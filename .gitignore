@@ -1,0 +1,16 @@
+*.idea
+*.iml
+*.class
+*.jar
+target
+test-output
+out
+.settings
+.project
+.classpath
+~*
+~*.*
+atlassian-ide-plugin.xml
+.DS_Store
+**/bin/
+**/generated/
