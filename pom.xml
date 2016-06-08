@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Cognifide AET :: Project Root
+
+    Copyright (C) 2013 Cognifide Limited
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>com.cognifide.aet</groupId>
+	<artifactId>aet-root</artifactId>
+	<version>1.3.2-SNAPSHOT</version>
+	<packaging>pom</packaging>
+
+	<name>Cognifide AET :: Root</name>
+	<organization>
+		<name>Cognifide</name>
+		<url>http://www.cognifide.com</url>
+	</organization>
+	<inceptionYear>2013</inceptionYear>
+	<licenses>
+		<license>
+			<name>The Apache Software License, Version 2.0</name>
+			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<properties>
+		<sonar.plugin.version>4.5.1</sonar.plugin.version>
+		<surefire.plugin.version>2.13</surefire.plugin.version>
+		<mongo.driver.version>3.2.2</mongo.driver.version>
+		<junit.version>4.11</junit.version>
+		<guava.version>15.0</guava.version>
+		<slf4j.version>1.7.5</slf4j.version>
+	</properties>
+
+	<modules>
+		<module>aet-api</module>
+		<module>aet-maven-plugin</module>
+		<module>aet-core</module>
+		<module>aet-jobs</module>
+		<module>aet-report-engine</module>
+	</modules>
+
+	<scm>
+		<connection>scm:git:https://github.com/Cognifide/AET.git</connection>
+		<url>https://github.com/Cognifide/AET</url>
+		<developerConnection>scm:git|https://github.com/Cognifide/AET.git</developerConnection>
+		<tag>HEAD</tag>
+	</scm>
+
+	<developers>
+		<developer>
+			<id>maciej.laskowski</id>
+			<name>Maciej Laskowski</name>
+			<email>maciej.laskowski@cognifide.com</email>
+			<organization>Cognifide</organization>
+			<organizationUrl>http://www.cognifide.com</organizationUrl>
+		</developer>
+		<developer>
+			<id>tomasz.misiewicz</id>
+			<name>Tomasz Misiewicz</name>
+			<email>tomasz.misiewicz@cognifide.com</email>
+			<organization>Cognifide</organization>
+			<organizationUrl>http://www.cognifide.com</organizationUrl>
+		</developer>
+	</developers>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.2</version>
+				<configuration>
+					<fork>true</fork>
+					<source>1.7</source>
+					<target>1.7</target>
+					<compilerVersion>1.7</compilerVersion>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>properties-maven-plugin</artifactId>
+				<version>1.0-alpha-2</version>
+				<configuration>
+					<files>
+						<file>${external.properties}</file>
+					</files>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

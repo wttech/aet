@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<overlay id="JSErrorCollector-overlay"
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <script src="overlay.js"/>
+
+    <statusbar id="status-bar">
+        <statusbarpanel>
+            <hbox tooltiptext="JS error are collected to be retrieved from WebDriver.">
+                <label id="JSErrorCollector-label" value="JSErrorCollector: " />
+                <label id="JSErrorCollector-nb" value="0" />
+            </hbox>
+        </statusbarpanel>
+    </statusbar>
+</overlay>

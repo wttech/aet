@@ -1,0 +1,3 @@
+content	JSErrorCollector	content/
+overlay	chrome://browser/content/browser.xul	chrome://JSErrorCollector/content/overlay.xul
+

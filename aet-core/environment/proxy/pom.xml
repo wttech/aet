@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Cognifide AET :: Proxy
+
+    Copyright (C) 2013 Cognifide Limited
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>com.cognifide.aet</groupId>
+		<artifactId>environment</artifactId>
+		<version>1.3.2-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>proxy</artifactId>
+	<packaging>bundle</packaging>
+
+	<name>Cognifide AET :: Proxy</name>
+
+	<dependencies>
+		<dependency>
+			<groupId>com.cognifide.aet</groupId>
+			<artifactId>jobs-api</artifactId>
+			<version>${project.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<!-- scr annotations - for generating component descriptors only, not
+				a platform dependency -->
+			<groupId>org.apache.felix</groupId>
+			<artifactId>org.apache.felix.scr.annotations</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.osgi</groupId>
+			<artifactId>org.osgi.core</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>net.lightbody.bmp</groupId>
+			<artifactId>browsermob-proxy</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.google.code.gson</groupId>
+			<artifactId>gson</artifactId>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.httpcomponents</groupId>
+			<artifactId>httpclient</artifactId>
+			<version>4.3.3</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-remote-driver</artifactId>
+			<version>${selenium.version}</version>
+			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>com.github.detro</groupId>
+			<artifactId>browsermob-proxy-client</artifactId>
+			<version>0.1.3</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-bundle-plugin</artifactId>
+				<extensions>true</extensions>
+				<configuration>
+					<instructions>
+						<Bundle-SymbolicName>${project.artifactId}</Bundle-SymbolicName>
+						<Bundle-Name>${project.name}</Bundle-Name>
+						<Bundle-Vendor>Cognifide Ltd.</Bundle-Vendor>
+						<Export-Package>
+							com.cognifide.aet.proxy*
+						</Export-Package>
+						<Embed-Dependency>
+							*;scope=compile|runtime
+						</Embed-Dependency>
+						<Import-Package>
+							com.sun.net.ssl.*;resolution:=optional,
+							sun.net.spi.*;resolution:=optional,
+							com.sun.*;resolution:=optional,
+							*
+						</Import-Package>
+						<Private-Package />
+					</instructions>
+				</configuration>
+			</plugin>
+			<plugin>
+				<!-- scr annotations - e.g. for generating OSGi component descriptors -->
+				<groupId>org.apache.felix</groupId>
+				<artifactId>maven-scr-plugin</artifactId>
+			</plugin>
+			<plugin>
+				<groupId>com.mycila</groupId>
+				<artifactId>license-maven-plugin</artifactId>
+				<configuration>
+					<header>${project.parent.parent.basedir}/license-template.txt</header>
+					<headerDefinitions>
+						<header>${project.parent.parent.basedir}/license-header-definition.txt</header>
+					</headerDefinitions>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+</project>

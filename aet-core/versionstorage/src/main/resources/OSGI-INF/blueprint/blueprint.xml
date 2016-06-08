@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- xmlns:ext="http://aries.apache.org/blueprint/xmlns/blueprint-ext/v1.0.0" -->
+<blueprint xmlns="http://www.osgi.org/xmlns/blueprint/v1.0.0"
+		   xmlns:ext="http://aries.apache.org/blueprint/xmlns/blueprint-ext/v1.2.0"
+		   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		   xmlns:cm="http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0"
+		   xmlns:cxf="http://cxf.apache.org/blueprint/core"
+		   xmlns:jaxrs="http://cxf.apache.org/blueprint/jaxrs"
+		   xsi:schemaLocation="http://www.osgi.org/xmlns/blueprint/v1.0.0 http://www.osgi.org/xmlns/blueprint/v1.0.0/blueprint.xsd
+  http://cxf.apache.org/blueprint/jaxrs http://cxf.apache.org/schemas/blueprint/jaxrs.xsd
+  http://cxf.apache.org/blueprint/core http://cxf.apache.org/schemas/blueprint/core.xsd
+  http://aries.apache.org/blueprint/xmlns/blueprint-cm/v1.1.0
+  http://aries.apache.org/schemas/blueprint-cm/blueprint-cm-1.1.0.xsd">
+	<cm:property-placeholder persistent-id="com.cognifide.aet.vs.rest.rest"
+							 update-strategy="reload">
+	</cm:property-placeholder>
+	<cxf:bus id="aetRestServletBus">
+	</cxf:bus>
+	<jaxrs:server address="/aet" id="AetRestServlet">
+		<jaxrs:serviceBeans>
+			<ref component-id="aetRestServletImpl"/>
+			<ref component-id="commentsRestServletImpl"/>
+		</jaxrs:serviceBeans>
+		<jaxrs:providers>
+			<!-- Transforms rest output object to json representation-->
+			<bean class="org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider"/>
+			<!-- Maps exeptions to responses-->
+			<bean class="com.cognifide.aet.vs.rest.exceptions.RestApiExceptionMapper"/>
+			<!-- Cross-origin resource sharing filter (adds  "Access-Control-Allow-Origin: *" header)-->
+			<bean class="com.cognifide.aet.vs.rest.filters.CorsFilter"/>
+		</jaxrs:providers>
+	</jaxrs:server>
+	<bean id="aetRestServletImpl" scope="prototype" class="com.cognifide.aet.vs.rest.AetRestEndpointImpl">
+		<property name="storage" ref="storage"/>
+		<property name="rebaser" ref="rebaser"/>
+	</bean>
+	<reference id="storage" interface="com.cognifide.aet.vs.VersionStorage"/>
+	<reference id="rebaser" interface="com.cognifide.aet.vs.rebase.Rebaser" ext:proxy-method='classes'/>
+	<bean id="commentsRestServletImpl" scope="prototype" class="com.cognifide.aet.vs.rest.CommentsRestEndpointImpl">
+		<property name="manager" ref="manager"/>
+	</bean>
+	<reference id="manager" interface="com.cognifide.aet.comments.api.manager.CommentsManager"/>
+
+</blueprint>
