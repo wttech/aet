@@ -101,11 +101,6 @@
 				<artifactId>diffutils</artifactId>
 				<version>1.2.1</version>
 			</dependency>
-			<dependency>
-				<groupId>diff_match_patch</groupId>
-				<artifactId>diff_match_patch</artifactId>
-				<version>current</version>
-			</dependency>
 			<!-- osgi -->
 			<dependency>
 				<groupId>org.osgi</groupId>

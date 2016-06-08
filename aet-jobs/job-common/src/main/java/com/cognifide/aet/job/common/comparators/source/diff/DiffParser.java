@@ -17,13 +17,12 @@
  */
 package com.cognifide.aet.job.common.comparators.source.diff;
 
+import static com.cognifide.aet.job.common.comparators.source.diff.DiffMatchPatch.Diff;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-
-import name.fraser.neil.plaintext.diff_match_patch;
-import name.fraser.neil.plaintext.diff_match_patch.Diff;
 
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -49,7 +48,7 @@ public class DiffParser {
 		}
 	};
 
-	private static diff_match_patch diffMatchPatch = new diff_match_patch();
+	private static DiffMatchPatch diffMatchPatch = new DiffMatchPatch();
 
 	/**
 	 * Generates deltas of changes using DiffUtils library. If {trimmed} all source lines are trimmed before

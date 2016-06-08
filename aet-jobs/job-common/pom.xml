@@ -83,10 +83,6 @@
 			<artifactId>diffutils</artifactId>
 		</dependency>
 		<dependency>
-			<groupId>diff_match_patch</groupId>
-			<artifactId>diff_match_patch</artifactId>
-		</dependency>
-		<dependency>
 			<groupId>org.apache.httpcomponents</groupId>
 			<artifactId>fluent-hc</artifactId>
 			<version>4.3.4</version>
