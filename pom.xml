@@ -65,6 +65,14 @@
 		<tag>HEAD</tag>
 	</scm>
 
+	<distributionManagement>
+		<repository>
+			<id>local-directory</id>
+			<name>Local directory</name>
+			<url>file://D:/distributionManagement/</url>
+		</repository>
+	</distributionManagement>
+
 	<developers>
 		<developer>
 			<id>maciej.laskowski</id>
