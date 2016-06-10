@@ -20,11 +20,15 @@ The tool has been developed to aid front end client side layout regression testi
 * Integration with CI Tools (Jenkins, Bamboo) thanks to maven application client. 
 
 ## Installation
-Please refer to the Installation Guide in the documentation for an overview on how to configure AET.
+Please refer to the Installation Guide in the [documentation][aet-documentation] for an overview on how to configure AET.
 
 ## Configuration
-Please refer to the Configuration Guide in the documentation for an overview on how to configure AET.
+Please refer to the Configuration Guide in the [documentation][aet-documentation] for an overview on how to configure AET.
 
 ## References
-* [AET Documentation and User Guide](https://cognifide.atlassian.net/wiki/display/AET)
+* [AET Documentation and User Guide][aet-documentation]
+* [AET Distribution binary files][aet-distribution]
 * [AET issue tracking](https://cognifide.atlassian.net/browse/AET)
+
+[aet-documentation]: https://cognifide.atlassian.net/wiki/display/AET/AET+1.3.2+Documentation
+[aet-distribution]: https://cognifide.atlassian.net/wiki/display/AET/AET+1.3.2+Distribution
