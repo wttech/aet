@@ -25,6 +25,18 @@ Please refer to the Installation Guide in the [documentation][aet-documentation]
 ## Configuration
 Please refer to the Configuration Guide in the [documentation][aet-documentation] for an overview on how to configure AET.
 
+## Commercial Support
+
+We are working to establish Support services.
+Please [contact us](mailto:labs-support@cognifide.com) for more details.
+
+As part of the services we will:
+
+* prioritize your feature request,
+* tailor the product to your needs,
+* provide a training for your engineers,
+* support your engineering teams.
+
 ## References
 * [AET Documentation and User Guide][aet-documentation]
 * [AET Distribution binary files][aet-distribution]
