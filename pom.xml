@@ -116,9 +116,6 @@
     <jetty.plugin.version>9.2.10.v20150310</jetty.plugin.version>
     <mongo.driver.version>3.2.2</mongo.driver.version>
     <junit.version>4.11</junit.version>
-    <bb.version>0.9.6</bb.version>
-    <!-- there were some errors while trying to use version 1.2.4, do NOT upgrade -->
-    <cucumber.version>1.2.3</cucumber.version>
 
     <!-- properties for maven uploads -->
     <target.tomcat.serverId>aet-vagrant-instance</target.tomcat.serverId>
@@ -552,38 +549,6 @@
         <scope>test</scope>
       </dependency>
 
-      <!-- functional-tests (bobcat and cucumber need compile scope) -->
-      <dependency>
-        <groupId>com.cognifide.qa.bb</groupId>
-        <artifactId>bb-core</artifactId>
-        <version>${bb.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.cognifide.qa.bb</groupId>
-        <artifactId>bb-junit</artifactId>
-        <version>${bb.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>com.cognifide.qa.bb</groupId>
-        <artifactId>bb-reports</artifactId>
-        <version>${bb.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>info.cukes</groupId>
-        <artifactId>cucumber-java</artifactId>
-        <version>${cucumber.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>info.cukes</groupId>
-        <artifactId>cucumber-junit</artifactId>
-        <version>${cucumber.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>info.cukes</groupId>
-        <artifactId>cucumber-guice</artifactId>
-        <version>${cucumber.version}</version>
-      </dependency>
-
       <!-- findbugs -->
       <dependency>
         <groupId>com.google.code.findbugs</groupId>
@@ -839,11 +804,6 @@
             <target>${source.java.version}</target>
             <compilerVersion>${source.java.version}</compilerVersion>
           </configuration>
-        </plugin>
-        <plugin>
-          <groupId>org.apache.maven.plugins</groupId>
-          <artifactId>maven-surefire-plugin</artifactId>
-          <version>2.19.1</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>

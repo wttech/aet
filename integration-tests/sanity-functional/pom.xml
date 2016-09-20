@@ -23,14 +23,9 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <parent>
-    <artifactId>aet-root</artifactId>
-    <groupId>com.cognifide.aet</groupId>
-    <version>2.0.0-SNAPSHOT</version>
-    <relativePath>../..</relativePath>
-  </parent>
-
+  <groupId>com.cognifide.aet</groupId>
   <artifactId>sanity-functional</artifactId>
+  <version>1.0.0-SNAPSHOT</version>
 
   <name>AET :: Integration Tests :: Sanity Functional</name>
   <description>BDD tests for AET</description>
@@ -38,6 +33,10 @@
   <properties>
     <runSuite>**/CucumberSuite.java</runSuite>
     <configuration.paths>src/main/config</configuration.paths>
+
+    <bobcat.version>0.9.6</bobcat.version>
+    <!-- there were some errors while trying to use version 1.2.4, do NOT upgrade -->
+    <cucumber.version>1.2.3</cucumber.version>
 
     <!-- we are using newer version here as Bobcat needs JAVA 1.8 -->
     <source.java.version>1.8</source.java.version>
@@ -51,6 +50,37 @@
         <artifactId>junit</artifactId>
         <version>${junit.version}</version>
         <scope>compile</scope>
+      </dependency>
+      <!-- functional-tests (bobcat and cucumber need compile scope) -->
+      <dependency>
+        <groupId>com.cognifide.qa.bb</groupId>
+        <artifactId>bb-core</artifactId>
+        <version>${bobcat.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.cognifide.qa.bb</groupId>
+        <artifactId>bb-junit</artifactId>
+        <version>${bobcat.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.cognifide.qa.bb</groupId>
+        <artifactId>bb-reports</artifactId>
+        <version>${bobcat.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>info.cukes</groupId>
+        <artifactId>cucumber-java</artifactId>
+        <version>${cucumber.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>info.cukes</groupId>
+        <artifactId>cucumber-junit</artifactId>
+        <version>${cucumber.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>info.cukes</groupId>
+        <artifactId>cucumber-guice</artifactId>
+        <version>${cucumber.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -85,6 +115,15 @@
   </dependencies>
 
   <build>
+    <pluginManagement>
+      <plugins>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.19.1</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
