@@ -1,0 +1,16 @@
+{
+  "deltas": [],
+  "sourceCompareType": "ALL",
+  "status": "SUCCESS",
+  "properties": {
+    "comparatorTitle": "",
+    "testName": "",
+    "url": "",
+    "urlName": "",
+    "collectorModule": "",
+    "collectorModuleName": "",
+    "comparatorModule": "",
+    "comparatorModuleName": ""
+  },
+  "hasPattern": true
+}

@@ -1,1 +1,0 @@
-{"jsErrorLogs":[{"errorMessage":"ReferenceError: nonExistingVarible is not defined","sourceName":"http://anotherbuggypage.com","lineNumber":387},{"errorMessage":"ReferenceError: nonExistingJsFunction is not defined","sourceName":"http://somebuggypage.com","lineNumber":20}],"url":"http://www.cognifide.com"}

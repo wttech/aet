@@ -1,16 +1,46 @@
-*.idea
+# Custom file that may be added for additional maven build properties.
+# For properties-maven-plugin configuration.
+# Add this file or override maven property for it's location.
+/maven.properties
+
+# IntelliJ idea specific files
+.idea
 *.iml
-*.class
-*.jar
-target
-test-output
-out
+
+# Eclipse specific files
 .settings
 .project
 .classpath
+
+target
+test-output
+
+.metadata
 ~*
 ~*.*
 atlassian-ide-plugin.xml
 .DS_Store
-**/bin/
 **/generated/
+
+### AET report web application
+# node instance for frontend-maven-plugin
+/report/src/main/webapp/node
+# npm packages
+/report/src/main/webapp/node_modules/
+# sass cache
+/report/src/main/webapp/.sass-cache/
+# auto-generated assets
+/report/src/main/webapp/assets/libs
+
+### AET sanity tests
+/integration-tests/test-suite/suite.xml
+
+### AET documentation
+# node instance for frontend-maven-plugin
+/documentation/src/main/node
+# npm packages
+/documentation/src/main/node_modules/
+
+# aet-vagrant
+/vagrant/.vagrant
+/vagrant/Berksfile.lock

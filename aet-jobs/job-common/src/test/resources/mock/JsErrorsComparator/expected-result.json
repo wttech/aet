@@ -1,3 +1,0 @@
-{"jsErrorLogs":[{"errorMessage":"ReferenceError: nonExistingVarible is not defined","sourceName":"http://anotherbuggypage.com","lineNumber":387},{"errorMessage":"ReferenceError: nonExistingJsFunction is not defined","sourceName":"http://somebuggypage.com","lineNumber":20}],"status":"FAILED","properties":{"comparatorTitle":"comparator for collector","testName":"","url":"","urlName":"","collectorModule":"collector","collectorModuleName":"collector","comparatorModule":"comparator","comparatorModuleName":"comparator"},"hasPattern":false}
-
-

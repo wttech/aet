@@ -1,0 +1,74 @@
+<!--
+
+    Automated Exploratory Tests
+
+    Copyright (C) 2013 Cognifide Limited
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<div ng-if="processingError" class="processing-error">
+    <h3>
+        <span class="label label-danger">
+            Failure when processing this url.
+        </span>
+    </h3>
+    <ul>
+        <li ng-repeat="error in processingErrorText">
+            <i>{{error}}</i>
+        </li>
+    </ul>
+    <div class="processing-error-comparators" ng-if="comparatorsError.length">
+        <span>Errors found in comparators:</span>
+        <ul>
+            <li ng-repeat="error in comparatorsError">
+                <i>{{error}}</i>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div class="tab-content-toolbar">
+    <div class="toolbar-blocks">
+        <div class="toolbar-btns pull-right">
+            <ng-include src="'app/html/includes/test_cases_comment.html'"/>
+        </div>
+    </div>
+</div>
+
+<div ng-if="!processingError">
+    <h3>
+        Overall score <span class="label label-{{::performance.prettyOverallScore}}">{{::performance.prettyOverallScore}}</span>
+    </h3>
+    <div class="performance-table tabbable tabs-left">
+        <ul class="nav nav-tabs">
+            <li  ng-repeat="item in performance.g track by $index">
+                <a href="#test-{{$index+1}}" ng-click="getTab($event)" data-toggle="tab" role="tab">
+                    <span class="label label-{{::item.prettyScore}}">{{::item.prettyScore}}</span>
+                    <strong>{{::item.name}}</strong>
+                </a>
+            </li>
+        </ul>
+        <div class="tab-content tab-content-performance">
+            <div class="tab-pane" id="test-{{$index+1}}" ng-repeat="item in performance.g track by $index">
+                <span>Grade <span class="label label-{{::item.prettyScore}}">{{::item.prettyScore}}</span> on {{::item.name}}</span>
+                <span ng-bind-html="item.message | to_trusted"></span>
+                <div ng-if="item.components.length > 0" class="links-list">
+                    <a href="" ng-repeat="component in item.components">
+                        <i>{{component}}</i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,242 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Automated Exploratory Tests
+
+    Copyright (C) 2013 Cognifide Limited
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<suite name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
+
+	<!-- Source-Comparator START -->
+	<test name="comparator-Source-SUCCESS">
+		<collect>
+			<open />
+			<source />
+		</collect>
+		<compare>
+			<source comparator="source" />
+		</compare>
+		<urls>
+			<url href="comparators/source/success.jsp" />
+		</urls>
+	</test>
+	<test name="comparator-Source-FAILED">
+		<collect>
+			<open />
+			<source />
+		</collect>
+		<compare>
+			<source comparator="source" />
+		</compare>
+		<urls>
+			<url href="comparators/source/failed.jsp" />
+		</urls>
+	</test>
+	<test name="comparator-Source-Remove-Lines-SUCCESS">
+		<collect>
+			<open />
+			<source />
+		</collect>
+		<compare>
+			<source comparator="source">
+				<remove-lines dataRanges="10,15;27,27" patternRanges="10,15;27,27" />
+			</source>
+		</compare>
+		<urls>
+			<url href="comparators/source/success_remove_lines.jsp" />
+		</urls>
+	</test>
+	<test name="comparator-Source-Remove-Lines-FAILED">
+		<collect>
+			<open />
+			<source />
+		</collect>
+		<compare>
+			<source comparator="source">
+				<remove-lines dataRanges="10,15;27,27" patternRanges="10,15;27,27" />
+			</source>
+		</compare>
+		<urls>
+			<url href="comparators/source/failed_remove_lines.jsp" />
+		</urls>
+	</test>
+	<test name="comparator-Source-Remove-Nodes-SUCCESS">
+		<collect>
+			<open />
+			<source />
+		</collect>
+		<compare>
+			<source comparator="source">
+				<remove-nodes xpath="/html/body/div[2]/div[3]/div[1]/div/div" />
+			</source>
+		</compare>
+		<urls>
+			<url href="comparators/source/success_remove_nodes.jsp" />
+		</urls>
+	</test>
+	<test name="comparator-Source-Remove-Nodes-FAILED">
+		<collect>
+			<open />
+			<source />
+		</collect>
+		<compare>
+			<source comparator="source">
+				<remove-nodes xpath="/html/body/div[2]/div[3]/div[1]/div/div" />
+			</source>
+		</compare>
+		<urls>
+			<url href="comparators/source/failed_remove_nodes.jsp" />
+		</urls>
+	</test>
+	<test name="comparator-Source-Extract-Element-SUCCESS">
+		<collect>
+			<open />
+			<source />
+		</collect>
+		<compare>
+			<source comparator="source">
+				<extract-element elementId="banner" />
+			</source>
+		</compare>
+		<urls>
+			<url href="comparators/source/success_extract_element.jsp" />
+		</urls>
+	</test>
+	<test name="comparator-Source-Extract-Element-FAILED">
+		<collect>
+			<open />
+			<source />
+		</collect>
+		<compare>
+			<source comparator="source">
+				<extract-element elementId="date-panel" />
+			</source>
+		</compare>
+		<urls>
+			<url href="comparators/source/failed_extract_element.jsp" />
+		</urls>
+	</test>
+	<test name="comparator-Source-Long-Response-SUCCESS">
+		<collect>
+			<open />
+			<source />
+		</collect>
+		<compare>
+			<source comparator="source" />
+		</compare>
+		<urls>
+			<url href="comparators/source/success_long_response.jsp" />
+		</urls>
+	</test>
+	<test name="comparator-Source-Long-Response-FAILED">
+		<collect>
+			<open />
+			<source />
+		</collect>
+		<compare>
+			<source comparator="source" />
+		</compare>
+		<urls>
+			<url href="comparators/source/failed_long_response.jsp" />
+		</urls>
+	</test>
+	<test name="comparator-Source-Redirect-SUCCESS">
+		<collect>
+			<open />
+			<source />
+		</collect>
+		<compare>
+			<source comparator="source" />
+		</compare>
+		<urls>
+			<url href="comparators/source/success_redirect.jsp" />
+		</urls>
+	</test>
+	<test name="comparator-Source-Redirect-FAILED">
+		<collect>
+			<open />
+			<source />
+		</collect>
+		<compare>
+			<source comparator="source" />
+		</compare>
+		<urls>
+			<url href="comparators/source/failed_redirect.jsp" />
+		</urls>
+	</test>
+	<test name="comparator-Source-Random-Empty-Lines-ALLFORMATTED-SUCCESS">
+		<collect>
+			<open />
+			<source />
+		</collect>
+		<compare>
+			<source compareType="allFormatted"/>
+		</compare>
+		<urls>
+			<url href="comparators/source/random-empty-lines.jsp" />
+		</urls>
+	</test>
+	<test name="comparator-Source-Random-Empty-Lines-FAILED">
+		<collect>
+			<open />
+			<source />
+		</collect>
+		<compare>
+			<source/>
+		</compare>
+		<urls>
+			<url href="comparators/source/random-empty-lines.jsp" />
+		</urls>
+	</test>
+
+	<test name="comparator-Source-compareType-CONTENT-SUCCESS">
+		<collect>
+			<open/>
+			<source/>
+		</collect>
+		<compare>
+			<source compareType="content"/>
+		</compare>
+		<urls>
+			<url href="comparators/source/random-empty-lines.jsp"/>
+		</urls>
+	</test>
+	<test name="comparator-Source-compareType-MARKUP-SUCCESS">
+		<collect>
+			<open/>
+			<source/>
+		</collect>
+		<compare>
+			<source compareType="markup"/>
+		</compare>
+		<urls>
+			<url href="comparators/source/random-empty-lines.jsp"/>
+		</urls>
+	</test>
+	<test name="comparator-Source-compareType-ALLFORMATTED-SUCCESS">
+		<collect>
+			<open/>
+			<source/>
+		</collect>
+		<compare>
+			<source compareType="allFormatted"/>
+		</compare>
+		<urls>
+			<url href="comparators/source/random-empty-lines.jsp"/>
+		</urls>
+	</test>
+	<!-- Source-Comparator END -->
+</suite>

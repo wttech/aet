@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Cognifide AET :: Project Root
+    Automated Exploratory Tests
 
     Copyright (C) 2013 Cognifide Limited
 
@@ -19,162 +19,1104 @@
 
 -->
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+  <modelVersion>4.0.0</modelVersion>
 
-	<groupId>com.cognifide.aet</groupId>
-	<artifactId>aet-root</artifactId>
-	<version>1.3.3-SNAPSHOT</version>
-	<packaging>pom</packaging>
+  <groupId>com.cognifide.aet</groupId>
+  <artifactId>aet-root</artifactId>
+  <version>2.0.0-SNAPSHOT</version>
+  <packaging>pom</packaging>
 
-	<name>Cognifide AET :: Root</name>
-	<organization>
-		<name>Cognifide</name>
-		<url>http://www.cognifide.com</url>
-	</organization>
-	<inceptionYear>2013</inceptionYear>
-	<licenses>
-		<license>
-			<name>The Apache Software License, Version 2.0</name>
-			<url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
-			<distribution>repo</distribution>
-		</license>
-	</licenses>
+  <name>AET</name>
+  <description>Automated Exploratory Tests - system that detects changes on web sites</description>
+  <url>https://github.com/Cognifide/AET</url>
+  <inceptionYear>2013</inceptionYear>
 
-	<properties>
-		<sonar.plugin.version>4.5.1</sonar.plugin.version>
-		<surefire.plugin.version>2.13</surefire.plugin.version>
-		<mongo.driver.version>3.2.2</mongo.driver.version>
-		<junit.version>4.11</junit.version>
-		<guava.version>15.0</guava.version>
-		<slf4j.version>1.7.5</slf4j.version>
-	</properties>
+  <organization>
+    <name>Cognifide</name>
+    <url>http://www.cognifide.com</url>
+  </organization>
 
-	<modules>
-		<module>aet-api</module>
-		<module>aet-maven-plugin</module>
-		<module>aet-core</module>
-		<module>aet-jobs</module>
-		<module>aet-report-engine</module>
-	</modules>
+  <licenses>
+    <license>
+      <name>The Apache Software License, Version 2.0</name>
+      <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
+    </license>
+  </licenses>
+  
+  <developers>
+    <developer>
+      <name>Maciej Laskowski</name>
+      <email>maciej.laskowski@cognifide.com</email>
+      <organization>Cognifide</organization>
+      <organizationUrl>http://www.cognifide.com</organizationUrl>
+    </developer>
+    <developer>
+      <name>Jakub Kubiczak</name>
+      <email>jakub.kubiczak@cognifide.com</email>
+      <organization>Cognifide</organization>
+      <organizationUrl>http://www.cognifide.com</organizationUrl>
+    </developer>
+    <developer>
+      <id>tomasz.misiewicz</id>
+      <name>Tomasz Misiewicz</name>
+      <email>tomasz.misiewicz@cognifide.com</email>
+      <organization>Cognifide</organization>
+      <organizationUrl>http://www.cognifide.com</organizationUrl>
+    </developer>
+  </developers>
 
-	<scm>
-		<connection>scm:git:https://github.com/Cognifide/AET.git</connection>
-		<url>https://github.com/Cognifide/AET</url>
-		<developerConnection>scm:git:git@github.com:Cognifide/AET.git</developerConnection>
-		<tag>HEAD</tag>
-	</scm>
+  <prerequisites>
+    <maven>${min.maven.version}</maven>
+  </prerequisites>
 
-	<distributionManagement>
-		<repository>
-			<id>local-directory</id>
-			<name>Local directory</name>
-			<url>file://D:/distributionManagement/</url>
-		</repository>
-	</distributionManagement>
+  <modules>
+    <module>api</module>
+    <module>client</module>
+    <module>core</module>
+    <module>documentation</module>
+    <module>integration-tests/json-test</module>
+    <module>integration-tests/sample-site</module>
+    <module>integration-tests/test-suite</module>
+    <module>osgi-dependencies</module>
+    <module>report</module>
+    <module>rest-endpoint</module>
+    <module>zip</module>
+  </modules>
 
-	<developers>
-		<developer>
-			<id>maciej.laskowski</id>
-			<name>Maciej Laskowski</name>
-			<email>maciej.laskowski@cognifide.com</email>
-			<organization>Cognifide</organization>
-			<organizationUrl>http://www.cognifide.com</organizationUrl>
-		</developer>
-		<developer>
-			<id>tomasz.misiewicz</id>
-			<name>Tomasz Misiewicz</name>
-			<email>tomasz.misiewicz@cognifide.com</email>
-			<organization>Cognifide</organization>
-			<organizationUrl>http://www.cognifide.com</organizationUrl>
-		</developer>
-	</developers>
+  <scm>
+    <connection>scm:git:https://github.com/Cognifide/aet.git</connection>
+    <developerConnection>scm:git:git@github.com:Cognifide/aet.git</developerConnection>
+    <tag>HEAD</tag>
+    <url>https://github.com/Cognifide/aet</url>
+  </scm>
+  
+  <!-- please add sonatype credentials in your user settings.xml file -->
+  <distributionManagement>
+    <repository>
+      <id>oss.sonatype.org</id>
+      <name>Nexus Release Repository</name>
+      <url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
+    </repository>
+    <snapshotRepository>
+      <id>oss.sonatype.org</id>
+      <name>Nexus Snapshots Repository</name>
+      <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+    </snapshotRepository>
+  </distributionManagement>
 
-	<build>
-		<pluginManagement>
-			<plugins>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-release-plugin</artifactId>
-					<version>2.5.2</version>
-					<configuration>
-						<tagNameFormat>@{project.version}</tagNameFormat>
-					</configuration>
-				</plugin>
-			</plugins>
-		</pluginManagement>
-		<plugins>
-			<plugin>
-				<artifactId>maven-compiler-plugin</artifactId>
-				<version>3.2</version>
-				<configuration>
-					<fork>true</fork>
-					<source>1.7</source>
-					<target>1.7</target>
-					<compilerVersion>1.7</compilerVersion>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>properties-maven-plugin</artifactId>
-				<version>1.0-alpha-2</version>
-				<configuration>
-					<files>
-						<file>${external.properties}</file>
-					</files>
-				</configuration>
-			</plugin>
-			<plugin>
-				<groupId>org.apache.maven.plugins</groupId>
-				<artifactId>maven-site-plugin</artifactId>
-				<version>3.5.1</version>
-				<configuration>
-					<skip>true</skip>
-					<skipDeploy>true</skipDeploy>
-				</configuration>
-			</plugin>
-		</plugins>
-	</build>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <!-- For reporting plugins (i.e. version-maven-plugin -->
+    <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-	<profiles>
-		<profile>
-			<id>sources</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-source-plugin</artifactId>
-						<version>3.0.0</version>
-						<executions>
-							<execution>
-								<id>attach-sources</id>
-								<goals>
-									<goal>jar</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-		<profile>
-			<id>javadoc</id>
-			<build>
-				<plugins>
-					<plugin>
-						<groupId>org.apache.maven.plugins</groupId>
-						<artifactId>maven-javadoc-plugin</artifactId>
-						<version>2.10.3</version>
-						<executions>
-							<execution>
-								<id>attach-javadocs</id>
-								<goals>
-									<goal>jar</goal>
-								</goals>
-							</execution>
-						</executions>
-					</plugin>
-				</plugins>
-			</build>
-		</profile>
-	</profiles>
+    <!-- For wagon plugin -->
+    <finalName.extension>jar</finalName.extension>
+
+    <!-- Versions -->
+    <aet.sample.site.version>1.0.0</aet.sample.site.version>
+    <source.java.version>1.7</source.java.version>
+    <jetty.plugin.version>9.2.10.v20150310</jetty.plugin.version>
+    <mongo.driver.version>3.2.2</mongo.driver.version>
+    <junit.version>4.11</junit.version>
+    <bb.version>0.9.6</bb.version>
+    <!-- there were some errors while trying to use version 1.2.4, do NOT upgrade -->
+    <cucumber.version>1.2.3</cucumber.version>
+
+    <!-- properties for maven uploads -->
+    <target.tomcat.serverId>aet-vagrant-instance</target.tomcat.serverId>
+    <target.tomcat.url>scp://192.168.123.100/opt/aet/tomcat/aet_sample_site/current</target.tomcat.url>
+
+    <target.karaf.serverId>aet-vagrant-instance</target.karaf.serverId>
+    <target.karaf.bundles.url>scp://192.168.123.100/opt/aet/karaf/current/deploy/bundles</target.karaf.bundles.url>
+    <target.karaf.configs.url>scp://192.168.123.100/opt/aet/karaf/current/etc/aet</target.karaf.configs.url>
+    <target.karaf.features.url>scp://192.168.123.100/opt/aet/karaf/current/deploy/features</target.karaf.features.url>
+
+    <target.httpd.serverId>aet-vagrant-instance</target.httpd.serverId>
+    <target.httpd.report.url>scp://192.168.123.100/opt/aet/apache/aet_reports/current</target.httpd.report.url>
+
+    <!--
+        required for building by sortpom-maven-plugin:2.5.0 and bobcat
+    -->
+    <min.java.version>1.8</min.java.version>
+    <!--
+        required by frontend-maven-plugin (for grunt and npm)
+    -->
+    <min.maven.version>3.1.0</min.maven.version>
+
+    <!--
+      this property should be overwritten from commandline
+      (see "Release Procedure" section of documentation)
+    -->
+    <gpg.keyname>9A105524</gpg.keyname>
+    <!--
+        Custom file that may be added for additional maven build properties.
+        For properties-maven-plugin configuration.
+        Add this file or override maven property for it's location.
+    -->
+    <external.properties>maven.properties</external.properties>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava</artifactId>
+        <version>15.0</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-lang3</artifactId>
+        <version>3.3.2</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.google.inject</groupId>
+        <artifactId>guice</artifactId>
+        <version>3.0</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.activemq</groupId>
+        <artifactId>activemq-osgi</artifactId>
+        <version>5.13.1</version>
+        <scope>provided</scope>
+      </dependency>
+
+      <!-- osgi -->
+      <dependency>
+        <groupId>org.osgi</groupId>
+        <artifactId>org.osgi.core</artifactId>
+        <version>4.3.0</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.osgi</groupId>
+        <artifactId>org.osgi.compendium</artifactId>
+        <version>4.2.0</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>org.osgi.compendium</artifactId>
+        <version>1.0.1</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>org.apache.felix.configadmin</artifactId>
+        <version>1.6.0</version>
+        <scope>provided</scope>
+      </dependency>
+
+      <!-- provided by Karaf: org.osgi.service.http -->
+      <dependency>
+        <groupId>org.ops4j.pax.web</groupId>
+        <artifactId>pax-web-runtime</artifactId>
+        <version>1.1.17</version>
+        <scope>provided</scope>
+      </dependency>
+      <!-- provided by Karaf: javax.servlet 3.5 -->
+      <dependency>
+        <groupId>org.apache.geronimo.specs</groupId>
+        <artifactId>geronimo-servlet_2.5_spec</artifactId>
+        <version>1.2</version>
+        <scope>provided</scope>
+      </dependency>
+      <!-- provided in Karaf by pax-logging -->
+      <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-api</artifactId>
+        <version>1.7.7</version>
+        <scope>provided</scope>
+      </dependency>
+
+      <!-- will be provided by Karaf, see aet-features.xml file -->
+      <dependency>
+        <groupId>javax.validation</groupId>
+        <artifactId>validation-api</artifactId>
+        <version>1.1.0.Final</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.hibernate</groupId>
+        <artifactId>hibernate-validator</artifactId>
+        <version>4.3.2.Final</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.jboss.logging</groupId>
+        <artifactId>jboss-logging</artifactId>
+        <version>3.1.0.GA</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.codehaus.jackson</groupId>
+        <artifactId>jackson-mapper-asl</artifactId>
+        <version>1.9.13</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.servicemix.bundles</groupId>
+        <artifactId>org.apache.servicemix.bundles.quartz</artifactId>
+        <version>2.1.7_1</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.camel</groupId>
+        <artifactId>camel-core</artifactId>
+        <version>2.17.0</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>joda-time</groupId>
+        <artifactId>joda-time</artifactId>
+        <version>2.9.3</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>commons-codec</groupId>
+        <artifactId>commons-codec</artifactId>
+        <version>1.8</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>commons-io</groupId>
+        <artifactId>commons-io</artifactId>
+        <version>2.4</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.mongodb</groupId>
+        <artifactId>mongo-java-driver</artifactId>
+        <version>3.2.2</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.sling</groupId>
+        <artifactId>org.apache.sling.commons.osgi</artifactId>
+        <version>2.2.2</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.json</groupId>
+        <artifactId>json</artifactId>
+        <version>20160212</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>org.apache.felix.http.servlet-api</artifactId>
+        <version>1.1.2</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpclient</artifactId>
+        <version>4.3.3</version>
+        <scope>provided</scope>
+      </dependency>
+
+      <!-- wrapped by Karaf, see aet-features.xml file -->
+      <dependency>
+        <groupId>org.reflections</groupId>
+        <artifactId>reflections</artifactId>
+        <version>0.9.10</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>fluent-hc</artifactId>
+        <version>4.3.4</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.google.code.gson</groupId>
+        <artifactId>gson</artifactId>
+        <version>2.6.1</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.jsoup</groupId>
+        <artifactId>jsoup</artifactId>
+        <version>1.8.1</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.googlecode.java-diff-utils</groupId>
+        <artifactId>diffutils</artifactId>
+        <version>1.2.1</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.google.inject.extensions</groupId>
+        <artifactId>guice-assistedinject</artifactId>
+        <version>3.0</version>
+        <scope>provided</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>org.apache.felix.scr.annotations</artifactId>
+        <version>1.9.6</version>
+        <scope>provided</scope>
+      </dependency>
+
+      <!--
+          dependencies to be wrapped by AET
+          (should only be used by wrapping modules)
+
+          this one depends on org.seleniumhq.selenium : selenium-java : 2.40.0
+          our wrapped selenium version is newer (see selenium module),
+          but backward-compatible
+      -->
+      <dependency>
+        <groupId>com.github.detro</groupId>
+        <artifactId>browsermob-proxy-client</artifactId>
+        <version>0.1.3</version>
+        <exclusions>
+          <exclusion>
+            <artifactId>selenium-java</artifactId>
+            <groupId>org.seleniumhq.selenium</groupId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+
+      <!-- AET artifacts that are re-used by other AET artifacts -->
+      <dependency>
+        <groupId>com.cognifide.aet</groupId>
+        <artifactId>jobs-api</artifactId>
+        <version>${project.version}</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.cognifide.aet</groupId>
+        <artifactId>communication-api</artifactId>
+        <version>${project.version}</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.cognifide.aet</groupId>
+        <artifactId>datastorage-api</artifactId>
+        <version>${project.version}</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.cognifide.aet</groupId>
+        <artifactId>validation-api</artifactId>
+        <version>${project.version}</version>
+        <scope>provided</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>com.cognifide.aet</groupId>
+        <artifactId>communication</artifactId>
+        <version>${project.version}</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.cognifide.aet</groupId>
+        <artifactId>datastorage</artifactId>
+        <version>${project.version}</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.cognifide.aet</groupId>
+        <artifactId>validation</artifactId>
+        <version>${project.version}</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.cognifide.aet</groupId>
+        <artifactId>proxy</artifactId>
+        <version>${project.version}</version>
+        <scope>provided</scope>
+      </dependency>
+
+      <!-- AET wrappers for non-OSGi libraries -->
+      <dependency>
+        <groupId>com.cognifide.aet</groupId>
+        <artifactId>selenium</artifactId>
+        <version>${project.version}</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.cognifide.aet</groupId>
+        <artifactId>w3chtml5validator</artifactId>
+        <version>${project.version}</version>
+        <scope>provided</scope>
+      </dependency>
+
+      <!-- Tests -->
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>${junit.version}</version>
+        <scope>test</scope>
+        <exclusions>
+          <!-- remove transitive hamcrest dependency (old version) -->
+          <exclusion>
+            <artifactId>hamcrest-core</artifactId>
+            <groupId>org.hamcrest</groupId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>org.mockito</groupId>
+        <artifactId>mockito-all</artifactId>
+        <version>1.9.5</version>
+        <scope>test</scope>
+        <exclusions>
+          <!-- remove transitive hamcrest dependency (old version) -->
+          <exclusion>
+            <artifactId>hamcrest-core</artifactId>
+            <groupId>org.hamcrest</groupId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>org.hamcrest</groupId>
+        <artifactId>hamcrest-all</artifactId>
+        <version>1.3</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.google.guava</groupId>
+        <artifactId>guava-testlib</artifactId>
+        <version>10.0</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.googlecode.zohhak</groupId>
+        <artifactId>zohhak</artifactId>
+        <version>1.0.2</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>xmlunit</groupId>
+        <artifactId>xmlunit</artifactId>
+        <version>1.2</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.google.guiceberry</groupId>
+        <artifactId>guiceberry</artifactId>
+        <version>3.1.0</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>uk.co.jemos.podam</groupId>
+        <artifactId>podam</artifactId>
+        <version>3.6.0.RELEASE</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.sling</groupId>
+        <artifactId>org.apache.sling.commons.testing</artifactId>
+        <version>2.0.6</version>
+        <scope>test</scope>
+        <exclusions>
+          <exclusion>
+            <artifactId>slf4j-simple</artifactId>
+            <groupId>org.slf4j</groupId>
+          </exclusion>
+        </exclusions>
+      </dependency>
+      <dependency>
+        <groupId>com.googlecode.catch-exception</groupId>
+        <artifactId>catch-exception</artifactId>
+        <version>1.2.0</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.skyscreamer</groupId>
+        <artifactId>jsonassert</artifactId>
+        <version>1.3.0</version>
+        <scope>test</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.powermock</groupId>
+        <artifactId>powermock-core</artifactId>
+        <version>1.5.2</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.powermock</groupId>
+        <artifactId>powermock-module-junit4</artifactId>
+        <version>1.5.2</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.powermock</groupId>
+        <artifactId>powermock-api-mockito</artifactId>
+        <version>1.5.2</version>
+        <scope>test</scope>
+      </dependency>
+
+      <!-- functional-tests (bobcat and cucumber need compile scope) -->
+      <dependency>
+        <groupId>com.cognifide.qa.bb</groupId>
+        <artifactId>bb-core</artifactId>
+        <version>${bb.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.cognifide.qa.bb</groupId>
+        <artifactId>bb-junit</artifactId>
+        <version>${bb.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>com.cognifide.qa.bb</groupId>
+        <artifactId>bb-reports</artifactId>
+        <version>${bb.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>info.cukes</groupId>
+        <artifactId>cucumber-java</artifactId>
+        <version>${cucumber.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>info.cukes</groupId>
+        <artifactId>cucumber-junit</artifactId>
+        <version>${cucumber.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>info.cukes</groupId>
+        <artifactId>cucumber-guice</artifactId>
+        <version>${cucumber.version}</version>
+      </dependency>
+
+      <!-- findbugs -->
+      <dependency>
+        <groupId>com.google.code.findbugs</groupId>
+        <artifactId>jsr305</artifactId>
+        <version>3.0.1</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>taglibs</groupId>
+        <artifactId>standard</artifactId>
+        <version>1.1.2</version>
+      </dependency>
+      <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>jstl</artifactId>
+        <version>1.2</version>
+      </dependency>
+    </dependencies>
+        
+  </dependencyManagement>
+
+  <build>
+    <finalName>${project.groupId}.${project.artifactId}-${project.version}</finalName>
+
+    <pluginManagement>
+      <plugins>
+        <!--
+          whenever maven-aet-plugin is used we want to use its current version
+        -->
+        <plugin>
+          <groupId>com.cognifide.aet</groupId>
+          <artifactId>aet-maven-plugin</artifactId>
+          <version>${project.version}</version>
+        </plugin>
+
+        <!-- plugin that keep our poms in good shape -->
+
+        <!-- This plugin validates maven configuration and build environment -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-enforcer-plugin</artifactId>
+          <version>1.4.1</version>
+          <dependencies>
+            <dependency>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>extra-enforcer-rules</artifactId>
+              <version>1.0-beta-4</version>
+            </dependency>
+            <dependency>
+              <groupId>com.github.ferstl</groupId>
+              <artifactId>pedantic-pom-enforcers</artifactId>
+              <version>1.2.0</version>
+            </dependency>
+          </dependencies>
+        </plugin>
+        <!-- keeps pom.xml files structured consistently -->
+        <plugin>
+          <groupId>com.github.ekryd.sortpom</groupId>
+          <artifactId>sortpom-maven-plugin</artifactId>
+          <version>2.5.0</version>
+        </plugin>
+        <!-- plugin for checking if licensing header is present in headers of all files -->
+        <plugin>
+          <groupId>org.apache.rat</groupId>
+          <artifactId>apache-rat-plugin</artifactId>
+          <version>0.12</version>
+          <!--
+              configuration within pluginManagement section
+              here we configure general exclusions
+              plugin executions have module-specific exclusions
+          -->
+          <configuration>
+            <excludes combine.children="append">
+              <!-- Files that don't require a license header -->
+              <exclude>**/README.md</exclude>
+              <exclude>**/LICENSE</exclude>
+              <exclude>**/NOTICE</exclude>
+              <exclude>CONTRIBUTING.md</exclude>
+              <exclude>.travis.yml</exclude>
+
+              <exclude>**/target/**</exclude>
+
+              <exclude>**/*.jar</exclude>
+              <exclude>**/*.war</exclude>
+              <exclude>**/*.zip</exclude>
+
+              <exclude>**/*.json</exclude>
+
+              <!-- Eclipse files -->
+              <exclude>**/.project</exclude>
+              <exclude>**/.classpath</exclude>
+
+              <!-- IntelliJ files -->
+              <exclude>**/.idea/**</exclude>
+              <exclude>**/*.iml</exclude>
+            </excludes>
+          </configuration>
+        </plugin>
+
+        <!-- Additional plugins -->
+        <plugin>
+          <groupId>org.apache.felix</groupId>
+          <artifactId>maven-bundle-plugin</artifactId>
+          <version>2.4.0</version>
+          <extensions>true</extensions>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.felix</groupId>
+          <artifactId>maven-scr-plugin</artifactId>
+          <version>1.15.0</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>sonar-maven-plugin</artifactId>
+          <version>3.0.2</version>
+        </plugin>
+        <plugin>
+          <groupId>org.jacoco</groupId>
+          <artifactId>jacoco-maven-plugin</artifactId>
+          <version>0.7.7.201606060606</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>versions-maven-plugin</artifactId>
+          <version>2.3</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>build-helper-maven-plugin</artifactId>
+          <version>1.11</version>
+        </plugin>
+        <plugin>
+          <groupId>com.github.eirslett</groupId>
+          <artifactId>frontend-maven-plugin</artifactId>
+          <version>1.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-dependency-plugin</artifactId>
+          <version>2.10</version>
+        </plugin>
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>truezip-maven-plugin</artifactId>
+          <version>1.2</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>properties-maven-plugin</artifactId>
+          <version>1.0.0</version>
+          <!--
+              configuration within pluginManagement section
+              only because this plugin has no execution specified
+              (it is run on-demand from command-line)
+              run only in currently built module:
+              this is enough and submodules may not contain
+              properties file if a path is relative
+          -->
+          <inherited>false</inherited>
+          <configuration>
+            <files>
+              <file>${external.properties}</file>
+            </files>
+          </configuration>
+        </plugin>
+        <!--
+            execution provided in plugin management
+            we want to turn-on the plugin easily only in those modules
+            that provide osgi bundle for karaf
+        -->
+        <plugin>
+          <groupId>org.codehaus.mojo</groupId>
+          <artifactId>wagon-maven-plugin</artifactId>
+          <version>1.0</version>
+          <executions>
+            <execution>
+              <id>upload-single-bundle-to-karaf</id>
+              <phase>install</phase>
+              <goals>
+                <goal>upload-single</goal>
+              </goals>
+              <configuration>
+                <fromFile>
+                  ${project.build.directory}/${project.build.finalName}.${finalName.extension}
+                </fromFile>
+                <!--
+                    please configure credentials for ${vm.serverId}
+                    in your settings.xml file
+                -->
+                <serverId>${target.karaf.serverId}</serverId>
+                <url>${target.karaf.bundles.url}</url>
+              </configuration>
+            </execution>
+          </executions>
+          <dependencies>
+            <dependency>
+              <groupId>org.apache.maven.wagon</groupId>
+              <artifactId>wagon-ssh</artifactId>
+              <version>2.10</version>
+            </dependency>
+            <dependency>
+              <groupId>org.apache.maven.wagon</groupId>
+              <artifactId>wagon-ftp</artifactId>
+              <version>2.10</version>
+            </dependency>
+          </dependencies>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-war-plugin</artifactId>
+          <version>3.0.0</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-assembly-plugin</artifactId>
+          <version>2.6</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-plugin-plugin</artifactId>
+          <version>3.4</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.eclipse.jetty</groupId>
+          <artifactId>jetty-maven-plugin</artifactId>
+          <version>${jetty.plugin.version}</version>
+          <dependencies>
+            <dependency>
+              <groupId>org.eclipse.jetty</groupId>
+              <artifactId>jetty-servlets</artifactId>
+              <version>${jetty.plugin.version}</version>
+            </dependency>
+            <dependency>
+              <groupId>javax.servlet</groupId>
+              <artifactId>jstl</artifactId>
+              <version>1.2</version>
+            </dependency>
+          </dependencies>
+        </plugin>
+
+        <!-- Default maven plugins -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-compiler-plugin</artifactId>
+          <version>3.5.1</version>
+          <!-- configuration within pluginManagement section on purpose -->
+          <configuration>
+            <fork>true</fork>
+            <source>${source.java.version}</source>
+            <target>${source.java.version}</target>
+            <compilerVersion>${source.java.version}</compilerVersion>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-surefire-plugin</artifactId>
+          <version>2.19.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-resources-plugin</artifactId>
+          <version>3.0.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-install-plugin</artifactId>
+          <version>2.5.2</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-release-plugin</artifactId>
+          <version>2.5.3</version>
+          <configuration>
+            <tagNameFormat>@{project.version}</tagNameFormat>
+          </configuration>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-source-plugin</artifactId>
+          <version>3.0.1</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>2.10.4</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-deploy-plugin</artifactId>
+          <version>2.8.2</version>
+        </plugin>
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-gpg-plugin</artifactId>
+          <version>1.6</version>
+          <!--
+            configured here in order to enable signing artifacts by specifying goal:
+            mvn gpg:sign
+          -->
+          <configuration>
+            <!--
+              this should be overwritten during signing AET artifacts
+              with -Dgpg.keyname
+              but when used with maven-release-plugin
+              -Darguments="-Dgpg.keyname" should be used
+              see http://maven.apache.org/plugins/maven-gpg-plugin/sign-mojo.html#keyname
+              and http://maven.apache.org/maven-release/maven-release-plugin/prepare-mojo.html#arguments
+            -->
+            <keyname>${gpg.keyname}</keyname>
+            <executable>gpg2</executable>
+          </configuration>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+
+    <plugins>
+      <plugin>
+        <groupId>com.github.ekryd.sortpom</groupId>
+        <artifactId>sortpom-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>validate</phase>
+            <goals>
+              <goal>verify</goal>
+            </goals>
+            <configuration>
+              <nrOfIndentSpace>2</nrOfIndentSpace>
+              <keepBlankLines>true</keepBlankLines>
+              <createBackupFile>false</createBackupFile>
+              <expandEmptyElements>false</expandEmptyElements>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>enforce-poms-quality</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <!-- default rules -->
+                <requireMavenVersion>
+                  <version>${min.maven.version}</version>
+                </requireMavenVersion>
+                <requireJavaVersion>
+                  <version>${min.java.version}</version>
+                </requireJavaVersion>
+                <!-- Mojo extra-enforcer-rules -->
+                <banCircularDependencies />
+                <!-- pedantic-pom-enforcers rules -->
+                <moduleOrder implementation="com.github.ferstl.maven.pomenforcers.PedanticModuleOrderEnforcer" />
+                <dependencConfiguration implementation="com.github.ferstl.maven.pomenforcers.PedanticDependencyConfigurationEnforcer" />
+                <pluginConfiguration implementation="com.github.ferstl.maven.pomenforcers.PedanticPluginConfigurationEnforcer" />
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- plugin for checking if licensing header is present in headers of all files -->
+      <plugin>
+        <groupId>org.apache.rat</groupId>
+        <artifactId>apache-rat-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>validate</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+            <configuration>
+              <excludes>
+                <exclude>/misc/plugins-report.txt</exclude>
+                <exclude>/misc/dependencies-report.txt</exclude>
+                <exclude>/vagrant/.vagrant/**</exclude>
+                <exclude>/vagrant/Berksfile.lock</exclude>
+                <!-- TODO: update license headers in those files, see AET-1301 -->
+                <exclude>integration-tests/**/*.css</exclude>
+                <exclude>integration-tests/**/*.js</exclude>
+              </excludes>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>add-resource</id>
+            <phase>generate-resources</phase>
+            <goals>
+              <goal>add-resource</goal>
+            </goals>
+            <configuration>
+              <resources>
+                <resource>
+                  <directory>${basedir}</directory>
+                  <targetPath>META-INF</targetPath>
+                  <includes>
+                    <include>LICENSE</include>
+                    <include>NOTICE</include>
+                  </includes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- run jacoco for every module -->
+      <plugin>
+        <groupId>org.jacoco</groupId>
+        <artifactId>jacoco-maven-plugin</artifactId>
+        <executions>
+          <!-- use jacoco agent for every module built -->
+          <execution>
+            <id>default-prepare-agent</id>
+            <goals>
+              <goal>prepare-agent</goal>
+            </goals>
+          </execution>
+          <!-- merge submodules jacoco into current module build -->
+          <execution>
+            <id>merge-submodules</id>
+            <goals>
+              <goal>merge</goal>
+            </goals>
+            <configuration>
+              <fileSets>
+                <fileSet>
+                  <directory>${project.build.directory}</directory>
+                  <includes>
+                    <include>*.exec</include>
+                  </includes>
+                </fileSet>
+              </fileSets>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>versions</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>versions-maven-plugin</artifactId>
+            <executions>
+              <execution>
+                <phase>validate</phase>
+                <goals>
+                  <goal>display-plugin-updates</goal>
+                </goals>
+                <configuration>
+                  <logOutput>false</logOutput>
+                  <outputFile>${project.basedir}/misc/plugins-report.txt</outputFile>
+                </configuration>
+              </execution>
+              <execution>
+                <id>dependencies</id>
+                <phase>validate</phase>
+                <goals>
+                  <goal>display-dependency-updates</goal>
+                </goals>
+                <configuration>
+                  <logOutput>false</logOutput>
+                  <outputFile>${project.basedir}/misc/dependencies-report.txt</outputFile>
+                </configuration>
+              </execution>
+            </executions>
+            <inherited>false</inherited>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    <profile>
+      <id>release</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-source-plugin</artifactId>
+            <version>2.4</version>
+            <executions>
+              <execution>
+                <id>attach-sources</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-javadoc-plugin</artifactId>
+            <version>2.10.3</version>
+            <executions>
+              <execution>
+                <id>attach-javadocs</id>
+                <goals>
+                  <goal>jar</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-gpg-plugin</artifactId>
+            <executions>
+              <execution>
+                <id>sign-artifacts</id>
+                <phase>verify</phase>
+                <goals>
+                  <goal>sign</goal>
+                </goals>
+              </execution>
+            </executions>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
 </project>

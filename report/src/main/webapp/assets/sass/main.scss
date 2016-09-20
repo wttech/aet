@@ -1,0 +1,193 @@
+/*
+ * Automated Exploratory Tests
+ *
+ * Copyright (C) 2013 Cognifide Limited
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+@import "compass";
+@import "../../node_modules/bootstrap-sass-twbs/assets/stylesheets/_bootstrap.scss";
+@import "normalize";
+@import "variables";
+@import "typography";
+@import "toolbar";
+@import "sidebar";
+@import "filters";
+@import "buttons";
+@import "popups";
+@import "test";
+@import "report";
+
+html,
+body {
+	height: 100%;
+}
+
+body {
+	overflow-y: scroll;
+	overflow-x: hidden;
+	&.modal-open {
+		overflow-y: scroll;
+		padding-right: 0 !important;
+	}
+}
+
+* {
+	box-sizing: border-box;
+	box-shadow: none !important;
+
+	&:hover, &:focus, &:active {
+		outline: none;
+		box-shadow: none
+	}
+}
+
+a {
+	@include transition(color 0.3s);
+
+	&:hover, &:focus, &:active {
+		text-decoration: none;
+	}
+}
+
+body {
+	color: $text_color;
+	font-family: $font_regular;
+}
+
+.main {
+	@include transition(left 0.3s, width 0.3s);
+	position: relative;
+	width: 100%;
+	left: 0;
+
+	.menu-expanded & {
+		left: 350px;
+		width: calc(100% - 350px);
+	}
+}
+
+.page-main {
+	z-index: 1;
+	padding: 140px 25px 0 25px;
+}
+
+.is-hidden {
+	display: none !important;
+}
+
+.is-disabled {
+	pointer-events: none;
+	opacity: 0.5;
+	cursor: not-allowed !important;
+}
+
+.screen-cover {
+	background-repeat: no-repeat;
+	background-position: center center;
+	position: absolute;
+	left: 0;
+	width: 100%;
+	opacity: 1;
+	height: 100vh;
+
+	&.js-loader-app {
+		top: 0;
+		height: 100%;
+		z-index: 999;
+		background-color: $aside_background;
+		background-image: url(#{$src}tail-spin-light.svg);
+	}
+
+	&.data-loading-error {
+		top: 0;
+		height: 100%;
+		z-index: 999;
+		background-color: $black;
+	}
+
+	.menu-expanded & {
+		&.js-loader-content {
+			width: calc(100vw - 365px);
+		}
+	}
+
+	h1 {
+		color: $white;
+		text-align: center;
+	}
+
+	p {
+		color: $white;
+		text-align: center;
+	}
+
+}
+
+.status{
+	font-weight: bold;
+	display: inline !important;
+	&.failed {
+		color: $failed !important;
+	}
+
+	&.warning {
+		color: $warning !important;
+	}
+
+	&.rebased {
+		color: $rebased !important;
+	}
+
+	&.passed {
+		color: $passed !important;
+	}
+}
+
+.url-tile {
+	text-align: center;
+	word-break: break-all;
+
+	&.passed {
+		color: $passed;
+	}
+
+	&.rebased {
+		color: $rebased;
+		span, i {
+			color: $white
+		}
+	}
+
+	&.warning {
+		color: $warning;
+	}
+
+	&.failed {
+		color: $failed;
+	}
+
+	.glyphicon {
+		font-size: 60px;
+		line-height: 60px;
+	}
+
+	.statistics {
+		color: $gray_dark !important;;
+	}
+
+	.name {
+		font-family: $font_bold;
+		font-size: 18px;
+	}
+}

@@ -1,0 +1,9 @@
+{
+  "statusCodes": [
+    {
+      "code": 200,
+      "url": "http://www.cognifide.com",
+      "excluded": false
+    }
+  ]
+}

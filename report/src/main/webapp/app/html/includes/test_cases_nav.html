@@ -1,0 +1,94 @@
+<!--
+
+    Automated Exploratory Tests
+
+    Copyright (C) 2013 Cognifide Limited
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<!-- Nav tabs -->
+<div class="tabs" ng-show="currentTab">
+    <div class="nav-tabs-wrapper">
+        <ul class="nav nav-tabs test-tabs" role="tablist">
+            <li role="presentation" ng-repeat="item in testCase.screen.screen track by $index">
+                <a href="#layoutTest"
+                   class="{{item.parameters.name || item.name}}"
+                   ng-click="getTestCase($event, 'layout', item, item.parameters.name || item.name, $index) "
+                   ng-class="item.comparators[0].stepResult.status.toLowerCase()"
+                   role="tab" data-toggle="tab"> Layout for {{item.parameters.name || item.name}}</a>
+            </li>
+
+            <li role="presentation" ng-if="testCase.accessibility" ng-repeat="comparator in testCase.accessibility.accessibility[0].comparators track by $index">
+                <a href="#accessibility"
+                   class="accessibility"
+                   ng-click="getTestCase($event, 'accessibility', testCase.accessibility.accessibility[0], '', $index)"
+                   ng-class="comparator.stepResult.status.toLowerCase()"
+                   aria-controls="accessibility"role="tab" data-toggle="tab">{{testCase.accessibility.accessibility[0].name}}</a>
+            </li>
+
+            <li role="presentation" ng-if="testCase['js-errors']" ng-repeat="comparator in testCase['js-errors']['js-errors'][0].comparators track by $index">
+                <a href="#jserrors"
+                   class="js-errors"
+                   ng-class="comparator.stepResult.status.toLowerCase()"
+                   ng-click="getTestCase($event,testCase['js-errors']['js-errors'][0].name, testCase['js-errors']['js-errors'][0], '', $index)"
+                   role="tab" data-toggle="tab">{{::testCase['js-errors']['js-errors'][0].name}}</a>
+            </li>
+
+            <li role="presentation" ng-if="testCase.cookie" ng-repeat="comparator in testCase.cookie.cookie[0].comparators track by $index">
+                <a href="#cookies"
+                   class="cookies"
+                   ng-class="comparator.stepResult.status.toLowerCase()"
+                   ng-click="getTestCase($event, 'cookie', testCase.cookie.cookie[0], '', $index)"
+                   role="tab" data-toggle="tab">{{comparator.type}} {{comparator.parameters.action}}</a>
+            </li>
+
+            <li role="presentation" ng-repeat="comparator in testCase.source.source[0].comparators track by $index">
+                <a href="#source"
+                   class="{{comparator.parameters.comparator}}"
+                   ng-class="testCase.source.source[0].comparators[$index].stepResult.status.toLowerCase()"
+                   ng-click="getTestCase($event,'source',testCase.source.source[0],'',$index)"
+                   role="tab" data-toggle="tab">{{comparator.type}} {{comparator.parameters.comparator}}</a>
+            </li>
+
+            <li role="presentation" ng-if="testCase['status-codes']" ng-repeat="comparator in testCase['status-codes']['status-codes'][0].comparators track by $index">
+                <a href="#status-codes"
+                   class="status-codes"
+                   ng-class="comparator.stepResult.status.toLowerCase()"
+                   ng-click="getTestCase($event, 'status-codes', testCase['status-codes']['status-codes'][0], '', $index)"
+                   role="tab" data-toggle="tab">
+                    {{::testCase['status-codes']['status-codes'][0].name}} {{::comparator.parameters.name}}
+                </a>
+            </li>
+            <li role="presentation" ng-if="testCase['client-side-performance']" ng-repeat="comparator in testCase['client-side-performance']['client-side-performance'][0].comparators track by $index">
+                <a href="#client-side-performance"
+                   class="client-side-performance"
+                   ng-click="getTestCase($event, 'client-side-performance', testCase['client-side-performance']['client-side-performance'][0], '', $index)"
+                   ng-class="comparator.stepResult.status.toLowerCase() || testCase['client-side-performance']['client-side-performance'][0].status.toLowerCase()"
+                   role="tab" data-toggle="tab">{{::testCase['client-side-performance']['client-side-performance'][0].name}}</a>
+            </li>
+        </ul>
+
+    </div>
+    <ul tab-navigation class="nav navbar-controls">
+        <li class="toolbar-nav">
+            <div class="nav-prev">
+                <i class="glyphicon glyphicon-chevron-left"></i>
+            </div>
+
+            <div class="nav-next">
+                <i class="glyphicon glyphicon-chevron-right"></i>
+            </div>
+        </li>
+    </ul>
+</div>

@@ -1,0 +1,51 @@
+<!--
+
+    Automated Exploratory Tests
+
+    Copyright (C) 2013 Cognifide Limited
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<div class="main page-main">
+    <div>
+        <ng-include src="'app/html/includes/test_cases_nav.html'"></ng-include>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div role="tabpanel" class="tab-pane" id="layoutTest">
+                <ng-include src="'app/html/partials/test_desktop.html'"></ng-include>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="accessibility">
+                <ng-include src="'app/html/partials/test_accessibility.html'" ng-if="testCase.accessibility"></ng-include>
+            </div>
+
+            <div role="tabpanel" class="tab-pane" id="jserrors">
+                <ng-include src="'app/html/partials/test_jserrors.html'"></ng-include>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="source">
+                <ng-include src="'app/html/partials/test_source.html'" ng-if="testCase.source"></ng-include>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="cookies">
+                <ng-include src="'app/html/partials/test_cookies.html'" ng-if="testCase.cookie"></ng-include>
+            </div>
+
+            <div role="tabpanel" class="tab-pane" id="status-codes">
+                <ng-include src="'app/html/partials/test_status.html'" ng-if="testCase['status-codes']"></ng-include>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="client-side-performance">
+                <ng-include src="'app/html/partials/test_clientside.html'" ng-if="testCase['client-side-performance']"></ng-include>
+            </div>
+        </div>
+
+    </div>
+</div>

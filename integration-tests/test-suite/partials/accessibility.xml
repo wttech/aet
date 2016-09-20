@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Automated Exploratory Tests
+
+    Copyright (C) 2013 Cognifide Limited
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<suite name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
+
+	<!-- Accessibility Comparator START -->
+	<test name="comparator-accessibility-SUCCESS-with-standard-wcag2a">
+		<collect>
+			<open />
+			<accessibility standard="WCAG2A" />
+		</collect>
+		<compare>
+			<accessibility />
+		</compare>
+		<urls>
+			<url href="comparators/accessibility/success.jsp" />
+		</urls>
+	</test>
+
+	<test name="comparator-accessibility-SUCCESS-with-standard-wcag2aa">
+		<collect>
+			<open />
+			<accessibility />
+		</collect>
+		<compare>
+			<accessibility />
+		</compare>
+		<urls>
+			<url href="comparators/accessibility/success.jsp" />
+		</urls>
+	</test>
+
+	<test name="comparator-accessibility-SUCCESS-with-standard-wcag2aaa">
+		<collect>
+			<open />
+			<accessibility standard="WCAG2AAA" />
+		</collect>
+		<compare>
+			<accessibility />
+		</compare>
+		<urls>
+			<url href="comparators/accessibility/success.jsp" />
+		</urls>
+	</test>
+
+	<test name="comparator-accessibility-SUCCESS-with-standard-wcag2aaa-report-level-error">
+		<collect>
+			<open />
+			<accessibility standard="WCAG2AAA" />
+		</collect>
+		<compare>
+			<accessibility report-level="ERROR"/>
+		</compare>
+		<urls>
+			<url href="comparators/accessibility/warning.jsp" />
+		</urls>
+	</test>
+
+	<test name="comparator-accessibility-WARNING-with-standard-wcag2aaa-report-level-warn">
+		<collect>
+			<open />
+			<accessibility standard="WCAG2AAA" />
+		</collect>
+		<compare>
+			<accessibility report-level="WARN" />
+		</compare>
+		<urls>
+			<url href="comparators/accessibility/warning.jsp" />
+		</urls>
+	</test>
+
+	<test name="comparator-accessibility-WARNING-with-standard-wcag2aaa-report-level-notice">
+		<collect>
+			<open />
+			<accessibility standard="WCAG2AAA" />
+		</collect>
+		<compare>
+			<accessibility report-level="NOTICE" />
+		</compare>
+		<urls>
+			<url href="comparators/accessibility/warning.jsp" />
+		</urls>
+	</test>
+
+	<test name="comparator-accessibility-WARNING-no-ignore-notice">
+		<collect>
+			<open />
+			<accessibility standard="WCAG2AAA"/>
+		</collect>
+		<compare>
+			<accessibility ignore-notice="false" />
+		</compare>
+		<urls>
+			<url href="comparators/accessibility/success.jsp" />
+		</urls>
+	</test>
+
+	<test name="comparator-accessibility-FAILED-with-standard-wcag2a">
+		<collect>
+			<open />
+			<accessibility standard="WCAG2A" />
+		</collect>
+		<compare>
+			<accessibility />
+		</compare>
+		<urls>
+			<url href="comparators/accessibility/failed.jsp" />
+		</urls>
+	</test>
+
+	<test name="comparator-accessibility-FAILED-with-standard-wcag2a-filtered-only-by-principle">
+		<collect>
+			<open />
+			<accessibility standard="WCAG2A" />
+		</collect>
+		<compare>
+			<accessibility>
+				<accessibility-filter principle="WCAG2A.Principle1.Guideline1_3.1_3_1.F68" />
+			</accessibility>
+		</compare>
+		<urls>
+			<url href="comparators/accessibility/failed.jsp" />
+		</urls>
+	</test>
+
+	<test name="comparator-accessibility-FAILED-with-standard-wcag2a-filtered-only-by-error">
+		<collect>
+			<open />
+			<accessibility standard="WCAG2A" />
+		</collect>
+		<compare>
+			<accessibility>
+				<accessibility-filter error="This select element does not have a name available to an accessibility API. Valid names are: label element, title attribute." />
+			</accessibility>
+		</compare>
+		<urls>
+			<url href="comparators/accessibility/failed.jsp" />
+		</urls>
+	</test>
+
+	<test name="comparator-accessibility-FAILED-with-standard-wcag2a-filtered-only-by-line">
+		<collect>
+			<open />
+			<accessibility standard="WCAG2A" />
+		</collect>
+		<compare>
+			<accessibility>
+				<accessibility-filter line="270" />
+				<accessibility-filter line="314" />
+			</accessibility>
+		</compare>
+		<urls>
+			<url href="comparators/accessibility/failed.jsp" />
+		</urls>
+	</test>
+
+	<test name="comparator-accessibility-FAILED-with-standard-wcag2a-filtered-only-by-column">
+		<collect>
+			<open />
+			<accessibility standard="WCAG2A" />
+		</collect>
+		<compare>
+			<accessibility>
+				<accessibility-filter column="5" />
+			</accessibility>
+		</compare>
+		<urls>
+			<url href="comparators/accessibility/failed.jsp" />
+		</urls>
+	</test>
+
+	<test name="comparator-accessibility-SUCCESS-with-standard-wcag2a-filtered-all">
+		<collect>
+			<open />
+			<accessibility standard="WCAG2A" />
+		</collect>
+		<compare>
+			<accessibility>
+				<accessibility-filter principle="WCAG2A.Principle1.Guideline1_3.1_3_1.F68" />
+				<accessibility-filter error="This select element does not have a name available to an accessibility API. Valid names are: label element, title attribute." />
+				<accessibility-filter line="22" column="5" />
+				<accessibility-filter line="252" column="26" />
+				<accessibility-filter line="273" column="6" />
+				<accessibility-filter line="317" column="50" />
+			</accessibility>
+		</compare>
+		<urls>
+			<url href="comparators/accessibility/failed.jsp" />
+		</urls>
+	</test>
+
+	<test name="comparator-accessibility-FAILED-with-standard-wcag2aa">
+		<collect>
+			<open />
+			<accessibility />
+		</collect>
+		<compare>
+			<accessibility />
+		</compare>
+		<urls>
+			<url href="comparators/accessibility/failed.jsp" />
+		</urls>
+	</test>
+
+	<test name="comparator-accessibility-FAILED-with-standard-wcag2aaa">
+		<collect>
+			<open />
+			<accessibility standard="WCAG2AAA" />
+		</collect>
+		<compare>
+			<accessibility />
+		</compare>
+		<urls>
+			<url href="comparators/accessibility/failed.jsp" />
+		</urls>
+	</test>
+	<!-- Accessibility Comparator END -->
+</suite>

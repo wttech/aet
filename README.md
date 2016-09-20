@@ -1,9 +1,10 @@
-![Cognifide logo](http://cognifide.github.io/images/cognifide-logo.png)
+![Automated Exploratory Tests](misc/img/logo.png)
 
-[![Build Status](https://travis-ci.org/Cognifide/AET.svg?branch=master)](https://travis-ci.org/Cognifide/AET)
+[![Build Status](https://travis-ci.org/Cognifide/aet.svg?branch=master)](https://travis-ci.org/Cognifide/aet)
 
 # Automated Exploratory Tests
-AET (acronym formed from Automated Exploratory Testing) is an on-line tool designed as a flexible application that can be adapted and tailored to the regression requirements of a given project.
+AET (acronym formed from Automated Exploratory Testing) is a system that detects changes on web sites.
+AET is designed as a flexible system that can be adapted and tailored to the regression requirements of a given project.
 The tool has been developed to aid front end client side layout regression testing of websites or portfolios. In essence assessing the impact or change of a website from one snapshot to the next.
 
 ## Features
@@ -17,30 +18,62 @@ The tool has been developed to aid front end client side layout regression testi
 * Source Code Comparison,
 * Accessibility check,
 * Cookies check,
-* Integration with CI Tools (Jenkins, Bamboo) thanks to maven application client. 
+* Integration with CI Tools (Jenkins, Bamboo).
 
-## Installation
-Please refer to the Installation Guide in the [documentation][aet-documentation] for an overview on how to configure AET.
+## Modules
 
-## Configuration
-Please refer to the Configuration Guide in the [documentation][aet-documentation] for an overview on how to configure AET.
+Please see details in README files for each module individually.
 
-## Commercial Support
+##Setup
 
-We are working to establish Support services.
-Please [contact us](mailto:labs-support@cognifide.com) for more details.
+### Maven
+#### Prequisities:
 
-As part of the services we will:
+In order to be able to deploy bundles
+to Karaf instance define vagrant vm location
+in your setting.xml file (`$USER_HOME/m2`):
+```
+<server>
+  <id>aet-vagrant-instance</id>
+  <username>developer</username>
+  <password>developer</password>
+  <configuration>
+    <sshExecutable>plink</sshExecutable>
+    <scpExecutable>pscp</scpExecutable>
+  </configuration>
+</server>
+```
 
-* prioritize your feature request,
-* tailor the product to your needs,
-* provide a training for your engineers,
-* support your engineering teams.
+#### Deployment command
+```
+mvn clean install -P upload-to-karaf
+```
 
-## References
-* [AET Documentation and User Guide][aet-documentation]
-* [AET Distribution binary files][aet-distribution]
-* [AET issue tracking](https://cognifide.atlassian.net/browse/AET)
+#### Command for sonar
 
-[aet-documentation]: https://cognifide.atlassian.net/wiki/display/AET/AET+1.3.2+Documentation
-[aet-distribution]: https://cognifide.atlassian.net/wiki/display/AET/AET+1.3.2+Distribution
+Currently we are still using `org.codehaus.mojo:sonar-maven-plugin`
+(instead of new one: `org.sonarsource.scanner.maven`).
+First run unit tests to collect jacoco report:
+```
+mvn clean test
+```
+
+Run properties plugin to read sonar configuration and then sonar plugin:
+```
+mvn properties:read-project-properties org.codehaus.mojo:sonar-maven-plugin:sonar
+```
+following properties should be set for sonar in `maven.properties` file:
+```
+sonar.host.url=http://sonarqube.example.com
+sonar.login=login
+sonar.password=P@ssw0rd
+sonar.jdbc.url=jdbc:mysql://192.168.123.100:3306/sonar?useUnicode=true&amp;characterEncoding=utf8
+sonar.jdbc.driver=com.mysql.jdbc.Driver
+sonar.jdbc.username=username
+sonar.jdbc.password=jdbcP@ssw0rd
+```
+
+## Non-application directories:
+###sanity-tests
+
+Separate sub-project used for sanity/functional tests.

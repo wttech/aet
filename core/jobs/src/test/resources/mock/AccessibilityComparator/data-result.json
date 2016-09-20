@@ -1,0 +1,578 @@
+[
+  {
+    "type": "NOTICE",
+    "message": "Check that the title element describes the document.",
+    "code": "WCAG2A.Principle2.Guideline2_4.2_4_2.H25.2",
+    "elementString": "<title>AET Demo Page</title>",
+    "elementStringAbbreviated": "\u0026lt;title\u0026gt;AET Demo Page\u0026lt;/title\u0026gt;",
+    "lineNumber": 7,
+    "columnNumber": 1
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that the link text combined with programmatically determined link context identifies the purpose of the link.",
+    "code": "WCAG2A.Principle2.Guideline2_4.2_4_4.H77,H78,H79,H80,H81",
+    "elementString": "<a href\u003d\"#\" class\u003d\"navbar-brand\">Navbar</a>",
+    "elementStringAbbreviated": "\u0026lt;a href\u003d\u0026quot;#\u0026quot; class\u003d\u0026quot;navbar-brand\u0026quot;\u0026gt;Navbar\u0026lt;/a\u0026gt;",
+    "lineNumber": 20,
+    "columnNumber": 5
+  },
+  {
+    "type": "ERROR",
+    "message": "This button element does not have a name available to an accessibility API. Valid names are: title attribute, element content.",
+    "code": "WCAG2A.Principle4.Guideline4_1.4_1_2.H91.Button.Name",
+    "elementString": "<button class\u003d\"navbar-toggle\" type\u003d\"button\" data-toggle\u003d\"collapse\" data-target\u003d\"#navbar-main\">\n\t\t\t\t\t<span class\u003d\"icon-bar\"></span> <span class\u003d\"icon-bar\"></span> <span class\u003d\"icon-bar\"></span>\n\t\t\t\t</button>",
+    "elementStringAbbreviated": "\u0026lt;button class\u003d\u0026quot;navbar-toggle\u0026quot; type\u003d\u0026quot;button\u0026quot; data-toggle\u003d\u0026quot;collapse\u0026quot;...ar\u0026quot;\u0026gt;\u0026lt;/span\u0026gt; \u0026lt;span class\u003d\u0026quot;icon-bar\u0026quot;\u0026gt;\u0026lt;/span\u0026gt;\n\t\t\t\t\u0026lt;/button\u0026gt;",
+    "lineNumber": 21,
+    "columnNumber": 5
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that a change of context does not occur when this input field receives focus.",
+    "code": "WCAG2A.Principle3.Guideline3_2.3_2_1.G107",
+    "elementString": "<button class\u003d\"navbar-toggle\" type\u003d\"button\" data-toggle\u003d\"collapse\" data-target\u003d\"#navbar-main\">\n\t\t\t\t\t<span class\u003d\"icon-bar\"></span> <span class\u003d\"icon-bar\"></span> <span class\u003d\"icon-bar\"></span>\n\t\t\t\t</button>",
+    "elementStringAbbreviated": "\u0026lt;button class\u003d\u0026quot;navbar-toggle\u0026quot; type\u003d\u0026quot;button\u0026quot; data-toggle\u003d\u0026quot;collapse\u0026quot;...ar\u0026quot;\u0026gt;\u0026lt;/span\u0026gt; \u0026lt;span class\u003d\u0026quot;icon-bar\u0026quot;\u0026gt;\u0026lt;/span\u0026gt;\n\t\t\t\t\u0026lt;/button\u0026gt;",
+    "lineNumber": 21,
+    "columnNumber": 5
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that the link text combined with programmatically determined link context identifies the purpose of the link.",
+    "code": "WCAG2A.Principle2.Guideline2_4.2_4_4.H77,H78,H79,H80,H81",
+    "elementString": "<a class\u003d\"dropdown-toggle\" data-toggle\u003d\"dropdown\" href\u003d\"#\" id\u003d\"themes\">Dropdown <span class\u003d\"caret\"></span></a>",
+    "elementStringAbbreviated": "\u0026lt;a class\u003d\u0026quot;dropdown-toggle\u0026quot; data-toggle\u003d\u0026quot;dropdown\u0026quot; href\u003d\u0026quot;#\u0026quot; id\u003d\u0026quot;themes\u0026quot;\u0026gt;Dropdown \u0026lt;span class\u003d\u0026quot;caret\u0026quot;\u0026gt;\u0026lt;/span\u0026gt;\u0026lt;/a\u0026gt;",
+    "lineNumber": 27,
+    "columnNumber": 27
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that the link text combined with programmatically determined link context identifies the purpose of the link.",
+    "code": "WCAG2A.Principle2.Guideline2_4.2_4_4.H77,H78,H79,H80,H81",
+    "elementString": "<a href\u003d\"#\">Default</a>",
+    "elementStringAbbreviated": "\u0026lt;a href\u003d\u0026quot;#\u0026quot;\u0026gt;Default\u0026lt;/a\u0026gt;",
+    "lineNumber": 29,
+    "columnNumber": 12
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that the link text combined with programmatically determined link context identifies the purpose of the link.",
+    "code": "WCAG2A.Principle2.Guideline2_4.2_4_4.H77,H78,H79,H80,H81",
+    "elementString": "<a href\u003d\"#\">Option</a>",
+    "elementStringAbbreviated": "\u0026lt;a href\u003d\u0026quot;#\u0026quot;\u0026gt;Option\u0026lt;/a\u0026gt;",
+    "lineNumber": 31,
+    "columnNumber": 12
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that the link text combined with programmatically determined link context identifies the purpose of the link.",
+    "code": "WCAG2A.Principle2.Guideline2_4.2_4_4.H77,H78,H79,H80,H81",
+    "elementString": "<a href\u003d\"#\">Second option</a>",
+    "elementStringAbbreviated": "\u0026lt;a href\u003d\u0026quot;#\u0026quot;\u0026gt;Second option\u0026lt;/a\u0026gt;",
+    "lineNumber": 32,
+    "columnNumber": 12
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that the link text combined with programmatically determined link context identifies the purpose of the link.",
+    "code": "WCAG2A.Principle2.Guideline2_4.2_4_4.H77,H78,H79,H80,H81",
+    "elementString": "<a href\u003d\"#\">Last option</a>",
+    "elementStringAbbreviated": "\u0026lt;a href\u003d\u0026quot;#\u0026quot;\u0026gt;Last option\u0026lt;/a\u0026gt;",
+    "lineNumber": 33,
+    "columnNumber": 12
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that the link text combined with programmatically determined link context identifies the purpose of the link.",
+    "code": "WCAG2A.Principle2.Guideline2_4.2_4_4.H77,H78,H79,H80,H81",
+    "elementString": "<a href\u003d\"#\">Help</a>",
+    "elementStringAbbreviated": "\u0026lt;a href\u003d\u0026quot;#\u0026quot;\u0026gt;Help\u0026lt;/a\u0026gt;",
+    "lineNumber": 35,
+    "columnNumber": 10
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that the link text combined with programmatically determined link context identifies the purpose of the link.",
+    "code": "WCAG2A.Principle2.Guideline2_4.2_4_4.H77,H78,H79,H80,H81",
+    "elementString": "<a href\u003d\"#\">Blog</a>",
+    "elementStringAbbreviated": "\u0026lt;a href\u003d\u0026quot;#\u0026quot;\u0026gt;Blog\u0026lt;/a\u0026gt;",
+    "lineNumber": 36,
+    "columnNumber": 10
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that the link text combined with programmatically determined link context identifies the purpose of the link.",
+    "code": "WCAG2A.Principle2.Guideline2_4.2_4_4.H77,H78,H79,H80,H81",
+    "elementString": "<a href\u003d\"#\" target\u003d\"_blank\">Some fun</a>",
+    "elementStringAbbreviated": "\u0026lt;a href\u003d\u0026quot;#\u0026quot; target\u003d\u0026quot;_blank\u0026quot;\u0026gt;Some fun\u0026lt;/a\u0026gt;",
+    "lineNumber": 40,
+    "columnNumber": 10
+  },
+  {
+    "type": "WARN",
+    "message": "If this element contains a navigation section, it is recommended that it be marked up as a list.",
+    "code": "WCAG2A.Principle1.Guideline1_3.1_3_1.H48",
+    "elementString": "<p class\u003d\"lead\">\n\t\t\t\t\t\tbuild with <a href\u003d\"http://getbootstrap.com/\">Bootstrap</a> and <a href\u003d\"http://bootswatch.com/\">Bootswatch</a>\n\t\t\t\t\t</p>",
+    "elementStringAbbreviated": "\u0026lt;p class\u003d\u0026quot;lead\u0026quot;\u0026gt;\n\t\t\t\t\t\tbuild with \u0026lt;a href\u003d\u0026quot;http://getbootstrap.com/\u0026quot;\u0026g...t;/a\u0026gt; and \u0026lt;a href\u003d\u0026quot;http://bootswatch.com/\u0026quot;\u0026gt;Bootswatch\u0026lt;/a\u0026gt;\n\t\t\t\t\t\u0026lt;/p\u0026gt;",
+    "lineNumber": 54,
+    "columnNumber": 6
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that the link text combined with programmatically determined link context identifies the purpose of the link.",
+    "code": "WCAG2A.Principle2.Guideline2_4.2_4_4.H77,H78,H79,H80,H81",
+    "elementString": "<a href\u003d\"http://getbootstrap.com/\">Bootstrap</a>",
+    "elementStringAbbreviated": "\u0026lt;a href\u003d\u0026quot;http://getbootstrap.com/\u0026quot;\u0026gt;Bootstrap\u0026lt;/a\u0026gt;",
+    "lineNumber": 55,
+    "columnNumber": 18
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that the link text combined with programmatically determined link context identifies the purpose of the link.",
+    "code": "WCAG2A.Principle2.Guideline2_4.2_4_4.H77,H78,H79,H80,H81",
+    "elementString": "<a href\u003d\"http://bootswatch.com/\">Bootswatch</a>",
+    "elementStringAbbreviated": "\u0026lt;a href\u003d\u0026quot;http://bootswatch.com/\u0026quot;\u0026gt;Bootswatch\u0026lt;/a\u0026gt;",
+    "lineNumber": 55,
+    "columnNumber": 71
+  },
+  {
+    "type": "NOTICE",
+    "message": "Ensure that the img element\u0027s alt text serves the same purpose and presents the same information as the image.",
+    "code": "WCAG2A.Principle1.Guideline1_1.1_1_1.G94.Image",
+    "elementString": "<img src\u003d\"/aet-demo/assets/demo_files/logo.png\" alt\u003d\"Bootswatch\">",
+    "elementStringAbbreviated": "\u0026lt;img src\u003d\u0026quot;/aet-demo/assets/demo_files/logo.png\u0026quot; alt\u003d\u0026quot;Bootswatch\u0026quot;\u0026gt;",
+    "lineNumber": 61,
+    "columnNumber": 7
+  },
+  {
+    "type": "NOTICE",
+    "message": "If this image cannot be fully described in a short text alternative, ensure a long text alternative is also available, such as in the body text or through a link.",
+    "code": "WCAG2A.Principle1.Guideline1_1.1_1_1.G73,G74",
+    "elementString": "<img src\u003d\"/aet-demo/assets/demo_files/logo.png\" alt\u003d\"Bootswatch\">",
+    "elementStringAbbreviated": "\u0026lt;img src\u003d\u0026quot;/aet-demo/assets/demo_files/logo.png\u0026quot; alt\u003d\u0026quot;Bootswatch\u0026quot;\u0026gt;",
+    "lineNumber": 61,
+    "columnNumber": 7
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that the link text combined with programmatically determined link context identifies the purpose of the link.",
+    "code": "WCAG2A.Principle2.Guideline2_4.2_4_4.H77,H78,H79,H80,H81",
+    "elementString": "<a href\u003d\"#\">urna mollis ornare</a>",
+    "elementStringAbbreviated": "\u0026lt;a href\u003d\u0026quot;#\u0026quot;\u0026gt;urna mollis ornare\u0026lt;/a\u0026gt;",
+    "lineNumber": 110,
+    "columnNumber": 31
+  },
+  {
+    "type": "WARN",
+    "message": "Semantic markup should be used to mark emphasised or special text so that it can be programmatically determined.",
+    "code": "WCAG2A.Principle1.Guideline1_3.1_3_1.H49.Small",
+    "elementString": "<small>This line of text is meant to be treated as fine\n\t\t\t\t\t\t\t\tprint.</small>",
+    "elementStringAbbreviated": "\u0026lt;small\u0026gt;This line of text is meant to be treated as fine\n\t\t\t\t\t\t\t\tprint.\u0026lt;/small\u0026gt;",
+    "lineNumber": 116,
+    "columnNumber": 8
+  },
+  {
+    "type": "WARN",
+    "message": "Semantic markup should be used to mark emphasised or special text so that it can be programmatically determined.",
+    "code": "WCAG2A.Principle1.Guideline1_3.1_3_1.H49.Small",
+    "elementString": "<small>Someone famous in <cite title\u003d\"Source Title\">Source\n\t\t\t\t\t\t\t\t\tTitle</cite></small>",
+    "elementStringAbbreviated": "\u0026lt;small\u0026gt;Someone famous in \u0026lt;cite title\u003d\u0026quot;Source Title\u0026quot;\u0026gt;Source\n\t\t\t\t\t\t\t\t\tTitle\u0026lt;/cite\u0026gt;\u0026lt;/small\u0026gt;",
+    "lineNumber": 166,
+    "columnNumber": 8
+  },
+  {
+    "type": "WARN",
+    "message": "Semantic markup should be used to mark emphasised or special text so that it can be programmatically determined.",
+    "code": "WCAG2A.Principle1.Guideline1_3.1_3_1.H49.Small",
+    "elementString": "<small>Someone famous in <cite title\u003d\"Source Title\">Source\n\t\t\t\t\t\t\t\t\tTitle</cite></small>",
+    "elementStringAbbreviated": "\u0026lt;small\u0026gt;Someone famous in \u0026lt;cite title\u003d\u0026quot;Source Title\u0026quot;\u0026gt;Source\n\t\t\t\t\t\t\t\t\tTitle\u0026lt;/cite\u0026gt;\u0026lt;/small\u0026gt;",
+    "lineNumber": 166,
+    "columnNumber": 8
+  },
+  {
+    "type": "NOTICE",
+    "message": "If an input error is automatically detected in this form, check that the item(s) in error are identified and the error(s) are described to the user in text.",
+    "code": "WCAG2A.Principle3.Guideline3_3.3_3_1.G83,G84,G85",
+    "elementString": "<form class\u003d\"form-horizontal\">\n\t\t\t\t\t\t\t<fieldset>\n\t\t\t\t\t\t\t\t<legend>Legend</legend>\n\t\t\t\t\t\t\t\t<div class\u003d\"form-group\">\n\t\t\t\t\t\t\t\t\t<label for\u003d\"inputEmail\" class\u003d\"col-lg-2 control-label\">Email</label>\n\t\t\t\t\t\t\t\t\t<div class\u003d\"col-lg-10\">\n\t\t\t\t\t\t\t\t\t\t<input class\u003d\"form-control\" id\u003d\"inputEmail\" placeholder\u003d\"Email\" type\u003d\"text\">\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class\u003d\"form-group\">\n\t\t\t\t\t\t\t\t\t<label for\u003d\"inputPassword\" class\u003d\"col-lg-2 control-label\">Password</label>\n\t\t\t\t\t\t\t\t\t<div class\u003d\"col-lg-10\">\n\t\t\t\t\t\t\t\t\t\t<input class\u003d\"form-control\" id\u003d\"inputPassword\" placeholder\u003d\"Password\" type\u003d\"password\">\n\t\t\t\t\t\t\t\t\t\t<div class\u003d\"checkbox\">\n\t\t\t\t\t\t\t\t\t\t\t<label> <input type\u003d\"checkbox\"> Checkbox\n\t\t\t\t\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class\u003d\"form-group\">\n\t\t\t\t\t\t\t\t\t<label for\u003d\"textArea\" class\u003d\"col-lg-2 control-label\">Textarea</label>\n\t\t\t\t\t\t\t\t\t<div class\u003d\"col-lg-10\">\n\t\t\t\t\t\t\t\t\t\t<textarea class\u003d\"form-control\" rows\u003d\"3\" id\u003d\"textArea\"></textarea>\n\t\t\t\t\t\t\t\t\t\t<span class\u003d\"help-block\">A longer block of help text\n\t\t\t\t\t\t\t\t\t\t\tthat breaks onto a new line and may extend beyond one line.</span>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class\u003d\"form-group\">\n\t\t\t\t\t\t\t\t\t<label class\u003d\"col-lg-2 control-label\">Radios</label>\n\t\t\t\t\t\t\t\t\t<div class\u003d\"col-lg-10\">\n\t\t\t\t\t\t\t\t\t\t<div class\u003d\"radio\">\n\t\t\t\t\t\t\t\t\t\t\t<label> <input name\u003d\"optionsRadios\" id\u003d\"optionsRadios1\" value\u003d\"option1\" checked\u003d\"\" type\u003d\"radio\"> Option one\n\t\t\t\t\t\t\t\t\t\t\t\tis this\n\t\t\t\t\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class\u003d\"radio\">\n\t\t\t\t\t\t\t\t\t\t\t<label> <input name\u003d\"optionsRadios\" id\u003d\"optionsRadios2\" value\u003d\"option2\" type\u003d\"radio\"> Option two can be\n\t\t\t\t\t\t\t\t\t\t\t\tsomething else\n\t\t\t\t\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class\u003d\"form-group\">\n\t\t\t\t\t\t\t\t\t<label for\u003d\"select\" class\u003d\"col-lg-2 control-label\">Selects</label>\n\t\t\t\t\t\t\t\t\t<div class\u003d\"col-lg-10\">\n\t\t\t\t\t\t\t\t\t\t<select class\u003d\"form-control\" id\u003d\"select\">\n\t\t\t\t\t\t\t\t\t\t\t<option>1</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>2</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>3</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>4</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>5</option>\n\t\t\t\t\t\t\t\t\t\t</select> <br> <select multiple\u003d\"\" class\u003d\"form-control\">\n\t\t\t\t\t\t\t\t\t\t\t<option>1</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>2</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>3</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>4</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>5</option>\n\t\t\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class\u003d\"form-group\">\n\t\t\t\t\t\t\t\t\t<div class\u003d\"col-lg-10 col-lg-offset-2\">\n\t\t\t\t\t\t\t\t\t\t<button class\u003d\"btn btn-default\">Cancel</button>\n\t\t\t\t\t\t\t\t\t\t<button type\u003d\"submit\" class\u003d\"btn btn-primary\">Submit</button>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</fieldset>\n\t\t\t\t\t\t</form>",
+    "elementStringAbbreviated": "\u0026lt;form class\u003d\u0026quot;form-horizontal\u0026quot;\u0026gt;\n\t\t\t\t\t\t\t\u0026lt;fieldset\u0026gt;\n\t\t\t\t\t\t\t\t\u0026lt;legend\u0026gt;Legend...button\u0026gt;\n\t\t\t\t\t\t\t\t\t\u0026lt;/div\u0026gt;\n\t\t\t\t\t\t\t\t\u0026lt;/div\u0026gt;\n\t\t\t\t\t\t\t\u0026lt;/fieldset\u0026gt;\n\t\t\t\t\t\t\u0026lt;/form\u0026gt;",
+    "lineNumber": 198,
+    "columnNumber": 7
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that descriptive labels or instructions (including for required fields) are provided for user input in this form.",
+    "code": "WCAG2A.Principle3.Guideline3_3.3_3_2.G131,G89,G184,H90",
+    "elementString": "<form class\u003d\"form-horizontal\">\n\t\t\t\t\t\t\t<fieldset>\n\t\t\t\t\t\t\t\t<legend>Legend</legend>\n\t\t\t\t\t\t\t\t<div class\u003d\"form-group\">\n\t\t\t\t\t\t\t\t\t<label for\u003d\"inputEmail\" class\u003d\"col-lg-2 control-label\">Email</label>\n\t\t\t\t\t\t\t\t\t<div class\u003d\"col-lg-10\">\n\t\t\t\t\t\t\t\t\t\t<input class\u003d\"form-control\" id\u003d\"inputEmail\" placeholder\u003d\"Email\" type\u003d\"text\">\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class\u003d\"form-group\">\n\t\t\t\t\t\t\t\t\t<label for\u003d\"inputPassword\" class\u003d\"col-lg-2 control-label\">Password</label>\n\t\t\t\t\t\t\t\t\t<div class\u003d\"col-lg-10\">\n\t\t\t\t\t\t\t\t\t\t<input class\u003d\"form-control\" id\u003d\"inputPassword\" placeholder\u003d\"Password\" type\u003d\"password\">\n\t\t\t\t\t\t\t\t\t\t<div class\u003d\"checkbox\">\n\t\t\t\t\t\t\t\t\t\t\t<label> <input type\u003d\"checkbox\"> Checkbox\n\t\t\t\t\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class\u003d\"form-group\">\n\t\t\t\t\t\t\t\t\t<label for\u003d\"textArea\" class\u003d\"col-lg-2 control-label\">Textarea</label>\n\t\t\t\t\t\t\t\t\t<div class\u003d\"col-lg-10\">\n\t\t\t\t\t\t\t\t\t\t<textarea class\u003d\"form-control\" rows\u003d\"3\" id\u003d\"textArea\"></textarea>\n\t\t\t\t\t\t\t\t\t\t<span class\u003d\"help-block\">A longer block of help text\n\t\t\t\t\t\t\t\t\t\t\tthat breaks onto a new line and may extend beyond one line.</span>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class\u003d\"form-group\">\n\t\t\t\t\t\t\t\t\t<label class\u003d\"col-lg-2 control-label\">Radios</label>\n\t\t\t\t\t\t\t\t\t<div class\u003d\"col-lg-10\">\n\t\t\t\t\t\t\t\t\t\t<div class\u003d\"radio\">\n\t\t\t\t\t\t\t\t\t\t\t<label> <input name\u003d\"optionsRadios\" id\u003d\"optionsRadios1\" value\u003d\"option1\" checked\u003d\"\" type\u003d\"radio\"> Option one\n\t\t\t\t\t\t\t\t\t\t\t\tis this\n\t\t\t\t\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t\t<div class\u003d\"radio\">\n\t\t\t\t\t\t\t\t\t\t\t<label> <input name\u003d\"optionsRadios\" id\u003d\"optionsRadios2\" value\u003d\"option2\" type\u003d\"radio\"> Option two can be\n\t\t\t\t\t\t\t\t\t\t\t\tsomething else\n\t\t\t\t\t\t\t\t\t\t\t</label>\n\t\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class\u003d\"form-group\">\n\t\t\t\t\t\t\t\t\t<label for\u003d\"select\" class\u003d\"col-lg-2 control-label\">Selects</label>\n\t\t\t\t\t\t\t\t\t<div class\u003d\"col-lg-10\">\n\t\t\t\t\t\t\t\t\t\t<select class\u003d\"form-control\" id\u003d\"select\">\n\t\t\t\t\t\t\t\t\t\t\t<option>1</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>2</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>3</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>4</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>5</option>\n\t\t\t\t\t\t\t\t\t\t</select> <br> <select multiple\u003d\"\" class\u003d\"form-control\">\n\t\t\t\t\t\t\t\t\t\t\t<option>1</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>2</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>3</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>4</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>5</option>\n\t\t\t\t\t\t\t\t\t\t</select>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t<div class\u003d\"form-group\">\n\t\t\t\t\t\t\t\t\t<div class\u003d\"col-lg-10 col-lg-offset-2\">\n\t\t\t\t\t\t\t\t\t\t<button class\u003d\"btn btn-default\">Cancel</button>\n\t\t\t\t\t\t\t\t\t\t<button type\u003d\"submit\" class\u003d\"btn btn-primary\">Submit</button>\n\t\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t\t</fieldset>\n\t\t\t\t\t\t</form>",
+    "elementStringAbbreviated": "\u0026lt;form class\u003d\u0026quot;form-horizontal\u0026quot;\u0026gt;\n\t\t\t\t\t\t\t\u0026lt;fieldset\u0026gt;\n\t\t\t\t\t\t\t\t\u0026lt;legend\u0026gt;Legend...button\u0026gt;\n\t\t\t\t\t\t\t\t\t\u0026lt;/div\u0026gt;\n\t\t\t\t\t\t\t\t\u0026lt;/div\u0026gt;\n\t\t\t\t\t\t\t\u0026lt;/fieldset\u0026gt;\n\t\t\t\t\t\t\u0026lt;/form\u0026gt;",
+    "lineNumber": 198,
+    "columnNumber": 7
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that a change of context does not occur when this input field receives focus.",
+    "code": "WCAG2A.Principle3.Guideline3_2.3_2_1.G107",
+    "elementString": "<input class\u003d\"form-control\" id\u003d\"inputEmail\" placeholder\u003d\"Email\" type\u003d\"text\">",
+    "elementStringAbbreviated": "\u0026lt;input class\u003d\u0026quot;form-control\u0026quot; id\u003d\u0026quot;inputEmail\u0026quot; placeholder\u003d\u0026quot;Email\u0026quot; type\u003d\u0026quot;text\u0026quot;\u0026gt;",
+    "lineNumber": 204,
+    "columnNumber": 11
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that a change of context does not occur when this input field receives focus.",
+    "code": "WCAG2A.Principle3.Guideline3_2.3_2_1.G107",
+    "elementString": "<input class\u003d\"form-control\" id\u003d\"inputPassword\" placeholder\u003d\"Password\" type\u003d\"password\">",
+    "elementStringAbbreviated": "\u0026lt;input class\u003d\u0026quot;form-control\u0026quot; id\u003d\u0026quot;inputPassword\u0026quot; placeholder\u003d\u0026quot;Password\u0026quot; type\u003d\u0026quot;password\u0026quot;\u0026gt;",
+    "lineNumber": 210,
+    "columnNumber": 11
+  },
+  {
+    "type": "WARN",
+    "message": "This label\u0027s \"for\" attribute contains an ID that does not exist in the document fragment.",
+    "code": "WCAG2A.Principle1.Guideline1_3.1_3_1.H44.NonExistentFragment",
+    "elementString": "<label> <input type\u003d\"checkbox\"> Checkbox\n\t\t\t\t\t\t\t\t\t\t\t</label>",
+    "elementStringAbbreviated": "\u0026lt;label\u0026gt; \u0026lt;input type\u003d\u0026quot;checkbox\u0026quot;\u0026gt; Checkbox\n\t\t\t\t\t\t\t\t\t\t\t\u0026lt;/label\u0026gt;",
+    "lineNumber": 212,
+    "columnNumber": 12
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that a change of context does not occur when this input field receives focus.",
+    "code": "WCAG2A.Principle3.Guideline3_2.3_2_1.G107",
+    "elementString": "<input type\u003d\"checkbox\">",
+    "elementStringAbbreviated": "\u0026lt;input type\u003d\u0026quot;checkbox\u0026quot;\u0026gt;",
+    "lineNumber": 212,
+    "columnNumber": 20
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that a change of context does not occur when this input field receives focus.",
+    "code": "WCAG2A.Principle3.Guideline3_2.3_2_1.G107",
+    "elementString": "<textarea class\u003d\"form-control\" rows\u003d\"3\" id\u003d\"textArea\"></textarea>",
+    "elementStringAbbreviated": "\u0026lt;textarea class\u003d\u0026quot;form-control\u0026quot; rows\u003d\u0026quot;3\u0026quot; id\u003d\u0026quot;textArea\u0026quot;\u0026gt;\u0026lt;/textarea\u0026gt;",
+    "lineNumber": 220,
+    "columnNumber": 11
+  },
+  {
+    "type": "WARN",
+    "message": "This label\u0027s \"for\" attribute contains an ID that does not exist in the document fragment.",
+    "code": "WCAG2A.Principle1.Guideline1_3.1_3_1.H44.NonExistentFragment",
+    "elementString": "<label> <input name\u003d\"optionsRadios\" id\u003d\"optionsRadios1\" value\u003d\"option1\" checked\u003d\"\" type\u003d\"radio\"> Option one\n\t\t\t\t\t\t\t\t\t\t\t\tis this\n\t\t\t\t\t\t\t\t\t\t\t</label>",
+    "elementStringAbbreviated": "\u0026lt;label\u0026gt; \u0026lt;input name\u003d\u0026quot;optionsRadios\u0026quot; id\u003d\u0026quot;optionsRadios1\u0026quot; value\u003d\u0026quot;op...d\u003d\u0026quot;\u0026quot; type\u003d\u0026quot;radio\u0026quot;\u0026gt; Option one\n\t\t\t\t\t\t\t\t\t\t\t\tis this\n\t\t\t\t\t\t\t\t\t\t\t\u0026lt;/label\u0026gt;",
+    "lineNumber": 229,
+    "columnNumber": 12
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that a change of context does not occur when this input field receives focus.",
+    "code": "WCAG2A.Principle3.Guideline3_2.3_2_1.G107",
+    "elementString": "<input name\u003d\"optionsRadios\" id\u003d\"optionsRadios1\" value\u003d\"option1\" checked\u003d\"\" type\u003d\"radio\">",
+    "elementStringAbbreviated": "\u0026lt;input name\u003d\u0026quot;optionsRadios\u0026quot; id\u003d\u0026quot;optionsRadios1\u0026quot; value\u003d\u0026quot;option1\u0026quot; checked\u003d\u0026quot;\u0026quot; type\u003d\u0026quot;radio\u0026quot;\u0026gt;",
+    "lineNumber": 229,
+    "columnNumber": 20
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that a change of context does not occur when this input field receives focus.",
+    "code": "WCAG2A.Principle3.Guideline3_2.3_2_1.G107",
+    "elementString": "<input name\u003d\"optionsRadios\" id\u003d\"optionsRadios2\" value\u003d\"option2\" type\u003d\"radio\">",
+    "elementStringAbbreviated": "\u0026lt;input name\u003d\u0026quot;optionsRadios\u0026quot; id\u003d\u0026quot;optionsRadios2\u0026quot; value\u003d\u0026quot;option2\u0026quot; type\u003d\u0026quot;radio\u0026quot;\u0026gt;",
+    "lineNumber": 234,
+    "columnNumber": 20
+  },
+  {
+    "type": "WARN",
+    "message": "This select element does not have an initially selected option. Depending on your HTML version, the value exposed to an accessibility API may be undefined.",
+    "code": "WCAG2A.Principle4.Guideline4_1.4_1_2.H91.Select.Value",
+    "elementString": "<select class\u003d\"form-control\" id\u003d\"select\">\n\t\t\t\t\t\t\t\t\t\t\t<option>1</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>2</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>3</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>4</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>5</option>\n\t\t\t\t\t\t\t\t\t\t</select>",
+    "elementStringAbbreviated": "\u0026lt;select class\u003d\u0026quot;form-control\u0026quot; id\u003d\u0026quot;select\u0026quot;\u0026gt;\n\t\t\t\t\t\t\t\t\t\t\t\u0026lt;option\u0026gt;1\u0026lt;/...\u0026lt;option\u0026gt;4\u0026lt;/option\u0026gt;\n\t\t\t\t\t\t\t\t\t\t\t\u0026lt;option\u0026gt;5\u0026lt;/option\u0026gt;\n\t\t\t\t\t\t\t\t\t\t\u0026lt;/select\u0026gt;",
+    "lineNumber": 243,
+    "columnNumber": 11
+  },
+  {
+    "type": "WARN",
+    "message": "If this selection list contains groups of related options, they should be grouped with optgroup.",
+    "code": "WCAG2A.Principle1.Guideline1_3.1_3_1.H85.2",
+    "elementString": "<select class\u003d\"form-control\" id\u003d\"select\">\n\t\t\t\t\t\t\t\t\t\t\t<option>1</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>2</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>3</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>4</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>5</option>\n\t\t\t\t\t\t\t\t\t\t</select>",
+    "elementStringAbbreviated": "\u0026lt;select class\u003d\u0026quot;form-control\u0026quot; id\u003d\u0026quot;select\u0026quot;\u0026gt;\n\t\t\t\t\t\t\t\t\t\t\t\u0026lt;option\u0026gt;1\u0026lt;/...\u0026lt;option\u0026gt;4\u0026lt;/option\u0026gt;\n\t\t\t\t\t\t\t\t\t\t\t\u0026lt;option\u0026gt;5\u0026lt;/option\u0026gt;\n\t\t\t\t\t\t\t\t\t\t\u0026lt;/select\u0026gt;",
+    "lineNumber": 243,
+    "columnNumber": 11
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that a change of context does not occur when this input field receives focus.",
+    "code": "WCAG2A.Principle3.Guideline3_2.3_2_1.G107",
+    "elementString": "<select class\u003d\"form-control\" id\u003d\"select\">\n\t\t\t\t\t\t\t\t\t\t\t<option>1</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>2</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>3</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>4</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>5</option>\n\t\t\t\t\t\t\t\t\t\t</select>",
+    "elementStringAbbreviated": "\u0026lt;select class\u003d\u0026quot;form-control\u0026quot; id\u003d\u0026quot;select\u0026quot;\u0026gt;\n\t\t\t\t\t\t\t\t\t\t\t\u0026lt;option\u0026gt;1\u0026lt;/...\u0026lt;option\u0026gt;4\u0026lt;/option\u0026gt;\n\t\t\t\t\t\t\t\t\t\t\t\u0026lt;option\u0026gt;5\u0026lt;/option\u0026gt;\n\t\t\t\t\t\t\t\t\t\t\u0026lt;/select\u0026gt;",
+    "lineNumber": 243,
+    "columnNumber": 11
+  },
+  {
+    "type": "ERROR",
+    "message": "This select element does not have a name available to an accessibility API. Valid names are: label element, title attribute.",
+    "code": "WCAG2A.Principle4.Guideline4_1.4_1_2.H91.Select.Name",
+    "elementString": "<select multiple\u003d\"\" class\u003d\"form-control\">\n\t\t\t\t\t\t\t\t\t\t\t<option>1</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>2</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>3</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>4</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>5</option>\n\t\t\t\t\t\t\t\t\t\t</select>",
+    "elementStringAbbreviated": "\u0026lt;select multiple\u003d\u0026quot;\u0026quot; class\u003d\u0026quot;form-control\u0026quot;\u0026gt;\n\t\t\t\t\t\t\t\t\t\t\t\u0026lt;option\u0026gt;1\u0026lt;/...\u0026lt;option\u0026gt;4\u0026lt;/option\u0026gt;\n\t\t\t\t\t\t\t\t\t\t\t\u0026lt;option\u0026gt;5\u0026lt;/option\u0026gt;\n\t\t\t\t\t\t\t\t\t\t\u0026lt;/select\u0026gt;",
+    "lineNumber": 249,
+    "columnNumber": 26
+  },
+  {
+    "type": "ERROR",
+    "message": "This form field should be labelled in some way. Use the label element (either with a \"for\" attribute or wrapped around the form field), or \"title\", \"aria-label\" or \"aria-labelledby\" attributes as appropriate.",
+    "code": "WCAG2A.Principle1.Guideline1_3.1_3_1.F68",
+    "elementString": "<select multiple\u003d\"\" class\u003d\"form-control\">\n\t\t\t\t\t\t\t\t\t\t\t<option>1</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>2</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>3</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>4</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>5</option>\n\t\t\t\t\t\t\t\t\t\t</select>",
+    "elementStringAbbreviated": "\u0026lt;select multiple\u003d\u0026quot;\u0026quot; class\u003d\u0026quot;form-control\u0026quot;\u0026gt;\n\t\t\t\t\t\t\t\t\t\t\t\u0026lt;option\u0026gt;1\u0026lt;/...\u0026lt;option\u0026gt;4\u0026lt;/option\u0026gt;\n\t\t\t\t\t\t\t\t\t\t\t\u0026lt;option\u0026gt;5\u0026lt;/option\u0026gt;\n\t\t\t\t\t\t\t\t\t\t\u0026lt;/select\u0026gt;",
+    "lineNumber": 249,
+    "columnNumber": 26
+  },
+  {
+    "type": "WARN",
+    "message": "If this selection list contains groups of related options, they should be grouped with optgroup.",
+    "code": "WCAG2A.Principle1.Guideline1_3.1_3_1.H85.2",
+    "elementString": "<select multiple\u003d\"\" class\u003d\"form-control\">\n\t\t\t\t\t\t\t\t\t\t\t<option>1</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>2</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>3</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>4</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>5</option>\n\t\t\t\t\t\t\t\t\t\t</select>",
+    "elementStringAbbreviated": "\u0026lt;select multiple\u003d\u0026quot;\u0026quot; class\u003d\u0026quot;form-control\u0026quot;\u0026gt;\n\t\t\t\t\t\t\t\t\t\t\t\u0026lt;option\u0026gt;1\u0026lt;/...\u0026lt;option\u0026gt;4\u0026lt;/option\u0026gt;\n\t\t\t\t\t\t\t\t\t\t\t\u0026lt;option\u0026gt;5\u0026lt;/option\u0026gt;\n\t\t\t\t\t\t\t\t\t\t\u0026lt;/select\u0026gt;",
+    "lineNumber": 249,
+    "columnNumber": 26
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that a change of context does not occur when this input field receives focus.",
+    "code": "WCAG2A.Principle3.Guideline3_2.3_2_1.G107",
+    "elementString": "<select multiple\u003d\"\" class\u003d\"form-control\">\n\t\t\t\t\t\t\t\t\t\t\t<option>1</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>2</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>3</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>4</option>\n\t\t\t\t\t\t\t\t\t\t\t<option>5</option>\n\t\t\t\t\t\t\t\t\t\t</select>",
+    "elementStringAbbreviated": "\u0026lt;select multiple\u003d\u0026quot;\u0026quot; class\u003d\u0026quot;form-control\u0026quot;\u0026gt;\n\t\t\t\t\t\t\t\t\t\t\t\u0026lt;option\u0026gt;1\u0026lt;/...\u0026lt;option\u0026gt;4\u0026lt;/option\u0026gt;\n\t\t\t\t\t\t\t\t\t\t\t\u0026lt;option\u0026gt;5\u0026lt;/option\u0026gt;\n\t\t\t\t\t\t\t\t\t\t\u0026lt;/select\u0026gt;",
+    "lineNumber": 249,
+    "columnNumber": 26
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that a change of context does not occur when this input field receives focus.",
+    "code": "WCAG2A.Principle3.Guideline3_2.3_2_1.G107",
+    "elementString": "<button class\u003d\"btn btn-default\">Cancel</button>",
+    "elementStringAbbreviated": "\u0026lt;button class\u003d\u0026quot;btn btn-default\u0026quot;\u0026gt;Cancel\u0026lt;/button\u0026gt;",
+    "lineNumber": 260,
+    "columnNumber": 11
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that a change of context does not occur when this input field receives focus.",
+    "code": "WCAG2A.Principle3.Guideline3_2.3_2_1.G107",
+    "elementString": "<button type\u003d\"submit\" class\u003d\"btn btn-primary\">Submit</button>",
+    "elementStringAbbreviated": "\u0026lt;button type\u003d\u0026quot;submit\u0026quot; class\u003d\u0026quot;btn btn-primary\u0026quot;\u0026gt;Submit\u0026lt;/button\u0026gt;",
+    "lineNumber": 261,
+    "columnNumber": 11
+  },
+  {
+    "type": "ERROR",
+    "message": "Form does not contain a submit button (input type\u003d\"submit\", input type\u003d\"image\", or button type\u003d\"submit\").",
+    "code": "WCAG2A.Principle3.Guideline3_2.3_2_2.H32.2",
+    "elementString": "<form class\u003d\"bs-component\">\n\t\t\t\t\t\t<div class\u003d\"form-group\">\n\t\t\t\t\t\t\t<label class\u003d\"control-label\" for\u003d\"focusedInput\">Focused\n\t\t\t\t\t\t\t\tinput</label> <input class\u003d\"form-control\" id\u003d\"focusedInput\" value\u003d\"This is focused...\" type\u003d\"text\">\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class\u003d\"form-group\">\n\t\t\t\t\t\t\t<label class\u003d\"control-label\" for\u003d\"disabledInput\">Disabled\n\t\t\t\t\t\t\t\tinput</label> <input class\u003d\"form-control\" id\u003d\"disabledInput\" placeholder\u003d\"Disabled input here...\" disabled\u003d\"\" type\u003d\"text\">\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class\u003d\"form-group has-warning\">\n\t\t\t\t\t\t\t<label class\u003d\"control-label\" for\u003d\"inputWarning\">Input\n\t\t\t\t\t\t\t\twarning</label> <input class\u003d\"form-control\" id\u003d\"inputWarning\" type\u003d\"text\">\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class\u003d\"form-group has-error\">\n\t\t\t\t\t\t\t<label class\u003d\"control-label\" for\u003d\"inputError\">Input error</label>\n\t\t\t\t\t\t\t<input class\u003d\"form-control\" id\u003d\"inputError\" type\u003d\"text\">\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class\u003d\"form-group has-success\">\n\t\t\t\t\t\t\t<label class\u003d\"control-label\" for\u003d\"inputSuccess\">Input\n\t\t\t\t\t\t\t\tsuccess</label> <input class\u003d\"form-control\" id\u003d\"inputSuccess\" type\u003d\"text\">\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class\u003d\"form-group\">\n\t\t\t\t\t\t\t<label class\u003d\"control-label\" for\u003d\"inputLarge\">Large input</label>\n\t\t\t\t\t\t\t<input class\u003d\"form-control input-lg\" id\u003d\"inputLarge\" type\u003d\"text\">\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class\u003d\"form-group\">\n\t\t\t\t\t\t\t<label class\u003d\"control-label\" for\u003d\"inputDefault\">Default\n\t\t\t\t\t\t\t\tinput</label> <input class\u003d\"form-control\" id\u003d\"inputDefault\" type\u003d\"text\">\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class\u003d\"form-group\">\n\t\t\t\t\t\t\t<label class\u003d\"control-label\" for\u003d\"inputSmall\">Small input</label>\n\t\t\t\t\t\t\t<input class\u003d\"form-control input-sm\" id\u003d\"inputSmall\" type\u003d\"text\">\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class\u003d\"form-group\">\n\t\t\t\t\t\t\t<label class\u003d\"control-label\">Input addons</label>\n\t\t\t\t\t\t\t<div class\u003d\"input-group\">\n\t\t\t\t\t\t\t\t<span class\u003d\"input-group-addon\">$</span> <input class\u003d\"form-control\" type\u003d\"text\"> <span class\u003d\"input-group-btn\">\n\t\t\t\t\t\t\t\t\t<button class\u003d\"btn btn-default\" type\u003d\"button\">Button</button>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</form>",
+    "elementStringAbbreviated": "\u0026lt;form class\u003d\u0026quot;bs-component\u0026quot;\u0026gt;\n\t\t\t\t\t\t\u0026lt;div class\u003d\u0026quot;form-group\u0026quot;\u0026gt;\n\t\t\t\t\t\t\t\u0026...ton\u0026lt;/button\u0026gt;\n\t\t\t\t\t\t\t\t\u0026lt;/span\u0026gt;\n\t\t\t\t\t\t\t\u0026lt;/div\u0026gt;\n\t\t\t\t\t\t\u0026lt;/div\u0026gt;\n\t\t\t\t\t\u0026lt;/form\u0026gt;",
+    "lineNumber": 270,
+    "columnNumber": 6
+  },
+  {
+    "type": "NOTICE",
+    "message": "If an input error is automatically detected in this form, check that the item(s) in error are identified and the error(s) are described to the user in text.",
+    "code": "WCAG2A.Principle3.Guideline3_3.3_3_1.G83,G84,G85",
+    "elementString": "<form class\u003d\"bs-component\">\n\t\t\t\t\t\t<div class\u003d\"form-group\">\n\t\t\t\t\t\t\t<label class\u003d\"control-label\" for\u003d\"focusedInput\">Focused\n\t\t\t\t\t\t\t\tinput</label> <input class\u003d\"form-control\" id\u003d\"focusedInput\" value\u003d\"This is focused...\" type\u003d\"text\">\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class\u003d\"form-group\">\n\t\t\t\t\t\t\t<label class\u003d\"control-label\" for\u003d\"disabledInput\">Disabled\n\t\t\t\t\t\t\t\tinput</label> <input class\u003d\"form-control\" id\u003d\"disabledInput\" placeholder\u003d\"Disabled input here...\" disabled\u003d\"\" type\u003d\"text\">\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class\u003d\"form-group has-warning\">\n\t\t\t\t\t\t\t<label class\u003d\"control-label\" for\u003d\"inputWarning\">Input\n\t\t\t\t\t\t\t\twarning</label> <input class\u003d\"form-control\" id\u003d\"inputWarning\" type\u003d\"text\">\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class\u003d\"form-group has-error\">\n\t\t\t\t\t\t\t<label class\u003d\"control-label\" for\u003d\"inputError\">Input error</label>\n\t\t\t\t\t\t\t<input class\u003d\"form-control\" id\u003d\"inputError\" type\u003d\"text\">\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class\u003d\"form-group has-success\">\n\t\t\t\t\t\t\t<label class\u003d\"control-label\" for\u003d\"inputSuccess\">Input\n\t\t\t\t\t\t\t\tsuccess</label> <input class\u003d\"form-control\" id\u003d\"inputSuccess\" type\u003d\"text\">\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class\u003d\"form-group\">\n\t\t\t\t\t\t\t<label class\u003d\"control-label\" for\u003d\"inputLarge\">Large input</label>\n\t\t\t\t\t\t\t<input class\u003d\"form-control input-lg\" id\u003d\"inputLarge\" type\u003d\"text\">\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class\u003d\"form-group\">\n\t\t\t\t\t\t\t<label class\u003d\"control-label\" for\u003d\"inputDefault\">Default\n\t\t\t\t\t\t\t\tinput</label> <input class\u003d\"form-control\" id\u003d\"inputDefault\" type\u003d\"text\">\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class\u003d\"form-group\">\n\t\t\t\t\t\t\t<label class\u003d\"control-label\" for\u003d\"inputSmall\">Small input</label>\n\t\t\t\t\t\t\t<input class\u003d\"form-control input-sm\" id\u003d\"inputSmall\" type\u003d\"text\">\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class\u003d\"form-group\">\n\t\t\t\t\t\t\t<label class\u003d\"control-label\">Input addons</label>\n\t\t\t\t\t\t\t<div class\u003d\"input-group\">\n\t\t\t\t\t\t\t\t<span class\u003d\"input-group-addon\">$</span> <input class\u003d\"form-control\" type\u003d\"text\"> <span class\u003d\"input-group-btn\">\n\t\t\t\t\t\t\t\t\t<button class\u003d\"btn btn-default\" type\u003d\"button\">Button</button>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</form>",
+    "elementStringAbbreviated": "\u0026lt;form class\u003d\u0026quot;bs-component\u0026quot;\u0026gt;\n\t\t\t\t\t\t\u0026lt;div class\u003d\u0026quot;form-group\u0026quot;\u0026gt;\n\t\t\t\t\t\t\t\u0026...ton\u0026lt;/button\u0026gt;\n\t\t\t\t\t\t\t\t\u0026lt;/span\u0026gt;\n\t\t\t\t\t\t\t\u0026lt;/div\u0026gt;\n\t\t\t\t\t\t\u0026lt;/div\u0026gt;\n\t\t\t\t\t\u0026lt;/form\u0026gt;",
+    "lineNumber": 270,
+    "columnNumber": 6
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that descriptive labels or instructions (including for required fields) are provided for user input in this form.",
+    "code": "WCAG2A.Principle3.Guideline3_3.3_3_2.G131,G89,G184,H90",
+    "elementString": "<form class\u003d\"bs-component\">\n\t\t\t\t\t\t<div class\u003d\"form-group\">\n\t\t\t\t\t\t\t<label class\u003d\"control-label\" for\u003d\"focusedInput\">Focused\n\t\t\t\t\t\t\t\tinput</label> <input class\u003d\"form-control\" id\u003d\"focusedInput\" value\u003d\"This is focused...\" type\u003d\"text\">\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class\u003d\"form-group\">\n\t\t\t\t\t\t\t<label class\u003d\"control-label\" for\u003d\"disabledInput\">Disabled\n\t\t\t\t\t\t\t\tinput</label> <input class\u003d\"form-control\" id\u003d\"disabledInput\" placeholder\u003d\"Disabled input here...\" disabled\u003d\"\" type\u003d\"text\">\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class\u003d\"form-group has-warning\">\n\t\t\t\t\t\t\t<label class\u003d\"control-label\" for\u003d\"inputWarning\">Input\n\t\t\t\t\t\t\t\twarning</label> <input class\u003d\"form-control\" id\u003d\"inputWarning\" type\u003d\"text\">\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class\u003d\"form-group has-error\">\n\t\t\t\t\t\t\t<label class\u003d\"control-label\" for\u003d\"inputError\">Input error</label>\n\t\t\t\t\t\t\t<input class\u003d\"form-control\" id\u003d\"inputError\" type\u003d\"text\">\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class\u003d\"form-group has-success\">\n\t\t\t\t\t\t\t<label class\u003d\"control-label\" for\u003d\"inputSuccess\">Input\n\t\t\t\t\t\t\t\tsuccess</label> <input class\u003d\"form-control\" id\u003d\"inputSuccess\" type\u003d\"text\">\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class\u003d\"form-group\">\n\t\t\t\t\t\t\t<label class\u003d\"control-label\" for\u003d\"inputLarge\">Large input</label>\n\t\t\t\t\t\t\t<input class\u003d\"form-control input-lg\" id\u003d\"inputLarge\" type\u003d\"text\">\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class\u003d\"form-group\">\n\t\t\t\t\t\t\t<label class\u003d\"control-label\" for\u003d\"inputDefault\">Default\n\t\t\t\t\t\t\t\tinput</label> <input class\u003d\"form-control\" id\u003d\"inputDefault\" type\u003d\"text\">\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class\u003d\"form-group\">\n\t\t\t\t\t\t\t<label class\u003d\"control-label\" for\u003d\"inputSmall\">Small input</label>\n\t\t\t\t\t\t\t<input class\u003d\"form-control input-sm\" id\u003d\"inputSmall\" type\u003d\"text\">\n\t\t\t\t\t\t</div>\n\n\t\t\t\t\t\t<div class\u003d\"form-group\">\n\t\t\t\t\t\t\t<label class\u003d\"control-label\">Input addons</label>\n\t\t\t\t\t\t\t<div class\u003d\"input-group\">\n\t\t\t\t\t\t\t\t<span class\u003d\"input-group-addon\">$</span> <input class\u003d\"form-control\" type\u003d\"text\"> <span class\u003d\"input-group-btn\">\n\t\t\t\t\t\t\t\t\t<button class\u003d\"btn btn-default\" type\u003d\"button\">Button</button>\n\t\t\t\t\t\t\t\t</span>\n\t\t\t\t\t\t\t</div>\n\t\t\t\t\t\t</div>\n\t\t\t\t\t</form>",
+    "elementStringAbbreviated": "\u0026lt;form class\u003d\u0026quot;bs-component\u0026quot;\u0026gt;\n\t\t\t\t\t\t\u0026lt;div class\u003d\u0026quot;form-group\u0026quot;\u0026gt;\n\t\t\t\t\t\t\t\u0026...ton\u0026lt;/button\u0026gt;\n\t\t\t\t\t\t\t\t\u0026lt;/span\u0026gt;\n\t\t\t\t\t\t\t\u0026lt;/div\u0026gt;\n\t\t\t\t\t\t\u0026lt;/div\u0026gt;\n\t\t\t\t\t\u0026lt;/form\u0026gt;",
+    "lineNumber": 270,
+    "columnNumber": 6
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that a change of context does not occur when this input field receives focus.",
+    "code": "WCAG2A.Principle3.Guideline3_2.3_2_1.G107",
+    "elementString": "<input class\u003d\"form-control\" id\u003d\"focusedInput\" value\u003d\"This is focused...\" type\u003d\"text\">",
+    "elementStringAbbreviated": "\u0026lt;input class\u003d\u0026quot;form-control\u0026quot; id\u003d\u0026quot;focusedInput\u0026quot; value\u003d\u0026quot;This is focused...\u0026quot; type\u003d\u0026quot;text\u0026quot;\u0026gt;",
+    "lineNumber": 273,
+    "columnNumber": 23
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that a change of context does not occur when this input field receives focus.",
+    "code": "WCAG2A.Principle3.Guideline3_2.3_2_1.G107",
+    "elementString": "<input class\u003d\"form-control\" id\u003d\"disabledInput\" placeholder\u003d\"Disabled input here...\" disabled\u003d\"\" type\u003d\"text\">",
+    "elementStringAbbreviated": "\u0026lt;input class\u003d\u0026quot;form-control\u0026quot; id\u003d\u0026quot;disabledInput\u0026quot; placeholder\u003d\u0026quot;Disabled input here...\u0026quot; disabled\u003d\u0026quot;\u0026quot; type\u003d\u0026quot;text\u0026quot;\u0026gt;",
+    "lineNumber": 278,
+    "columnNumber": 23
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that a change of context does not occur when this input field receives focus.",
+    "code": "WCAG2A.Principle3.Guideline3_2.3_2_1.G107",
+    "elementString": "<input class\u003d\"form-control\" id\u003d\"inputWarning\" type\u003d\"text\">",
+    "elementStringAbbreviated": "\u0026lt;input class\u003d\u0026quot;form-control\u0026quot; id\u003d\u0026quot;inputWarning\u0026quot; type\u003d\u0026quot;text\u0026quot;\u0026gt;",
+    "lineNumber": 283,
+    "columnNumber": 25
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that a change of context does not occur when this input field receives focus.",
+    "code": "WCAG2A.Principle3.Guideline3_2.3_2_1.G107",
+    "elementString": "<input class\u003d\"form-control\" id\u003d\"inputError\" type\u003d\"text\">",
+    "elementStringAbbreviated": "\u0026lt;input class\u003d\u0026quot;form-control\u0026quot; id\u003d\u0026quot;inputError\u0026quot; type\u003d\u0026quot;text\u0026quot;\u0026gt;",
+    "lineNumber": 288,
+    "columnNumber": 8
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that a change of context does not occur when this input field receives focus.",
+    "code": "WCAG2A.Principle3.Guideline3_2.3_2_1.G107",
+    "elementString": "<input class\u003d\"form-control\" id\u003d\"inputSuccess\" type\u003d\"text\">",
+    "elementStringAbbreviated": "\u0026lt;input class\u003d\u0026quot;form-control\u0026quot; id\u003d\u0026quot;inputSuccess\u0026quot; type\u003d\u0026quot;text\u0026quot;\u0026gt;",
+    "lineNumber": 293,
+    "columnNumber": 25
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that a change of context does not occur when this input field receives focus.",
+    "code": "WCAG2A.Principle3.Guideline3_2.3_2_1.G107",
+    "elementString": "<input class\u003d\"form-control input-lg\" id\u003d\"inputLarge\" type\u003d\"text\">",
+    "elementStringAbbreviated": "\u0026lt;input class\u003d\u0026quot;form-control input-lg\u0026quot; id\u003d\u0026quot;inputLarge\u0026quot; type\u003d\u0026quot;text\u0026quot;\u0026gt;",
+    "lineNumber": 298,
+    "columnNumber": 8
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that a change of context does not occur when this input field receives focus.",
+    "code": "WCAG2A.Principle3.Guideline3_2.3_2_1.G107",
+    "elementString": "<input class\u003d\"form-control\" id\u003d\"inputDefault\" type\u003d\"text\">",
+    "elementStringAbbreviated": "\u0026lt;input class\u003d\u0026quot;form-control\u0026quot; id\u003d\u0026quot;inputDefault\u0026quot; type\u003d\u0026quot;text\u0026quot;\u0026gt;",
+    "lineNumber": 303,
+    "columnNumber": 23
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that a change of context does not occur when this input field receives focus.",
+    "code": "WCAG2A.Principle3.Guideline3_2.3_2_1.G107",
+    "elementString": "<input class\u003d\"form-control input-sm\" id\u003d\"inputSmall\" type\u003d\"text\">",
+    "elementStringAbbreviated": "\u0026lt;input class\u003d\u0026quot;form-control input-sm\u0026quot; id\u003d\u0026quot;inputSmall\u0026quot; type\u003d\u0026quot;text\u0026quot;\u0026gt;",
+    "lineNumber": 308,
+    "columnNumber": 8
+  },
+  {
+    "type": "WARN",
+    "message": "This label\u0027s \"for\" attribute contains an ID that does not exist in the document fragment.",
+    "code": "WCAG2A.Principle1.Guideline1_3.1_3_1.H44.NonExistentFragment",
+    "elementString": "<label class\u003d\"control-label\">Input addons</label>",
+    "elementStringAbbreviated": "\u0026lt;label class\u003d\u0026quot;control-label\u0026quot;\u0026gt;Input addons\u0026lt;/label\u0026gt;",
+    "lineNumber": 312,
+    "columnNumber": 8
+  },
+  {
+    "type": "ERROR",
+    "message": "This text input element does not have a name available to an accessibility API. Valid names are: label element, title attribute.",
+    "code": "WCAG2A.Principle4.Guideline4_1.4_1_2.H91.InputText.Name",
+    "elementString": "<input class\u003d\"form-control\" type\u003d\"text\">",
+    "elementStringAbbreviated": "\u0026lt;input class\u003d\u0026quot;form-control\u0026quot; type\u003d\u0026quot;text\u0026quot;\u0026gt;",
+    "lineNumber": 314,
+    "columnNumber": 50
+  },
+  {
+    "type": "ERROR",
+    "message": "This form field should be labelled in some way. Use the label element (either with a \"for\" attribute or wrapped around the form field), or \"title\", \"aria-label\" or \"aria-labelledby\" attributes as appropriate.",
+    "code": "WCAG2A.Principle1.Guideline1_3.1_3_1.F68",
+    "elementString": "<input class\u003d\"form-control\" type\u003d\"text\">",
+    "elementStringAbbreviated": "\u0026lt;input class\u003d\u0026quot;form-control\u0026quot; type\u003d\u0026quot;text\u0026quot;\u0026gt;",
+    "lineNumber": 314,
+    "columnNumber": 50
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that a change of context does not occur when this input field receives focus.",
+    "code": "WCAG2A.Principle3.Guideline3_2.3_2_1.G107",
+    "elementString": "<input class\u003d\"form-control\" type\u003d\"text\">",
+    "elementStringAbbreviated": "\u0026lt;input class\u003d\u0026quot;form-control\u0026quot; type\u003d\u0026quot;text\u0026quot;\u0026gt;",
+    "lineNumber": 314,
+    "columnNumber": 50
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that a change of context does not occur when this input field receives focus.",
+    "code": "WCAG2A.Principle3.Guideline3_2.3_2_1.G107",
+    "elementString": "<button class\u003d\"btn btn-default\" type\u003d\"button\">Button</button>",
+    "elementStringAbbreviated": "\u0026lt;button class\u003d\u0026quot;btn btn-default\u0026quot; type\u003d\u0026quot;button\u0026quot;\u0026gt;Button\u0026lt;/button\u0026gt;",
+    "lineNumber": 315,
+    "columnNumber": 10
+  },
+  {
+    "type": "WARN",
+    "message": "If this element contains a navigation section, it is recommended that it be marked up as a list.",
+    "code": "WCAG2A.Principle1.Guideline1_3.1_3_1.H48",
+    "elementString": "<p>\n\t\t\t\t\t\tMade by <a href\u003d\"http://thomaspark.me\" rel\u003d\"nofollow\">Thomas\n\t\t\t\t\t\t\tPark</a>. Contact him at <a href\u003d\"mailto:thomas@bootswatch.com\">thomas@bootswatch.com</a>.\n\t\t\t\t\t</p>",
+    "elementStringAbbreviated": "\u0026lt;p\u0026gt;\n\t\t\t\t\t\tMade by \u0026lt;a href\u003d\u0026quot;http://thomaspark.me\u0026quot; rel\u003d\u0026quot;nofollow\u0026quot;\u0026gt;Tho... href\u003d\u0026quot;mailto:thomas@bootswatch.com\u0026quot;\u0026gt;thomas@bootswatch.com\u0026lt;/a\u0026gt;.\n\t\t\t\t\t\u0026lt;/p\u0026gt;",
+    "lineNumber": 330,
+    "columnNumber": 6
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that the link text combined with programmatically determined link context identifies the purpose of the link.",
+    "code": "WCAG2A.Principle2.Guideline2_4.2_4_4.H77,H78,H79,H80,H81",
+    "elementString": "<a href\u003d\"http://thomaspark.me\" rel\u003d\"nofollow\">Thomas\n\t\t\t\t\t\t\tPark</a>",
+    "elementStringAbbreviated": "\u0026lt;a href\u003d\u0026quot;http://thomaspark.me\u0026quot; rel\u003d\u0026quot;nofollow\u0026quot;\u0026gt;Thomas\n\t\t\t\t\t\t\tPark\u0026lt;/a\u0026gt;",
+    "lineNumber": 331,
+    "columnNumber": 15
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that the link text combined with programmatically determined link context identifies the purpose of the link.",
+    "code": "WCAG2A.Principle2.Guideline2_4.2_4_4.H77,H78,H79,H80,H81",
+    "elementString": "<a href\u003d\"mailto:thomas@bootswatch.com\">thomas@bootswatch.com</a>",
+    "elementStringAbbreviated": "\u0026lt;a href\u003d\u0026quot;mailto:thomas@bootswatch.com\u0026quot;\u0026gt;thomas@bootswatch.com\u0026lt;/a\u0026gt;",
+    "lineNumber": 332,
+    "columnNumber": 33
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that the link text combined with programmatically determined link context identifies the purpose of the link.",
+    "code": "WCAG2A.Principle2.Guideline2_4.2_4_4.H77,H78,H79,H80,H81",
+    "elementString": "<a href\u003d\"https://github.com/thomaspark/bootswatch/blob/gh-pages/LICENSE\">MIT\n\t\t\t\t\t\t\tLicense</a>",
+    "elementStringAbbreviated": "\u0026lt;a href\u003d\u0026quot;https://github.com/thomaspark/bootswatch/blob/gh-pages/LICENSE\u0026quot;\u0026gt;MIT\n\t\t\t\t\t\t\tLicense\u0026lt;/a\u0026gt;",
+    "lineNumber": 335,
+    "columnNumber": 31
+  },
+  {
+    "type": "WARN",
+    "message": "If this element contains a navigation section, it is recommended that it be marked up as a list.",
+    "code": "WCAG2A.Principle1.Guideline1_3.1_3_1.H48",
+    "elementString": "<p>\n\t\t\t\t\t\tBased on <a href\u003d\"http://getbootstrap.com\" rel\u003d\"nofollow\">Bootstrap</a>.\n\t\t\t\t\t\tIcons from <a href\u003d\"http://fortawesome.github.io/Font-Awesome/\" rel\u003d\"nofollow\">Font Awesome</a>. Web fonts from <a href\u003d\"http://www.google.com/webfonts\" rel\u003d\"nofollow\">Google</a>.\n\t\t\t\t\t</p>",
+    "elementStringAbbreviated": "\u0026lt;p\u0026gt;\n\t\t\t\t\t\tBased on \u0026lt;a href\u003d\u0026quot;http://getbootstrap.com\u0026quot; rel\u003d\u0026quot;nofollow\u0026quot;\u0026gt...http://www.google.com/webfonts\u0026quot; rel\u003d\u0026quot;nofollow\u0026quot;\u0026gt;Google\u0026lt;/a\u0026gt;.\n\t\t\t\t\t\u0026lt;/p\u0026gt;",
+    "lineNumber": 338,
+    "columnNumber": 6
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that the link text combined with programmatically determined link context identifies the purpose of the link.",
+    "code": "WCAG2A.Principle2.Guideline2_4.2_4_4.H77,H78,H79,H80,H81",
+    "elementString": "<a href\u003d\"http://getbootstrap.com\" rel\u003d\"nofollow\">Bootstrap</a>",
+    "elementStringAbbreviated": "\u0026lt;a href\u003d\u0026quot;http://getbootstrap.com\u0026quot; rel\u003d\u0026quot;nofollow\u0026quot;\u0026gt;Bootstrap\u0026lt;/a\u0026gt;",
+    "lineNumber": 339,
+    "columnNumber": 16
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that the link text combined with programmatically determined link context identifies the purpose of the link.",
+    "code": "WCAG2A.Principle2.Guideline2_4.2_4_4.H77,H78,H79,H80,H81",
+    "elementString": "<a href\u003d\"http://fortawesome.github.io/Font-Awesome/\" rel\u003d\"nofollow\">Font Awesome</a>",
+    "elementStringAbbreviated": "\u0026lt;a href\u003d\u0026quot;http://fortawesome.github.io/Font-Awesome/\u0026quot; rel\u003d\u0026quot;nofollow\u0026quot;\u0026gt;Font Awesome\u0026lt;/a\u0026gt;",
+    "lineNumber": 340,
+    "columnNumber": 18
+  },
+  {
+    "type": "NOTICE",
+    "message": "Check that the link text combined with programmatically determined link context identifies the purpose of the link.",
+    "code": "WCAG2A.Principle2.Guideline2_4.2_4_4.H77,H78,H79,H80,H81",
+    "elementString": "<a href\u003d\"http://www.google.com/webfonts\" rel\u003d\"nofollow\">Google</a>",
+    "elementStringAbbreviated": "\u0026lt;a href\u003d\u0026quot;http://www.google.com/webfonts\u0026quot; rel\u003d\u0026quot;nofollow\u0026quot;\u0026gt;Google\u0026lt;/a\u0026gt;",
+    "lineNumber": 340,
+    "columnNumber": 119
+  }
+]

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Automated Exploratory Tests
+
+    Copyright (C) 2013 Cognifide Limited
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3.0.xsd">
+
+    <display-name>AET Sample Site</display-name>
+
+    <security-constraint>
+        <display-name>authorizedUsers</display-name>
+        <web-resource-collection>
+            <web-resource-name>Private pages</web-resource-name>
+            <url-pattern>/sanity/modifiers/header/private/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <role-name>SAMPLE_ROLE</role-name>
+        </auth-constraint>
+    </security-constraint>
+
+    <security-constraint>
+        <display-name>publicAccess</display-name>
+        <web-resource-collection>
+            <web-resource-name>All Urls</web-resource-name>
+            <url-pattern>/*</url-pattern>
+        </web-resource-collection>
+    </security-constraint>
+
+    <login-config>
+        <auth-method>BASIC</auth-method>
+        <realm-name>AET Private Stuff</realm-name>
+    </login-config>
+
+    <security-role>
+        <role-name>SAMPLE_ROLE</role-name>
+        <description>sample role for testing basic authentication</description>
+    </security-role>
+
+    <!-- Enable directory listings by overriding the server default web.xml -->
+    <!-- definition for the default servlet -->
+    <servlet>
+        <servlet-name>DirectoryListing</servlet-name>
+        <servlet-class>org.apache.catalina.servlets.DefaultServlet</servlet-class>
+        <init-param>
+            <param-name>debug</param-name>
+            <param-value>0</param-value>
+        </init-param>
+        <init-param>
+            <param-name>listings</param-name>
+            <param-value>true</param-value>
+        </init-param>
+        <init-param>
+            <param-name>allowSpecialPaths</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>DirectoryListing</servlet-name>
+        <url-pattern>/</url-pattern>
+    </servlet-mapping>
+</web-app>

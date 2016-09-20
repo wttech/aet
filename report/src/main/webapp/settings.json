@@ -1,0 +1,36 @@
+{
+  "server": {
+    "base": "",
+    "port": 9000,
+    "root": "report.html?company=aet&project=aet&suite=main"
+  },
+  "app": {
+    "base": "app",
+    "docroot": "/html",
+    "js": "/_old_js",
+    "components": "components",
+    "shared": "shared",
+    "snippets": "snippets"
+  },
+  "assets": {
+    "base": "assets",
+    "sass": "/sass",
+    "css": "/css",
+    "images": "/img",
+    "fonts": "/fonts"
+  },
+  "dist": {
+    "base": "",
+    "js": "app",
+    "css": "assets/css",
+    "images": "assets/img",
+    "fonts": "assets/fonts"
+  },
+  "doc": {
+    "base": "doc"
+  },
+  "test": {
+    "base": "test",
+    "specs": "specs"
+  }
+}

@@ -1,0 +1,302 @@
+/*
+ * Automated Exploratory Tests
+ *
+ * Copyright (C) 2013 Cognifide Limited
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+.aside {
+  @include transition(left 0.3s, width 0.3s);
+  background: $aside_background;
+  position: fixed;
+  top: 0;
+  left: -350px;
+  width: 350px;
+  height: 100%;
+  padding: 100px 0 148px 0;
+  overflow: auto;
+  text-align: center;
+  z-index: 99;
+
+  .menu-expanded & {
+    left: 0;
+  }
+
+  .logo-holder {
+    position: fixed;
+    width: 330px;
+    text-align: center;
+    background: $aside_background;
+    height: 80px;
+    top: 0;
+    z-index: 2;
+  }
+
+  &-report {
+    line-height: 47px;
+    max-height: 47px;
+    overflow: hidden;
+    position: relative;
+
+    &.is-expanded {
+      max-height: none;
+
+      ul {
+        display: block;
+      }
+    }
+
+    .test-name {
+      color: $gray_darker;
+      display: block;
+      width: 100%;
+      padding-left: 13px;
+      border-top: solid 1px $border_color_dark;
+
+      &.passed {
+        color: $passed;
+      }
+
+      &.warning {
+        color: $warning;
+      }
+
+      &.failed,
+      &.processing_error {
+        color: $failed;
+      }
+
+      &.rebased {
+        color: $rebased;
+      }
+
+      &.is-hidden {
+        + .urls-list {
+          display: none;
+        }
+      }
+
+      &.is-active {
+        color: $white;
+
+        &:before {
+          color: inherit;
+        }
+      }
+    }
+
+    span {
+      @include ellipsis();
+      color: inherit;
+      font-family: $font_light;
+      font-size: 15px;
+      width: 80%;
+      display: block;
+      cursor: pointer;
+      text-align: left;
+
+      i {
+        @include transition(transform, 100ms ease-out);
+        font-size: 13px;
+        position: relative;
+        top: 2px;
+        display: inline-block;
+        margin-right: 10px;
+      }
+    }
+
+    &.is-expanded {
+
+      i {
+        @include transform(rotate(90deg));
+      }
+    }
+
+    ul {
+      padding: 0;
+      margin: 0 0 0 30px;
+      background: $aside_background;
+      display: none;
+
+      li {
+        width: 80%;
+        display: block;
+        font-size: 15px;
+        font-family: $font_light;
+        background: $aside_background;
+        position: relative;
+        line-height: normal;
+        margin-bottom: 20px;
+        margin-left: 14px;
+        color: $gray_dark;
+
+        &:last-of-type {
+          border-bottom: solid 1px #313942;
+        }
+
+        a {
+          color: inherit;
+          text-align: left;
+          padding-left: 10px;
+        }
+
+        &:before {
+          position: absolute;
+          left: -10px;
+          font-size: 15px;
+          left: -16px;
+        }
+
+        &.failed,
+        &.failedcommented,
+        &.processing_error {
+          color: $failed;
+          @extend .glyphicon-remove;
+        }
+
+        &.passed {
+          color: $passed;
+          @extend .glyphicon-ok;
+        }
+
+        &.warning {
+          color: $warning;
+          @extend .glyphicon-alert;
+        }
+
+        &.rebased {
+          color: $rebased;
+          @extend .glyphicon-cloud-upload;
+        }
+      }
+    }
+  }
+
+  &.has-filters-applied {
+    .aside-report {
+      &:not(.is-hidden) {
+        max-height: none;
+        ul {
+          display: block;
+        }
+      }
+    }
+  }
+  &.show-failed {
+
+    .url-name,
+    .test-name {
+      display: none;
+
+      &.failed {
+        display: block;
+      }
+    }
+  }
+
+  &.show-commented {
+
+    .url-name, .test-name {
+      display: none;
+
+      &.commented {
+        display: block;
+      }
+    }
+  }
+
+  &.show-passed {
+
+    .url-name, .test-name {
+      display: none;
+      &.passed {
+        display: block;
+      }
+    }
+  }
+
+  &.show-warning {
+
+    .url-name, .test-name {
+      display: none;
+
+      &.warning {
+        display: block;
+      }
+    }
+  }
+}
+
+.aside-report-summary {
+  display: table;
+  width: 100%;
+  border-bottom: solid 1px $border_color_dark;
+  text-transform: uppercase;
+  padding: 0 15px;
+  line-height: 40px;
+
+  header {
+    float: left;
+    color: $white;
+    font-size: 16px;
+    text-transform: uppercase;
+  }
+
+  .stats {
+    font-size: 14px;
+    color: $white;
+
+    &.has-errors {
+      color: $warning;
+    }
+
+    &.is-filtered {
+      color: $white;
+    }
+  }
+}
+
+.report-item-stats {
+  color: $gray_darker;
+  position: absolute;
+  right: 21px;
+  top: 6px;
+  background: $grayish;
+  font-family: $font_bold;
+  font-size: 14px;
+  line-height: 32px;
+  padding: 0 7px;
+}
+
+.js-rebase-all, .js-cancel-all {
+  position: fixed;
+  bottom: 0;
+  width: 335px;
+  border-top: solid 1px $border-color_dark;
+  padding: 16px;
+  background: $aside_background;
+  z-index: 1;
+}
+
+.js-rebase-all {
+  bottom: 60px;
+}
+
+.is-active {
+  color: $white !important;
+
+  a,
+  &:before {
+    color: $white !important;
+  }
+}

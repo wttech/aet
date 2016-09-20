@@ -1,0 +1,98 @@
+<!--
+
+    Automated Exploratory Tests
+
+    Copyright (C) 2013 Cognifide Limited
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<!--
+    Desktop layouts compare
+-->
+
+<div class="tab-content-toolbar">
+    <span class="tab-content-toolbar-header" ng-show="mask">
+        Settings
+    </span>
+    <div class="checkboxes-inline">
+        <div class="checkbox" ng-show="mask">
+            <input type="checkbox" id="toggleMask" ng-click="toggleMask()" ng-checked="$root.maskVisible">
+            <label for="toggleMask">
+                <span>Show Mask</span>
+            </label>
+        </div>
+    </div>
+    <div class="toolbar-blocks">
+        <div class="toolbar-block" ng-if="patternCollect">
+            Pattern collected: {{patternCollect | date:'medium'}}
+        </div>
+        <div class="toolbar-btns pull-right">
+            <ng-include src="'app/html/includes/test_cases_comment.html'"/>
+            <ng-include src="'app/html/includes/test_cases_accept_or_revert.html'"/>
+        </div>
+    </div>
+</div>
+<div ng-if="processingError" class="processing-error">
+    <h3>
+        <span class="label label-danger">
+            Failure when processing this url.
+        </span>
+    </h3>
+    <ul>
+        <li ng-repeat="error in processingErrorText">
+            <i>{{error}}</i>
+        </li>
+    </ul>
+    <div class="processing-error-comparators" ng-if="comparatorsError.length">
+        <span>Errors found in comparators:</span>
+        <ul>
+            <li ng-repeat="error in comparatorsError">
+                <i>{{error}}</i>
+            </li>
+        </ul>
+    </div>
+</div>
+
+<div ng-if="!processingError">
+    <div class="layout-compare">
+        <div class="layout-compare-item pull-left">
+            <p class="layout-compare-description">Pattern</p>
+            <div class="mask-container">
+                <img ng-src="{{mask}}" ng-show="mask" class="mask img-responsive" ng-class="($root.maskVisible == true ? 'is-visible' : '')"
+                     alt="">
+
+                <a href="{{pattern}}" target="_blank">
+                    <img ng-src="{{pattern}}" ng-if="pattern" alt="" class="img-responsive">
+                </a>
+
+                <a href="{{design}}" target="_blank">
+                    <img ng-src="{{design}}" ng-if="design" alt="" class="img-responsive">
+                </a>
+            </div>
+        </div>
+        <div class="layout-compare-item pull-left">
+            <p ng-show="!mask" class="layout-compare-description">No changes found!</p>
+            <p ng-show="mask" class="layout-compare-description">View</p>
+
+            <div ng-show="mask" class="mask-container">
+                <a href="{{new}}" target="_blank">
+                    <img ng-src="{{new}}" alt="" class="img-responsive">
+                </a>
+
+                <img ng-src="{{mask}}" class="mask img-responsive" ng-class="($root.maskVisible == true ? 'is-visible' : '')"
+                     alt="">
+            </div>
+        </div>
+    </div>
+</div>

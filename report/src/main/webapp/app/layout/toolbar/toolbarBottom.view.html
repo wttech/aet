@@ -1,0 +1,76 @@
+<!--
+
+    Automated Exploratory Tests
+
+    Copyright (C) 2013 Cognifide Limited
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<div class="toolbar-bottom">
+    <div class="toolbar-link">
+        <div class="ellipsis">
+            <h4 class="toolbar-link-header">
+                <span class="preformatted">{{toolbarBottom.viewMode}}:</span>
+                <span ng-if="toolbarBottom.viewMode != 'url'">{{toolbarBottom.model.name}}</span>
+                <a ng-if="toolbarBottom.viewMode == 'url'"
+                   href="{{toolbarBottom.model.domain + toolbarBottom.model.url}}" target="_blank"
+                   data-toggle="popover"
+                   data-content="Click to open: {{toolbarBottom.model.domain + toolbarBottom.model.url}}"
+                   data-trigger="hover"
+                   data-container="body">{{toolbarBottom.model.name}}</a>
+            </h4>
+        </div>
+    </div>
+    <div class="toolbar-blocks">
+        <div class="toolbar-btns is-absolute">
+
+            <div class="toolbar-nav toolbar-nav-urls pull-left"
+                 ng-show="toolbarBottom.viewMode == 'url' || toolbarBottom.viewMode == 'test'">
+                <a ng-click="traverseTree('up')">
+                    <div class="nav-prev">
+                        <i class="glyphicon glyphicon-chevron-left"></i>
+                    </div>
+                </a>
+
+                <a ng-click="traverseTree('down')"
+                   ng-show="toolbarBottom.viewMode == 'url' || toolbarBottom.viewMode == 'test'">
+                    <div class="nav-next">
+                        <i class="glyphicon glyphicon-chevron-right"></i>
+                    </div>
+                </a>
+            </div>
+            <span class="comments-status pull-left"
+                  data-toggle="popover"
+                  data-ng-class="toolbarBottom.model.comment ? 'present' : 'absent'"
+                  data-content="<p>{{toolbarBottom.model.comment}}</p><br><span class='preformatted'>Click to update this {{toolbarBottom.viewMode}} note</span>"
+                  data-html="true" data-trigger="hover"
+                  data-ng-click="toolbarBottom.displayCommentModal()">
+                <i class="glyphicon glyphicon-comment"></i>
+            </span>
+
+            <span class="button js-rebase-suite button-blue"
+                  data-ng-if="toolbarBottom.showAcceptButton()"
+                  data-ng-click="toolbarBottom.updatePatterns()"></i>
+                Accept {{toolbarBottom.viewMode}}
+            </span>
+
+            <span class="button js-rebase-suite button-red"
+                  data-ng-if="toolbarBottom.showRevertButton()"
+                  data-ng-click="toolbarBottom.revertAcceptedPatterns()">
+                <i class="glyphicon glyphicon-cloud-download"></i>
+                Revert {{toolbarBottom.viewMode}}
+            </span>
+        </div>
+    </div>
+</div>
