@@ -863,6 +863,15 @@
           <version>2.5.3</version>
           <configuration>
             <tagNameFormat>@{project.version}</tagNameFormat>
+            <!--
+              will install released version in local maven repository
+            -->
+            <preparationGoals>clean install</preparationGoals>
+            <!--
+              will skip running tests after new development version is set
+              see: http://maven.apache.org/maven-release/maven-release-plugin/perform-mojo.html#goals
+            -->
+            <goals>deploy site-deploy -DskipTests</goals>
           </configuration>
         </plugin>
         <plugin>
