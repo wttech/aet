@@ -103,3 +103,25 @@ Remember to provide path to your `suite.xml` file.
 Once the test run finishes there should be `target` directory created inside a dicrectory containing the `pom.xml` file. Inside the `target` directory you should find `redirect.html` file. Open this file and the test report will show up in your web browser.
 
 Congratulations! You have successfully created and run your first AET test.
+
+
+### Build and upload application
+You need JDK 8 and Maven 3.3.1 or newer to build AET application.
+To build and upload application use following command from application root:
+```
+mvn clean install -P upload
+```
+
+#### Vagrant upload prequisities:
+In order to be able to deploy bundles to Karaf instance define vagrant vm location in your setting.xml file (`$USER_HOME/m2`):
+```
+<server>
+  <id>aet-vagrant-instance</id>
+  <username>developer</username>
+  <password>developer</password>
+  <configuration>
+    <sshExecutable>plink</sshExecutable>
+    <scpExecutable>pscp</scpExecutable>
+  </configuration>
+</server>
+```
