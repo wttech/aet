@@ -119,7 +119,7 @@
       <dependency>
         <groupId>${project.groupId}</groupId>
         <artifactId>sample-site</artifactId>
-        <version>${aet.sample.site.version}</version>
+        <version>${project.version}</version>
         <type>war</type>
       </dependency>
     </dependencies>
@@ -377,7 +377,7 @@
                 </goals>
                 <configuration>
                   <from>
-                    ${project.build.directory}/${project.groupId}.sample-site-${aet.sample.site.version}.war
+                    ${project.build.directory}/${project.groupId}.sample-site-${project.version}.war
                   </from>
                   <to>${project.build.directory}/sample-site.war</to>
                 </configuration>

@@ -112,7 +112,6 @@
     <finalName.extension>jar</finalName.extension>
 
     <!-- Versions -->
-    <aet.sample.site.version>1.0.0</aet.sample.site.version>
     <source.java.version>1.7</source.java.version>
     <jetty.plugin.version>9.2.10.v20150310</jetty.plugin.version>
     <mongo.driver.version>3.2.2</mongo.driver.version>

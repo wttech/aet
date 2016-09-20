@@ -31,7 +31,6 @@
   </parent>
 
   <artifactId>sample-site</artifactId>
-  <version>${aet.sample.site.version}</version>
   <packaging>war</packaging>
 
   <name>AET :: Integration Tests :: Sample Site</name>
@@ -138,7 +137,7 @@
                 </goals>
                 <configuration>
                   <from>
-                    ${project.build.directory}/${project.groupId}.sample-site-${aet.sample.site.version}.${finalName.extension}
+                    ${project.build.directory}/${project.groupId}.sample-site-${project.version}.${finalName.extension}
                   </from>
                   <to>${project.build.directory}/${project.artifactId}.${finalName.extension}</to>
                 </configuration>
