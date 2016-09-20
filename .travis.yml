@@ -1,6 +1,5 @@
-sudo: false
 language: java
-script: mvn clean package
+sudo: false
 jdk:
   - oraclejdk8
   - oraclejdk7
