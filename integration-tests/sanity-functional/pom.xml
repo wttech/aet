@@ -48,7 +48,7 @@
       <dependency>
         <groupId>junit</groupId>
         <artifactId>junit</artifactId>
-        <version>${junit.version}</version>
+        <version>4.11</version>
         <scope>compile</scope>
       </dependency>
       <!-- functional-tests (bobcat and cucumber need compile scope) -->
@@ -117,6 +117,36 @@
   <build>
     <pluginManagement>
       <plugins>
+        <!-- This plugin validates maven configuration and build environment -->
+        <plugin>
+          <groupId>org.apache.maven.plugins</groupId>
+          <artifactId>maven-enforcer-plugin</artifactId>
+          <version>1.4.1</version>
+          <dependencies>
+            <dependency>
+              <groupId>org.codehaus.mojo</groupId>
+              <artifactId>extra-enforcer-rules</artifactId>
+              <version>1.0-beta-4</version>
+            </dependency>
+            <dependency>
+              <groupId>com.github.ferstl</groupId>
+              <artifactId>pedantic-pom-enforcers</artifactId>
+              <version>1.2.0</version>
+            </dependency>
+          </dependencies>
+        </plugin>
+        <!-- keeps pom.xml files structured consistently -->
+        <plugin>
+          <groupId>com.github.ekryd.sortpom</groupId>
+          <artifactId>sortpom-maven-plugin</artifactId>
+          <version>2.5.0</version>
+        </plugin>
+        <!-- plugin for checking if licensing header is present in headers of all files -->
+        <plugin>
+          <groupId>org.apache.rat</groupId>
+          <artifactId>apache-rat-plugin</artifactId>
+          <version>0.12</version>
+        </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-surefire-plugin</artifactId>
@@ -125,6 +155,82 @@
       </plugins>
     </pluginManagement>
     <plugins>
+      <plugin>
+        <groupId>com.github.ekryd.sortpom</groupId>
+        <artifactId>sortpom-maven-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>validate</phase>
+            <goals>
+              <goal>verify</goal>
+            </goals>
+            <configuration>
+              <nrOfIndentSpace>2</nrOfIndentSpace>
+              <keepBlankLines>true</keepBlankLines>
+              <createBackupFile>false</createBackupFile>
+              <expandEmptyElements>false</expandEmptyElements>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>enforce-poms-quality</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <!-- default rules -->
+                <requireMavenVersion>
+                  <version>3.1.0</version>
+                </requireMavenVersion>
+                <requireJavaVersion>
+                  <version>1.8</version>
+                </requireJavaVersion>
+                <!-- Mojo extra-enforcer-rules -->
+                <banCircularDependencies />
+                <!-- pedantic-pom-enforcers rules -->
+                <moduleOrder implementation="com.github.ferstl.maven.pomenforcers.PedanticModuleOrderEnforcer" />
+                <dependencConfiguration implementation="com.github.ferstl.maven.pomenforcers.PedanticDependencyConfigurationEnforcer" />
+                <pluginConfiguration implementation="com.github.ferstl.maven.pomenforcers.PedanticPluginConfigurationEnforcer" />
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- plugin for checking if licensing header is present in headers of all files -->
+      <plugin>
+        <groupId>org.apache.rat</groupId>
+        <artifactId>apache-rat-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>validate</phase>
+            <goals>
+              <goal>check</goal>
+            </goals>
+            <configuration>
+              <excludes>
+                <!-- Files that don't require a license header -->
+                <exclude>**/LICENSE</exclude>
+                <exclude>**/target/**</exclude>
+
+                <!-- Eclipse files -->
+                <exclude>**/.project</exclude>
+                <exclude>**/.classpath</exclude>
+
+                <!-- IntelliJ files -->
+                <exclude>**/.idea/**</exclude>
+                <exclude>**/*.iml</exclude>
+              </excludes>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-surefire-plugin</artifactId>
