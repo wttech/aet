@@ -869,7 +869,7 @@
               will skip running tests after new development version is set
               see: http://maven.apache.org/maven-release/maven-release-plugin/perform-mojo.html#goals
             -->
-            <goals>deploy site-deploy -DskipTests</goals>
+            <goals>deploy -DskipTests</goals>
           </configuration>
         </plugin>
         <plugin>
