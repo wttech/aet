@@ -23,7 +23,7 @@
 
   <groupId>com.cognifide.aet</groupId>
   <artifactId>aet-root</artifactId>
-  <version>2.0.0-SNAPSHOT</version>
+  <version>2.0.0-rc2</version>
   <packaging>pom</packaging>
 
   <name>AET</name>
@@ -85,7 +85,7 @@
   <scm>
     <connection>scm:git:https://github.com/Cognifide/aet.git</connection>
     <developerConnection>scm:git:git@github.com:Cognifide/aet.git</developerConnection>
-    <tag>HEAD</tag>
+    <tag>2.0.0-rc2</tag>
     <url>https://github.com/Cognifide/aet</url>
   </scm>
   
