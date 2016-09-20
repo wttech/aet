@@ -1,0 +1,269 @@
+/*
+ * Automated Exploratory Tests
+ *
+ * Copyright (C) 2013 Cognifide Limited
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+.reports-list {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 5px;
+  padding-right: 5px;
+
+  &-item {
+    overflow: hidden;
+    flex-basis: calc(25% - 7.5px);
+    height: 283px;
+    box-shadow: 0 3px 0 0 rgba(211, 211, 211, 0.004);
+    margin-bottom: 15px;
+    border: solid 1px $border-color;
+    border-bottom: solid 5px $border-color;
+    background: $passed_bg;
+    border-top: solid 10px $passed;
+    box-sizing: border-box;
+    min-width: 200px;
+    margin-right: 10px;
+
+    &-url {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      line-height: 40px;
+      text-align: left;
+      width: 100%;
+      padding: 0 25px;
+      background: $white;
+
+      span {
+        color: $gray_dark;
+        display: table;
+        font-family: $font_light;
+      }
+
+      &:before {
+        left: 0;
+        padding-left: 1em;
+        margin-left: 0;
+      }
+    }
+
+    @media (max-width: 1200px) {
+      flex-basis: calc(33.33% - 7px);
+    }
+
+    &:nth-child(4n+4) {
+      @media (min-width: 1200px) {
+        margin-right: 0;
+      }
+    }
+
+    &:nth-child(3n+3) {
+      @media (max-width: 1200px) {
+        margin-right: 0;
+      }
+    }
+
+    /* Tile Style */
+
+    &.passed {
+      background: $passed_bg;
+      border-top: solid 10px $passed;
+
+      span, i {
+        color: $passed;
+      }
+    }
+
+    &.failed,
+    &.processing_error {
+      background: $failed_bg;
+      border-top: solid 10px $failed;
+
+      span, i {
+        color: $failed;
+      }
+    }
+
+    &.rebased {
+      background: $rebased_bg;
+      border-top: solid 10px darken($rebased, 10%);
+
+      span, i {
+        color: $white
+      }
+
+    }
+
+    &.warning {
+      background: $warning_bg;
+      border-top: solid 10px $warning;
+
+      span, i {
+        color: $warning
+      }
+    }
+
+    &:hover {
+      .test-icons {
+        z-index: 2;
+        opacity: 1;
+      }
+    }
+
+    a {
+      @include transition(none);
+      display: table;
+      height: 269px;
+      width: 100%;
+      padding: 30px 10px 40px;
+    }
+
+    &.warning,
+    &.rebased,
+    &.processing_error,
+    &.failed {
+      .icon {
+        height: 70px;
+        padding-top: 7px;
+      }
+    }
+
+    i {
+      &.passed {
+        @extend .glyphicon-ok;
+      }
+
+      &.warning {
+        @extend .glyphicon-alert;
+      }
+
+      &.failed {
+        @extend .glyphicon-remove;
+      }
+
+      &.rebased {
+        @extend .glyphicon-cloud-upload;
+      }
+    }
+  }
+
+  /* List style*/
+
+  .test-count {
+    text-align: center;
+    overflow: hidden;
+
+    i {
+      font-size: 45px;
+      line-height: 50px;
+      display: block;
+      font-family: $font_bold;
+    }
+
+    span {
+      font-size: 18px;
+      font-family: $font_bold;
+      display: block;
+      word-break: break-all;
+    }
+
+    &-large {
+      border-right: 0 none;
+    }
+  }
+
+  .errors-count, .success-count {
+    @extend .test-count;
+  }
+
+  .errors-count {
+    border-right: solid 1px $failed;
+
+    i {
+      color: $failed;
+    }
+
+    span {
+      color: $failed;
+    }
+  }
+
+  .success-count {
+    i {
+      color: $passed;
+    }
+
+    span {
+      color: $passed;
+    }
+  }
+
+  .errors-list {
+    span {
+      font-family: $font_bold;
+      font-size: 18px;
+      color: $red_dark;
+    }
+
+    ul {
+      margin: 0 0 10px 0;
+      padding: 0;
+      list-style: none;
+
+      li {
+        font-size: 14px;
+        color: $red_dark;
+        position: relative;
+        padding-left: 15px;
+
+        &:before {
+          content: '-';
+          position: absolute;
+          left: 0;
+        }
+      }
+    }
+  }
+}
+
+.test-icons {
+  @include transition(all .3s);
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  left: 0;
+  bottom: 67px;
+  z-index: -1;
+  opacity: 0;
+
+  span {
+    border-radius: 999px;
+    display: inline-block;
+    width: 35px;
+    height: 35px;
+    line-height: 39px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+    color: $white;
+  }
+
+  &-comment {
+    background: $gray-darker;
+  }
+
+  &-rebase {
+    background: $rebased;
+  }
+}

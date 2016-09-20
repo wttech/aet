@@ -1,0 +1,77 @@
+{
+  "correlationId" : "unittest-project-0",
+  "company" : "unittest",
+  "project" : "project",
+  "name" : "unitTestingSuite",
+  "tests" : [
+    {
+      "name" : "test-one",
+      "urls" : [
+        {
+          "name" : "/our-company",
+          "url" : "/our-company",
+          "canonicalUrl" : "/our-company",
+          "domain" : "https://cognifide.com",
+          "steps" : [
+            {
+              "index" : 0,
+              "name" : "open",
+              "stepResult" : {
+                "status" : "PAGE_OPENED"
+              },
+              "type" : "open"
+            },
+            {
+              "index": 1,
+              "name": "sleep",
+              "type": "sleep",
+              "parameters": {
+                "duration": "4000"
+              }
+            },
+            {
+              "index" : 2,
+              "name" : "desktop",
+              "comparators" : [
+                {
+                  "type" : "screen",
+                  "parameters" : {
+                    "comparator" : "layout"
+                  }
+                }
+              ],
+              "type" : "screen",
+              "parameters" : {
+                "name" : "desktop"
+              }
+            },
+            {
+              "index": 3,
+              "name": "sleep",
+              "type": "sleep",
+              "parameters": {
+                "duration": "4000"
+              }
+            },
+            {
+              "index" : 4,
+              "name" : "mobile",
+              "comparators" : [
+                {
+                  "type" : "screen",
+                  "parameters" : {
+                    "comparator" : "layout"
+                  }
+                }
+              ],
+              "type" : "screen",
+              "parameters" : {
+                "name" : "mobile"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

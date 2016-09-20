@@ -1,0 +1,212 @@
+/*
+ * Automated Exploratory Tests
+ *
+ * Copyright (C) 2013 Cognifide Limited
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+.toolbar {
+  @include transition(left 0.3s, width 0.3s);
+  position: fixed;
+  left: 0;
+  height: 125px;
+  width: 100%;
+  border-bottom: solid 1px $border_color;
+
+  .menu-expanded & {
+    left: 350px;
+    width: calc(100% - 350px);
+  }
+
+  &-holder {
+    z-index: 10;
+  }
+
+  &-top {
+    background: $gray_light;
+    border-bottom: solid 1px #ededed;
+    background: $gray_light;
+    padding: 0 20px;
+    display: table;
+    width: 100%;
+  }
+
+  &-toggle {
+    float: left;
+    cursor: pointer;
+    padding-top: 17px;
+
+    span {
+      display: block;
+      width: 20px;
+      background: $gray_dark;
+      height: 3px;
+      margin-bottom: 3px;
+    }
+  }
+
+  &-link {
+    @include transition(width, 0.3s);
+    width: calc(100vw - 570px);
+    float: left;
+    background: $white;
+
+    > {
+      float: right;
+    }
+  }
+
+  &-block {
+    text-align: center;
+    border-left: solid 1px $border_color;
+    border-right: solid 1px $border_color;
+    font-family: $font_light;
+    color: rgb(119, 119, 124);
+    font-size: 14px;
+    float: left;
+    line-height: 49px;
+    padding: 0 22px;
+
+    i {
+      cursor: pointer;
+      font-size: 20px;
+      vertical-align: middle;
+    }
+  }
+
+  &-blocks {
+    float: right;
+
+    &.is-absolute {
+      right: 0;
+      padding-right: 15px;
+      background: $white;
+      position: absolute;
+    }
+  }
+
+  &-bottom {
+    display: table;
+    width: 100%;
+    padding: 0 20px;
+    background: $white;
+
+    h4 {
+      font-size: 24px;
+      font-weight: normal;
+      color: $gray_darker;
+      padding-right: 20px;
+      line-height: 54px;
+      display: table;
+      a {
+        color: $gray_darker;
+
+        &:hover {
+          color: darken($gray_darker, 10%);
+        }
+      }
+    }
+  }
+
+  &-nav {
+    padding-top: 5px;
+    margin-right: 20px;
+
+    &.is-absolute {
+      right: 15px;
+      background: $white;
+      position: absolute;
+    }
+
+    div {
+      float: left;
+      border: solid 1px $border-color;
+      margin-left: -1px;
+      padding: 0 12px;
+      cursor: pointer;
+      background: $white;
+
+      i {
+        margin: 5px 0 8px 0;
+        display: block;
+        color: $gray_darker;
+      }
+    }
+  }
+  &-btns {
+    border-left: solid 1px $border-color;
+    padding-left: 30px;
+    padding-top: 15px;
+    height: 73px;
+    display: table;
+
+    .button {
+      float: left;
+      margin-left: 12px;
+    }
+
+    .tab-content-toolbar & {
+      padding-top: 3px;
+      padding-right: 15px;
+      height: 47px;
+    }
+  }
+}
+
+.comments-status {
+  width: 45px;
+  font-family: $font_light;
+  font-size: 30px;
+  display: block;
+  line-height: 44px;
+  cursor: pointer;
+
+  &.small {
+    line-height: 37px;
+    font-size: 11px;
+  }
+
+  &.present {
+    color: $yellow;
+  }
+
+  &.absent {
+    color: $grayish;
+  }
+}
+
+.menu-expanded {
+
+  .toolbar-link {
+    width: calc(100vw - 920px);
+  }
+}
+
+.tab-content-toolbar {
+
+  @media (max-width: 1300px) {
+    height: 94px;
+  }
+
+  .toolbar-btns, .comments-status {
+    width: auto;
+  }
+}
+
+.button-dark.js-trigger-modal {
+  display: inline-block;
+}
+
+.preformatted {
+  font-family: monospace;
+}

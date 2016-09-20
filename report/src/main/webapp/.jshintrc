@@ -1,0 +1,25 @@
+{
+  // see defaults at
+  // https://github.com/jshint/jshint/blob/master/examples/.jshintrc
+
+  // Enforcing
+  "camelcase": true,
+  "immed": true,
+  "newcap": true,
+  "nonew": true,
+  "quotmark": true,
+  "maxparams": 10,
+
+  // Environments
+  "jquery": true,
+
+  // Custom Globals
+  "globals": {
+    "_": true,
+    "define": true,
+    "alert": true,
+    "console":true,
+    "angular":true,
+    "require":true
+  }
+}

@@ -1,0 +1,70 @@
+{
+  "nonExcludedIssues": [
+    {
+      "type": "ERROR",
+      "message": "This button element does not have a name available to an accessibility API. Valid names are: title attribute, element content.",
+      "code": "WCAG2A.Principle4.Guideline4_1.4_1_2.H91.Button.Name",
+      "elementString": "\u003cbutton class\u003d\"navbar-toggle\" type\u003d\"button\" data-toggle\u003d\"collapse\" data-target\u003d\"#navbar-main\"\u003e\n\t\t\t\t\t\u003cspan class\u003d\"icon-bar\"\u003e\u003c/span\u003e \u003cspan class\u003d\"icon-bar\"\u003e\u003c/span\u003e \u003cspan class\u003d\"icon-bar\"\u003e\u003c/span\u003e\n\t\t\t\t\u003c/button\u003e",
+      "elementStringAbbreviated": "\u0026lt;button class\u003d\u0026quot;navbar-toggle\u0026quot; type\u003d\u0026quot;button\u0026quot; data-toggle\u003d\u0026quot;collapse\u0026quot;...ar\u0026quot;\u0026gt;\u0026lt;/span\u0026gt; \u0026lt;span class\u003d\u0026quot;icon-bar\u0026quot;\u0026gt;\u0026lt;/span\u0026gt;\n\t\t\t\t\u0026lt;/button\u0026gt;",
+      "lineNumber": 21,
+      "columnNumber": 5,
+      "excluded": false
+    },
+    {
+      "type": "ERROR",
+      "message": "This select element does not have a name available to an accessibility API. Valid names are: label element, title attribute.",
+      "code": "WCAG2A.Principle4.Guideline4_1.4_1_2.H91.Select.Name",
+      "elementString": "\u003cselect multiple\u003d\"\" class\u003d\"form-control\"\u003e\n\t\t\t\t\t\t\t\t\t\t\t\u003coption\u003e1\u003c/option\u003e\n\t\t\t\t\t\t\t\t\t\t\t\u003coption\u003e2\u003c/option\u003e\n\t\t\t\t\t\t\t\t\t\t\t\u003coption\u003e3\u003c/option\u003e\n\t\t\t\t\t\t\t\t\t\t\t\u003coption\u003e4\u003c/option\u003e\n\t\t\t\t\t\t\t\t\t\t\t\u003coption\u003e5\u003c/option\u003e\n\t\t\t\t\t\t\t\t\t\t\u003c/select\u003e",
+      "elementStringAbbreviated": "\u0026lt;select multiple\u003d\u0026quot;\u0026quot; class\u003d\u0026quot;form-control\u0026quot;\u0026gt;\n\t\t\t\t\t\t\t\t\t\t\t\u0026lt;option\u0026gt;1\u0026lt;/...\u0026lt;option\u0026gt;4\u0026lt;/option\u0026gt;\n\t\t\t\t\t\t\t\t\t\t\t\u0026lt;option\u0026gt;5\u0026lt;/option\u0026gt;\n\t\t\t\t\t\t\t\t\t\t\u0026lt;/select\u0026gt;",
+      "lineNumber": 249,
+      "columnNumber": 26,
+      "excluded": false
+    },
+    {
+      "type": "ERROR",
+      "message": "This form field should be labelled in some way. Use the label element (either with a \"for\" attribute or wrapped around the form field), or \"title\", \"aria-label\" or \"aria-labelledby\" attributes as appropriate.",
+      "code": "WCAG2A.Principle1.Guideline1_3.1_3_1.F68",
+      "elementString": "\u003cselect multiple\u003d\"\" class\u003d\"form-control\"\u003e\n\t\t\t\t\t\t\t\t\t\t\t\u003coption\u003e1\u003c/option\u003e\n\t\t\t\t\t\t\t\t\t\t\t\u003coption\u003e2\u003c/option\u003e\n\t\t\t\t\t\t\t\t\t\t\t\u003coption\u003e3\u003c/option\u003e\n\t\t\t\t\t\t\t\t\t\t\t\u003coption\u003e4\u003c/option\u003e\n\t\t\t\t\t\t\t\t\t\t\t\u003coption\u003e5\u003c/option\u003e\n\t\t\t\t\t\t\t\t\t\t\u003c/select\u003e",
+      "elementStringAbbreviated": "\u0026lt;select multiple\u003d\u0026quot;\u0026quot; class\u003d\u0026quot;form-control\u0026quot;\u0026gt;\n\t\t\t\t\t\t\t\t\t\t\t\u0026lt;option\u0026gt;1\u0026lt;/...\u0026lt;option\u0026gt;4\u0026lt;/option\u0026gt;\n\t\t\t\t\t\t\t\t\t\t\t\u0026lt;option\u0026gt;5\u0026lt;/option\u0026gt;\n\t\t\t\t\t\t\t\t\t\t\u0026lt;/select\u0026gt;",
+      "lineNumber": 249,
+      "columnNumber": 26,
+      "excluded": false
+    },
+    {
+      "type": "ERROR",
+      "message": "Form does not contain a submit button (input type\u003d\"submit\", input type\u003d\"image\", or button type\u003d\"submit\").",
+      "code": "WCAG2A.Principle3.Guideline3_2.3_2_2.H32.2",
+      "elementString": "\u003cform class\u003d\"bs-component\"\u003e\n\t\t\t\t\t\t\u003cdiv class\u003d\"form-group\"\u003e\n\t\t\t\t\t\t\t\u003clabel class\u003d\"control-label\" for\u003d\"focusedInput\"\u003eFocused\n\t\t\t\t\t\t\t\tinput\u003c/label\u003e \u003cinput class\u003d\"form-control\" id\u003d\"focusedInput\" value\u003d\"This is focused...\" type\u003d\"text\"\u003e\n\t\t\t\t\t\t\u003c/div\u003e\n\n\t\t\t\t\t\t\u003cdiv class\u003d\"form-group\"\u003e\n\t\t\t\t\t\t\t\u003clabel class\u003d\"control-label\" for\u003d\"disabledInput\"\u003eDisabled\n\t\t\t\t\t\t\t\tinput\u003c/label\u003e \u003cinput class\u003d\"form-control\" id\u003d\"disabledInput\" placeholder\u003d\"Disabled input here...\" disabled\u003d\"\" type\u003d\"text\"\u003e\n\t\t\t\t\t\t\u003c/div\u003e\n\n\t\t\t\t\t\t\u003cdiv class\u003d\"form-group has-warning\"\u003e\n\t\t\t\t\t\t\t\u003clabel class\u003d\"control-label\" for\u003d\"inputWarning\"\u003eInput\n\t\t\t\t\t\t\t\twarning\u003c/label\u003e \u003cinput class\u003d\"form-control\" id\u003d\"inputWarning\" type\u003d\"text\"\u003e\n\t\t\t\t\t\t\u003c/div\u003e\n\n\t\t\t\t\t\t\u003cdiv class\u003d\"form-group has-error\"\u003e\n\t\t\t\t\t\t\t\u003clabel class\u003d\"control-label\" for\u003d\"inputError\"\u003eInput error\u003c/label\u003e\n\t\t\t\t\t\t\t\u003cinput class\u003d\"form-control\" id\u003d\"inputError\" type\u003d\"text\"\u003e\n\t\t\t\t\t\t\u003c/div\u003e\n\n\t\t\t\t\t\t\u003cdiv class\u003d\"form-group has-success\"\u003e\n\t\t\t\t\t\t\t\u003clabel class\u003d\"control-label\" for\u003d\"inputSuccess\"\u003eInput\n\t\t\t\t\t\t\t\tsuccess\u003c/label\u003e \u003cinput class\u003d\"form-control\" id\u003d\"inputSuccess\" type\u003d\"text\"\u003e\n\t\t\t\t\t\t\u003c/div\u003e\n\n\t\t\t\t\t\t\u003cdiv class\u003d\"form-group\"\u003e\n\t\t\t\t\t\t\t\u003clabel class\u003d\"control-label\" for\u003d\"inputLarge\"\u003eLarge input\u003c/label\u003e\n\t\t\t\t\t\t\t\u003cinput class\u003d\"form-control input-lg\" id\u003d\"inputLarge\" type\u003d\"text\"\u003e\n\t\t\t\t\t\t\u003c/div\u003e\n\n\t\t\t\t\t\t\u003cdiv class\u003d\"form-group\"\u003e\n\t\t\t\t\t\t\t\u003clabel class\u003d\"control-label\" for\u003d\"inputDefault\"\u003eDefault\n\t\t\t\t\t\t\t\tinput\u003c/label\u003e \u003cinput class\u003d\"form-control\" id\u003d\"inputDefault\" type\u003d\"text\"\u003e\n\t\t\t\t\t\t\u003c/div\u003e\n\n\t\t\t\t\t\t\u003cdiv class\u003d\"form-group\"\u003e\n\t\t\t\t\t\t\t\u003clabel class\u003d\"control-label\" for\u003d\"inputSmall\"\u003eSmall input\u003c/label\u003e\n\t\t\t\t\t\t\t\u003cinput class\u003d\"form-control input-sm\" id\u003d\"inputSmall\" type\u003d\"text\"\u003e\n\t\t\t\t\t\t\u003c/div\u003e\n\n\t\t\t\t\t\t\u003cdiv class\u003d\"form-group\"\u003e\n\t\t\t\t\t\t\t\u003clabel class\u003d\"control-label\"\u003eInput addons\u003c/label\u003e\n\t\t\t\t\t\t\t\u003cdiv class\u003d\"input-group\"\u003e\n\t\t\t\t\t\t\t\t\u003cspan class\u003d\"input-group-addon\"\u003e$\u003c/span\u003e \u003cinput class\u003d\"form-control\" type\u003d\"text\"\u003e \u003cspan class\u003d\"input-group-btn\"\u003e\n\t\t\t\t\t\t\t\t\t\u003cbutton class\u003d\"btn btn-default\" type\u003d\"button\"\u003eButton\u003c/button\u003e\n\t\t\t\t\t\t\t\t\u003c/span\u003e\n\t\t\t\t\t\t\t\u003c/div\u003e\n\t\t\t\t\t\t\u003c/div\u003e\n\t\t\t\t\t\u003c/form\u003e",
+      "elementStringAbbreviated": "\u0026lt;form class\u003d\u0026quot;bs-component\u0026quot;\u0026gt;\n\t\t\t\t\t\t\u0026lt;div class\u003d\u0026quot;form-group\u0026quot;\u0026gt;\n\t\t\t\t\t\t\t\u0026...ton\u0026lt;/button\u0026gt;\n\t\t\t\t\t\t\t\t\u0026lt;/span\u0026gt;\n\t\t\t\t\t\t\t\u0026lt;/div\u0026gt;\n\t\t\t\t\t\t\u0026lt;/div\u0026gt;\n\t\t\t\t\t\u0026lt;/form\u0026gt;",
+      "lineNumber": 270,
+      "columnNumber": 6,
+      "excluded": false
+    },
+    {
+      "type": "ERROR",
+      "message": "This text input element does not have a name available to an accessibility API. Valid names are: label element, title attribute.",
+      "code": "WCAG2A.Principle4.Guideline4_1.4_1_2.H91.InputText.Name",
+      "elementString": "\u003cinput class\u003d\"form-control\" type\u003d\"text\"\u003e",
+      "elementStringAbbreviated": "\u0026lt;input class\u003d\u0026quot;form-control\u0026quot; type\u003d\u0026quot;text\u0026quot;\u0026gt;",
+      "lineNumber": 314,
+      "columnNumber": 50,
+      "excluded": false
+    },
+    {
+      "type": "ERROR",
+      "message": "This form field should be labelled in some way. Use the label element (either with a \"for\" attribute or wrapped around the form field), or \"title\", \"aria-label\" or \"aria-labelledby\" attributes as appropriate.",
+      "code": "WCAG2A.Principle1.Guideline1_3.1_3_1.F68",
+      "elementString": "\u003cinput class\u003d\"form-control\" type\u003d\"text\"\u003e",
+      "elementStringAbbreviated": "\u0026lt;input class\u003d\u0026quot;form-control\u0026quot; type\u003d\u0026quot;text\u0026quot;\u0026gt;",
+      "lineNumber": 314,
+      "columnNumber": 50,
+      "excluded": false
+    }
+  ],
+  "excludedIssues": [],
+  "errorCount": 6,
+  "warningCount": 0,
+  "noticeCount": 0,
+  "showWarning": false,
+  "showNotice": false
+}

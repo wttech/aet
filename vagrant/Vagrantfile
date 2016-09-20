@@ -1,0 +1,101 @@
+#
+# Automated Exploratory Tests
+#
+# Copyright (C) 2013 Cognifide Limited
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = '2'
+
+Vagrant.require_version '>= 1.5.0'
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.hostname = 'aet-vagrant'
+  config.vm.box = 'opscode-centos-6.7'
+  config.vm.box_url = 'http://opscode-vm-bento.s3.amazonaws.com/vagrant/virtualbox/opscode_centos-6.7_chef-provisionerless.box'
+  config.vm.box_check_update = true
+
+  config.vm.network :private_network, ip: '192.168.123.100'
+  # Karaf
+  config.vm.network 'forwarded_port', guest: 8181, host: 8181
+  # Karaf debug port
+  config.vm.network 'forwarded_port', guest: 5005, host: 5005
+  # Tomcat
+  config.vm.network 'forwarded_port', guest: 9090, host: 9090
+  # ActiveMQ
+  config.vm.network 'forwarded_port', guest: 61616, host: 61616
+  # ActiveMQ Web Console
+  config.vm.network 'forwarded_port', guest: 8161, host: 8161
+  # ActiveMQ JMX
+  config.vm.network 'forwarded_port', guest: 11199, host: 11199
+  # Mongo DB
+  config.vm.network 'forwarded_port', guest: 27017, host: 27017
+
+  # config.vm.synced_folder 'd:\sample\folder',
+  #   '/opt/aet',
+  #   owner: 'developer', group: 'developer'
+
+  config.vm.provider 'virtualbox' do |v|
+    v.memory = 6144
+    v.cpus = 4
+  end
+
+  config.hostmanager.enabled = true
+  config.hostmanager.manage_host = true
+  config.hostmanager.ignore_private_ip = false
+  config.hostmanager.include_offline = true
+
+  config.hostmanager.aliases = %w(
+    aet.local
+  )
+
+  config.omnibus.chef_version = '12.7.2'
+  config.berkshelf.enabled = true
+
+  config.vm.provision :chef_solo do |chef|
+    chef.json = {
+      "aet" => {
+        "karaf" => {
+          "java_max_mem" => "3072M",
+          "debug" => true
+        }
+      }
+    }
+    chef.run_list = [
+      "recipe[aet::_develop]",
+      "recipe[aet::karaf]",
+      "recipe[aet::deploy_configs]",
+      "recipe[aet::deploy_features]",
+      "recipe[aet::deploy_bundles]",
+      "recipe[aet::postdeploy_restart]",
+      "recipe[aet::apache]",
+      "recipe[aet::deploy_reports]",
+      "recipe[aet::tomcat]",
+      "recipe[aet::deploy_sample_site]",
+      "recipe[aet::display]",
+      "recipe[aet::mongo]",
+      "recipe[aet::activemq]",
+      "recipe[aet::browsermob]",
+      "recipe[aet::firefox]",
+      "recipe[aet::xvfb]",
+      "recipe[aet::reboot]"
+    ]
+  end
+
+  config.vm.provision 'shell', inline: 'ifconfig eth1 up'
+
+end

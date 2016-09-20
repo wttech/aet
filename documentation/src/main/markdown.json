@@ -1,0 +1,6 @@
+{
+    "build": "wiki/releases/2.0.0/Documentation-2.0.0.md",
+    "files": [
+        "DocumentationTemplate.md"
+    ]
+}

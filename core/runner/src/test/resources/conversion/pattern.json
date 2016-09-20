@@ -1,0 +1,109 @@
+{
+  "correlationId" : "unittest-project-0",
+  "company" : "unittest",
+  "project" : "project",
+  "name" : "unitTestingSuite",
+  "version" : 1,
+  "tests" : [
+    {
+      "name" : "test-one",
+      "comment" : "test level comment",
+      "urls" : [
+        {
+          "name" : "/our-company",
+          "url" : "/our-company",
+          "canonicalUrl" : "/our-company",
+          "domain" : "https://cognifide.com",
+          "comment" : "url level comment",
+          "steps" : [
+            {
+              "index" : 0,
+              "name" : "open",
+              "stepResult" : {
+                "status" : "PAGE_OPENED"
+              },
+              "type" : "open"
+            },
+            {
+              "index": 1,
+              "name": "sleep",
+              "stepResult": {
+                "status": "MODIFIED"
+              },
+              "type": "sleep",
+              "parameters": {
+                "duration": "4000"
+              }
+            },
+            {
+              "index" : 2,
+              "name" : "desktop",
+              "comment" : "step level comment",
+              "pattern" : "56ebbed87346a042e67ef462",
+              "stepResult" : {
+                "status" : "COLLECTED",
+                "artifactId" : "56ebbed87346a042e67ef462"
+              },
+              "comparators" : [
+                {
+                  "comment" : "screen comparator level comment",
+                  "stepResult" : {
+                    "status" : "PASSED"
+                  },
+                  "type" : "screen",
+                  "parameters" : {
+                    "comparator" : "layout"
+                  }
+                }
+              ],
+              "type" : "screen",
+              "parameters" : {
+                "name" : "desktop"
+              }
+            },
+            {
+              "index": 3,
+              "name": "sleep",
+              "stepResult": {
+                "status": "MODIFIED"
+              },
+              "type": "sleep",
+              "parameters": {
+                "duration": "4000"
+              }
+            },
+            {
+              "index" : 4,
+              "name" : "source",
+              "pattern" : "56f3b0a978139e1e6dabcd0e",
+              "stepResult" : {
+                "status" : "COLLECTED",
+                "artifactId" : "56f3b0a978139e1e6dabcd0e"
+              },
+              "comparators" : [
+                {
+                  "stepResult" : {
+                    "status" : "PASSED"
+                  },
+                  "filters" : [
+                    {
+                      "type" : "extract-element",
+                      "parameters" : {
+                        "elementId" : "date-panel"
+                      }
+                    }
+                  ],
+                  "type" : "source",
+                  "parameters" : {
+                    "comparator" : "source"
+                  }
+                }
+              ],
+              "type" : "source"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

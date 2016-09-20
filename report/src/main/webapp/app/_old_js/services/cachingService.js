@@ -1,0 +1,46 @@
+/*
+ * Automated Exploratory Tests
+ *
+ * Copyright (C) 2013 Cognifide Limited
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+define(['angularAMD', 'localStorageService', 'sessionStorageService'], function (angularAMD) {
+	'use strict';
+	angularAMD.factory('cachingService', function (localStorageService, sessionStorageService) {
+		function getStoreID(company, project, suite) {
+			return 'AET' + company + ',' + project + ',' + suite;
+		}
+		return {
+			storeSuiteData: function (company, project, suite, data) {
+				sessionStorageService.setObject(getStoreID(company, project, suite), data);
+			},
+			storeChangedSuiteData: function (company, project, suite, data) {
+				localStorageService.put(getStoreID(company, project, suite), data);
+			},
+			getSuiteData: function (company, project, suite) {
+				if (this.hasScheduledChanges(company, project, suite)) {
+					return localStorageService.get(getStoreID(company, project, suite));
+				}
+				return sessionStorageService.getObject(getStoreID(company, project, suite));
+			},
+			hasScheduledChanges: function (company, project, suite) {
+				return localStorageService.get(getStoreID(company, project, suite));
+			},
+			revertChanges: function (company, project, suite) {
+				localStorageService.remove(getStoreID(company, project, suite));
+				sessionStorageService.removeObject(getStoreID(company, project, suite));
+			}
+		};
+	});
+});

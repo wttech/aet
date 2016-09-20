@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Automated Exploratory Tests
+
+    Copyright (C) 2013 Cognifide Limited
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<suite name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
+	
+	<!-- STATUS CODES-Comparator START -->
+	<test name="comparator-StatusCodes-FAILED-no-filter" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes showExcluded="true"/>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/failed.jsp"/>
+			<url href="comparators/statuscodes/success.jsp"/>
+			<url href="comparators/statuscodes/noneexistingPage.jsp"/>
+		</urls>
+	</test>
+
+	<test name="comparator-StatusCodes-SUCCESS-filter-300-505" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes filterRange="300,500" showExcluded="true"/>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/success.jsp"/>
+		</urls>
+	</test>
+
+	<test name="comparator-StatusCodes-FAILED-filter-404-404" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+
+			<status-codes filterRange="404,404" showExcluded="true"/>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/noneexistingPage404.jsp"/>
+			<url href="comparators/statuscodes/failed.jsp"/>
+		</urls>
+	</test>
+
+	<test name="comparator-StatusCodes-SUCCESS-404-exclude-specific-url" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes filterCodes="404" showExcluded="true">
+				<exclude url="/sample-site/NonExistingResourceFile.png"/>
+			</status-codes>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/failed.jsp"/>
+		</urls>
+	</test>
+
+	<test name="comparator-StatusCodes-SUCCESS-404-exclude-pattern" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes filterCodes="404" showExcluded="true">
+				<exclude pattern="^.*png$"/>
+			</status-codes>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/failed.jsp"/>
+		</urls>
+	</test>
+
+	<test name="comparator-StatusCodes-SUCCESS-404-include-only-one-url" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes filterCodes="404" showExcluded="true">
+				<include url="/~/media/cognifide2014/avada-assets/cognifide-expertly-done.png"/>
+			</status-codes>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/failed.jsp"/>
+		</urls>
+	</test>
+
+	<test name="comparator-StatusCodes-SUCCESS-404-include-only-pattern" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes filterCodes="404" showExcluded="true">
+				<include pattern="^.*logo.png$"/>
+			</status-codes>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/failed.jsp"/>
+		</urls>
+	</test>
+
+	<test name="comparator-StatusCodes-SUCCESS-exclude-all-external-by-url" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes showExcluded="true"/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes filterRange="300,600">
+				<exclude pattern=".*sample-site.*"/>
+				<exclude url="http://fonts.googleapis.com/css?family=Lato:300,400,700"/>
+				<exclude url="http://cognifide.com/%7E/media/cognifide2014/avada-assets/cognifide-expertly-done.png"/>
+				<exclude url="http://fonts.gstatic.com/s/lato/v11/KT3KS9Aol4WfR6Vas8kNcg.woff"/>
+				<exclude url="http://fonts.gstatic.com/s/lato/v11/wkfQbvfT_02e2IWO3yYueQ.woff"/>
+				<exclude url="http://fonts.gstatic.com/s/lato/v11/9k-RPmcnxYEPm8CNFsH2gg.woff"/>
+			</status-codes>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/failed.jsp"/>
+		</urls>
+	</test>
+
+	<test name="comparator-StatusCodes-SUCCESS-exclude-all-by-pattern" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes showExcluded="true">
+				<exclude pattern="^.*$"/>
+			</status-codes>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/failed.jsp"/>
+		</urls>
+	</test>
+
+	<test name="comparator-StatusCodes-FAILED-exclude-url-and-pattern-only-url" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes filterCodes="404" showExcluded="true">
+				<exclude url="/sample-site/NonExistingResourceFile.jpg"/>
+			</status-codes>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/exclude-url-and-pattern.jsp"/>
+		</urls>
+	</test>
+
+	<test name="comparator-StatusCodes-FAILED-exclude-url-and-pattern-only-pattern" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes filterCodes="404" showExcluded="true">
+				<exclude pattern="^.*png$"/>
+			</status-codes>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/exclude-url-and-pattern.jsp"/>
+		</urls>
+	</test>
+
+	<test name="comparator-StatusCodes-SUCCESS-exclude-url-and-pattern" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes filterCodes="404" showExcluded="true">
+				<exclude url="/sample-site/NonExistingResourceFile.jpg" pattern="^.*png$"/>
+			</status-codes>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/exclude-url-and-pattern.jsp"/>
+		</urls>
+	</test>
+
+	<test name="comparator-StatusCodes-SUCCESS-include-non-existing-url" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes showExcluded="true">
+				<include url="/sample-site/NonExistingUrl.png"/>
+			</status-codes>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/failed.jsp"/>
+		</urls>
+	</test>
+
+	<test name="comparator-StatusCodes-SUCCESS-include-non-matching-pattern" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes showExcluded="true">
+				<include pattern="^nonMatchingPattern$"/>
+			</status-codes>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/failed.jsp"/>
+		</urls>
+	</test>
+
+	<test name="comparator-StatusCodes-FAILED-include-exclude-only-exclude-url" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes showExcluded="true">
+				<exclude url="/sample-site/NonExistingResourceFile.png"/>
+			</status-codes>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/include-exclude.jsp"/>
+		</urls>
+	</test>
+
+	<test name="comparator-StatusCodes-FAILED-include-exclude-only-include-url" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes showExcluded="true">
+				<include url="/sample-site/NonExistingResourceFile.png"/>
+			</status-codes>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/include-exclude.jsp"/>
+		</urls>
+	</test>
+
+	<test name="comparator-StatusCodes-SUCCESS-include-exclude-url" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes showExcluded="true">
+				<include url="/sample-site/NonExistingResourceFile.png"/>
+				<exclude url="/sample-site/NonExistingResourceFile.png"/>
+			</status-codes>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/include-exclude.jsp"/>
+		</urls>
+	</test>
+
+	<test name="comparator-StatusCodes-FAILED-include-exclude-only-include-pattern" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes showExcluded="true">
+				<include pattern="^.*css$"/>
+			</status-codes>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/include-exclude.jsp"/>
+		</urls>
+	</test>
+
+	<test name="comparator-StatusCodes-FAILED-include-exclude-only-exclude-pattern" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes showExcluded="true">
+				<exclude pattern="^.*css$"/>
+			</status-codes>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/include-exclude.jsp"/>
+		</urls>
+	</test>
+
+	<test name="comparator-StatusCodes-SUCCESS-include-exclude-pattern" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes showExcluded="true">
+				<include pattern="^.*css$"/>
+				<exclude pattern="^.*css$"/>
+			</status-codes>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/include-exclude.jsp"/>
+		</urls>
+	</test>
+
+	<!-- STATUS CODES-Comparator END -->
+</suite>

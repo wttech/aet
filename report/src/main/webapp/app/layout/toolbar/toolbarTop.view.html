@@ -1,0 +1,49 @@
+<!--
+
+    Automated Exploratory Tests
+
+    Copyright (C) 2013 Cognifide Limited
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+
+<div class="toolbar-top">
+    <div class="toolbar-toggle" data-aet-sidepanel-toggle>
+        <i class="glyphicon glyphicon-chevron-left" data-ng-class="sidebarExpanded ? 'glyphicon-chevron-left' : 'glyphicon-chevron-right'"></i>
+    </div>
+    <div class="toolbar-blocks">
+        <div class="toolbar-block">
+            Total cases: <span class="name">{{toolbarTop.suiteStatistics.total}}</span>
+            ( <span class="status failed" data-toggle="popover" data-content="Failed cases" data-trigger="hover" data-container="body">{{toolbarTop.suiteStatistics.failed}}</span> /
+            <span class="status warning" data-toggle="popover" data-content="Warning cases" data-trigger="hover" data-container="body">{{toolbarTop.suiteStatistics.warning}}</span> /
+            <span class="status passed" data-toggle="popover" data-content="Passed cases" data-trigger="hover" data-container="body">{{toolbarTop.suiteStatistics.passed}}</span> /
+            <span class="status rebased" data-toggle="popover" data-content="Accepted cases" data-trigger="hover" data-container="body">{{toolbarTop.suiteStatistics.rebased}}</span> )
+            ( <span class="status rebased" data-toggle="popover" data-content="Not saved, accepted cases" data-trigger="hover" data-container="body">{{toolbarTop.suiteStatistics.acceptedPatterns}}</span> /
+            <span class="status failed" data-toggle="popover" data-content="Cases that may be accepted" data-trigger="hover" data-container="body">{{toolbarTop.suiteStatistics.patternsToAccept - toolbarTop.suiteStatistics.acceptedPatterns}}</span> )
+        </div>
+        <div class="toolbar-block">
+            Project: <span class="name">{{toolbarTop.suiteInfo.project}}</span>
+        </div>
+        <div class="toolbar-block">
+            Suite: <span class="name">{{toolbarTop.suiteInfo.name}}</span>
+            <span class="preformatted" data-toggle="popover" data-content="Suite version" data-trigger="hover" data-container="body">v{{toolbarTop.suiteInfo.version}}</span>
+        </div>
+        <div class="toolbar-block">
+            Last change: {{toolbarTop.suiteInfo.lastUpdate | date: 'yyyy-MM-dd HH:mm:ss'}}
+        </div>
+        <div class="toolbar-block" data-toggle="modal" data-target="#helpModal">
+            <i class="glyphicon glyphicon-question-sign"></i>
+        </div>
+    </div>
+</div>

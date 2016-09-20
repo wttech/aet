@@ -1,0 +1,26 @@
+#### Screen - layout
+
+##### Description
+For layout tests the results are presented as compared screenshots (as on screenshot below). 
+
+![Layout failure](assets/suiteReport/layout-failure.png)
+
+1. Test case's name (red font means failure).
+2. "Accept test case" button (available only when differences have been detected).
+3. "Show mask" switch - when the mask is on, differences are marked in a red colour over the collected screenshot, otherwise a raw screenshot is presented.
+4. Pattern - a screen which the "view" is compared to (if there is no pattern, the first collected screenshot is saved as the pattern).
+5. View - a screen that was taken during the test and it is compared to the pattern.
+6. Example of difference area.
+7. Date of obtaining current pattern.
+
+Test case's result is marked as successful when there is no difference between view and pattern (see screenshot below).
+
+![Layout success](assets/suiteReport/layout-success.png)
+
+##### What vulnerabilities it discovers
+* Differences found in page screenshots may indicate undesired changes in the page layout (css, html structure) e.g. when a new functionality was implemented 
+in a system it may have an impact on another system component(s). This may show itself as a changed page layout.
+* Content changes can be divided into two groups: wanted (are intended) and unwanted (a result of a mistake or an error). 
+An example of a change that is not a defect (wanted) is: the carousel component with the latest news items displayed or the twitter component displaying latest tweets. 
+In order to avoid detecting these sorts of changes in these dynamic components, the user can use the [[Hide Modifier|HideModifier]] feature in the suite definition. 
+Another example of the ‘wanted’ dynamic content is a cookies policy popup that may be hidden using the [[Cookie Modifier|CookieModifier]].

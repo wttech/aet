@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Automated Exploratory Tests
+
+    Copyright (C) 2013 Cognifide Limited
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <artifactId>aet-root</artifactId>
+    <groupId>com.cognifide.aet</groupId>
+    <version>2.0.0-SNAPSHOT</version>
+    <relativePath>../..</relativePath>
+  </parent>
+
+  <artifactId>sanity-functional</artifactId>
+
+  <name>AET :: Integration Tests :: Sanity Functional</name>
+  <description>BDD tests for AET</description>
+
+  <properties>
+    <runSuite>**/CucumberSuite.java</runSuite>
+    <configuration.paths>src/main/config</configuration.paths>
+
+    <!-- we are using newer version here as Bobcat needs JAVA 1.8 -->
+    <source.java.version>1.8</source.java.version>
+  </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <!-- junit scope needs to be overwritten for steps definition -->
+      <dependency>
+        <groupId>junit</groupId>
+        <artifactId>junit</artifactId>
+        <version>${junit.version}</version>
+        <scope>compile</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.cognifide.qa.bb</groupId>
+      <artifactId>bb-core</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.cognifide.qa.bb</groupId>
+      <artifactId>bb-junit</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.cognifide.qa.bb</groupId>
+      <artifactId>bb-reports</artifactId>
+    </dependency>
+
+    <!-- cucumber -->
+    <dependency>
+      <groupId>info.cukes</groupId>
+      <artifactId>cucumber-java</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>info.cukes</groupId>
+      <artifactId>cucumber-junit</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>info.cukes</groupId>
+      <artifactId>cucumber-guice</artifactId>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>default-test</id>
+            <configuration>
+              <systemPropertyVariables>
+                <configuration.paths>${configuration.paths}</configuration.paths>
+              </systemPropertyVariables>
+              <includes>
+                <include>${runSuite}</include>
+              </includes>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+</project>

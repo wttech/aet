@@ -1,0 +1,90 @@
+<!--
+
+    Automated Exploratory Tests
+
+    Copyright (C) 2013 Cognifide Limited
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>AET Report</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
+    <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon">
+</head>
+
+<body hide-popovers aet-keyboard-shortcuts ng-class="{'menu-expanded': sidebarExpanded }">
+
+<div class="screen-cover js-loader-app" ng-if="metadataSaveInProgress"><h1>Saving data...</h1></div>
+<div class="screen-cover data-loading-error" ng-if="metadataLoadingStatus == 'FAILED'"><h1>Failed to load metadata!</h1><p>Please make sure your url is valid.</p></div>
+<div class="screen-cover js-loader-app" ng-if="metadataLoadingStatus == 'IN_PROGRESS'"><h1>Loading data...</h1></div>
+
+<div ui-view="sidepanel"></div>
+<div class="main toolbar-holder">
+    <div class="toolbar">
+        <div ui-view="toolbarTop"></div>
+        <div ui-view="toolbarBottom"></div>
+    </div>
+</div>
+<div ui-view="content"></div>
+
+<!--
+    Comments modal
+-->
+<div class="modal fade" id="commentModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="glyphicon glyphicon-remove"></i></span></button>
+                <h4 class="modal-title" id="myModalLabel">Add Comment</h4>
+            </div>
+            <div class="modal-body">
+                <textarea name="" id="newComment" ng-model="newComment"></textarea>
+            </div>
+            <div class="modal-footer">
+                <button class="button button-blue pull-right" save-changes change="{{commentType}}" type="comment" text="{{newComment}}"><i class="glyphicon glyphicon-ok"></i>Save</button>
+                <button type="button" class="button button-dark pull-right" data-dismiss="modal"><i class="glyphicon glyphicon-remove"></i>Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--
+    Help modal
+-->
+<div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i class="glyphicon glyphicon-remove"></i></span></button>
+                <h4 class="modal-title">Handful keyboard shortcuts</h4>
+            </div>
+            <div class="modal-body">
+                <ul>
+                    <li>press <span class="label label-info">q</span> to expand/collapse all items</li>
+                    <li>press <span class="label label-info">e</span> to expand/collapse all error items</li>
+                    <li>use <span class="label label-info">[ ]</span> to navigate between test's urls</li>
+                    <li>press <span class="label label-info">m</span> to show/hide layout mask (when available)</li>
+                    <li>press <span class="label label-info">← / →</span> to navigate between url's tabs</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script src='assets/libs/requirejs/require.js' data-main="app/app.config.js"></script>
+</html>

@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Automated Exploratory Tests
+
+    Copyright (C) 2013 Cognifide Limited
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <artifactId>osgi-dependencies</artifactId>
+    <groupId>com.cognifide.aet</groupId>
+    <version>2.0.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>selenium</artifactId>
+  <packaging>bundle</packaging>
+
+  <name>AET :: OSGi Dependencies :: Selenium</name>
+  <description>Wraps Selenium library into OSGi bundle</description> 
+  
+  <properties>
+    <selenium.version>2.50.1</selenium.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>jetty-repacked</artifactId>
+      <version>7.6.1.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-java</artifactId>
+      <version>${selenium.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-api</artifactId>
+      <version>${selenium.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-chrome-driver</artifactId>
+      <version>${selenium.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-firefox-driver</artifactId>
+      <version>${selenium.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-htmlunit-driver</artifactId>
+      <version>${selenium.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-ie-driver</artifactId>
+      <version>${selenium.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-remote-driver</artifactId>
+      <version>${selenium.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-support</artifactId>
+      <version>${selenium.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.seleniumhq.selenium</groupId>
+      <artifactId>selenium-server</artifactId>
+      <version>${selenium.version}</version>
+    </dependency>
+
+    <!-- Selenium 2.49.0 dependencies -->
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-exec</artifactId>
+      <version>1.3</version>
+    </dependency>
+    <dependency>
+      <groupId>com.sun.jna</groupId>
+      <artifactId>jna</artifactId>
+      <version>3.0.9</version>
+    </dependency>
+    <dependency>
+      <groupId>net.java.dev.jna</groupId>
+      <artifactId>jna</artifactId>
+      <version>3.3.0</version>
+    </dependency>
+    <dependency>
+      <groupId>net.java.dev.jna</groupId>
+      <artifactId>platform</artifactId>
+      <version>3.5.2</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-bundle-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>default-bundle</id>
+            <configuration>
+              <instructions>
+                <Bundle-Vendor>Cognifide Ltd.</Bundle-Vendor>
+                <Export-Package>
+                  org.openqa.*;version="${selenium.version}"
+                </Export-Package>
+                <Embed-Dependency>
+                  *;scope=compile|runtime|optional
+                </Embed-Dependency>
+                <Import-Package>
+                  com.beust.jcommander.*;resolution:=optional,
+                  com.gargoylesoftware.htmlunit.javascript.host.*;resolution:=optional,
+                  javax.servlet.*;resolution:=optional,
+                  javax.servlet.http.*;resolution:=optional,
+                  junit.*;resolution:=optional,
+                  org.apache.commons.logging.*;resolution:=optional,
+                  org.eclipse.jetty.*;resolution:=optional,
+                  org.junit.*;resolution:=optional,
+                  org.mortbay.*;resolution:=optional,
+                  org.openqa.jetty.*;resolution:=optional,
+                  org.seleniumhq.*;resolution:=optional,
+                  com.sun.jna.platform.*;resolution:=optional,
+                  *
+                </Import-Package>
+                <Embed-Directory>OSGI-INF/lib</Embed-Directory>
+                <Embed-Transitive>false</Embed-Transitive>
+              </instructions>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <!-- overwrite configuration for enforcer plugin in this module -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-enforcer-plugin</artifactId>
+        <executions>
+          <!-- disable execution inherited from top-level pom -->
+          <execution>
+            <id>enforce-poms-quality</id>
+            <phase>none</phase>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+          </execution>
+          <!-- execute custom check -->
+          <execution>
+            <id>custom-check</id>
+            <phase>validate</phase>
+            <goals>
+              <goal>enforce</goal>
+            </goals>
+            <configuration>
+              <rules>
+                <!-- default rules -->
+                <requireMavenVersion>
+                  <version>${min.maven.version}</version>
+                </requireMavenVersion>
+                <requireJavaVersion>
+                  <version>${min.java.version}</version>
+                </requireJavaVersion>
+                <!-- Mojo extra-enforcer-rules -->
+                <banCircularDependencies />
+                <!-- pedantic-pom-enforcers rules -->
+                <moduleOrder implementation="com.github.ferstl.maven.pomenforcers.PedanticModuleOrderEnforcer" />
+                <pluginConfiguration implementation="com.github.ferstl.maven.pomenforcers.PedanticPluginConfigurationEnforcer" />
+              </rules>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
+  <profiles>
+    <profile>
+      <id>upload</id>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>wagon-maven-plugin</artifactId>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+  </profiles>
+</project>

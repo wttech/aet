@@ -1,0 +1,107 @@
+/*
+ * Automated Exploratory Tests
+ *
+ * Copyright (C) 2013 Cognifide Limited
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+.filters {
+  padding: 0 15px;
+
+  p {
+    color: $gray_darker;
+    text-align: left;
+  }
+
+  .form-group {
+    position: relative;
+
+    i {
+      position: absolute;
+      right: 15px;
+      z-index: 1;
+      top: 11px;
+      font-size: 18px;
+      color: #FFF;
+    }
+  }
+
+  input,
+  .filter-list {
+    background-color: $grayish;
+    border: 0 none;
+    color: $white;
+    font-family: $font_light;
+    font-size: 15px;
+    height: 40px;
+    line-height: 40px;
+    padding-left: 20px;
+    padding-right: 40px;
+    width: 100%;
+    z-index: 1;
+    cursor: pointer;
+
+    .icon {
+      top: 3px;
+    }
+  }
+
+  .popover {
+    border: none;
+    border-radius: 0;
+    max-width: none;
+    padding: 0;
+    top: 40px;
+    width: 100%;
+
+    &.is-active {
+      display: block;
+    }
+
+    &-content {
+      padding: 0;
+    }
+
+    .dropdown-field {
+      border-bottom: 1px solid $border_color;
+      display: block;
+      padding: 10px;
+      width: 100%;
+
+      &:last-of-type {
+        border-bottom: 0;
+      }
+
+      label {
+        margin: 0;
+      }
+
+      input {
+        border-radius: 0;
+        display: inline;
+        height: auto;
+        margin-right: 10px;
+        width: auto;
+      }
+
+      a {
+        color: $text-color;
+        display: inline;
+      }
+    }
+  }
+}
+
+.no-results {
+  color: $white
+}

@@ -1,0 +1,442 @@
+/*
+ * Automated Exploratory Tests
+ *
+ * Copyright (C) 2013 Cognifide Limited
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+.tab-content {
+  margin-top: 100px;
+  z-index: 1;
+}
+
+.menu-expanded {
+
+  .tab-content-toolbar {
+    left: 350px;
+    width: calc(100% - 350px);
+  }
+}
+
+.tab-content-toolbar {
+  @include transition(left, .3s);
+  position: fixed;
+  top: 185px;
+  left: 0;
+  width: 100%;
+  height: 47px;
+  background: #ebebeb;
+  border: solid $border_color_darken;
+  border-width: 1px 0;
+  z-index: 1;
+
+  &-header {
+    font-family: $font_light;
+    color: #77777c;
+    font-size: 11px;
+    display: inline-block;
+    padding: 0 20px;
+    line-height: 30px;
+    border-right: solid 1px $border_color_darken;
+    margin-top: 5px
+  }
+}
+
+.checkboxes-inline {
+  display: inline-block;
+  margin: 0 0 20px 11px;
+
+  .checkbox {
+    display: inline-block;
+    margin-bottom: 20px;
+  }
+}
+
+.checkbox {
+  position: relative;
+  width: 150px;
+
+  label {
+    cursor: pointer;
+    position: absolute;
+    width: 18px;
+    height: 18px;
+    left: 4px;
+    top: 4px;
+    background: $white;
+    border: solid 1px $black;
+
+    span {
+      position: absolute;
+      width: 150px;
+      left: 30px;
+    }
+
+    &:after {
+      opacity: 0;
+      content: '';
+      top: 2px;
+      left: 3px;
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      background: $rebased;
+    }
+  }
+
+  input[type=checkbox] {
+    opacity: 0;
+
+    &:checked + label:after {
+      opacity: 1;
+    }
+  }
+}
+
+/*
+  Nav tabs
+*/
+.menu-expanded {
+
+  .tabs {
+    left: 370px;
+    width: calc(100% - 370px);
+    padding-left: 0;
+  }
+}
+
+.tabs {
+  @include transition(left, .3s);
+  display: table;
+  background: $white;
+  position: fixed;
+  left: 20px;
+  top: 124px;
+  width: 100%;
+  z-index: 5;
+
+  .mCustomScrollBox {
+    height: 61px;
+  }
+
+  .mCSB_scrollTools.mCSB_scrollTools_horizontal {
+    bottom: -3px;
+
+    .mCSB_dragger {
+      width: 100px;
+    }
+  }
+
+}
+
+.menu-expanded {
+
+  .nav-tabs-wrapper {
+    width: calc(100vw - 400px);
+    max-width: none;
+    padding-right: 100px;
+  }
+}
+
+.nav-tabs-wrapper {
+  max-width: calc(100% - 100px);
+  padding-right: 30px;
+  overflow: auto;
+  position: relative;
+}
+
+.navbar-controls {
+  position: absolute;
+  right: 20px;
+  top: -9px;
+}
+
+.test-tabs.nav-tabs {
+  border: 0 none;
+  background: $white;
+  width: 100%;
+  line-height: 51px;
+
+  li {
+    margin-bottom: 0;
+    display: block;
+    float: left;
+
+    a {
+      text-transform: uppercase;
+      font-size: 18px;
+      border: 0 none;
+      border-bottom: solid 7px transparent;
+      padding: 14px 15px 7px;
+      color: $gray_dark;
+
+      &.failed,
+      &.processing_error {
+        color: $failed;
+      }
+
+      &.rebased {
+        color: $rebased;
+      }
+
+      &.warning {
+        color: $warning;
+      }
+    }
+
+    &.active,
+    &:hover,
+    &:focus {
+
+      a {
+        border: 0 none;
+        background: transparent;
+        border-bottom: solid 7px $green;
+      }
+    }
+  }
+  .toolbar-nav {
+    padding-top: 10px;
+    margin-right: 40px;
+
+    &:hover {
+      a {
+        border-bottom: none;
+      }
+    }
+
+    a {
+      padding: 0;
+      margin: 0;
+      border: 0;
+      float: left;
+      line-height: 0.5;
+    }
+
+  }
+}
+
+/*
+  Layout comparison
+*/
+
+.layout-compare {
+  &-item {
+    position: relative;
+    width: 50%;
+    text-align: center;
+    padding: 0 15px;
+
+    .mask-container {
+      position: relative;
+
+      &:hover {
+
+        .mask {
+          display: none !important;
+        }
+      }
+    }
+
+    .mask {
+      position: absolute;
+      top: 0;
+      display: none;
+      -webkit-filter: drop-shadow(5px 5px 5px #222);
+      filter: drop-shadow(5px 5px 5px #222);
+
+      &.is-visible {
+        display: block;
+      }
+    }
+
+  }
+
+  &-description {
+    padding: 10px 0;
+    font-size: 20px;
+    color: $gray-darker;
+  }
+}
+
+/*
+  Source codes
+*/
+.diff-report table {
+  table-layout: fixed;
+
+  thead {
+    position: relative;
+    display: block;
+  }
+  tbody {
+    white-space: nowrap;
+    font-size: 11px;
+    display: block;
+    height: 500px;
+    overflow: auto;
+  }
+
+  &.table-w3c {
+
+    thead {
+      border: 1px solid #ddd;
+      th {
+        border-bottom: 0 none;
+      }
+    }
+
+    th,
+    td {
+
+      &.num {
+        width: 50px;
+        display: block;
+      }
+    }
+
+    td.code {
+      white-space: normal;
+    }
+
+    tbody {
+      height: auto;
+      font-size: 14px;
+    }
+  }
+
+  th {
+
+    &.num {
+      min-width: 50px;
+    }
+
+    &.code {
+      width: 100%;
+    }
+  }
+
+  td.code {
+    min-width: 100px;
+    white-space: pre-wrap;
+
+    &.code {
+      width: 100%;
+
+      p {
+        margin: 0;
+      }
+
+      span,
+      small {
+        white-space: normal
+      }
+    }
+
+    &.num {
+      min-width: 50px;
+    }
+  }
+}
+
+.w3c-error {
+  white-space: nowrap;
+
+  span,
+  mark {
+    padding: 0;
+  }
+}
+
+tr {
+
+  &.no-change {
+    background: $white;
+  }
+
+  &.insert,
+  &.info,
+  &.notice {
+    background: #d9edf7;
+  }
+
+  &.change {
+    background: #fcf8e3;
+  }
+
+  &.warn {
+    background: #faf2cc;
+  }
+
+  &.delete,
+  &.err,
+  &.error {
+    background: #f2dede;
+  }
+}
+
+.tab-content {
+
+  .tab-pane {
+    display: none;
+  }
+
+  .active {
+    display: block;
+  }
+}
+
+/*
+  performance table
+*/
+
+.performance-table {
+  margin-top: 0;
+
+  .nav-tabs {
+    width: 400px;
+    float: left;
+
+    li {
+      display: block;
+      float: none;
+    }
+  }
+}
+
+.tab-content-performance {
+  margin-top: 0;
+}
+
+.links-list {
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: solid 1px #ebebeb;
+
+  a {
+    display: block;
+    color: $gray_dark
+  }
+}
+
+.label {
+  @extend .label-warning;
+
+  &-A {
+    background-color: #5cb85c !important;
+  }
+
+  &-F {
+    background-color: #d9534f !important;
+  }
+}

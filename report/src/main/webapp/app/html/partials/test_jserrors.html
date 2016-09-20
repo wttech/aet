@@ -1,0 +1,104 @@
+<!--
+
+    Automated Exploratory Tests
+
+    Copyright (C) 2013 Cognifide Limited
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<!--
+    JS Errors
+-->
+<div class="tab-content-toolbar" >
+    <div class="toolbar-blocks">
+        <div class="toolbar-btns pull-right">
+            <ng-include src="'app/html/includes/test_cases_comment.html'"/>
+        </div>
+    </div>
+</div>
+<div ng-if="processingError" class="processing-error">
+    <h3>
+        <span class="label label-danger">
+            Failure when processing this url.
+        </span>
+    </h3>
+    <ul>
+        <li ng-repeat="error in processingErrorText">
+            <i>{{error}}</i>
+        </li>
+    </ul>
+    <div class="processing-error-comparators" ng-if="comparatorsError.length">
+        <span>Errors found in comparators:</span>
+        <ul>
+            <li ng-repeat="error in comparatorsError">
+                <i>{{error}}</i>
+            </li>
+        </ul>
+    </div>
+</div>
+<div ng-if="!processingError">
+    <span ng-if="!js || js == ''"  class="test-no-issues">
+        No issues found
+    </span>
+    <div ng-if="js && js != ''">
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th>No.</th>
+                <th>Error</th>
+                <th>Source</th>
+                <th>Line number</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in js track by $index">
+                <td>{{$index+1}}</td>
+                <td>{{item.errorMessage}}</td>
+                <td>
+                    <a href="{{item.sourceName}}">{{item.sourceName}}</a>
+                </td>
+                <td>{{item.lineNumber}}</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div ng-if="jsFilters">
+        <br>
+        <span>
+            JS Errors filters applied:
+        </span>
+        <table class="table table-striped table-hover">
+            <thead>
+            <tr>
+                <th>No.</th>
+                <th>Source</th>
+                <th>Error</th>
+                <th>Line number</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-repeat="item in jsFilters">
+                <td>{{$index+1}}</td>
+                <td>{{item.source}}</td>
+                <td ng-if="item.error">{{item.error}}</td>
+                <td ng-if="!item.error">-</td>
+
+                <td ng-if="item.line">{{item.line}}</td>
+                <td ng-if="!item.line">-</td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

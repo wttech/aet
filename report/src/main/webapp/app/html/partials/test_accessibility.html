@@ -1,0 +1,135 @@
+<!--
+
+    Automated Exploratory Tests
+
+    Copyright (C) 2013 Cognifide Limited
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<!--
+   Accessibility
+-->
+<div class="tab-content-toolbar">
+    <div class="toolbar-blocks">
+        <div class="toolbar-btns pull-right">
+            <ng-include src="'app/html/includes/test_cases_comment.html'"/>
+        </div>
+    </div>
+</div>
+
+<div ng-if="processingError" class="processing-error">
+    <h3>
+        <span class="label label-danger">
+            Failure when processing this url.
+        </span>
+    </h3>
+    <ul>
+        <li ng-repeat="error in processingErrorText">
+            <i>{{error}}</i>
+        </li>
+    </ul>
+    <div class="processing-error-comparators" ng-if="comparatorsError.length">
+        <span>Errors found in comparators:</span>
+        <ul>
+            <li ng-repeat="error in comparatorsError">
+                <i>{{error}}</i>
+            </li>
+        </ul>
+    </div>
+</div>
+<div ng-if="!processingError">
+    <span ng-if="!accessibility.nonExcludedIssues.length && !accessibility.excludedIssues.length">
+        No issues found
+    </span>
+    <p ng-if="accessibility.errorCount >= 0">Validation errors count: <span class="badge alert-danger">{{accessibility.errorCount}}</span>
+    </p>
+    <p ng-if="accessibility.warningCount >= 0">Validation warnings count: <span class="badge alert-warning">{{accessibility.warningCount}}</span>
+    </p>
+    <p ng-if="accessibility.noticeCount >= 0">Validation notices count: <span class="badge alert-info">{{accessibility.noticeCount}}</span>
+    </p>
+
+    <div class="clearfix"></div>
+    <div>
+
+        <table class="table table-condensed table-bordered"
+               ng-if="accessibility.nonExcludedIssues.length || accessibility.excludedIssues.length">
+            <thead>
+            <tr>
+                <th>No.</th>
+                <th>Validation Output</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-class="item.type.toLowerCase()" ng-repeat="item in accessibility.nonExcludedIssues"
+                ng-if="accessibility.nonExcludedIssues">
+                <td>{{$index+1}}</td>
+                <td>
+                    <p>
+                        <em>Line {{item.lineNumber}}, column {{item.columnNumber}}:</em>
+                        <strong>{{item.message}}</strong>
+                    </p>
+                    <pre ng-bind-html="item.elementStringAbbreviated | to_trusted"></pre>
+                    <small><em>{{item.code}}</em></small>
+                    <p></p>
+                </td>
+            </tr>
+            <tr ng-if="accessibility.excludedIssues.length">
+                <td colspan="3" class="info">
+                    Excluded issues:
+                </td>
+            </tr>
+            <tr ng-class="item.type.toLowerCase()" ng-repeat="item in accessibility.excludedIssues"
+                ng-if="accessibility.excludedIssues.length">
+                <td>{{$index+1}}</td>
+                <td>
+                    <p>
+                        <em>Line {{item.lineNumber}}, column {{item.columnNumber}}:</em>
+                        <strong>{{item.message}}</strong>
+                    </p>
+                    <pre ng-bind-html="item.elementStringAbbreviated | to_trusted"></pre>
+                    <small><em>{{item.code}}</em></small>
+
+                </td>
+            </tr>
+            </tbody>
+        </table>
+
+        <table class="table table-condensed table-bordered"
+               ng-if="!accessibility.nonExcludedIssues.length && !accessibility.excludedIssues.length && (accessibility.noticeCount != 0 || accessibility.warningCount != 0 || accessibility.errorCount != 0)">
+            <thead>
+            <tr>
+                <th>No.</th>
+                <th>Validation Output</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr ng-class="item.type.toLowerCase()" ng-repeat="item in accessibility">
+                <td>{{$index+1}}</td>
+                <td>
+                    <p>
+                        <em>Line {{item.lineNumber}}, column {{item.columnNumber}}:</em>
+                        <strong>{{item.message}}</strong>
+                    </p>
+                    <pre ng-bind-html="item.elementStringAbbreviated | to_trusted"></pre>
+                    <small><em>{{item.code}}</em></small>
+                    <p></p>
+                </td>
+            </tr>
+
+
+            </tbody>
+        </table>
+    </div>
+
+</div>

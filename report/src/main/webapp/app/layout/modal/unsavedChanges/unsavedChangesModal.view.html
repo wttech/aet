@@ -1,0 +1,33 @@
+<!--
+
+    Automated Exploratory Tests
+
+    Copyright (C) 2013 Cognifide Limited
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<div class="modal-header">
+    <h3 class="modal-title">Uncommitted changes detected!</h3>
+</div>
+<div class="modal-body">
+    <div>Uncommitted changes applied to <a href="{{unsavedChangesModal.previousReportUrl}}" target="_blank">previous
+        [{{unsavedChangesModal.oldSuite.version}}] version of this report</a> were detected in your cache.
+        Changes cannot be imported to this report because they are outdated.
+        We advise to discard those changes in order to keep application cache small.</div>
+    <div><span class="modal-question">What should happen with unsaved changes?</span></div>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="unsavedChangesModal.leave()">Leave</button>
+    <button class="btn btn-warning" type="button" ng-click="unsavedChangesModal.discard()">Discard</button>
+</div>

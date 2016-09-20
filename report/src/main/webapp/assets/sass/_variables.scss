@@ -1,0 +1,61 @@
+/*
+ * Automated Exploratory Tests
+ *
+ * Copyright (C) 2013 Cognifide Limited
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+// Paths
+$src: '../img/';
+$fonts: '../fonts/';
+
+// Colors
+$aside_background: #2c333b;
+$green: #caeb7f;
+$green_dark: #96d700;
+$green_darker: #6f9f00;
+$red: #ddacac;
+$red_dark: #bb5a5a;
+$yellow: #c08830;
+$text_color: #333333;
+$black: #000000;
+
+$gray_light: #f9f9f9;
+$gray_disabled: #c4c4cc;
+$gray_dark: #77777c;
+$gray_darker: #85898e;
+$gray_middle: #444e5b;
+$blue: #0097fe;
+$white: #ffffff;
+$grayish: #3c4550;
+
+
+$border_color: #ededed;
+$border_color_dark: #313942;
+$border_color_darken: #dcdce5;
+
+// Fonts
+$font_regular: 'montserratregular', sans-serif;
+$font_light: 'montserratlight', sans-serif;
+$font_bold: 'montserratbold', sans-serif;
+
+/** NEW STYLES AFTER REFACTOR **/
+$warning: #f0ad4e;
+$rebased: #0097fe;
+$failed: #bb5a5a;
+$passed: #6f9f00;
+
+$warning_bg: #fff085;
+$rebased_bg: #00c1ff;
+$failed_bg: #ddacac;
+$passed_bg: #caeb7f;

@@ -1,0 +1,114 @@
+<!--
+
+    Automated Exploratory Tests
+
+    Copyright (C) 2013 Cognifide Limited
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<div class="aside" ui-view="aside" ng-class="{'has-filters-applied': asideHasFilters}">
+    <div class="logo-holder">
+        <a ui-sref="suite">
+            <img class="logo" src="assets/img/logo.png" alt="">
+        </a>
+    </div>
+    <!--
+        Filters
+    -->
+    <div class="filters">
+        <div class="form-group sidepanel-search-section">
+            <input type="text" placeholder="Search..." data-aet-sidepanel-search data-ng-model="$root.searchText" class="search-input">
+            <i class="glyphicon glyphicon-search" data-toggle="popover" data-content="Start typing to filter by url name" data-trigger="hover" data-container="body"></i>
+            <i class="glyphicon glyphicon-remove" data-toggle="popover" data-content="Clear search" data-trigger="hover" data-container="body" ng-click="clearSearch()" style="display: none;"></i>
+        </div>
+        <div class="form-group">
+            <div data-aet-sidepanel-status-filter class="pop" data-toggle="popover">
+                <div class="filter-list">
+                    <div class="filter-list-title">
+                        <p>No filters applied</p>
+                        <i class="glyphicon glyphicon-chevron-down" data-toggle="popover" data-content="Apply filtering to urls" data-trigger="hover" data-container="body"></i>
+                        <i class="glyphicon glyphicon-remove" data-toggle="popover" data-content="Clear filters" data-trigger="hover" data-container="body" ng-click="clearFilters()" style="display: none;"></i>
+                    </div>
+                    <form class="dropdown-menu">
+                        <div class="dropdown-field">
+                            <label><input type="checkbox"><p data-attribute="failed" class="dropdown-item">Show failed urls</p></label>
+                        </div>
+                        <div class="dropdown-field">
+                            <label><input type="checkbox"><p data-attribute="warning" class="dropdown-item" href="#">Show urls with warnings</p></labeL>
+                        </div>
+                        <div class="dropdown-field">
+                            <label><input type="checkbox"><p data-attribute="passed" class="dropdown-item" href="#">Show passed urls</p></label>
+                        </div>
+                        <div class="dropdown-field">
+                            <label ><input type="checkbox"><p data-attribute="rebased" class="dropdown-item" href="#">Show accepted urls</p></label>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--
+        Tests/ reports listing
+    -->
+    <div class="aside-report-summary">
+        <header>
+            Tests:
+        </header>
+        <div class="pull-right stats">
+            <span class="status" data-toggle="popover" data-content="Total tests found." data-trigger="hover" data-container="body">{{sidepanel.testsStats.total}}</span>
+            ( <span class="status failed" data-toggle="popover" data-content="Failed tests" data-trigger="hover" data-container="body">{{sidepanel.testsStats.failed}}</span> /
+            <span class="status warning" data-toggle="popover" data-content="Warning tests" data-trigger="hover" data-container="body">{{sidepanel.testsStats.warning}}</span> /
+            <span class="status passed" data-toggle="popover" data-content="Passed tests" data-trigger="hover" data-container="body">{{sidepanel.testsStats.passed}}</span> /
+            <span class="status rebased" data-toggle="popover" data-content="Accepted tests" data-trigger="hover" data-container="body">{{sidepanel.testsStats.rebased}}</span> )
+        </div>
+    </div>
+
+    <div ng-repeat="test in sidepanel.tests | orderBy:'name'" class="aside-report {{filteredUrls.length > 0 ? 'is-visible' : 'is-hidden'}}">
+        <a ui-sref="test({'suite':$root.params.project, 'test':test.name})" ui-sref-active="is-active" class="test-name {{filteredUrls.length > 0 ? 'is-visible' : 'is-hidden'}}" toggle-link type="test-name" ng-class="[test.getStatus()]" data-url="{{test.name}}">
+            <span>
+                <i class="glyphicon glyphicon-chevron-right"></i>
+                {{test.name}}
+            </span>
+            <div class="report-item-stats" data-toggle="popover" data-content="Urls in test" data-trigger="hover" data-container="body">
+                {{filteredUrls.length}}
+            </div>
+        </a>
+        <ul class="urls-list">
+            <li ng-repeat="url in test.urls | filter: {name: $root.searchText} | aetUrlStatusFilter:$root.activeFilters | orderBy:'name' as filteredUrls" ng-class="[url.getStatus()]" class="glyphicon url-name">
+                <div truncate-urls class="text-left nowrap">
+                    <a class="test-url" ui-sref-active="is-active" ui-sref="url({'suite':$root.params.project,'test':test.name, 'url':url.name})" >
+                        {{url.name}}
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </div>
+    <h4 class="no-results" ng-if="sidepanel.testsStats.total === 0">
+        No results found
+    </h4>
+    <div class="js-rebase-all" ng-if="sidepanel.thereAreChangesToSave()" ng-click="sidepanel.saveAllChanges()">
+        <span class="button button-blue button-wide">
+            <i class="glyphicon glyphicon-cloud-upload"></i>
+            Save all changes
+        </span>
+    </div>
+
+    <div class="js-cancel-all" ng-if="sidepanel.thereAreChangesToSave()" ng-click="sidepanel.discardAllChanges()">
+        <span class="button button-darkred button-wide">
+            <i class="glyphicon glyphicon-cloud-download"></i>
+            Discard all changes
+        </span>
+    </div>
+</div>
