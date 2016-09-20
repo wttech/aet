@@ -21,10 +21,10 @@ The tool has been developed to aid front end client side layout regression testi
 * Integration with CI Tools (Jenkins, Bamboo).
 
 ## Modules
-
 Please see details in README files for each module individually.
 
 ##Setup
+Please refer to the [Setup Guide](https://github.com/Cognifide/aet/wiki/BasicSetup) in the documentation for an overview on how to configure AET.
 
 ### Maven
 #### Prequisities:
@@ -44,36 +44,15 @@ in your setting.xml file (`$USER_HOME/m2`):
 </server>
 ```
 
-#### Deployment command
+#### Command for upload
 ```
-mvn clean install -P upload-to-karaf
-```
-
-#### Command for sonar
-
-Currently we are still using `org.codehaus.mojo:sonar-maven-plugin`
-(instead of new one: `org.sonarsource.scanner.maven`).
-First run unit tests to collect jacoco report:
-```
-mvn clean test
-```
-
-Run properties plugin to read sonar configuration and then sonar plugin:
-```
-mvn properties:read-project-properties org.codehaus.mojo:sonar-maven-plugin:sonar
-```
-following properties should be set for sonar in `maven.properties` file:
-```
-sonar.host.url=http://sonarqube.example.com
-sonar.login=login
-sonar.password=P@ssw0rd
-sonar.jdbc.url=jdbc:mysql://192.168.123.100:3306/sonar?useUnicode=true&amp;characterEncoding=utf8
-sonar.jdbc.driver=com.mysql.jdbc.Driver
-sonar.jdbc.username=username
-sonar.jdbc.password=jdbcP@ssw0rd
+mvn clean install -P upload
 ```
 
 ## Non-application directories:
 ###sanity-tests
 
 Separate sub-project used for sanity/functional tests.
+
+## References
+* [AET Documentation and User Guide](https://github.com/Cognifide/aet/wiki)

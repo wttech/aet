@@ -1,3 +1,4 @@
+![Automated Exploratory Tests](/Cognifide/aet/wiki/assets/misc/aet-logo.png)
 # Getting Started
 
 ## What is AET
