@@ -36,16 +36,27 @@ I hereby agree to the terms of the AET Contributor License Agreement.
 
 **Please do not update wiki pages directly because your changes will be lost.**
 
-All Knot.x documentation is in the same repository as codebase in [documentation](https://github.com/Cognifide/knotx/tree/master/documentation) module.
-This documentation after update is ported to [Knot.x wiki](https://github.com/Cognifide/knotx/wiki).
-When updating documentation please update proper markdown pages in [documentation](https://github.com/Cognifide/knotx/tree/master/documentation) module following [instructions](https://github.com/Cognifide/knotx/blob/master/documentation/README.md) and include it with your pull request.
+All AET documentation is in the same repository as codebase in [documentation](https://github.com/Cognifide/aet/tree/master/documentation) module.
+This documentation after update is ported to [AET wiki](https://github.com/Cognifide/aet/wiki).
+When updating documentation please update proper markdown pages in [documentation](https://github.com/Cognifide/aet/tree/master/documentation) module following [instructions](https://github.com/Cognifide/aet/blob/master/documentation/README.md) and include it with your pull request.
 After your pull request is merged, wiki pages will be updated.
+
+## Tests naming convention
+Tests written in AET should be named with `methodName_whenStateUnderTest_expectBehavior` convention proposed as the first example in [7 Popular Unit Test Naming Conventions](https://dzone.com/articles/7-popular-unit-test-naming).
+
+### Examples:
+**Unit tests**
+`canTakeScreenshot_whenNoUrlProvided_expectNoUrlException`
+
+**Integration tests**
+In integration tests method name is omitted, and test class name should suggest what part of system we test:
+`whenPageReturned404_expectNoScreenshotCollected`
 
 ## Coding Conventions
 Below is a short list of things that will help us keep AET quality and accept pull requests:
 - Follow [Google Style Guide](https://github.com/google/styleguide) code formatting,
-- write tests,
+- write tests (integration/functional and Unit Tests) following defined convention,
 - write javadoc, especially for interfaces and abstract methods,
-- update documentation and include changes in the same pull request which modifies the code,
+- update [documentation](https://github.com/Cognifide/aet/tree/master/documentation) and include changes in the same pull request which modifies the code,
 - provide description of any new features,
 - when logging use proper levels: `INFO` and `WARNING` should log only very important messages. 

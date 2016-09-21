@@ -40,7 +40,7 @@ AET helps testers to ensure that a change in one part of the software has not in
 ## What's inside?
 *AET* uses several tools and frameworks that are used to check page quality in following areas:
 
-* Full page **screenshots comparison** using Firefox browser to render page and Selenium to capture screenshots.
+* Full page **screenshots comparison** using Firefox browser to render page and [Selenium](http://www.seleniumhq.org/projects/webdriver/) to capture screenshots.
     * Hiding Page Items by xpath,
     * Changing screen resolution (width/height setup),
 * Compare page **sources**.
