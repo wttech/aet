@@ -3,7 +3,7 @@
 [![Build Status](https://travis-ci.org/Cognifide/aet.svg?branch=master)](https://travis-ci.org/Cognifide/aet)
 [![Apache License, Version 2.0, January 2004](https://img.shields.io/github/license/cognifide/aet.svg?label=License)](http://www.apache.org/licenses/)
 
-# Automated Exploratory Tests
+# Automated Exploratory Testing
 <p align="center">
   <img src="misc/img/aet-logo-black.png" alt="AET Logo"/>
 </p>
@@ -16,11 +16,11 @@ In essence assessing the impact or change of a website from one snapshot to the 
 ## What's philosophy behind AET?
 AET helps testers to ensure that a change in one part of the software has not introduced new defects in other parts of the software.
 
-#### AET can be most useful for
-* testing large websites or large portfolios using common components in a CMS,
-* unit testing custom components for a CMS project,
+#### AET is suited for
+* monitoring regression across large digital web platforms,
+* managing visual changes across digital platform after changing common component (e.g. footer),
 * regression tests at the end of an Hourly/Daily/Weekly/Per Sprint Completion,
-* as part of an upgrade or migration of infrastructure / platform migration.
+* as part of an upgrade or migration process of a platform.
 
 #### A typical scenario of use
 1. The AET user (Developer or QA) baselines a set of components or pages with URLs as an input to the tool.
@@ -29,9 +29,15 @@ AET helps testers to ensure that a change in one part of the software has not in
   * There are no changes - no involvement required.
   * There is a change but the user accepts it, which means she/he re-baselines.
   * There is a change and the user does not accept it, so she/he has to fix it.
-4. AET produces a report
+4. AET produces a report.
 
-## What tools does AET consist of?
+#### AET is not about
+* functional testing - checkout another Cognifide's testing framework: [Bobcat](https://github.com/Cognifide/bobcat) for functional testing,
+* cross-browser testing,
+* usability testing,
+* security or server-side performance.
+
+## What's inside?
 *AET* uses several tools and frameworks that are used to check page quality in following areas:
 
 * Full page **screenshots comparison** using Firefox browser to render page and Selenium to capture screenshots.
@@ -45,7 +51,7 @@ AET helps testers to ensure that a change in one part of the software has not in
 * Check and modify page **cookies**.
 * Check page **client side performance** using [YSlow](http://yslow.org/).
 
-## AET System
+## AET architecture
 The AET System consists of 7 units:
 
 - Client (AET Maven Plugin)
@@ -82,18 +88,6 @@ Please refer to the [Setup Guide](https://github.com/Cognifide/aet/wiki/BasicSet
 - Developer Guide
 - Report UX improvements
 - More browsers support
-
-## Dependencies
-
-- org.seleniumhq.selenium
-- net.lightbody.bmp
-- com.google.inject
-- net.jsourcerer.webdriver
-- google-diff-match-patch
-- com.github.detro
-- nu.validator
-- yslow.org
-- HTML_CodeSniffer
 
 ## Documentation
 * [AET Wiki](https://github.com/Cognifide/aet/wiki)
