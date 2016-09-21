@@ -71,7 +71,7 @@ Please see our [AET in 10 minutes](https://github.com/Cognifide/aet/wiki/AETIn10
 
 To run **AET** tests the following tools are required:
 
-- Java 8
+- Java 7 or 8
 - Maven 3.3.1 or newer
 - Chrome Browser to preview AET reports
 
