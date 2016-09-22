@@ -1,5 +1,9 @@
-![Automated Exploratory Tests](../misc/img/logo.png)
+![Cognifide logo](http://cognifide.github.io/images/cognifide-logo.png)
+
 # Automated Exploratory Tests
+<p align="center">
+  <img src="misc/img/aet-logo-black.png" alt="AET Logo"/>
+</p>
 
 ## Job Common Module
 Contains implementations for `Modifiers`, `Collectors`, `Data Filters` and `Comparators`:

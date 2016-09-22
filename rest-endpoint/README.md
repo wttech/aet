@@ -1,5 +1,9 @@
-![Automated Exploratory Tests](../misc/img/logo.png)
+![Cognifide logo](http://cognifide.github.io/images/cognifide-logo.png)
+
 # Automated Exploratory Tests
+<p align="center">
+  <img src="misc/img/aet-logo-black.png" alt="AET Logo"/>
+</p>
 
 ## Rest-endpoint Module
 The Representational State Transfer API for the AET System. This is an access point for all operations and data for the whole system.

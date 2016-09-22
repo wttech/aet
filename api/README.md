@@ -1,5 +1,9 @@
-![Automated Exploratory Tests](../misc/img/logo.png)
+![Cognifide logo](http://cognifide.github.io/images/cognifide-logo.png)
+
 # Automated Exploratory Tests
+<p align="center">
+  <img src="misc/img/aet-logo-black.png" alt="AET Logo"/>
+</p>
 
 ## API Module
 Module contains Application Program Interfaces that are shared with application modules.

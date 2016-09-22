@@ -1,5 +1,9 @@
-![Automated Exploratory Tests](../misc/img/logo.png)
+![Cognifide logo](http://cognifide.github.io/images/cognifide-logo.png)
+
 # Automated Exploratory Tests
+<p align="center">
+  <img src="misc/img/aet-logo-black.png" alt="AET Logo"/>
+</p>
 
 ## Report Module
 Client side application driven by AngularJS that renders html reports for the end users using AET REST API as the data source.
