@@ -6,10 +6,12 @@ This is a quick guide showing how to setup AET environment and run an example te
 Before start make sure that you have enough memory on your machine (8 GB is minimum, 16 GB recommended though).
 
 You need to download and install following software:
-* [VirtualBox 5.0](https://www.virtualbox.org/wiki/Downloads)
-* [Vagrant 1.8.1](https://www.vagrantup.com/downloads.html)
-* [ChefDK 0.11.0](https://downloads.chef.io/chef-dk/)
-* [Maven](https://maven.apache.org/download.cgi) (at least version 3.0.4)
+   * [VirtualBox 5.0.26](https://www.virtualbox.org/wiki/Download_Old_Builds_5_0)
+   * [Vagrant 1.8.4](https://www.vagrantup.com/downloads.html)
+   * [ChefDK 0.17.17](https://downloads.chef.io/chef-dk/)
+   * [Maven](https://maven.apache.org/download.cgi) (at least version 3.0.4)
+   * [JDK 7 or 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html)
+   * [Chrome browser](https://www.google.com/chrome/browser/desktop/) to preview reports
 
 ### Vagrant setup
 
