@@ -5,7 +5,7 @@
 
 # Automated Exploratory Testing
 <p align="center">
-  <img src="misc/img/aet-logo-black.png" alt="AET Logo"/>
+  <img src="https://github.com/Cognifide/aet/blob/update-readme-files/misc/img/aet-logo-black.png?raw=true" alt="AET Logo"/>
 </p>
 
 AET (acronym formed from **A**utomated **E**xploratory **T**esting) is a system that detects changes on web sites.

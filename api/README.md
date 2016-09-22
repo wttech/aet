@@ -2,7 +2,7 @@
 
 # Automated Exploratory Tests
 <p align="center">
-  <img src="misc/img/aet-logo-black.png" alt="AET Logo"/>
+  <img src="https://github.com/Cognifide/aet/blob/update-readme-files/misc/img/aet-logo-black.png?raw=true" alt="AET Logo"/>
 </p>
 
 ## API Module
