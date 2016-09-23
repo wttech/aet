@@ -117,6 +117,9 @@
     <mongo.driver.version>3.2.2</mongo.driver.version>
     <junit.version>4.11</junit.version>
 
+    <!-- use project version for aet plugin by default  -->
+    <aet.plugin.version>${project.version}</aet.plugin.version>
+
     <!-- properties for maven uploads -->
     <target.tomcat.serverId>aet-vagrant-instance</target.tomcat.serverId>
     <target.tomcat.url>scp://192.168.123.100/opt/aet/tomcat/aet_sample_site/current</target.tomcat.url>
@@ -581,7 +584,7 @@
         <plugin>
           <groupId>com.cognifide.aet</groupId>
           <artifactId>aet-maven-plugin</artifactId>
-          <version>${project.version}</version>
+          <version>${aet.plugin.version}</version>
         </plugin>
 
         <!-- plugin that keep our poms in good shape -->
