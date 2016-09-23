@@ -12,7 +12,6 @@ Module name: **resolution**
 
 | Parameter | Value | Description | Mandatory |
 | --------- | ----- | ----------- | --------- |
-| ~~`maximize`~~ | ~~true <br/> false (default)~~ | ~~Maximize browser window~~ | This property is deprecated and will be removed in future release. |
 | `width` | int (1 to 100000) | Window width | no |
 | `height` | int (1 to 100000) | Window height | no |
 
