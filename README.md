@@ -5,7 +5,7 @@
 
 # Automated Exploratory Testing
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Cognifide/aet/2.0.0/misc/img/aet-logo-black.png"
+  <img src="https://github.com/Cognifide/aet/blob/master/misc/img/aet-logo-black.png?raw=true"
          alt="AET Logo"/>
 </p>
 
