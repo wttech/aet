@@ -20,6 +20,7 @@ package com.cognifide.aet.job.common.comparators.layout.utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
@@ -44,9 +45,9 @@ public final class ImageComparison {
 
   private static final int RGB_MAX_VALUE = 255;
 
-  private static final int INVALID_PIXEL_COLOR = 125 << ALPHA_SHIFT | 255 << RED_SHIFT | 0 << GREEN_SHIFT | 0;
+  private static final int INVALID_PIXEL_COLOR = new Color(255,0,0,125).getRGB();
 
-  private static final int CANVAS_DIFF_COLOR = 125 << ALPHA_SHIFT | 255 << RED_SHIFT | 255 << GREEN_SHIFT | 0;
+  private static final int CANVAS_DIFF_COLOR = new Color(255,255,0,125).getRGB();
 
   private static final int VALID_PIXEL_COLOR = 0;
 
