@@ -45,9 +45,9 @@ public final class ImageComparison {
 
   private static final int RGB_MAX_VALUE = 255;
 
-  private static final int INVALID_PIXEL_COLOR = new Color(255,0,0,125).getRGB();
+  private static final int INVALID_PIXEL_COLOR = new Color(255, 0, 0, 125).getRGB();
 
-  private static final int CANVAS_DIFF_COLOR = new Color(255,255,0,125).getRGB();
+  private static final int CANVAS_DIFF_COLOR = new Color(255, 255, 0, 125).getRGB();
 
   private static final int VALID_PIXEL_COLOR = 0;
 
