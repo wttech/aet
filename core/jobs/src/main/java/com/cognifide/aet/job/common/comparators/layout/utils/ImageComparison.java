@@ -88,12 +88,12 @@ public final class ImageComparison {
 
   private static int fastMarkOuterAreaAsError(int minWidth, int minHeight, int widthDifference,
                                                int heightDifference, int resultHeight, WritableRaster writableRaster) {
-    // fil right area
+    // fill right area
     int[] emptyAreaA = new int[widthDifference * resultHeight];
     Arrays.fill(emptyAreaA, CANVAS_DIFF_COLOR);
     writableRaster.setDataElements(minWidth, 0, widthDifference, resultHeight, emptyAreaA);
 
-    // fil bottom area
+    // fill bottom area
     int[] emptyAreaB = new int[minWidth * heightDifference];
     Arrays.fill(emptyAreaB, CANVAS_DIFF_COLOR);
     writableRaster.setDataElements(0, minHeight, minWidth, heightDifference, emptyAreaB);
