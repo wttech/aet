@@ -96,7 +96,7 @@ public class ImageComparisonTest {
   }
 
   @Test
-  public void testCompare_different_canvas() throws Exception {
+  public void compare_differentSizeScreenshots_expectSizeDifferenceMarkedWithYellow() throws Exception {
     InputStream sampleStream = null;
     InputStream patternStream = null;
     InputStream maskStream = null;
@@ -111,11 +111,10 @@ public class ImageComparisonTest {
 
       assertThat(imageComparisonResult.isMatch(), is(false));
       assertThat(imageComparisonResult.getHeightDifference(), is(100));
-      assertThat(imageComparisonResult.getWidthDifference(), is(0));
-      assertThat(imageComparisonResult.getPixelDifferenceCount(), is(10399));
+      assertThat(imageComparisonResult.getWidthDifference(), is(20));
+      assertThat(imageComparisonResult.getPixelDifferenceCount(), is(14399));
 
       maskStream = imageToStream(imageComparisonResult.getResultImage());
-
       expectedMaskStream = getClass().getResourceAsStream("/mock/LayoutComparator/canvasSizeDiff/mask.png");
       assertThat(IOUtils.contentEquals(maskStream, expectedMaskStream), is(true));
 

@@ -79,22 +79,21 @@ public final class ImageComparison {
     int differenceCounter = fastCompareMatchingArea(minWidth, minHeight, resultImage.getRaster(),
             img1Pixels, img2Pixels);
 
-    // Sets not covered areas as error (red)
     differenceCounter += fastMarkOuterAreaAsError(minWidth, minHeight, widthDifference, heightDifference,
-            resultImage.getRaster());
+            resultHeight, resultImage.getRaster());
 
     LOG.debug("Returning comparison result of images.");
     return new ImageComparisonResult(differenceCounter, widthDifference, heightDifference, resultImage);
   }
 
   private static int fastMarkOuterAreaAsError(int minWidth, int minHeight, int widthDifference,
-                                               int heightDifference, WritableRaster writableRaster) {
-    // fil area [minWidth, 0, resultWidth, minHeight]
-    int[] emptyAreaA = new int[widthDifference * minHeight];
+                                               int heightDifference, int resultHeight, WritableRaster writableRaster) {
+    // fil right area
+    int[] emptyAreaA = new int[widthDifference * resultHeight];
     Arrays.fill(emptyAreaA, CANVAS_DIFF_COLOR);
-    writableRaster.setDataElements(minWidth, 0, widthDifference, minHeight, emptyAreaA);
+    writableRaster.setDataElements(minWidth, 0, widthDifference, resultHeight, emptyAreaA);
 
-    // fil area [0, minHeight, minWidth, resultHeight]
+    // fil bottom area
     int[] emptyAreaB = new int[minWidth * heightDifference];
     Arrays.fill(emptyAreaB, CANVAS_DIFF_COLOR);
     writableRaster.setDataElements(0, minHeight, minWidth, heightDifference, emptyAreaB);
