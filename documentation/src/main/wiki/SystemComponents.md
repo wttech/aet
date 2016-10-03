@@ -1,6 +1,6 @@
 ## System Components
 
-The AET System consists of 6 core units:
+The AET System consists of 7 core units:
 
 * The Client (AET Maven Plugin)
 * The Runner cluster
@@ -8,6 +8,7 @@ The AET System consists of 6 core units:
 * The JMS Server
 * The Database
 * The REST API
+* Reports web application
 
 ### AET System architecture
 
