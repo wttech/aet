@@ -101,4 +101,4 @@ Please notice we use [ZenHub](https://www.zenhub.com/) extension to manage issue
 
 ## Contact and Commercial Support
 
-If you have any questions or require technical support please contact us at [aet@cognifide.com](aet@cognifide.com).
+If you have any questions or require technical support please contact us at [aet@cognifide.com](mailto:aet@cognifide.com).
