@@ -1,8 +1,8 @@
 #### Accessibility Data Filter
 
-Accessibility Data Filter filters Accessibility issues - it removes matched accessibility issues from reports.  
-This filter can be only applied to `accessibility` comparator tag in test case.  
-When more than one parameter is provided then only fully matched issues are filtered.
+Accessibility Data Filter filters out Accessibility issues - it removes the matched accessibility issues from reports.  
+This filter can be only applied to the `accessibility` comparator tag in the test case.  
+When more than one parameter is provided then only issues fully matched are filtered out.
 
 Module name: **accessibility-filter**
 
@@ -12,14 +12,14 @@ Resource name: accessibility
 
 | Parameter | Value | Description | Mandatory |
 | --------------- | ----- | ----------- | --------- |
-| `error` | string error | Exact error message | At least one of parameter is required |
-| `principle` | string principle | Exact accessibility issue principle |
-| `line` | integer line number | Line number in file in which issue occurred |
-| `column` | integer column number | Column number in file in which issue occurred |
+| `error` | string error | The exact error message | At least one of parameters is required |
+| `principle` | string principle | The exact accessibility issue principle |
+| `line` | integer line number |The line number in the file which the issue occurred in |
+| `column` | integer column number | The column number in the file which the issue occurred is |
 
 ##### Example Usage
 
-In this sample exact match of accessibility issue breaking principle "WCAG2A.Principle4.Guideline4_1.4_1_2.H91.Button.Name", at line 21, column 5 with message "This button element does not have a name available to an accessibility API. Valid names are: title attribute, element content." will be totally ignored.
+In this example the exact match of the accessibility issue breaking principle "WCAG2A.Principle4.Guideline4_1.4_1_2.H91.Button.Name", at the line 21, the column 5 with the message "This button element does not have a name available to an accessibility API. Valid names are: title attribute, element content." will be totally ignored.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -54,7 +54,7 @@ In this sample exact match of accessibility issue breaking principle "WCAG2A.Pri
 </suite>
 ```
 
-There can be more than one `accessibility-filter` tag in `accessibility` comparator eg:
+There can be more than one `accessibility-filter` tag in the `accessibility` comparator e.g.:
 
 ```xml
 <accessibility>

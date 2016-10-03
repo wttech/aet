@@ -1,28 +1,28 @@
-## AET In 10 Minutes
+## AET in 10 Minutes
 
-This is a quick guide showing how to setup AET environment and run an example test.
+This is a quick guide showing how to setup the AET environment and run a sample test.
 
 ### Prerequisites
 Before start make sure that you have enough memory on your machine (8 GB is minimum, 16 GB recommended though).
 
-You need to download and install following software:
+You need to download and install the following software:
 * [VirtualBox 5.0](https://www.virtualbox.org/wiki/Downloads)
 * [Vagrant 1.8.1](https://www.vagrantup.com/downloads.html)
 * [ChefDK 0.11.0](https://downloads.chef.io/chef-dk/)
-* [Maven](https://maven.apache.org/download.cgi) (at least version 3.0.4)
+* [Maven](https://maven.apache.org/download.cgi) (version 3.0.4 or newer)
 
-### Vagrant setup
+### Set Up Vagrant
 
-Open command prompt as an administrator and execute the following commands:
+Open a command prompt as the administrator and execute the following commands:
 * `vagrant plugin install vagrant-omnibus`
 * `vagrant plugin install vagrant-berkshelf`
 * `vagrant plugin install vagrant-hostmanager`
 
-Navigate to the `vagrant` module directory. Run `berks install` and then `vagrant up` to start virtual machine. This process may take a few minutes.
+Navigate to the `vagrant` module directory. Run `berks install` and then `vagrant up` to start the virtual machine. This process may take a few minutes.
 
-### Test setup
+### Set Up the Test
 
-Create file named `suite.xml` with following content:
+Create the file named `suite.xml` with the following content:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -52,7 +52,7 @@ Create file named `suite.xml` with following content:
 </suite>
 ```
 
-Then create another file named `pom.xml` with following content:
+Then create another file named `pom.xml` with the following content:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -86,34 +86,33 @@ Then create another file named `pom.xml` with following content:
 </project>
 ```
 
-It does not need to be in the same directory as `suite.xml` file.
+It does not need to be in the same directory as the `suite.xml` file.
 
-### Run test
+### Run the Test
 
-Once you have created both `suite.xml` and `pom.xml` files open command prompt in the directory which contains `pom.xml` file and execute following command:
+Once you have created both `suite.xml` and `pom.xml` files open a command prompt in the directory which contains the `pom.xml` file and execute the following command:
 
 ```
 mvn aet:run -DtestSuite=full/path/to/suite.xml
 ```
 
-Remember to provide path to your `suite.xml` file.
+Remember to provide the path to your `suite.xml` file.
 
-### Check results
+### Check Results
 
-Once the test run finishes there should be `target` directory created inside a dicrectory containing the `pom.xml` file. Inside the `target` directory you should find `redirect.html` file. Open this file and the test report will show up in your web browser.
+Once the test run finishes there should be the `target` directory created inside the dicrectory containing the `pom.xml` file. Inside the `target` directory you should find the `redirect.html` file. Open this file and the test report will show up in your web browser.
 
 Congratulations! You have successfully created and run your first AET test.
 
-
-### Build and upload application
-You need JDK 8 and Maven 3.3.1 or newer to build AET application.
-To build and upload application use following command from application root:
+### Build and Upload the Application
+You need JDK 8 and Maven 3.3.1 or newer to build the AET application.
+To build and upload the application use the following command in the application root:
 ```
 mvn clean install -P upload
 ```
 
-#### Vagrant upload prequisities:
-In order to be able to deploy bundles to Karaf instance define vagrant vm location in your setting.xml file (`$USER_HOME/m2`):
+#### Upload Vagrant Prequisities:
+In order to be able to deploy bundles to the Karaf instance define the location of the vagrant vm in your `setting.xml` file (`$USER_HOME/m2`):
 ```
 <server>
   <id>aet-vagrant-instance</id>

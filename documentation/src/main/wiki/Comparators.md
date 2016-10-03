@@ -1,8 +1,8 @@
 ### Comparators
 
-Comparator is module which main task is to consume data and compare it with pattern or against defined set of rules.
+The comparator is a module which is responsible for consuming data and comparing it to the pattern or against a defined set of rules.
 
-Each comparator presented in section below consists of three elements:
+Each comparator presented in the section below consists of three elements:
 
 * consumed resource type,
 * module name (comparator),
@@ -10,17 +10,17 @@ Each comparator presented in section below consists of three elements:
 
 ##### Consumed resource type
 
-This is name of resource type consumed by defined comparator. This is always name of tag definition for comparator.
+This is the name of the resource type consumed by the defined comparator. This is always the name of a tag definition for the comparator.
 
-This name says the system which **resource type** should be consumed by defined comparator. When no comparator in system can consume defined resource type, system exception will occur and test will not be performed. This solution enables adding new features to the system without system downtime (just by installing new feature bundle).
+This name says the system which **resource type** should be consumed by the defined comparator. When no comparator in the system can consume the defined resource type, a system exception will occur and the test will not be performed. This solution enables adding new features to the system with no system downtime (just by installing a new feature bundle).
 
-Each comparator can consume only one type of resource.
+Each comparator can consume only one resource type.
 
 ##### Module name (comparator)
 
-This is special parameter, unique name for comparator type treated as interpretation of given resource type. System will recognize which implementation of comparator should be called by this name. This parameter is required for each comparator but system will assume default comparator for each resource type when no `comparator` property is defined.
+This is a special parameter, a unique name for the comparator type treated as an interpretation of a given resource type. The system will recognize which implementation of the comparator should be called by this name. This parameter is required for each comparator but system will assume a default comparator for each resource type when no `comparator` property is defined.
 
-###### Default comparators for consumed resource names
+###### Default comparators for the consumed resource names
 
 * [[cookie|CookieCollector]] -> [[CookieComparator]],
 * [[js errors|JSErrorsCollector]] -> [[JSErrorsComparator]],
@@ -28,7 +28,7 @@ This is special parameter, unique name for comparator type treated as interpreta
 * [[source|SourceCollector]] -> [[SourceComparator]],
 * [[status-codes|StatusCodesCollector]] -> [[StatusCodesComparator]].
 
-Example of usage can be found in system for *source* comparison, where two comparators exists: [[W3C HTML5 Comparator|W3CHTML5Comparator]] and [[Source Comparator|SourceComparator]]. Example below shows sample usage:
+Sample usage can be found in the system for the *source* comparison where two comparators exist: [[W3C HTML5 Comparator|W3CHTML5Comparator]] and [[Source Comparator|SourceComparator]]. The example below shows its sample usage:
 
 ```xml
 ...
@@ -43,18 +43,18 @@ Example of usage can be found in system for *source* comparison, where two compa
 ...
 ```
 
-When test defined as above is executed, only one collection of page source is performed. But result of this collection is used twice during comparison phase. First by [[Source Comparator|SourceComparator]] and then by [[W3C HTML5 Comparator|W3C HTML5 Comparator]].
+When a test defined as above is executed, only one collection of a page source is performed. But the result of this collection is used twice during the comparison phase. First by [[Source Comparator|SourceComparator]] and then by [[W3C HTML5 Comparator|W3C HTML5 Comparator]].
 
 ##### Parameters
 
-This is set of key-value pairs using which user can pass some configuration and information to comparator. Parameters for comparators can be divided into two groups:
+This is a set of key-value pairs allowing the user to pass some configuration and information to the comparator. Parameters for comparators can be divided into the following two groups:
 
 * mandatory - parameters without which comparison will be not possible,
-* optional - passing this parameter is not obligatory, usually this is some comparator functionality extension.
+* optional - passing this parameter is not obligatory, usually this is thr extension of some comparator functionality.
 
 ###### collectorName
 
-There exists special comparator property `collectorName` which is connected with collector's `name` property. By using `collectorName` property combined with collector's `name` property, user can control which comparator instance compares results collected by particular collector. See examples below:
+There exists the special comparator property `collectorName` which is connected to the collector `name` property. By using the `collectorName` property combined with the collector `name` property, the user can control which comparator instance compares results collected by a particular collector. See examples below:
 
 ```xml
 ...
@@ -72,7 +72,7 @@ There exists special comparator property `collectorName` which is connected with
 ...
 ```
 
-Configuration above will trigger three screens collections (desktop, tablet and mobile) and two comparisons (mobile and tablet). Screenshot taken for *desktop* will be not compared.
+The configuration above will trigger three screens collections (desktop, tablet and mobile) and two comparisons (mobile and tablet). Screenshot taken for *desktop* will not be compared.
 
 ```xml
 ...
@@ -89,7 +89,7 @@ Configuration above will trigger three screens collections (desktop, tablet and 
 ...
 ```
 
-Configuration above will trigger three screens collections (desktop, tablet and mobile) and three comparisons (desktop, table, mobile).
+The configuration above will trigger three screens collections (desktop, tablet and mobile) and three comparisons (desktop, table, mobile).
 
 ```xml
 ...
@@ -107,11 +107,11 @@ Configuration above will trigger three screens collections (desktop, tablet and 
 ...
 ```
 
-Configuration above will trigger three screens collections (desktop, tablet and mobile) and four comparisons (desktop, tablet, mobile and one additional for tablet).
+The configuration above will trigger three screens collections (desktop, tablet and mobile) and four comparisons (desktop, tablet, mobile and one additional for the tablet).
 
 ##### Definitions illustration
 
-Following picture presents definitions described earlier:
+The following picture depicts definitions described earlier:
 
 ![Compare phase definitions](assets/diagrams/compare-phase-definitions.png)
 

@@ -1,23 +1,23 @@
 ### Collectors
 
-Collector is module which main task is to collect data from tested pages.
+The collector is a module which is responsible for collecting data from tested pages.
 
-Each collector presented in section below consist of two elements:
+Each collector presented in the section below consists of the following two elements:
 
 * module name (produced resource type),
 * parameters.
 
 ##### Module name (produced resource type)
 
-This name is unique identifier of system functionality. Each collector has its unique name, this name should be also unique for all modules in *[[collect|SuiteStructure#collect]]* phase. This is always name of tag definition for collector.
+This name is a unique identifier of a system functionality. Each collector has its unique name which should also be unique for all modules in the *[[collect|SuiteStructure#collect]]* phase. This is always the name of a tag definition for the collector.
 
-AET System does not know what work will be performed by collector when it reads suite definition. The only thing that is known is **module name**. System will recognize which collector should be called by matching definition from *[[collect|SuiteStructure#collect]]* phase with name registered in system. When no collector in system with defined name is found, system exception will occur and test will be not performed. This solution enables adding new features to the system without system downtime (just by installing new feature bundle).
+The AET System does not know what work will be performed by the collector when it reads the suite definition. The only thing that is known is **module name**. The system will recognize which collector should be called by matching a definition from the *[[collect|SuiteStructure#collect]]* phase with the name registered in the system. When no collector with a defined name is found in system, a system exception will occur and the test will be not performed. This solution enables adding new features to the system with no system downtime (just by installing a new feature bundle).
 
-Each collector produces resource of defined type. This type can be later recognized by [[comparators |Comparators]] and [[data filters|DataFilters]]. Two collectors can't produce data with the same resource type. **Produced resource type is always equal to collector module name.**
+Each collector produces a resource of a defined type. This type can be later recognized by [[comparators |Comparators]] and [[data filters|DataFilters]]. Two collectors can't produce data with the same resource type. **A produced resource type is always equal to the collector module name.**
 
 ##### Parameters
 
-This is set of key-value pairs using which user can pass some configuration and information to collector. Parameters for collectors are usually not mandatory - passing this parameter is not obligatory, usually this is some collector functionality extension. However, there is one special property: **name**. Collector with set name can be treated in special way by [[comparators|Comparators]] (some comparators may look only for collection results from specifically named collectors), example:
+This is a set of key-value pairs with the use of which the user can pass some configuration and information to the collector. Parameters for collectors are usually not mandatory - passing this parameter is not obligatory, usually this is the extension of some collector functionality. However, there is one special property: **name**. The collector with a name set can be treated in a special way by [[comparators|Comparators]] (some comparators may look only for collection results from the collectors with a specific name) e.g.:
 
 ```xml
 ...
@@ -34,11 +34,11 @@ This is set of key-value pairs using which user can pass some configuration and 
 ...
 ```
 
-During collect phase, three screenshot with different resolutions will be taken and saved to database. However, only one of them (*mobile*) will be compared with pattern during comparison phase and presented on report (under "*Layout For Mobile*" section).
+During the collect phase, three screenshot with different resolutions will be taken and saved in the database. However, only one of them (*mobile*) will be compared to the pattern during the comparison phase and presented in the report (under the "*Layout For Mobile*" section).
 
 ##### Definitions illustration
 
-Following picture presents elements described earlier:
+The following picture depicts the elements described before:
 
 ![Collect phase definitions](assets/diagrams/collect-phase-definitions.png)
 

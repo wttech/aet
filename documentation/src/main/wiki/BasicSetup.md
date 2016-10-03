@@ -1,6 +1,6 @@
 ### Basic Setup
 
-This setup uses vagrant module, a pseudo-cookbook which is responsible for local environment provisioning using Vagrant (powered by Chef + Berkshelf under the hood).
+This setup makes use of the Vagrant module, a pseudo-cookbook which is responsible for local environment provisioning using Vagrant (powered by Chef + Berkshelf under the hood).
 
 #### Overview
 
@@ -15,15 +15,15 @@ Currently a virtual machine with the following services is created:
 * Firefox
 * X environment
 
-#### AET services
+#### AET Services
 
-All services are running using default ports. For communication please use IP address:
+All services run using default ports. For communication please use the following IP address:
 
 * `192.168.123.100`
 
-#### General prerequisites
+#### General Prerequisites
 
-By default Vagrant virtual machine needs 3 GB of RAM and 2 vCPUs, so please make sure that you have enough memory on your machine (8 GB is minimum, 16 GB recommended though).
+By default the Vagrant virtual machine needs 3 GB of RAM and 2 vCPUs, so please make sure that you have enough memory on your machine (8 GB is minimum, 16 GB recommended though).
 
 #### Installation
 
@@ -33,7 +33,7 @@ By default Vagrant virtual machine needs 3 GB of RAM and 2 vCPUs, so please make
   [Vagrant 1.8.1](https://www.vagrantup.com/downloads.html)
 * Download and install [ChefDK 0.11.0](https://downloads.chef.io/chef-dk/)
 
-As an administrator execute the following commands:
+As the administrator execute the following commands:
 
 * `vagrant plugin install vagrant-omnibus`
 * `vagrant plugin install vagrant-berkshelf`
@@ -44,7 +44,7 @@ Whenever you'd like to keep all Vagrant related data and virtual machine disks i
 * set `VAGRANT_HOME` variable to new location (by default it is set to `$HOME/vagrant.d`).
 * update VirtualBox settings (`File -> Preferences -> General`) to move all disks to other directory.
 
-#### Starting virtual machine
+#### Starting Virtual Machine
 
 Once you set all described things up just execute:
 
@@ -52,7 +52,7 @@ Once you set all described things up just execute:
 berks update && vagrant destroy -f && vagrant up
 ```
 
-#### First run
+#### First Run
 
 All commands have to be executed when you're inside a directory that contains `Vagrantfile`.
 
@@ -65,34 +65,34 @@ Next please execute:
 
 Whenever new version is released please execute the following:
 
-* `git pull` to get latest version of `Vagrantfile`.
+* `git pull` to get the latest version of `Vagrantfile`.
 * `berks update` to update Chef dependencies.
 * `vagrant provision` to re-run Chef on the virtual machine.
 
-#### SSH access
+#### SSH Access
 
-To get into the virtual machine via SSH please execute `vagrant ssh` from the same directory that contains `Vagrantfile`. After that please type `sudo -i` and press ENTER to switch to `root`.
+To access the virtual machine via SSH please execute `vagrant ssh` from the same directory that contains `Vagrantfile`. After that please type `sudo -i` and press ENTER to switch to `root`.
 
-If you prefer to use PuTTY, mRemote or any other connection manager, please log in as user `vagrant` with password `vagrant` on `localhost` port `2222`. Keep in mind that the port may be different if you have more than one Vagrant machine running at the same time. You can check current assignment by executing `vagrant ssh-config` command from directory that contains your `Vagrantfile`.
+If you prefer to use PuTTY, mRemote or any other connection manager, please log in as the user `vagrant` with the password `vagrant` on `localhost` with the port `2222`. Keep in mind that the port may be different if you have more than one Vagrant machine running at the same time. You can check the current assignment by executing the `vagrant ssh-config` command from the directory that contains your `Vagrantfile`.
 
-#### Useful Vagrant commands
+#### Useful Vagrant Commands
 
-* `vagrant reload` restarts Vagrant machine and re-applies settings defined in
-  `Vagrantfile`. It's useful whenever you've changed port forwarding or synced
+* `vagrant reload` restarts the Vagrant machine and re-applies settings defined in
+  `Vagrantfile`. It's useful whenever you've changed the port forwarding or synced
   folder configuration.
-* `vagrant destroy -f` deletes entire virtual machine.
-* `vagrant reload --provision` restarts virtual machine and re-run Chef
+* `vagrant destroy -f` deletes the entire virtual machine.
+* `vagrant reload --provision` restarts the virtual machine and re-run Chef
   afterwards.
-* `vagrant suspend` suspends currently running virtual machine.
-* `vagrant resume` resumes suspended virtual machine.
-* `vagrant status` show status of virtual machine described in `Vagrantfile`.
-* `vagrant halt` halts/turns off virtual machine.
+* `vagrant suspend` suspends the currently running virtual machine.
+* `vagrant resume` resumes the suspended virtual machine.
+* `vagrant status` show the status of the virtual machine described in `Vagrantfile`.
+* `vagrant halt` halts/turns off the virtual machine.
 
-#### Port forwarding
+#### Port Forwarding
 
-Local port is a port exposed on your machine. You can access services via `localhost:<PORT>`.
+The local port is a port exposed on your machine. You can access services via `localhost:<PORT>`.
 
-VM port refers to port assigned inside Vagrant's virtual machine.
+The VM port refers to the port assigned inside the Vagrant virtual machine.
 
 Port forwarding rules can be easily changed in `Vagrantfile`.
 
@@ -103,8 +103,8 @@ Port forwarding rules can be easily changed in `Vagrantfile`.
 
 #### Known Issues
 
-* When getting following error on deploying application to local vagrant:
+* When getting the following error on application deployment to the local Vagrant:
     ```
     What went wrong: Execution failed for task ':deployDevClearCache'. > java.net.ConnectException: Connection timed out: connect
     ```
-    run `ifup eth1` command on vagrant using ssh.
+    run the `ifup eth1` command on Vagrant using ssh.

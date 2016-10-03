@@ -4,7 +4,7 @@
 a *JMS (Java Message Service)* Server which is a basic communication channel between AET System components.
 
 *AET*  
-an acronym for **A**utomatic **E**xploratory **T**esting, an online testing tool developed by Cognifide.
+an acronym for **A**utomatic **E**xploratory **T**esting, a testing tool developed by Cognifide.
 
 *AET Core*  
 a set of system modules that are crucial to whole system work. The AET system will not work properly without all core modules configured and running properly.
@@ -16,7 +16,7 @@ implementations of jobs that can perform a particular task (e.g. collect screens
 a default client application for the AET system that is used to trigger the execution of the *Test Suite*.
 
 *Amazon Web Services*  
-Cloud Computing Services where AET environment is setup.
+Cloud computing services where the AET environment can be deployed to.
 
 *Apache Karaf*  
 see *Karaf*.
@@ -28,13 +28,13 @@ usually used in the context of a small piece of data, the result of some operati
 see *Amazon Web Services*.
 
 *Baseline*  
-The act of taking a snap shot of the url/page and saving it to a file for future comparison in a number of ways to find differences.
+The act of taking a snapshot of the url/page and saving it to a file for future comparison in a number of ways to find differences.
 
 *Browsermob*  
 a proxy server used by AET to collect some kinds of data from tested pages.
 
 *Cleaner*  
-a module responsible for removing old and unused artefacts from the database.
+a module responsible for removing old and unused artifacts from the database.
 
 *Collector*  
 a module responsible for gathering data necessary for its further processing (e.g. validation, comparison).
@@ -46,7 +46,7 @@ the first phase of the AET service during which all specified data is collected 
 a module responsible for comparing data currently collected to its existing pattern or validating it against a set of defined rules.
 
 *Comparison*  
-the second phase of the AET service that performs the operation on the data. collected during the first phase In some cases the collected data is compared to patterns, in others special validation is performed (e.g. *W3C HTML5*). The second phase starts before the collection finishes - just the moment when required artefacts are collected and become ready to be compared (e.g. to compare two screenshots system does not have to wait until the source of a page is collected).
+the second phase of the AET service that performs the operation on the data. In some cases the data collected during the first phase is compared to patterns, in others special validation is performed (e.g. *W3C HTML5*). The second phase starts before the collection finishes - just the moment when required artifacts are collected and become ready to be compared (e.g. to compare two screenshots system does not have to wait until the source of a page is collected).
 
 *Cookie Collector*  
 a collector responsible for collecting cookies.
@@ -67,10 +67,10 @@ a database abstraction layer which contains versioned data (data grid).
 a modifier that allows to extract an element from the html source (collected by the Screen Collector) by providing the id attribute or the class attribute.
 
 *Feature*  
-a part of the AET system which covers full testing case e.g. layout - this feature consists of the Screen Collector, the screen comparator and the layout reporter module.
+a part of the AET system which covers a full testing case e.g. layout - this feature consists of the Screen Collector, the screen comparator and the layout reporter module.
 
 *Firefox*  
-a browser the AET tool makes use of, currently the version that is used is 30 en-US.
+a browser the AET tool makes use of, currently the version that is used is 38.6.0 ESR (en-US).
 
 *Header Modifier*  
 a modifier responsible for adding additional headers to a page.
@@ -160,10 +160,10 @@ a sample model of data. Collection results are compared to their patterns to dis
 a Maven tool configuration file that contains information about the project and configuration details used by Maven to build the project.
 
 *Rebasing*  
-am operation changing the existing pattern to the current result.
+an operation changing the existing pattern to the current result.
 
 *Regression testing*  
-This is a type of software testing that seeks to uncover new software bugs, or regressions, in existing functional and non-functional areas of a system. It is especially useful after changes such as enhancements, patches or configuration changes, have been made .
+this is a type of software testing that seeks to uncover new software bugs, or regressions, in existing functional and non-functional areas of a system. It is especially useful after changes such as enhancements, patches or configuration changes, have been made.
 
 *Remove Lines Data Modifier*  
 a modifier that allows to remove lines from the source (data or pattern) that a given page is compared to.
@@ -172,7 +172,7 @@ a modifier that allows to remove lines from the source (data or pattern) that a 
 a modifier that allows to delete some node(s) from a html tree. Node(s) are defined by the xpath selector.
 
 *Report (Web application)*  
-Web application for viewing / browsing AET tests results. (Only chrome browser is supported for now).
+a web application for viewing / browsing AET test results. (At the moment the Google Chrome browser is supported).
 
 *Representational State Transfer API*  
 see *Rest API*.
@@ -196,7 +196,7 @@ a data structure storing metadata for a set of files that is managed by a source
 a collector responsible for collecting a screenshot of the page under a given URL.
 
 *Selenium*  
-a portable software testing framework for web applications.
+a portable software testing framework for web applications. At the moment AET makes use of Selenium 2.50.1.
 
 *Selenium Driver*  
 a test tool that allows to perform specific actions in a browser environment (e.g. take a screenshot of a page).
@@ -208,7 +208,7 @@ a modifier responsible for ceasing the execution of a given test temporarily. It
 a collector responsible for collecting the source of a page under a given URL. Unlike other collectors the *Source Collector* does not use *Web Driver*. It connects directly to a web server.
 
 *Source Comparator*  
-a comparator responsible for comparing a collected page source with its pattern.
+a comparator responsible for comparing a collected page source to its pattern.
 
 *Status Code*  
 a response code for the resource request. For a detailed list of codes please refer to the Hypertext Transfer Protocol documentation at: http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html.
@@ -220,7 +220,7 @@ a collector responsible for collecting status codes for links to resources on a 
 a comparator responsible for processing collected *Status Codes*.
 
 *Step*  
-a single operation performed on url defined in `<collect>` phase of suite.
+a single operation performed on the url defined in the `<collect>` phase of the suite.
 
 *Test*  
 a definition of logical set of *Test Cases* performed on a set of URLs.
@@ -238,7 +238,7 @@ a feature allowing to declare a Jenkins build as ‘success’, ‘unstable’ o
 a modifier that waits until a page is loaded or a fixed amount of time is up.
 
 *Web Console*  
-the OSGi console installed on Apache Karaf. By default it is accessible via a browser: http://localhost:8181/system/console/configMgr. The default user/password are as follows: karaf/karaf.
+the OSGi console installed on Apache Karaf. By default it is accessible via a browser: http://localhost:8181/system/console/configMgr. The default user/password are: karaf/karaf.
 
 *Worker*  
 a single processing unit that can perform a defined amount of tasks (e.g. collect a screenshot, compare a source).

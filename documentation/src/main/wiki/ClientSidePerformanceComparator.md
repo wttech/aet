@@ -2,9 +2,9 @@
 
 | ! Beta Version |
 |:------------   |
-| This AET Plugin is currently in BETA version. |
+| This AET Plugin is currently in a BETA version. |
 
-Client Side Performance Comparator is responsible for processing of collected client side performance analysis result. Comparator uses [YSlow](http://yslow.org/) tool in order to perform comparison phase on collected results.
+Client Side Performance Comparator is responsible for processing collected client side performance analysis results. The comparator makes use of the [YSlow](http://yslow.org/) tool in order to perform the comparison phase on collected results.
 
 Module name: **client-side-performance**
 

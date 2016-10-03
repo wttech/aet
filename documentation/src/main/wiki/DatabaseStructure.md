@@ -9,7 +9,7 @@ Each AET project has its own database. Project database consists of 3 collection
 
 ### Metadata
 
-Metadata collection holds whole suite run with all necessary metadata. Example:
+The metadata collection holds the whole suite run with all necessary metadata e.g.:
 
 ```
 {
@@ -166,18 +166,18 @@ Metadata collection holds whole suite run with all necessary metadata. Example:
 }
 ```
 
-Each step defined in original suite is stored in this collection with all information necessary to run it.
+Each step defined in the original suite is stored in this collection with all the information necessary to run it.
 
 ![aet-data-model](assets/diagrams/aet-data-model.png)
 
-**Metadata** is a simple MongoDB collection. It contains keys (objectId) of GridFS artifacts stored in **Artifacts** collection.
+**Metadata** is a simple MongoDB collection. It contains keys (objectId) of GridFS artifacts stored in the **Artifacts** collection.
 
 ![aet-mongo-collections](assets/diagrams/aet-mongo-collections.png)
 
-Metadata is persisted after full suite run. At the beginning of processing, pattern keys are fetched from the last run if it was performed.
+Metadata is persisted after a full suite run. At the beginning of processing, pattern keys are fetched from the last run if it was performed.
 
 ![aet-suite-storage](assets/diagrams/aet-suite-storage.png)
 
 ### Artifacts
 
-Artifacts is a GridFS collection (consists of 2 colelctions .files and .chunks). It holds binary artifacts (e.g. screenshots, source etc.). Each file has its ObjectId which is reference to it. This collection has no knowledge of its context, artifacts are not marked as pattern/result etc.
+Artifacts is a GridFS collection (it consists of 2 colelctions: .files and .chunks). It holds binary artifacts (e.g. screenshots, source etc.). Each file has its ObjectId which is a reference to it. This collection has no knowledge of its context, artifacts are not marked as pattern/result etc.

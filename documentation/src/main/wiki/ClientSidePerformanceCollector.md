@@ -2,9 +2,9 @@
 
 | ! Beta Version |
 |:------------   |
-| This AET Plugin is currently in BETA version. |
+| This AET Plugin is currently in a BETA version. |
 
-Client Side Performance Collector is responsible for collecting performance analysis result. It uses [YSlow](http://yslow.org/) tool to perform analysis.
+Client Side Performance Collector is responsible for collecting performance analysis results. The collector makes use of the [YSlow](http://yslow.org/) tool to perform analysis.
 
 Module name: **client-side-performance**
 

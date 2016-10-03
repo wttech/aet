@@ -1,6 +1,6 @@
 ### Client Application
 
-The AET client application comes in the form of a plugin for the *Maven* build automation tool -- `aet-maven-plugin`. This plugin connects to the AET application in order to run the specified test suite.
+The AET client application comes the a form of a plugin for the *Maven* build automation tool -- `aet-maven-plugin`. This plugin connects to the AET application in order to run the specified test suite.
 
 #### Usage
 
@@ -14,22 +14,22 @@ In order to run tests you must create a *Maven* project and include `aet-maven-p
 </plugin>
 ```
 
-The plugin version is here specified as the *Maven* property `aet.version`. This allows to define the AET plugin version from the command line using `-Daet.version=x.y.z` option, where `x.y.z` is the version number.
+The plugin version is here specified as the *Maven* property `aet.version`. This allows to define the AET plugin version from the command line using the `-Daet.version=x.y.z` option, where `x.y.z` is the version number.
 
-`aet-maven-plugin` defines the `aet:run` *Maven* goal which needs to be executed in order to run test suite.
+`aet-maven-plugin` defines the `aet:run` *Maven* goal which needs to be executed in order to run the test suite.
 
-So if you want to run AET tests you must execute following command in the directory where the `pom.xml` file has been defined:
+So if you want to run AET tests you must execute the following command in the directory where the `pom.xml` file has been defined:
 ```
 mvn aet:run -DtestSuite=FULL_PATH_TO_TEST_SUITE
 ```
 
 ##### Parameters
 
-The `aet-maven-plugin` has a few parameters that configure its behaviour. The `testSuite` parameter already mentioned defines the path to the xml suite configuration file. All the parameters are described below:
+`aet-maven-plugin` has a few parameters that configure its behaviour. The `testSuite` parameter already mentioned defines the path to the xml suite configuration file. All the parameters are described below:
 
 | Parameter | Description | Default Value | Mandatory |
 | --------- | ----------- | ------------- | --------- |
-| `testSuite` | The full path to suite definition file (at least a file name with an extension, e.g. `testSuite.xml`).| suite.xml | no |
+| `testSuite` | The full path to the suite definition file (at least a file name with an extension, e.g. `testSuite.xml`).| suite.xml | no |
 | `endpointDomain` | the URL to the main AET domain | http://localhost:8181 | no |
 | `userName` | ActiveMQ user name. | karaf | no |
 | `password` | ActiveMQ password. | karaf | no |
@@ -37,7 +37,7 @@ The `aet-maven-plugin` has a few parameters that configure its behaviour. The `t
 | `inQueue` | Active MQ incomming queue name. | AET.runner-in | no |
 | `domain` | Overrides the *domain* parameter value from the test suite definition. | - | no |
 | `timeout` | Milliseconds to detect the timeout since the last message received from AET. This is useful to abort the test run if there is no activity for a long time. | 300000 (5 minutes) | no |
-| `xUnit` | The flag that says if the xUnit report should be generated and downloaded.| false | no |
+| `xUnit` | The flag that indicates whether the xUnit report should be generated and downloaded or not.| false | no |
 
 ##### Test results
 
@@ -52,12 +52,12 @@ By default, `aet-maven-plugin` connects to the AET application using the port 81
 mvn aet:run -DtestSuite=suite.xml -DendpointDomain=http://aet.example.com
 ```
 
-If all URLs in your test suite point to a single domain, you can specify it so it is no longer needed to do it again in the suite file. Let's say you'd like to test some subpages of the English version of Wikipedia. Then you can specify the target domain in the following way:
+If all URLs in your test suite point to a single domain, you can specify it so it is no longer needed to do it again in the suite file. Let's assume you'd like to test some subpages of the English version of Wikipedia. Then you can specify the target domain in the following way:
 ```
 mvn aet:run -DtestSuite=suite.xml -Ddomain=https://en.wikipedia.org
 ```
 
-If you want the test run to fail if running it takes too much time, you can specify the timeout (in milliseconds) in the following way:
+If you want the test run to fail if it's run takes too much time, you can specify the timeout (in milliseconds) in the following way:
 ```
 mvn aet:run -DtestSuite=suite.xml -Dtimeout=2000
 ```
