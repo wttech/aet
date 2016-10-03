@@ -7,7 +7,7 @@ Before start make sure that you have enough memory on your machine (8 GB is mini
 
 You need to download and install following software:
    * [VirtualBox 5.0.26](https://www.virtualbox.org/wiki/Download_Old_Builds_5_0)
-   * [Vagrant 1.8.4](https://www.vagrantup.com/downloads.html)
+   * [Vagrant 1.8.4](https://releases.hashicorp.com/vagrant/)
    * [ChefDK 0.17.17](https://downloads.chef.io/chef-dk/)
    * [Maven](https://maven.apache.org/download.cgi) (at least version 3.0.4)
    * [JDK 7 or 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html)
