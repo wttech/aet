@@ -1,5 +1,5 @@
 ### What's new
-AET 1.4 brings new reporting capabilities and improved performance. We have decided to label the new features as BETA and 
+AET 2.0 brings new reporting capabilities and improved performance. We have decided to label the new features as BETA and 
 improve them based your feedback as it means a lot to us. Stay tuned!
 
 #### Architecture performance improvements
