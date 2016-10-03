@@ -21,7 +21,7 @@ Resource name: status-codes
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
 <suite name="test-suite" company="cognifide" project="project">
-    <test name="status-codes-test">
+    <test name="status-codes-test" useProxy="rest">
         <collect>
             ...
             <open />          

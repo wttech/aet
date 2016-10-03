@@ -1,5 +1,10 @@
-![Automated Exploratory Tests](../misc/img/logo.png)
+![Cognifide logo](http://cognifide.github.io/images/cognifide-logo.png)
+
 # Automated Exploratory Tests
+<p align="center">
+  <img src="https://github.com/Cognifide/aet/blob/master/misc/img/aet-logo-black.png?raw=true"
+         alt="AET Logo"/>
+</p>
 
 ## Core Module
 Contains core AET System elements, such as Runner, Worker and storage implementation.

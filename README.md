@@ -5,7 +5,8 @@
 
 # Automated Exploratory Testing
 <p align="center">
-  <img src="misc/img/aet-logo-black.png" alt="AET Logo"/>
+  <img src="https://github.com/Cognifide/aet/blob/master/misc/img/aet-logo-black.png?raw=true"
+         alt="AET Logo"/>
 </p>
 
 AET (acronym formed from **A**utomated **E**xploratory **T**esting) is a system that detects changes on web sites.
@@ -71,9 +72,9 @@ Please see our [AET in 10 minutes](https://github.com/Cognifide/aet/wiki/AETIn10
 
 To run **AET** tests the following tools are required:
 
-- Java 7 or 8
-- Maven 3.3.1 or newer
-- Chrome Browser to preview AET reports
+* [Maven](https://maven.apache.org/download.cgi) (at least version 3.0.4)
+* [JDK 7 or 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html)
+* [Chrome browser](https://www.google.com/chrome/browser/desktop/) to preview reports
 
 ## Setup
 Please refer to the [Setup Guide](https://github.com/Cognifide/aet/wiki/BasicSetup) in the documentation for an overview on how to configure AET.
@@ -81,13 +82,23 @@ Please refer to the [Setup Guide](https://github.com/Cognifide/aet/wiki/BasicSet
 ## License
 **AET** is licensed under [Apache License, Version 2.0 (the "License")](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
+
+## Bugs and Feedback
+
+For bugs, questions and discussions please use the [Github Issues](https://github.com/Cognifide/aet/issues).
+Please notice we use [ZenHub](https://www.zenhub.com/) extension to manage issues.
+
 ## Roadmap
 
-- Selenium Grid
-- Microservices Architecture
-- Developer Guide
-- Report UX improvements
-- More browsers support
+- [Selenium Grid](https://github.com/Cognifide/aet/issues/8)
+- [Microservices Architecture](https://github.com/Cognifide/aet/issues/7)
+- [Developer Guide](https://github.com/Cognifide/aet/issues/10)
+- [Report UX improvements](https://github.com/Cognifide/aet/issues/9)
+- [More browsers support](https://github.com/Cognifide/aet/issues/8)
 
 ## Documentation
 * [AET Wiki](https://github.com/Cognifide/aet/wiki)
+
+## Contact and Commercial Support
+
+If you have any questions or require technical support please contact us at [aet@cognifide.com](mailto:aet@cognifide.com).

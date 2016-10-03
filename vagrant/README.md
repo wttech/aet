@@ -1,5 +1,10 @@
-![Automated Exploratory Tests](../misc/img/logo.png)
+![Cognifide logo](http://cognifide.github.io/images/cognifide-logo.png)
+
 # Automated Exploratory Tests
+<p align="center">
+  <img src="https://github.com/Cognifide/aet/blob/master/misc/img/aet-logo-black.png?raw=true"
+         alt="AET Logo"/>
+</p>
 
 ## Vagrant
 
@@ -116,26 +121,14 @@ machine running at the same time. You can check current assignment by executing
 * `vagrant status` show status of virtual machine described in `Vagrantfile`
 * `vagrant halt` halts/turns off virtual machine
 
-### Domains
-
-| Domain                                         | Description                    | Protocols                         |
-| ---------------------------------------------- | ------------------------------ | --------------------------------- |
-| TBD                                            | TBD                            | TBD                               |
-
-
 ### Port forwarding
 
-Local port is a port exposed on your machine. You can access services
+Local port (*host*) is a port exposed on your machine. You can access services
 via `localhost:<PORT>`.
 
-VM port refers to port assigned inside Vagrant's virtual machine.
+*guest* ports refer to ports assigned inside Vagrant's virtual machine.
 
 Port forwarding rules can be easily changed in `Vagrantfile`.
-
-| Local port | VM port | Description         |
-| ---------- | ------- | ------------------- |
-| 8181       | 8181    | Karaf               |
-
 
 ### Known Issues
 
