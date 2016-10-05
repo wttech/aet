@@ -1,12 +1,12 @@
 #### Hide Modifier
 
-Hide Modifier is responsible for hiding some unnecessary for test element on page. Affects [[Screen Collector|ScreenCollector]] results. Hiding is done by setting css `visibility` property to `hidden`. Works with webDriver only. You can hide many elements by defining many `<hide>` nodes. If xpath covers more than one element then all elements that match defined xpath will be hidden.
+Hide Modifier is responsible for hiding an element on the page that is redundant for testing and/or can make the page look different each time a screenshot is taken. It affects [[Screen Collector|ScreenCollector]] results. Hiding is performed by setting the css `visibility` property to `hidden`. It works with webDriver only. You can hide many elements by defining many `<hide>` nodes. If the xpath covers more than one element then all the elements matching the xpath will be hidden.
 
 Module name: **hide**
 
 | ! Important information |
 |:----------------------- |
-| In order to use this modifier it must be declared after open module in test suite XML definition. |
+| In order to use this modifier it must be declared after the open module in the definition of the test suite XML. |
 
 ##### Parameters
 
