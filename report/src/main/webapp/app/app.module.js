@@ -208,8 +208,9 @@ define(['angularAMD',
 				cache: true,
 				views: {
 					'content@': angularAMD.route({
-						templateUrl: 'app/html/url_view.html',
-						controllerUrl: '_old_js/controllers/url',
+						templateUrl: 'app/layout/main/url/mainView.url.view.html',
+						controllerUrl: 'layout/main/url/mainView.url.controller',
+						controllerAs: 'urlView',
 						resolve: {
 							metadataReady: function (metadataLoaderService) {
 								return metadataLoaderService.setup();

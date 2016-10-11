@@ -3860,13 +3860,13 @@ table { border-collapse: collapse; border-spacing: 0; }
 /* line 155, ../sass/_typography.scss */
 .name { font-style: italic; }
 
-/* line 61, C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+/* line 61, ../../../../../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]:-moz-placeholder { color: #85898e; }
-/* line 64, C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+/* line 64, ../../../../../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]::-moz-placeholder { color: #85898e; }
-/* line 67, C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+/* line 67, ../../../../../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]:-ms-input-placeholder { color: #85898e; }
-/* line 56, C:/Ruby22-x64/lib/ruby/gems/2.2.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+/* line 56, ../../../../../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]::-webkit-input-placeholder { color: #85898e; }
 
 /* Automated Exploratory Tests  Copyright (C) 2013 Cognifide Limited  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */
@@ -4353,6 +4353,19 @@ tr.delete, tr.err, tr.error { background: #f2dede; }
 .test-icons-comment { background: #85898e; }
 /* line 266, ../sass/_report.scss */
 .test-icons-rebase { background: #0097fe; }
+
+/* line 272, ../sass/_report.scss */
+.nav-tabs .case-tab { text-transform: uppercase; font-size: 18px; border: 0 none; border-bottom: solid 7px transparent; padding: 4px 5px 7px; }
+/* line 279, ../sass/_report.scss */
+.nav-tabs .case-tab a, .nav-tabs .case-tab a:hover, .nav-tabs .case-tab a:focus, .nav-tabs .case-tab a:active { color: #77777c; }
+/* line 285, ../sass/_report.scss */
+.nav-tabs .case-tab.failed a, .nav-tabs .case-tab.failed a:hover, .nav-tabs .case-tab.failed a:focus, .nav-tabs .case-tab.failed a:active, .nav-tabs .case-tab.processing_error a, .nav-tabs .case-tab.processing_error a:hover, .nav-tabs .case-tab.processing_error a:focus, .nav-tabs .case-tab.processing_error a:active { color: #bb5a5a; }
+/* line 291, ../sass/_report.scss */
+.nav-tabs .case-tab.rebased a, .nav-tabs .case-tab.rebased a:hover, .nav-tabs .case-tab.rebased a:focus, .nav-tabs .case-tab.rebased a:active { color: #0097fe; }
+/* line 297, ../sass/_report.scss */
+.nav-tabs .case-tab.warning a, .nav-tabs .case-tab.warning a:hover, .nav-tabs .case-tab.warning a:focus, .nav-tabs .case-tab.warning a:active { color: #f0ad4e; }
+/* line 302, ../sass/_report.scss */
+.nav-tabs .case-tab.active { border: 0 none; background: transparent; border-bottom: solid 7px #caeb7f; }
 
 /* line 31, ../sass/main.scss */
 html, body { height: 100%; }
