@@ -57,8 +57,10 @@ define(['angularAMD',
 	'notesService',
 	'suiteInfoService',
 	'patternsService',
+	'caseFactory',
 	'userSettingsService',
 	'viewModeService',
+
 	// sidepanel
 	'sidepanelToggleDirective',
 	'sidepanelStatusFilterDirective',

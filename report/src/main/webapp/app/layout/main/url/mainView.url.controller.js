@@ -18,11 +18,11 @@
 define([], function () {
   'use strict';
   return ['$rootScope', '$stateParams', '$uibModal', 'metadataAccessService', 'viewModeService',
-          'notesService', 'patternsService', 'artifactsService',
+          'notesService', 'patternsService', 'userSettingsService', 'caseFactory',
           MainViewUrlController];
 
   function MainViewUrlController($rootScope, $stateParams, $uibModal, metadataAccessService,
-                                 viewModeService, notesService, patternsService, artifactsService) {
+                                 viewModeService, notesService, patternsService, userSettingsService, caseFactory) {
     var vm = this;
 
     $rootScope.$on('metadata:changed', updateUrlView);
@@ -43,7 +43,8 @@ define([], function () {
       vm.updateCurrentCase = updateCurrentCase;
       vm.acceptCase = acceptCase;
       vm.revertCase = revertCase;
-      vm.getArtifactUrl = getArtifactUrl;
+
+      vm.toggleMask = toggleMask;
     }
 
     function getUrlCases(testName, urlName) {
@@ -51,63 +52,13 @@ define([], function () {
       var cases = [];
       _.forEach(urlSteps, function (step) {
         _.forEach(step.comparators, function (comparator, index) {
-          var currentCase = {};
-          currentCase.comparator = comparator;
-          currentCase.step = step;
-
-          currentCase.displayName = getCaseDisplayName(step, comparator);
-          var stepResult = comparator.stepResult;
-          currentCase.showAcceptButton =
-              stepResult && stepResult.rebaseable && stepResult.status === 'FAILED';
-          currentCase.showRevertButton = comparator.hasNotSavedChanges;
-          currentCase.index = index;
-          currentCase.status = getCaseStatus(step, comparator);
-
-          if (currentCase.status === 'PROCESSING_ERROR') {
-            currentCase.errors = getCaseErrors(step, comparator);
-            currentCase.getTemplate = function () {
-              return 'app/layout/main/url/errors/processingError.html';
-            };
-          } else {
-            currentCase.getTemplate = function () {
-              return 'app/layout/main/url/reports/' + comparator.type + '.html';
-            };
-          }
-          cases.push(currentCase);
+          cases.push(caseFactory.getCase(step, comparator, index));
         });
       });
       return cases;
     }
 
-    function getCaseDisplayName(step, comparator) {
-      var displayName = comparator.type;
-      if (step.parameters && step.parameters.name) {
-        displayName += ' ' + step.parameters.name;
-      } else if (comparator.parameters && comparator.parameters.comparator) {
-        displayName += ' ' + comparator.parameters.comparator;
-      }
-      return displayName;
-    }
-
-    function getCaseStatus(step, comparator) {
-      var status;
-      if (comparator.stepResult) {
-        status = comparator.stepResult.status ? comparator.stepResult.status : step.stepResult.status;
-      } else {
-        status = step.stepResult ? step.stepResult.status : 'PROCESSING_ERROR';
-      }
-      return status;
-    }
-
-    function getCaseErrors(step, comparator) {
-      var errors;
-      if (comparator.stepResult) {
-        errors = comparator.stepResult.errors ? comparator.stepResult.errors : step.stepResult.errors;
-      } else {
-        errors = step.stepResult ? step.stepResult.errors : 'Unknown error';
-      }
-      return errors;
-    }
+   
 
     function updateCurrentCase(currentCase) {
       vm.currentCase = currentCase;
@@ -142,9 +93,9 @@ define([], function () {
          }
        });
     }
-    
-    function getArtifactUrl(artifactId) {
-      return artifactsService.getArtifactUrl(artifactId);
+
+    function toggleMask() {
+      $rootScope.maskVisible = userSettingsService.toggleScreenshotMask();
     }
 
   }

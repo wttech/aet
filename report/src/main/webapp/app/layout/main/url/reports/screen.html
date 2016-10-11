@@ -22,7 +22,7 @@
   <span class="tab-content-toolbar-header">Settings</span>
   <div class="checkboxes-inline">
     <div class="checkbox">
-      <input type="checkbox" id="toggleMask" ng-click="toggleMask()" ng-checked="$root.maskVisible">
+      <input type="checkbox" id="toggleMask" ng-click="urlView.toggleMask()" ng-checked="$root.maskVisible">
       <label for="toggleMask">
         <span>Show Mask</span>
       </label>
@@ -43,13 +43,13 @@
         <span class="label label-info">{{case.comparator.stepResult.data.patternTimestamp | date:'medium'}}</span>
       </p>
       <div class="mask-container">
-        <img ng-src="{{urlView.getArtifactUrl(case.comparator.stepResult.artifactId)}}"
+        <img ng-src="{{case.getResultUrl()}}"
              class="mask img-responsive"
              ng-class="($root.maskVisible == true ? 'is-visible' : '')"
              ng-if="differenceFound"/>
 
-        <a href="{{urlView.getArtifactUrl(case.step.pattern)}}" target="_blank">
-          <img ng-src="{{urlView.getArtifactUrl(case.step.pattern)}}" class="img-responsive"/>
+        <a href="{{case.getPatternUrl()}}" target="_blank">
+          <img ng-src="{{case.getPatternUrl()}}" class="img-responsive"/>
         </a>
       </div>
     </div>
@@ -59,12 +59,12 @@
       </p>
 
       <div class="mask-container">
-        <img ng-src="{{urlView.getArtifactUrl(case.comparator.stepResult.artifactId)}}"
+        <img ng-src="{{case.getResultUrl()}}"
              class="mask img-responsive"
              ng-class="($root.maskVisible == true ? 'is-visible' : '')"/>
 
-        <a href="{{urlView.getArtifactUrl(case.step.stepResult.artifactId)}}" target="_blank">
-          <img ng-src="{{urlView.getArtifactUrl(case.step.stepResult.artifactId)}}" class="img-responsive"/>
+        <a href="{{case.getDataUrl()}}" target="_blank">
+          <img ng-src="{{case.getDataUrl()}}" class="img-responsive"/>
         </a>
       </div>
     </div>

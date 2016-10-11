@@ -75,6 +75,7 @@ require.config({
 		'suiteController': 'layout/main/suite/mainView.suite.controller',
 		'testController': 'layout/main/test/mainView.test.controller',
 		'urlController': 'layout/main/url/mainView.url.controller',
+		'caseFactory': 'layout/main/url/caseFactory.service',
 		//modals
 		'unsavedChangesModalController': 'layout/modal/unsavedChanges/unsavedChangesModal.controller',
 		'noteModalController': 'layout/modal/note/noteModal.controller'
