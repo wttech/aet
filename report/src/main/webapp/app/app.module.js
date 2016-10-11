@@ -46,6 +46,7 @@ define(['angularAMD',
 	'testUrlsStatusFilter',
 	'urlStatusFilter',
 	// services
+	'artifactsService',
 	'metadataEndpointService',
 	'metadataLoaderService',
 	'localStorageService',

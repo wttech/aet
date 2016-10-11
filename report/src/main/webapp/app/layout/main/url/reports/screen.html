@@ -29,9 +29,6 @@
     </div>
   </div>
   <div class="toolbar-blocks">
-    <div class="toolbar-block">
-      Pattern collected: {{case.comparator.stepResult.data.patternTimestamp | date:'medium'}}
-    </div>
     <div class="toolbar-btns pull-right">
       <ng-include src="'app/layout/main/url/navigation/navigation.comments.html'"/>
       <ng-include src="'app/layout/main/url/navigation/navigation.patternButtons.html'"/>
@@ -39,5 +36,40 @@
   </div>
 </div>
 <div>
-  SCREENHOTS! {{case.comparator.stepResult.status.toLowerCase()}}, {{case.displayName}}
+  <div class="layout-compare"
+       ng-init="differenceFound = case.comparator.stepResult.status === 'FAILED'">
+    <div class="layout-compare-item pull-left">
+      <p class="layout-compare-description">Pattern
+        <span class="label label-info">{{case.comparator.stepResult.data.patternTimestamp | date:'medium'}}</span>
+      </p>
+      <div class="mask-container">
+        <img ng-src="{{urlView.getArtifactUrl(case.comparator.stepResult.artifactId)}}"
+             class="mask img-responsive"
+             ng-class="($root.maskVisible == true ? 'is-visible' : '')"
+             ng-if="differenceFound"/>
+
+        <a href="{{urlView.getArtifactUrl(case.step.pattern)}}" target="_blank">
+          <img ng-src="{{urlView.getArtifactUrl(case.step.pattern)}}" class="img-responsive"/>
+        </a>
+      </div>
+    </div>
+    <div class="layout-compare-item pull-left" ng-if="differenceFound">
+      <p class="layout-compare-description">Current
+        <span class="label label-info">{{case.comparator.stepResult.data.collectTimestamp | date:'medium'}}</span>
+      </p>
+
+      <div class="mask-container">
+        <img ng-src="{{urlView.getArtifactUrl(case.comparator.stepResult.artifactId)}}"
+             class="mask img-responsive"
+             ng-class="($root.maskVisible == true ? 'is-visible' : '')"/>
+
+        <a href="{{urlView.getArtifactUrl(case.step.stepResult.artifactId)}}" target="_blank">
+          <img ng-src="{{urlView.getArtifactUrl(case.step.stepResult.artifactId)}}" class="img-responsive"/>
+        </a>
+      </div>
+    </div>
+    <div class="layout-compare-item pull-left" ng-if="!differenceFound">
+      <p class="layout-compare-description">No difference was detected!</p>
+    </div>
+  </div>
 </div>

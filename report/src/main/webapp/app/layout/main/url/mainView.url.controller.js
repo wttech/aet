@@ -18,11 +18,11 @@
 define([], function () {
   'use strict';
   return ['$rootScope', '$stateParams', '$uibModal', 'metadataAccessService', 'viewModeService',
-          'notesService', 'patternsService',
+          'notesService', 'patternsService', 'artifactsService',
           MainViewUrlController];
 
   function MainViewUrlController($rootScope, $stateParams, $uibModal, metadataAccessService,
-                                 viewModeService, notesService, patternsService) {
+                                 viewModeService, notesService, patternsService, artifactsService) {
     var vm = this;
 
     $rootScope.$on('metadata:changed', updateUrlView);
@@ -43,6 +43,7 @@ define([], function () {
       vm.updateCurrentCase = updateCurrentCase;
       vm.acceptCase = acceptCase;
       vm.revertCase = revertCase;
+      vm.getArtifactUrl = getArtifactUrl;
     }
 
     function getUrlCases(testName, urlName) {
@@ -52,13 +53,14 @@ define([], function () {
         _.forEach(step.comparators, function (comparator, index) {
           var currentCase = {};
           currentCase.comparator = comparator;
+          currentCase.step = step;
+
           currentCase.displayName = getCaseDisplayName(step, comparator);
           var stepResult = comparator.stepResult;
           currentCase.showAcceptButton =
               stepResult && stepResult.rebaseable && stepResult.status === 'FAILED';
           currentCase.showRevertButton = comparator.hasNotSavedChanges;
           currentCase.index = index;
-          currentCase.stepIndex = step.index;
           currentCase.status = getCaseStatus(step, comparator);
 
           if (currentCase.status === 'PROCESSING_ERROR') {
@@ -108,17 +110,16 @@ define([], function () {
     }
 
     function updateCurrentCase(currentCase) {
-      console.log('currentCase:', currentCase);
       vm.currentCase = currentCase;
     }
 
     function acceptCase(currentCase) {
-      patternsService.updateCase($stateParams.test, $stateParams.url, currentCase.stepIndex,
+      patternsService.updateCase($stateParams.test, $stateParams.url, currentCase.step.index,
                                  currentCase.index);
     }
 
     function revertCase(currentCase) {
-      patternsService.revertCase($stateParams.test, $stateParams.url, currentCase.stepIndex,
+      patternsService.revertCase($stateParams.test, $stateParams.url, currentCase.step.index,
                                  currentCase.index);
     }
 
@@ -140,6 +141,10 @@ define([], function () {
            }
          }
        });
+    }
+    
+    function getArtifactUrl(artifactId) {
+      return artifactsService.getArtifactUrl(artifactId);
     }
 
   }

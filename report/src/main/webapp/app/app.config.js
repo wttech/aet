@@ -49,6 +49,7 @@ require.config({
 		'urlStatusFilter': 'components/urlStatus.filter',
 		'keyboardShortcutsDirective': 'components/keyboardShortcuts.directive',
 		//services
+		'artifactsService': 'services/artifacts.service',
 		'metadataEndpointService': 'services/metadataEndpoint.service',
 		'metadataLoaderService': 'services/metadataLoader.service',
 		'localStorageService': 'services/localStorage.service',
