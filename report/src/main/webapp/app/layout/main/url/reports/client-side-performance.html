@@ -17,14 +17,15 @@
     limitations under the License.
 
 -->
-<div class="main page-main">
-  <uib-tabset>
-    <uib-tab
-        ng-repeat="case in urlView.cases"
-        classes="case-tab {{case.stepResult.status.toLowerCase()}}"
-        heading="{{case.displayName}}"
-        select="urlView.updateCurrentCase(case)">
-      <ng-include ng-init="templateUrl = case.getTemplate()" src="templateUrl"/>
-    </uib-tab>
-  </uib-tabset>
+
+<div class="tab-content-toolbar">
+    <div class="toolbar-blocks">
+        <div class="toolbar-btns pull-right">
+            <ng-include src="'app/layout/main/url/navigation/navigation.comments.html'"/>
+            <ng-include src="'app/layout/main/url/navigation/navigation.patternButtons.html'"/>
+        </div>
+    </div>
+</div>
+<div>
+    Client side performance {{case.comparator.stepResult.status.toLowerCase()}}, {{case.displayName}}
 </div>

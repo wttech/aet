@@ -16,48 +16,97 @@
  * limitations under the License.
  */
 define([], function () {
-	'use strict';
-	return ['$rootScope', '$stateParams', 'metadataAccessService', MainViewUrlController];
+  'use strict';
+  return ['$rootScope', '$stateParams', '$uibModal', 'metadataAccessService', 'viewModeService', 'notesService', 'patternsService',
+          MainViewUrlController];
 
-	function MainViewUrlController($rootScope, $stateParams, metadataAccessService) {
-		var vm = this;
+  function MainViewUrlController($rootScope, $stateParams, $uibModal, metadataAccessService, viewModeService, notesService, patternsService) {
+    var vm = this;
 
-		$rootScope.$on('metadata:changed', updateUrlView);
-		$('[data-toggle="popover"]').popover({
-			placement: 'bottom'
-		});
+    $rootScope.$on('metadata:changed', updateUrlView);
+    $('[data-toggle="popover"]').popover({
+      placement: 'bottom'
+    });
 
-		updateUrlView();
+    updateUrlView();
 
-		/***************************************
-		 ***********  Private methods  *********
-		 ***************************************/
+    /***************************************
+     ***********  Private methods  *********
+     ***************************************/
 
-		function updateUrlView() {
-			vm.comparators = getUrlComparators($stateParams.test, $stateParams.url);
-			vm.urlName = $stateParams.url;
-		}
+    function updateUrlView() {
+      vm.cases = getUrlCases($stateParams.test, $stateParams.url);
+      vm.urlName = $stateParams.url;
+      vm.displayCommentModal = displayCommentModal;
+      vm.updateCurrentCase = updateCurrentCase;
+      vm.acceptCase = acceptCase;
+      vm.revertCase = revertCase;
+    }
 
-		function getUrlComparators(testName, urlName) {
-			var urlSteps = metadataAccessService.getUrlSteps(testName, urlName);
-			var comparators = [];
-			_.forEach(urlSteps, function (step) {
-				_.forEach(step.comparators, function (comparator) {
-					comparator.displayName = getComparatorDisplayName(step, comparator);
-					comparators.push(comparator);
-				});
-			});
-			return comparators;
-		}
+    function getUrlCases(testName, urlName) {
+      var urlSteps = metadataAccessService.getUrlSteps(testName, urlName);
+      var cases = [];
+      _.forEach(urlSteps, function (step) {
+        _.forEach(step.comparators, function (comparator, index) {
+          var currentCase = {};
+          currentCase.comparator = comparator;
+          currentCase.displayName = getCaseDisplayName(step, comparator);
+          var stepResult = comparator.stepResult;
+          currentCase.showAcceptButton = stepResult && stepResult.rebaseable && stepResult.status === 'FAILED';
+          currentCase.showRevertButton = comparator.hasNotSavedChanges;
+          currentCase.index = index;
+          currentCase.stepIndex = step.index;
+          currentCase.getTemplate = function () {
+            return 'app/layout/main/url/reports/' + comparator.type + '.html';
+          };
+          cases.push(currentCase);
+        });
+      });
+      return cases;
+    }
 
-		function getComparatorDisplayName(step, comparator) {
-			var displayName = comparator.type;
-			if (step.parameters && step.parameters.name) {
-				displayName += ' ' + step.parameters.name;
-			} else if (comparator.parameters && comparator.parameters.comparator) {
-				displayName += ' ' + comparator.parameters.comparator;
-			}
-			return displayName;
-		}
-	}
+    function getCaseDisplayName(step, comparator) {
+      var displayName = comparator.type;
+      if (step.parameters && step.parameters.name) {
+        displayName += ' ' + step.parameters.name;
+      } else if (comparator.parameters && comparator.parameters.comparator) {
+        displayName += ' ' + comparator.parameters.comparator;
+      }
+      return displayName;
+    }
+
+    function updateCurrentCase(currentCase) {
+      console.log('currentCase:', currentCase);
+      vm.currentCase = currentCase;
+    }
+
+    function acceptCase(currentCase) {
+      patternsService.updateCase($stateParams.test, $stateParams.url, currentCase.stepIndex, currentCase.index);
+    }
+
+    function revertCase(currentCase) {
+      patternsService.revertCase($stateParams.test, $stateParams.url, currentCase.stepIndex, currentCase.index);
+    }
+
+    function displayCommentModal(currentCase) {
+      $uibModal.open({
+         animation: true,
+         templateUrl: 'app/layout/modal/note/noteModal.view.html',
+         controller: 'noteModalController',
+         controllerAs: 'noteModal',
+         resolve: {
+           model: function () {
+             return currentCase;
+           },
+           viewMode: function () {
+             return viewModeService.COMPARATOR;
+           },
+           notesService: function () {
+             return notesService;
+           }
+         }
+       });
+    }
+
+  }
 });

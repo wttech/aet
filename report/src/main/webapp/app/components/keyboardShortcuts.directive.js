@@ -65,7 +65,7 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
 			$(document).on('keydown', function (e) {
 				if($('body').hasClass('modal-open')){
 					return true;
-				} else {
+				} else if (shortcuts[e.keyCode]) {
 					shortcuts[e.keyCode]();
 				}
 			});
