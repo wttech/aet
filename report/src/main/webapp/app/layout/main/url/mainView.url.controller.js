@@ -17,16 +17,18 @@
  */
 define([], function () {
   'use strict';
-  return ['$rootScope', '$stateParams', '$uibModal', 'metadataAccessService', 'viewModeService', 'notesService', 'patternsService',
+  return ['$rootScope', '$stateParams', '$uibModal', 'metadataAccessService', 'viewModeService',
+          'notesService', 'patternsService',
           MainViewUrlController];
 
-  function MainViewUrlController($rootScope, $stateParams, $uibModal, metadataAccessService, viewModeService, notesService, patternsService) {
+  function MainViewUrlController($rootScope, $stateParams, $uibModal, metadataAccessService,
+                                 viewModeService, notesService, patternsService) {
     var vm = this;
 
     $rootScope.$on('metadata:changed', updateUrlView);
     $('[data-toggle="popover"]').popover({
-      placement: 'bottom'
-    });
+       placement: 'bottom'
+     });
 
     updateUrlView();
 
@@ -52,13 +54,23 @@ define([], function () {
           currentCase.comparator = comparator;
           currentCase.displayName = getCaseDisplayName(step, comparator);
           var stepResult = comparator.stepResult;
-          currentCase.showAcceptButton = stepResult && stepResult.rebaseable && stepResult.status === 'FAILED';
+          currentCase.showAcceptButton =
+              stepResult && stepResult.rebaseable && stepResult.status === 'FAILED';
           currentCase.showRevertButton = comparator.hasNotSavedChanges;
           currentCase.index = index;
           currentCase.stepIndex = step.index;
-          currentCase.getTemplate = function () {
-            return 'app/layout/main/url/reports/' + comparator.type + '.html';
-          };
+          currentCase.status = getCaseStatus(step, comparator);
+
+          if (currentCase.status === 'PROCESSING_ERROR') {
+            currentCase.errors = getCaseErrors(step, comparator);
+            currentCase.getTemplate = function () {
+              return 'app/layout/main/url/errors/processingError.html';
+            };
+          } else {
+            currentCase.getTemplate = function () {
+              return 'app/layout/main/url/reports/' + comparator.type + '.html';
+            };
+          }
           cases.push(currentCase);
         });
       });
@@ -75,17 +87,39 @@ define([], function () {
       return displayName;
     }
 
+    function getCaseStatus(step, comparator) {
+      var status;
+      if (comparator.stepResult) {
+        status = comparator.stepResult.status ? comparator.stepResult.status : step.stepResult.status;
+      } else {
+        status = step.stepResult ? step.stepResult.status : 'PROCESSING_ERROR';
+      }
+      return status;
+    }
+
+    function getCaseErrors(step, comparator) {
+      var errors;
+      if (comparator.stepResult) {
+        errors = comparator.stepResult.errors ? comparator.stepResult.errors : step.stepResult.errors;
+      } else {
+        errors = step.stepResult ? step.stepResult.errors : 'Unknown error';
+      }
+      return errors;
+    }
+
     function updateCurrentCase(currentCase) {
       console.log('currentCase:', currentCase);
       vm.currentCase = currentCase;
     }
 
     function acceptCase(currentCase) {
-      patternsService.updateCase($stateParams.test, $stateParams.url, currentCase.stepIndex, currentCase.index);
+      patternsService.updateCase($stateParams.test, $stateParams.url, currentCase.stepIndex,
+                                 currentCase.index);
     }
 
     function revertCase(currentCase) {
-      patternsService.revertCase($stateParams.test, $stateParams.url, currentCase.stepIndex, currentCase.index);
+      patternsService.revertCase($stateParams.test, $stateParams.url, currentCase.stepIndex,
+                                 currentCase.index);
     }
 
     function displayCommentModal(currentCase) {

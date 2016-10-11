@@ -19,7 +19,19 @@
 -->
 
 <div class="tab-content-toolbar">
+  <span class="tab-content-toolbar-header">Settings</span>
+  <div class="checkboxes-inline">
+    <div class="checkbox">
+      <input type="checkbox" id="toggleMask" ng-click="toggleMask()" ng-checked="$root.maskVisible">
+      <label for="toggleMask">
+        <span>Show Mask</span>
+      </label>
+    </div>
+  </div>
   <div class="toolbar-blocks">
+    <div class="toolbar-block">
+      Pattern collected: {{case.comparator.stepResult.data.patternTimestamp | date:'medium'}}
+    </div>
     <div class="toolbar-btns pull-right">
       <ng-include src="'app/layout/main/url/navigation/navigation.comments.html'"/>
       <ng-include src="'app/layout/main/url/navigation/navigation.patternButtons.html'"/>

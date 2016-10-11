@@ -17,14 +17,12 @@
     limitations under the License.
 
 -->
-<div class="main page-main">
-  <uib-tabset>
-    <uib-tab
-        ng-repeat="case in urlView.cases"
-        classes="case-tab {{case.status.toLowerCase()}}"
-        heading="{{case.displayName}}"
-        select="urlView.updateCurrentCase(case)">
-      <ng-include ng-init="templateUrl = case.getTemplate()" src="templateUrl"/>
-    </uib-tab>
-  </uib-tabset>
+
+<div class="tab-content-toolbar">
+
+</div>
+<div>
+    <h2>Processing error occurred!</h2>
+    <p>Details:</p>
+    <p>{{case.errors}}</p>
 </div>
