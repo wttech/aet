@@ -76,7 +76,7 @@ define(['angularAMD', 'artifactsService', 'extensionsFactory'], function (angula
           artifact = extension.handlePatternArtifact(data);
         }).catch(function (e) {
           console.log(e);
-        })
+        });
       }
       return artifact;
     }
@@ -97,7 +97,7 @@ define(['angularAMD', 'artifactsService', 'extensionsFactory'], function (angula
           artifact = extension.handleDataArtifact(data);
         }).catch(function (e) {
           console.log(e);
-        })
+        });
       }
       return artifact;
     }
@@ -119,7 +119,7 @@ define(['angularAMD', 'artifactsService', 'extensionsFactory'], function (angula
               caseModel.result = extension.handleResultArtifact(data);
             }).catch(function (e) {
               console.log(e);
-        })
+        });
       }
     }
 

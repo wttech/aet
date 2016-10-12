@@ -27,14 +27,14 @@ define(['angularAMD'], function (angularAMD) {
           getExtension: getExtension
         },
         EXTENSIONS = {
-          'accessibility': new NoPatternExtension(),
-          'client-side-performance': new NoPatternExtension(),
-          'cookie': new NoPatternExtension(),
+          'accessibility': new OnlyResultExtensions(),
+          'client-side-performance': new OnlyResultExtensions(),
+          'cookie': new OnlyResultExtensions(),
           'js-errors': new JsErrorsExtension(),
           'screen_layout': new LayoutExtension(),
           'source': new SourceComparisonExtension(),
           'source_w3c-html5': new W3CExtension(),
-          'status-codes': new NoPatternExtension()
+          'status-codes': new OnlyResultExtensions()
         };
 
     return service;
@@ -43,8 +43,6 @@ define(['angularAMD'], function (angularAMD) {
       var type = step.type,
           comparatorAlgorithm = comparator.parameters ? comparator.parameters.comparator : null,
           key = comparatorAlgorithm ? type + '_' + comparatorAlgorithm : type;
-
-      console.log('exteinsion', key, EXTENSIONS[key]);
 
       return EXTENSIONS[key];
     }
@@ -55,10 +53,9 @@ define(['angularAMD'], function (angularAMD) {
 
   }
 
-  function NoPatternExtension() {
+  function OnlyResultExtensions() {
     return {
       setup: setup,
-      handleDataArtifact: handleDataArtifact,
       handleResultArtifact: handleResultArtifact
     };
     
@@ -66,18 +63,28 @@ define(['angularAMD'], function (angularAMD) {
       caseModel.getResultArtifact();
     }
 
-    function handleDataArtifact(data) {
+    function handleResultArtifact(data) {
       return data;
+    }
+  }
+  
+  function JsErrorsExtension() {
+    return {
+      setup: setup,
+      handleResultArtifact: handleResultArtifact
+    };
+
+    function setup(caseModel, step, comparator, index) {
+      caseModel.getResultArtifact();
+      if (comparator.filters) {
+        caseModel.resultFilters = [];
+        caseModel.resultFilters.push(comparator.filters[0].parameters);
+      }
     }
 
     function handleResultArtifact(data) {
       return data;
     }
-
-  }
-  
-  function JsErrorsExtension() {
-    
   }
 
   function LayoutExtension() {

@@ -19,13 +19,36 @@
 -->
 
 <div class="tab-content-toolbar">
-    <div class="toolbar-blocks">
-        <div class="toolbar-btns pull-right">
-            <ng-include src="'app/layout/main/url/navigation/navigation.comments.html'"/>
-            <ng-include src="'app/layout/main/url/navigation/navigation.patternButtons.html'"/>
-        </div>
+  <div class="toolbar-blocks">
+    <div class="toolbar-btns pull-right">
+      <ng-include src="'app/layout/main/url/navigation/navigation.comments.html'"/>
     </div>
+  </div>
 </div>
 <div>
-    Client side performance {{case.comparator.stepResult.status.toLowerCase()}}, {{case.displayName}}
+  <h3>
+    Overall score <span class="label label-{{::case.result.prettyOverallScore}}">{{::case.result.prettyOverallScore}}</span>
+  </h3>
+  <div class="case.result-table tabbable tabs-left">
+    <ul class="nav nav-tabs">
+      <li ng-repeat="item in case.result.g track by $index">
+        <a href="#test-{{$index+1}}" ng-click="getTab($event)" data-toggle="tab" role="tab">
+          <span class="label label-{{::item.prettyScore}}">{{::item.prettyScore}}</span>
+          <strong>{{::item.name}}</strong>
+        </a>
+      </li>
+    </ul>
+    <div class="tab-content tab-content-case.result">
+      <div class="tab-pane" id="test-{{$index+1}}"
+           ng-repeat="item in case.result.g track by $index">
+        <span>Grade <span class="label label-{{::item.prettyScore}}">{{::item.prettyScore}}</span> on {{::item.name}}</span>
+        <span ng-bind-html="item.message | to_trusted"></span>
+        <div ng-if="item.components.length > 0" class="links-list">
+          <a href="" ng-repeat="component in item.components">
+            <i>{{component}}</i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
