@@ -198,7 +198,7 @@ define(['angularAMD', 'artifactsService'], function (angularAMD) {
           templateName;
 
       if (comparatorAlgorithm && comparatorAlgorithm !== type) {
-        templateName = comparatorAlgorithm ? type + '_' + comparatorAlgorithm : type
+        templateName = comparatorAlgorithm ? type + '_' + comparatorAlgorithm : type;
       } else {
         templateName = type;
       }
