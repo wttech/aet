@@ -58,6 +58,7 @@ define(['angularAMD',
 	'suiteInfoService',
 	'patternsService',
 	'caseFactory',
+	'extensionsFactory',
 	'userSettingsService',
 	'viewModeService',
 

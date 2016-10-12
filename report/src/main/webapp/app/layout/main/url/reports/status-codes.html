@@ -22,10 +22,59 @@
     <div class="toolbar-blocks">
         <div class="toolbar-btns pull-right">
             <ng-include src="'app/layout/main/url/navigation/navigation.comments.html'"/>
-            <ng-include src="'app/layout/main/url/navigation/navigation.patternButtons.html'"/>
         </div>
     </div>
 </div>
 <div>
-    Status-codes {{case.comparator.stepResult.status.toLowerCase()}}, {{case.displayName}}
+    <table class="table table-striped table-hover">
+        <thead>
+        <tr>
+            <th>No.</th>
+            <th>Status Code</th>
+            <th>URL</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr class="info" ng-if="case.comparator.parameters.showExcluded && case.comparator.parameters.filterCodes">
+            <td colspan="3">
+                Excluded status codes:
+            </td>
+        </tr>
+        <tr class="info" ng-repeat="item in case.result.excludedStatusCodes | filter: {code: case.comparator.parameters.filterCodes}" ng-if="case.comparator.parameters.showExcluded && case.comparator.parameters.filterCodes">
+            <td>{{$index+1}}</td>
+            <td>{{item.code}}</td>
+            <td><a href="{{item.url}}" title="{{item.url}}">{{item.url}}</a></td>
+        </tr>
+        <tr class="info" ng-if="case.result.filteredStatusCodes.length > 0">
+            <td colspan="3">
+                Filtered status codes:
+            </td>
+        </tr>
+        <tr ng-class="(item.code == '404' ? 'danger' :'')" ng-repeat="item in case.result.filteredStatusCodes">
+            <td>{{$index+1}}</td>
+            <td>{{item.code}}</td>
+            <td><a href="{{item.url}}" title="{{item.url}}">{{item.url}}</a></td>
+        </tr>
+        <tr class="info" ng-if="case.comparator.parameters.showExcluded && !case.comparator.parameters.filterCodes && case.result.excludedStatusCodes.length > 0">
+            <td colspan="3">
+                Excluded status codes:
+            </td>
+        </tr>
+        <tr class="info" ng-repeat="item in case.result.excludedStatusCodes" ng-if="case.comparator.parameters.showExcluded && !case.comparator.parameters.filterCodes && case.result.excludedStatusCodes.length > 0">
+            <td>{{$index+1}}</td>
+            <td>{{item.code}}</td>
+            <td><a href="{{item.url}}" title="{{item.url}}">{{item.url}}</a></td>
+        </tr>
+        <tr class="info">
+            <td colspan="3">
+                All gathered status codes:
+            </td>
+        </tr>
+        <tr class="info" ng-repeat="item in case.result.statusCodes">
+            <td>{{$index+1}}</td>
+            <td>{{item.code}}</td>
+            <td><a href="{{item.url}}" title="{{item.url}}">{{item.url}}</a></td>
+        </tr>
+        </tbody>
+    </table>
 </div>

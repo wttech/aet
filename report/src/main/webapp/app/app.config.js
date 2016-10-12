@@ -76,6 +76,7 @@ require.config({
 		'testController': 'layout/main/test/mainView.test.controller',
 		'urlController': 'layout/main/url/mainView.url.controller',
 		'caseFactory': 'layout/main/url/caseFactory.service',
+		'extensionsFactory': 'layout/main/url/extensionsFactory.service',
 		//modals
 		'unsavedChangesModalController': 'layout/modal/unsavedChanges/unsavedChangesModal.controller',
 		'noteModalController': 'layout/modal/note/noteModal.controller'
