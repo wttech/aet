@@ -17,17 +17,28 @@
  */
 define(['angularAMD'], function (angularAMD) {
 	'use strict';
-	angularAMD.directive('hidePopovers', function () {
+	angularAMD.directive('aetTruncateUrls', ['$timeout', function ($timeout) {
 		return {
-			restrict: 'A',
+			restrict: 'AE',
+			scope: {
+				type: '@'
+			},
 			link: function (scope, $element) {
-				$element.on('click', function (e) {
-					if (!$(e.target).parents().hasClass('pop') && !$(e.target).parents().hasClass('popover')) {
-						$('[data-toggle="popover"], .pop').popover('hide');
-					}
+				var checkElementsHeights = function () {
+					if ($element.children().width() > $element.parent().width()) {
+						$element.addClass('ellipsis');
+					}  else {
+						$element.removeClass('ellipsis');
+					} 
+				};
+
+				$(window).on('resize', checkElementsHeights);
+
+				$timeout(function () {
+					checkElementsHeights();
 				});
 			}
 		};
-	});
+	}]);
 
 });

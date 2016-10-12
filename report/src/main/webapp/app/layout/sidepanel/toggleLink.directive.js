@@ -17,21 +17,21 @@
  */
 define(['angularAMD'], function (angularAMD) {
 	'use strict';
-	angularAMD.directive('truncateUrls', ['$timeout', function ($timeout) {
+	angularAMD.directive('aetToggleLink', [function () {
 		return {
 			restrict: 'AE',
 			scope: {
-				type: '@'
+				'type': '@'
 			},
 			link: function (scope, $element) {
-				var checkElementsHeights = function () {
-					$element.children().width() > $element.parent().width() ? $element.addClass('ellipsis') : $element.removeClass('ellipsis');
-				};
-
-				$(window).on('resize', checkElementsHeights);
-
-				$timeout(function () {
-					checkElementsHeights();
+				var parent = $element.parent();
+				$element.on('click', function (event) {
+					if ($(event.target).attr('class') == 'glyphicon glyphicon-chevron-down') {
+						event.preventDefault();
+					}
+					if (scope.type == 'test-name') {
+						parent.toggleClass('is-expanded');
+					}
 				});
 			}
 		};

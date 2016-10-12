@@ -17,14 +17,15 @@
  */
 define(['angularAMD'], function (angularAMD) {
 	'use strict';
-	angularAMD.factory('configService', function () {
+	angularAMD.directive('aetHidePopovers', function () {
 		return {
-			getConfig: function () {
-				var config = {
-					'production': '/api/'
-				};
-
-				return config;
+			restrict: 'A',
+			link: function (scope, $element) {
+				$element.on('click', function (e) {
+					if (!$(e.target).parents().hasClass('pop') && !$(e.target).parents().hasClass('popover')) {
+						$('[data-toggle="popover"], .pop').popover('hide');
+					}
+				});
 			}
 		};
 	});

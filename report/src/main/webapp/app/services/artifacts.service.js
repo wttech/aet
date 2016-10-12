@@ -15,25 +15,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-define(['angularAMD', 'configService', 'requestParametersService'], function (angularAMD) {
+define(['angularAMD', 'endpointConfiguration', 'requestParametersService'], function (angularAMD) {
   'use strict';
   angularAMD.factory('artifactsService', ArtifactsService);
 
   /**
    * Service responsible for fetching artifacts.
    */
-  function ArtifactsService($q, $http, configService, requestParametersService) {
+  function ArtifactsService($q, $http, endpointConfiguration, requestParametersService) {
     var service = {
           getArtifactUrl: getArtifactUrl,
           getArtifact: getArtifact
         },
         requestParams = requestParametersService.get(),
-        configParams = configService.getConfig();
+        getEndpointUrl = endpointConfiguration.getEndpointUrl();
 
     return service;
 
     function getArtifactUrl(artifactId) {
-      return configParams.production + 'artifact?company=' + requestParams.company + '&project=' + requestParams.project + '&id=' + artifactId;
+      return getEndpointUrl.production + 'artifact?company=' + requestParams.company + '&project=' + requestParams.project + '&id=' + artifactId;
     }
 
     function getArtifact(artifactId) {

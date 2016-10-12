@@ -16,25 +16,16 @@
  * limitations under the License.
  */
 define(['angularAMD'], function (angularAMD) {
-	'use strict';
-	angularAMD.directive('toggleLink', [function () {
-		return {
-			restrict: 'AE',
-			scope: {
-				'type': '@'
-			},
-			link: function (scope, $element) {
-				var parent = $element.parent();
-				$element.on('click', function (event) {
-					if ($(event.target).attr('class') == 'glyphicon glyphicon-chevron-down') {
-						event.preventDefault();
-					}
-					if (scope.type == 'test-name') {
-						parent.toggleClass('is-expanded');
-					}
-				});
-			}
-		};
-	}]);
+  'use strict';
+  angularAMD.factory('endpointConfiguration', function () {
+    return {
+      getEndpointUrl: function () {
+        var config = {
+          'production': '/api/'
+        };
+        return config;
+      }
+    };
+  });
 
 });

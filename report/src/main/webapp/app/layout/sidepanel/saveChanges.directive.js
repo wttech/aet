@@ -17,7 +17,7 @@
  */
 define(['angularAMD'], function (angularAMD) {
 	'use strict';
-	angularAMD.directive('saveChanges', ['$rootScope', 'metadataService', function ($rootScope, metadataService) {
+	angularAMD.directive('aetSaveChanges', ['$rootScope', 'metadataService', function ($rootScope, metadataService) {
 		return {
 			restrict: 'A',
 			scope: {

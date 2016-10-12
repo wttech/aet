@@ -25,20 +25,14 @@ define(['angularAMD',
 	'jquery',
 	'bootstrap',
 	'scroller',
-	// **** OLD STRUCTURE ****
-	'configService',
-	'toggleLinkDirective',
-	'saveChangesDirective',
-	'scrollTablesDirective',
-	'truncateUrlsDirective',
-	'hidePopoversDirective',
-	// **** NEW STRUCTURE ****
 	// components
+	'hidePopoversDirective',
 	'keyboardShortcutsDirective',
 	'testUrlsSearch',
 	'testUrlsStatusFilter',
 	'urlStatusFilter',
 	// services
+	'endpointConfiguration',
 	'artifactsService',
 	'metadataEndpointService',
 	'metadataLoaderService',
@@ -58,6 +52,9 @@ define(['angularAMD',
 	'sidepanelToggleDirective',
 	'sidepanelStatusFilterDirective',
 	'sidepanelSearchDirective',
+	'sidepanelToggleLinkDirective',
+	'sidepanelSaveChangesDirective',
+	'sidepanelTruncateUrlsDirective',
 	// modals
 	'noteModalController',
 	'unsavedChangesModalController'], function (angularAMD, _) {

@@ -26,21 +26,16 @@ require.config({
 		'angularAMD': '../assets/libs/angularAMD/angularAMD',
 		'lodash': '../assets/libs/lodash/dist/lodash',
 		'angular-bootstrap': '../assets/libs/angular-bootstrap/ui-bootstrap-tpls',
-		// ************** OLD *************
-		'toggleLinkDirective': '_old_js/directives/toggleLinkDirective',
-		'saveChangesDirective': '_old_js/directives/saveChangesDirective',
-		'scrollTablesDirective': '_old_js/directives/scrollTablesDirective',
-		'truncateUrlsDirective': '_old_js/directives/truncateUrlsDirective',
-		'hidePopoversDirective':'_old_js/directives/hidePopoversDirective',
-		'configService':'_old_js/services/configService',
 		'scroller':'../assets/libs/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar',
-		// **************** new structure ********************
+		// **************** AET custom ********************
 		//components
 		'testUrlsSearch': 'components/testUrlsSearch.filter',
 		'testUrlsStatusFilter': 'components/testUrlsStatus.filter',
 		'urlStatusFilter': 'components/urlStatus.filter',
 		'keyboardShortcutsDirective': 'components/keyboardShortcuts.directive',
+		'hidePopoversDirective':'components/hidePopovers.directive',
 		//services
+		'endpointConfiguration': 'services/endpointConfiguration.service',
 		'artifactsService': 'services/artifacts.service',
 		'metadataEndpointService': 'services/metadataEndpoint.service',
 		'metadataLoaderService': 'services/metadataLoader.service',
@@ -62,6 +57,9 @@ require.config({
 		'sidepanelToggleDirective': 'layout/sidepanel/sidepanelToggle.directive',
 		'sidepanelStatusFilterDirective': 'layout/sidepanel/sidepanelStatusFilter.directive',
 		'sidepanelSearchDirective': 'layout/sidepanel/sidepanelSearch.directive',
+		'sidepanelToggleLinkDirective': 'layout/sidepanel/toggleLink.directive',
+		'sidepanelSaveChangesDirective': 'layout/sidepanel/saveChanges.directive',
+		'sidepanelTruncateUrlsDirective': 'layout/sidepanel/truncateUrls.directive',
 		'sidepanelController': 'layout/sidepanel/sidepanel.controller',
 		//main
 		'suiteController': 'layout/main/suite/mainView.suite.controller',
