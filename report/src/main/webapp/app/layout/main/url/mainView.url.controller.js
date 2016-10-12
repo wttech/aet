@@ -25,7 +25,6 @@ define([], function () {
                                  viewModeService, notesService, patternsService, userSettingsService, caseFactory) {
     var vm = this;
     vm.displayCommentModal = displayCommentModal;
-    vm.updateCurrentCase = updateCurrentCase;
     vm.acceptCase = acceptCase;
     vm.revertCase = revertCase;
 
@@ -37,15 +36,21 @@ define([], function () {
        placement: 'bottom'
      });
 
-    updateUrlView();
+    setupUrlView();
 
     /***************************************
      ***********  Private methods  *********
      ***************************************/
 
-    function updateUrlView() {
+    function setupUrlView() {
       vm.cases = getUrlCases($stateParams.test, $stateParams.url);
       vm.urlName = $stateParams.url;
+    }
+
+    function updateUrlView() {
+      _.forEach(vm.cases, function (testcase) {
+        testcase.update();
+      });
     }
 
     function getUrlCases(testName, urlName) {
@@ -57,12 +62,6 @@ define([], function () {
         });
       });
       return cases;
-    }
-
-   
-
-    function updateCurrentCase(currentCase) {
-      vm.currentCase = currentCase;
     }
 
     function acceptCase(currentCase) {

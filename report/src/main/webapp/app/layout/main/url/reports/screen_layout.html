@@ -36,8 +36,7 @@
   </div>
 </div>
 <div>
-  <div class="layout-compare"
-       ng-init="differenceFound = case.comparator.stepResult.status === 'FAILED'">
+  <div class="layout-compare">
     <div class="layout-compare-item pull-left">
       <p class="layout-compare-description">Pattern
         <span class="label label-info">{{case.comparator.stepResult.data.patternTimestamp | date:'medium'}}</span>
@@ -46,14 +45,14 @@
         <img ng-src="{{case.getResultUrl()}}"
              class="mask img-responsive"
              ng-class="($root.maskVisible == true ? 'is-visible' : '')"
-             ng-if="differenceFound"/>
+             ng-if="case.status == 'FAILED'"/>
 
         <a href="{{case.getPatternUrl()}}" target="_blank">
           <img ng-src="{{case.getPatternUrl()}}" class="img-responsive"/>
         </a>
       </div>
     </div>
-    <div class="layout-compare-item pull-left" ng-if="differenceFound">
+    <div class="layout-compare-item pull-left" ng-if="case.status == 'FAILED'">
       <p class="layout-compare-description">Current
         <span class="label label-info">{{case.comparator.stepResult.data.collectTimestamp | date:'medium'}}</span>
       </p>
@@ -68,7 +67,7 @@
         </a>
       </div>
     </div>
-    <div class="layout-compare-item pull-left" ng-if="!differenceFound">
+    <div class="layout-compare-item pull-left" ng-if="case.status != 'FAILED'">
       <p class="layout-compare-description">No difference was detected!</p>
     </div>
   </div>

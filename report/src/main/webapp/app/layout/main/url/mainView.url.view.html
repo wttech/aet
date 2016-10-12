@@ -22,8 +22,7 @@
     <uib-tab
         ng-repeat="case in urlView.cases"
         classes="case-tab {{case.status.toLowerCase()}}"
-        heading="{{case.displayName}}"
-        select="urlView.updateCurrentCase(case)">
+        heading="{{case.displayName}}">
       <ng-include ng-init="templateUrl = case.getTemplate()" src="templateUrl"/>
     </uib-tab>
   </uib-tabset>

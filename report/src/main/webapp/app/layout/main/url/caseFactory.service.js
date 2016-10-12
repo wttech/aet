@@ -44,6 +44,7 @@ define(['angularAMD', 'artifactsService'], function (angularAMD) {
    */
   function BasicCaseModel(step, comparator, index, artifactsService) {
     var caseModel = {
+      update: update,
       hasPattern: hasPattern,
       getPatternUrl: getPatternUrl,
       getPatternArtifact: getPatternArtifact,
@@ -119,14 +120,7 @@ define(['angularAMD', 'artifactsService'], function (angularAMD) {
       }
     }
 
-    /***************************************
-     ***********  Private methods  *********
-     ***************************************/
-
-    function setup() {
-      caseModel.comparator = comparator;
-      caseModel.step = step;
-
+    function update() {
       caseModel.displayName = getCaseDisplayName(step, comparator);
       var stepResult = comparator.stepResult;
       caseModel.showAcceptButton =
@@ -145,7 +139,18 @@ define(['angularAMD', 'artifactsService'], function (angularAMD) {
           return templateProvider.getTemplateUrl(step, comparator);
         };
       }
+    }
 
+    /***************************************
+     ***********  Private methods  *********
+     ***************************************/
+
+    function setup() {
+      caseModel.comparator = comparator;
+      caseModel.step = step;
+
+      update();
+      
       getResultArtifact();
     }
 
