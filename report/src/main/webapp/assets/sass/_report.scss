@@ -269,6 +269,13 @@
 }
 
 .nav-tabs {
+  transition: left, 0.3s;
+  background: #ffffff;
+  position: fixed;
+  top: 124px;
+  width: 100%;
+  z-index: 5;
+
   .case-tab {
     text-transform: uppercase;
     font-size: 18px;

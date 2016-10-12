@@ -4354,17 +4354,19 @@ tr.delete, tr.err, tr.error { background: #f2dede; }
 /* line 266, ../sass/_report.scss */
 .test-icons-rebase { background: #0097fe; }
 
-/* line 272, ../sass/_report.scss */
-.nav-tabs .case-tab { text-transform: uppercase; font-size: 18px; border: 0 none; border-bottom: solid 7px transparent; padding: 4px 5px 7px; }
+/* line 271, ../sass/_report.scss */
+.nav-tabs { transition: left, 0.3s; background: #ffffff; position: fixed; top: 124px; width: 100%; z-index: 5; }
 /* line 279, ../sass/_report.scss */
+.nav-tabs .case-tab { text-transform: uppercase; font-size: 18px; border: 0 none; border-bottom: solid 7px transparent; padding: 4px 5px 7px; }
+/* line 286, ../sass/_report.scss */
 .nav-tabs .case-tab a, .nav-tabs .case-tab a:hover, .nav-tabs .case-tab a:focus, .nav-tabs .case-tab a:active { color: #77777c; }
-/* line 285, ../sass/_report.scss */
+/* line 292, ../sass/_report.scss */
 .nav-tabs .case-tab.failed a, .nav-tabs .case-tab.failed a:hover, .nav-tabs .case-tab.failed a:focus, .nav-tabs .case-tab.failed a:active, .nav-tabs .case-tab.processing_error a, .nav-tabs .case-tab.processing_error a:hover, .nav-tabs .case-tab.processing_error a:focus, .nav-tabs .case-tab.processing_error a:active { color: #bb5a5a; }
-/* line 291, ../sass/_report.scss */
+/* line 298, ../sass/_report.scss */
 .nav-tabs .case-tab.rebased a, .nav-tabs .case-tab.rebased a:hover, .nav-tabs .case-tab.rebased a:focus, .nav-tabs .case-tab.rebased a:active { color: #0097fe; }
-/* line 297, ../sass/_report.scss */
+/* line 304, ../sass/_report.scss */
 .nav-tabs .case-tab.warning a, .nav-tabs .case-tab.warning a:hover, .nav-tabs .case-tab.warning a:focus, .nav-tabs .case-tab.warning a:active { color: #f0ad4e; }
-/* line 302, ../sass/_report.scss */
+/* line 309, ../sass/_report.scss */
 .nav-tabs .case-tab.active { border: 0 none; background: transparent; border-bottom: solid 7px #caeb7f; }
 
 /* line 31, ../sass/main.scss */
