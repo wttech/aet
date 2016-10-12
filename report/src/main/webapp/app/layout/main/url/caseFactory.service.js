@@ -15,14 +15,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-define(['angularAMD', 'artifactsService', 'extensionsFactory'], function (angularAMD) {
+define(['angularAMD', 'artifactsService'], function (angularAMD) {
   'use strict';
   angularAMD.factory('caseFactory', CaseFactoryService);
 
   /**
    * Service responsible for producing case that is displayed on report.
    */
-  function CaseFactoryService($rootScope, $q, artifactsService, extensionsFactory) {
+  function CaseFactoryService($rootScope, artifactsService) {
     var service = {
       getCase: getCase
     };
@@ -30,8 +30,7 @@ define(['angularAMD', 'artifactsService', 'extensionsFactory'], function (angula
     return service;
 
     function getCase(step, comparator, index) {
-      var extension = extensionsFactory.getExtension(step, comparator);
-      return new BasicCaseModel(step, comparator, index, extension, artifactsService, $q);
+      return new BasicCaseModel(step, comparator, index, artifactsService);
     }
 
   }
@@ -41,10 +40,9 @@ define(['angularAMD', 'artifactsService', 'extensionsFactory'], function (angula
    * @param step - step object in which case exists.
    * @param comparator - case comparator model.
    * @param index - index of comparator in step
-   * @param extension - extension that can handle artifacts data,
    * @param artifactsService
    */
-  function BasicCaseModel(step, comparator, index, extension, artifactsService, $q) {
+  function BasicCaseModel(step, comparator, index, artifactsService) {
     var caseModel = {
       hasPattern: hasPattern,
       getPatternUrl: getPatternUrl,
@@ -55,7 +53,7 @@ define(['angularAMD', 'artifactsService', 'extensionsFactory'], function (angula
       hasResult: hasResult,
       getResultUrl: getResultUrl,
       getResultArtifact: getResultArtifact
-    };
+    }, templateProvider = new ExtensionsTemplateProvider();
 
     setup();
 
@@ -73,7 +71,7 @@ define(['angularAMD', 'artifactsService', 'extensionsFactory'], function (angula
       caseModel.pattern = {};
       if (hasPattern()) {
         artifactsService.getArtifact(caseModel.step.pattern).then(function (data) {
-          caseModel.pattern = extension.handlePatternArtifact(data);
+          caseModel.pattern = data;
         }).catch(function (e) {
           console.log(e);
         });
@@ -93,7 +91,7 @@ define(['angularAMD', 'artifactsService', 'extensionsFactory'], function (angula
       caseModel.data = {};
       if (hasData()) {
         artifactsService.getArtifact(caseModel.step.stepResult.artifactId).then(function (data) {
-          caseModel.data = extension.handleDataArtifact(data);
+          caseModel.data = data;
         }).catch(function (e) {
           console.log(e);
         });
@@ -114,7 +112,7 @@ define(['angularAMD', 'artifactsService', 'extensionsFactory'], function (angula
       if (hasResult()) {
         artifactsService.getArtifact(caseModel.comparator.stepResult.artifactId)
             .then(function (data) {
-              caseModel.result = extension.handleResultArtifact(data);
+              caseModel.result = data;
             }).catch(function (e) {
               console.log(e);
         });
@@ -144,13 +142,11 @@ define(['angularAMD', 'artifactsService', 'extensionsFactory'], function (angula
         };
       } else {
         caseModel.getTemplate = function () {
-          return 'app/layout/main/url/reports/' + comparator.type + '.html';
+          return templateProvider.getTemplateUrl(step, comparator);
         };
       }
 
-      if (extension.setup) {
-        extension.setup(caseModel, step, comparator, index);
-      }
+      getResultArtifact();
     }
 
     function getCaseDisplayName(step, comparator) {
@@ -183,6 +179,31 @@ define(['angularAMD', 'artifactsService', 'extensionsFactory'], function (angula
         errors = step.stepResult ? step.stepResult.errors : 'Unknown error';
       }
       return errors;
+    }
+  }
+
+  /**
+   * Provides path to template for each type.
+   */
+  function ExtensionsTemplateProvider() {
+    var service = {
+      getTemplateUrl: getTemplateUrl
+    };
+
+    return service;
+
+    function getTemplateUrl(step, comparator) {
+      var type = step.type,
+          comparatorAlgorithm = comparator.parameters ? comparator.parameters.comparator : null,
+          templateName;
+
+      if (comparatorAlgorithm && comparatorAlgorithm !== type) {
+        templateName = comparatorAlgorithm ? type + '_' + comparatorAlgorithm : type
+      } else {
+        templateName = type;
+      }
+
+      return 'app/layout/main/url/reports/' + templateName + '.html';
     }
   }
 
