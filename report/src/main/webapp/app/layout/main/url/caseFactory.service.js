@@ -70,15 +70,14 @@ define(['angularAMD', 'artifactsService', 'extensionsFactory'], function (angula
     }
 
     function getPatternArtifact() {
-      var artifact = {};
+      caseModel.pattern = {};
       if (hasPattern()) {
         artifactsService.getArtifact(caseModel.step.pattern).then(function (data) {
-          artifact = extension.handlePatternArtifact(data);
+          caseModel.pattern = extension.handlePatternArtifact(data);
         }).catch(function (e) {
           console.log(e);
         });
       }
-      return artifact;
     }
 
     function hasData() {
@@ -91,15 +90,14 @@ define(['angularAMD', 'artifactsService', 'extensionsFactory'], function (angula
     }
 
     function getDataArtifact() {
-      var artifact = {};
+      caseModel.data = {};
       if (hasData()) {
         artifactsService.getArtifact(caseModel.step.stepResult.artifactId).then(function (data) {
-          artifact = extension.handleDataArtifact(data);
+          caseModel.data = extension.handleDataArtifact(data);
         }).catch(function (e) {
           console.log(e);
         });
       }
-      return artifact;
     }
 
     function hasResult() {
@@ -112,7 +110,7 @@ define(['angularAMD', 'artifactsService', 'extensionsFactory'], function (angula
     }
 
     function getResultArtifact() {
-      caseModel.result ={};
+      caseModel.result = {};
       if (hasResult()) {
         artifactsService.getArtifact(caseModel.comparator.stepResult.artifactId)
             .then(function (data) {

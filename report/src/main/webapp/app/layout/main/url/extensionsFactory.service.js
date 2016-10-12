@@ -27,14 +27,14 @@ define(['angularAMD'], function (angularAMD) {
           getExtension: getExtension
         },
         EXTENSIONS = {
-          'accessibility': new OnlyResultExtensions(),
-          'client-side-performance': new OnlyResultExtensions(),
-          'cookie': new OnlyResultExtensions(),
-          'js-errors': new JsErrorsExtension(),
+          'accessibility_accessibility': new OnlyResultExtensions(),
+          'client-side-performance_client-side-performance': new OnlyResultExtensions(),
+          'cookie_cookie': new OnlyResultExtensions(),
+          'js-errors_js-errors': new OnlyResultExtensions(),
           'screen_layout': new LayoutExtension(),
-          'source': new SourceComparisonExtension(),
-          'source_w3c-html5': new W3CExtension(),
-          'status-codes': new OnlyResultExtensions()
+          'source_source': new OnlyResultExtensions(),
+          'source_w3c-html5': new OnlyResultExtensions(),
+          'status-codes_status-codes': new OnlyResultExtensions()
         };
 
     return service;
@@ -42,7 +42,7 @@ define(['angularAMD'], function (angularAMD) {
     function getExtension(step, comparator) {
       var type = step.type,
           comparatorAlgorithm = comparator.parameters ? comparator.parameters.comparator : null,
-          key = comparatorAlgorithm ? type + '_' + comparatorAlgorithm : type;
+          key = comparatorAlgorithm ? type + '_' + comparatorAlgorithm : type + '_' + type;
 
       return EXTENSIONS[key];
     }
@@ -67,36 +67,9 @@ define(['angularAMD'], function (angularAMD) {
       return data;
     }
   }
-  
-  function JsErrorsExtension() {
-    return {
-      setup: setup,
-      handleResultArtifact: handleResultArtifact
-    };
-
-    function setup(caseModel, step, comparator, index) {
-      caseModel.getResultArtifact();
-      if (comparator.filters) {
-        caseModel.resultFilters = [];
-        caseModel.resultFilters.push(comparator.filters[0].parameters);
-      }
-    }
-
-    function handleResultArtifact(data) {
-      return data;
-    }
-  }
 
   function LayoutExtension() {
-
-  }
-
-  function SourceComparisonExtension() {
-
-  }
-
-  function W3CExtension() {
-
+    //no implementation required
   }
 
 });

@@ -24,6 +24,13 @@ define([], function () {
   function MainViewUrlController($rootScope, $stateParams, $uibModal, metadataAccessService,
                                  viewModeService, notesService, patternsService, userSettingsService, caseFactory) {
     var vm = this;
+    vm.displayCommentModal = displayCommentModal;
+    vm.updateCurrentCase = updateCurrentCase;
+    vm.acceptCase = acceptCase;
+    vm.revertCase = revertCase;
+
+    vm.toggleMask = toggleMask;
+    vm.toggleFullSource = toggleFullSource;
 
     $rootScope.$on('metadata:changed', updateUrlView);
     $('[data-toggle="popover"]').popover({
@@ -39,12 +46,6 @@ define([], function () {
     function updateUrlView() {
       vm.cases = getUrlCases($stateParams.test, $stateParams.url);
       vm.urlName = $stateParams.url;
-      vm.displayCommentModal = displayCommentModal;
-      vm.updateCurrentCase = updateCurrentCase;
-      vm.acceptCase = acceptCase;
-      vm.revertCase = revertCase;
-
-      vm.toggleMask = toggleMask;
     }
 
     function getUrlCases(testName, urlName) {
@@ -96,6 +97,10 @@ define([], function () {
 
     function toggleMask() {
       $rootScope.maskVisible = userSettingsService.toggleScreenshotMask();
+    }
+
+    function toggleFullSource() {
+      $rootScope.fullSourceVisible = userSettingsService.toggleFullSource();
     }
 
   }
