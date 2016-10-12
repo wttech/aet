@@ -26,19 +26,12 @@ define(['angularAMD',
 	'bootstrap',
 	'scroller',
 	// **** OLD STRUCTURE ****
-	'apiServices',
-	'sessionStorageService',
-	'tabStateService',
-	'cachingService',
 	'configService',
-	'suiteParamsService',
 	'toggleLinkDirective',
-	'commentDirective',
 	'saveChangesDirective',
 	'scrollTablesDirective',
 	'truncateUrlsDirective',
 	'hidePopoversDirective',
-	'tabNavigationDirective',
 	// **** NEW STRUCTURE ****
 	// components
 	'keyboardShortcutsDirective',
@@ -75,18 +68,12 @@ define(['angularAMD',
 		'$rootScope',
 		'$state',
 		'$uibModal',
-		'apiServices',
-		'cachingService',
-		'suiteParamsService',
 		'metadataService',
 		'userSettingsService',
 		'metadataLoaderService',
 		function ($rootScope,
 		          $state,
 		          $uibModal,
-		          apiServices,
-		          cachingService,
-		          suiteParamsService,
 		          metadataService,
 		          userSettingsService,
 		          metadataLoaderService) {
@@ -95,16 +82,6 @@ define(['angularAMD',
 			metadataLoaderService.setup();
 			
 			$rootScope.$state = $state;
-
-			suiteParamsService.setParams();
-
-			var suiteParams = suiteParamsService.getParams();
-
-			$rootScope.hasChanges = cachingService.hasScheduledChanges(suiteParams.company, suiteParams.project, suiteParams.suite) ? cachingService.hasScheduledChanges(suiteParams.company, suiteParams.project, suiteParams.suite).changesCount : 0;
-
-			apiServices.getMetadata(suiteParams.company, suiteParams.project, suiteParams.suite, suiteParams.correlationId).then(function (data) {
-				apiServices.processData(data);
-			});
 
 			$rootScope.$on('metadata:unsavedChangesDetected', function (event, oldSuite) {
 				displayNotificationModal($uibModal, oldSuite);

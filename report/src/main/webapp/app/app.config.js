@@ -27,20 +27,12 @@ require.config({
 		'lodash': '../assets/libs/lodash/dist/lodash',
 		'angular-bootstrap': '../assets/libs/angular-bootstrap/ui-bootstrap-tpls',
 		// ************** OLD *************
-		'UrlController': '_old_js/controllers/url',
 		'toggleLinkDirective': '_old_js/directives/toggleLinkDirective',
-		'commentDirective': '_old_js/directives/commentDirective',
 		'saveChangesDirective': '_old_js/directives/saveChangesDirective',
 		'scrollTablesDirective': '_old_js/directives/scrollTablesDirective',
-		'tabNavigationDirective' : '_old_js/directives/tabNavigationDirective',
 		'truncateUrlsDirective': '_old_js/directives/truncateUrlsDirective',
 		'hidePopoversDirective':'_old_js/directives/hidePopoversDirective',
-		'apiServices': '_old_js/services/apiService',
-		'sessionStorageService': '_old_js/services/sessionStorageService',
 		'configService':'_old_js/services/configService',
-		'cachingService': '_old_js/services/cachingService',
-		'tabStateService':'_old_js/services/tabStateService',
-		'suiteParamsService': '_old_js/services/suiteParamsService',
 		'scroller':'../assets/libs/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar',
 		// **************** new structure ********************
 		//components

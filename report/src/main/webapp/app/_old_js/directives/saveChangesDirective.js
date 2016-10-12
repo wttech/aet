@@ -17,7 +17,7 @@
  */
 define(['angularAMD'], function (angularAMD) {
 	'use strict';
-	angularAMD.directive('saveChanges', ['apiServices', 'cachingService', '$rootScope','suiteParamsService', 'metadataService', function (apiServices, cachingService, $rootScope,suiteParamsService, metadataService) {
+	angularAMD.directive('saveChanges', ['$rootScope', 'metadataService', function ($rootScope, metadataService) {
 		return {
 			restrict: 'A',
 			scope: {
@@ -26,7 +26,6 @@ define(['angularAMD'], function (angularAMD) {
 				text: '@'
 			},
 			link: function (scope, $element) {
-				var suiteParams = suiteParamsService.getParams();
 				$element.on('click', function () {
 					if (scope.type === 'comment') {
 						if (scope.change === 'report' || scope.change === 'url') {
@@ -50,11 +49,9 @@ define(['angularAMD'], function (angularAMD) {
 					} else {
 						if ($element.hasClass('js-cancel-all')) {
 							metadataService.discardLocalChanges();
-							cachingService.revertChanges(suiteParams.company, suiteParams.project, suiteParams.suite);
 							window.location.reload();
 						} else {
 							metadataService.discardLocalChanges();
-							apiServices.sendData();
 						}
 					}
 				});
