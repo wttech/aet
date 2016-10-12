@@ -24,12 +24,6 @@ define([], function () {
   function MainViewUrlController($rootScope, $stateParams, $uibModal, metadataAccessService,
                                  viewModeService, notesService, patternsService, userSettingsService, caseFactory) {
     var vm = this;
-    vm.displayCommentModal = displayCommentModal;
-    vm.acceptCase = acceptCase;
-    vm.revertCase = revertCase;
-
-    vm.toggleMask = toggleMask;
-    vm.toggleFullSource = toggleFullSource;
 
     $rootScope.$on('metadata:changed', updateUrlView);
     $('[data-toggle="popover"]').popover({
@@ -43,6 +37,12 @@ define([], function () {
      ***************************************/
 
     function setupUrlView() {
+      vm.displayCommentModal = displayCommentModal;
+      vm.acceptCase = acceptCase;
+      vm.revertCase = revertCase;
+
+      vm.toggleMask = toggleMask;
+      vm.toggleFullSource = toggleFullSource;
       vm.cases = getUrlCases($stateParams.test, $stateParams.url);
       vm.urlName = $stateParams.url;
     }
