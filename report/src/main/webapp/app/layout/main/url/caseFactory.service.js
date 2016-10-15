@@ -44,6 +44,8 @@ define(['angularAMD', 'artifactsService'], function (angularAMD) {
    */
   function BasicCaseModel(step, comparator, index, artifactsService) {
     var caseModel = {
+      result: {},
+      collectorResult: {},
       update: update,
       getPatternUrl: getPatternUrl,
       getDataUrl: getDataUrl,
