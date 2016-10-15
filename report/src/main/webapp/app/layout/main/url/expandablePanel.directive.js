@@ -17,9 +17,9 @@
  */
 define(['angularAMD', 'userSettingsService'], function (angularAMD) {
   'use strict';
-  angularAMD.directive('aetClientSidePerformance', clientSidePerformancesDirective);
+  angularAMD.directive('aetExpandablePanel', expandablePanelDirective);
 
-  function clientSidePerformancesDirective($timeout) {
+  function expandablePanelDirective($timeout) {
 
     return {
       restrict: 'A',

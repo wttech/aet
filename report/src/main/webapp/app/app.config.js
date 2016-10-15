@@ -66,7 +66,7 @@ require.config({
 		'testController': 'layout/main/test/mainView.test.controller',
 		'urlController': 'layout/main/url/mainView.url.controller',
 		'caseFactory': 'layout/main/url/caseFactory.service',
-		'clientSidePerformanceDirective': 'layout/main/url/clientSidePerformance.directive',
+		'expandablePanelDirective': 'layout/main/url/expandablePanel.directive',
 		//modals
 		'unsavedChangesModalController': 'layout/modal/unsavedChanges/unsavedChangesModal.controller',
 		'noteModalController': 'layout/modal/note/noteModal.controller'
