@@ -45,13 +45,10 @@ define(['angularAMD', 'artifactsService'], function (angularAMD) {
   function BasicCaseModel(step, comparator, index, artifactsService) {
     var caseModel = {
       update: update,
-      hasPattern: hasPattern,
       getPatternUrl: getPatternUrl,
       getPatternArtifact: getPatternArtifact,
-      hasData: hasData,
       getDataUrl: getDataUrl,
       getDataArtifact: getDataArtifact,
-      hasResult: hasResult,
       getResultUrl: getResultUrl,
       getResultArtifact: getResultArtifact
     }, templateProvider = new ExtensionsTemplateProvider();
@@ -59,10 +56,6 @@ define(['angularAMD', 'artifactsService'], function (angularAMD) {
     setup();
 
     return caseModel;
-
-    function hasPattern() {
-      return caseModel.step && caseModel.step.pattern;
-    }
 
     function getPatternUrl() {
       return hasPattern() ? artifactsService.getArtifactUrl(caseModel.step.pattern) : null;
@@ -79,10 +72,6 @@ define(['angularAMD', 'artifactsService'], function (angularAMD) {
       }
     }
 
-    function hasData() {
-      return caseModel.step.stepResult && caseModel.step.stepResult.artifactId;
-    }
-
     function getDataUrl() {
       return hasData() ?
              artifactsService.getArtifactUrl(caseModel.step.stepResult.artifactId) : null;
@@ -97,10 +86,6 @@ define(['angularAMD', 'artifactsService'], function (angularAMD) {
           console.log(e);
         });
       }
-    }
-
-    function hasResult() {
-      return caseModel.comparator.stepResult && caseModel.comparator.stepResult.artifactId;
     }
 
     function getResultUrl() {
@@ -185,6 +170,19 @@ define(['angularAMD', 'artifactsService'], function (angularAMD) {
       }
       return errors;
     }
+
+    function hasData() {
+      return caseModel.step.stepResult && caseModel.step.stepResult.artifactId;
+    }
+
+    function hasPattern() {
+      return caseModel.step && caseModel.step.pattern;
+    }
+
+    function hasResult() {
+      return caseModel.comparator.stepResult && caseModel.comparator.stepResult.artifactId;
+    }
+
   }
 
   /**
