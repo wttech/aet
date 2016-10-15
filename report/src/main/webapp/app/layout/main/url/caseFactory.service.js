@@ -162,8 +162,8 @@ define(['angularAMD', 'artifactsService'], function (angularAMD) {
     }
 
     function initializeCollectorResultArtifact() {
-      caseModel.collectorResult = {};
-      if (hasCollectorResult()) {
+      var collectorHasResult = caseModel.step.stepResult && caseModel.step.stepResult.artifactId;
+      if (collectorHasResult) {
         artifactsService.getArtifact(caseModel.step.stepResult.artifactId)
             .then(function (data) {
               caseModel.collectorResult = data;
@@ -171,10 +171,6 @@ define(['angularAMD', 'artifactsService'], function (angularAMD) {
           console.log(e);
         });
       }
-    }
-
-    function hasCollectorResult() {
-      return caseModel.step.stepResult && caseModel.step.stepResult.artifactId;
     }
 
   }
