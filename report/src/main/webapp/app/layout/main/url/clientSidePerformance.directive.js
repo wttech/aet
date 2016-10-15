@@ -23,15 +23,15 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
 
     return {
       restrict: 'A',
-      link: addStateListener
+      link: addCollapseListeners
     };
 
-    function addStateListener(scope, element) {
+    function addCollapseListeners(scope, element) {
+      // uses '$timeout' in order to have 'element' ready
       $timeout(function () {
-        var panel, icon, onHidden, onShown;
+        var icon, onShown, onHidden, panel;
 
         icon = $(element).find('i');
-
         onShown = function () {
           icon.removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
         };
