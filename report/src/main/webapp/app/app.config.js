@@ -66,6 +66,7 @@ require.config({
 		'testController': 'layout/main/test/mainView.test.controller',
 		'urlController': 'layout/main/url/mainView.url.controller',
 		'caseFactory': 'layout/main/url/caseFactory.service',
+		'includedCommentPopoverDirective': 'layout/main/url/includedCommentPopover.directive',
 		//modals
 		'unsavedChangesModalController': 'layout/modal/unsavedChanges/unsavedChangesModal.controller',
 		'noteModalController': 'layout/modal/note/noteModal.controller'
