@@ -46,9 +46,7 @@ define(['angularAMD', 'artifactsService'], function (angularAMD) {
     var caseModel = {
       update: update,
       getPatternUrl: getPatternUrl,
-      getPatternArtifact: getPatternArtifact,
       getDataUrl: getDataUrl,
-      getDataArtifact: getDataArtifact,
       getResultUrl: getResultUrl
     }, templateProvider = new ExtensionsTemplateProvider();
 
@@ -64,17 +62,6 @@ define(['angularAMD', 'artifactsService'], function (angularAMD) {
       return hasPattern() ? artifactsService.getArtifactUrl(caseModel.step.pattern) : null;
     }
 
-    function getPatternArtifact() {
-      caseModel.pattern = {};
-      if (hasPattern()) {
-        artifactsService.getArtifact(caseModel.step.pattern).then(function (data) {
-          caseModel.pattern = data;
-        }).catch(function (e) {
-          console.log(e);
-        });
-      }
-    }
-
     function hasData() {
       return caseModel.step.stepResult && caseModel.step.stepResult.artifactId;
     }
@@ -82,17 +69,6 @@ define(['angularAMD', 'artifactsService'], function (angularAMD) {
     function getDataUrl() {
       return hasData() ?
              artifactsService.getArtifactUrl(caseModel.step.stepResult.artifactId) : null;
-    }
-
-    function getDataArtifact() {
-      caseModel.data = {};
-      if (hasData()) {
-        artifactsService.getArtifact(caseModel.step.stepResult.artifactId).then(function (data) {
-          caseModel.data = data;
-        }).catch(function (e) {
-          console.log(e);
-        });
-      }
     }
 
     function hasResult() {
