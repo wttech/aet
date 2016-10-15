@@ -49,9 +49,7 @@ define(['angularAMD', 'artifactsService'], function (angularAMD) {
       getPatternArtifact: getPatternArtifact,
       getDataUrl: getDataUrl,
       getDataArtifact: getDataArtifact,
-      getResultUrl: getResultUrl,
-      getCollectorResultArtifact: getCollectorResultArtifact,
-      getResultArtifact: getResultArtifact
+      getResultUrl: getResultUrl
     }, templateProvider = new ExtensionsTemplateProvider();
 
     setup();
@@ -106,18 +104,6 @@ define(['angularAMD', 'artifactsService'], function (angularAMD) {
              artifactsService.getArtifactUrl(caseModel.comparator.stepResult.artifactId) : null;
     }
 
-    function getResultArtifact() {
-      caseModel.result = {};
-      if (hasResult()) {
-        artifactsService.getArtifact(caseModel.comparator.stepResult.artifactId)
-            .then(function (data) {
-              caseModel.result = data;
-            }).catch(function (e) {
-              console.log(e);
-        });
-      }
-    }
-
     function update() {
       caseModel.displayName = getCaseDisplayName(step, comparator);
       var stepResult = comparator.stepResult;
@@ -161,6 +147,18 @@ define(['angularAMD', 'artifactsService'], function (angularAMD) {
         displayName += ' ' + comparator.parameters.comparator;
       }
       return displayName;
+    }
+
+    function getResultArtifact() {
+      caseModel.result = {};
+      if (hasResult()) {
+        artifactsService.getArtifact(caseModel.comparator.stepResult.artifactId)
+            .then(function (data) {
+              caseModel.result = data;
+            }).catch(function (e) {
+          console.log(e);
+        });
+      }
     }
 
     function getCollectorResultArtifact() {
