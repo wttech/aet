@@ -34,7 +34,7 @@
 
   .logo-holder {
     position: fixed;
-    width: 330px;
+    width: $width_for_fixed_element_in_sidebar;
     text-align: center;
     background: $aside_background;
     height: 80px;
@@ -281,7 +281,7 @@
 .js-rebase-all, .js-cancel-all {
   position: fixed;
   bottom: 0;
-  width: 335px;
+  width: $width_for_fixed_element_in_sidebar;
   border-top: solid 1px $border-color_dark;
   padding: 16px;
   background: $aside_background;
