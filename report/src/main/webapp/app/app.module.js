@@ -55,6 +55,8 @@ define(['angularAMD',
 	'sidepanelToggleLinkDirective',
 	'sidepanelSaveChangesDirective',
 	'sidepanelTruncateUrlsDirective',
+	// main
+	'expandablePanelDirective',
 	// modals
 	'noteModalController',
 	'unsavedChangesModalController'], function (angularAMD, _) {
