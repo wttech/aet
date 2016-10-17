@@ -56,6 +56,7 @@ define(['angularAMD',
 	'sidepanelSaveChangesDirective',
 	'sidepanelTruncateUrlsDirective',
 	// main
+	'includedCommentPopoverDirective',
 	'expandablePanelDirective',
 	// modals
 	'noteModalController',
