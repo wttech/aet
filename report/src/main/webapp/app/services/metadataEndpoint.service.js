@@ -65,7 +65,14 @@ define(['angularAMD', 'endpointConfiguration', 'requestParametersService'], func
 				url: getEndpointUrl.production + 'metadata',
 				data: suite,
 				headers: {
-					'Content-Type': 'application/json'
+					/*
+					 * for cross-origin request (when working on localhost:9000 with Grunt)
+					 * special content type is required according to jQuery documentation at
+					 *     http://api.jquery.com/jquery.ajax/
+					 * see also:
+					 *     http://stackoverflow.com/a/30554385
+					 */
+					'Content-Type': 'multipart/form-data; charset=UTF-8'
 				}
 			}).then(function (data) {
 				deferred.resolve(data.data);

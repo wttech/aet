@@ -57,6 +57,7 @@ define(['angularAMD',
 	'sidepanelTruncateUrlsDirective',
 	// main
 	'includedCommentPopoverDirective',
+	'expandablePanelDirective',
 	// modals
 	'noteModalController',
 	'unsavedChangesModalController'], function (angularAMD, _) {
