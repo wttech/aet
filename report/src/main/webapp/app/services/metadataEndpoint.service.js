@@ -28,7 +28,7 @@ define(['angularAMD', 'endpointConfiguration', 'requestParametersService'], func
 				saveMetadata: saveMetadata
 			},
 			requestParams = requestParametersService.get(),
-			getEndpointUrl = endpointConfiguration.getEndpointUrl();
+			endpoint = endpointConfiguration.getEndpoint();
 
 		return service;
 
@@ -37,10 +37,10 @@ define(['angularAMD', 'endpointConfiguration', 'requestParametersService'], func
 				url;
 
 			if (requestParams.correlationId) {
-				url = getEndpointUrl.production + 'metadata?company=' + requestParams.company + '&project=' + requestParams.project + '&correlationId=' + requestParams.correlationId;
+				url = endpoint.getUrl + 'metadata?company=' + requestParams.company + '&project=' + requestParams.project + '&correlationId=' + requestParams.correlationId;
 			}
 			else {
-				url = getEndpointUrl.production + 'metadata?company=' + requestParams.company + '&project=' + requestParams.project + '&suite=' + requestParams.suite;
+				url = endpoint.getUrl + 'metadata?company=' + requestParams.company + '&project=' + requestParams.project + '&suite=' + requestParams.suite;
 			}
 
 			return $http({
@@ -62,7 +62,7 @@ define(['angularAMD', 'endpointConfiguration', 'requestParametersService'], func
 			
 			$http({
 				method: 'POST',
-				url: getEndpointUrl.production + 'metadata',
+				url: endpoint.getUrl + 'metadata',
 				data: suite,
 				headers: {
 					/*

@@ -28,12 +28,12 @@ define(['angularAMD', 'endpointConfiguration', 'requestParametersService'], func
           getArtifact: getArtifact
         },
         requestParams = requestParametersService.get(),
-        getEndpointUrl = endpointConfiguration.getEndpointUrl();
+        endpoint = endpointConfiguration.getEndpoint();
 
     return service;
 
     function getArtifactUrl(artifactId) {
-      return getEndpointUrl.production + 'artifact?company=' + requestParams.company + '&project=' + requestParams.project + '&id=' + artifactId;
+      return endpoint.getUrl + 'artifact?company=' + requestParams.company + '&project=' + requestParams.project + '&id=' + artifactId;
     }
 
     function getArtifact(artifactId) {

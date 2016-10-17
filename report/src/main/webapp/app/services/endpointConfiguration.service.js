@@ -19,9 +19,9 @@ define(['angularAMD'], function (angularAMD) {
   'use strict';
   angularAMD.factory('endpointConfiguration', function () {
     return {
-      getEndpointUrl: function () {
+      getEndpoint: function () {
         var config = {
-          'production': '/api/'
+          'getUrl': '/api/'
         };
         return config;
       }
