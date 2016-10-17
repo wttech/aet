@@ -39,7 +39,7 @@
   <div class="layout-compare">
     <div class="layout-compare-item pull-left">
       <p class="layout-compare-description">Pattern
-        <span class="label label-info">{{case.comparator.stepResult.data.patternTimestamp | date:'medium'}}</span>
+        <span class="label label-info">{{case.comparator.stepResult.data.patternTimestamp | date:'yyyy-MM-dd HH:mm'}}</span>
       </p>
       <div class="mask-container">
         <img ng-src="{{case.getResultUrl()}}"
@@ -53,8 +53,8 @@
       </div>
     </div>
     <div class="layout-compare-item pull-left" ng-if="case.status == 'FAILED'">
-      <p class="layout-compare-description">Current
-        <span class="label label-info">{{case.comparator.stepResult.data.collectTimestamp | date:'medium'}}</span>
+      <p class="layout-compare-description">Collected
+        <span class="label label-info">{{case.comparator.stepResult.data.collectTimestamp | date:'yyyy-MM-dd HH:mm'}}</span>
       </p>
 
       <div class="mask-container">
