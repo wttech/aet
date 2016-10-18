@@ -17,15 +17,16 @@
  */
 define(['angularAMD'], function (angularAMD) {
 	'use strict';
-	angularAMD.filter('aetSearchTestFilter', TestUrlsSearchFilter);
+	angularAMD.filter('aetSearchTestFilter', SearchTestFilter);
 
 	/**
-	 * Filters collection of tests. Returns only those tests that have url with name matching searched phrase.
+	 * Filters collection of tests.
+	 * Returns only those tests that have url with name matching searched phrase.
 	 */
-	function TestUrlsSearchFilter() {
-		return sidepanelSearchFilter;
+	function SearchTestFilter() {
+		return filter;
 
-		function sidepanelSearchFilter(tests, searchPhrase) {
+		function filter(tests, searchPhrase) {
 			if (!searchPhrase) {
 				return tests;
 			}
