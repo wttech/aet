@@ -17,7 +17,7 @@
  */
 define(['angularAMD'], function (angularAMD) {
 	'use strict';
-	angularAMD.filter('aetTestUrlsStatusFilter', TestUrlsStatusFilter);
+	angularAMD.filter('aetTestStatusFilter', TestUrlsStatusFilter);
 
 	/**
 	 * Filters collection of tests, return only those tests that have at least one url with status matching applied status filter (or all tests no filter applied).
