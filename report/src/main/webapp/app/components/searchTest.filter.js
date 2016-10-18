@@ -17,7 +17,7 @@
  */
 define(['angularAMD'], function (angularAMD) {
 	'use strict';
-	angularAMD.filter('aetTestUrlsSearchFilter', TestUrlsSearchFilter);
+	angularAMD.filter('aetSearchTestFilter', TestUrlsSearchFilter);
 
 	/**
 	 * Filters collection of tests. Returns only those tests that have url with name matching searched phrase.
