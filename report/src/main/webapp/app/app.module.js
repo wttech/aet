@@ -30,6 +30,7 @@ define(['angularAMD',
 	'keyboardShortcutsDirective',
 	'testSearchFilter',
 	'testStatusFilter',
+	'urlSearchFilter',
 	'urlStatusFilter',
 	// services
 	'endpointConfiguration',

@@ -16,23 +16,25 @@
  * limitations under the License.
  */
 define(['angularAMD'], function (angularAMD) {
-	'use strict';
-	angularAMD.filter('aetUrlStatusFilter', UrlStatusFilter);
+  'use strict';
+  angularAMD.filter('aetUrlStatusFilter', UrlStatusFilter);
 
-	/**
-	 * Filters collection of urls, return only those urls that have status matching applied status filter (or all when no filter applied).
-	 */
-	function UrlStatusFilter() {
-		return function(urls, statuses) {
-			var filteredUrls = urls;
-			if (statuses && statuses.length > 0) {
-				filteredUrls = _.filter(urls, function (url) {
-					// FIXME: variable below used to be compliant with 2 storage systems: new and old one
-					var urlStatus = url.status ? url.status.toLowerCase() : url.getStatus();
-					return jQuery.inArray(urlStatus, statuses) > -1;
-				});
-			}
-			return filteredUrls;
-		};
-	}
+  /**
+   * Filters collection of urls.
+   * Return only those urls that have status matching applied status filter
+   * (or all when no filter applied).
+   */
+  function UrlStatusFilter() {
+    return filter;  
+
+    function filter(urls, statuses) {
+      var filteredUrls = urls;
+      if (statuses && statuses.length > 0) {
+        filteredUrls = _.filter(urls, function (url) {
+          return statuses.indexOf(url.getStatus()) > -1;
+        });
+      }
+      return filteredUrls;
+    }
+  }
 });

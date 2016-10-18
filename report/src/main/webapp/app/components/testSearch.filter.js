@@ -16,30 +16,30 @@
  * limitations under the License.
  */
 define(['angularAMD'], function (angularAMD) {
-	'use strict';
-	angularAMD.filter('aetTestSearchFilter', TestSearchFilter);
+  'use strict';
+  angularAMD.filter('aetTestSearchFilter', TestSearchFilter);
 
-	/**
-	 * Filters collection of tests.
-	 * Returns only those tests that have url with name matching searched phrase.
-	 */
-	function TestSearchFilter() {
-		return filter;
+  /**
+   * Filters collection of tests.
+   * Returns only those tests that have url with name matching searched phrase.
+   */
+  function TestSearchFilter() {
+    return filter;
 
-		function filter(tests, searchPhrase) {
-			if (!searchPhrase) {
-				return tests;
-			}
+    function filter(tests, searchPhrase) {
+      if (!searchPhrase) {
+        return tests;
+      }
 
-			return tests.filter(function (test) {
-				return _.some(test.urls, function (url) {
-					return matches(searchPhrase, url.name);
-				});
-			});
-		}
+      return tests.filter(function (test) {
+        return _.some(test.urls, function (url) {
+          return matches(searchPhrase, url.name);
+        });
+      });
+    }
 
-		function matches(searchPhrase, name) {
-			return name && name.indexOf(searchPhrase) > 0;
-		}
-	}
+    function matches(searchPhrase, name) {
+      return name && name.indexOf(searchPhrase) > 0;
+    }
+  }
 });

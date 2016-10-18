@@ -31,6 +31,7 @@ require.config({
 		//components
 		'testSearchFilter': 'components/testSearch.filter',
 		'testStatusFilter': 'components/testStatus.filter',
+		'urlSearchFilter': 'components/urlSearch.filter',
 		'urlStatusFilter': 'components/urlStatus.filter',
 		'keyboardShortcutsDirective': 'components/keyboardShortcuts.directive',
 		'hidePopoversDirective':'components/hidePopovers.directive',
