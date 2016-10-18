@@ -17,13 +17,13 @@
  */
 define(['angularAMD'], function (angularAMD) {
 	'use strict';
-	angularAMD.filter('aetSearchTestFilter', SearchTestFilter);
+	angularAMD.filter('aetTestSearchFilter', TestSearchFilter);
 
 	/**
 	 * Filters collection of tests.
 	 * Returns only those tests that have url with name matching searched phrase.
 	 */
-	function SearchTestFilter() {
+	function TestSearchFilter() {
 		return filter;
 
 		function filter(tests, searchPhrase) {

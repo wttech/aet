@@ -29,7 +29,7 @@ require.config({
 		'scroller':'../assets/libs/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar',
 		// **************** AET custom ********************
 		//components
-		'searchTestFilter': 'components/searchTest.filter',
+		'testSearchFilter': 'components/testSearch.filter',
 		'testUrlsStatusFilter': 'components/testUrlsStatus.filter',
 		'urlStatusFilter': 'components/urlStatus.filter',
 		'keyboardShortcutsDirective': 'components/keyboardShortcuts.directive',
