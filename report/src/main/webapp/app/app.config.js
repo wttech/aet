@@ -30,7 +30,7 @@ require.config({
 		// **************** AET custom ********************
 		//components
 		'testSearchFilter': 'components/testSearch.filter',
-		'testUrlsStatusFilter': 'components/testUrlsStatus.filter',
+		'testStatusFilter': 'components/testStatus.filter',
 		'urlStatusFilter': 'components/urlStatus.filter',
 		'keyboardShortcutsDirective': 'components/keyboardShortcuts.directive',
 		'hidePopoversDirective':'components/hidePopovers.directive',

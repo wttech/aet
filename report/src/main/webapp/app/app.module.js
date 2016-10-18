@@ -29,7 +29,7 @@ define(['angularAMD',
 	'hidePopoversDirective',
 	'keyboardShortcutsDirective',
 	'testSearchFilter',
-	'testUrlsStatusFilter',
+	'testStatusFilter',
 	'urlStatusFilter',
 	// services
 	'endpointConfiguration',
