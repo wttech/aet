@@ -1,6 +1,6 @@
 #### Extranct Element Data Filter
 
-Extract Element Data Filter allows to extract element from html source (collected by Screen Collector) by providing id attribute or class attribute. Found element's source is processed by comparator.
+Extract Element Data Filter allows to extract an element from the html source (collected by Screen Collector) by providing an id attribute or a class attribute. The found source of the element is processed by the comparator.
 
 Module name: **extract-element**
 
@@ -10,12 +10,12 @@ Resource name: source
 
 | Parameter | Value | Description | Mandatory |
 | --------- | ----- | ----------- | --------- |
-| `elementId` | HTML id | Id for element to extract | See note below |
-| `class` | HTML class | Class name for element to extract | See note below |
+| `elementId` | HTML id | Id for the element to extract | See the note below |
+| `class` | HTML class | Class name for the element to extract | See the note below |
 
 | ! Note |
 |:------ |
-| One of these parameters is required. Only one parameter (either `elementId` attribute or `class` attribute) can be provided. |
+| One of these parameters is required. Only one parameter (either the `elementId` attribute or the `class` attribute) can be provided. |
 
 ##### Example Usage
 

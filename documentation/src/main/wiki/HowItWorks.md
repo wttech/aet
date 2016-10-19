@@ -1,16 +1,16 @@
 # How It Works
-AET is distributed system that consists of modules deployed on 
-[Apache Karaf](http://karaf.apache.org/) which communicate with each other using JMS Server - [Active MQ](http://activemq.apache.org/).
-Data collected and results of tests processing are saved into Datastorage (which current implementation is [MongoDB](https://www.mongodb.com/)).
-Additionally AET use [Browsermob](http://bmp.lightbody.net/) as requests proxy server and [Apache Server](https://httpd.apache.org/) as host server
+AET is a distributed system that consists of a set of modules deployed on 
+[Apache Karaf](http://karaf.apache.org/) which communicate with one another using JMS Server - [Active MQ](http://activemq.apache.org/).
+The data collected and results of test processing are saved into the Datastorage (its current implementation is [MongoDB](https://www.mongodb.com/)).
+Additionally, AET makes use of [Browsermob](http://bmp.lightbody.net/) as a requests proxy server and [Apache Server](https://httpd.apache.org/) as a host server
 for [[Reports Web Application|SuiteReport]].
 
-Diagram below presents AET system and communication between AET system components:
+The diagram below depicts the AET system and communication between AET system components:
 
 ![aet-components-diagram](assets/diagrams/aet-components-diagram.png)
 
 #### Third-party software used by system
-AET uses the following third party software as parts of the system:
+AET makes use of the following third party software as parts of the system:
 
 | Software | Used version | Function |
 | --------- | ----- | ----------- |

@@ -1,8 +1,8 @@
 ### Data Filters
 
-Data filters are modules which narrow area on which comparison will be performed.
+Data filters are modules which narrow the area which the comparison will be performed on.
 
-They are nested in [[Comparators]] and apply only to instance of comparator in which they are defined.
+They are nested in [[Comparators]] and apply only to the instance of the comparator which they are defined in.
 
 Each data filter consists of two elements:
 * module name,
@@ -10,11 +10,10 @@ Each data filter consists of two elements:
 
 ##### Module name
 
-This name is unique identifier for each data filter (and each module in compare phase).
+This name is a unique identifier for each data filter (and each module in the compare phase).
 
 ##### Parameters
 
-This is set of key-value pairs using which user can pass some configuration and information to data filter. Parameters can be divided into two groups:
-
+This is a set of key-value pairs the user can make use of to pass some configuration and information to the data filter. Parameters can be divided into two groups:
 * mandatory - parameters without which filtering will be not possible,
-* optional - passing this parameter is not obligatory, usually they trigger some functionality extension.
+* optional - passing this parameter is not obligatory, usually it triggers some functionality extension.

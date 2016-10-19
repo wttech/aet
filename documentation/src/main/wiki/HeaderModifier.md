@@ -1,19 +1,19 @@
 #### Header Modifier
 
-Header Modifier is responsible for injecting additional headers to page before it is opened to test.
+Header Modifier is responsible for injecting additional headers to the page before it is opened to test.
 
 Module name: **header**
 
 | ! Important information |
 |:----------------------- |
-| In order to use this modifier it must be declared before open module in test suite XML definition and *[[proxy|SuiteStructure#proxy]]* must be used. |
+| In order to use this modifier it must be declared before the open module in the definition of the test suite XML and *[[proxy|SuiteStructure#proxy]]* must be used. |
 
 ##### Parameters
 
 | Parameter | Value | Description | Mandatory |
 | --------- | ----- | ----------- | --------- |
-| `key` | x | Key for header | yes |
-| `value` | y | Value for header | yes |
+| `key` | x | Key for the header | yes |
+| `value` | y | Value for the header | yes |
 
 ##### Example Usage
 

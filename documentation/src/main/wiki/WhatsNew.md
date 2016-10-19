@@ -1,5 +1,5 @@
 ### What's new
-AET 1.4 brings new reporting capabilities and improved performance. We have decided to label the new features as BETA and 
+AET 2.0 brings new reporting capabilities and improved performance. We have decided to label the new features as BETA and 
 improve them based your feedback as it means a lot to us. Stay tuned!
 
 #### Architecture performance improvements
@@ -15,7 +15,7 @@ accepting patterns don’t worry, now all changes are applied on the fly. Additi
 that you are concerned about and share with your team just by copying the test URL and pasting to JIRA.
 
 #### Accessibility report BETA
-AET 1.4 introduces an accessibility report that displays validation output of page accessibility analysis using the 
+AET 2.0 introduces an accessibility report that displays validation output of page accessibility analysis using the 
 [HTML_CodeSniffer](http://squizlabs.github.io/HTML_CodeSniffer/) library. Results show the total count of errors, warnings and notice type violations.
 
 #### Client-side performance BETA

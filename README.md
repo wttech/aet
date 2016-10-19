@@ -82,13 +82,23 @@ Please refer to the [Setup Guide](https://github.com/Cognifide/aet/wiki/BasicSet
 ## License
 **AET** is licensed under [Apache License, Version 2.0 (the "License")](https://www.apache.org/licenses/LICENSE-2.0.txt)
 
+
+## Bugs and Feedback
+
+For bugs, questions and discussions please use the [Github Issues](https://github.com/Cognifide/aet/issues).
+Please notice we use [ZenHub](https://www.zenhub.com/) extension to manage issues.
+
 ## Roadmap
 
-- Selenium Grid
-- Microservices Architecture
-- Developer Guide
-- Report UX improvements
-- More browsers support
+- [Selenium Grid](https://github.com/Cognifide/aet/issues/8)
+- [Microservices Architecture](https://github.com/Cognifide/aet/issues/7)
+- [Developer Guide](https://github.com/Cognifide/aet/issues/10)
+- [Report UX improvements](https://github.com/Cognifide/aet/issues/9)
+- [More browsers support](https://github.com/Cognifide/aet/issues/8)
 
 ## Documentation
 * [AET Wiki](https://github.com/Cognifide/aet/wiki)
+
+## Contact and Commercial Support
+
+If you have any questions or require technical support please contact us at [aet@cognifide.com](mailto:aet@cognifide.com).

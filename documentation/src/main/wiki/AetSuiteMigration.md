@@ -1,5 +1,5 @@
-## Migrate AET Suite to AET 2.0
-### Preparing the suite XML
+## AET Suite Migration to AET 2.0
+### Preparing the XML suite
 You should perform the following changes in your project suite XML:
 
 * remove the `environment="win7-ff16` property from the `suite` tag,
@@ -12,7 +12,7 @@ You should perform the following changes in your project suite XML:
   
 | ! Important information |
 |:----------------------- |
-|From this AET version, html reports are no longer generated as static files but are served by dynamic web application. If you still need a xunit report please update your aet run command with the parameter `xUnit=true`. See more in [[Client Application|ClientApplication]]. |
+|Starting from this AET version, html reports are no longer generated as static files but are served by the dynamic web application. If you still need a xunit report please update your aet run command with the parameter `xUnit=true`. For more information refer to the [[Client Application|ClientApplication]] section. |
 
   
 * check your `screen` collector definition, remove deprecated parameters: `maximize`, `width`, `height` (see  the [[Screen Collector|ScreenColector]] documentation for recommended changes),
@@ -23,4 +23,4 @@ You should perform the following changes in your project suite XML:
 
   ![w3c position](assets/aetSuiteMigration/w3c.png)
   
-* [OPTIONAL] in `w3c-html5` use the `ignore-warnings` parameter instead of the `errors-only`parameter in `w3c-html5`).
+* [OPTIONAL] in `w3c-html5` use the `ignore-warnings` parameter instead of the `errors-only`parameter in `w3c-html5`.

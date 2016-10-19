@@ -2,9 +2,9 @@
 
 ### Test suite
 
-In general the test suite is an XML document that defines tests performed over collection of web pages. This chapter covers test suite API, with description of each element.
+In general the test suite is an XML document that defines tests conducted on a collection of web pages. This chapter covers the test suite API, with a description of each element.
 
-### Example test suite
+### Sample test suite
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -41,21 +41,21 @@ In general the test suite is an XML document that defines tests performed over c
 </suite>
 ```
 
-Root element of test suite definition is `suite` element.
+The root element of the test suite definition is the `suite` element.
 
 ### suite
 
 | ! Important |
 |:----------- |
-| When defining a suite a user should think of three mandatory parameters properly: `name, company, project`. Those parameters are used by the AET System to identify the suite. <br/><br/> Any change in one of those parameters values in the future will occur in treating the suite as a completely new one, which will in effect gather all the patterns from scratch. |
+| When defining the suite the user should think of three mandatory parameters properly: `name, company, project`. These parameters are used by the AET System to identify the suite. <br/><br/> Any change in one of these parameter values in the future will occur in treating the suite as a completely new one, which will in effect gather all patterns from scratch. |
 
-Root element for xml definition, each test suite definition consists of exactly one `suite` tag.
+The Root element for the xml definition, each test suite definition consists of exactly one `suite` tag.
 
 | Attribute name | Description |Mandatory  |
 | -------------- | ----------- | --------- |
-| `name` | Name of the test suite. Should consist only of lowercase letters, digits and/or characters: `-`, `_`. | yes |
-| `company` | Name of the company. Should consist only of lowercase letters, digits and/or characters: `-`.| yes |
-| `project` | Name of the project. Should consist only of lowercase letters, digits and/or characters: `-`.| yes |
-| `domain` | General domain name consistent for all considered urls. Every url link is built as a concatenation of *domain* name and *href* attribute of it. If `domain` property is not set, then `href` value in `url` definition should contain full valid url. See more in [[Urls|Urls]] section. | no |
+| `name` | Name of the test suite. It should contain lowercase letters, digits and/or characters: `-`, `_` only. | yes |
+| `company` | Name of the company. It should contain lowercase letters, digits and/or characters: `-` only.| yes |
+| `project` | Name of the project. It should contain lowercase letters, digits and/or characters: `-` only.| yes |
+| `domain` | General domain name consistent for all the urls considered. Every url link is built as a concatenation of the *domain* name and the *href* attribute of it. If the `domain` property is not set, then the `href` value in the `url` definition should contain a full valid url. See more in the [[Urls|Urls]] section. | no |
 
-`suite` element contains one or more **[[test|SuiteStructure#test]]** elements.
+The `suite` element contains one or more **[[test|SuiteStructure#test]]** elements.

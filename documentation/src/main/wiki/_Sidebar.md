@@ -48,7 +48,7 @@
             * [[Remove Nodes|RemoveNodesDataFilter]]
             * [[Remove Regex|RemoveRegexDataFilter]]
             * [[Status Codes|StatusCodesDataFilters]]
-			* [[W3C HTML5 Issues Filter|W3CHTML5IssuesFilter]]
+            * [[W3C HTML5 Issues Filter|W3CHTML5IssuesFilter]]
         * [[Urls|Urls]]
     * [[Suite Report|SuiteReport]]
         * Test Cases
@@ -75,3 +75,5 @@
     * [[Logs|Logs]]
 * [[What's new|WhatsNew]]
     * [[Migrate AET suite from 1.3.2 to 2.0|AetSuiteMigration]]
+* Releases
+    * [[AET 2.0.0|Documentation-2.0.0]]
