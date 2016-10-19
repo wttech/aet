@@ -28,8 +28,9 @@ define(['angularAMD',
 	// components
 	'hidePopoversDirective',
 	'keyboardShortcutsDirective',
-	'testUrlsSearch',
-	'testUrlsStatusFilter',
+	'testSearchFilter',
+	'testStatusFilter',
+	'urlSearchFilter',
 	'urlStatusFilter',
 	// services
 	'endpointConfiguration',

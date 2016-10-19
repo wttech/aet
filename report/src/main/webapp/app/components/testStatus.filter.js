@@ -16,29 +16,28 @@
  * limitations under the License.
  */
 define(['angularAMD'], function (angularAMD) {
-	'use strict';
-	angularAMD.filter('aetTestUrlsSearchFilter', TestUrlsSearchFilter);
+  'use strict';
+  angularAMD.filter('aetTestStatusFilter', TestUrlsStatusFilter);
 
-	/**
-	 * Filters collection of tests. Returns only those tests that have url with name matching searched phrase.
-	 */
-	function TestUrlsSearchFilter() {
-		return sidepanelSearchFilter;
+  /**
+   * Filters collection of tests.
+   * Returns only those tests that have at least one url with status matching applied status filter
+   * (or all tests no filter applied).
+   */
+  function TestUrlsStatusFilter() {
+    return filter;
 
-		function sidepanelSearchFilter(tests, searchPhrase) {
-			if (!searchPhrase) {
-				return tests;
-			}
-
-			return tests.filter(function (test) {
-				return _.some(test.urls, function (url) {
-					return matches(searchPhrase, url.name);
-				});
-			});
-		}
-
-		function matches(searchPhrase, name) {
-			return name && name.indexOf(searchPhrase) > 0;
-		}
-	}
+    function filter(tests, statuses) {
+      var filteredTests = tests;
+      if (statuses && statuses.length > 0) {
+        filteredTests = _.filter(tests, function (test) {
+          return _.some(test.urls, function (url) {
+            return statuses.indexOf(url.getStatus()) > -1;
+          });
+        });
+      }
+      return filteredTests;
+    }
+  }
 });
+
