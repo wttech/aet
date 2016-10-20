@@ -20,6 +20,7 @@ package com.cognifide.aet.job.common.comparators.layout.utils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
@@ -28,13 +29,11 @@ import java.util.Arrays;
 /**
  * ImageComparison - util class for fast images comparison
  *
- * @author Maciej Laskowski
+ * @author Maciej Laskowski & Tomasz Misiewicz
  */
 public final class ImageComparison {
 
   private static final Logger LOG = LoggerFactory.getLogger(ImageComparison.class);
-
-  private static final int RGB_ERROR_COLOR = 16711680;
 
   private static final int ALPHA_SHIFT = 24;
 
@@ -46,7 +45,9 @@ public final class ImageComparison {
 
   private static final int RGB_MAX_VALUE = 255;
 
-  private static final int INVALID_PIXEL_COLOR = 125 << ALPHA_SHIFT | 255 << RED_SHIFT | 0 << GREEN_SHIFT | 0;
+  private static final int INVALID_PIXEL_COLOR = new Color(255, 0, 0, 125).getRGB();
+
+  private static final int CANVAS_DIFF_COLOR = new Color(255, 255, 0, 125).getRGB();
 
   private static final int VALID_PIXEL_COLOR = 0;
 
@@ -78,25 +79,26 @@ public final class ImageComparison {
     int differenceCounter = fastCompareMatchingArea(minWidth, minHeight, resultImage.getRaster(),
             img1Pixels, img2Pixels);
 
-    // Sets not covered areas as error (red)
-    fastMarkOuterAreaAsError(minWidth, minHeight, widthDifference, heightDifference,
-            resultImage.getRaster());
+    differenceCounter += fastMarkOuterAreaAsError(minWidth, minHeight, widthDifference, heightDifference,
+            resultHeight, resultImage.getRaster());
 
     LOG.debug("Returning comparison result of images.");
     return new ImageComparisonResult(differenceCounter, widthDifference, heightDifference, resultImage);
   }
 
-  private static void fastMarkOuterAreaAsError(int minWidth, int minHeight, int widthDifference,
-                                               int heightDifference, WritableRaster writableRaster) {
-    // fil area [minWidth, 0, resultWidth, minHeight]
-    int[] emptyAreaA = new int[widthDifference * minHeight];
-    Arrays.fill(emptyAreaA, RGB_ERROR_COLOR);
-    writableRaster.setDataElements(minWidth, 0, widthDifference, minHeight, emptyAreaA);
+  private static int fastMarkOuterAreaAsError(int minWidth, int minHeight, int widthDifference,
+                                               int heightDifference, int resultHeight, WritableRaster writableRaster) {
+    // fill right area
+    int[] emptyAreaA = new int[widthDifference * resultHeight];
+    Arrays.fill(emptyAreaA, CANVAS_DIFF_COLOR);
+    writableRaster.setDataElements(minWidth, 0, widthDifference, resultHeight, emptyAreaA);
 
-    // fil area [0, minHeight, minWidth, resultHeight]
+    // fill bottom area
     int[] emptyAreaB = new int[minWidth * heightDifference];
-    Arrays.fill(emptyAreaB, RGB_ERROR_COLOR);
+    Arrays.fill(emptyAreaB, CANVAS_DIFF_COLOR);
     writableRaster.setDataElements(0, minHeight, minWidth, heightDifference, emptyAreaB);
+
+    return emptyAreaA.length + emptyAreaB.length;
   }
 
   private static int fastCompareMatchingArea(int minWidth, int minHeight, WritableRaster writableRaster,
