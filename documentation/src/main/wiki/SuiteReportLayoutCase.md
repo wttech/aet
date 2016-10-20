@@ -1,7 +1,8 @@
 #### Screen - layout
 
 ##### Description
-For layout tests the results are presented as compared screenshots (as on screenshot below). 
+
+For layout tests the results are presented as compared screenshots
 
 ![Layout failure](assets/suiteReport/layout-failure.png)
 
@@ -12,6 +13,20 @@ For layout tests the results are presented as compared screenshots (as on screen
 5. View - a screen that was taken during the test and it is compared to the pattern.
 6. Example of difference area.
 7. Date of obtaining current pattern.
+
+##### Yellow color
+
+Yellow color in mask is introduced when there is a change in test definition.
+The yellow color shows that we have different resolutions for pattern and collected view.
+
+In this example pattern has resolution *800x600*, but then test definition for view has been increased using resolution modifier:
+```
+<resolution width="1024" height="768" />
+```
+
+![Yellow mask](assets/suiteReport/layout-yellow-mask.png)
+
+##### Success
 
 Test case's result is marked as successful when there is no difference between view and pattern (see screenshot below).
 
