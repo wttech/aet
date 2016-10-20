@@ -268,48 +268,47 @@
   }
 }
 
-.nav-tabs {
-  transition: left, 0.3s;
-  background: #ffffff;
-  position: fixed;
-  top: 124px;
-  width: 100%;
-  z-index: 5;
+// links for URL tabs
 
-  .case-tab {
-    text-transform: uppercase;
-    font-size: 18px;
-    border: 0 none;
-    border-bottom: solid 7px transparent;
-    padding: 4px 5px 7px;
-
-    a, a:hover, a:focus, a:active {
+ul {
+  li {
+    a.nav-link {
+      text-transform: uppercase;
+      font-size: 18px;
+      //border-bottom: solid 7px red;//transparent;
       color: $gray_dark;
-    }
-
-    &.failed,
-    &.processing_error {
-      a, a:hover, a:focus, a:active {
-        color: $failed;
-      }
-    }
-
-    &.rebased {
-      a, a:hover, a:focus, a:active {
-        color: $rebased;
-      }
-    }
-
-    &.warning {
-      a, a:hover, a:focus, a:active {
-        color: $warning;
-      }
-    }
-
-    &.active {
-      border: 0 none;
-      background: transparent;
-      border-bottom: solid 7px $green;
     }
   }
 }
+ul {
+  li.passed {
+    a.nav-link,
+    a.nav-link:focus,
+    a.nav-link:hover {
+      color: $passed;
+    }
+  }
+  li.failed,
+  li.processing_error {
+    a.nav-link,
+    a.nav-link:focus,
+    a.nav-link:hover {
+      color: $failed;
+    }
+  }
+  li.rebased {
+    a.nav-link,
+    a.nav-link:focus,
+    a.nav-link:hover {
+      color: $rebased;
+    }
+  }
+  li.warning {
+    a.nav-link,
+    a.nav-link:focus,
+    a.nav-link:hover {
+      color: $warning;
+    }
+  }
+}
+
