@@ -4169,93 +4169,93 @@ input[type=text]::-webkit-input-placeholder { color: #85898e; }
 
 /* Layout comparison
 */
-/* line 169, ../sass/_test.scss */
+/* line 168, ../sass/_test.scss */
 .layout-compare-item { position: relative; width: 50%; text-align: center; padding: 0 15px; }
-/* line 175, ../sass/_test.scss */
+/* line 174, ../sass/_test.scss */
 .layout-compare-item .mask-container { position: relative; }
-/* line 180, ../sass/_test.scss */
+/* line 179, ../sass/_test.scss */
 .layout-compare-item .mask-container:hover .mask { display: none !important; }
-/* line 186, ../sass/_test.scss */
+/* line 185, ../sass/_test.scss */
 .layout-compare-item .mask { position: absolute; top: 0; display: none; -webkit-filter: drop-shadow(5px 5px 5px #222); filter: drop-shadow(5px 5px 5px #222); }
-/* line 193, ../sass/_test.scss */
+/* line 192, ../sass/_test.scss */
 .layout-compare-item .mask.is-visible { display: block; }
-/* line 200, ../sass/_test.scss */
+/* line 199, ../sass/_test.scss */
 .layout-compare-description { padding: 10px 0; font-size: 20px; color: #85898e; }
 
 /* Source codes
 */
-/* line 210, ../sass/_test.scss */
+/* line 209, ../sass/_test.scss */
 .diff-report table { table-layout: fixed; }
-/* line 213, ../sass/_test.scss */
+/* line 212, ../sass/_test.scss */
 .diff-report table thead { position: relative; display: block; }
-/* line 217, ../sass/_test.scss */
+/* line 216, ../sass/_test.scss */
 .diff-report table tbody { white-space: nowrap; font-size: 11px; display: block; height: 500px; overflow: auto; }
-/* line 227, ../sass/_test.scss */
+/* line 226, ../sass/_test.scss */
 .diff-report table.table-w3c thead { border: 1px solid #ddd; }
-/* line 229, ../sass/_test.scss */
+/* line 228, ../sass/_test.scss */
 .diff-report table.table-w3c thead th { border-bottom: 0 none; }
-/* line 237, ../sass/_test.scss */
+/* line 236, ../sass/_test.scss */
 .diff-report table.table-w3c th.num, .diff-report table.table-w3c td.num { width: 50px; display: block; }
-/* line 243, ../sass/_test.scss */
+/* line 242, ../sass/_test.scss */
 .diff-report table.table-w3c td.code { white-space: normal; }
-/* line 247, ../sass/_test.scss */
+/* line 246, ../sass/_test.scss */
 .diff-report table.table-w3c tbody { height: auto; font-size: 14px; }
-/* line 255, ../sass/_test.scss */
+/* line 254, ../sass/_test.scss */
 .diff-report table th.num { min-width: 50px; }
-/* line 259, ../sass/_test.scss */
+/* line 258, ../sass/_test.scss */
 .diff-report table th.code { width: 100%; }
-/* line 264, ../sass/_test.scss */
+/* line 263, ../sass/_test.scss */
 .diff-report table td.code { min-width: 100px; white-space: pre-wrap; }
-/* line 268, ../sass/_test.scss */
+/* line 267, ../sass/_test.scss */
 .diff-report table td.code.code { width: 100%; }
-/* line 271, ../sass/_test.scss */
+/* line 270, ../sass/_test.scss */
 .diff-report table td.code.code p { margin: 0; }
-/* line 275, ../sass/_test.scss */
+/* line 274, ../sass/_test.scss */
 .diff-report table td.code.code span, .diff-report table td.code.code small { white-space: normal; }
-/* line 281, ../sass/_test.scss */
+/* line 280, ../sass/_test.scss */
 .diff-report table td.code.num { min-width: 50px; }
 
-/* line 287, ../sass/_test.scss */
+/* line 286, ../sass/_test.scss */
 .w3c-error { white-space: nowrap; }
-/* line 290, ../sass/_test.scss */
+/* line 289, ../sass/_test.scss */
 .w3c-error span, .w3c-error mark { padding: 0; }
 
-/* line 298, ../sass/_test.scss */
+/* line 297, ../sass/_test.scss */
 tr.no-change { background: #ffffff; }
-/* line 302, ../sass/_test.scss */
+/* line 301, ../sass/_test.scss */
 tr.insert, tr.info, tr.notice { background: #d9edf7; }
-/* line 308, ../sass/_test.scss */
+/* line 307, ../sass/_test.scss */
 tr.change { background: #fcf8e3; }
-/* line 312, ../sass/_test.scss */
+/* line 311, ../sass/_test.scss */
 tr.warn { background: #faf2cc; }
-/* line 316, ../sass/_test.scss */
+/* line 315, ../sass/_test.scss */
 tr.delete, tr.err, tr.error { background: #f2dede; }
 
-/* line 325, ../sass/_test.scss */
+/* line 324, ../sass/_test.scss */
 .tab-content .tab-pane { display: none; }
-/* line 329, ../sass/_test.scss */
+/* line 328, ../sass/_test.scss */
 .tab-content .active { display: block; }
 
 /* performance table
 */
-/* line 338, ../sass/_test.scss */
+/* line 337, ../sass/_test.scss */
 .performance-table { margin-top: 0; }
-/* line 341, ../sass/_test.scss */
+/* line 340, ../sass/_test.scss */
 .performance-table .nav-tabs { width: 400px; float: left; }
-/* line 345, ../sass/_test.scss */
+/* line 344, ../sass/_test.scss */
 .performance-table .nav-tabs li { display: block; float: none; }
 
-/* line 352, ../sass/_test.scss */
+/* line 351, ../sass/_test.scss */
 .tab-content-performance { margin-top: 0; }
 
-/* line 356, ../sass/_test.scss */
+/* line 355, ../sass/_test.scss */
 .links-list { margin-top: 10px; padding-top: 10px; border-top: solid 1px #ebebeb; }
-/* line 361, ../sass/_test.scss */
+/* line 360, ../sass/_test.scss */
 .links-list a { display: block; color: #77777c; }
 
-/* line 370, ../sass/_test.scss */
+/* line 369, ../sass/_test.scss */
 .label-A { background-color: #5cb85c !important; }
-/* line 374, ../sass/_test.scss */
+/* line 373, ../sass/_test.scss */
 .label-F { background-color: #d9534f !important; }
 
 /* Automated Exploratory Tests  Copyright (C) 2013 Cognifide Limited  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */
@@ -4333,16 +4333,16 @@ tr.delete, tr.err, tr.error { background: #f2dede; }
 /* line 266, ../sass/_report.scss */
 .test-icons-rebase { background: #0097fe; }
 
-/* line 275, ../sass/_report.scss */
+/* line 274, ../sass/_report.scss */
 ul li a.nav-link { text-transform: uppercase; font-size: 18px; color: #77777c; }
 
-/* line 285, ../sass/_report.scss */
+/* line 284, ../sass/_report.scss */
 ul li.passed a.nav-link, ul li.passed a.nav-link:focus, ul li.passed a.nav-link:hover { color: #6f9f00; }
-/* line 293, ../sass/_report.scss */
+/* line 292, ../sass/_report.scss */
 ul li.failed a.nav-link, ul li.failed a.nav-link:focus, ul li.failed a.nav-link:hover, ul li.processing_error a.nav-link, ul li.processing_error a.nav-link:focus, ul li.processing_error a.nav-link:hover { color: #bb5a5a; }
-/* line 300, ../sass/_report.scss */
+/* line 299, ../sass/_report.scss */
 ul li.rebased a.nav-link, ul li.rebased a.nav-link:focus, ul li.rebased a.nav-link:hover { color: #0097fe; }
-/* line 307, ../sass/_report.scss */
+/* line 306, ../sass/_report.scss */
 ul li.warning a.nav-link, ul li.warning a.nav-link:focus, ul li.warning a.nav-link:hover { color: #f0ad4e; }
 
 /* line 31, ../sass/main.scss */
