@@ -110,6 +110,7 @@ module.exports = function (grunt) {
 		'compass': {
 			build: {
 				options: {
+					config: 'compass-config.rb',
 					//sassDir: config.assets.base + config.assets.sass,
 					sassDir: 'assets/sass',
 					//cssDir: config.assets.base + config.assets.css,
