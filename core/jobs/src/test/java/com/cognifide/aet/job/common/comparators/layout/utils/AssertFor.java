@@ -20,11 +20,11 @@ package com.cognifide.aet.job.common.comparators.layout.utils;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-class ComparisonResultAssert {
+class AssertFor {
 
   private final ImageComparisonResult imageComparisonResult;
 
-  ComparisonResultAssert(ImageComparisonResult imageComparisonResult) {
+  AssertFor(ImageComparisonResult imageComparisonResult) {
     this.imageComparisonResult = imageComparisonResult;
   }
 
@@ -33,37 +33,22 @@ class ComparisonResultAssert {
    *
    * @param comparedImagesMatch <code>true</code> if compared images are expected to be same
    */
-  ComparisonResultAssert same(boolean comparedImagesMatch) {
+  AssertFor sameImages(boolean comparedImagesMatch) {
     assertThat(imageComparisonResult.isMatch(), is(comparedImagesMatch));
     return this;
   }
 
-  /**
-   * Makes assertions on expected difference in compared images height
-   *
-   * @param expectedHeightDifference expected value of the difference
-   */
-  ComparisonResultAssert heightDifference(int expectedHeightDifference) {
+  AssertFor heightDifference(int expectedHeightDifference) {
     assertThat(imageComparisonResult.getHeightDifference(), is(expectedHeightDifference));
     return this;
   }
 
-  /**
-   * Makes assertions on expected difference in compared images width
-   *
-   * @param expectedWidthDifference expected value of the difference
-   */
-  ComparisonResultAssert widthDifference(int expectedWidthDifference) {
+  AssertFor widthDifference(int expectedWidthDifference) {
     assertThat(imageComparisonResult.getWidthDifference(), is(expectedWidthDifference));
     return this;
   }
 
-  /**
-   * Makes assertions on expected number of pixels that differs between compared images
-   *
-   * @param expectedDifferentPixelsCount expected number of differences
-   */
-  ComparisonResultAssert numberOfDifferentPixels(int expectedDifferentPixelsCount) {
+  AssertFor numberOfDifferentPixels(int expectedDifferentPixelsCount) {
     assertThat(imageComparisonResult.getPixelDifferenceCount(), is(expectedDifferentPixelsCount));
     return this;
   }
