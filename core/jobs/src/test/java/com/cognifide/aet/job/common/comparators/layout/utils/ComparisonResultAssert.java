@@ -20,30 +20,50 @@ package com.cognifide.aet.job.common.comparators.layout.utils;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-class ComparisonResultAssertions {
+class ComparisonResultAssert {
 
   private final ImageComparisonResult imageComparisonResult;
 
-  ComparisonResultAssertions(ImageComparisonResult imageComparisonResult){
+  ComparisonResultAssert(ImageComparisonResult imageComparisonResult) {
     this.imageComparisonResult = imageComparisonResult;
   }
 
-  ComparisonResultAssertions areSame(boolean comparedImagesMatch){
+  /**
+   * Checks if compared images was same
+   *
+   * @param comparedImagesMatch <code>true</code> if compared images are expected to be same
+   */
+  ComparisonResultAssert same(boolean comparedImagesMatch) {
     assertThat(imageComparisonResult.isMatch(), is(comparedImagesMatch));
     return this;
   }
 
-  ComparisonResultAssertions heightDifferenceIs(int expectedHeightDifference){
+  /**
+   * Makes assertions on expected difference in compared images height
+   *
+   * @param expectedHeightDifference expected value of the difference
+   */
+  ComparisonResultAssert heightDifference(int expectedHeightDifference) {
     assertThat(imageComparisonResult.getHeightDifference(), is(expectedHeightDifference));
     return this;
   }
 
-  ComparisonResultAssertions widthDifferenceIs(int expectedWidthDifference){
+  /**
+   * Makes assertions on expected difference in compared images width
+   *
+   * @param expectedWidthDifference expected value of the difference
+   */
+  ComparisonResultAssert widthDifference(int expectedWidthDifference) {
     assertThat(imageComparisonResult.getWidthDifference(), is(expectedWidthDifference));
     return this;
   }
 
-  ComparisonResultAssertions numberOfDifferentPixelsIs(int expectedDifferentPixelsCount){
+  /**
+   * Makes assertions on expected number of pixels that differs between compared images
+   *
+   * @param expectedDifferentPixelsCount expected number of differences
+   */
+  ComparisonResultAssert numberOfDifferentPixels(int expectedDifferentPixelsCount) {
     assertThat(imageComparisonResult.getPixelDifferenceCount(), is(expectedDifferentPixelsCount));
     return this;
   }

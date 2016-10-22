@@ -19,7 +19,6 @@ package com.cognifide.aet.job.common.comparators.layout.utils;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.output.ByteArrayOutputStream;
@@ -64,21 +63,20 @@ public class ImageComparisonTest {
   public void test_sameScreenshot_expectNoDifferencesInResultAndTransparentMask() throws Exception {
     try {
       // given
-      patternStream = getClass()
-              .getResourceAsStream("/mock/LayoutComparator/image.png");
-      BufferedImage pattern = ImageIO.read(patternStream);
-      sampleStream = getClass()
-              .getResourceAsStream("/mock/LayoutComparator/image.png");
+      sampleStream = getClass().getResourceAsStream("/mock/LayoutComparator/image.png");
+      patternStream = getClass().getResourceAsStream("/mock/LayoutComparator/image.png");
+
       BufferedImage sample = ImageIO.read(sampleStream);
+      BufferedImage pattern = ImageIO.read(patternStream);
       // when
       ImageComparisonResult imageComparisonResult = ImageComparison.compare(pattern, sample);
       // then
-      new ComparisonResultAssertions(imageComparisonResult).areSame(true)
-              .heightDifferenceIs(0).widthDifferenceIs(0).numberOfDifferentPixelsIs(0);
-      // and
+      new ComparisonResultAssert(imageComparisonResult).same(true)
+              .heightDifference(0).widthDifference(0).numberOfDifferentPixels(0);
+
       maskStream = imageToStream(imageComparisonResult.getResultImage());
-      expectedMaskStream = getClass()
-              .getResourceAsStream("/mock/LayoutComparator/mask-identical.png");
+      expectedMaskStream = getClass().getResourceAsStream("/mock/LayoutComparator/mask-identical.png");
+
       assertThat(IOUtils.contentEquals(expectedMaskStream, maskStream), is(true));
     } finally {
       closeInputStreams(imageStreams);
@@ -89,21 +87,20 @@ public class ImageComparisonTest {
   public void compare_differentScreenshots_expectDifferenceMask() throws Exception {
     try {
       // given
-      patternStream = getClass()
-              .getResourceAsStream("/mock/LayoutComparator/image2.png");
-      BufferedImage pattern = ImageIO.read(patternStream);
-      sampleStream = getClass()
-              .getResourceAsStream("/mock/LayoutComparator/image.png");
+      sampleStream = getClass().getResourceAsStream("/mock/LayoutComparator/image.png");
+      patternStream = getClass().getResourceAsStream("/mock/LayoutComparator/image2.png");
+
       BufferedImage sample = ImageIO.read(sampleStream);
+      BufferedImage pattern = ImageIO.read(patternStream);
       // when
       ImageComparisonResult imageComparisonResult = ImageComparison.compare(pattern, sample);
       // then
-      new ComparisonResultAssertions(imageComparisonResult).areSame(false)
-              .heightDifferenceIs(0).widthDifferenceIs(0).numberOfDifferentPixelsIs(15600);
-      // and
+      new ComparisonResultAssert(imageComparisonResult).same(false)
+              .heightDifference(0).widthDifference(0).numberOfDifferentPixels(15600);
+
       maskStream = imageToStream(imageComparisonResult.getResultImage());
-      expectedMaskStream = getClass()
-              .getResourceAsStream("/mock/LayoutComparator/mask-different.png");
+      expectedMaskStream = getClass().getResourceAsStream("/mock/LayoutComparator/mask-different.png");
+
       assertThat(IOUtils.contentEquals(maskStream, expectedMaskStream), is(true));
     } finally {
       closeInputStreams(imageStreams);
@@ -114,21 +111,19 @@ public class ImageComparisonTest {
   public void compare_differentSizeScreenshots_expectSizeDifferenceMarkedWithYellow() throws Exception {
     try {
       // given
-      patternStream = getClass()
-              .getResourceAsStream("/mock/LayoutComparator/canvasSizeDiff/pattern.png");
-      BufferedImage pattern = ImageIO.read(patternStream);
-      sampleStream = getClass()
-              .getResourceAsStream("/mock/LayoutComparator/canvasSizeDiff/collected.png");
+      sampleStream = getClass().getResourceAsStream("/mock/LayoutComparator/canvasSizeDiff/collected.png");
+      patternStream = getClass().getResourceAsStream("/mock/LayoutComparator/canvasSizeDiff/pattern.png");
+
       BufferedImage sample = ImageIO.read(sampleStream);
+      BufferedImage pattern = ImageIO.read(patternStream);
       // when
       ImageComparisonResult imageComparisonResult = ImageComparison.compare(pattern, sample);
       // then
-      new ComparisonResultAssertions(imageComparisonResult).areSame(false)
-              .heightDifferenceIs(100).widthDifferenceIs(20).numberOfDifferentPixelsIs(14399);
-      // and
+      new ComparisonResultAssert(imageComparisonResult).same(false)
+              .heightDifference(100).widthDifference(20).numberOfDifferentPixels(14399);
+
       maskStream = imageToStream(imageComparisonResult.getResultImage());
-      expectedMaskStream = getClass()
-              .getResourceAsStream("/mock/LayoutComparator/canvasSizeDiff/mask.png");
+      expectedMaskStream = getClass().getResourceAsStream("/mock/LayoutComparator/canvasSizeDiff/mask.png");
       assertThat(IOUtils.contentEquals(maskStream, expectedMaskStream), is(true));
     } finally {
       closeInputStreams(imageStreams);

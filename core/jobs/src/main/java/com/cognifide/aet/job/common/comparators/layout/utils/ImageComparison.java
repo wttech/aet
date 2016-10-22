@@ -39,7 +39,7 @@ public final class ImageComparison {
   // red, green, blue, alpha
   private static final int CHANNELS_IN_IMAGE = 4;
 
-  private static final int SHIFT_BASE = 0xFF;
+  private static final int CHANNEL_VALUE_MASK = 0xFF;
 
   private static final int INVALID_PIXEL_COLOR = new Color(255, 0, 0, 125).getRGB();
 
@@ -120,6 +120,7 @@ public final class ImageComparison {
     return differenceCounter;
   }
 
+  // package-scoped for unit test
   static int[][] convertImageTo2DArray(BufferedImage image) {
     final byte[] imageBytes = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();
     final int width = image.getWidth();
@@ -130,10 +131,10 @@ public final class ImageComparison {
     int col = 0;
     for (int pixel = 0; pixel < imageBytes.length; pixel += CHANNELS_IN_IMAGE) {
 
-      int red = imageBytes[pixel + 3] & SHIFT_BASE;
-      int green = imageBytes[pixel + 2] & SHIFT_BASE;
-      int blue = imageBytes[pixel + 1] & SHIFT_BASE;
-      int alpha = imageBytes[pixel] & SHIFT_BASE;
+      int red = imageBytes[pixel + 3] & CHANNEL_VALUE_MASK;
+      int green = imageBytes[pixel + 2] & CHANNEL_VALUE_MASK;
+      int blue = imageBytes[pixel + 1] & CHANNEL_VALUE_MASK;
+      int alpha = imageBytes[pixel] & CHANNEL_VALUE_MASK;
 
       int argb = new Color(red, green, blue, alpha).getRGB();
       result[row][col] = argb;
