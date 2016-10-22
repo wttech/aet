@@ -27,7 +27,8 @@ import java.awt.image.WritableRaster;
 import java.util.Arrays;
 
 /**
- * ImageComparison - util class for fast images comparison
+ * ImageComparison - util class for fast images comparison.
+ * This class expects compared images to contain four channels: red, green, blue and alpha.
  *
  * @author Maciej Laskowski & Tomasz Misiewicz
  */
@@ -35,21 +36,16 @@ public final class ImageComparison {
 
   private static final Logger LOG = LoggerFactory.getLogger(ImageComparison.class);
 
-  private static final int ALPHA_SHIFT = 24;
-
-  private static final int RED_SHIFT = 16;
-
-  private static final int GREEN_SHIFT = 8;
+  // red, green, blue, alpha
+  private static final int CHANNELS_IN_IMAGE = 4;
 
   private static final int SHIFT_BASE = 0xFF;
-
-  private static final int RGB_MAX_VALUE = 255;
 
   private static final int INVALID_PIXEL_COLOR = new Color(255, 0, 0, 125).getRGB();
 
   private static final int CANVAS_DIFF_COLOR = new Color(255, 255, 0, 125).getRGB();
 
-  private static final int VALID_PIXEL_COLOR = 0;
+  private static final int VALID_PIXEL_COLOR = new Color(0, 0, 0, 0).getRGB();
 
   private ImageComparison() {
   }
@@ -58,8 +54,8 @@ public final class ImageComparison {
    * Compares two images, if images are with different dimensions, the output image's dimension is maxWidth
    * x maxHeight
    *
-   * @param pattern
-   * @param sample
+   * @param pattern - saved image of how screen should look like
+   * @param sample - actual screen collected during test
    * @return ImageComparisonResult
    */
   public static ImageComparisonResult compare(final BufferedImage pattern, final BufferedImage sample) {
@@ -124,22 +120,22 @@ public final class ImageComparison {
     return differenceCounter;
   }
 
-  private static int[][] convertImageTo2DArray(BufferedImage image) {
-
-    final byte[] pixels = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();
+  static int[][] convertImageTo2DArray(BufferedImage image) {
+    final byte[] imageBytes = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();
     final int width = image.getWidth();
     final int height = image.getHeight();
 
     int[][] result = new int[height][width];
-    final int pixelLength = 4;
     int row = 0;
     int col = 0;
-    for (int pixel = 0; pixel < pixels.length; pixel += pixelLength) {
-      int argb = 0;
-      argb += ((RGB_MAX_VALUE & SHIFT_BASE) << ALPHA_SHIFT); // alpha
-      argb += ((int) pixels[pixel] & SHIFT_BASE); // blue
-      argb += (((int) pixels[pixel + 1] & SHIFT_BASE) << GREEN_SHIFT); // green
-      argb += (((int) pixels[pixel + 2] & SHIFT_BASE) << RED_SHIFT); // red
+    for (int pixel = 0; pixel < imageBytes.length; pixel += CHANNELS_IN_IMAGE) {
+
+      int red = imageBytes[pixel + 3] & SHIFT_BASE;
+      int green = imageBytes[pixel + 2] & SHIFT_BASE;
+      int blue = imageBytes[pixel + 1] & SHIFT_BASE;
+      int alpha = imageBytes[pixel] & SHIFT_BASE;
+
+      int argb = new Color(red, green, blue, alpha).getRGB();
       result[row][col] = argb;
       col++;
       if (col == width) {
