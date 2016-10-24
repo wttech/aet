@@ -61,34 +61,42 @@ public class ImageComparisonConvertImageTest {
 
   @Test
   public void convertImageTo2DArray_2x1Image_expectSecondPixelDifferent() throws Exception {
-    // given
-    patternStream = getClass().getResourceAsStream("/mock/LayoutComparator/comparingColors/2x1-red.png");
-    BufferedImage pattern = ImageIO.read(patternStream);
-    sampleStream = getClass().getResourceAsStream("/mock/LayoutComparator/comparingColors/2x1-red-black.png");
-    BufferedImage sample = ImageIO.read(sampleStream);
-    // when
-    int[][] patternPixels = ImageComparison.convertImageTo2DArray(pattern);
-    int[][] samplePixels = ImageComparison.convertImageTo2DArray(sample);
-    // then
-    int patternPixel = patternPixels[0][1];
-    int samplePixel = samplePixels[0][1];
-    assertThat(patternPixel, is(not(equalTo(samplePixel))));
+    try {
+      // given
+      patternStream = getClass().getResourceAsStream("/mock/LayoutComparator/comparingColors/2x1-red.png");
+      BufferedImage pattern = ImageIO.read(patternStream);
+      sampleStream = getClass().getResourceAsStream("/mock/LayoutComparator/comparingColors/2x1-red-black.png");
+      BufferedImage sample = ImageIO.read(sampleStream);
+      // when
+      int[][] patternPixels = ImageComparison.convertImageTo2DArray(pattern);
+      int[][] samplePixels = ImageComparison.convertImageTo2DArray(sample);
+      // then
+      int patternPixel = patternPixels[0][1];
+      int samplePixel = samplePixels[0][1];
+      assertThat(patternPixel, is(not(equalTo(samplePixel))));
+    } finally {
+      closeInputStreams(imageStreams);
+    }
   }
 
   @Test
   public void convertImageTo2DArray_1x4Gradients_expectLastPixelSame() throws Exception {
-    // given
-    patternStream = getClass().getResourceAsStream("/mock/LayoutComparator/comparingColors/1x4-blue-gradient.png");
-    BufferedImage pattern = ImageIO.read(patternStream);
-    sampleStream = getClass().getResourceAsStream("/mock/LayoutComparator/comparingColors/1x4-grey-gradient.png");
-    BufferedImage sample = ImageIO.read(sampleStream);
-    // when
-    int[][] patternPixels = ImageComparison.convertImageTo2DArray(pattern);
-    int[][] samplePixels = ImageComparison.convertImageTo2DArray(sample);
-    // then
-    int patternPixel = patternPixels[3][0];
-    int samplePixel = samplePixels[3][0];
-    assertThat(patternPixel, is(equalTo(samplePixel)));
+    try {
+      // given
+      patternStream = getClass().getResourceAsStream("/mock/LayoutComparator/comparingColors/1x4-blue-gradient.png");
+      BufferedImage pattern = ImageIO.read(patternStream);
+      sampleStream = getClass().getResourceAsStream("/mock/LayoutComparator/comparingColors/1x4-grey-gradient.png");
+      BufferedImage sample = ImageIO.read(sampleStream);
+      // when
+      int[][] patternPixels = ImageComparison.convertImageTo2DArray(pattern);
+      int[][] samplePixels = ImageComparison.convertImageTo2DArray(sample);
+      // then
+      int patternPixel = patternPixels[3][0];
+      int samplePixel = samplePixels[3][0];
+      assertThat(patternPixel, is(equalTo(samplePixel)));
+    } finally {
+      closeInputStreams(imageStreams);
+    }
   }
 
   private void closeInputStreams(List<InputStream> inputStreams) {
