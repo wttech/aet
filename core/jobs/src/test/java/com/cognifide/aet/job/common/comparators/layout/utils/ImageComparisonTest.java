@@ -95,6 +95,37 @@ public class ImageComparisonTest {
     }
   }
 
+  @Test
+  public void compare_differentSizeScreenshots_expectSizeDifferenceMarkedWithYellow() throws Exception {
+    InputStream sampleStream = null;
+    InputStream patternStream = null;
+    InputStream maskStream = null;
+    InputStream expectedMaskStream = null;
+    try {
+      sampleStream = getClass().getResourceAsStream("/mock/LayoutComparator/canvasSizeDiff/collected.png");
+      patternStream = getClass().getResourceAsStream("/mock/LayoutComparator/canvasSizeDiff/pattern.png");
+
+      BufferedImage sample = ImageIO.read(sampleStream);
+      BufferedImage pattern = ImageIO.read(patternStream);
+      ImageComparisonResult imageComparisonResult = ImageComparison.compare(pattern, sample);
+
+      assertThat(imageComparisonResult.isMatch(), is(false));
+      assertThat(imageComparisonResult.getHeightDifference(), is(100));
+      assertThat(imageComparisonResult.getWidthDifference(), is(20));
+      assertThat(imageComparisonResult.getPixelDifferenceCount(), is(14399));
+
+      maskStream = imageToStream(imageComparisonResult.getResultImage());
+      expectedMaskStream = getClass().getResourceAsStream("/mock/LayoutComparator/canvasSizeDiff/mask.png");
+      assertThat(IOUtils.contentEquals(maskStream, expectedMaskStream), is(true));
+
+    } finally {
+      IOUtils.closeQuietly(sampleStream);
+      IOUtils.closeQuietly(patternStream);
+      IOUtils.closeQuietly(maskStream);
+      IOUtils.closeQuietly(expectedMaskStream);
+    }
+  }
+
   private InputStream imageToStream(BufferedImage image) throws IOException {
     ByteArrayOutputStream imageStream = new ByteArrayOutputStream();
     try {
