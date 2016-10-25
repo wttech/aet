@@ -3871,73 +3871,73 @@ input[type=text]::-webkit-input-placeholder { color: #85898e; }
 
 /* Automated Exploratory Tests  Copyright (C) 2013 Cognifide Limited  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */
 /* line 18, ../sass/_toolbar.scss */
-.toolbar { -webkit-transition: left 0.3s, width 0.3s; -o-transition: left 0.3s, width 0.3s; transition: left 0.3s, width 0.3s; position: fixed; left: 0; height: 125px; width: 100%; border-bottom: solid 1px #ededed; }
-/* line 26, ../sass/_toolbar.scss */
+.toolbar { -webkit-transition: left 0.3s, width 0.3s; -o-transition: left 0.3s, width 0.3s; transition: left 0.3s, width 0.3s; position: fixed; left: 0; height: 125px; width: 100%; }
+/* line 25, ../sass/_toolbar.scss */
 .menu-expanded .toolbar { left: 350px; width: calc(100% - 350px); }
-/* line 31, ../sass/_toolbar.scss */
+/* line 30, ../sass/_toolbar.scss */
 .toolbar-holder { z-index: 10; }
-/* line 35, ../sass/_toolbar.scss */
+/* line 34, ../sass/_toolbar.scss */
 .toolbar-top { background: #f9f9f9; border-bottom: solid 1px #ededed; background: #f9f9f9; padding: 0 20px; display: table; width: 100%; }
-/* line 44, ../sass/_toolbar.scss */
+/* line 43, ../sass/_toolbar.scss */
 .toolbar-toggle { float: left; cursor: pointer; padding-top: 17px; }
-/* line 49, ../sass/_toolbar.scss */
+/* line 48, ../sass/_toolbar.scss */
 .toolbar-toggle span { display: block; width: 20px; background: #77777c; height: 3px; margin-bottom: 3px; }
-/* line 58, ../sass/_toolbar.scss */
+/* line 57, ../sass/_toolbar.scss */
 .toolbar-link { -webkit-transition: width, 0.3s; -o-transition: width, 0.3s; transition: width, 0.3s; width: calc(100vw - 570px); float: left; background: #ffffff; }
-/* line 64, ../sass/_toolbar.scss */
+/* line 63, ../sass/_toolbar.scss */
 .toolbar-link > { float: right; }
-/* line 69, ../sass/_toolbar.scss */
+/* line 68, ../sass/_toolbar.scss */
 .toolbar-block { text-align: center; border-left: solid 1px #ededed; border-right: solid 1px #ededed; font-family: "montserratlight", sans-serif; color: #77777c; font-size: 14px; float: left; line-height: 49px; padding: 0 22px; }
-/* line 80, ../sass/_toolbar.scss */
+/* line 79, ../sass/_toolbar.scss */
 .toolbar-block i { cursor: pointer; font-size: 20px; vertical-align: middle; }
-/* line 87, ../sass/_toolbar.scss */
+/* line 86, ../sass/_toolbar.scss */
 .toolbar-blocks { float: right; }
-/* line 90, ../sass/_toolbar.scss */
+/* line 89, ../sass/_toolbar.scss */
 .toolbar-blocks.is-absolute { right: 0; padding-right: 15px; background: #ffffff; position: absolute; }
-/* line 98, ../sass/_toolbar.scss */
+/* line 97, ../sass/_toolbar.scss */
 .toolbar-bottom { display: table; width: 100%; padding: 0 20px; background: #ffffff; }
-/* line 104, ../sass/_toolbar.scss */
+/* line 103, ../sass/_toolbar.scss */
 .toolbar-bottom h4 { font-size: 24px; font-weight: normal; color: #85898e; padding-right: 20px; line-height: 54px; display: table; }
-/* line 111, ../sass/_toolbar.scss */
+/* line 110, ../sass/_toolbar.scss */
 .toolbar-bottom h4 a { color: #85898e; }
-/* line 114, ../sass/_toolbar.scss */
+/* line 113, ../sass/_toolbar.scss */
 .toolbar-bottom h4 a:hover { color: #6c7074; }
-/* line 121, ../sass/_toolbar.scss */
+/* line 120, ../sass/_toolbar.scss */
 .toolbar-nav { padding-top: 5px; margin-right: 20px; }
-/* line 125, ../sass/_toolbar.scss */
+/* line 124, ../sass/_toolbar.scss */
 .toolbar-nav.is-absolute { right: 15px; background: #ffffff; position: absolute; }
-/* line 131, ../sass/_toolbar.scss */
+/* line 130, ../sass/_toolbar.scss */
 .toolbar-nav div { float: left; border: solid 1px #ededed; margin-left: -1px; padding: 0 12px; cursor: pointer; background: #ffffff; }
-/* line 139, ../sass/_toolbar.scss */
+/* line 138, ../sass/_toolbar.scss */
 .toolbar-nav div i { margin: 5px 0 8px 0; display: block; color: #85898e; }
-/* line 146, ../sass/_toolbar.scss */
+/* line 145, ../sass/_toolbar.scss */
 .toolbar-btns { border-left: solid 1px #ededed; padding-left: 30px; padding-top: 15px; height: 73px; display: table; }
-/* line 153, ../sass/_toolbar.scss */
+/* line 152, ../sass/_toolbar.scss */
 .toolbar-btns .button { float: left; margin-left: 12px; }
-/* line 158, ../sass/_toolbar.scss */
+/* line 157, ../sass/_toolbar.scss */
 .tab-content-toolbar .toolbar-btns { padding-top: 3px; padding-right: 15px; height: 47px; }
 
-/* line 166, ../sass/_toolbar.scss */
+/* line 165, ../sass/_toolbar.scss */
 .comments-status { width: 45px; font-family: "montserratlight", sans-serif; font-size: 30px; display: block; line-height: 44px; cursor: pointer; }
-/* line 174, ../sass/_toolbar.scss */
+/* line 173, ../sass/_toolbar.scss */
 .comments-status.small { line-height: 37px; font-size: 11px; }
-/* line 179, ../sass/_toolbar.scss */
+/* line 178, ../sass/_toolbar.scss */
 .comments-status.present { color: #c08830; }
-/* line 183, ../sass/_toolbar.scss */
+/* line 182, ../sass/_toolbar.scss */
 .comments-status.absent { color: #3c4550; }
 
-/* line 190, ../sass/_toolbar.scss */
+/* line 189, ../sass/_toolbar.scss */
 .menu-expanded .toolbar-link { width: calc(100vw - 920px); }
 
-@media (max-width: 1300px) { /* line 195, ../sass/_toolbar.scss */
+@media (max-width: 1300px) { /* line 194, ../sass/_toolbar.scss */
   .tab-content-toolbar { height: 94px; } }
-/* line 201, ../sass/_toolbar.scss */
+/* line 200, ../sass/_toolbar.scss */
 .tab-content-toolbar .toolbar-btns, .tab-content-toolbar .comments-status { width: auto; }
 
-/* line 206, ../sass/_toolbar.scss */
+/* line 205, ../sass/_toolbar.scss */
 .button-dark.js-trigger-modal { display: inline-block; }
 
-/* line 210, ../sass/_toolbar.scss */
+/* line 209, ../sass/_toolbar.scss */
 .preformatted { font-family: monospace; }
 
 /* Automated Exploratory Tests  Copyright (C) 2013 Cognifide Limited  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */
@@ -4116,7 +4116,7 @@ input[type=text]::-webkit-input-placeholder { color: #85898e; }
 
 /* Automated Exploratory Tests  Copyright (C) 2013 Cognifide Limited  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */
 /* line 18, ../sass/_test.scss */
-.tab-content { margin-top: 100px; z-index: 1; }
+.tab-content { margin-top: 130px; z-index: 1; }
 
 /* line 25, ../sass/_test.scss */
 .menu-expanded .tab-content-toolbar { left: 350px; width: calc(100% - 350px); }
@@ -4336,14 +4336,20 @@ tr.delete, tr.err, tr.error { background: #f2dede; }
 /* line 274, ../sass/_report.scss */
 ul li a.nav-link { text-transform: uppercase; font-size: 18px; color: #77777c; }
 
-/* line 284, ../sass/_report.scss */
+/* line 283, ../sass/_report.scss */
 ul li.passed a.nav-link, ul li.passed a.nav-link:focus, ul li.passed a.nav-link:hover { color: #6f9f00; }
-/* line 292, ../sass/_report.scss */
+/* line 291, ../sass/_report.scss */
 ul li.failed a.nav-link, ul li.failed a.nav-link:focus, ul li.failed a.nav-link:hover, ul li.processing_error a.nav-link, ul li.processing_error a.nav-link:focus, ul li.processing_error a.nav-link:hover { color: #bb5a5a; }
-/* line 299, ../sass/_report.scss */
+/* line 298, ../sass/_report.scss */
 ul li.rebased a.nav-link, ul li.rebased a.nav-link:focus, ul li.rebased a.nav-link:hover { color: #0097fe; }
-/* line 306, ../sass/_report.scss */
+/* line 305, ../sass/_report.scss */
 ul li.warning a.nav-link, ul li.warning a.nav-link:focus, ul li.warning a.nav-link:hover { color: #f0ad4e; }
+
+/* line 312, ../sass/_report.scss */
+.bg-shield { height: 60px; width: 100%; position: fixed; top: 125px; background-color: #fff; z-index: 1; }
+
+/* line 320, ../sass/_report.scss */
+.test-tabs .nav-tabs { position: fixed; top: 128px; z-index: 2; }
 
 /* line 31, ../sass/main.scss */
 html, body { height: 100%; }

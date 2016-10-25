@@ -309,4 +309,16 @@ ul {
     }
   }
 }
-
+.bg-shield {
+  height: 60px;
+  width: 100%;
+  position: fixed;
+  top: 125px;
+  background-color: $simple_background;
+  z-index: 1;
+}
+.test-tabs .nav-tabs {
+  position: fixed;
+  top: 128px;
+  z-index: 2;
+}
