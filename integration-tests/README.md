@@ -30,7 +30,7 @@ Then run `mvn aet:run` to test sample pages and store results in AET database.
 
 The result should be available at:
 
-* [/html/index.html?company=aet&project=aet&suite=main#/home](http://localhost:8181/html/index.html?company=aet&project=aet&suite=main#/home)
+* [http://aet-vagrant/report.html?company=aet&project=aet&suite=main#/home](http://aet-vagrant/report.html?company=aet&project=aet&suite=main#/home)
 
 
 ### sanity-functional

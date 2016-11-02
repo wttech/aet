@@ -59,7 +59,7 @@ public class LoginFormComponent {
 
   private WebElement getElementByXpath(WebDriver webDriver, String xpathExpression) {
     WebDriverWait wait = new WebDriverWait(webDriver, TIMEOUT);
-    wait.until(ExpectedConditions.presenceOfElementLocated(By.xpath(xpathExpression)));
+    wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(xpathExpression)));
     return webDriver.findElement(By.xpath(xpathExpression));
   }
 
