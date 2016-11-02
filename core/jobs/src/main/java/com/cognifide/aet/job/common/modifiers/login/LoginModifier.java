@@ -1,14 +1,14 @@
 /**
  * Automated Exploratory Tests
- * <p>
+ *
  * Copyright (C) 2013 Cognifide Limited
- * <p>
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p>
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -18,33 +18,23 @@
 package com.cognifide.aet.job.common.modifiers.login;
 
 import com.cognifide.aet.communication.api.metadata.CollectorStepResult;
-import com.cognifide.aet.job.api.ParametersValidator;
 import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.validation.ValidationResultBuilder;
-
-import com.google.common.base.Predicate;
-import org.apache.commons.io.FileUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
-import org.openqa.selenium.*;
-import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.Cookie;
+import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.annotation.Nullable;
-import java.io.File;
-import java.io.IOException;
 import java.util.Map;
-import java.util.concurrent.TimeUnit;
 
 public class LoginModifier implements CollectorJob {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(LoginModifier.class);
-
   public static final String NAME = "login";
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(LoginModifier.class);
 
   private final WebCommunicationWrapper webCommunicationWrapper;
 
@@ -111,7 +101,7 @@ public class LoginModifier implements CollectorJob {
 
   private void sleep() {
     if (config.getLoginCheckTimeout() > 0) {
-      LOGGER.info("Waiting {} ms before checking login token.", config.getLoginCheckTimeout());
+      LOGGER.info("Waiting {} ms.", config.getLoginCheckTimeout());
       try {
         Thread.sleep(config.getLoginCheckTimeout());
       } catch (InterruptedException e) {
