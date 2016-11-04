@@ -53,8 +53,10 @@ public class ImageComparisonTest {
       // when
       ImageComparisonResult imageComparisonResult = ImageComparison.compare(pattern, sample);
       // then
-      new AssertFor(imageComparisonResult).sameImages(true)
-              .heightDifference(0).widthDifference(0).numberOfDifferentPixels(0);
+      assertThat(imageComparisonResult.isMatch(), is(true));
+      assertThat(imageComparisonResult.getHeightDifference(), is(0));
+      assertThat(imageComparisonResult.getWidthDifference(), is(0));
+      assertThat(imageComparisonResult.getPixelDifferenceCount(), is(0));
 
       maskStream = imageToStream(imageComparisonResult.getResultImage());
       expectedMaskStream = getClass().getResourceAsStream("/mock/LayoutComparator/mask-identical.png");
@@ -81,8 +83,10 @@ public class ImageComparisonTest {
       // when
       ImageComparisonResult imageComparisonResult = ImageComparison.compare(pattern, sample);
       // then
-      new AssertFor(imageComparisonResult).sameImages(false)
-              .heightDifference(0).widthDifference(0).numberOfDifferentPixels(15600);
+      assertThat(imageComparisonResult.isMatch(), is(false));
+      assertThat(imageComparisonResult.getHeightDifference(), is(0));
+      assertThat(imageComparisonResult.getWidthDifference(), is(0));
+      assertThat(imageComparisonResult.getPixelDifferenceCount(), is(15600));
 
       maskStream = imageToStream(imageComparisonResult.getResultImage());
       expectedMaskStream = getClass().getResourceAsStream("/mock/LayoutComparator/mask-different.png");
@@ -109,8 +113,10 @@ public class ImageComparisonTest {
       // when
       ImageComparisonResult imageComparisonResult = ImageComparison.compare(pattern, sample);
       // then
-      new AssertFor(imageComparisonResult).sameImages(false)
-              .heightDifference(100).widthDifference(20).numberOfDifferentPixels(14399);
+      assertThat(imageComparisonResult.isMatch(), is(false));
+      assertThat(imageComparisonResult.getHeightDifference(), is(100));
+      assertThat(imageComparisonResult.getWidthDifference(), is(20));
+      assertThat(imageComparisonResult.getPixelDifferenceCount(), is(14399));
 
       maskStream = imageToStream(imageComparisonResult.getResultImage());
       expectedMaskStream = getClass().getResourceAsStream("/mock/LayoutComparator/canvasSizeDiff/mask.png");
