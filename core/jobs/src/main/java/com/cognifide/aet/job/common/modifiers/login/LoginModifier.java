@@ -46,7 +46,7 @@ public class LoginModifier implements CollectorJob {
 
   LoginModifier(WebCommunicationWrapper webCommunicationWrapper, ValidationResultBuilder validationResultBuilder) {
     this.webCommunicationWrapper = webCommunicationWrapper;
-    webDriver = webCommunicationWrapper.getWebDriver();
+    this.webDriver = webCommunicationWrapper.getWebDriver();
     this.validationResultBuilder = validationResultBuilder;
   }
 
@@ -57,7 +57,7 @@ public class LoginModifier implements CollectorJob {
       boolean successfullyLogged = false;
       while (trialNumber < config.getRetrialNumber() && !successfullyLogged) {
         if (trialNumber > 0) {
-          sleep();
+          delayBeforeLoginCheckOrReattempt();
         }
         try {
           login();
@@ -80,7 +80,7 @@ public class LoginModifier implements CollectorJob {
 
   private void login() throws ProcessingException {
     loginToForm();
-    sleep();
+    delayBeforeLoginCheckOrReattempt();
 
     Cookie authCookie = getLoginToken();
     if (authCookie == null) {
@@ -99,11 +99,11 @@ public class LoginModifier implements CollectorJob {
     form.login(config.getLogin(), config.getPassword());
   }
 
-  private void sleep() {
-    if (config.getLoginCheckTimeout() > 0) {
-      LOGGER.info("Waiting {} ms.", config.getLoginCheckTimeout());
+  private void delayBeforeLoginCheckOrReattempt() {
+    if (config.getDelayBeforeLoginCheckOrReattempt() > 0) {
+      LOGGER.info("Waiting {} ms.", config.getDelayBeforeLoginCheckOrReattempt());
       try {
-        Thread.sleep(config.getLoginCheckTimeout());
+        Thread.sleep(config.getDelayBeforeLoginCheckOrReattempt());
       } catch (InterruptedException e) {
         LOGGER.error("Interruption", e);
         Thread.currentThread().interrupt();

@@ -25,7 +25,7 @@ import org.apache.commons.lang3.math.NumberUtils;
 
 import java.util.Map;
 
-public class LoginModifierConfig {
+class LoginModifierConfig {
 
   private static final String DEFAULT_LOGIN = "admin";
 
@@ -77,7 +77,7 @@ public class LoginModifierConfig {
 
   private final String loginTokenKey;
 
-  private final int loginCheckTimeout;
+  private final int delayBeforeLoginCheckOrReattempt;
 
   private final boolean forceLogin;
 
@@ -92,12 +92,11 @@ public class LoginModifierConfig {
     this.submitButtonSelector = getParameter(params, SUBMIT_BUTTON_SELECTOR_PARAM, DEFAULT_SUBMIT_BUTTON_SELECTOR);
     this.loginTokenKey = getParameter(params, LOGIN_TOKEN_KEY_PARAM, DEFAULT_LOGIN_TOKEN);
     this.forceLogin = BooleanUtils.toBoolean(params.get(FORCE_LOGIN));
-    int loginTimeout = NumberUtils.toInt(getParameter(params, LOGIN_CHECK_TIMEOUT_PARAM, DEFAULT_CHECK_TIMEOUT_PARAM));
-    this.loginCheckTimeout = Math.min(10000, loginTimeout);
+    this.delayBeforeLoginCheckOrReattempt = NumberUtils.toInt(getParameter(params, LOGIN_CHECK_TIMEOUT_PARAM, DEFAULT_CHECK_TIMEOUT_PARAM));
     this.retrialNumber = NumberUtils.toInt(getParameter(params, RETRIAL_NUMBER_PARAM, DEFAULT_RETRIAL_NUMBER));
 
     ParametersValidator.checkNotBlank(loginPage, "`login-page` parameter is mandatory");
-    ParametersValidator.checkRange(loginTimeout, 0, 10000, "Timeout duration should be greater than 0 and " +
+    ParametersValidator.checkRange(delayBeforeLoginCheckOrReattempt, 0, 10000, "Timeout duration should be greater than 0 and " +
             "less than 10 seconds");
     ParametersValidator.checkRange(retrialNumber, 1, Integer.MAX_VALUE, "Retrial number has to be at least 1");
   }
@@ -134,8 +133,8 @@ public class LoginModifierConfig {
     return loginTokenKey;
   }
 
-  public int getLoginCheckTimeout() {
-    return loginCheckTimeout;
+  public int getDelayBeforeLoginCheckOrReattempt() {
+    return delayBeforeLoginCheckOrReattempt;
   }
 
   public boolean isForceLogin() {
