@@ -31,10 +31,6 @@ import java.io.InputStream;
 
 import javax.imageio.ImageIO;
 
-/**
- * When preparing images for unit test keep in mind that <code>ImageComparison</code>
- * expects images to contain only 3 channels: red, green and blue (no alpha!).
- */
 public class ImageComparisonTest {
 
   @Test
