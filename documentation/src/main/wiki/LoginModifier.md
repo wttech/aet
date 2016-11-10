@@ -1,10 +1,8 @@
 #### Login Modifier
 
-| ! Note |
-|:------ |
-| This module is no longer supported and may not work correctly. It may be removed in future version. |
+Login Modifier allows to login into pages that have access secured with login form. If input element isn't available (for example it's not loaded yet) then Login Modifier will wait up to 10s for login input, then for password input and at the end for submit button to appear. If the login form isn't ready or logging in fails for any other reason, we will try again 3 times by default. 
 
-Login Modifier allows to login into pages that have access secured with login form. If input element wont be available (wont be loaded yet) then Login Modifier will wait up to 10s for login input, then for password input and at the end for submit button to appear. If any element won't be ready then TimeoutException will be thrown.
+Login modifier checks if *login-token-key* cookie is present to decide if authentication was successful. If cookie with specified name is present, it assumes that credentials were valid.
 
 Module name: **login**
 
@@ -23,8 +21,9 @@ Module name: **login**
 | `password-input-selector` | Xpath expression for password input | no | //input[@name='j_password'] |
 | `submit-button-selector` | Xpath expression for submit button | no | //*[@type='submit'] |
 | `login-token-key` | Name for cookie we get after successfull login | no | login-token |
-| `timeout` | Number of milliseconds (between 0 and 10000) that modifier will wait to login page response after submiting credentials. | no | 0 |
+| `timeout` | Number of milliseconds (between 0 and 10000) that modifier will wait to login page response after submiting credentials. It is also used between reattempts to log in. | no | 5000 |
 | `force-login` | Enforces login even when login cookie is present. | no | false |
+| `retrial-number` | Number of reattempts to log in. It's a way to deal with unpredictable problem with logging in. | no | 3 |  
 
 ##### Example Usage
 

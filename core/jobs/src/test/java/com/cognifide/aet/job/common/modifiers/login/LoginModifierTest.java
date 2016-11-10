@@ -114,6 +114,11 @@ public class LoginModifierTest {
     when(webDriver.findElement(By.xpath(DEFAULT_LOGIN_INPUT_ELEMENT_SELECTOR))).thenReturn(loginInput);
     when(webDriver.findElement(By.xpath(DEFAULT_PASSWORD_INPUT_ELEMENT_SELECTOR))).thenReturn(passwordInput);
     when(webDriver.findElement(By.xpath(DEFAULT_SUBMIT_BUTTON_ELEMENT_SELECTOR))).thenReturn(submitButton);
+
+    when(loginInput.isDisplayed()).thenReturn(true);
+    when(passwordInput.isDisplayed()).thenReturn(true);
+    when(submitButton.isDisplayed()).thenReturn(true);
+
     when(properties.getUrl()).thenReturn("http://example.url.com");
     tested = new LoginModifier(webCommunicationWrapper, validationResultBuilder);
 
@@ -154,9 +159,8 @@ public class LoginModifierTest {
 
     tested.collect();
 
-    verify(webDriver, times(1)).get(LOGIN_PAGE_URL);
-    verify(submitButton, times(1)).click();
-    verify(httpRequestBuilder).addCookie(anyString(), anyString());
+    verify(webDriver, times(3)).get(LOGIN_PAGE_URL);
+    verify(submitButton, times(0)).click();
   }
 
   @Test
