@@ -71,7 +71,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       "aet" => {
         "karaf" => {
           "java_max_mem" => "3072M",
-          "debug" => true
+          "enable_debug" => true
         },
         "version" => "2.0.0"
       }

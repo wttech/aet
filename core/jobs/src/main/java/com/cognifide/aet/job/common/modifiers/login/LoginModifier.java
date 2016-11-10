@@ -18,15 +18,11 @@
 package com.cognifide.aet.job.common.modifiers.login;
 
 import com.cognifide.aet.communication.api.metadata.CollectorStepResult;
-import com.cognifide.aet.job.api.ParametersValidator;
 import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.validation.ValidationResultBuilder;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
@@ -36,39 +32,9 @@ import java.util.Map;
 
 public class LoginModifier implements CollectorJob {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(LoginModifier.class);
-
-  private static final String DEFAULT_LOGIN = "admin";
-
-  private static final String DEFAULT_PASSWORD = "admin";
-
-  private static final String DEFAULT_LOGIN_INPUT_ELEMENT_SELECTOR = "//input[@name='j_username']";
-
-  private static final String DEFAULT_PASSWORD_INPUT_ELEMENT_SELECTOR = "//input[@name='j_password']";
-
-  private static final String DEFAULT_SUBMIT_BUTTON_ELEMENT_SELECTOR = "//*[@type='submit']";
-
-  private static final String DEFAULT_LOGIN_TOKEN = "login-token";
-
   public static final String NAME = "login";
 
-  private static final String LOGIN_PARAM = "login";
-
-  private static final String PASSWORD_PARAM = "password";
-
-  private static final String LOGIN_PAGE_PARAM = "login-page";
-
-  private static final String LOGIN_INPUT_SELECTOR_PARAM = "login-input-selector";
-
-  private static final String PASSWORD_INPUT_SELECTOR_PARAM = "password-input-selector";
-
-  private static final String SUBMIT_BUTTON_SELECTOR_PARAM = "submit-button-selector";
-
-  private static final String LOGIN_TOKEN_KEY_PARAM = "login-token-key";
-
-  private static final String LOGIN_CHECK_TIMEOUT_PARAM = "timeout";
-
-  private static final String FORCE_LOGIN = "force-login";
+  private static final Logger LOGGER = LoggerFactory.getLogger(LoginModifier.class);
 
   private final WebCommunicationWrapper webCommunicationWrapper;
 
@@ -76,57 +42,34 @@ public class LoginModifier implements CollectorJob {
 
   private final ValidationResultBuilder validationResultBuilder;
 
-  private String login;
-
-  private String password;
-
-  private String loginPage;
-
-  private String submitButtonSelector;
-
-  private String passwordInputSelector;
-
-  private String loginInputSelector;
-
-  private String loginTokenKey;
-
-  private int loginCheckTimeout;
-
-  private boolean forceLogin;
+  private LoginModifierConfig config;
 
   LoginModifier(WebCommunicationWrapper webCommunicationWrapper, ValidationResultBuilder validationResultBuilder) {
     this.webCommunicationWrapper = webCommunicationWrapper;
-    webDriver = webCommunicationWrapper.getWebDriver();
+    this.webDriver = webCommunicationWrapper.getWebDriver();
     this.validationResultBuilder = validationResultBuilder;
   }
 
   @Override
   public CollectorStepResult collect() throws ProcessingException {
-    // check if there is a cookie
-    if (forceLogin || !hasLoginToken()) {
-      LOGGER.info("Attempting to login user: {} on site {}", login, loginPage);
-      webDriver.get(loginPage);
-      LoginFormComponent form = new LoginFormComponent(webDriver, loginInputSelector,
-              passwordInputSelector, submitButtonSelector);
-      form.login(login, password);
-
-      if (loginCheckTimeout > 0) {
-        LOGGER.info("Waiting {} ms before checking login token.", loginCheckTimeout);
-        try {
-          Thread.sleep(loginCheckTimeout);
-        } catch (InterruptedException e) {
-          LOGGER.error("Interruption", e);
-          Thread.currentThread().interrupt();
+    if (config.isForceLogin() || !hasLoginToken()) {
+      int trialNumber = 0;
+      boolean successfullyLogged = false;
+      while (trialNumber < config.getRetrialNumber() && !successfullyLogged) {
+        if (trialNumber > 0) {
+          delayBeforeLoginCheckOrReattempt();
         }
+        try {
+          login();
+          successfullyLogged = true;
+        } catch (ProcessingException e) {
+          LOGGER.warn("Attempt {}/{} to log in to {} failed.", trialNumber + 1, config.getRetrialNumber(), config.getLoginPage(), e);
+        }
+        trialNumber++;
       }
-      Cookie authCookie = getLoginToken();
-      if (authCookie == null) {
-        throw new ProcessingException("Unable to acquire Cookie; check credentials.");
+      if (!successfullyLogged) {
+        throw new ProcessingException("All attempts to log in to " + config.getLoginPage() + " failed.");
       }
-
-      webCommunicationWrapper.getHttpRequestBuilder().addCookie(authCookie.getName(), authCookie.getValue());
-
-      LOGGER.info("User has been authenticated");
     } else {
       LOGGER.info("User is authenticated.");
       Cookie cookie = getLoginToken();
@@ -135,35 +78,46 @@ public class LoginModifier implements CollectorJob {
     return CollectorStepResult.newModifierResult();
   }
 
-  @Override
-  public void setParameters(Map<String, String> params) throws ParametersException {
-    loginPage = params.get(LOGIN_PAGE_PARAM);
-    login = StringUtils.defaultString(params.get(LOGIN_PARAM), DEFAULT_LOGIN);
-    password = StringUtils.defaultString(params.get(PASSWORD_PARAM), DEFAULT_PASSWORD);
+  private void login() throws ProcessingException {
+    loginToForm();
+    delayBeforeLoginCheckOrReattempt();
 
-    loginInputSelector = StringUtils.defaultString(params.get(LOGIN_INPUT_SELECTOR_PARAM),
-            DEFAULT_LOGIN_INPUT_ELEMENT_SELECTOR);
-    passwordInputSelector = StringUtils.defaultString(params.get(PASSWORD_INPUT_SELECTOR_PARAM),
-            DEFAULT_PASSWORD_INPUT_ELEMENT_SELECTOR);
-    submitButtonSelector = StringUtils.defaultString(params.get(SUBMIT_BUTTON_SELECTOR_PARAM),
-            DEFAULT_SUBMIT_BUTTON_ELEMENT_SELECTOR);
-
-    loginTokenKey = StringUtils.defaultString(params.get(LOGIN_TOKEN_KEY_PARAM), DEFAULT_LOGIN_TOKEN);
-    final String timeoutString = params.get(LOGIN_CHECK_TIMEOUT_PARAM);
-
-    ParametersValidator.checkNotBlank(loginPage, "`login-page` parameter is mandatory");
-    if (StringUtils.isNotBlank(timeoutString)) {
-      loginCheckTimeout = NumberUtils.toInt(timeoutString);
-      ParametersValidator.checkRange(loginCheckTimeout, 0, 10000, "Timeout duration should be greater than 0 and " +
-              "less than 10 seconds");
+    Cookie authCookie = getLoginToken();
+    if (authCookie == null) {
+      throw new ProcessingException("Unable to acquire Cookie; check credentials.");
     }
-    if (params.containsKey(FORCE_LOGIN)) {
-      this.forceLogin = Boolean.valueOf(params.get(FORCE_LOGIN));
+
+    webCommunicationWrapper.getHttpRequestBuilder().addCookie(authCookie.getName(), authCookie.getValue());
+    LOGGER.info("User has been authenticated");
+  }
+
+  private void loginToForm() throws ProcessingException {
+    LOGGER.info("Attempting to login user: {} on site {}", config.getLogin(), config.getLoginPage());
+    webDriver.get(config.getLoginPage());
+    LoginFormComponent form = new LoginFormComponent(webDriver, config.getLoginInputSelector(),
+            config.getPasswordInputSelector(), config.getSubmitButtonSelector());
+    form.login(config.getLogin(), config.getPassword());
+  }
+
+  private void delayBeforeLoginCheckOrReattempt() {
+    if (config.getDelayBeforeLoginCheckOrReattempt() > 0) {
+      LOGGER.info("Waiting {} ms.", config.getDelayBeforeLoginCheckOrReattempt());
+      try {
+        Thread.sleep(config.getDelayBeforeLoginCheckOrReattempt());
+      } catch (InterruptedException e) {
+        LOGGER.error("Interruption", e);
+        Thread.currentThread().interrupt();
+      }
     }
   }
 
+  @Override
+  public void setParameters(Map<String, String> params) throws ParametersException {
+    this.config = new LoginModifierConfig(params);
+  }
+
   private Cookie getLoginToken() {
-    return webDriver.manage().getCookieNamed(loginTokenKey);
+    return webDriver.manage().getCookieNamed(config.getLoginTokenKey());
   }
 
   private boolean hasLoginToken() {

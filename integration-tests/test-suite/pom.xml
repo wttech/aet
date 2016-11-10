@@ -45,7 +45,7 @@
 
   <profiles>
     <profile>
-      <!-- Assembly test suites from 'partials' catolog into one main-test.xml -->
+      <!-- Assembly test suites from 'partials' catalog into one main-test.xml -->
       <id>main-test-assembly</id>
       <activation>
         <activeByDefault>true</activeByDefault>
