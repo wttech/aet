@@ -16,25 +16,25 @@
  * limitations under the License.
  */
 define(['angularAMD'], function (angularAMD) {
-  'use strict';
-  angularAMD.filter('aetUrlStatusFilter', UrlStatusFilter);
+	'use strict';
+	angularAMD.directive('aetToggleLink', [function () {
+		return {
+			restrict: 'AE',
+			scope: {
+				'type': '@'
+			},
+			link: function (scope, $element) {
+				var parent = $element.parent();
+				$element.on('click', function (event) {
+					if ($(event.target).attr('class') == 'glyphicon glyphicon-chevron-down') {
+						event.preventDefault();
+					}
+					if (scope.type == 'test-name') {
+						parent.toggleClass('is-expanded');
+					}
+				});
+			}
+		};
+	}]);
 
-  /**
-   * Filters collection of urls.
-   * Return only those urls that have status matching applied status filter
-   * (or all when no filter applied).
-   */
-  function UrlStatusFilter() {
-    return filter;  
-
-    function filter(urls, statuses) {
-      var filteredUrls = urls;
-      if (statuses && statuses.length > 0) {
-        filteredUrls = _.filter(urls, function (url) {
-          return statuses.indexOf(url.getStatus()) > -1;
-        });
-      }
-      return filteredUrls;
-    }
-  }
 });
