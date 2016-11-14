@@ -16,25 +16,29 @@
  * limitations under the License.
  */
 define(['angularAMD'], function (angularAMD) {
-  'use strict';
-  angularAMD.filter('aetUrlStatusFilter', UrlStatusFilter);
+	'use strict';
+	angularAMD.directive('aetTruncateUrls', ['$timeout', function ($timeout) {
+		return {
+			restrict: 'AE',
+			scope: {
+				type: '@'
+			},
+			link: function (scope, $element) {
+				var checkElementsHeights = function () {
+					if ($element.children().width() > $element.parent().width()) {
+						$element.addClass('ellipsis');
+					}  else {
+						$element.removeClass('ellipsis');
+					} 
+				};
 
-  /**
-   * Filters collection of urls.
-   * Return only those urls that have status matching applied status filter
-   * (or all when no filter applied).
-   */
-  function UrlStatusFilter() {
-    return filter;  
+				$(window).on('resize', checkElementsHeights);
 
-    function filter(urls, statuses) {
-      var filteredUrls = urls;
-      if (statuses && statuses.length > 0) {
-        filteredUrls = _.filter(urls, function (url) {
-          return statuses.indexOf(url.getStatus()) > -1;
-        });
-      }
-      return filteredUrls;
-    }
-  }
+				$timeout(function () {
+					checkElementsHeights();
+				});
+			}
+		};
+	}]);
+
 });

@@ -23,12 +23,12 @@ You will need following tools installed locally:
 
 #### Running web application locally
 
-1. update REST endpoint in `.../report/src/main/webapp/app/_old_js/services/configService`:
+1. update REST endpoint in `report/src/main/webapp/app/services/endpointConfiguration.service.js`:
 
         var config = {
-            'production': 'http://aet.server.com:8181/api/'
+            'getUrl': 'http://aet.server.com:8181/api/'
         };
-
+   in order to fetch data displayed on the report from instance `http://aet.server.com:8181`.
 2. got into `.../report/src/main/webapp` folder
 3. run `npm install` to install required npm modules
 4. run `grunt` to start your web application
@@ -38,7 +38,7 @@ You will need following tools installed locally:
 
 You could also upload report application to local virtual machine: 
 
-    mvn clean install -Pupload-to-karaf
+    mvn clean install -P upload
 
 [node-js]: https://nodejs.org/en/
 [npm-install]: https://docs.npmjs.com/getting-started/installing-node#updating-npm

@@ -25,27 +25,16 @@ define(['angularAMD',
 	'jquery',
 	'bootstrap',
 	'scroller',
-	// **** OLD STRUCTURE ****
-	'apiServices',
-	'sessionStorageService',
-	'tabStateService',
-	'cachingService',
-	'configService',
-	'suiteParamsService',
-	'toggleLinkDirective',
-	'commentDirective',
-	'saveChangesDirective',
-	'scrollTablesDirective',
-	'truncateUrlsDirective',
-	'hidePopoversDirective',
-	'tabNavigationDirective',
-	// **** NEW STRUCTURE ****
 	// components
+	'hidePopoversDirective',
 	'keyboardShortcutsDirective',
-	'testUrlsSearch',
-	'testUrlsStatusFilter',
+	'testSearchFilter',
+	'testStatusFilter',
+	'urlSearchFilter',
 	'urlStatusFilter',
 	// services
+	'endpointConfiguration',
+	'artifactsService',
 	'metadataEndpointService',
 	'metadataLoaderService',
 	'localStorageService',
@@ -56,12 +45,20 @@ define(['angularAMD',
 	'notesService',
 	'suiteInfoService',
 	'patternsService',
+	'caseFactory',
 	'userSettingsService',
 	'viewModeService',
+
 	// sidepanel
 	'sidepanelToggleDirective',
 	'sidepanelStatusFilterDirective',
 	'sidepanelSearchDirective',
+	'sidepanelToggleLinkDirective',
+	'sidepanelSaveChangesDirective',
+	'sidepanelTruncateUrlsDirective',
+	// main
+	'includedCommentPopoverDirective',
+	'expandablePanelDirective',
 	// modals
 	'noteModalController',
 	'unsavedChangesModalController'], function (angularAMD, _) {
@@ -72,18 +69,12 @@ define(['angularAMD',
 		'$rootScope',
 		'$state',
 		'$uibModal',
-		'apiServices',
-		'cachingService',
-		'suiteParamsService',
 		'metadataService',
 		'userSettingsService',
 		'metadataLoaderService',
 		function ($rootScope,
 		          $state,
 		          $uibModal,
-		          apiServices,
-		          cachingService,
-		          suiteParamsService,
 		          metadataService,
 		          userSettingsService,
 		          metadataLoaderService) {
@@ -92,16 +83,6 @@ define(['angularAMD',
 			metadataLoaderService.setup();
 			
 			$rootScope.$state = $state;
-
-			suiteParamsService.setParams();
-
-			var suiteParams = suiteParamsService.getParams();
-
-			$rootScope.hasChanges = cachingService.hasScheduledChanges(suiteParams.company, suiteParams.project, suiteParams.suite) ? cachingService.hasScheduledChanges(suiteParams.company, suiteParams.project, suiteParams.suite).changesCount : 0;
-
-			apiServices.getMetadata(suiteParams.company, suiteParams.project, suiteParams.suite, suiteParams.correlationId).then(function (data) {
-				apiServices.processData(data);
-			});
 
 			$rootScope.$on('metadata:unsavedChangesDetected', function (event, oldSuite) {
 				displayNotificationModal($uibModal, oldSuite);
@@ -208,8 +189,9 @@ define(['angularAMD',
 				cache: true,
 				views: {
 					'content@': angularAMD.route({
-						templateUrl: 'app/html/url_view.html',
-						controllerUrl: '_old_js/controllers/url',
+						templateUrl: 'app/layout/main/url/mainView.url.view.html',
+						controllerUrl: 'layout/main/url/mainView.url.controller',
+						controllerAs: 'urlView',
 						resolve: {
 							metadataReady: function (metadataLoaderService) {
 								return metadataLoaderService.setup();

@@ -1,0 +1,76 @@
+<!--
+
+    Automated Exploratory Tests
+
+    Copyright (C) 2013 Cognifide Limited
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+
+<div class="tab-content-toolbar">
+  <div class="toolbar-blocks">
+    <div class="toolbar-btns pull-right">
+      <ng-include src="'app/layout/main/url/navigation/navigation.comments.html'"/>
+    </div>
+  </div>
+</div>
+
+<div class="alert alert-info" role="alert">
+  The <strong>client-side-performance</strong> module is currently in beta version.
+</div>
+
+  <h3>
+    Overall score <span class="label label-{{::case.collectorResult.prettyOverallScore}}">{{::case.collectorResult.prettyOverallScore}}</span>
+  </h3>
+
+
+  <div class="panel-group">
+    <div ng-repeat="item in case.collectorResult.g track by $index" class="panel panel-default">
+
+      <!-- for score without details -->
+      <div class="panel-heading" ng-if="!item.message" data-index="{{$index}}">
+        <h4 class="panel-title">
+          <span>
+            <span class="label label-{{::item.prettyScore}}">{{::item.prettyScore}}</span>
+            {{::item.name}}
+          </span>
+        </h4>
+      </div>
+
+      <!-- for score with details -->
+      <div class="panel-heading" ng-if="item.message" data-index="{{$index}}"
+           role="button"
+           data-aet-expandable-panel>
+        <h4 class="panel-title" data-toggle="collapse" href="#collapse-{{$index}}">
+          <span>
+            <span class="label label-{{::item.prettyScore}}">{{::item.prettyScore}}</span>
+            {{::item.name}}
+            <span class="pull-right"><i class="glyphicon glyphicon-chevron-down"></i></span>
+          </span>
+        </h4>
+      </div>
+      <div class="panel-collapse collapse" ng-if="item.message" id="collapse-{{$index}}">
+        <div class="panel-body">
+          <div ng-bind-html="item.message | to_trusted"></div>
+          <div ng-if="item.components.length > 0" class="links-list">
+            <a href="{{component}}" target="_blank" ng-repeat="component in item.components">
+              <i>{{component}}</i>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>

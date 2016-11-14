@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-define(['angularAMD', 'configService', 'metadataService', 'metadataEndpointService'], function (angularAMD) {
+define(['angularAMD', 'metadataService', 'metadataEndpointService'], function (angularAMD) {
 	'use strict';
 	angularAMD.factory('metadataLoaderService', MetadataLoaderService);
 

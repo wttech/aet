@@ -15,20 +15,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-define(['angularAMD', 'configService', 'requestParametersService'], function (angularAMD) {
+define(['angularAMD', 'endpointConfiguration', 'requestParametersService'], function (angularAMD) {
 	'use strict';
 	angularAMD.factory('metadataEndpointService', MetadataEndpointService);
 
 	/**
 	 * Service responsible for communication with AET metadata REST API endpoint.
 	 */
-	function MetadataEndpointService($q, $http, configService, requestParametersService) {
+	function MetadataEndpointService($q, $http, endpointConfiguration, requestParametersService) {
 		var service = {
 				getMetadata: getMetadata,
 				saveMetadata: saveMetadata
 			},
 			requestParams = requestParametersService.get(),
-			configParams = configService.getConfig();
+			endpoint = endpointConfiguration.getEndpoint();
 
 		return service;
 
@@ -37,10 +37,10 @@ define(['angularAMD', 'configService', 'requestParametersService'], function (an
 				url;
 
 			if (requestParams.correlationId) {
-				url = configParams.production + 'metadata?company=' + requestParams.company + '&project=' + requestParams.project + '&correlationId=' + requestParams.correlationId;
+				url = endpoint.getUrl + 'metadata?company=' + requestParams.company + '&project=' + requestParams.project + '&correlationId=' + requestParams.correlationId;
 			}
 			else {
-				url = configParams.production + 'metadata?company=' + requestParams.company + '&project=' + requestParams.project + '&suite=' + requestParams.suite;
+				url = endpoint.getUrl + 'metadata?company=' + requestParams.company + '&project=' + requestParams.project + '&suite=' + requestParams.suite;
 			}
 
 			return $http({
@@ -62,10 +62,17 @@ define(['angularAMD', 'configService', 'requestParametersService'], function (an
 			
 			$http({
 				method: 'POST',
-				url: configParams.production + 'metadata',
+				url: endpoint.getUrl + 'metadata',
 				data: suite,
 				headers: {
-					'Content-Type': 'application/json'
+					/*
+					 * for cross-origin request (when working on localhost:9000 with Grunt)
+					 * special content type is required according to jQuery documentation at
+					 *     http://api.jquery.com/jquery.ajax/
+					 * see also:
+					 *     http://stackoverflow.com/a/30554385
+					 */
+					'Content-Type': 'multipart/form-data; charset=UTF-8'
 				}
 			}).then(function (data) {
 				deferred.resolve(data.data);
