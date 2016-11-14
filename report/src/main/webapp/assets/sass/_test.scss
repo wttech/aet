@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 .tab-content {
-  margin-top: 100px;
+  margin-top: 130px;
   z-index: 1;
 }
 
@@ -161,75 +161,9 @@
   top: -9px;
 }
 
-.test-tabs.nav-tabs {
-  border: 0 none;
-  background: $white;
-  width: 100%;
-  line-height: 51px;
-
-  li {
-    margin-bottom: 0;
-    display: block;
-    float: left;
-
-    a {
-      text-transform: uppercase;
-      font-size: 18px;
-      border: 0 none;
-      border-bottom: solid 7px transparent;
-      padding: 14px 15px 7px;
-      color: $gray_dark;
-
-      &.failed,
-      &.processing_error {
-        color: $failed;
-      }
-
-      &.rebased {
-        color: $rebased;
-      }
-
-      &.warning {
-        color: $warning;
-      }
-    }
-
-    &.active,
-    &:hover,
-    &:focus {
-
-      a {
-        border: 0 none;
-        background: transparent;
-        border-bottom: solid 7px $green;
-      }
-    }
-  }
-  .toolbar-nav {
-    padding-top: 10px;
-    margin-right: 40px;
-
-    &:hover {
-      a {
-        border-bottom: none;
-      }
-    }
-
-    a {
-      padding: 0;
-      margin: 0;
-      border: 0;
-      float: left;
-      line-height: 0.5;
-    }
-
-  }
-}
-
 /*
   Layout comparison
 */
-
 .layout-compare {
   &-item {
     position: relative;

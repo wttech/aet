@@ -1,0 +1,74 @@
+<!--
+
+    Automated Exploratory Tests
+
+    Copyright (C) 2013 Cognifide Limited
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+
+<div class="tab-content-toolbar">
+  <span class="tab-content-toolbar-header">Settings</span>
+  <div class="checkboxes-inline">
+    <div class="checkbox">
+      <input type="checkbox" id="toggleMask" ng-click="urlView.toggleMask()" ng-checked="$root.maskVisible">
+      <label for="toggleMask">
+        <span>Show Mask</span>
+      </label>
+    </div>
+  </div>
+  <div class="toolbar-blocks">
+    <div class="toolbar-btns pull-right">
+      <ng-include src="'app/layout/main/url/navigation/navigation.comments.html'"/>
+      <ng-include src="'app/layout/main/url/navigation/navigation.patternButtons.html'"/>
+    </div>
+  </div>
+</div>
+<div>
+  <div class="layout-compare">
+    <div class="layout-compare-item pull-left">
+      <p class="layout-compare-description">Pattern
+        <span class="label label-info">{{case.comparator.stepResult.data.patternTimestamp | date:'yyyy-MM-dd HH:mm'}}</span>
+      </p>
+      <div class="mask-container">
+        <img ng-src="{{case.getResultUrl()}}"
+             class="mask img-responsive"
+             ng-class="($root.maskVisible == true ? 'is-visible' : '')"
+             ng-if="case.status == 'FAILED'"/>
+
+        <a href="{{case.getPatternUrl()}}" target="_blank">
+          <img ng-src="{{case.getPatternUrl()}}" class="img-responsive"/>
+        </a>
+      </div>
+    </div>
+    <div class="layout-compare-item pull-left" ng-if="case.status == 'FAILED'">
+      <p class="layout-compare-description">Collected
+        <span class="label label-info">{{case.comparator.stepResult.data.collectTimestamp | date:'yyyy-MM-dd HH:mm'}}</span>
+      </p>
+
+      <div class="mask-container">
+        <img ng-src="{{case.getResultUrl()}}"
+             class="mask img-responsive"
+             ng-class="($root.maskVisible == true ? 'is-visible' : '')"/>
+
+        <a href="{{case.getDataUrl()}}" target="_blank">
+          <img ng-src="{{case.getDataUrl()}}" class="img-responsive"/>
+        </a>
+      </div>
+    </div>
+    <div class="layout-compare-item pull-left" ng-if="case.status != 'FAILED'">
+      <p class="layout-compare-description">No difference was detected!</p>
+    </div>
+  </div>
+</div>

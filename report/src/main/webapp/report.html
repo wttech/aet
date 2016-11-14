@@ -27,7 +27,7 @@
     <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon">
 </head>
 
-<body hide-popovers aet-keyboard-shortcuts ng-class="{'menu-expanded': sidebarExpanded }">
+<body aet-hide-popovers aet-keyboard-shortcuts ng-class="{'menu-expanded': sidebarExpanded }">
 
 <div class="screen-cover js-loader-app" ng-if="metadataSaveInProgress"><h1>Saving data...</h1></div>
 <div class="screen-cover data-loading-error" ng-if="metadataLoadingStatus == 'FAILED'"><h1>Failed to load metadata!</h1><p>Please make sure your url is valid.</p></div>
@@ -56,7 +56,7 @@
                 <textarea name="" id="newComment" ng-model="newComment"></textarea>
             </div>
             <div class="modal-footer">
-                <button class="button button-blue pull-right" save-changes change="{{commentType}}" type="comment" text="{{newComment}}"><i class="glyphicon glyphicon-ok"></i>Save</button>
+                <button class="button button-blue pull-right" aet-save-changes change="{{commentType}}" type="comment" text="{{newComment}}"><i class="glyphicon glyphicon-ok"></i>Save</button>
                 <button type="button" class="button button-dark pull-right" data-dismiss="modal"><i class="glyphicon glyphicon-remove"></i>Cancel</button>
             </div>
         </div>

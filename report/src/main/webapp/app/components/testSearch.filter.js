@@ -17,24 +17,29 @@
  */
 define(['angularAMD'], function (angularAMD) {
   'use strict';
-  angularAMD.filter('aetUrlStatusFilter', UrlStatusFilter);
+  angularAMD.filter('aetTestSearchFilter', TestSearchFilter);
 
   /**
-   * Filters collection of urls.
-   * Return only those urls that have status matching applied status filter
-   * (or all when no filter applied).
+   * Filters collection of tests.
+   * Returns only those tests that have url with name matching searched phrase.
    */
-  function UrlStatusFilter() {
-    return filter;  
+  function TestSearchFilter() {
+    return filter;
 
-    function filter(urls, statuses) {
-      var filteredUrls = urls;
-      if (statuses && statuses.length > 0) {
-        filteredUrls = _.filter(urls, function (url) {
-          return statuses.indexOf(url.getStatus()) > -1;
-        });
+    function filter(tests, searchPhrase) {
+      if (!searchPhrase) {
+        return tests;
       }
-      return filteredUrls;
+
+      return tests.filter(function (test) {
+        return _.some(test.urls, function (url) {
+          return matches(searchPhrase, url.name);
+        });
+      });
+    }
+
+    function matches(searchPhrase, name) {
+      return name && name.indexOf(searchPhrase) > 0;
     }
   }
 });

@@ -267,3 +267,58 @@
     background: $rebased;
   }
 }
+
+// links for URL tabs
+ul {
+  li {
+    a.nav-link {
+      text-transform: uppercase;
+      font-size: 18px;
+      color: $gray_dark;
+    }
+  }
+}
+ul {
+  li.passed {
+    a.nav-link,
+    a.nav-link:focus,
+    a.nav-link:hover {
+      color: $passed;
+    }
+  }
+  li.failed,
+  li.processing_error {
+    a.nav-link,
+    a.nav-link:focus,
+    a.nav-link:hover {
+      color: $failed;
+    }
+  }
+  li.rebased {
+    a.nav-link,
+    a.nav-link:focus,
+    a.nav-link:hover {
+      color: $rebased;
+    }
+  }
+  li.warning {
+    a.nav-link,
+    a.nav-link:focus,
+    a.nav-link:hover {
+      color: $warning;
+    }
+  }
+}
+.bg-shield {
+  height: 60px;
+  width: 100%;
+  position: fixed;
+  top: 125px;
+  background-color: $simple_background;
+  z-index: 1;
+}
+.test-tabs .nav-tabs {
+  position: fixed;
+  top: 128px;
+  z-index: 2;
+}

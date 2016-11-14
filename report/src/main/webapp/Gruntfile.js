@@ -110,6 +110,7 @@ module.exports = function (grunt) {
 		'compass': {
 			build: {
 				options: {
+					config: 'compass-config.rb',
 					//sassDir: config.assets.base + config.assets.sass,
 					sassDir: 'assets/sass',
 					//cssDir: config.assets.base + config.assets.css,
@@ -166,7 +167,7 @@ module.exports = function (grunt) {
 		},
 		'requirejs': {
 			options: {
-				'appDir': 'app/_old_js',
+				'appDir': 'app',
 				'dir': 'build',
 				'mainConfigFile': 'app/app.config.js',
 				'uglify2': {
@@ -190,10 +191,9 @@ module.exports = function (grunt) {
 						'name': 'common',
 						'include': ['jquery',
 							'lodash',
-							'bootstrap',
-							'app/_old_js/controllers/suite'
-						],
-					},]
+							'bootstrap'
+						]
+					}]
 				}
 			}
 		},

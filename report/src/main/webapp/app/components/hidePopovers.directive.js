@@ -16,25 +16,18 @@
  * limitations under the License.
  */
 define(['angularAMD'], function (angularAMD) {
-  'use strict';
-  angularAMD.filter('aetUrlStatusFilter', UrlStatusFilter);
+	'use strict';
+	angularAMD.directive('aetHidePopovers', function () {
+		return {
+			restrict: 'A',
+			link: function (scope, $element) {
+				$element.on('click', function (e) {
+					if (!$(e.target).parents().hasClass('pop') && !$(e.target).parents().hasClass('popover')) {
+						$('[data-toggle="popover"], .pop').popover('hide');
+					}
+				});
+			}
+		};
+	});
 
-  /**
-   * Filters collection of urls.
-   * Return only those urls that have status matching applied status filter
-   * (or all when no filter applied).
-   */
-  function UrlStatusFilter() {
-    return filter;  
-
-    function filter(urls, statuses) {
-      var filteredUrls = urls;
-      if (statuses && statuses.length > 0) {
-        filteredUrls = _.filter(urls, function (url) {
-          return statuses.indexOf(url.getStatus()) > -1;
-        });
-      }
-      return filteredUrls;
-    }
-  }
 });

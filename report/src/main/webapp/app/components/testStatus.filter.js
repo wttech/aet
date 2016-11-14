@@ -17,24 +17,27 @@
  */
 define(['angularAMD'], function (angularAMD) {
   'use strict';
-  angularAMD.filter('aetUrlStatusFilter', UrlStatusFilter);
+  angularAMD.filter('aetTestStatusFilter', TestUrlsStatusFilter);
 
   /**
-   * Filters collection of urls.
-   * Return only those urls that have status matching applied status filter
-   * (or all when no filter applied).
+   * Filters collection of tests.
+   * Returns only those tests that have at least one url with status matching applied status filter
+   * (or all tests no filter applied).
    */
-  function UrlStatusFilter() {
-    return filter;  
+  function TestUrlsStatusFilter() {
+    return filter;
 
-    function filter(urls, statuses) {
-      var filteredUrls = urls;
+    function filter(tests, statuses) {
+      var filteredTests = tests;
       if (statuses && statuses.length > 0) {
-        filteredUrls = _.filter(urls, function (url) {
-          return statuses.indexOf(url.getStatus()) > -1;
+        filteredTests = _.filter(tests, function (test) {
+          return _.some(test.urls, function (url) {
+            return statuses.indexOf(url.getStatus()) > -1;
+          });
         });
       }
-      return filteredUrls;
+      return filteredTests;
     }
   }
 });
+
