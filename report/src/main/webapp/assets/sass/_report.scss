@@ -322,3 +322,21 @@ ul {
   top: 128px;
   z-index: 2;
 }
+
+// cookies report
+
+.failed {
+  .cookie-test {
+    font-weight: bold;
+    display: inline !important;
+    color: $failed !important;
+  }
+}
+
+.passed {
+  .cookie-test {
+    font-weight: bold;
+    display: inline !important;
+    color: $passed !important;
+  }
+}
