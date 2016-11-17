@@ -21,7 +21,7 @@ define(['angularAMD'], function (angularAMD) {
     return {
       getEndpoint: function () {
         var config = {
-          'getUrl': 'https://karaf-integration-aet.cognifide.com/api/'
+          'getUrl': '/api/'
         };
         return config;
       }
