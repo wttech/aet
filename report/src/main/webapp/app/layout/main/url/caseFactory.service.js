@@ -88,9 +88,10 @@ define(['angularAMD', 'artifactsService'], function (angularAMD) {
         artifactsService.getArtifact(caseModel.comparator.stepResult.artifactId)
             .then(function (data) {
               caseModel.result = data;
-            }).catch(function (e) {
+            })
+            .catch(function (e) {
               console.log(e);
-        });
+            });
       }
     }
 
@@ -124,7 +125,6 @@ define(['angularAMD', 'artifactsService'], function (angularAMD) {
       caseModel.step = step;
 
       update();
-      
       getResultArtifact();
       initializeCollectorResultArtifact();
     }
@@ -166,15 +166,16 @@ define(['angularAMD', 'artifactsService'], function (angularAMD) {
       //FIXME this should be handled another way, currently because of a wrong content type of source artifact
       // there is error with parsing (says json instead html). There is no need to download source artifact,
       // it is not presented on the report.
-      var notSourceCollector = caseModel.step.type !== "source";
+      var notSourceCollector = caseModel.step.type !== 'source';
       if (collectorHasResult && notSourceCollector) {
         console.log('Getting: ', caseModel.step.stepResult.artifactId);
         artifactsService.getArtifact(caseModel.step.stepResult.artifactId)
             .then(function (data) {
               caseModel.collectorResult = data;
-            }).catch(function (e) {
+            })
+            .catch(function (e) {
               console.log(e);
-        });
+            });
       }
     }
 
