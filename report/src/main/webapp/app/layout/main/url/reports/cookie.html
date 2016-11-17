@@ -67,20 +67,13 @@
       </tr>
       </tbody>
     </table>
-
   </div>
 
-
-  <div
-      ng-if="(case.result.cookieName || case.result.name) && res.cookie.cookie[0].status == 'FAILED'">
-    Cookie with name: '{{case.result.cookieName}}' not found
-    <span
-        ng-if="case.result.cookieValue">' and value: '{{case.result.cookieValue}}' not found </span>
-  </div>
-  <div
-      ng-if="(case.result.cookieName || case.result.name) && res.cookie.cookie[0].status != 'FAILED'">
-    Cookie with name: '{{case.result.cookieName}}' found
-    <span ng-if="case.result.cookieValue">' and value: '{{case.result.cookieValue}}' found </span>
+  <div ng-if="case.comparator.parameters.action == 'test'"
+       ng-class="case.comparator.stepResult.status == 'FAILED' ? 'failed' : 'passed'">
+    Cookie with name: <span class="cookie-test">{{case.result.cookieName}}</span>
+    <span ng-if="case.result.cookieValue"> and value: <span class="cookie-test">{{case.result.cookieValue}}</span></span>
+    <span ng-if="case.comparator.stepResult.status == 'FAILED'">not</span> found
   </div>
 
   <div
