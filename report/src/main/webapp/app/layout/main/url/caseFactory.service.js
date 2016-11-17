@@ -88,9 +88,10 @@ define(['angularAMD', 'artifactsService'], function (angularAMD) {
         artifactsService.getArtifact(caseModel.comparator.stepResult.artifactId)
             .then(function (data) {
               caseModel.result = data;
-            }).catch(function (e) {
+            })
+            .catch(function (e) {
               console.log(e);
-        });
+            });
       }
     }
 
@@ -124,7 +125,6 @@ define(['angularAMD', 'artifactsService'], function (angularAMD) {
       caseModel.step = step;
 
       update();
-      
       getResultArtifact();
       initializeCollectorResultArtifact();
     }
@@ -162,14 +162,24 @@ define(['angularAMD', 'artifactsService'], function (angularAMD) {
     }
 
     function initializeCollectorResultArtifact() {
-      var collectorHasResult = caseModel.step.stepResult && caseModel.step.stepResult.artifactId;
+      var collectorHasResult = caseModel.step.stepResult && caseModel.step.stepResult.artifactId,
+          sourceCollector = caseModel.step.type === 'source',
+          artifactId;
+
       if (collectorHasResult) {
-        artifactsService.getArtifact(caseModel.step.stepResult.artifactId)
-            .then(function (data) {
-              caseModel.collectorResult = data;
-            }).catch(function (e) {
-          console.log(e);
-        });
+        artifactId = caseModel.step.stepResult.artifactId;
+        if (sourceCollector) {
+          caseModel.collectorResult = artifactsService.getArtifactUrl(artifactId);
+        } else {
+          console.log('Getting: ', artifactId);
+          artifactsService.getArtifact(artifactId)
+              .then(function (data) {
+                caseModel.collectorResult = data;
+              })
+              .catch(function (e) {
+                console.log(e);
+              });
+        }
       }
     }
 

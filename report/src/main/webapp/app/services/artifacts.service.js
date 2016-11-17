@@ -50,7 +50,7 @@ define(['angularAMD', 'endpointConfiguration', 'requestParametersService'], func
         deferred.resolve(data.data);
         return deferred.promise;
       }).catch(function (exception) {
-        handleFailed('Failed to load artifact!', exception);
+        handleFailed('Failed to load artifact ' + artifactId, exception);
       });
     }
 

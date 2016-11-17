@@ -42,7 +42,7 @@ import java.util.concurrent.TimeoutException;
 public class SourceCollector implements CollectorJob {
 
   public static final String NAME = "source";
-
+  private static final String CONTENT_TYPE = "text/html";
   private static final String CHAR_ENCODING = "UTF-8";
 
   private final ArtifactsDAO artifactsDAO;
@@ -72,7 +72,7 @@ public class SourceCollector implements CollectorJob {
         throw new ProcessingException("Page source is empty!");
       }
       dataInputStream = IOUtils.toInputStream(pageSource, CHAR_ENCODING);
-      String resultId = artifactsDAO.saveArtifact(properties, dataInputStream);
+      String resultId = artifactsDAO.saveArtifact(properties, dataInputStream, CONTENT_TYPE);
       stepResult = CollectorStepResult.newCollectedResult(resultId);
 
     } catch (Exception e) {
