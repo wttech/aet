@@ -42,7 +42,7 @@ import java.util.concurrent.TimeoutException;
 public class SourceCollector implements CollectorJob {
 
   public static final String NAME = "source";
-  public static final String CONTENT_TYPE = "text/html";
+  private static final String CONTENT_TYPE = "text/html";
   private static final String CHAR_ENCODING = "UTF-8";
 
   private final ArtifactsDAO artifactsDAO;
