@@ -30,7 +30,7 @@ import java.util.Arrays;
  * ImageComparison - util class for fast images comparison.
  * This class expects compared images to contain four channels: red, green, blue and alpha.
  *
- * @author Maciej Laskowski & Tomasz Misiewicz
+ * @author Maciej Laskowski and Tomasz Misiewicz
  */
 public final class ImageComparison {
 
