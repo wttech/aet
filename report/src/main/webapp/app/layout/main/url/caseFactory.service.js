@@ -162,20 +162,24 @@ define(['angularAMD', 'artifactsService'], function (angularAMD) {
     }
 
     function initializeCollectorResultArtifact() {
-      var collectorHasResult = caseModel.step.stepResult && caseModel.step.stepResult.artifactId;
-      //FIXME this should be handled another way, currently because of a wrong content type of source artifact
-      // there is error with parsing (says json instead html). There is no need to download source artifact,
-      // it is not presented on the report.
-      var notSourceCollector = caseModel.step.type !== 'source';
-      if (collectorHasResult && notSourceCollector) {
-        console.log('Getting: ', caseModel.step.stepResult.artifactId);
-        artifactsService.getArtifact(caseModel.step.stepResult.artifactId)
-            .then(function (data) {
-              caseModel.collectorResult = data;
-            })
-            .catch(function (e) {
-              console.log(e);
-            });
+      var collectorHasResult = caseModel.step.stepResult && caseModel.step.stepResult.artifactId,
+          sourceCollector = caseModel.step.type === 'source',
+          artifactId;
+
+      if (collectorHasResult) {
+        artifactId = caseModel.step.stepResult.artifactId;
+        if (sourceCollector) {
+          caseModel.collectorResult = artifactsService.getArtifactUrl(artifactId);
+        } else {
+          console.log('Getting: ', artifactId);
+          artifactsService.getArtifact(artifactId)
+              .then(function (data) {
+                caseModel.collectorResult = data;
+              })
+              .catch(function (e) {
+                console.log(e);
+              });
+        }
       }
     }
 
