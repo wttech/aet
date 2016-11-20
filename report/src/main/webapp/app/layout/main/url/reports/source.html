@@ -41,7 +41,8 @@
   <div ng-if="case.status == 'PASSED' || case.status == 'REBASED'" class="test-no-issues">
     <div>No issues found</div>
     <div>
-      <a href="{{case.collectorResult}}" target="_blank">View source</a>
+      View source:<br/>
+      <a href="{{case.collectorResult}}" target="_blank">{{case.collectorResult}}</a>
     </div>
   </div>
 
