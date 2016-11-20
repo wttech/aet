@@ -575,15 +575,6 @@
 
     <pluginManagement>
       <plugins>
-        <!--
-          whenever maven-aet-plugin is used we want to use its current version
-        -->
-        <plugin>
-          <groupId>com.cognifide.aet</groupId>
-          <artifactId>aet-maven-plugin</artifactId>
-          <version>${aet.plugin.version}</version>
-        </plugin>
-
         <!-- plugin that keep our poms in good shape -->
 
         <!-- This plugin validates maven configuration and build environment -->
