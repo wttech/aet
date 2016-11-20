@@ -118,7 +118,7 @@
     <junit.version>4.11</junit.version>
 
     <!-- use project version for aet plugin by default  -->
-    <aet.plugin.version>2.0.1-SNAPSHOT</aet.plugin.version>
+    <aet.plugin.version>${project.version}</aet.plugin.version>
 
     <!-- properties for maven uploads -->
     <target.tomcat.serverId>aet-vagrant-instance</target.tomcat.serverId>
