@@ -34,20 +34,7 @@
   <name>AET :: Integration Tests :: Test Suite</name>
   <description>AET test suites for integration (sanity) tests</description>
 
-  <properties>
-    <aet.plugin.version>${project.version}</aet.plugin.version>
-  </properties>
-
   <build>
-    <pluginManagement>
-      <plugins>
-        <plugin>
-          <groupId>com.cognifide.aet</groupId>
-          <artifactId>aet-maven-plugin</artifactId>
-          <version>${aet.plugin.version}</version>
-        </plugin>
-      </plugins>
-    </pluginManagement>
     <plugins>
       <plugin>
         <groupId>com.cognifide.aet</groupId>
