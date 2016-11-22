@@ -2,7 +2,6 @@
 
 [![Build Status](https://travis-ci.org/Cognifide/aet.svg?branch=master)](https://travis-ci.org/Cognifide/aet)
 [![Apache License, Version 2.0, January 2004](https://img.shields.io/github/license/cognifide/aet.svg?label=License)](http://www.apache.org/licenses/)
-[![Quality Gate](https://sonarqube.com/api/badges/gate?key=com.cognifide.aet:aet-root)](https://sonarqube.com/dashboard/index/com.cognifide.aet:aet-root)
 
 # Automated Exploratory Testing
 <p align="center">
