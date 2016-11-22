@@ -1,4 +1,10 @@
 language: java
 sudo: false
 jdk:
-  - oraclejdk8
+- oraclejdk8
+env:
+  global:
+    secure: bV3xF2yn0rbCc3JnSzYXhY0qDhSRJUi868rmIxxvluTaXCod2sdL/lLR7E5K/7YW5UTLL14S7qNHMMh6LgAPheIsGsIZ/hRWq/vmDWrOZB6taJXkwb+N8qWFpvEcLoDFFwcYdaaRqYRDcB4comDXb6HQxxZ9nmufGPz2HKg2546mrsy5nj1d2lhkKkIV2TkMljagthEGjPCZ6Ft2uda3VN97v2k2u0VSd44g7IiFq7ebtXtW/mEYl6lqjHssNnif1Xi6/3D9RjPTLyYXgTJE+k74f+KNtrFQ84S/N1cm85ntdC76lYSoOCggxKSDQgtj3NA5fdtUB4JkO0Tvv78O4fVVgujfzyEQt4NotFWBLJvhHkj4qGOtQdgrIKX/+nmrApqEAWLu87fkeU71inf94yrI/ozEAq52roWU5bi1v++9XjldKKgoswQVAUGWnBtxYhvFhou13jgloa+uGoN1kERDP5fJEtlApsY1hK3m8P73xTgCKb4UGXIjWbHYFmjWpAxWRhMbZL9cLZqi299PZggrcaWkyW/PVYyo4ZhjObVQSBiJ3oLWTpEen9FNBndKDmmAUw3395w7vwm3jZyag+ncLjP7Q1/AkVyb7KMGt7egHQlF+5oiZEIbYjdBIm933vN1R+ms8BnMo9+qkd+lq3oxyjJxVF+OfDWVTSax894=
+script:
+  # the following command line builds the project, runs the tests with coverage and then execute the SonarQube analysis
+  - mvn clean org.jacoco:jacoco-maven-plugin:prepare-agent install sonar:sonar -Dsonar.login=$SONAR_TOKEN -Dsonar.host.url=https://sonarqube.com
