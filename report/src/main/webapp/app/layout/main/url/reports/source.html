@@ -37,7 +37,15 @@
   </div>
 </div>
 <div class="diff-report">
-  <span ng-if="case.status == 'PASSED' || case.status == 'REBASED'" class="test-no-issues">No issues found</span>
+
+  <div ng-if="case.status == 'PASSED' || case.status == 'REBASED'" class="test-no-issues">
+    <div>No issues found</div>
+    <div>
+      View source:<br/>
+      <a href="{{case.collectorResult}}" target="_blank">{{case.collectorResult}}</a>
+    </div>
+  </div>
+
   <div ng-if="case.status == 'FAILED' || case.status == 'WARNING'">
     <div class="clearfix"></div>
     <div class="col-xs-6">

@@ -23,7 +23,7 @@
 
   <groupId>com.cognifide.aet</groupId>
   <artifactId>aet-root</artifactId>
-  <version>2.0.1-SNAPSHOT</version>
+  <version>2.0.2-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>AET</name>
@@ -116,9 +116,6 @@
     <jetty.plugin.version>9.2.10.v20150310</jetty.plugin.version>
     <mongo.driver.version>3.2.2</mongo.driver.version>
     <junit.version>4.11</junit.version>
-
-    <!-- use project version for aet plugin by default  -->
-    <aet.plugin.version>${project.version}</aet.plugin.version>
 
     <!-- properties for maven uploads -->
     <target.tomcat.serverId>aet-vagrant-instance</target.tomcat.serverId>
@@ -584,7 +581,7 @@
         <plugin>
           <groupId>com.cognifide.aet</groupId>
           <artifactId>aet-maven-plugin</artifactId>
-          <version>${aet.plugin.version}</version>
+          <version>${project.version}</version>
         </plugin>
 
         <!-- plugin that keep our poms in good shape -->
