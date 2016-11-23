@@ -55,9 +55,9 @@ public class DiffParser {
    * Generates deltas of changes using DiffUtils library. If {trimmed} all source lines are trimmed before
    * comparison in order to remove white spaces differences between html tags.
    *
-   * @param pattern
-   * @param source
-   * @param trimmedLines
+   * @param pattern        - pattern to compare
+   * @param source         - source to compare
+   * @param trimmedLines   - flag if lines should be trimmed
    * @return List of Delta changes
    */
   public List<ResultDelta> generateDiffs(String pattern, String source, boolean trimmedLines) {

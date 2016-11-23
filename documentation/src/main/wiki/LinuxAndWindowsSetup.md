@@ -28,6 +28,7 @@ Please note that full list of required tools and its versions can be found in [S
     * Install Browsermob as a Windows service
     * Check if it's working under http://localhost:9272/proxy.
 6. Install Firefox 38.6.0 ESR
+    * Choose 'Custom Install' and **do not install maintenance service** - this is very important
     * Turn off automatic updates
 7. Check the following connections between Windows and Linux:
     * MongoDB: `telnet ${LINUX_MACHINE_PRIVATE_IP} 27017`
