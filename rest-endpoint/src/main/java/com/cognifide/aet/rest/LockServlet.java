@@ -53,13 +53,13 @@ public class LockServlet extends HttpServlet {
 
   private static final String APPLICATION_JSON_CONTENT_TYPE = "application/json";
 
+  private static final Gson GSON = new Gson();
+
   @Reference
-  private HttpService httpService;
+  private transient HttpService httpService;
 
   @Reference
   private LockService lockService;
-
-  private final Gson gson = new Gson();
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
@@ -71,9 +71,9 @@ public class LockServlet extends HttpServlet {
 
     String key = getKey(req);
     if (StringUtils.isBlank(key)) {
-      resp.getWriter().write(gson.toJson(getLocks()));
+      resp.getWriter().write(GSON.toJson(getLocks()));
     } else {
-      resp.getWriter().write(gson.toJson(lockService.isLockPresent(key)));
+      resp.getWriter().write(GSON.toJson(lockService.isLockPresent(key)));
     }
     resp.flushBuffer();
   }

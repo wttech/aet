@@ -30,13 +30,14 @@ import org.apache.felix.scr.annotations.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.Serializable;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 
 @Service(LockService.class)
 @Component(label = "LockService", description = "Provides lock service", immediate = true, metatype = true, policy = ConfigurationPolicy.IGNORE)
-public class LockService {
+public class LockService implements Serializable {
 
   private static final long serialVersionUID = 101244102266582495L;
 
@@ -44,7 +45,7 @@ public class LockService {
 
   private static final int LOCK_CACHE_TIMEOUT = 20000;
 
-  private Cache<String, String> lockSet;
+  private transient Cache<String, String> lockSet;
 
   @Activate
   public void start() {

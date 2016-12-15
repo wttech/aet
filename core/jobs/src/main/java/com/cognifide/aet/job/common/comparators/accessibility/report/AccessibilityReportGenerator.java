@@ -84,7 +84,6 @@ public class AccessibilityReportGenerator {
       Iterables.removeAll(nonExcludedIssues, Lists.newArrayList(issues));
       Iterable<AccessibilityIssue> excluded = Iterables.filter(excludedIssues, new IssueTypePredicate(type));
       Iterables.removeAll(excludedIssues, Lists.newArrayList(excluded));
-      result = 0;
     } else {
       result = Iterables.size(issues);
     }

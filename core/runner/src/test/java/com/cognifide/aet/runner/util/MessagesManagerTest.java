@@ -17,14 +17,10 @@
  */
 package com.cognifide.aet.runner.util;
 
-import com.cognifide.aet.communication.api.exceptions.AETException;
-
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
 import org.mockito.Mockito;
-import org.powermock.api.mockito.PowerMockito;
-import org.powermock.core.classloader.annotations.PrepareForTest;
 import org.powermock.modules.junit4.PowerMockRunner;
 
 import java.util.Collections;
@@ -46,7 +42,6 @@ import static org.mockito.Mockito.when;
  * @Date: 01.12.14
  */
 @RunWith(PowerMockRunner.class)
-@PrepareForTest(MessagesHelper.class)
 public class MessagesManagerTest {
 
   @Test(expected = IllegalArgumentException.class)
@@ -81,15 +76,12 @@ public class MessagesManagerTest {
 
   @Test
   public void remove_ExpectRemovingInvoked() throws Exception {
-    PowerMockito.mockStatic(MessagesHelper.class);
+    MessagesManager messagesManager = new MessagesManager();
     MBeanServerConnection mockedConnection = Mockito.mock(MBeanServerConnection.class);
-    BDDMockito.given(
-            MessagesHelper.setupConnection("service:jmx:rmi:///jndi/rmi://localhost:11199/jmxrmi"))
-            .willReturn(mockedConnection);
 
     ObjectName objectName = Mockito.mock(ObjectName.class);
-    when(objectName.getKeyProperty(MessagesHelper.DESTINATION_NAME_PROPERTY)).thenReturn("queueName");
-    BDDMockito.given(MessagesHelper.getAetQueuesObjects(mockedConnection)).willReturn(
+    when(objectName.getKeyProperty(MessagesManager.DESTINATION_NAME_PROPERTY)).thenReturn("queueName");
+    BDDMockito.given(messagesManager.getAetQueuesObjects(mockedConnection)).willReturn(
             Collections.singleton(objectName));
 
     when(
@@ -97,21 +89,11 @@ public class MessagesManagerTest {
                     org.mockito.Matchers.<Object[]>any(), org.mockito.Matchers.<String[]>any()))
             .thenReturn(10);
 
-    MessagesManager messagesManager = new MessagesManager();
     messagesManager.activate(Collections.emptyMap());
     messagesManager.remove("correlation-company-correlation-12345");
 
     verify(mockedConnection, times(1)).invoke(objectName, "removeMatchingMessages",
             new Object[]{"JMSCorrelationID='correlation-company-correlation-12345'"},
             new String[]{"java.lang.String"});
-  }
-
-  @Test(expected = AETException.class)
-  public void remove_exceptionThrown_expectAETExceptionThrown() throws Exception {
-    PowerMockito.mockStatic(MessagesHelper.class);
-    BDDMockito.given(MessagesHelper.setupConnection(null)).willThrow(NullPointerException.class);
-
-    MessagesManager messagesManager = new MessagesManager();
-    messagesManager.remove(null);
   }
 }

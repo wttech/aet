@@ -34,7 +34,7 @@ public class Operation implements Serializable {
 
   protected final String type;
 
-  protected final Map<String, String> parameters = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+  protected transient final Map<String, String> parameters = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
   public Operation(String type) {
     this.type = type;
@@ -53,7 +53,7 @@ public class Operation implements Serializable {
   }
 
   public Map<String, String> getParameters() {
-    return parameters != null ? ImmutableMap.copyOf(parameters) : Collections.<String, String>emptyMap();
+    return parameters.isEmpty() ? Collections.<String, String>emptyMap() : ImmutableMap.copyOf(parameters);
   }
 
   @Override

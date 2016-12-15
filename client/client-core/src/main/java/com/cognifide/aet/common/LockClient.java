@@ -63,14 +63,15 @@ public class LockClient implements Runnable {
 
   @Override
   public void run() {
-    while (true) {
+    boolean running = true;
+    while (running) {
       try {
         Thread.sleep(BEAT_INTERVAL);
         Request.Put(url + LOCK_PATH + "/" + key).bodyForm(Form.form().add(VALUE_PARAM_NAME, correlationId).build()).execute().discardContent();
       } catch (Exception e) {
+        running = false;
         runnerTerminator.update();
         Logger.error(this, e.getMessage());
-        break;
       }
     }
   }

@@ -20,11 +20,12 @@ package com.cognifide.aet.vs;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.Date;
 import java.util.Set;
 
-public interface ArtifactsDAO {
+public interface ArtifactsDAO extends Serializable {
 
   /**
    * Saves data into gridfs files collection with provided content type

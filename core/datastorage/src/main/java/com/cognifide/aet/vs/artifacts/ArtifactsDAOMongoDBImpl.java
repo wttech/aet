@@ -66,7 +66,7 @@ public class ArtifactsDAOMongoDBImpl implements ArtifactsDAO {
   private static final Gson GSON = new Gson();
 
   @Reference
-  private MongoDBClient client;
+  private transient MongoDBClient client;
 
   @Override
   public String saveArtifact(DBKey dbKey, InputStream data, String contentType) {
