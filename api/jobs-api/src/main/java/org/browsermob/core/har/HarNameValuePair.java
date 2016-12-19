@@ -34,6 +34,7 @@ public final class HarNameValuePair {
   private String value;
 
   public HarNameValuePair() {
+    // default constructor
   }
 
   public HarNameValuePair(String name, String value) {
@@ -58,16 +59,27 @@ public final class HarNameValuePair {
   }
 
   // TODO: Perhaps these should be done the right way
-  public boolean equals(Object o) {
-    HarNameValuePair obj = (HarNameValuePair) o;
+  @Override
+  public boolean equals(Object other) {
+    if (other == null) {
+      return false;
+    }
+    if (other == this) {
+      return true;
+    }
+    if (!(other instanceof HarNameValuePair)) {
+      return false;
+    }
+    HarNameValuePair obj = (HarNameValuePair) other;
     return obj.getName().equals(this.getName()) && obj.getValue().equals(this.getValue());
-
   }
 
+  @Override
   public int hashCode() {
     return toString().hashCode();
   }
 
+  @Override
   public String toString() {
     return name + "=" + value;
   }

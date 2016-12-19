@@ -44,12 +44,9 @@ import java.net.SocketException;
  */
 class AetSocketLock extends SocketLock {
 
-
   private static final int DELAY_BETWEEN_SOCKET_CHECKS = 600;
 
   private static final int ADDITIONAL_TIMEOUT_IN_MILLIS = 4000;
-
-  private static final int DEFAULT_PORT = 7055;
 
   private static final Object syncObject = new Object();
 
@@ -76,7 +73,7 @@ class AetSocketLock extends SocketLock {
       // Attempt to acquire the lock until something goes wrong or we run out of time.
       do {
         try {
-          if (isLockFree(address)) {
+          if (isLockOnInetSocketAddressFree(address)) {
             return;
           }
           // Randomness or retry! Something from my past (Paul H) :
@@ -110,7 +107,7 @@ class AetSocketLock extends SocketLock {
    * @return true if the lock is locked; false if it is not
    * @throws IOException if something goes catastrophically wrong with the socket
    */
-  private boolean isLockFree(InetSocketAddress address) throws IOException {
+  private boolean isLockOnInetSocketAddressFree(InetSocketAddress address) throws IOException {
     try {
       lockSocket.bind(address);
       return true;
