@@ -19,7 +19,7 @@ package com.cognifide.aet.runner.util;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.BDDMockito;
+import org.mockito.Matchers;
 import org.mockito.Mockito;
 import org.powermock.modules.junit4.PowerMockRunner;
 
@@ -27,6 +27,7 @@ import java.util.Collections;
 
 import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
+import javax.management.remote.JMXConnector;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -34,6 +35,7 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.doReturn;
 
 /**
  * QueuesUtilTest
@@ -77,15 +79,20 @@ public class MessagesManagerTest {
   @Test
   public void remove_ExpectRemovingInvoked() throws Exception {
     MessagesManager messagesManager = new MessagesManager();
+    messagesManager = Mockito.spy(messagesManager);
+
     MBeanServerConnection mockedConnection = Mockito.mock(MBeanServerConnection.class);
+    JMXConnector mockedJmxConnector = Mockito.mock(JMXConnector .class);
+    when(mockedJmxConnector.getMBeanServerConnection()).thenReturn(mockedConnection);
+
+    doReturn(mockedJmxConnector).when(messagesManager).getJmxConnection(Mockito.anyString());
 
     ObjectName objectName = Mockito.mock(ObjectName.class);
-    when(objectName.getKeyProperty(MessagesManager.DESTINATION_NAME_PROPERTY)).thenReturn("queueName");
-    BDDMockito.given(messagesManager.getAetQueuesObjects(mockedConnection)).willReturn(
-            Collections.singleton(objectName));
+    when(objectName.getKeyProperty(MessagesManager.DESTINATION_NAME_PROPERTY)).thenReturn("AET.queueName");
 
-    when(
-            mockedConnection.invoke(org.mockito.Matchers.<ObjectName>any(), anyString(),
+    when(mockedConnection.getAttribute(Matchers.<ObjectName>any(), Matchers.anyString())).thenReturn(new ObjectName[] {objectName});
+
+    when(mockedConnection.invoke(org.mockito.Matchers.<ObjectName>any(), anyString(),
                     org.mockito.Matchers.<Object[]>any(), org.mockito.Matchers.<String[]>any()))
             .thenReturn(10);
 

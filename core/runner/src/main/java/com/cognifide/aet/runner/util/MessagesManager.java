@@ -85,8 +85,7 @@ public class MessagesManager {
 
     JMXConnector jmxc = null;
     try {
-      JMXServiceURL url = new JMXServiceURL(jmxUrl);
-      jmxc = JMXConnectorFactory.connect(url);
+      jmxc = getJmxConnection(jmxUrl);
       MBeanServerConnection connection = jmxc.getMBeanServerConnection();
       for (ObjectName queue : getAetQueuesObjects(connection)) {
         String queueName = queue.getKeyProperty(DESTINATION_NAME_PROPERTY);
@@ -139,5 +138,10 @@ public class MessagesManager {
       }
     }
     return queues;
+  }
+
+  protected JMXConnector getJmxConnection(String jmxUrl) throws IOException {
+    JMXServiceURL url = new JMXServiceURL(jmxUrl);
+    return JMXConnectorFactory.connect(url);
   }
 }
