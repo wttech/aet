@@ -29,6 +29,8 @@
 */
 package org.browsermob.core.har;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+
 public final class HarNameValuePair {
   private String name;
   private String value;
@@ -70,7 +72,10 @@ public final class HarNameValuePair {
       return false;
     }
     HarNameValuePair obj = (HarNameValuePair) other;
-    return obj.getName().equals(this.getName()) && obj.getValue().equals(this.getValue());
+    return new EqualsBuilder()
+            .append(getName(), obj.getName())
+            .append(getValue(), obj.getValue())
+            .isEquals();
   }
 
   @Override

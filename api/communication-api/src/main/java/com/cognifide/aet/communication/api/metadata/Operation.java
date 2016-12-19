@@ -53,7 +53,7 @@ public class Operation implements Serializable {
   }
 
   public Map<String, String> getParameters() {
-    return parameters.isEmpty() ? Collections.<String, String>emptyMap() : ImmutableMap.copyOf(parameters);
+    return ImmutableMap.copyOf(parameters);
   }
 
   @Override

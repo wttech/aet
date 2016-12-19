@@ -37,6 +37,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.mockito.Mockito.doReturn;
 
+import com.cognifide.aet.communication.api.exceptions.AETException;
+
 /**
  * QueuesUtilTest
  *
@@ -102,5 +104,13 @@ public class MessagesManagerTest {
     verify(mockedConnection, times(1)).invoke(objectName, "removeMatchingMessages",
             new Object[]{"JMSCorrelationID='correlation-company-correlation-12345'"},
             new String[]{"java.lang.String"});
+  }
+
+  @Test
+  public void remove_exceptionThrown_expectAETExceptionThrown() throws Exception {
+    MessagesManager messagesManager = new MessagesManager();
+    messagesManager = Mockito.spy(messagesManager);
+    Mockito.doThrow(NullPointerException.class).when(messagesManager).getJmxConnection(null);
+    Mockito.doThrow(AETException.class).when(messagesManager).remove(null);
   }
 }
