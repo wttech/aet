@@ -58,7 +58,6 @@ public final class HarNameValuePair {
     this.value = value;
   }
 
-  // TODO: Perhaps these should be done the right way
   @Override
   public boolean equals(Object other) {
     if (other == null) {
