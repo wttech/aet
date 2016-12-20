@@ -25,7 +25,7 @@ import com.google.gson.Gson;
 public class SerializingOperationTest {
 
   @Test
-  public void serialization() throws Exception {
+  public void whenObjectIsSerializedAndDeserialized_expectedNotEmptyParametersList() throws Exception {
     Operation operationInput = new Operation("test");
     operationInput.addParameter("key-test", "value-test");
     Assert.assertFalse(operationInput.getParameters().isEmpty());
@@ -40,7 +40,7 @@ public class SerializingOperationTest {
   }
 
   @Test
-  public void deserialize_whenThereIsNoParameters_expectedEmptyList() throws Exception {
+  public void whenThereIsNoParametersInDeserializedJson_expectedEmptyParametersList() throws Exception {
     Gson gson = new Gson();
     String json = "{\"type\":\"test\"}";
     Operation operationOutput = gson.fromJson(json, Operation.class);
