@@ -83,9 +83,7 @@ public class MessagesManager {
     Object[] removeSelector = {JMS_CORRELATION_ID + "='" + correlationID + "'"};
     String[] signature = {STRING_SIGNATURE};
 
-    JMXConnector jmxc = null;
-    try {
-      jmxc = getJmxConnection(jmxUrl);
+    try (JMXConnector jmxc = getJmxConnection(jmxUrl)) {
       MBeanServerConnection connection = jmxc.getMBeanServerConnection();
       for (ObjectName queue : getAetQueuesObjects(connection)) {
         String queueName = queue.getKeyProperty(DESTINATION_NAME_PROPERTY);
@@ -96,14 +94,6 @@ public class MessagesManager {
     } catch (Exception e) {
       throw new AETException(String.format("Error while removing messages with correlationID: %s",
               correlationID), e);
-    } finally {
-      if (jmxc != null) {
-        try {
-          jmxc.close();
-        } catch (IOException ioe) {
-          LOGGER.debug(String.format("JMX Connection with '%s' cannot be closed!", jmxUrl), ioe);
-        }
-      }
     }
   }
 

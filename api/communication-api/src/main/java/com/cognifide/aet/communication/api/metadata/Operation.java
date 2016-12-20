@@ -21,7 +21,6 @@ import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableMap;
 
 import java.io.Serializable;
-import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -34,7 +33,7 @@ public class Operation implements Serializable {
 
   protected final String type;
 
-  protected transient final Map<String, String> parameters = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
+  protected final Map<String, String> parameters = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
 
   public Operation(String type) {
     this.type = type;
