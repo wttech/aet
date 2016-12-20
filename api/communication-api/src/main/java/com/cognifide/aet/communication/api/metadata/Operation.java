@@ -21,6 +21,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableMap;
 
 import java.io.Serializable;
+import java.util.Collections;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -52,7 +53,7 @@ public class Operation implements Serializable {
   }
 
   public Map<String, String> getParameters() {
-    return ImmutableMap.copyOf(parameters);
+    return parameters != null ? ImmutableMap.copyOf(parameters) : Collections.<String, String>emptyMap();
   }
 
   @Override
