@@ -55,7 +55,7 @@ public class StartMetadataCleanupProcessor implements Processor {
   };
 
   @Reference
-  private MongoDBClient client;
+  private transient MongoDBClient client;
 
   @Override
   public void process(Exchange exchange) throws Exception {

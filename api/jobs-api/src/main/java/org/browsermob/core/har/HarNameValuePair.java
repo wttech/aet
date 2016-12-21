@@ -29,11 +29,14 @@
 */
 package org.browsermob.core.har;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+
 public final class HarNameValuePair {
   private String name;
   private String value;
 
   public HarNameValuePair() {
+    // default constructor
   }
 
   public HarNameValuePair(String name, String value) {
@@ -57,17 +60,30 @@ public final class HarNameValuePair {
     this.value = value;
   }
 
-  // TODO: Perhaps these should be done the right way
-  public boolean equals(Object o) {
-    HarNameValuePair obj = (HarNameValuePair) o;
-    return obj.getName().equals(this.getName()) && obj.getValue().equals(this.getValue());
-
+  @Override
+  public boolean equals(Object other) {
+    if (other == null) {
+      return false;
+    }
+    if (other == this) {
+      return true;
+    }
+    if (!(other instanceof HarNameValuePair)) {
+      return false;
+    }
+    HarNameValuePair obj = (HarNameValuePair) other;
+    return new EqualsBuilder()
+            .append(getName(), obj.getName())
+            .append(getValue(), obj.getValue())
+            .isEquals();
   }
 
+  @Override
   public int hashCode() {
     return toString().hashCode();
   }
 
+  @Override
   public String toString() {
     return name + "=" + value;
   }

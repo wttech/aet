@@ -75,7 +75,7 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
   private static final String CORRELATION_ID_PARAM_NAME = "correlationId";
 
   @Reference
-  private MongoDBClient client;
+  private transient MongoDBClient client;
 
   @Override
   public Suite saveSuite(Suite suite) throws StorageException, ValidatorException {

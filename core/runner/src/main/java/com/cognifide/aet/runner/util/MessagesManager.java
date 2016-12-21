@@ -28,10 +28,16 @@ import org.apache.sling.commons.osgi.PropertiesUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.Set;
 
 import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
+import javax.management.remote.JMXConnector;
+import javax.management.remote.JMXConnectorFactory;
+import javax.management.remote.JMXServiceURL;
 
 /**
  * Created by tomasz.misiewicz on 2015-01-13.
@@ -55,6 +61,14 @@ public class MessagesManager {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(MessagesManager.class);
 
+  private static final String BROKER_OBJECT_NAME = "org.apache.activemq:type=Broker,brokerName=localhost";
+
+  private static final String QUEUES_ATTRIBUTE = "Queues";
+
+  private static final String AET_QUEUE_DOMAIN = "AET.";
+
+  static final String DESTINATION_NAME_PROPERTY = "destinationName";
+
   @Activate
   public void activate(Map properties) {
     jmxUrl = PropertiesUtil.toString(properties.get(JMX_URL_PROPERTY_NAME), DEFAULT_JMX_URL);
@@ -69,10 +83,10 @@ public class MessagesManager {
     Object[] removeSelector = {JMS_CORRELATION_ID + "='" + correlationID + "'"};
     String[] signature = {STRING_SIGNATURE};
 
-    try {
-      MBeanServerConnection connection = MessagesHelper.setupConnection(jmxUrl);
-      for (ObjectName queue : MessagesHelper.getAetQueuesObjects(connection)) {
-        String queueName = queue.getKeyProperty(MessagesHelper.DESTINATION_NAME_PROPERTY);
+    try (JMXConnector jmxc = getJmxConnection(jmxUrl)) {
+      MBeanServerConnection connection = jmxc.getMBeanServerConnection();
+      for (ObjectName queue : getAetQueuesObjects(connection)) {
+        String queueName = queue.getKeyProperty(DESTINATION_NAME_PROPERTY);
         int deletedMessagesNumber = (Integer) connection.invoke(queue, REMOVE_OPERATION_NAME,
                 removeSelector, signature);
         LOGGER.debug("Deleted: {} jmsMessages from: {} queue", deletedMessagesNumber, queueName);
@@ -87,10 +101,37 @@ public class MessagesManager {
     if (StringUtils.isBlank(name)) {
       throw new IllegalArgumentException("Queue name can't be null or empty string!");
     }
-    return MessagesHelper.AET_QUEUE_DOMAIN + name;
+    return AET_QUEUE_DOMAIN + name;
   }
 
   protected String getJmxUrl() {
     return jmxUrl;
+  }
+
+  protected Set<ObjectName> getAetQueuesObjects(MBeanServerConnection connection) throws AETException {
+    ObjectName[] queues;
+    try {
+      ObjectName broker = new ObjectName(BROKER_OBJECT_NAME);
+      connection.getMBeanInfo(broker);
+      queues = (ObjectName[]) connection.getAttribute(broker, QUEUES_ATTRIBUTE);
+    } catch (Exception e) {
+      throw new AETException("Exception while getting AET Queues.", e);
+    }
+    return filter(queues);
+  }
+
+  private Set<ObjectName> filter(ObjectName[] queuesObjects) {
+    Set<ObjectName> queues = new HashSet<>();
+    for (ObjectName queueObject : queuesObjects) {
+      if (queueObject.getKeyProperty(DESTINATION_NAME_PROPERTY).startsWith(AET_QUEUE_DOMAIN)) {
+        queues.add(queueObject);
+      }
+    }
+    return queues;
+  }
+
+  protected JMXConnector getJmxConnection(String jmxUrl) throws IOException {
+    JMXServiceURL url = new JMXServiceURL(jmxUrl);
+    return JMXConnectorFactory.connect(url);
   }
 }

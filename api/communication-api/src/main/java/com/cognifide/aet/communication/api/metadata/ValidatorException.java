@@ -35,7 +35,7 @@ public class ValidatorException extends Exception {
             }
           };
 
-  private final Set<ConstraintViolation> issues;
+  private transient final Set<ConstraintViolation> issues;
 
   @SuppressWarnings("unchecked")
   public ValidatorException(String message, Set issues) {
