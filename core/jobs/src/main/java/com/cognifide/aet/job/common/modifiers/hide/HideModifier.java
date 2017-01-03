@@ -18,25 +18,21 @@
 package com.cognifide.aet.job.common.modifiers.hide;
 
 import com.cognifide.aet.communication.api.metadata.CollectorStepResult;
-import com.cognifide.aet.job.api.ParametersValidator;
 import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 
+import com.cognifide.aet.job.common.modifiers.WebElementsLocatorParams;
 import org.apache.commons.lang3.BooleanUtils;
-import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
+import org.openqa.selenium.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Map;
 
-public class HideModifier implements CollectorJob {
+public class HideModifier extends WebElementsLocatorParams implements CollectorJob {
 
   public static final String NAME = "hide";
 
@@ -50,13 +46,9 @@ public class HideModifier implements CollectorJob {
 
   private static final String VISIBILITY_FALSE_SCRIPT = "arguments[0].style.visibility='hidden'";
 
-  private static final String XPATH_PARAM = "xpath";
-
   private final WebDriver webDriver;
 
   private final CollectorProperties properties;
-
-  private String xpath;
 
   private boolean leaveBlankSpace;
 
@@ -68,22 +60,20 @@ public class HideModifier implements CollectorJob {
   @Override
   public CollectorStepResult collect() throws ProcessingException {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Hiding element for xpath: {} on page: {} with leaveBlankSpace: {}. url: {}",
-              xpath, webDriver.getCurrentUrl(), leaveBlankSpace, properties.getUrl(),
+      LOG.debug("Hiding element for {}: {} on page: {} with leaveBlankSpace: {}. url: {}",
+              getSelectorType(), getSelectorValue(), webDriver.getCurrentUrl(), leaveBlankSpace, properties.getUrl(),
               properties.getUrl());
     }
-    return hideElement(webDriver, xpath);
+    return hideElement(getLocator());
   }
 
   @Override
   public void setParameters(Map<String, String> params) throws ParametersException {
-    xpath = params.get(XPATH_PARAM);
+    setElementParams(params);
     leaveBlankSpace = BooleanUtils.toBooleanDefaultIfNull(
-            BooleanUtils.toBooleanObject(params.get(LEAVE_BLANK_SPACE_PARAM)), LEAVE_BLANK_SPACE_DEFAULT);
-    ParametersValidator.checkNotBlank(xpath, "xpath parameter is mandatory");
-  }
+            BooleanUtils.toBooleanObject(params.get(LEAVE_BLANK_SPACE_PARAM)), LEAVE_BLANK_SPACE_DEFAULT);}
 
-  public CollectorStepResult hideElement(WebDriver driver, String xpath) throws ProcessingException {
+  public CollectorStepResult hideElement(By locator) throws ProcessingException {
     CollectorStepResult result;
     try {
       String script;
@@ -92,17 +82,18 @@ public class HideModifier implements CollectorJob {
       } else {
         script = DISPLAY_NONE_SCRIPT;
       }
-      List<WebElement> webElements = driver.findElements(By.xpath(xpath));
+
+      List<WebElement> webElements=webDriver.findElements(locator);
       for (WebElement element : webElements) {
-        ((JavascriptExecutor) driver).executeScript(script, element);
+        ((JavascriptExecutor) webDriver).executeScript(script, element);
       }
       result = CollectorStepResult.newModifierResult();
     } catch (NoSuchElementException e) {
-      final String message = String.format("Error while hiding element '%s'. %s", xpath, e.getMessage());
+      final String message = String.format("Error while hiding element '%s'. %s", getSelectorValue(), e.getMessage());
       result = CollectorStepResult.newProcessingErrorResult(message);
-      LOG.warn("Error while trying to find element '{}'", xpath, e);
+      LOG.warn("Error while trying to find element '{}'", getSelectorValue(), e);
     } catch (Exception e) {
-      throw new ProcessingException("Can't hide element: " + xpath, e);
+      throw new ProcessingException("Can't hide element by " + getSelectorType() + ": " + getSelectorValue(), e);
     }
     return result;
   }

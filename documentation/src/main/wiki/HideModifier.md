@@ -12,7 +12,8 @@ Module name: **hide**
 
 | Parameter | Value | Description | Mandatory |
 | --------- | ----- | ----------- | --------- |
-| `xpath` | xpath_to_element | Xpath to element(s) to hide | yes |
+| `xpath` | xpath_to_element | Xpath to element(s) to hide | xpath or css |
+| `css` | css_selector_to_element | css selector to element(s) to hide | xpath or css |
 | `leaveBlankSpace` | boolean | Defines if element(s) should be invisible (effect as using `display=none`) or should be not displayed (effect as using `visibility=hidden`). When set to `true`, blank and transparent space is left in place of the hidden element, otherwise, element is completely removed from the view. When not defined, hide modifier behaves as if `leaveBlankSpace` property was set to `true`. | no |
 
 ##### Example Usage
@@ -25,7 +26,7 @@ Module name: **hide**
             <open />          
             ...
             <hide xpath="//*[@id='logo']" />
-            <hide xpath="//*[@id='primaryNavMenu']/li[2]/a/div" />            
+            <hide css="#logo > a" />            
             ...
             <screen width="1200" height="760" />
             ...

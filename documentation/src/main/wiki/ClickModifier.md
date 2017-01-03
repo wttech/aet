@@ -11,7 +11,8 @@ Module name: **click**
 ##### Parameters
 | Parameter | Default value | Description | Mandatory |
 | --------- | ------------- | ----------- | --------- |
-| `xpath` | | xpath of the element to be clicked | yes |
+| `xpath` | | xpath of the element to be clicked        | yes |
+| `css`   | | css selector of the element to be clicked | yes |
 | `timeout` | | The timeout for the element to appear, in miliseconds. The max value of this parameter is 15000 miliseconds (15 seconds). | yes |
 
 ##### Example Usage
@@ -24,6 +25,7 @@ Module name: **click**
             <open />
             ...
             <click xpath="//*[@id='header_0_container1_0_pRow']/div[1]/div/div/a/img" timeout="3000" />
+            <click css="#logo > a" timeout="1000" />
             <sleep duration="2000" />
             ...
             <screen width="1280" height="800" name="desktop" />

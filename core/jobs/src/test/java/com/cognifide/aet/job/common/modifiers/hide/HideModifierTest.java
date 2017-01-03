@@ -40,8 +40,10 @@ import static org.mockito.Mockito.when;
 public class HideModifierTest {
 
   private static final String PARAM_XPATH = "xpath";
+  private static final String PARAM_CSS = "css";
 
   private static final String PARAM_XPATH_VALUE = "//*[@id='toRemove']";
+  private static final String PARAM_CSS_VALUE = "@logo > a";
 
   private static final String URL = "http://www.cognifide.com";
 
@@ -70,6 +72,32 @@ public class HideModifierTest {
     tested.setParameters(params);
   }
 
+  @Test
+  public void setParameters_CssIsValid_ValidationPassedSuccessfuly() throws ParametersException {
+    when(params.containsKey(PARAM_CSS)).thenReturn(true);
+    when(params.get(PARAM_CSS)).thenReturn(PARAM_CSS_VALUE);
+    when(properties.getUrl()).thenReturn(URL);
+    tested.setParameters(params);
+  }
+
+  @Test(expected = ParametersException.class)
+  public void setParameters_CssAndXpathArePassed_ValidationPassedUnsuccessfuly() throws ParametersException {
+    when(params.containsKey(PARAM_CSS)).thenReturn(true);
+    when(params.get(PARAM_CSS)).thenReturn(PARAM_CSS_VALUE);
+
+    when(params.containsKey(PARAM_XPATH)).thenReturn(true);
+    when(params.get(PARAM_XPATH)).thenReturn(PARAM_XPATH_VALUE);
+
+    when(properties.getUrl()).thenReturn(URL);
+    tested.setParameters(params);
+  }
+
+  @Test(expected = ParametersException.class)
+  public void setParameters_CssAndXpathAreNotPassed_ValidationPassedUnsuccessfuly() throws ParametersException {
+    when(properties.getUrl()).thenReturn(URL);
+    tested.setParameters(params);
+  }
+
   @Test(expected = ParametersException.class)
   public void setParameters_XPathIsInvalid_ExceptionIsThrown() throws ParametersException {
     tested.setParameters(params);
@@ -83,5 +111,15 @@ public class HideModifierTest {
     tested.setParameters(params);
     tested.collect();
     verify(webDriver, times(1)).findElements(By.xpath(PARAM_XPATH_VALUE));
+  }
+
+  @Test
+  public void hideElement_ValidCssIsProvided_WebDriverFindElementsMethodIsCalledOnce()
+          throws ProcessingException, ParametersException {
+    when(params.containsKey(PARAM_CSS)).thenReturn(true);
+    when(params.get(PARAM_CSS)).thenReturn(PARAM_CSS_VALUE);
+    tested.setParameters(params);
+    tested.collect();
+    verify(webDriver, times(1)).findElements(By.cssSelector(PARAM_CSS_VALUE));
   }
 }

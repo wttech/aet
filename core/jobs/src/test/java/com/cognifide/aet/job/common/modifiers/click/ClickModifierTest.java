@@ -1,14 +1,14 @@
 /**
  * Automated Exploratory Tests
- *
+ * <p>
  * Copyright (C) 2013 Cognifide Limited
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -19,8 +19,6 @@ package com.cognifide.aet.job.common.modifiers.click;
 
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
-import com.cognifide.aet.validation.ValidationResultBuilder;
-
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,91 +31,93 @@ import org.openqa.selenium.WebElement;
 
 import java.util.Map;
 
-import static org.mockito.Mockito.anyString;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ClickModifierTest {
 
-  private static final String PARAM_XPATH = "xpath";
+    private static final String PARAM_XPATH = "xpath";
 
-  private static final String PARAM_TIMEOUT = "timeout";
+    private static final String PARAM_CSS = "css";
 
-  private static final String PARAM_XPATH_VALUE = "//*[@id='toClick']";
+    private static final String PARAM_TIMEOUT = "timeout";
 
-  private static final String PARAM_TIMEOUT_VALUE = "5";
+    private static final String PARAM_XPATH_VALUE = "//*[@id='toClick']";
 
-  @Mock
-  private WebDriver webDriver;
+    private static final String PARAM_CSS_VALUE = "#hlogo > a";
 
-  @InjectMocks
-  private ClickModifier tested;
+    private static final String PARAM_TIMEOUT_VALUE = "5";
 
-  @Mock
-  private Map<String, String> params;
+    @Mock
+    private WebDriver webDriver;
 
-  @Mock
-  private WebElement elementToClick;
+    @InjectMocks
+    private ClickModifier tested;
 
-  @Mock
-  private ValidationResultBuilder validationResultBuilder;
+    @Mock
+    private Map<String, String> params;
 
-  @Before
-  public void setUp() {
-    when(webDriver.findElement(By.xpath(PARAM_XPATH_VALUE))).thenReturn(elementToClick);
-  }
+    @Mock
+    private WebElement elementToClick;
 
-  public void setupParams(String timeoutValue, String xpathValue) {
-    when(params.get(PARAM_TIMEOUT)).thenReturn(timeoutValue);
-    when(params.get(PARAM_XPATH)).thenReturn(xpathValue);
-  }
 
-  @Test
-  public void setParameters_whenValidParamsAreProvided_thenValidationPassedSuccessfuly() throws ParametersException {
-    setupParams(PARAM_TIMEOUT_VALUE, PARAM_TIMEOUT_VALUE);
+    @Before
+    public void setUp() {
+        when(webDriver.findElement(By.xpath(PARAM_XPATH_VALUE))).thenReturn(elementToClick);
+    }
 
-    tested.setParameters(params);
+    public void setupParams(String timeoutValue, String xpathValue, String cssValue) {
+        when(params.get(PARAM_TIMEOUT)).thenReturn(timeoutValue);
+        when(params.get(PARAM_XPATH)).thenReturn(xpathValue);
+        when(params.get(PARAM_CSS)).thenReturn(cssValue);
+    }
 
-    verify(validationResultBuilder, times(0)).addErrorMessage(anyString());
-  }
+    @Test
+    public void setParameters_whenValidXpathParamIsProvided_thenValidationPassedSuccessfuly() throws ParametersException {
+        setupParams(PARAM_TIMEOUT_VALUE, PARAM_TIMEOUT_VALUE, null);
+        tested.setParameters(params);
+    }
 
-  @Test
-  public void setParameters_whenInvalidTimeoutParamIsProvided_thenExceptionIsThrown() throws ParametersException {
-    setupParams("xyz", PARAM_XPATH_VALUE);
+    @Test
+    public void setParameters_whenValidCSSParamIsProvided_thenValidationPassedSuccessfuly() throws ParametersException {
+        setupParams(PARAM_TIMEOUT_VALUE, null, PARAM_CSS_VALUE);
+        tested.setParameters(params);
+    }
 
-    tested.setParameters(params);
+    @Test(expected = ParametersException.class)
+    public void setParameters_whenInvalidTimeoutParamIsProvided_thenExceptionIsThrown() throws ParametersException {
+        setupParams("xyz", PARAM_XPATH_VALUE, null);
+        tested.setParameters(params);
+    }
 
-    verify(validationResultBuilder, times(1)).addErrorMessage(anyString());
-  }
+    @Test(expected = ParametersException.class)
+    public void setParameters_whenTooBgTimeoutParamIsProvided_thenExceptionIsThrown() throws ParametersException {
+        setupParams("300000", PARAM_XPATH_VALUE, null);
+        tested.setParameters(params);
+    }
 
-  @Test
-  public void setParameters_whenTooBigTimeoutParamIsProvided_thenExceptionIsThrown() throws ParametersException {
-    setupParams("300000", PARAM_XPATH_VALUE);
+    @Test(expected = ParametersException.class)
+    public void setParameters_whenNoParamsIsProvided_thenExceptionIsThrown() throws ParametersException {
+        setupParams(PARAM_TIMEOUT_VALUE, null, null);
+        tested.setParameters(params);
+    }
 
-    tested.setParameters(params);
+    @Test
+    public void collect_whenValidXpathParamIsProvided_elementIsClicked() throws ProcessingException, ParametersException {
+        setupParams(PARAM_TIMEOUT_VALUE, PARAM_XPATH_VALUE, null);
+        when(elementToClick.isDisplayed()).thenReturn(true);
+        tested.setParameters(params);
+        tested.collect();
+        verify(elementToClick, times(1)).click();
+    }
 
-    verify(validationResultBuilder, times(1)).addErrorMessage(anyString());
-  }
 
-  @Test
-  public void setParameters_whenNoXpathParamIsProvided_thenExceptionIsThrown() throws ParametersException {
-    setupParams(PARAM_TIMEOUT_VALUE, null);
-
-    tested.setParameters(params);
-
-    verify(validationResultBuilder, times(1)).addErrorMessage(anyString());
-  }
-
-  @Test
-  public void collect_whenValidParamsAreProvided_elementIsClicked() throws ProcessingException, ParametersException {
-    setupParams(PARAM_TIMEOUT_VALUE, PARAM_XPATH_VALUE);
-    when(elementToClick.isDisplayed()).thenReturn(true);
-
-    tested.setParameters(params);
-    tested.collect();
-
-    verify(elementToClick, times(1)).click();
-  }
+    @Test
+    public void collect_whenValidCssParamIsProvided_elementIsClicked() throws ProcessingException, ParametersException {
+        setupParams(PARAM_TIMEOUT_VALUE, PARAM_XPATH_VALUE, null);
+        when(elementToClick.isDisplayed()).thenReturn(true);
+        tested.setParameters(params);
+        tested.collect();
+        verify(elementToClick, times(1)).click();
+    }
 }
