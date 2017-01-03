@@ -24,6 +24,7 @@
             * [[Status Codes|StatusCodesCollector]]
         * [[Modifiers|Modifiers]]
             * [[Click|ClickModifier]]
+            * [[Replace Text|ReplaceTextModifier]]
             * [[Cookie|CookieModifier]]
             * [[Header|HeaderModifier]]
             * [[Hide|HideModifier]]
