@@ -61,11 +61,15 @@ There exists the special comparator property `collectorName` which is connected 
 <collect>
     <open/>
     <sleep duration="1000"/>
-    <screen width="1280" height="1024" name="desktop"/>
-    <screen width="768" height="1024" name="tablet"/>
-    <screen width="320" height="480" name="mobile"/>
+    <resolution width="1280" height="1024" name="desktop"/>
+    <screen name="desktop"/>
+    <resolution width="768" height="1024" name="tablet"/>
+    <screen name="tablet"/>
+    <resolution width="320" height="480" name="mobile"/>
+    <screen name="mobile"/>
 </collect>
 <compare>
+    <screen collectorName="desktop"/>
     <screen collectorName="mobile"/>
     <screen collectorName="tablet"/>
 </compare>
@@ -79,9 +83,12 @@ The configuration above will trigger three screens collections (desktop, tablet 
 <collect>
     <open/>
     <sleep duration="1000"/>
-    <screen width="1280" height="1024" name="desktop"/>
-    <screen width="768" height="1024" name="tablet"/>
-    <screen width="320" height="480" name="mobile"/>
+     <resolution width="1280" height="1024" name="desktop"/>
+     <screen name="desktop"/>
+     <resolution width="768" height="1024" name="tablet"/>
+     <screen name="tablet"/>
+     <resolution width="320" height="480" name="mobile"/>
+     <screen name="mobile"/>
 </collect>
 <compare>
     <screen/>
@@ -96,9 +103,12 @@ The configuration above will trigger three screens collections (desktop, tablet 
 <collect>
     <open/>
     <sleep duration="1000"/>
-    <screen width="1280" height="1024" name="desktop"/>
-    <screen width="768" height="1024" name="tablet"/>
-    <screen width="320" height="480" name="mobile"/>
+    <resolution width="1280" height="1024" name="desktop"/>
+    <screen name="desktop"/>
+    <resolution width="768" height="1024" name="tablet"/>
+    <screen name="tablet"/>
+    <resolution width="320" height="480" name="mobile"/>
+    <screen name="mobile"/>
 </collect>
 <compare>
     <screen/>

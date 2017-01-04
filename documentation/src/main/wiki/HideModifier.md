@@ -28,7 +28,8 @@ Module name: **hide**
             <hide xpath="//*[@id='logo']" />
             <hide css="#logo > a" />            
             ...
-            <screen width="1200" height="760" />
+            <resolution width="1200" height="760" />
+            <screen />
             ...
         </collect>
         <compare>

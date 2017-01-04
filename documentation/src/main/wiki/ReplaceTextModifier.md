@@ -26,11 +26,12 @@ Module name: **replaceText**
         <collect>
             <open />          
             ...
+            <resolution  width="1200" height="760" />
             <replaceText xpath="//*[@id='day_of_the_week']" value="today"/>
             <replaceText css="#logo > a" attribute="href" value="#"/>
             <replaceText css="#logo > a" />
             ...
-            <screen width="1200" height="760" />
+            <screen />
             ...
         </collect>
         <compare>
