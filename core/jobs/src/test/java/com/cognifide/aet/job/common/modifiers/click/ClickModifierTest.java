@@ -111,7 +111,6 @@ public class ClickModifierTest {
         verify(elementToClick, times(1)).click();
     }
 
-
     @Test
     public void collect_whenValidCssParamIsProvided_elementIsClicked() throws ProcessingException, ParametersException {
         setupParams(PARAM_TIMEOUT_VALUE, PARAM_XPATH_VALUE, null);

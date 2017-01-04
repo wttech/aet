@@ -31,7 +31,9 @@ import org.openqa.selenium.WebDriver;
 
 import java.util.Map;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.atLeast;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ReplaceTextModifierTest {
@@ -111,7 +113,7 @@ public class ReplaceTextModifierTest {
     when(params.get(PARAM_XPATH)).thenReturn(PARAM_XPATH_VALUE);
     tested.setParameters(params);
     tested.collect();
-    verify(webDriver, times(1)).findElements(By.xpath(PARAM_XPATH_VALUE));
+    verify(webDriver, atLeast(1)).findElement(By.xpath(PARAM_XPATH_VALUE));
   }
 
   @Test
@@ -121,6 +123,24 @@ public class ReplaceTextModifierTest {
     when(params.get(PARAM_CSS)).thenReturn(PARAM_CSS_VALUE);
     tested.setParameters(params);
     tested.collect();
-    verify(webDriver, times(1)).findElements(By.cssSelector(PARAM_CSS_VALUE));
+    verify(webDriver, atLeast(1)).findElement(By.cssSelector(PARAM_CSS_VALUE));
   }
+
+  @Test
+  public void ReplaceTextInElement_AllValidParamsAreProvided_WebDriverFindElementsMethodIsCalledOnce()
+          throws ProcessingException, ParametersException {
+    when(params.containsKey(PARAM_XPATH)).thenReturn(true);
+    when(params.get(PARAM_XPATH)).thenReturn(PARAM_XPATH_VALUE);
+    when(params.containsKey(ATTRIBUTE_PARAM)).thenReturn(true);
+    when(params.get(ATTRIBUTE_PARAM)).thenReturn(PARAM_ATTRIBUTE_VALUE);
+    when(params.containsKey(VALUE_PARAM)).thenReturn(true);
+    when(params.get(VALUE_PARAM)).thenReturn(PARAM_VALUE_VALUE);
+    when(properties.getUrl()).thenReturn(URL);
+
+    tested.setParameters(params);
+    tested.collect();
+    verify(webDriver, atLeast(1)).findElement(By.xpath(PARAM_XPATH_VALUE));
+  }
+
+
 }

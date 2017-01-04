@@ -13,7 +13,7 @@ Module name: **click**
 | --------- | ------------- | ----------- | --------- |
 | `xpath` | | xpath of the element to be clicked        | xpath or css |
 | `css`   | | css selector of the element to be clicked | xpath or css |
-| `timeout` | 1000ms | The timeout for the element to appear, in miliseconds. The max value of this parameter is 15000 miliseconds (15 seconds). | no (default will be used) |
+| `timeout` | 1000ms | The timeout for the element to appear, in milliseconds. The max value of this parameter is 15000 milliseconds (15 seconds). | no (default will be used) |
 
 ##### Example Usage
 

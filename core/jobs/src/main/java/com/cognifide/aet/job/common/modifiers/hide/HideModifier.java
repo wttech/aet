@@ -22,7 +22,6 @@ import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
-
 import com.cognifide.aet.job.common.modifiers.WebElementsLocatorParams;
 import org.apache.commons.lang3.BooleanUtils;
 import org.openqa.selenium.*;
@@ -83,12 +82,15 @@ public class HideModifier extends WebElementsLocatorParams implements CollectorJ
         script = DISPLAY_NONE_SCRIPT;
       }
 
-      List<WebElement> webElements=webDriver.findElements(locator);
+      By elementLocator = getLocator();
+      waitForElementToBePresent(webDriver, elementLocator);
+
+      List<WebElement> webElements = webDriver.findElements(elementLocator);
       for (WebElement element : webElements) {
         ((JavascriptExecutor) webDriver).executeScript(script, element);
       }
       result = CollectorStepResult.newModifierResult();
-    } catch (NoSuchElementException e) {
+    } catch (WebDriverException e) {
       final String message = String.format("Error while hiding element '%s'. %s", getSelectorValue(), e.getMessage());
       result = CollectorStepResult.newProcessingErrorResult(message);
       LOG.warn("Error while trying to find element '{}'", getSelectorValue(), e);

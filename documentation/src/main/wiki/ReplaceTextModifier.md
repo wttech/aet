@@ -16,6 +16,7 @@ Module name: **replaceText**
 | `attributeName` | name_of_attribute | eg 'href' or 'value' in case of input tag; if set attribute value will be replaced/set to 'value' if empty innerHTML of selected element(s) will be replaced| no |
 | `xpath` | xpath_to_element | Xpath of element(s)| xpath or css |
 | `css` | css_selector_to_element | css selector of element(s)  | xpath or css |
+| `timeout` | 1000ms | The timeout for the element to appear, in milliseconds. The max value of this parameter is 15000 milliseconds (15 seconds). | no (default will be used) |
 
 ##### Example Usage
 

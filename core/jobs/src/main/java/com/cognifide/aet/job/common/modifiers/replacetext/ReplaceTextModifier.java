@@ -25,9 +25,10 @@ import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.job.common.modifiers.WebElementsLocatorParams;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.By;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -77,12 +78,15 @@ public class ReplaceTextModifier extends WebElementsLocatorParams implements Col
         try {
             String script = "arguments[0]." + attributeName + "=arguments[1];";
 
-            List<WebElement> webElements = webDriver.findElements(getLocator());
+            By elementLocator = getLocator();
+            waitForElementToBePresent(webDriver, elementLocator);
+
+            List<WebElement> webElements = webDriver.findElements(elementLocator);
             for (WebElement element : webElements) {
                 ((JavascriptExecutor) webDriver).executeScript(script, element, value);
             }
             result = CollectorStepResult.newModifierResult();
-        } catch (NoSuchElementException e) {
+        } catch (WebDriverException e) {
             final String message = String.format("Error while replacing text in element '%s'. %s", getSelectorValue(), e.getMessage());
             result = CollectorStepResult.newProcessingErrorResult(message);
             LOG.warn("Error while trying to find element '{}'", getSelectorValue(), e);

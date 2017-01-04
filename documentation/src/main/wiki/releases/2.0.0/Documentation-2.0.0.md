@@ -1568,7 +1568,7 @@ Module name: **click**
 | Parameter | Default value | Description | Mandatory |
 | --------- | ------------- | ----------- | --------- |
 | `xpath` | | xpath of element to click | yes |
-| `timeout` | | Timeout for element to appear, in miliseconds. Max value of this parameter is 15000 miliseconds (15 seconds). | yes |
+| `timeout` | | Timeout for element to appear, in milliseconds. Max value of this parameter is 15000 milliseconds (15 seconds). | yes |
 
 ##### Example Usage
 
@@ -1918,7 +1918,7 @@ No parameters.
 
 | ! Important information |
 |:----------------------- |
-| Timeout for waiting is 10000 milliseconds.<br/><br/> Page is checked every 1000 miliseconds. |
+| Timeout for waiting is 10000 milliseconds.<br/><br/> Page is checked every 1000 milliseconds. |
 
 ##### Example Usage
 

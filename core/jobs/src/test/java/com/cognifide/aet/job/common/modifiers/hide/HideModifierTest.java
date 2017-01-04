@@ -32,7 +32,7 @@ import org.openqa.selenium.WebDriver;
 
 import java.util.Map;
 
-import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -110,7 +110,7 @@ public class HideModifierTest {
     when(params.get(PARAM_XPATH)).thenReturn(PARAM_XPATH_VALUE);
     tested.setParameters(params);
     tested.collect();
-    verify(webDriver, times(1)).findElements(By.xpath(PARAM_XPATH_VALUE));
+    verify(webDriver, atLeast(1)).findElement(By.xpath(PARAM_XPATH_VALUE));
   }
 
   @Test
@@ -120,6 +120,6 @@ public class HideModifierTest {
     when(params.get(PARAM_CSS)).thenReturn(PARAM_CSS_VALUE);
     tested.setParameters(params);
     tested.collect();
-    verify(webDriver, times(1)).findElements(By.cssSelector(PARAM_CSS_VALUE));
+    verify(webDriver, atLeast(1)).findElement(By.cssSelector(PARAM_CSS_VALUE));
   }
 }
