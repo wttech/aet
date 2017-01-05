@@ -31,9 +31,13 @@ import java.util.concurrent.TimeUnit;
 abstract public class WebElementsLocatorParams {
 
     private static final String PARAM_TIMEOUT = "timeout";
+
     private static final String XPATH_PARAM = "xpath";
+
     private static final String CSS_PARAM = "css";
+
     private static final long TIMEOUT_SECONDS_MAX_VALUE = 15L;
+
     private static final long TIMEOUT_SECONDS_DEFAULT_VALUE = 1L;
 
     /**
@@ -56,26 +60,13 @@ abstract public class WebElementsLocatorParams {
     }
 
     protected void setElementParams(Map<String, String> params) throws ParametersException {
-        String timeoutString = params.get(PARAM_TIMEOUT);
         xpath = params.get(XPATH_PARAM);
         css = params.get(CSS_PARAM);
-
-        if (StringUtils.isNotBlank(xpath) ^ StringUtils.isNotBlank(css)) {
+        if (StringUtils.isBlank(xpath) == StringUtils.isBlank(css)) {
             throw new ParametersException("Either 'xpath' or 'css' parameter must be provided for element modifier.");
         }
-        if (StringUtils.isNotBlank(timeoutString)) {
-            if (StringUtils.isNumeric(timeoutString)) {
-                timeoutInSeconds = TimeUnit.SECONDS.convert(Long.valueOf(timeoutString), TimeUnit.MILLISECONDS);
-                if (timeoutInSeconds < 0) {
-                    throw new ParametersException("'timeout' parameter value should be greater or equal zero.");
-                } else if (TIMEOUT_SECONDS_MAX_VALUE < timeoutInSeconds) {
-                    throw new ParametersException("'timeout' parameter value can't be greater than "
-                            +Long.toString(TIMEOUT_SECONDS_MAX_VALUE)+" seconds.");
-                }
-            } else {
-                throw new ParametersException("Parameter 'timeout' on Click Modifier isn't a numeric value.");
-            }
-        }
+
+        setTimeOutParam(params.get(PARAM_TIMEOUT));
     }
 
     protected String getSelectorType() {
@@ -90,8 +81,23 @@ abstract public class WebElementsLocatorParams {
         return xpath != null ? By.xpath(xpath) : By.cssSelector(css);
     }
 
-    protected void waitForElementToBePresent(WebDriver webDriver,By elementLocator) throws WebDriverException{
+    protected void waitForElementToBePresent(WebDriver webDriver, By elementLocator) throws WebDriverException {
         WebDriverWait wait = new WebDriverWait(webDriver, getTimeoutInSeconds());
         wait.until(ExpectedConditions.presenceOfElementLocated(elementLocator));
+    }
+
+    private void setTimeOutParam(String timeoutString) throws ParametersException {
+        if (StringUtils.isNotBlank(timeoutString)) {
+            if (!StringUtils.isNumeric(timeoutString)) {
+                throw new ParametersException("Parameter 'timeout' on Click Modifier isn't a numeric value.");
+            }
+            timeoutInSeconds = TimeUnit.SECONDS.convert(Long.valueOf(timeoutString), TimeUnit.MILLISECONDS);
+            if (timeoutInSeconds < 0) {
+                throw new ParametersException("'timeout' parameter value should be greater or equal zero.");
+            } else if (TIMEOUT_SECONDS_MAX_VALUE < timeoutInSeconds) {
+                throw new ParametersException("'timeout' parameter value can't be greater than "
+                        + Long.toString(TIMEOUT_SECONDS_MAX_VALUE) + " seconds.");
+            }
+        }
     }
 }
