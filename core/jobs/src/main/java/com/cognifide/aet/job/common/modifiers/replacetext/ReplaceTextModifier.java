@@ -42,6 +42,7 @@ public class ReplaceTextModifier extends WebElementsLocatorParams implements Col
     private static final Logger LOG = LoggerFactory.getLogger(ReplaceTextModifier.class);
 
     private static final String ATTRIBUTE_PARAM = "attributeName";
+
     private static final String VALUE_PARAM = "value";
 
     private final WebDriver webDriver;

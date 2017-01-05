@@ -53,7 +53,6 @@ abstract public class WebElementsLocatorParams {
 
     protected long getTimeoutInSeconds() {
         return timeoutInSeconds;
-
     }
 
     protected void setElementParams(Map<String, String> params) throws ParametersException {
@@ -61,8 +60,8 @@ abstract public class WebElementsLocatorParams {
         xpath = params.get(XPATH_PARAM);
         css = params.get(CSS_PARAM);
 
-        if (StringUtils.isNotBlank(xpath) == StringUtils.isNotBlank(css)) {
-            throw new ParametersException("Only 'xpath' OR 'css' parameter must be provided for element modifier.");
+        if (StringUtils.isNotBlank(xpath) ^ StringUtils.isNotBlank(css)) {
+            throw new ParametersException("Either 'xpath' or 'css' parameter must be provided for element modifier.");
         }
         if (StringUtils.isNotBlank(timeoutString)) {
             if (StringUtils.isNumeric(timeoutString)) {
@@ -70,7 +69,8 @@ abstract public class WebElementsLocatorParams {
                 if (timeoutInSeconds < 0) {
                     throw new ParametersException("'timeout' parameter value should be greater or equal zero.");
                 } else if (TIMEOUT_SECONDS_MAX_VALUE < timeoutInSeconds) {
-                    throw new ParametersException("'timeout' parameter value can't be greater than 15 seconds.");
+                    throw new ParametersException("'timeout' parameter value can't be greater than "
+                            +Long.toString(TIMEOUT_SECONDS_MAX_VALUE)+" seconds.");
                 }
             } else {
                 throw new ParametersException("Parameter 'timeout' on Click Modifier isn't a numeric value.");
@@ -79,7 +79,7 @@ abstract public class WebElementsLocatorParams {
     }
 
     protected String getSelectorType() {
-        return (xpath != null) ? XPATH_PARAM : CSS_PARAM;
+        return xpath != null ? XPATH_PARAM : CSS_PARAM;
     }
 
     protected String getSelectorValue() {
