@@ -14,7 +14,7 @@ AET is designed as a flexible system that can be adapted and tailored to the reg
 The tool has been developed to aid front end client side layout regression testing of websites or portfolios. 
 In essence assessing the impact or change of a website from one snapshot to the next.
 
-## What's philosophy behind AET?
+## What's the philosophy behind AET?
 AET helps testers to ensure that a change in one part of the software has not introduced new defects in other parts of the software.
 
 #### AET is suited for
