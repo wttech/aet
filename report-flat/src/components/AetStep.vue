@@ -1,5 +1,6 @@
 <template>
   <div v-if="showStep">
+    <hr/>
     {{model.type}}|{{model.name}} <span v-if="model.stepResult">{{model.stepResult.status}}</span>
     <AetScreenStep :options="options" :model="model" v-if="model.type=='screen'"/>
   </div>
