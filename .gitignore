@@ -32,6 +32,17 @@ atlassian-ide-plugin.xml
 # auto-generated assets
 /report/src/main/webapp/assets/libs
 
+### AET report-flat web application
+# node instance for frontend-maven-plugin
+# npm packages
+/report-flat/node_modules/
+/report-flat/.DS_Store
+/report-flat/dist/
+/report-flat/npm-debug.log
+/report-flat/test/unit/coverage
+/report-flat/test/e2e/reports
+/report-flat/selenium-debug.log
+
 ### AET sanity tests
 /integration-tests/test-suite/suite.xml
 
