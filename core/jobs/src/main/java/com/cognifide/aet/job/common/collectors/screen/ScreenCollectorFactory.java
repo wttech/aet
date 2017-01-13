@@ -23,7 +23,6 @@ import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.vs.ArtifactsDAO;
-
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.Service;
@@ -44,7 +43,9 @@ public class ScreenCollectorFactory implements CollectorFactory {
 
   @Override
   public CollectorJob createInstance(CollectorProperties properties, Map<String, String> parameters, WebCommunicationWrapper webCommunicationWrapper) throws ParametersException {
-    return new ScreenCollector(properties, webCommunicationWrapper.getWebDriver(), artifactsDAO);
+        ScreenCollector collector = new ScreenCollector(properties, webCommunicationWrapper.getWebDriver(), artifactsDAO);
+      collector.setParameters(parameters);
+      return collector;
   }
 
 }

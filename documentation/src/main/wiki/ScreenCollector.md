@@ -6,13 +6,21 @@
 
 | ! Notice    |
 | :---------- |
-| Since AET 1.4.0 version AET Screen Collector will have no parameters. Please use [[Resolution Modifier|ResolutionModifier]] in order to perform browser resolution change. Using Screen collector without resolution change will not guarantee any specific screenshot resolution. |
 
-Screen Collector is responsible for collecting screenshot of the page under given URL.
+Screen Collector is responsible for collecting screenshot of the page or just part of it by specifying element locator (xpatc or css)  under given URL.
 
 Module name: **screen**
 
 **Note that you cannot maximize the window and specify the dimension at the same time. If no parameters provided, default browser size is set before taking screenshot.**
+
+##### Parameters
+
+| Parameter | Value | Description | Mandatory |
+| --------- | ----- | ----------- | --------- |
+| `xpath` | xpath_to_element | Xpath to element(s) | optional (either xpath or css) |
+| `css` | css_selector_to_element | css selector to element(s)| optional (either xpath or css) |
+| `timeout` | 1000ms | The timeout for the element to appear, in milliseconds. The max value of this parameter is 15000 milliseconds (15 seconds). | no (default will be used) |
+
 
 ##### Example Usage
 
@@ -23,6 +31,7 @@ Module name: **screen**
         <collect>
             ...
             <screen name="desktop" />
+            <screen name="carouselComponent" css=".carousel"/>
             ...
         </collect>
         <compare>

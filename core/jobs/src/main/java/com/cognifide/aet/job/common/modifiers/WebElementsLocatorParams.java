@@ -30,11 +30,11 @@ import java.util.concurrent.TimeUnit;
 
 abstract public class WebElementsLocatorParams {
 
-    private static final String PARAM_TIMEOUT = "timeout";
+    protected static final String PARAM_TIMEOUT = "timeout";
 
-    private static final String XPATH_PARAM = "xpath";
+    protected static final String XPATH_PARAM = "xpath";
 
-    private static final String CSS_PARAM = "css";
+    protected static final String CSS_PARAM = "css";
 
     private static final long TIMEOUT_SECONDS_MAX_VALUE = 15L;
 
@@ -43,12 +43,12 @@ abstract public class WebElementsLocatorParams {
     /**
      * Xpath to element to click.
      */
-    private String xpath;
+    protected String xpath;
 
     /**
      * Css selector of element to click.
      */
-    private String css;
+    protected String css;
 
     /**
      * Timeout for waiting for element (in seconds).
@@ -65,7 +65,6 @@ abstract public class WebElementsLocatorParams {
         if (StringUtils.isBlank(xpath) == StringUtils.isBlank(css)) {
             throw new ParametersException("Either 'xpath' or 'css' parameter must be provided for element modifier.");
         }
-
         setTimeOutParam(params.get(PARAM_TIMEOUT));
     }
 
@@ -86,7 +85,7 @@ abstract public class WebElementsLocatorParams {
         wait.until(ExpectedConditions.presenceOfElementLocated(elementLocator));
     }
 
-    private void setTimeOutParam(String timeoutString) throws ParametersException {
+    protected void setTimeOutParam(String timeoutString) throws ParametersException {
         if (StringUtils.isNotBlank(timeoutString)) {
             if (!StringUtils.isNumeric(timeoutString)) {
                 throw new ParametersException("Parameter 'timeout' on Click Modifier isn't a numeric value.");
