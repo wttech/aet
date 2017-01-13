@@ -10,17 +10,23 @@
     <input type="checkbox" id="showMask" v-model="options.showMask">
     <label for="showMask">showMask: {{ options.showMask }}</label>
 
+    <input type="checkbox" id="showJS" v-model="options.showJS">
+    <label for="showJS">showJS: {{ options.showJS }}</label>
+
+    <input type="checkbox" id="showScreen" v-model="options.showScreen">
+    <label for="showScreen">showScreen: {{ options.showScreen }}</label>
+
   </div>
 </template>
 
 <script>
-export default {
-  name: 'ReportOptions',
-  props: {
-    options: Object
+  export default {
+    name: 'ReportOptions',
+    props: {
+      options: Object
 
-  },
-};
+    },
+  };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

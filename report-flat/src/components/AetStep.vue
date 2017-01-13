@@ -1,18 +1,19 @@
 <template>
   <div v-if="showStep">
-    <hr/>
     {{model.type}}|{{model.name}} <span v-if="model.stepResult">{{model.stepResult.status}}</span>
-    <AetScreenStep :options="options" :model="model" v-if="model.type=='screen'"/>
+    <ScreenComponent :options="options" :model="model" v-if="model.type=='screen' && options.showScreen"/>
+    <JsErrorsComponent :options="options" :model="model" v-if="model.type=='js-errors'  && options.showJS"/>
   </div>
 </template>
 
 <script>
 
-  import AetScreenStep from './screen/ScreenStep';
+  import ScreenComponent from './screen/ScreenComponent';
+  import JsErrorsComponent from './jserrors/JsErrorsComponent';
 
   export default {
     components: {
-      AetScreenStep,
+      ScreenComponent, JsErrorsComponent
     },
     name: 'AetStep',
     props: {

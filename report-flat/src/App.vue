@@ -16,6 +16,7 @@
             <AetStep :options="options" :model="step"></AetStep>
           </div>
         </div>
+        <hr/>
       </div>
     </div>
   </div>
@@ -38,6 +39,8 @@
           showPattern: true,
           showCollected: true,
           showMask: true,
+          showJS: true,
+          showScreen: true
         },
       };
     },

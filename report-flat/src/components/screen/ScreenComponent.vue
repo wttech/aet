@@ -9,17 +9,17 @@
     </div>
 
     <div v-if="model.stepResult.status=='COLLECTED' && options.showMask" v-for="step in model.comparators">
-      <AetScreenComparison :model="step"/>
+      <ScreenComparison :model="step"/>
     </div>
   </div>
 </template>
 
 <script>
-  import AetScreenComparison from './ScreenComparisonResult';
+  import ScreenComparison from './ScreenComparisonResult';
   export default {
-    name: 'AetScreenStep',
+    name: 'Screen',
     components: {
-      AetScreenComparison,
+      ScreenComparison,
     },
     props: {
       model: Object,
@@ -40,7 +40,6 @@
         }
         return null;
       }
-
     }
   };
 </script>
@@ -58,7 +57,6 @@
 
   .imgCollected {
     float: left; /* add this */
-
     overflow: hidden;
   }
 
