@@ -12,11 +12,11 @@ Module name: **replaceText**
 
 | Parameter | Value | Description | Mandatory |
 | --------- | ----- | ----------- | --------- |
-| `value` | default: "" (empty string)| new text value for given attribute or innerHtml os selected Element  | no |
-| `attributeName` | name_of_attribute | eg 'href' or 'value' in case of input tag; if set attribute value will be replaced/set to 'value' if empty innerHTML of selected element(s) will be replaced| no |
+| `value` | default: "" (empty string)| new text value for given attribute or innerHtml of selected Element  | no |
+| `attributeName` | default: "innerHTML" | attribute of selected element to be set, eg 'href' or 'value'; attribute value or inner HTML will be replaced/set to 'value' | no |
 | `xpath` | xpath_to_element | Xpath of element(s)| xpath or css |
 | `css` | css_selector_to_element | css selector of element(s)  | xpath or css |
-| `timeout` | 1000ms | The timeout for the element to appear, in milliseconds. The max value of this parameter is 15000 milliseconds (15 seconds). | no (default will be used) |
+| `timeout` | 1000ms | The timeout to wait for the element to be present, in milliseconds. The max value of this parameter is 15000 milliseconds (15 seconds). | no (default will be used) |
 
 ##### Example Usage
 
