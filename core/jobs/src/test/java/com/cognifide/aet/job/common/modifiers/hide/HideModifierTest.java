@@ -17,10 +17,13 @@
  */
 package com.cognifide.aet.job.common.modifiers.hide;
 
-import com.cognifide.aet.job.api.collector.CollectorProperties;
+import static org.mockito.Mockito.atLeast;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
-
+import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -30,28 +33,21 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
-import java.util.Map;
-
-import static org.mockito.Mockito.atLeast;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-
 @RunWith(MockitoJUnitRunner.class)
 public class HideModifierTest {
 
   private static final String PARAM_XPATH = "xpath";
+
   private static final String PARAM_CSS = "css";
 
   private static final String PARAM_XPATH_VALUE = "//*[@id='toRemove']";
+
   private static final String PARAM_CSS_VALUE = "@logo > a";
 
   private static final String URL = "http://www.cognifide.com";
 
   @Mock
   private WebDriver webDriver;
-
-  @Mock
-  private CollectorProperties properties;
 
   @InjectMocks
   private HideModifier tested;
@@ -68,7 +64,6 @@ public class HideModifierTest {
   public void setParameters_XPathIsValid_ValidationPassedSuccessfuly() throws ParametersException {
     when(params.containsKey(PARAM_XPATH)).thenReturn(true);
     when(params.get(PARAM_XPATH)).thenReturn(PARAM_XPATH_VALUE);
-    when(properties.getUrl()).thenReturn(URL);
     tested.setParameters(params);
   }
 
@@ -76,7 +71,6 @@ public class HideModifierTest {
   public void setParameters_CssIsValid_ValidationPassedSuccessfuly() throws ParametersException {
     when(params.containsKey(PARAM_CSS)).thenReturn(true);
     when(params.get(PARAM_CSS)).thenReturn(PARAM_CSS_VALUE);
-    when(properties.getUrl()).thenReturn(URL);
     tested.setParameters(params);
   }
 
@@ -87,19 +81,11 @@ public class HideModifierTest {
 
     when(params.containsKey(PARAM_XPATH)).thenReturn(true);
     when(params.get(PARAM_XPATH)).thenReturn(PARAM_XPATH_VALUE);
-
-    when(properties.getUrl()).thenReturn(URL);
     tested.setParameters(params);
   }
 
   @Test(expected = ParametersException.class)
   public void setParameters_CssAndXpathAreNotPassed_ValidationPassedUnsuccessfuly() throws ParametersException {
-    when(properties.getUrl()).thenReturn(URL);
-    tested.setParameters(params);
-  }
-
-  @Test(expected = ParametersException.class)
-  public void setParameters_XPathIsInvalid_ExceptionIsThrown() throws ParametersException {
     tested.setParameters(params);
   }
 
