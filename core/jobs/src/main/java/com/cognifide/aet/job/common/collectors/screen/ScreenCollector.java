@@ -33,6 +33,7 @@ import java.io.InputStream;
 import java.util.Map;
 import javax.imageio.ImageIO;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.NoSuchElementException;
@@ -40,12 +41,16 @@ import org.openqa.selenium.OutputType;
 import org.openqa.selenium.Point;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 
 public class ScreenCollector extends WebElementsLocatorParams implements CollectorJob {
 
   public static final String NAME = "screen";
+
   public static final String CONTENT_TYPE = "image/png";
+
+  private static final String PNG_FORMAT = "png";
 
   private final WebDriver webDriver;
 
@@ -63,7 +68,7 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
 
   @Override
   public CollectorStepResult collect() throws ProcessingException {
-    byte[] screenshot = takeScreenshot(webDriver);
+    byte[] screenshot = takeScreenshot();
 
     CollectorStepResult stepResult;
     if (isPatternAndResultMD5Identical(screenshot)) {
@@ -99,42 +104,55 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
     }
   }
 
-  private byte[] takeScreenshot(WebDriver webDriver) throws ProcessingException {
+  private byte[] takeScreenshot() throws ProcessingException {
     try {
       if (isPartial) {
-        return takePartialScreenshot();
+        SeleniumWaitHelper
+            .waitForElementToBePresent(webDriver, getLocator(), getTimeoutInSeconds());
+        WebElement element = webDriver.findElement(getLocator());
+        return getImagePart(getFullPageScreenshot(), element);
       } else {
-        return ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.BYTES);
+        return getFullPageScreenshot();
       }
-    } catch (Exception e) {
-      throw new ProcessingException("Could not take screenshot !", e);
+    } catch (NoSuchElementException e) {
+      throw new ProcessingException("Unable to find element for taking screenshot part", e);
+    } catch (IOException | WebDriverException e) {
+      throw new ProcessingException("Unable to take screenshot", e);
+    }
+
+  }
+
+  private byte[] getFullPageScreenshot() {
+    return ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.BYTES);
+  }
+
+  private byte[] getImagePart(byte[] fullPage, WebElement webElement)
+      throws IOException, ProcessingException {
+    InputStream in = new ByteArrayInputStream(fullPage);
+    try {
+      BufferedImage fullImg = ImageIO.read(in);
+      Point point = webElement.getLocation();
+      Dimension size = webElement.getSize();
+      BufferedImage screenshotSection = fullImg.getSubimage(point.getX(), point.getY(),
+          size.getWidth(), size.getHeight());
+      return bufferedImageToByteArray(screenshotSection);
+    } catch (IOException e) {
+      throw new ProcessingException("Unable to create image from taken screenshot", e);
+    } finally {
+      IOUtils.closeQuietly(in);
     }
   }
 
-  private byte[] takePartialScreenshot() throws IOException, ProcessingException {
-    WebElement element;
+  private byte[] bufferedImageToByteArray(BufferedImage bufferedImage) throws ProcessingException {
+    ByteArrayOutputStream temporaryStream = new ByteArrayOutputStream();
     try {
-      SeleniumWaitHelper.waitForElementToBePresent(webDriver, getLocator(), getTimeoutInSeconds());
-      element = webDriver.findElement(getLocator());
-    } catch (NoSuchElementException e) {
-      throw new ProcessingException("Unable to find element for taking screenshot", e);
+      ImageIO.write(bufferedImage, PNG_FORMAT, temporaryStream);
+      temporaryStream.flush();
+      return temporaryStream.toByteArray();
+    } catch (IOException e) {
+      throw new ProcessingException("Unable to convert screenshot part to byte Array", e);
+    } finally {
+      IOUtils.closeQuietly(temporaryStream);
     }
-    byte[] fullPage = ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.BYTES);
-
-    InputStream in = new ByteArrayInputStream(fullPage);
-    BufferedImage fullImg = ImageIO.read(in);
-    Point point = element.getLocation();
-    Dimension size = element.getSize();
-
-    BufferedImage eleScreenshot = fullImg.getSubimage(point.getX(), point.getY(),
-        size.getWidth(), size.getHeight());
-    byte[] imageInByte;
-
-    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-    ImageIO.write(eleScreenshot, "png", baos);
-    baos.flush();
-    imageInByte = baos.toByteArray();
-    baos.close();
-    return imageInByte;
   }
 }
