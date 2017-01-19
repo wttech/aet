@@ -21,15 +21,14 @@ import com.cognifide.aet.communication.api.metadata.CollectorStepResult;
 import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
+import com.cognifide.aet.job.common.SeleniumWaitHelper;
 import com.cognifide.aet.job.common.modifiers.WebElementsLocatorParams;
-import org.openqa.selenium.By;
+import java.util.Map;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Map;
 
 public class ClickModifier extends WebElementsLocatorParams implements CollectorJob {
 
@@ -47,22 +46,23 @@ public class ClickModifier extends WebElementsLocatorParams implements Collector
   public CollectorStepResult collect() throws ProcessingException {
     CollectorStepResult result;
     try {
-        By elementLocator = getLocator();
-        waitForElementToBePresent(webDriver, elementLocator);
-        WebElement elementToClick = webDriver.findElement(elementLocator);
+      SeleniumWaitHelper
+          .waitForElementToBeClickable(webDriver, getLocator(), getTimeoutInSeconds());
+      WebElement elementToClick = webDriver.findElement(getLocator());
 
       if (elementToClick.isDisplayed()) {
         elementToClick.click();
         result = CollectorStepResult.newModifierResult();
       } else {
-        final String message = String.format("Element defined by %s: '%s' is not yet visible!", getSelectorType(), getSelectorValue());
+        final String message = String
+            .format("Element defined by %s is not yet visible!", getLocator().toString());
         result = CollectorStepResult.newProcessingErrorResult(message);
         LOG.warn(message);
       }
     } catch (WebDriverException e) {
       final String message =
-              String.format("No element defined by %s: '%s' could be found before timeout  (%s seconds)! %d",
-                    getSelectorType(), getSelectorValue(), getTimeoutInSeconds());
+          String.format("No element defined by %s could be found before timeout (%s seconds)!",
+              getLocator().toString(), getTimeoutInSeconds());
       LOG.warn(message, e.getMessage());
       result = CollectorStepResult.newProcessingErrorResult(message);
     }
