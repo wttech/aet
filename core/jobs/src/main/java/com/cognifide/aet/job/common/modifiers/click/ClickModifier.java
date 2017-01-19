@@ -46,21 +46,23 @@ public class ClickModifier extends WebElementsLocatorParams implements Collector
   public CollectorStepResult collect() throws ProcessingException {
     CollectorStepResult result;
     try {
-        SeleniumWaitHelper.waitForElementToBeClickable(webDriver, getLocator(),getTimeoutInSeconds());
-        WebElement elementToClick = webDriver.findElement(getLocator());
+      SeleniumWaitHelper
+          .waitForElementToBeClickable(webDriver, getLocator(), getTimeoutInSeconds());
+      WebElement elementToClick = webDriver.findElement(getLocator());
 
       if (elementToClick.isDisplayed()) {
         elementToClick.click();
         result = CollectorStepResult.newModifierResult();
       } else {
-        final String message = String.format("Element defined by %s is not yet visible!", getLocator().toString());
+        final String message = String
+            .format("Element defined by %s is not yet visible!", getLocator().toString());
         result = CollectorStepResult.newProcessingErrorResult(message);
         LOG.warn(message);
       }
     } catch (WebDriverException e) {
       final String message =
-              String.format("No element defined by %s could be found before timeout (%s seconds)!",
-                    getLocator().toString(), getTimeoutInSeconds());
+          String.format("No element defined by %s could be found before timeout (%s seconds)!",
+              getLocator().toString(), getTimeoutInSeconds());
       LOG.warn(message, e.getMessage());
       result = CollectorStepResult.newProcessingErrorResult(message);
     }

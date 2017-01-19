@@ -20,20 +20,18 @@ package com.cognifide.aet.communication.api.metadata;
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableSet;
-
 import java.util.Set;
-
 import javax.validation.ConstraintViolation;
 
 public class ValidatorException extends Exception {
 
   private static final Function<ConstraintViolation, String> EXTRACT_CONSTRAINT_VIOLATION_MESSAGES =
-          new Function<ConstraintViolation, String>() {
-            @Override
-            public String apply(ConstraintViolation violation) {
-              return violation.getMessage();
-            }
-          };
+      new Function<ConstraintViolation, String>() {
+        @Override
+        public String apply(ConstraintViolation violation) {
+          return violation.getMessage();
+        }
+      };
 
   private transient final Set<ConstraintViolation> issues;
 
