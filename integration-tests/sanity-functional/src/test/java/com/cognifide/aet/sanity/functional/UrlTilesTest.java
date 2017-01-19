@@ -33,9 +33,9 @@ import static org.junit.Assert.assertEquals;
 @Modules(GuiceModule.class)
 public class UrlTilesTest {
 
-  private static final int URLS = 97;
+  private static final int URLS = 100;
 
-  private static final int EXPECTED_URLS_SUCCESS = 49;
+  private static final int EXPECTED_URLS_SUCCESS = 52;
 
   private static final int EXPECTED_URLS_WARN = 6;
 
