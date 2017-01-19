@@ -17,7 +17,7 @@
  */
 package com.cognifide.aet.job.common.modifiers.click;
 
-import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.atLeast;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -47,7 +47,7 @@ public class ClickModifierTest {
 
   private static final String PARAM_CSS_VALUE = "#hlogo > a";
 
-  private static final String PARAM_TIMEOUT_VALUE = "5";
+  private static final String PARAM_TIMEOUT_VALUE = "15000";
 
   @Mock
   private WebDriver webDriver;
@@ -123,16 +123,6 @@ public class ClickModifierTest {
     when(elementToClick.isDisplayed()).thenReturn(true);
     tested.setParameters(params);
     tested.collect();
-    verify(elementToClick, times(1)).click();
-  }
-
-  @Test
-  public void collect_whenValidCssParamIsProvided_elementIsClicked()
-      throws ProcessingException, ParametersException {
-    setupParams(PARAM_TIMEOUT_VALUE, PARAM_XPATH_VALUE, null);
-    when(elementToClick.isDisplayed()).thenReturn(true);
-    tested.setParameters(params);
-    tested.collect();
-    verify(elementToClick, times(1)).click();
+    verify(webDriver, atLeast(1)).findElement(By.xpath(PARAM_XPATH_VALUE));
   }
 }
