@@ -61,8 +61,8 @@ Feature: Tests Results Filtering
   Scenario: Filtering Tests Results: w3c-html5
     Given I have opened sample tests report page
     When I search for tests containing "w3c-html5"
-    Then There are 4 tiles visible
-    And Statistics text contains "4 ( 1 / 1 / 2 / 0 )"
+    Then There are 7 tiles visible
+    And Statistics text contains "7 ( 1 / 1 / 5 / 0 )"
 
   Scenario: Filtering Tests Results: click-modifier
     Given I have opened sample tests report page

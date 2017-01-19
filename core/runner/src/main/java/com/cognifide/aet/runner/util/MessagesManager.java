@@ -50,9 +50,6 @@ public class MessagesManager {
 
   private static final String DEFAULT_JMX_URL = "service:jmx:rmi:///jndi/rmi://localhost:11199/jmxrmi";
 
-  @Property(name = JMX_URL_PROPERTY_NAME, label = "ActiveMQ JMX endpoint URL", description = "ActiveMQ JMX endpoint URL", value = DEFAULT_JMX_URL)
-  private String jmxUrl;
-
   private static final String REMOVE_OPERATION_NAME = "removeMatchingMessages";
 
   private static final String JMS_CORRELATION_ID = "JMSCorrelationID";
@@ -68,6 +65,9 @@ public class MessagesManager {
   private static final String AET_QUEUE_DOMAIN = "AET.";
 
   static final String DESTINATION_NAME_PROPERTY = "destinationName";
+
+  @Property(name = JMX_URL_PROPERTY_NAME, label = "ActiveMQ JMX endpoint URL", description = "ActiveMQ JMX endpoint URL", value = DEFAULT_JMX_URL)
+  private String jmxUrl;
 
   @Activate
   public void activate(Map properties) {

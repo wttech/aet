@@ -78,7 +78,7 @@ class AetSocketLock extends SocketLock {
           }
           // Randomness or retry! Something from my past (Paul H) :
           // http://www.wattystuff.net/amateur/packet/whatispacket.htm (search for random in page)
-          syncObject.wait((long) (DELAY_BETWEEN_SOCKET_CHECKS * Math.random()));
+          Thread.sleep((long) (DELAY_BETWEEN_SOCKET_CHECKS * Math.random()));
         } catch (InterruptedException | IOException e) {
           throw new WebDriverException(e);
         }
