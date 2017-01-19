@@ -22,6 +22,7 @@ import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
+import com.cognifide.aet.job.common.SeleniumWaitHelper;
 import com.cognifide.aet.job.common.modifiers.WebElementsLocatorParams;
 import com.cognifide.aet.vs.ArtifactsDAO;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -104,7 +105,7 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
     private byte[] takePartialScreenshot() throws IOException, ProcessingException {
         WebElement element;
         try {
-            waitForElementToBePresent(webDriver, getLocator());
+            SeleniumWaitHelper.waitForElementToBePresent(webDriver, getLocator(),getTimeoutInSeconds());
             element = webDriver.findElement(getLocator());
         } catch (NoSuchElementException e) {
             throw new ProcessingException("Unable to find element for taking screenshot", e);
