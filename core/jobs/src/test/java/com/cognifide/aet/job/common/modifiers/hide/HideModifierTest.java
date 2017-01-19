@@ -75,7 +75,8 @@ public class HideModifierTest {
   }
 
   @Test(expected = ParametersException.class)
-  public void setParameters_CssAndXpathArePassed_ValidationPassedUnsuccessfuly() throws ParametersException {
+  public void setParameters_CssAndXpathArePassed_ValidationPassedUnsuccessfuly()
+      throws ParametersException {
     when(params.containsKey(PARAM_CSS)).thenReturn(true);
     when(params.get(PARAM_CSS)).thenReturn(PARAM_CSS_VALUE);
 
@@ -85,13 +86,14 @@ public class HideModifierTest {
   }
 
   @Test(expected = ParametersException.class)
-  public void setParameters_CssAndXpathAreNotPassed_ValidationPassedUnsuccessfuly() throws ParametersException {
+  public void setParameters_CssAndXpathAreNotPassed_ValidationPassedUnsuccessfuly()
+      throws ParametersException {
     tested.setParameters(params);
   }
 
   @Test
   public void hideElement_ValidXPathIsProvided_WebDriverFindElementsMethodIsCalledOnce()
-          throws ProcessingException, ParametersException {
+      throws ProcessingException, ParametersException {
     when(params.containsKey(PARAM_XPATH)).thenReturn(true);
     when(params.get(PARAM_XPATH)).thenReturn(PARAM_XPATH_VALUE);
     tested.setParameters(params);
@@ -101,7 +103,7 @@ public class HideModifierTest {
 
   @Test
   public void hideElement_ValidCssIsProvided_WebDriverFindElementsMethodIsCalledOnce()
-          throws ProcessingException, ParametersException {
+      throws ProcessingException, ParametersException {
     when(params.containsKey(PARAM_CSS)).thenReturn(true);
     when(params.get(PARAM_CSS)).thenReturn(PARAM_CSS_VALUE);
     tested.setParameters(params);
