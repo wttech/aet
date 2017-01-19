@@ -53,21 +53,21 @@ public abstract class W3cHtml5ComparatorJob implements ComparatorJob {
           ProcessingException {
     String resultId;
     ComparatorStepResult comparatorStepResult;
-    W3cHtml5ComparatorResult modifiedW3cComparatorResult = w3cComparatorResult;
+    W3cHtml5ComparatorResult filteredW3cComparatorResult = w3cComparatorResult;
     for (DataFilterJob<W3cHtml5ComparatorResult> dataFilterJob : dataFilterJobs) {
-      modifiedW3cComparatorResult = dataFilterJob.modifyData(w3cComparatorResult);
+      filteredW3cComparatorResult = dataFilterJob.modifyData(w3cComparatorResult);
     }
 
-    resultId = artifactsDAO.saveArtifactInJsonFormat(properties, modifiedW3cComparatorResult);
-    if (modifiedW3cComparatorResult.getErrorsCount() > 0) {
+    resultId = artifactsDAO.saveArtifactInJsonFormat(properties, filteredW3cComparatorResult);
+    if (filteredW3cComparatorResult.getErrorsCount() > 0) {
       comparatorStepResult = new ComparatorStepResult(resultId, ComparatorStepResult.Status.FAILED);
-    } else if (!ignoreWarnings && modifiedW3cComparatorResult.getWarningsCount() > 0) {
+    } else if (!ignoreWarnings && filteredW3cComparatorResult.getWarningsCount() > 0) {
       comparatorStepResult = new ComparatorStepResult(resultId, ComparatorStepResult.Status.WARNING);
     } else {
       comparatorStepResult = new ComparatorStepResult(resultId, ComparatorStepResult.Status.PASSED);
     }
-    comparatorStepResult.addData("errorCount", Integer.toString(modifiedW3cComparatorResult.getErrorsCount()));
-    comparatorStepResult.addData("warningCount", Integer.toString(modifiedW3cComparatorResult.getWarningsCount()));
+    comparatorStepResult.addData("errorCount", Integer.toString(filteredW3cComparatorResult.getErrorsCount()));
+    comparatorStepResult.addData("warningCount", Integer.toString(filteredW3cComparatorResult.getWarningsCount()));
     return comparatorStepResult;
   }
 

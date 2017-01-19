@@ -22,14 +22,18 @@ import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
+import com.cognifide.aet.job.common.SeleniumWaitHelper;
 import com.cognifide.aet.job.common.modifiers.WebElementsLocatorParams;
-import org.apache.commons.lang3.BooleanUtils;
-import org.openqa.selenium.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.lang3.BooleanUtils;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.WebElement;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class HideModifier extends WebElementsLocatorParams implements CollectorJob {
 
@@ -59,9 +63,9 @@ public class HideModifier extends WebElementsLocatorParams implements CollectorJ
   @Override
   public CollectorStepResult collect() throws ProcessingException {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Hiding element for {}: {} on page: {} with leaveBlankSpace: {}. url: {}",
-              getSelectorType(), getSelectorValue(), webDriver.getCurrentUrl(), leaveBlankSpace, properties.getUrl(),
-              properties.getUrl());
+      LOG.debug("Hiding element  on page: {} with leaveBlankSpace: {}. url: {}",
+          getLocator().toString(), webDriver.getCurrentUrl(), leaveBlankSpace, properties.getUrl(),
+          properties.getUrl());
     }
     return hideElement(getLocator());
   }
@@ -70,7 +74,9 @@ public class HideModifier extends WebElementsLocatorParams implements CollectorJ
   public void setParameters(Map<String, String> params) throws ParametersException {
     setElementParams(params);
     leaveBlankSpace = BooleanUtils.toBooleanDefaultIfNull(
-            BooleanUtils.toBooleanObject(params.get(LEAVE_BLANK_SPACE_PARAM)), LEAVE_BLANK_SPACE_DEFAULT);}
+        BooleanUtils.toBooleanObject(params.get(LEAVE_BLANK_SPACE_PARAM)),
+        LEAVE_BLANK_SPACE_DEFAULT);
+  }
 
   public CollectorStepResult hideElement(By locator) throws ProcessingException {
     CollectorStepResult result;
@@ -83,7 +89,8 @@ public class HideModifier extends WebElementsLocatorParams implements CollectorJ
       }
 
       By elementLocator = getLocator();
-      waitForElementToBePresent(webDriver, elementLocator);
+      SeleniumWaitHelper
+          .waitForElementToBePresent(webDriver, elementLocator, getTimeoutInSeconds());
 
       List<WebElement> webElements = webDriver.findElements(elementLocator);
       for (WebElement element : webElements) {
@@ -91,11 +98,12 @@ public class HideModifier extends WebElementsLocatorParams implements CollectorJ
       }
       result = CollectorStepResult.newModifierResult();
     } catch (WebDriverException e) {
-      final String message = String.format("Error while hiding element '%s'. %s", getSelectorValue(), e.getMessage());
+      final String message = String
+          .format("Error while hiding element %s", getLocator().toString(), e.getMessage());
       result = CollectorStepResult.newProcessingErrorResult(message);
-      LOG.warn("Error while trying to find element '{}'", getSelectorValue(), e);
+      LOG.warn("Error while trying to find element '{}'", getLocator().toString(), e);
     } catch (Exception e) {
-      throw new ProcessingException("Can't hide element by " + getSelectorType() + ": " + getSelectorValue(), e);
+      throw new ProcessingException("Can't hide element by " + getLocator().toString(), e);
     }
     return result;
   }

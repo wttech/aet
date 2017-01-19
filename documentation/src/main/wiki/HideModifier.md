@@ -27,7 +27,7 @@ Module name: **hide**
             <open />          
             ...
             <hide xpath="//*[@id='logo']" />
-            <hide css="#logo > a" />            
+            <hide css="#ad-section > a" />            
             ...
             <resolution width="1200" height="760" />
             <screen />
