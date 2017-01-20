@@ -95,7 +95,10 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
 
   @Override
   public void setParameters(Map<String, String> params) throws ParametersException {
-    setElementParams(params);
+    if (StringUtils.isNotBlank(params.get(XPATH_PARAM)) || StringUtils
+        .isNotBlank(params.get(CSS_PARAM))) {
+      setElementParams(params);
+    }
   }
 
   private byte[] takeScreenshot() throws ProcessingException {

@@ -38,7 +38,7 @@ Feature: Tests Results Filtering
     Given I have opened sample tests report page
     When I search for tests containing "layout"
     Then There are 7 tiles visible
-    And Statistics text contains "7 ( 3 / 0 / 4 / 0 )"
+    And Statistics text contains "9 ( 3 / 0 / 4 / 0 )"
 
    Scenario: Filtering Tests Results: jserrors
     Given I have opened sample tests report page

@@ -27,9 +27,9 @@ abstract public class WebElementsLocatorParams {
 
   private static final String PARAM_TIMEOUT = "timeout";
 
-  private static final String XPATH_PARAM = "xpath";
+  protected static final String XPATH_PARAM = "xpath";
 
-  private static final String CSS_PARAM = "css";
+  protected static final String CSS_PARAM = "css";
 
   private static final long TIMEOUT_SECONDS_MAX_VALUE = 15L;
 
