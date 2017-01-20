@@ -56,7 +56,7 @@ public abstract class W3cHtml5ComparatorJob implements ComparatorJob {
     ComparatorStepResult comparatorStepResult;
     W3cHtml5ComparatorResult filteredW3cComparatorResult = w3cComparatorResult;
     for (DataFilterJob<W3cHtml5ComparatorResult> dataFilterJob : dataFilterJobs) {
-      filteredW3cComparatorResult = dataFilterJob.modifyData(w3cComparatorResult);
+      filteredW3cComparatorResult = dataFilterJob.modifyData(filteredW3cComparatorResult);
     }
 
     resultId = artifactsDAO.saveArtifactInJsonFormat(properties, filteredW3cComparatorResult);
