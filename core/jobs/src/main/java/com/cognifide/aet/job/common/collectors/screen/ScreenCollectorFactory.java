@@ -43,7 +43,10 @@ public class ScreenCollectorFactory implements CollectorFactory {
   @Override
   public CollectorJob createInstance(CollectorProperties properties, Map<String, String> parameters,
       WebCommunicationWrapper webCommunicationWrapper) throws ParametersException {
-    return new ScreenCollector(properties, webCommunicationWrapper.getWebDriver(), artifactsDAO);
+    ScreenCollector collector = new ScreenCollector(properties,
+        webCommunicationWrapper.getWebDriver(), artifactsDAO);
+    collector.setParameters(parameters);
+    return collector;
   }
 
 }
