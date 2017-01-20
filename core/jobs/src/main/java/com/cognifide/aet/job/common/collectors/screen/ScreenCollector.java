@@ -48,7 +48,7 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
 
   public static final String NAME = "screen";
 
-  public static final String CONTENT_TYPE = "image/png";
+  private static final String CONTENT_TYPE = "image/png";
 
   private static final String PNG_FORMAT = "png";
 
@@ -57,8 +57,6 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
   private final ArtifactsDAO artifactsDAO;
 
   private final CollectorProperties properties;
-
-  private boolean isPartial = false;
 
   ScreenCollector(CollectorProperties properties, WebDriver webDriver, ArtifactsDAO artifactsDAO) {
     this.properties = properties;
@@ -97,20 +95,15 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
 
   @Override
   public void setParameters(Map<String, String> params) throws ParametersException {
-    if (StringUtils.isNotBlank(params.get(XPATH_PARAM)) || StringUtils
-        .isNotBlank(params.get(CSS_PARAM))) {
-      setElementParams(params);
-      isPartial = true;
-    }
+    setElementParams(params);
   }
 
   private byte[] takeScreenshot() throws ProcessingException {
     try {
-      if (isPartial) {
+      if (isSelectorPresent()) {
         SeleniumWaitHelper
             .waitForElementToBePresent(webDriver, getLocator(), getTimeoutInSeconds());
-        WebElement element = webDriver.findElement(getLocator());
-        return getImagePart(getFullPageScreenshot(), element);
+        return getImagePart(getFullPageScreenshot(), webDriver.findElement(getLocator()));
       } else {
         return getFullPageScreenshot();
       }
@@ -144,7 +137,7 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
   }
 
   private byte[] bufferedImageToByteArray(BufferedImage bufferedImage) throws ProcessingException {
-    try (ByteArrayOutputStream temporaryStream = new ByteArrayOutputStream();) {
+    try (ByteArrayOutputStream temporaryStream = new ByteArrayOutputStream()) {
       ImageIO.write(bufferedImage, PNG_FORMAT, temporaryStream);
       temporaryStream.flush();
       return temporaryStream.toByteArray();
