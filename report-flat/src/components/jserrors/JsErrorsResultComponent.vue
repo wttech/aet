@@ -76,10 +76,8 @@
     },
 
     created: function () {
-      var self = this;
-
       if (this.model.stepResult != null && this.model.stepResult.status != "PASSED") {
-        var jsCompareArtifactUrl = this.getArtifactUrl(this.model.stepResult.artifactId)
+        var jsCompareArtifactUrl = this.getArtifactUrl(this.model.stepResult.artifactId);
         this.$http.get(jsCompareArtifactUrl).then((response) => {
           self.artifact = response.body;
         }, (response) => {
