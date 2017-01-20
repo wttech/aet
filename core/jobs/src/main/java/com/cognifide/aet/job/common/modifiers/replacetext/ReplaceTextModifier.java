@@ -1,21 +1,21 @@
 /**
  * Automated Exploratory Tests
- *
+ * <p>
  * Copyright (C) 2013 Cognifide Limited
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cognifide.aet.job.common.modifiers.hide;
+package com.cognifide.aet.job.common.modifiers.replacetext;
 
 import com.cognifide.aet.communication.api.metadata.CollectorStepResult;
 import com.cognifide.aet.job.api.collector.CollectorJob;
@@ -26,7 +26,7 @@ import com.cognifide.aet.job.common.SeleniumWaitHelper;
 import com.cognifide.aet.job.common.modifiers.WebElementsLocatorParams;
 import java.util.List;
 import java.util.Map;
-import org.apache.commons.lang3.BooleanUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -35,27 +35,24 @@ import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class HideModifier extends WebElementsLocatorParams implements CollectorJob {
+public class ReplaceTextModifier extends WebElementsLocatorParams implements CollectorJob {
 
-  public static final String NAME = "hide";
+  public static final String NAME = "replaceText";
 
-  private static final Logger LOG = LoggerFactory.getLogger(HideModifier.class);
+  private static final Logger LOG = LoggerFactory.getLogger(ReplaceTextModifier.class);
 
-  private static final String LEAVE_BLANK_SPACE_PARAM = "leaveBlankSpace";
+  private static final String ATTRIBUTE_PARAM = "attributeName";
 
-  private static final boolean LEAVE_BLANK_SPACE_DEFAULT = true;
-
-  private static final String DISPLAY_NONE_SCRIPT = "arguments[0].style.display='none'";
-
-  private static final String VISIBILITY_FALSE_SCRIPT = "arguments[0].style.visibility='hidden'";
+  private static final String VALUE_PARAM = "value";
 
   private final WebDriver webDriver;
 
   private final CollectorProperties properties;
 
-  private boolean leaveBlankSpace;
+  private String attributeName;
+  private String value;
 
-  public HideModifier(WebDriver webDriver, CollectorProperties properties) {
+  public ReplaceTextModifier(WebDriver webDriver, CollectorProperties properties) {
     this.webDriver = webDriver;
     this.properties = properties;
   }
@@ -63,30 +60,26 @@ public class HideModifier extends WebElementsLocatorParams implements CollectorJ
   @Override
   public CollectorStepResult collect() throws ProcessingException {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Hiding element  on page: {} with leaveBlankSpace: {}. url: {}",
-          getLocator().toString(), webDriver.getCurrentUrl(), leaveBlankSpace, properties.getUrl(),
+      LOG.debug(
+          "Replacing element for {} on page: {} with attributeName : {} and value: {}. url: {}",
+          getLocator().toString(), webDriver.getCurrentUrl(), attributeName, value,
+          properties.getUrl(),
           properties.getUrl());
     }
-    return hideElement(getLocator());
+    return replaceText();
   }
 
   @Override
   public void setParameters(Map<String, String> params) throws ParametersException {
     setElementParams(params);
-    leaveBlankSpace = BooleanUtils.toBooleanDefaultIfNull(
-        BooleanUtils.toBooleanObject(params.get(LEAVE_BLANK_SPACE_PARAM)),
-        LEAVE_BLANK_SPACE_DEFAULT);
+    attributeName = StringUtils.defaultIfBlank(params.get(ATTRIBUTE_PARAM), "innerHTML");
+    value = StringUtils.defaultIfBlank(params.get(VALUE_PARAM), "");
   }
 
-  public CollectorStepResult hideElement(By locator) throws ProcessingException {
+  public CollectorStepResult replaceText() throws ProcessingException {
     CollectorStepResult result;
     try {
-      String script;
-      if (leaveBlankSpace) {
-        script = VISIBILITY_FALSE_SCRIPT;
-      } else {
-        script = DISPLAY_NONE_SCRIPT;
-      }
+      String script = "arguments[0]." + attributeName + "=arguments[1];";
 
       By elementLocator = getLocator();
       SeleniumWaitHelper
@@ -94,16 +87,19 @@ public class HideModifier extends WebElementsLocatorParams implements CollectorJ
 
       List<WebElement> webElements = webDriver.findElements(elementLocator);
       for (WebElement element : webElements) {
-        ((JavascriptExecutor) webDriver).executeScript(script, element);
+        ((JavascriptExecutor) webDriver).executeScript(script, element, value);
       }
       result = CollectorStepResult.newModifierResult();
     } catch (WebDriverException e) {
       final String message = String
-          .format("Error while hiding element %s", getLocator().toString(), e.getMessage());
+          .format("Error while replacing text in element %s. %s", getLocator().toString(),
+              e.getMessage());
       result = CollectorStepResult.newProcessingErrorResult(message);
       LOG.warn("Error while trying to find element '{}'", getLocator().toString(), e);
     } catch (Exception e) {
-      throw new ProcessingException("Can't hide element by " + getLocator().toString(), e);
+      throw new ProcessingException(
+          "Can't replace text in +" + attributeName + " attribute in element: " + getLocator()
+              .toString(), e);
     }
     return result;
   }

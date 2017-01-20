@@ -24,9 +24,13 @@ This is a set of key-value pairs with the use of which the user can pass some co
 <collect>
   <open/>
   <sleep duration="1000"/>
-  <screen width="1280" height="1024" name="desktop"/>
-  <screen width="768" height="1024" name="tablet"/>
-  <screen width="320" height="480" name="mobile"/>
+  <resolution width="1280" height="1024" name="desktop"/>
+  <screen name="desktop"/>
+  <resolution width="768" height="1024" name="tablet"/>
+  <screen name="tablet"/
+  <resolution width="320" height="480" name="mobile"/>
+  <screen name="mobile"/>
+  
 </collect>
 <compare>
   <screen collectorName="mobile"/>

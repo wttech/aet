@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cognifide.aet.job.common.modifiers.click;
+package com.cognifide.aet.job.common.modifiers.replacetext;
 
 import com.cognifide.aet.job.api.collector.CollectorFactory;
 import com.cognifide.aet.job.api.collector.CollectorJob;
@@ -28,18 +28,20 @@ import org.apache.felix.scr.annotations.Service;
 
 @Component
 @Service
-public class ClickModiferFactory implements CollectorFactory {
+public class ReplaceTextFactory implements CollectorFactory {
 
   @Override
   public String getName() {
-    return ClickModifier.NAME;
+    return ReplaceTextModifier.NAME;
   }
 
   @Override
   public CollectorJob createInstance(CollectorProperties properties, Map<String, String> parameters,
       WebCommunicationWrapper webCommunicationWrapper) throws ParametersException {
-    ClickModifier collector = new ClickModifier(webCommunicationWrapper.getWebDriver());
-    collector.setParameters(parameters);
-    return collector;
+    ReplaceTextModifier modifier = new ReplaceTextModifier(webCommunicationWrapper.getWebDriver(),
+        properties);
+    modifier.setParameters(parameters);
+    return modifier;
   }
+
 }
