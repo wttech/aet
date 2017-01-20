@@ -144,15 +144,12 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
   }
 
   private byte[] bufferedImageToByteArray(BufferedImage bufferedImage) throws ProcessingException {
-    ByteArrayOutputStream temporaryStream = new ByteArrayOutputStream();
-    try {
+    try (ByteArrayOutputStream temporaryStream = new ByteArrayOutputStream();) {
       ImageIO.write(bufferedImage, PNG_FORMAT, temporaryStream);
       temporaryStream.flush();
       return temporaryStream.toByteArray();
     } catch (IOException e) {
       throw new ProcessingException("Unable to convert screenshot part to byte Array", e);
-    } finally {
-      IOUtils.closeQuietly(temporaryStream);
     }
   }
 }

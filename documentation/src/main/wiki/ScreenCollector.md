@@ -19,7 +19,7 @@ Module name: **screen**
 | --------- | ----- | ----------- | --------- |
 | `xpath` | xpath_to_element | Xpath to element(s) | optional (either xpath or css) |
 | `css` | css_selector_to_element | css selector to element(s)| optional (either xpath or css) |
-| `timeout` | 1000ms | The timeout for the element to appear, in milliseconds. The max value of this parameter is 15000 milliseconds (15 seconds). | no (default will be used) |
+| `timeout` | 1000ms | The timeout for the element to appear, in milliseconds. The max value of this parameter is 15000 milliseconds (15 seconds). | no (default will be used) this parameter applies only in conjunction with xpath or css param |
 
 
 ##### Example Usage

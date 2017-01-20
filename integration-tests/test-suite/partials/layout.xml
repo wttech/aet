@@ -119,11 +119,25 @@
 		</urls>
 	</test>
 
-	<test name="comparator-Layout-Partial-SUCCESS">
+	<test name="comparator-Layout-Partial-By-CSS-SUCCESS">
 		<collect>
 			<open />
 			<resolution width="200" height="300" />
 			<screen css="img" />
+		</collect>
+		<compare>
+			<screen comparator="layout" />
+		</compare>
+		<urls>
+			<url href="comparators/layout/success.jsp" />
+		</urls>
+	</test>
+
+	<test name="comparator-Layout-Partial-By-XPATH-SUCCESS">
+		<collect>
+			<open />
+			<resolution width="200" height="300" />
+			<screen xpath="//*[@id='banner']/div/div[1]/h1" />
 		</collect>
 		<compare>
 			<screen comparator="layout" />
