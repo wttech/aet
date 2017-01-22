@@ -1568,7 +1568,7 @@ Module name: **click**
 | Parameter | Default value | Description | Mandatory |
 | --------- | ------------- | ----------- | --------- |
 | `xpath` | | xpath of element to click | yes |
-| `timeout` | | Timeout for element to appear, in miliseconds. Max value of this parameter is 15000 miliseconds (15 seconds). | yes |
+| `timeout` | | Timeout for element to appear, in milliseconds. Max value of this parameter is 15000 milliseconds (15 seconds). | yes |
 
 ##### Example Usage
 
@@ -1582,7 +1582,8 @@ Module name: **click**
             <click xpath="//*[@id='header_0_container1_0_pRow']/div[1]/div/div/a/img" timeout="3000" />
             <sleep duration="2000" />
             ...
-            <screen width="1280" height="800" name="desktop" />
+            <resolution width="1280" height="800" />
+            <screen name="desktop" />
             ...
         </collect>
         <compare>
@@ -1733,7 +1734,8 @@ Module name: **hide**
             <hide xpath="//*[@id='logo']" />
             <hide xpath="//*[@id='primaryNavMenu']/li[2]/a/div" />            
             ...
-            <screen width="1200" height="760" />
+            <resolution width="1280" height="800" />
+            <screen name="desktop" />
             ...
         </collect>
         <compare>
@@ -1916,7 +1918,7 @@ No parameters.
 
 | ! Important information |
 |:----------------------- |
-| Timeout for waiting is 10000 milliseconds.<br/><br/> Page is checked every 1000 miliseconds. |
+| Timeout for waiting is 10000 milliseconds.<br/><br/> Page is checked every 1000 milliseconds. |
 
 ##### Example Usage
 
@@ -2009,9 +2011,12 @@ There exists special comparator property `collectorName` which is connected with
 <collect>
     <open/>
     <sleep duration="1000"/>
-    <screen width="1280" height="1024" name="desktop"/>
-    <screen width="768" height="1024" name="tablet"/>
-    <screen width="320" height="480" name="mobile"/>
+    <resolution width="1280" height="1024" name="desktop"/>
+    <screen name="desktop"/>
+    <resolution width="768" height="1024" name="tablet"/>
+    <screen name="tablet"/>
+    <resolution width="320" height="480" name="mobile"/>
+    <screen name="mobile"/>
 </collect>
 <compare>
     <screen collectorName="mobile"/>
@@ -2027,9 +2032,12 @@ Configuration above will trigger three screens collections (desktop, tablet and 
 <collect>
     <open/>
     <sleep duration="1000"/>
-    <screen width="1280" height="1024" name="desktop"/>
-    <screen width="768" height="1024" name="tablet"/>
-    <screen width="320" height="480" name="mobile"/>
+    <resolution width="1280" height="1024" name="desktop"/>
+    <screen name="desktop"/>
+    <resolution width="768" height="1024" name="tablet"/>
+    <screen name="tablet"/>
+    <resolution width="320" height="480" name="mobile"/>
+    <screen name="mobile"/>
 </collect>
 <compare>
     <screen/>
@@ -2044,9 +2052,12 @@ Configuration above will trigger three screens collections (desktop, tablet and 
 <collect>
     <open/>
     <sleep duration="1000"/>
-    <screen width="1280" height="1024" name="desktop"/>
-    <screen width="768" height="1024" name="tablet"/>
-    <screen width="320" height="480" name="mobile"/>
+    <resolution width="1280" height="1024" name="desktop"/>
+    <screen name="desktop"/>
+    <resolution width="768" height="1024" name="tablet"/>
+    <screen name="tablet"/>
+    <resolution width="320" height="480" name="mobile"/>
+    <screen name="mobile"/>
 </collect>
 <compare>
     <screen/>

@@ -36,6 +36,7 @@
 			<xsl:apply-templates select="document('partials/accessibility.xml')/*/test"/>
 			<xsl:apply-templates select="document('partials/header.xml')/*/test"/>
 			<xsl:apply-templates select="document('partials/loginmodifier.xml')/*/test"/>
+			<xsl:apply-templates select="document('partials/replacetext.xml')/*/test"/>
 			<xsl:copy-of select="reports"/>
 		</xsl:copy>
 	</xsl:template>

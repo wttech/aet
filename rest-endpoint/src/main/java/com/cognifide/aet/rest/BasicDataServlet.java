@@ -45,10 +45,10 @@ abstract class BasicDataServlet extends HttpServlet {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(BasicDataServlet.class);
 
-  private final Gson gson = new Gson();
+  private static final Gson GSON = new Gson();
 
   @Reference
-  private HttpService httpService;
+  private transient HttpService httpService;
 
   /***
    * Returns JSON representation of Suite based correlationId or suite name
@@ -105,7 +105,7 @@ abstract class BasicDataServlet extends HttpServlet {
   protected abstract void process(DBKey dbKey, HttpServletRequest req, HttpServletResponse resp) throws IOException;
 
   protected String responseAsJson(String format, Object... args) {
-    return gson.toJson(new ErrorMessage(format, args));
+    return GSON.toJson(new ErrorMessage(format, args));
   }
 
   private static class ErrorMessage {

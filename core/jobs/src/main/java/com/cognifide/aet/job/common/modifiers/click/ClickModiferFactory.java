@@ -22,20 +22,13 @@ import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
-import com.cognifide.aet.validation.ValidationResultBuilderFactory;
-
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.Service;
-
 import java.util.Map;
+import org.apache.felix.scr.annotations.Component;
+import org.apache.felix.scr.annotations.Service;
 
 @Component
 @Service
 public class ClickModiferFactory implements CollectorFactory {
-
-  @Reference
-  private ValidationResultBuilderFactory validationResultBuilderFactory;
 
   @Override
   public String getName() {
@@ -44,9 +37,8 @@ public class ClickModiferFactory implements CollectorFactory {
 
   @Override
   public CollectorJob createInstance(CollectorProperties properties, Map<String, String> parameters,
-                                     WebCommunicationWrapper webCommunicationWrapper) throws ParametersException {
-    ClickModifier collector = new ClickModifier(webCommunicationWrapper.getWebDriver(),
-            validationResultBuilderFactory.createInstance());
+      WebCommunicationWrapper webCommunicationWrapper) throws ParametersException {
+    ClickModifier collector = new ClickModifier(webCommunicationWrapper.getWebDriver());
     collector.setParameters(parameters);
     return collector;
   }

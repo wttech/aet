@@ -17,25 +17,23 @@
  */
 package com.cognifide.aet.sanity.functional;
 
-import com.google.inject.Inject;
+import static org.junit.Assert.assertEquals;
 
 import com.cognifide.aet.sanity.functional.po.ReportHomePage;
 import com.cognifide.qa.bb.junit.Modules;
 import com.cognifide.qa.bb.junit.TestRunner;
-
+import com.google.inject.Inject;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-
-import static org.junit.Assert.assertEquals;
 
 @RunWith(TestRunner.class)
 @Modules(GuiceModule.class)
 public class UrlTilesTest {
 
-  private static final int URLS = 97;
+  private static final int URLS = 101;
 
-  private static final int EXPECTED_URLS_SUCCESS = 49;
+  private static final int EXPECTED_URLS_SUCCESS = 53;
 
   private static final int EXPECTED_URLS_WARN = 6;
 
