@@ -95,19 +95,19 @@ public class CollectorJobSchedulerTest {
     verify(producer, times(1)).send(Matchers.<Destination>any(), Matchers.<Message>any());
   }
 
-  @Test
-  public void add_messageQueueIsConsumedBySafeRunMethod() throws Exception {
-    String correlationID = "98765432100";
-    Queue<MessageWithDestination> messagesQueue1 = mockMessagesQueue(Mockito.mock(Message.class),
-            Mockito.mock(Destination.class), correlationID);
-    Queue<MessageWithDestination> messagesQueue2 = mockMessagesQueue(Mockito.mock(Message.class),
-            Mockito.mock(Destination.class), correlationID);
 
+  @Test(expected = IllegalStateException.class)
+  public void add_whenAddedMessageExists_expectIllegalStateException() throws Exception {
+    String correlationID = "98765432100";
+
+    Queue<MessageWithDestination> messagesQueue1 = mockMessagesQueue(Mockito.mock(Message.class), Mockito.mock
+            (Destination.class), correlationID);
+    Queue<MessageWithDestination> messagesQueue2 = mockMessagesQueue(Mockito.mock(Message.class), Mockito.mock
+            (Destination.class), correlationID);
+
+    // quits scheduler in order to stop processing in safeRun method
+    tested.quit();
     tested.add(messagesQueue1, correlationID);
-    // messageQueues will be processed and removed from messagesMap
-    // in safeRun method of CollectorJobScheduler
-    // so it is possible to add another with the same correlationId
-    Thread.sleep(1000);
     tested.add(messagesQueue2, correlationID);
   }
 
