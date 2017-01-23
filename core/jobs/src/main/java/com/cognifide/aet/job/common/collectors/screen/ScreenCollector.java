@@ -22,23 +22,35 @@ import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
+import com.cognifide.aet.job.common.SeleniumWaitHelper;
+import com.cognifide.aet.job.common.modifiers.WebElementsLocatorParams;
 import com.cognifide.aet.vs.ArtifactsDAO;
-
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Map;
+import javax.imageio.ImageIO;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
+import org.openqa.selenium.Point;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.WebElement;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
-import java.util.Map;
-
-public class ScreenCollector implements CollectorJob {
+public class ScreenCollector extends WebElementsLocatorParams implements CollectorJob {
 
   public static final String NAME = "screen";
-  public static final String CONTENT_TYPE = "image/png";
+
+  private static final String CONTENT_TYPE = "image/png";
+
+  private static final String PNG_FORMAT = "png";
 
   private final WebDriver webDriver;
 
@@ -54,7 +66,7 @@ public class ScreenCollector implements CollectorJob {
 
   @Override
   public CollectorStepResult collect() throws ProcessingException {
-    byte[] screenshot = takeScreenshot(webDriver);
+    byte[] screenshot = takeScreenshot();
 
     CollectorStepResult stepResult;
     if (isPatternAndResultMD5Identical(screenshot)) {
@@ -67,14 +79,14 @@ public class ScreenCollector implements CollectorJob {
         throw new ProcessingException(e.getMessage(), e);
       }
     }
-
     return stepResult;
   }
 
   private boolean isPatternAndResultMD5Identical(byte[] screenshot) {
     if (properties.getPatternId() != null) {
       final String screenshotMD5 = DigestUtils.md5Hex(screenshot);
-      final String patternMD5 = artifactsDAO.getArtifactMD5(properties, properties.getPatternId());
+      final String patternMD5 = artifactsDAO
+          .getArtifactMD5(properties, properties.getPatternId());
       return StringUtils.equalsIgnoreCase(patternMD5, screenshotMD5);
     } else {
       return false;
@@ -83,15 +95,57 @@ public class ScreenCollector implements CollectorJob {
 
   @Override
   public void setParameters(Map<String, String> params) throws ParametersException {
-    //No parameters here
-  }
-
-  private byte[] takeScreenshot(WebDriver webDriver) throws ProcessingException {
-    try {
-      return ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.BYTES);
-    } catch (WebDriverException e) {
-      throw new ProcessingException("Could not take screenshot, page is not loaded yet!", e);
+    if (StringUtils.isNotBlank(params.get(XPATH_PARAM)) || StringUtils
+        .isNotBlank(params.get(CSS_PARAM))) {
+      setElementParams(params);
     }
   }
 
+  private byte[] takeScreenshot() throws ProcessingException {
+    try {
+      if (isSelectorPresent()) {
+        SeleniumWaitHelper
+            .waitForElementToBePresent(webDriver, getLocator(), getTimeoutInSeconds());
+        return getImagePart(getFullPageScreenshot(), webDriver.findElement(getLocator()));
+      } else {
+        return getFullPageScreenshot();
+      }
+    } catch (NoSuchElementException e) {
+      throw new ProcessingException("Unable to find element for taking screenshot part", e);
+    } catch (IOException | WebDriverException e) {
+      throw new ProcessingException("Unable to take screenshot", e);
+    }
+
+  }
+
+  private byte[] getFullPageScreenshot() {
+    return ((TakesScreenshot) webDriver).getScreenshotAs(OutputType.BYTES);
+  }
+
+  private byte[] getImagePart(byte[] fullPage, WebElement webElement)
+      throws IOException, ProcessingException {
+    InputStream in = new ByteArrayInputStream(fullPage);
+    try {
+      BufferedImage fullImg = ImageIO.read(in);
+      Point point = webElement.getLocation();
+      Dimension size = webElement.getSize();
+      BufferedImage screenshotSection = fullImg.getSubimage(point.getX(), point.getY(),
+          size.getWidth(), size.getHeight());
+      return bufferedImageToByteArray(screenshotSection);
+    } catch (IOException e) {
+      throw new ProcessingException("Unable to create image from taken screenshot", e);
+    } finally {
+      IOUtils.closeQuietly(in);
+    }
+  }
+
+  private byte[] bufferedImageToByteArray(BufferedImage bufferedImage) throws ProcessingException {
+    try (ByteArrayOutputStream temporaryStream = new ByteArrayOutputStream()) {
+      ImageIO.write(bufferedImage, PNG_FORMAT, temporaryStream);
+      temporaryStream.flush();
+      return temporaryStream.toByteArray();
+    } catch (IOException e) {
+      throw new ProcessingException("Unable to convert screenshot part to byte Array", e);
+    }
+  }
 }
