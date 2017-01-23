@@ -140,6 +140,7 @@ public class CollectorJobScheduler implements Runnable {
   }
 
   public void add(Queue<MessageWithDestination> messagesQueue, String correlationID) {
+    // needs synchronisation with 'updateIfMoreMessagesLeft' method
     synchronized(messagesMap) {
       if (messagesMap.putIfAbsent(correlationID, messagesQueue) == null) {
         availableMessages.release();
@@ -250,6 +251,7 @@ public class CollectorJobScheduler implements Runnable {
   }
 
   private void updateIfMoreMessagesLeft() {
+    // needs synchronisation with 'add' method
     synchronized(messagesMap) {
       if (!messagesMap.isEmpty()) {
         availableMessages.release();
