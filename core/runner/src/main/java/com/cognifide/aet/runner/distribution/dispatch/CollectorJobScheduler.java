@@ -140,17 +140,14 @@ public class CollectorJobScheduler implements Runnable {
   }
 
   public void add(Queue<MessageWithDestination> messagesQueue, String correlationID) {
-    // needs synchronisation with 'updateIfMoreMessagesLeft' method
-    synchronized(messagesMap) {
-      if (messagesMap.putIfAbsent(correlationID, messagesQueue) == null) {
-        availableMessages.release();
-        LOGGER.debug(
-                "New collection message with correlationID: {} (Semaphore availableMessages released). Currently waiting for {} packages ({} slots available).",
-                correlationID, receivedMessagesCounter.size(), getAvailableSlots());
-      } else {
-        LOGGER.error("Message {} already in messages map!", correlationID);
-        throw new IllegalStateException();
-      }
+    if (messagesMap.putIfAbsent(correlationID, messagesQueue) == null) {
+      availableMessages.release();
+      LOGGER.debug(
+              "New collection message with correlationID: {} (Semaphore availableMessages released). Currently waiting for {} packages ({} slots available).",
+              correlationID, receivedMessagesCounter.size(), getAvailableSlots());
+    } else {
+      LOGGER.error("Message {} already in messages map!", correlationID);
+      throw new IllegalStateException();
     }
   }
 
@@ -251,11 +248,8 @@ public class CollectorJobScheduler implements Runnable {
   }
 
   private void updateIfMoreMessagesLeft() {
-    // needs synchronisation with 'add' method
-    synchronized(messagesMap) {
-      if (!messagesMap.isEmpty()) {
-        availableMessages.release();
-      }
+    if (!messagesMap.isEmpty()) {
+      availableMessages.release();
     }
   }
 
