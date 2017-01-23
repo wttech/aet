@@ -139,7 +139,7 @@ public class CollectorJobScheduler implements Runnable {
     }
   }
 
-  public void add(Queue<MessageWithDestination> messagesQueue, String correlationID) {
+  public synchronized void add(Queue<MessageWithDestination> messagesQueue, String correlationID) {
     if (messagesMap.putIfAbsent(correlationID, messagesQueue) == null) {
       availableMessages.release();
       LOGGER.debug(
