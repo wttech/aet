@@ -97,7 +97,7 @@ public class CollectorJobSchedulerTest {
 
 
   @Test(expected = IllegalStateException.class)
-  public void add_whenAddedMessageExists_expectIllegalStateException() throws Exception {
+  public void add_whenMessageQueueWithSameId_expectIllegalStateException() throws Exception {
     String correlationID = "98765432100";
 
     Queue<MessageWithDestination> messagesQueue1 = mockMessagesQueue(Mockito.mock(Message.class), Mockito.mock
