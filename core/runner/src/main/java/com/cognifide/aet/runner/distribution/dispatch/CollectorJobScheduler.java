@@ -66,7 +66,8 @@ public class CollectorJobScheduler implements Runnable {
   private final ConcurrentMap<String, Queue<MessageWithDestination>> messagesMap = Maps.newConcurrentMap();
 
   /**
-   * BinarySemaphore which is used to passive waiting for work in task run loop
+   * BinarySemaphore which is used to passive waiting for work in task run loop.
+   * When message queue is added then semaphore is released for safeRun method to acquire it.
    */
   private final BinarySemaphore availableMessages = new BinarySemaphore(false);
 
@@ -120,6 +121,7 @@ public class CollectorJobScheduler implements Runnable {
   private void safeRun() {
     while (running) {
       waitUntilMessagesInQueueAvailable();
+      // Processes messages map entries.
       for (Iterator<Map.Entry<String, Queue<MessageWithDestination>>> iterator = messagesMap.entrySet()
               .iterator(); iterator.hasNext(); ) {
         Map.Entry<String, Queue<MessageWithDestination>> entry = iterator.next();
@@ -132,6 +134,7 @@ public class CollectorJobScheduler implements Runnable {
           iterator.remove();
         }
       }
+      // Checks if new entries were added in the meantime.
       updateIfMoreMessagesLeft();
     }
   }
@@ -244,7 +247,7 @@ public class CollectorJobScheduler implements Runnable {
             + maxMessagesInCollectorQueue;
   }
 
-  private void updateIfMoreMessagesLeft() {
+  private synchronized void updateIfMoreMessagesLeft() {
     if (!messagesMap.isEmpty()) {
       availableMessages.release();
     }
@@ -267,11 +270,11 @@ public class CollectorJobScheduler implements Runnable {
       this.semaphore = new Semaphore(available ? 1 : 0);
     }
 
-    public void acquire() throws InterruptedException {
+    private void acquire() throws InterruptedException {
       semaphore.acquire();
     }
 
-    public synchronized void release() {
+    private synchronized void release() {
       if (semaphore.availablePermits() == 0) {
         semaphore.release();
       }

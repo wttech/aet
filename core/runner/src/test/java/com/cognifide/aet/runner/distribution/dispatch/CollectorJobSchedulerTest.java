@@ -106,6 +106,8 @@ public class CollectorJobSchedulerTest {
             (Destination.class), correlationID);
 
     // quits scheduler in order to stop processing in safeRun method
+    // to actually observe the exception on linux
+    // as otherwise the first message is consumed before the second is added
     tested.quit();
     tested.add(messagesQueue1, correlationID);
     tested.add(messagesQueue2, correlationID);
