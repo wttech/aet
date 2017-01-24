@@ -22,8 +22,9 @@ import com.cognifide.aet.runner.util.MessagesManager;
 
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.runner.RunWith;
 import org.mockito.Matchers;
 import org.mockito.Mock;
@@ -51,6 +52,9 @@ import static org.mockito.Mockito.when;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class CollectorJobSchedulerTest {
+
+  @Rule
+  public ExpectedException thrown = ExpectedException.none();
 
   @Mock
   private MessagesManager messagesManager;
@@ -96,16 +100,21 @@ public class CollectorJobSchedulerTest {
   }
 
 
-  @Ignore("Ignored for some unexpected test failure on Linux")
-  @Test(timeout = 2000l, expected = IllegalStateException.class)
-  public void add_whenAddedMessageExists_expectIllegalStateException() throws Exception {
+  @Test
+  public void add_whenMessageQueueWithSameId_expectIllegalStateException() throws Exception {
     String correlationID = "98765432100";
 
     Queue<MessageWithDestination> messagesQueue1 = mockMessagesQueue(Mockito.mock(Message.class), Mockito.mock
             (Destination.class), correlationID);
     Queue<MessageWithDestination> messagesQueue2 = mockMessagesQueue(Mockito.mock(Message.class), Mockito.mock
             (Destination.class), correlationID);
+
+    // quits scheduler in order to stop processing in safeRun method
+    // to actually observe the exception on linux
+    // as otherwise the first message is consumed before the second is added
+    tested.quit();
     tested.add(messagesQueue1, correlationID);
+    thrown.expect(IllegalStateException.class);
     tested.add(messagesQueue2, correlationID);
   }
 
