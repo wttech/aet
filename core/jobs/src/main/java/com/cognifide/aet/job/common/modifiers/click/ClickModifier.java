@@ -50,15 +50,8 @@ public class ClickModifier extends WebElementsLocatorParams implements Collector
           .waitForElementToBeClickable(webDriver, getLocator(), getTimeoutInSeconds());
       WebElement elementToClick = webDriver.findElement(getLocator());
 
-      if (elementToClick.isDisplayed()) {
-        elementToClick.click();
-        result = CollectorStepResult.newModifierResult();
-      } else {
-        final String message = String
-            .format("Element defined by %s is not yet visible!", getLocator().toString());
-        result = CollectorStepResult.newProcessingErrorResult(message);
-        LOG.warn(message);
-      }
+      elementToClick.click();
+      result = CollectorStepResult.newModifierResult();
     } catch (WebDriverException e) {
       final String message =
           String.format("Element not found before timeout (%s seconds): %s!",
