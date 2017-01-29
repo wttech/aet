@@ -29,6 +29,7 @@ import java.util.Map;
 import org.apache.commons.lang3.BooleanUtils;
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
@@ -63,9 +64,8 @@ public class HideModifier extends WebElementsLocatorParams implements CollectorJ
   @Override
   public CollectorStepResult collect() throws ProcessingException {
     if (LOG.isDebugEnabled()) {
-      LOG.debug("Hiding element  on page: {} with leaveBlankSpace: {}. url: {}",
-          getLocator().toString(), webDriver.getCurrentUrl(), leaveBlankSpace, properties.getUrl(),
-          properties.getUrl());
+      LOG.debug("Hiding element {} on page: {} with leaveBlankSpace: {}. url: {}",
+          getLocator().toString(), webDriver.getCurrentUrl(), leaveBlankSpace, properties.getUrl());
     }
     return hideElement(getLocator());
   }
@@ -97,11 +97,18 @@ public class HideModifier extends WebElementsLocatorParams implements CollectorJ
         ((JavascriptExecutor) webDriver).executeScript(script, element);
       }
       result = CollectorStepResult.newModifierResult();
+    } catch (TimeoutException e) {
+      final String message =
+              String.format("Element not found before timeout (%s seconds): %s!",
+                      getTimeoutInSeconds(), getLocator().toString());
+      result = CollectorStepResult.newProcessingErrorResult(message);
+      LOG.info(message);
     } catch (WebDriverException e) {
       final String message = String
-          .format("Error while hiding element %s", getLocator().toString(), e.getMessage());
+          .format("Error while hiding element %s. Error: %s",
+                  getLocator().toString(), e.getMessage());
       result = CollectorStepResult.newProcessingErrorResult(message);
-      LOG.warn("Error while trying to find element '{}'", getLocator().toString(), e);
+      LOG.warn(message);
     } catch (Exception e) {
       throw new ProcessingException("Can't hide element by " + getLocator().toString(), e);
     }

@@ -61,8 +61,8 @@ public class ClickModifier extends WebElementsLocatorParams implements Collector
       }
     } catch (WebDriverException e) {
       final String message =
-          String.format("No element defined by %s could be found before timeout (%s seconds)!",
-              getLocator().toString(), getTimeoutInSeconds());
+          String.format("Element not found before timeout (%s seconds): %s!",
+                  getTimeoutInSeconds(), getLocator().toString());
       LOG.warn(message, e.getMessage());
       result = CollectorStepResult.newProcessingErrorResult(message);
     }
