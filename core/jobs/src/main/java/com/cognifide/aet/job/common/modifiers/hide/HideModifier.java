@@ -56,7 +56,7 @@ public class HideModifier extends WebElementsLocatorParams implements CollectorJ
 
   private boolean leaveBlankSpace;
 
-  public HideModifier(WebDriver webDriver, CollectorProperties properties) {
+  HideModifier(WebDriver webDriver, CollectorProperties properties) {
     this.webDriver = webDriver;
     this.properties = properties;
   }
@@ -78,7 +78,7 @@ public class HideModifier extends WebElementsLocatorParams implements CollectorJ
         LEAVE_BLANK_SPACE_DEFAULT);
   }
 
-  public CollectorStepResult hideElement(By locator) throws ProcessingException {
+  private CollectorStepResult hideElement(By locator) throws ProcessingException {
     CollectorStepResult result;
     try {
       String script;

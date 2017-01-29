@@ -38,7 +38,7 @@ public class ClickModifier extends WebElementsLocatorParams implements Collector
 
   private final WebDriver webDriver;
 
-  public ClickModifier(final WebDriver webDriver) {
+  ClickModifier(final WebDriver webDriver) {
     this.webDriver = webDriver;
   }
 
