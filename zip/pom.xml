@@ -101,6 +101,12 @@
 
       <dependency>
         <groupId>${project.groupId}</groupId>
+        <artifactId>test-executor</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+
+      <dependency>
+        <groupId>${project.groupId}</groupId>
         <artifactId>report</artifactId>
         <version>${project.version}</version>
         <type>zip</type>
@@ -162,6 +168,10 @@
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>rest-endpoint</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>test-executor</artifactId>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
@@ -287,6 +297,11 @@
 
                     <artifactItem>
                       <groupId>${project.groupId}</groupId>
+                      <artifactId>test-executor</artifactId>
+                    </artifactItem>
+
+                    <artifactItem>
+                      <groupId>${project.groupId}</groupId>
                       <artifactId>report</artifactId>
                       <type>zip</type>
                     </artifactItem>
@@ -364,6 +379,8 @@
 
                       <include>${project.groupId}.jobs-${project.version}.jar</include>
                       <include>${project.groupId}.rest-endpoint-${project.version}.jar</include>
+
+                      <include>${project.groupId}.test-executor-${project.version}.jar</include>
                     </includes>
                     <outputDirectory>${release.artifacts.dir}/${release.bundles}</outputDirectory>
                   </fileset>
