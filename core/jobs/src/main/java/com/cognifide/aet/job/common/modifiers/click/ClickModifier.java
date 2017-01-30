@@ -24,6 +24,8 @@ import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.job.common.SeleniumWaitHelper;
 import com.cognifide.aet.job.common.modifiers.WebElementsLocatorParams;
 import java.util.Map;
+
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
@@ -52,12 +54,18 @@ public class ClickModifier extends WebElementsLocatorParams implements Collector
 
       elementToClick.click();
       result = CollectorStepResult.newModifierResult();
+    } catch (TimeoutException e) {
+      final String message =
+              String.format("Element not found before timeout (%s seconds): '%s'",
+                      getTimeoutInSeconds(), getLocator().toString());
+      result = CollectorStepResult.newProcessingErrorResult(message);
+      LOG.info(message);
     } catch (WebDriverException e) {
       final String message =
-          String.format("Element not found before timeout (%s seconds): %s!",
-                  getTimeoutInSeconds(), getLocator().toString());
-      LOG.warn(message, e.getMessage());
+          String.format("Error while clicking element %s. Error: %s",
+                  getLocator().toString(), e.getMessage());
       result = CollectorStepResult.newProcessingErrorResult(message);
+      LOG.warn(message, e);
     }
     return result;
   }

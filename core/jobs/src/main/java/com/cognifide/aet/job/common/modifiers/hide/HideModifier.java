@@ -67,7 +67,7 @@ public class HideModifier extends WebElementsLocatorParams implements CollectorJ
       LOG.debug("Hiding element {} on page: {} with leaveBlankSpace: {}. url: {}",
           getLocator().toString(), webDriver.getCurrentUrl(), leaveBlankSpace, properties.getUrl());
     }
-    return hideElement(getLocator());
+    return hideElement(getLocator(), leaveBlankSpace);
   }
 
   @Override
@@ -78,41 +78,44 @@ public class HideModifier extends WebElementsLocatorParams implements CollectorJ
         LEAVE_BLANK_SPACE_DEFAULT);
   }
 
-  private CollectorStepResult hideElement(By locator) throws ProcessingException {
+  private CollectorStepResult hideElement(By locator, boolean leaveBlankSpace) throws ProcessingException {
     CollectorStepResult result;
     try {
-      String script;
-      if (leaveBlankSpace) {
-        script = VISIBILITY_FALSE_SCRIPT;
-      } else {
-        script = DISPLAY_NONE_SCRIPT;
-      }
+      String script = retrieveHidingScript(leaveBlankSpace);
 
-      By elementLocator = getLocator();
       SeleniumWaitHelper
-          .waitForElementToBePresent(webDriver, elementLocator, getTimeoutInSeconds());
+          .waitForElementToBePresent(webDriver, locator, getTimeoutInSeconds());
 
-      List<WebElement> webElements = webDriver.findElements(elementLocator);
+      List<WebElement> webElements = webDriver.findElements(locator);
       for (WebElement element : webElements) {
         ((JavascriptExecutor) webDriver).executeScript(script, element);
       }
       result = CollectorStepResult.newModifierResult();
     } catch (TimeoutException e) {
       final String message =
-              String.format("Element not found before timeout (%s seconds): %s!",
-                      getTimeoutInSeconds(), getLocator().toString());
+              String.format("Element not found before timeout (%s seconds): '%s'",
+                      getTimeoutInSeconds(), locator.toString());
       result = CollectorStepResult.newProcessingErrorResult(message);
       LOG.info(message);
     } catch (WebDriverException e) {
       final String message = String
           .format("Error while hiding element %s. Error: %s",
-                  getLocator().toString(), e.getMessage());
+                  locator.toString(), e.getMessage());
       result = CollectorStepResult.newProcessingErrorResult(message);
-      LOG.warn(message);
+      LOG.warn(message, e);
     } catch (Exception e) {
-      throw new ProcessingException("Can't hide element by " + getLocator().toString(), e);
+      throw new ProcessingException("Can't hide element by " + locator.toString(), e);
     }
     return result;
   }
 
+  private String retrieveHidingScript(boolean leaveBlankSpace){
+    String script;
+    if (leaveBlankSpace) {
+      script = VISIBILITY_FALSE_SCRIPT;
+    } else {
+      script = DISPLAY_NONE_SCRIPT;
+    }
+    return script;
+  }
 }
