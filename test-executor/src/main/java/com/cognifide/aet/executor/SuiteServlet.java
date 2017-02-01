@@ -69,9 +69,10 @@ public class SuiteServlet extends HttpServlet {
       Map<String, String> requestData = getRequestData(request);
       String suite = requestData.get(SUITE_PARAM);
       String domain = requestData.get(DOMAIN_PARAM);
+      String endpointDomain = StringUtils.substringBefore(request.getRequestURL().toString(), SERVLET_PATH);
 
       if (StringUtils.isNotBlank(suite)) {
-        SuiteExecutionResult suiteExecutionResult = suiteExecutor.execute(suite, domain);
+        SuiteExecutionResult suiteExecutionResult = suiteExecutor.execute(suite, domain, endpointDomain);
         Gson gson = new Gson();
         String responseBody = gson.toJson(suiteExecutionResult);
 

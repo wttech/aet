@@ -25,6 +25,9 @@ import com.cognifide.aet.communication.api.messages.TaskMessage;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
+import com.cognifide.aet.executor.common.ConsumerRemover;
+import com.cognifide.aet.executor.common.MessageProcessor;
+import com.cognifide.aet.executor.common.ProcessorFactory;
 import com.cognifide.aet.executor.common.SuiteFactory;
 import com.cognifide.aet.executor.model.CollectorStep;
 import com.cognifide.aet.executor.model.ComparatorStep;
@@ -37,24 +40,27 @@ import com.cognifide.aet.executor.xmlparser.xml.XmlTestSuiteParser;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
+import org.apache.felix.scr.annotations.Property;
 import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.Service;
+import org.apache.sling.commons.osgi.PropertiesUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.jms.Destination;
 import javax.jms.JMSException;
+import javax.jms.Message;
 import javax.jms.MessageConsumer;
 import javax.jms.MessageProducer;
 import javax.jms.ObjectMessage;
 import javax.jms.Session;
 
 @Service(SuiteExecutor.class)
-@Component(label = "SuiteExecutor", description = "Executes received test suite", immediate = true,
+@Component(label = "AET Suite Executor", description = "Executes received test suite", immediate = true,
     metatype = true)
 public class SuiteExecutor {
 
@@ -66,19 +72,29 @@ public class SuiteExecutor {
 
   private static final String HTML_REPORT_URL_FORMAT = "%s/report.html?company=%s&project=%s&correlationId=%s";
 
-  private static final String XUNIT_REPORT_URL_FORMAT = "/xunit?company=%s&project=%s&correlationId=%s";
+  private static final String XUNIT_REPORT_URL_FORMAT = "%s/xunit?company=%s&project=%s&correlationId=%s";
+
+  private static final String MESSAGE_RECEIVE_TIMEOUT_PROPERTY_NAME = "messageReceiveTimeout";
+
+  private static final long DEFAULT_MESSAGE_RECEIVE_TIMEOUT = 300000L;
 
   private Map<String, MessageConsumer> consumersMap;
+
+  @Property(name = MESSAGE_RECEIVE_TIMEOUT_PROPERTY_NAME, label = "ActiveMQ message receive timeout",
+      description = "ActiveMQ message receive timeout", longValue = DEFAULT_MESSAGE_RECEIVE_TIMEOUT)
+  private Long messageReceiveTimeout;
 
   @Reference
   private JmsConnection jmsConnection;
 
   @Activate
-  public void activate() {
-    consumersMap = new HashMap<>();
+  public void activate(Map properties) {
+    consumersMap = new ConcurrentHashMap<>();
+    messageReceiveTimeout = PropertiesUtil.toLong(
+        properties.get(MESSAGE_RECEIVE_TIMEOUT_PROPERTY_NAME), DEFAULT_MESSAGE_RECEIVE_TIMEOUT);
   }
 
-  public SuiteExecutionResult execute(String suiteString, String domain) {
+  public SuiteExecutionResult execute(String suiteString, String domain, String endpointDomain) {
     SuiteExecutionResult result;
 
     TestSuiteParser xmlFileParser = new XmlTestSuiteParser();
@@ -92,16 +108,40 @@ public class SuiteExecutor {
 
         runTestSuite(suite);
 
-        String htmlReportUrl = getHtmlReportUrl(suite);
-        String xunitReportUrl = getXunitReportUrl(suite);
-        result = SuiteExecutionResult.createSuccessResult(testSuiteRun.getCorrelationId(),
-            htmlReportUrl, xunitReportUrl);
+        String statusUrl = getStatusUrl(endpointDomain, suite);
+        String htmlReportUrl = getReportUrl(HTML_REPORT_URL_FORMAT, "http://aet-vagrant", suite); //TODO extract parameter (domain)
+        String xunitReportUrl = getReportUrl(XUNIT_REPORT_URL_FORMAT, endpointDomain, suite);
+        result = SuiteExecutionResult.createSuccessResult(statusUrl, htmlReportUrl, xunitReportUrl);
       } else {
         result = SuiteExecutionResult.createErrorResult(validationResult);
       }
     } catch (ParseException | JMSException | ValidatorException e) {
       LOGGER.error("Failed to run test suite", e);
       result = SuiteExecutionResult.createErrorResult(e.getMessage());
+    }
+
+    return result;
+  }
+
+  public SuiteStatusResult getExecutionStatus(String correlationId) {
+    SuiteStatusResult result = null;
+
+    MessageConsumer consumer = consumersMap.get(correlationId);
+    if (consumer != null) {
+      try {
+        Message statusMessage = consumer.receive(messageReceiveTimeout);
+        if (statusMessage != null) {
+          ConsumerRemover consumerRemover = new ConsumerRemover(consumersMap, correlationId);
+          MessageProcessor processor = ProcessorFactory.produce(statusMessage, consumerRemover);
+          if (processor != null) {
+            result = processor.process();
+          } else {
+            result = new SuiteStatusResult(ProcessingStatus.PROGRESS);
+          }
+        }
+      } catch (JMSException e) {
+        LOGGER.error("Failed to get processing status", e);
+      }
     }
 
     return result;
@@ -162,13 +202,11 @@ public class SuiteExecutor {
     producer.send(message);
   }
 
-  private String getHtmlReportUrl(Suite suite) {
-    return String.format(HTML_REPORT_URL_FORMAT, "http://aet-vagrant", suite.getCompany(),
-        suite.getProject(), suite.getCorrelationId()); //TODO extract parameter (domain)
+  private String getReportUrl(String format, String domain, Suite suite) {
+    return String.format(format, domain, suite.getCompany(), suite.getProject(), suite.getCorrelationId());
   }
 
-  private String getXunitReportUrl(Suite suite) {
-    return String.format(XUNIT_REPORT_URL_FORMAT, suite.getCompany(), suite.getProject(),
-        suite.getCorrelationId());
+  private String getStatusUrl(String domain, Suite suite) {
+    return domain + SuiteStatusServlet.SERVLET_PATH + "/" + suite.getCorrelationId();
   }
 }
