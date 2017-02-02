@@ -440,6 +440,12 @@
         <version>${project.version}</version>
         <scope>provided</scope>
       </dependency>
+      <dependency>
+        <groupId>com.cognifide.aet</groupId>
+        <artifactId>rest-endpoint</artifactId>
+        <version>${project.version}</version>
+        <scope>provided</scope>
+      </dependency>
 
       <!-- AET wrappers for non-OSGi libraries -->
       <dependency>

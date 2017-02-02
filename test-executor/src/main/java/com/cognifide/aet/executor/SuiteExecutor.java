@@ -36,6 +36,7 @@ import com.cognifide.aet.executor.model.TestSuiteRun;
 import com.cognifide.aet.executor.xmlparser.api.ParseException;
 import com.cognifide.aet.executor.xmlparser.api.TestSuiteParser;
 import com.cognifide.aet.executor.xmlparser.xml.XmlTestSuiteParser;
+import com.cognifide.aet.rest.helpers.ReportConfigurationManager;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.felix.scr.annotations.Activate;
@@ -87,6 +88,9 @@ public class SuiteExecutor {
   @Reference
   private JmsConnection jmsConnection;
 
+  @Reference
+  private ReportConfigurationManager reportConfigurationManager;
+
   @Activate
   public void activate(Map properties) {
     consumersMap = new ConcurrentHashMap<>();
@@ -109,7 +113,8 @@ public class SuiteExecutor {
         runTestSuite(suite);
 
         String statusUrl = getStatusUrl(endpointDomain, suite);
-        String htmlReportUrl = getReportUrl(HTML_REPORT_URL_FORMAT, "http://aet-vagrant", suite); //TODO extract parameter (domain)
+        String htmlReportUrl = getReportUrl(HTML_REPORT_URL_FORMAT,
+            reportConfigurationManager.getReportDomain(), suite);
         String xunitReportUrl = getReportUrl(XUNIT_REPORT_URL_FORMAT, endpointDomain, suite);
         result = SuiteExecutionResult.createSuccessResult(statusUrl, htmlReportUrl, xunitReportUrl);
       } else {

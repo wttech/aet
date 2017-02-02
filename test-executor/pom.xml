@@ -38,6 +38,10 @@
       <groupId>com.cognifide.aet</groupId>
       <artifactId>communication-api</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.cognifide.aet</groupId>
+      <artifactId>rest-endpoint</artifactId>
+    </dependency>
 
     <dependency>
       <groupId>org.osgi</groupId>
