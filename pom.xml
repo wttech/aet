@@ -623,14 +623,13 @@
           <configuration>
             <excludes combine.children="append">
               <!-- Files that don't require a license header -->
-              <exclude>**/README.md</exclude>
               <exclude>**/LICENSE</exclude>
               <exclude>**/NOTICE</exclude>
-              <exclude>CONTRIBUTING.md</exclude>
               <exclude>.travis.yml</exclude>
 
               <exclude>**/target/**</exclude>
 
+              <exclude>**/*.md</exclude>
               <exclude>**/*.jar</exclude>
               <exclude>**/*.war</exclude>
               <exclude>**/*.zip</exclude>

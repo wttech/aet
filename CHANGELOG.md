@@ -1,3 +1,9 @@
+![Cognifide logo](http://cognifide.github.io/images/cognifide-logo.png)
+<p align="center">
+  <img src="https://github.com/Cognifide/aet/blob/master/misc/img/aet-logo-black.png?raw=true"
+         alt="AET Logo"/>
+</p>
+
 # AET Releases
 All notable changes to AET will be documented in this file.
 
