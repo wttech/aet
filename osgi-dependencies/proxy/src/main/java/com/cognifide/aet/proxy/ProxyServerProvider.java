@@ -44,7 +44,7 @@ public class ProxyServerProvider {
           unbind = "unbindProxyManager")
   private final Map<String, ProxyManager> collectorManagers = Maps.newConcurrentMap();
 
-  public ProxyServerWrapper createProxy(String useProxy, int port) throws ProxyException {
+  public ProxyServerWrapper createProxy(String useProxy) throws ProxyException {
     String proxyType = useProxy;
     if ("true".equals(useProxy)) {
       proxyType = DEFAULT_PROXY_MANAGER;
@@ -54,9 +54,10 @@ public class ProxyServerProvider {
       throw new ProxyException("Undefined ProxyManager with proxyType: " + proxyType);
     }
     try {
-      return proxyManager.createProxy(port);
+      return proxyManager.createProxy();
     } catch (ProxyException e) {
-      throw new ProxyException("Unable to create ProxyServer on port " + port + " by ProxyManager", e);
+      String managerClass = proxyManager.getClass().getCanonicalName();
+      throw new ProxyException("Unable to create ProxyServer with ProxyManager: " + managerClass, e);
     }
   }
 
