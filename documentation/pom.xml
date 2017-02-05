@@ -49,8 +49,6 @@
                 <!-- Node instance for frontend-maven-plugin -->
                 <excludes>src/main/node/**</excludes>
                 <exclude>src/main/node_modules/**</exclude>
-                <exclude>src/main/wiki/**</exclude>
-                <exclude>src/main/DocumentationTemplate.md</exclude>
               </excludes>
             </configuration>
           </execution>
