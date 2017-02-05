@@ -37,7 +37,7 @@ import java.util.Map;
 @Component(immediate = true, label = "AET Proxy Server Provider", description = "AET Proxy Server Provider")
 @Properties({@Property(name = Constants.SERVICE_VENDOR, value = "Cognifide Ltd")})
 public class ProxyServerProvider {
-  private static final String DEFAULT_PROXY_MANAGER = "embedded";
+  private static final String DEFAULT_PROXY_MANAGER = "rest";
 
   @Reference(referenceInterface = ProxyManager.class, policy = ReferencePolicy.DYNAMIC,
           cardinality = ReferenceCardinality.OPTIONAL_MULTIPLE, bind = "bindProxyManager",
