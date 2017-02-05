@@ -12,7 +12,7 @@ All notable changes to AET will be documented in this file.
 - [PR-41](https://github.com/Cognifide/aet/pull/41) - [Click](https://github.com/Cognifide/aet/wiki/ClickModifier)
  and [Hide](https://github.com/Cognifide/aet/wiki/HideModifier) modifiers allows to use css selectors as parameters. 
  Added [Replace Text](https://github.com/Cognifide/aet/wiki/ReplaceTextModifier) modifier and it's tests.
-- [PR-39](https://github.com/Cognifide/aet/pull/39) - fixed filterint w3cHtml issues.
+- [PR-39](https://github.com/Cognifide/aet/pull/39) - fixed filtering w3cHtml issues.
 
 
 ## Version 2.0.1
