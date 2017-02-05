@@ -104,9 +104,9 @@ public class CollectorMessageListenerImpl extends AbstractTaskMessageListener {
       int collected = 0;
       try {
         //FIXME - proxy is now set per url
-        final String proxyTypeConfig = collectorJobData.getUrls().get(0).getProxy();
-        if (proxyShouldBeUsed(proxyTypeConfig)) {
-          webCommunicationWrapper = this.webDriverProvider.createWebDriverWithProxy(webDriverName, proxyTypeConfig);
+        final String usedProxy = collectorJobData.getUrls().get(0).getProxy();
+        if (isProxyUsed(usedProxy)) {
+          webCommunicationWrapper = this.webDriverProvider.createWebDriverWithProxy(webDriverName, usedProxy);
         } else {
           webCommunicationWrapper = this.webDriverProvider.createWebDriver(webDriverName);
         }
@@ -160,8 +160,8 @@ public class CollectorMessageListenerImpl extends AbstractTaskMessageListener {
     return result;
   }
 
-  private boolean proxyShouldBeUsed(String proxyTypeConfig) {
-    return StringUtils.isNotBlank(proxyTypeConfig) && !("false").equals(proxyTypeConfig);
+  private boolean isProxyUsed(String useProxy) {
+    return StringUtils.isNotBlank(useProxy) && !("false").equals(useProxy);
   }
 
   private void quitWebDriver(WebCommunicationWrapper webCommunicationWrapper) {

@@ -50,14 +50,14 @@ public class WebDriverProvider {
   @Reference
   private ProxyServerProvider proxyServerProvider;
 
-  public WebCommunicationWrapper createWebDriverWithProxy(String webDriverName, String proxyTypeConfig)
+  public WebCommunicationWrapper createWebDriverWithProxy(String webDriverName, String useProxy)
           throws WorkerException {
     WebDriverFactory webDriverFactory = collectorFactories.get(webDriverName);
     if (webDriverFactory == null) {
       throw new WorkerException("Undefined WebDriver " + webDriverName);
     }
     try {
-      return webDriverFactory.createWebDriver(proxyServerProvider.createProxy(proxyTypeConfig));
+      return webDriverFactory.createWebDriver(proxyServerProvider.createProxy(useProxy));
     } catch (ProxyException e) {
       throw new WorkerException(String.format("Failed to connect: %s", e.getMessage()), e);
     }

@@ -44,12 +44,10 @@ public class ProxyServerProvider {
           unbind = "unbindProxyManager")
   private final Map<String, ProxyManager> collectorManagers = Maps.newConcurrentMap();
 
-  public ProxyServerWrapper createProxy(String proxyTypeConfig) throws ProxyException {
-    String proxyType;
-    if ("true".equals(proxyTypeConfig)) {
+  public ProxyServerWrapper createProxy(String useProxy) throws ProxyException {
+    String proxyType = useProxy;
+    if ("true".equals(useProxy)) {
       proxyType = DEFAULT_PROXY_MANAGER;
-    } else {
-      proxyType = proxyTypeConfig;
     }
     ProxyManager proxyManager = collectorManagers.get(proxyType);
     if (proxyManager == null) {
