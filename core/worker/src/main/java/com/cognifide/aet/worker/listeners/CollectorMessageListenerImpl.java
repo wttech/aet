@@ -31,7 +31,6 @@ import com.cognifide.aet.worker.drivers.WebDriverProvider;
 import com.cognifide.aet.worker.exceptions.WorkerException;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.ConfigurationPolicy;
@@ -105,9 +104,9 @@ public class CollectorMessageListenerImpl extends AbstractTaskMessageListener {
       int collected = 0;
       try {
         //FIXME - proxy is now set per url
-        final String usedProxy = collectorJobData.getUrls().get(0).getProxy();
-        if (isProxyUsed(usedProxy)) {
-          webCommunicationWrapper = this.webDriverProvider.createWebDriverWithProxy(webDriverName, usedProxy);
+        final String proxyTypeConfig = collectorJobData.getUrls().get(0).getProxy();
+        if (proxyShouldBeUsed(proxyTypeConfig)) {
+          webCommunicationWrapper = this.webDriverProvider.createWebDriverWithProxy(webDriverName, proxyTypeConfig);
         } else {
           webCommunicationWrapper = this.webDriverProvider.createWebDriver(webDriverName);
         }
@@ -161,8 +160,8 @@ public class CollectorMessageListenerImpl extends AbstractTaskMessageListener {
     return result;
   }
 
-  private boolean isProxyUsed(String useProxy) {
-    return StringUtils.isNotBlank(useProxy) && !("false").equals(useProxy);
+  private boolean proxyShouldBeUsed(String proxyTypeConfig) {
+    return StringUtils.isNotBlank(proxyTypeConfig) && !("false").equals(proxyTypeConfig);
   }
 
   private void quitWebDriver(WebCommunicationWrapper webCommunicationWrapper) {
