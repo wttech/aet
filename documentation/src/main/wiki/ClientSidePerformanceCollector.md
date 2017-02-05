@@ -9,8 +9,8 @@ Client Side Performance Collector is responsible for collecting performance anal
 Module name: **client-side-performance**
 
 | ! Important information |
-|:----------------------- |
-| In order to use this collector **proxy** must be used. |
+| :---------------------- |
+| In order to use this collector *[[proxy|SuiteStructure#proxy]]* must be used. |
 
 ##### Parameters
 No parameters.
