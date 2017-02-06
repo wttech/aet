@@ -18,8 +18,8 @@
 package com.cognifide.aet.executor.common;
 
 import com.cognifide.aet.communication.api.messages.ProgressMessage;
-import com.cognifide.aet.executor.ProcessingStatus;
-import com.cognifide.aet.executor.SuiteStatusResult;
+import com.cognifide.aet.communication.api.suiteexecution.ProcessingStatus;
+import com.cognifide.aet.communication.api.suiteexecution.SuiteStatusResult;
 
 import org.apache.commons.lang3.StringUtils;
 

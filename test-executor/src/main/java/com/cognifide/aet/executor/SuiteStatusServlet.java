@@ -19,6 +19,8 @@ package com.cognifide.aet.executor;
 
 import com.google.gson.Gson;
 
+import com.cognifide.aet.communication.api.suiteexecution.SuiteStatusResult;
+
 import org.apache.commons.lang.StringUtils;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;

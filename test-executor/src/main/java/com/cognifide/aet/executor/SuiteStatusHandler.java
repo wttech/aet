@@ -19,6 +19,8 @@ package com.cognifide.aet.executor;
 
 import com.google.common.cache.Cache;
 
+import com.cognifide.aet.communication.api.suiteexecution.SuiteStatusResult;
+
 import java.util.Queue;
 
 public class SuiteStatusHandler {

@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cognifide.aet.executor;
+package com.cognifide.aet.communication.api.suiteexecution;
 
 public class SuiteExecutionResult {
 
@@ -31,7 +31,7 @@ public class SuiteExecutionResult {
     //Use create methods to get instance
   }
 
-  static SuiteExecutionResult createSuccessResult(String statusUrl, String htmlReportUrl,
+  public static SuiteExecutionResult createSuccessResult(String statusUrl, String htmlReportUrl,
       String xunitReportUrl) {
     SuiteExecutionResult suiteExecutionResult = new SuiteExecutionResult();
     suiteExecutionResult.setStatusUrl(statusUrl);
@@ -40,7 +40,7 @@ public class SuiteExecutionResult {
     return suiteExecutionResult;
   }
 
-  static SuiteExecutionResult createErrorResult(String errorMessage) {
+  public static SuiteExecutionResult createErrorResult(String errorMessage) {
     SuiteExecutionResult suiteExecutionResult = new SuiteExecutionResult();
     suiteExecutionResult.setErrorMessage(errorMessage);
     return suiteExecutionResult;

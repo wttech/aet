@@ -20,6 +20,8 @@ package com.cognifide.aet.executor;
 import com.cognifide.aet.communication.api.messages.MessageType;
 import com.cognifide.aet.communication.api.messages.TaskMessage;
 import com.cognifide.aet.communication.api.metadata.Suite;
+import com.cognifide.aet.communication.api.suiteexecution.ProcessingStatus;
+import com.cognifide.aet.communication.api.suiteexecution.SuiteStatusResult;
 import com.cognifide.aet.executor.common.MessageProcessor;
 import com.cognifide.aet.executor.common.ProcessorFactory;
 import com.cognifide.aet.executor.common.RunnerTerminator;

@@ -17,7 +17,7 @@
  */
 package com.cognifide.aet.executor.common;
 
-import com.cognifide.aet.executor.SuiteStatusResult;
+import com.cognifide.aet.communication.api.suiteexecution.SuiteStatusResult;
 
 public interface MessageProcessor {
 
