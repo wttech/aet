@@ -17,11 +17,17 @@
  */
 package com.cognifide.aet.executor;
 
-public enum ProcessingStatus {
+import com.google.common.cache.Cache;
 
-  PROGRESS,
-  ERROR,
-  FATAL_ERROR,
-  FINISHED,
-  UNKNOWN
+public class RunnerCacheUpdater {
+
+  private Cache<String, SuiteRunner> runnerCache;
+
+  public RunnerCacheUpdater(Cache<String, SuiteRunner> runnerCache) {
+    this.runnerCache = runnerCache;
+  }
+
+  public void update(String key) {
+    runnerCache.getIfPresent(key);
+  }
 }

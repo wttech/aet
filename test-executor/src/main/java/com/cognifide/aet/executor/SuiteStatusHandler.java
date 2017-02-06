@@ -15,26 +15,24 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cognifide.aet.executor.common;
+package com.cognifide.aet.executor;
 
-import java.util.Map;
+import com.google.common.cache.Cache;
 
-import javax.jms.MessageConsumer;
+import java.util.Queue;
 
-public class ConsumerRemover {
+public class SuiteStatusHandler {
 
-  private Map<String, MessageConsumer> consumersMap;
+  private Cache<String, Queue<SuiteStatusResult>> statusCache;
 
-  private String correlationId;
-
-  public ConsumerRemover(Map<String, MessageConsumer> consumersMap, String correlationId) {
-    this.consumersMap = consumersMap;
-    this.correlationId = correlationId;
+  public SuiteStatusHandler(Cache<String, Queue<SuiteStatusResult>> statusCache) {
+    this.statusCache = statusCache;
   }
 
-  public void remove() {
-    if (consumersMap != null && correlationId != null) {
-      consumersMap.remove(correlationId);
+  public void handle(String correlationId, SuiteStatusResult status) {
+    Queue<SuiteStatusResult> statusQueue = statusCache.getIfPresent(correlationId);
+    if (statusQueue != null) {
+      statusQueue.add(status);
     }
   }
 }

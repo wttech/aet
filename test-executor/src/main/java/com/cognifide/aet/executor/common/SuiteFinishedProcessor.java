@@ -30,11 +30,11 @@ class SuiteFinishedProcessor implements MessageProcessor {
 
   private final FinishedSuiteProcessingMessage data;
 
-  private final ConsumerRemover consumerRemover;
+  private final RunnerTerminator runnerTerminator;
 
-  public SuiteFinishedProcessor(FinishedSuiteProcessingMessage data, ConsumerRemover consumerRemover) {
+  public SuiteFinishedProcessor(FinishedSuiteProcessingMessage data, RunnerTerminator runnerTerminator) {
     this.data = data;
-    this.consumerRemover = consumerRemover;
+    this.runnerTerminator = runnerTerminator;
   }
 
   @Override
@@ -46,7 +46,7 @@ class SuiteFinishedProcessor implements MessageProcessor {
     } else if (data.getStatus() == FinishedSuiteProcessingMessage.Status.FAILED) {
       result = processError();
     }
-    consumerRemover.remove();
+    runnerTerminator.update();
     return result;
   }
 

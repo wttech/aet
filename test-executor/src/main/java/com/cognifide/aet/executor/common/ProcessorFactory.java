@@ -32,18 +32,18 @@ public final class ProcessorFactory {
     // private
   }
 
-  public static MessageProcessor produce(Message message, ConsumerRemover consumerRemover) throws JMSException {
+  public static MessageProcessor produce(Message message, RunnerTerminator runnerTerminator) throws JMSException {
     MessageProcessor processor = null;
     if (message instanceof ObjectMessage) {
       Object object = ((ObjectMessage) message).getObject();
       if (object instanceof ProcessingErrorMessage) {
-        processor = new ProcessingErrorMessageProcessor((ProcessingErrorMessage) object, consumerRemover);
+        processor = new ProcessingErrorMessageProcessor((ProcessingErrorMessage) object, runnerTerminator);
       } else if (object instanceof FinishedSuiteProcessingMessage) {
-        processor = new SuiteFinishedProcessor((FinishedSuiteProcessingMessage) object, consumerRemover);
+        processor = new SuiteFinishedProcessor((FinishedSuiteProcessingMessage) object, runnerTerminator);
       } else if (object instanceof ProgressMessage) {
         processor = new ProgressMessageProcessor((ProgressMessage) object);
       } else if (object instanceof FatalErrorMessage) {
-        processor = new FatalErrorMessageProcessor((FatalErrorMessage) object, consumerRemover);
+        processor = new FatalErrorMessageProcessor((FatalErrorMessage) object, runnerTerminator);
       }
     }
     return processor;

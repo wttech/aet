@@ -25,11 +25,11 @@ public class ProcessingErrorMessageProcessor implements MessageProcessor {
 
   private final ProcessingErrorMessage data;
 
-  private final ConsumerRemover consumerRemover;
+  private final RunnerTerminator runnerTerminator;
 
-  public ProcessingErrorMessageProcessor(ProcessingErrorMessage data, ConsumerRemover consumerRemover) {
+  public ProcessingErrorMessageProcessor(ProcessingErrorMessage data, RunnerTerminator runnerTerminator) {
     this.data = data;
-    this.consumerRemover = consumerRemover;
+    this.runnerTerminator = runnerTerminator;
   }
 
   @Override
@@ -39,7 +39,7 @@ public class ProcessingErrorMessageProcessor implements MessageProcessor {
       result = new SuiteStatusResult(ProcessingStatus.ERROR, data.getProcessingError().getDescription());
     } else {
       result = new SuiteStatusResult(ProcessingStatus.FATAL_ERROR, "Empty error message received");
-      consumerRemover.remove();
+      runnerTerminator.update();
     }
     return result;
   }

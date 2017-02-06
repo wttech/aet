@@ -17,17 +17,16 @@
  */
 package com.cognifide.aet.executor;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.RemovalListener;
+import com.google.common.cache.RemovalNotification;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
-import com.cognifide.aet.communication.api.messages.MessageType;
-import com.cognifide.aet.communication.api.messages.TaskMessage;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
-import com.cognifide.aet.executor.common.ConsumerRemover;
-import com.cognifide.aet.executor.common.MessageProcessor;
-import com.cognifide.aet.executor.common.ProcessorFactory;
 import com.cognifide.aet.executor.common.SuiteFactory;
 import com.cognifide.aet.executor.model.CollectorStep;
 import com.cognifide.aet.executor.model.ComparatorStep;
@@ -36,6 +35,7 @@ import com.cognifide.aet.executor.model.TestSuiteRun;
 import com.cognifide.aet.executor.xmlparser.api.ParseException;
 import com.cognifide.aet.executor.xmlparser.api.TestSuiteParser;
 import com.cognifide.aet.executor.xmlparser.xml.XmlTestSuiteParser;
+import com.cognifide.aet.rest.LockService;
 import com.cognifide.aet.rest.helpers.ReportConfigurationManager;
 
 import org.apache.commons.lang3.StringUtils;
@@ -50,14 +50,11 @@ import org.slf4j.LoggerFactory;
 
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.TimeUnit;
 
-import javax.jms.Destination;
 import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.MessageConsumer;
-import javax.jms.MessageProducer;
-import javax.jms.ObjectMessage;
 import javax.jms.Session;
 
 @Service(SuiteExecutor.class)
@@ -77,52 +74,93 @@ public class SuiteExecutor {
 
   private static final String MESSAGE_RECEIVE_TIMEOUT_PROPERTY_NAME = "messageReceiveTimeout";
 
-  private static final long DEFAULT_MESSAGE_RECEIVE_TIMEOUT = 300000L;
-
-  private Map<String, MessageConsumer> consumersMap;
+  private static final long DEFAULT_MESSAGE_RECEIVE_TIMEOUT = 20000L;
 
   @Property(name = MESSAGE_RECEIVE_TIMEOUT_PROPERTY_NAME, label = "ActiveMQ message receive timeout",
       description = "ActiveMQ message receive timeout", longValue = DEFAULT_MESSAGE_RECEIVE_TIMEOUT)
   private Long messageReceiveTimeout;
 
+  private static final String CACHE_EXPIRATION_TIMEOUT_PROPERTY_NAME = "cacheExpirationTimeout";
+
+  private static final long DEFAULT_CACHE_EXPIRATION_TIMEOUT = 30000L;
+
+  @Property(name = CACHE_EXPIRATION_TIMEOUT_PROPERTY_NAME, label = "Suite runner cache expiration timeout",
+      description = "Suite runner cache expiration timeout. Should be longer than 'ActiveMQ message receive timeout'.",
+      longValue = DEFAULT_CACHE_EXPIRATION_TIMEOUT)
+  private Long cacheExpirationTimeout;
+
   @Reference
   private JmsConnection jmsConnection;
 
   @Reference
+  private LockService lockService;
+
+  @Reference
   private ReportConfigurationManager reportConfigurationManager;
+
+  private Cache<String, SuiteRunner> suiteRunnerCache;
+
+  private Cache<String, Queue<SuiteStatusResult>> suiteStatusCache;
+
+  private RunnerCacheUpdater runnerCacheUpdater;
+
+  private SuiteStatusHandler suiteStatusHandler;
 
   @Activate
   public void activate(Map properties) {
-    consumersMap = new ConcurrentHashMap<>();
     messageReceiveTimeout = PropertiesUtil.toLong(
         properties.get(MESSAGE_RECEIVE_TIMEOUT_PROPERTY_NAME), DEFAULT_MESSAGE_RECEIVE_TIMEOUT);
+    cacheExpirationTimeout = PropertiesUtil.toLong(
+        properties.get(CACHE_EXPIRATION_TIMEOUT_PROPERTY_NAME), DEFAULT_CACHE_EXPIRATION_TIMEOUT);
+
+    suiteRunnerCache = CacheBuilder.newBuilder()
+        .expireAfterAccess(cacheExpirationTimeout, TimeUnit.MILLISECONDS)
+        .removalListener(new RunnerCacheRemovalListener())
+        .build();
+
+    suiteStatusCache = CacheBuilder.newBuilder()
+        .expireAfterWrite(cacheExpirationTimeout, TimeUnit.MILLISECONDS)
+        .build();
+
+    runnerCacheUpdater = new RunnerCacheUpdater(suiteRunnerCache);
+    suiteStatusHandler = new SuiteStatusHandler(suiteStatusCache);
   }
 
   public SuiteExecutionResult execute(String suiteString, String domain, String endpointDomain) {
+    SuiteRunner suiteRunner = null;
     SuiteExecutionResult result;
 
     TestSuiteParser xmlFileParser = new XmlTestSuiteParser();
     try {
       TestSuiteRun testSuiteRun = xmlFileParser.parse(suiteString);
       testSuiteRun = overrideDomainIfDefined(testSuiteRun, domain);
+
       String validationResult = validateTestSuiteRun(testSuiteRun);
       if (validationResult == null) {
         final Suite suite = new SuiteFactory().suiteFromTestSuiteRun(testSuiteRun);
         suite.validate(Sets.newHashSet("version", "runTimestamp"));
 
-        runTestSuite(suite);
+        if (lockTestSuite(suite)) {
+          suiteRunner = createSuiteRunner(suite);
+          suiteRunner.runSuite();
 
-        String statusUrl = getStatusUrl(endpointDomain, suite);
-        String htmlReportUrl = getReportUrl(HTML_REPORT_URL_FORMAT,
-            reportConfigurationManager.getReportDomain(), suite);
-        String xunitReportUrl = getReportUrl(XUNIT_REPORT_URL_FORMAT, endpointDomain, suite);
-        result = SuiteExecutionResult.createSuccessResult(statusUrl, htmlReportUrl, xunitReportUrl);
+          String statusUrl = getStatusUrl(endpointDomain, suite);
+          String htmlReportUrl = getReportUrl(HTML_REPORT_URL_FORMAT,
+              reportConfigurationManager.getReportDomain(), suite);
+          String xunitReportUrl = getReportUrl(XUNIT_REPORT_URL_FORMAT, endpointDomain, suite);
+          result = SuiteExecutionResult.createSuccessResult(statusUrl, htmlReportUrl, xunitReportUrl);
+        } else {
+          result = SuiteExecutionResult.createErrorResult("Suite is currently locked");
+        }
       } else {
         result = SuiteExecutionResult.createErrorResult(validationResult);
       }
     } catch (ParseException | JMSException | ValidatorException e) {
       LOGGER.error("Failed to run test suite", e);
       result = SuiteExecutionResult.createErrorResult(e.getMessage());
+      if (suiteRunner != null) {
+        suiteRunner.close();
+      }
     }
 
     return result;
@@ -131,21 +169,11 @@ public class SuiteExecutor {
   public SuiteStatusResult getExecutionStatus(String correlationId) {
     SuiteStatusResult result = null;
 
-    MessageConsumer consumer = consumersMap.get(correlationId);
-    if (consumer != null) {
-      try {
-        Message statusMessage = consumer.receive(messageReceiveTimeout);
-        if (statusMessage != null) {
-          ConsumerRemover consumerRemover = new ConsumerRemover(consumersMap, correlationId);
-          MessageProcessor processor = ProcessorFactory.produce(statusMessage, consumerRemover);
-          if (processor != null) {
-            result = processor.process();
-          } else {
-            result = new SuiteStatusResult(ProcessingStatus.PROGRESS);
-          }
-        }
-      } catch (JMSException e) {
-        LOGGER.error("Failed to get processing status", e);
+    Queue<SuiteStatusResult> statusQueue = suiteStatusCache.getIfPresent(correlationId);
+    if (statusQueue != null) {
+      result = statusQueue.poll();
+      if (result == null) {
+        result = new SuiteStatusResult(ProcessingStatus.UNKNOWN);
       }
     }
 
@@ -192,19 +220,17 @@ public class SuiteExecutor {
     return false;
   }
 
-  private void runTestSuite(Suite suite) throws JMSException {
-    //TODO lock
+  private boolean lockTestSuite(Suite suite) {
+    return lockService.trySetLock(suite.getSuiteIdentifier(), suite.getCorrelationId());
+  }
 
+  private SuiteRunner createSuiteRunner(Suite suite) throws JMSException {
     Session session = jmsConnection.getJmsSession();
-    MessageProducer producer = session.createProducer(session.createQueue(RUNNER_IN_QUEUE));
-    Destination outRunnerDestination = session.createTemporaryQueue();
-    MessageConsumer consumer = session.createConsumer(outRunnerDestination);
-    consumersMap.put(suite.getCorrelationId(), consumer);
-
-    TaskMessage taskMessage = new TaskMessage<>(MessageType.RUN, suite);
-    ObjectMessage message = session.createObjectMessage(taskMessage);
-    message.setJMSReplyTo(outRunnerDestination);
-    producer.send(message);
+    SuiteRunner suiteRunner = new SuiteRunner(session, lockService, runnerCacheUpdater,
+        suiteStatusHandler, suite, RUNNER_IN_QUEUE, messageReceiveTimeout);
+    suiteRunnerCache.put(suite.getCorrelationId(), suiteRunner);
+    suiteStatusCache.put(suite.getCorrelationId(), new ConcurrentLinkedQueue<SuiteStatusResult>());
+    return suiteRunner;
   }
 
   private String getReportUrl(String format, String domain, Suite suite) {
@@ -213,5 +239,13 @@ public class SuiteExecutor {
 
   private String getStatusUrl(String domain, Suite suite) {
     return domain + SuiteStatusServlet.SERVLET_PATH + "/" + suite.getCorrelationId();
+  }
+
+  private static class RunnerCacheRemovalListener implements RemovalListener<String, SuiteRunner> {
+
+    @Override
+    public void onRemoval(RemovalNotification<String, SuiteRunner> removalNotification) {
+      removalNotification.getValue().terminate();
+    }
   }
 }

@@ -26,16 +26,16 @@ class FatalErrorMessageProcessor implements MessageProcessor {
 
   private final FatalErrorMessage errorMessage;
 
-  private final ConsumerRemover consumerRemover;
+  private final RunnerTerminator runnerTerminator;
 
-  FatalErrorMessageProcessor(FatalErrorMessage errorMessage, ConsumerRemover consumerRemover) {
+  FatalErrorMessageProcessor(FatalErrorMessage errorMessage, RunnerTerminator runnerTerminator) {
     this.errorMessage = errorMessage;
-    this.consumerRemover = consumerRemover;
+    this.runnerTerminator = runnerTerminator;
   }
 
   @Override
   public SuiteStatusResult process() {
-    consumerRemover.remove();
+    runnerTerminator.update();
     return new SuiteStatusResult(ProcessingStatus.FATAL_ERROR, errorMessage.getMessage());
   }
 }

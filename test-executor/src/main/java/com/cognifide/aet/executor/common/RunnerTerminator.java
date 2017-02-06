@@ -15,13 +15,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cognifide.aet.executor;
+package com.cognifide.aet.executor.common;
 
-public enum ProcessingStatus {
+public class RunnerTerminator {
 
-  PROGRESS,
-  ERROR,
-  FATAL_ERROR,
-  FINISHED,
-  UNKNOWN
+  private volatile boolean runFinished;
+
+  public void update() {
+    runFinished = true;
+  }
+
+  public boolean isActive() {
+    return !runFinished;
+  }
 }

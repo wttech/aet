@@ -76,7 +76,11 @@ public class SuiteServlet extends HttpServlet {
         Gson gson = new Gson();
         String responseBody = gson.toJson(suiteExecutionResult);
 
-        response.setStatus(200);
+        if (suiteExecutionResult.getErrorMessage() == null) {
+          response.setStatus(200);
+        } else {
+          response.setStatus(400);
+        }
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(responseBody);
