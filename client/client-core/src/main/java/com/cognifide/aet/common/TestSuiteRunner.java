@@ -23,6 +23,7 @@ import com.cognifide.aet.communication.api.suiteexecution.SuiteStatusResult;
 import com.jcabi.log.Logger;
 
 import org.apache.http.HttpEntity;
+import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.fluent.Request;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
@@ -46,9 +47,9 @@ public class TestSuiteRunner {
 
   private static final int STATUS_CHECK_INTERVAL = 1000;
 
-  private final SuiteExecutionResponseHandler suiteExecutionResponseHandler;
+  private final ResponseHandler<SuiteExecutionResult> suiteExecutionResponseHandler;
 
-  private final SuiteStatusResponseHandler suiteStatusResponseHandler;
+  private final ResponseHandler<SuiteStatusResult> suiteStatusResponseHandler;
 
   private final String buildDirectory;
 
@@ -70,8 +71,8 @@ public class TestSuiteRunner {
     this.endpointDomain = endpointDomain;
     this.domain = domain;
     this.xUnit = xUnit;
-    suiteExecutionResponseHandler = new SuiteExecutionResponseHandler();
-    suiteStatusResponseHandler = new SuiteStatusResponseHandler();
+    suiteExecutionResponseHandler = new JSONResponseHandler<>(SuiteExecutionResult.class);
+    suiteStatusResponseHandler = new JSONResponseHandler<>(SuiteStatusResult.class);
   }
 
   public void runTestSuite(final File testSuite) throws AETException {

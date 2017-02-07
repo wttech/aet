@@ -19,8 +19,6 @@ package com.cognifide.aet.common;
 
 import com.google.gson.Gson;
 
-import com.cognifide.aet.communication.api.suiteexecution.SuiteStatusResult;
-
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
 import org.apache.http.client.HttpResponseException;
@@ -30,15 +28,21 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 
-public class SuiteStatusResponseHandler implements ResponseHandler<SuiteStatusResult> {
+class JSONResponseHandler<T> implements ResponseHandler<T> {
+
+  private Class<T> resultClass;
+
+  public JSONResponseHandler(Class<T> resultClass) {
+    this.resultClass = resultClass;
+  }
 
   @Override
-  public SuiteStatusResult handleResponse(HttpResponse httpResponse) throws IOException {
+  public T handleResponse(HttpResponse httpResponse) throws IOException {
     StatusLine statusLine = httpResponse.getStatusLine();
     if (statusLine.getStatusCode() == 200) {
       String result = EntityUtils.toString(httpResponse.getEntity(), MIME.UTF8_CHARSET);
       Gson gson = new Gson();
-      return gson.fromJson(result, SuiteStatusResult.class);
+      return gson.fromJson(result, resultClass);
     } else {
       throw new HttpResponseException(statusLine.getStatusCode(), statusLine.getReasonPhrase());
     }
