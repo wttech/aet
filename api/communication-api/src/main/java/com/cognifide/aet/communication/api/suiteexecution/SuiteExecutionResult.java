@@ -36,16 +36,16 @@ public class SuiteExecutionResult {
   public static SuiteExecutionResult createSuccessResult(String correlationId, String statusUrl,
       String htmlReportUrl, String xunitReportUrl) {
     SuiteExecutionResult suiteExecutionResult = new SuiteExecutionResult();
-    suiteExecutionResult.setCorrelationId(correlationId);
-    suiteExecutionResult.setStatusUrl(statusUrl);
-    suiteExecutionResult.setHtmlReportUrl(htmlReportUrl);
-    suiteExecutionResult.setXunitReportUrl(xunitReportUrl);
+    suiteExecutionResult.correlationId = correlationId;
+    suiteExecutionResult.statusUrl = statusUrl;
+    suiteExecutionResult.htmlReportUrl = htmlReportUrl;
+    suiteExecutionResult.xunitReportUrl = xunitReportUrl;
     return suiteExecutionResult;
   }
 
   public static SuiteExecutionResult createErrorResult(String errorMessage) {
     SuiteExecutionResult suiteExecutionResult = new SuiteExecutionResult();
-    suiteExecutionResult.setErrorMessage(errorMessage);
+    suiteExecutionResult.errorMessage = errorMessage;
     return suiteExecutionResult;
   }
 
@@ -69,23 +69,4 @@ public class SuiteExecutionResult {
     return errorMessage;
   }
 
-  private void setCorrelationId(String correlationId) {
-    this.correlationId = correlationId;
-  }
-
-  private void setStatusUrl(String statusUrl) {
-    this.statusUrl = statusUrl;
-  }
-
-  private void setHtmlReportUrl(String htmlReportUrl) {
-    this.htmlReportUrl = htmlReportUrl;
-  }
-
-  private void setXunitReportUrl(String xunitReportUrl) {
-    this.xunitReportUrl = xunitReportUrl;
-  }
-
-  private void setErrorMessage(String errorMessage) {
-    this.errorMessage = errorMessage;
-  }
 }
