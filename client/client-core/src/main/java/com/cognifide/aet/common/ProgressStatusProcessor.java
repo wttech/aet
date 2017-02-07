@@ -18,16 +18,14 @@
 package com.cognifide.aet.common;
 
 import com.cognifide.aet.communication.api.exceptions.AETException;
-import com.cognifide.aet.communication.api.messages.ProgressMessage;
+import com.cognifide.aet.communication.api.suiteexecution.SuiteStatusResult;
 import com.jcabi.log.Logger;
-
-import org.apache.commons.lang3.StringUtils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-class ProgressMessageProcessor implements MessageProcessor {
+class ProgressStatusProcessor implements StatusProcessor {
 
   private static final String DATE_FORMAT = "HH:mm:ss.SSS";
 
@@ -38,16 +36,14 @@ class ProgressMessageProcessor implements MessageProcessor {
     }
   };
 
-  private final ProgressMessage progressMessage;
+  private final SuiteStatusResult suiteStatusResult;
 
-  ProgressMessageProcessor(ProgressMessage progressMessage) {
-    this.progressMessage = progressMessage;
+  ProgressStatusProcessor(SuiteStatusResult suiteStatusResult) {
+    this.suiteStatusResult = suiteStatusResult;
   }
 
   @Override
   public void process() throws AETException {
-    if (progressMessage != null && StringUtils.isNotEmpty(progressMessage.getData())) {
-      Logger.info(this, "[%s]: %s", DATE_FORMATTER.get().format(new Date()), progressMessage.getData());
-    }
+    Logger.info(this, "[%s]: %s", DATE_FORMATTER.get().format(new Date()), suiteStatusResult.getMessage());
   }
 }

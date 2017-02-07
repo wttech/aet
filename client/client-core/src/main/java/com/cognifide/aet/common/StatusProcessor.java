@@ -18,19 +18,8 @@
 package com.cognifide.aet.common;
 
 import com.cognifide.aet.communication.api.exceptions.AETException;
-import com.cognifide.aet.communication.api.messages.FatalErrorMessage;
 
+public interface StatusProcessor {
 
-class FatalErrorMessageProcessor implements MessageProcessor {
-
-  private final FatalErrorMessage errorMessage;
-
-  FatalErrorMessageProcessor(FatalErrorMessage errorMessage) {
-    this.errorMessage = errorMessage;
-  }
-
-  @Override
-  public void process() throws AETException {
-    throw new AETException(errorMessage.getMessage());
-  }
+  void process() throws AETException;
 }

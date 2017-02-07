@@ -80,12 +80,12 @@ public class SuiteServlet extends HttpServlet {
 
         if (suiteExecutionResult.getErrorMessage() == null) {
           response.setStatus(200);
+          response.setContentType("application/json");
+          response.setCharacterEncoding("UTF-8");
+          response.getWriter().write(responseBody);
         } else {
-          response.setStatus(400);
+          response.sendError(500, suiteExecutionResult.getErrorMessage());
         }
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(responseBody);
       } else {
         response.sendError(400, "Request does not contain the test suite");
       }

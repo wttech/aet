@@ -151,7 +151,8 @@ public class SuiteExecutor {
           String htmlReportUrl = getReportUrl(HTML_REPORT_URL_FORMAT,
               reportConfigurationManager.getReportDomain(), suite);
           String xunitReportUrl = getReportUrl(XUNIT_REPORT_URL_FORMAT, endpointDomain, suite);
-          result = SuiteExecutionResult.createSuccessResult(statusUrl, htmlReportUrl, xunitReportUrl);
+          result = SuiteExecutionResult.createSuccessResult(suite.getCorrelationId(), statusUrl,
+              htmlReportUrl, xunitReportUrl);
         } else {
           result = SuiteExecutionResult.createErrorResult("Suite is currently locked");
         }

@@ -18,8 +18,19 @@
 package com.cognifide.aet.common;
 
 import com.cognifide.aet.communication.api.exceptions.AETException;
+import com.cognifide.aet.communication.api.suiteexecution.SuiteStatusResult;
+import com.jcabi.log.Logger;
 
-public interface MessageProcessor {
+public class ProcessingErrorStatusProcessor implements StatusProcessor {
 
-  void process() throws AETException;
+  private final SuiteStatusResult suiteStatusResult;
+
+  public ProcessingErrorStatusProcessor(SuiteStatusResult suiteStatusResult) {
+    this.suiteStatusResult = suiteStatusResult;
+  }
+
+  @Override
+  public void process() throws AETException {
+    Logger.warn(this, suiteStatusResult.getMessage());
+  }
 }

@@ -18,23 +18,18 @@
 package com.cognifide.aet.common;
 
 import com.cognifide.aet.communication.api.exceptions.AETException;
-import com.cognifide.aet.communication.api.messages.ProcessingErrorMessage;
-import com.jcabi.log.Logger;
+import com.cognifide.aet.communication.api.suiteexecution.SuiteStatusResult;
 
-public class ProcessingErrorMessageProcessor implements MessageProcessor {
+class FatalErrorStatusProcessor implements StatusProcessor {
 
-  private final ProcessingErrorMessage data;
+  private final SuiteStatusResult suiteStatusResult;
 
-  public ProcessingErrorMessageProcessor(ProcessingErrorMessage data) {
-    this.data = data;
+  FatalErrorStatusProcessor(SuiteStatusResult suiteStatusResult) {
+    this.suiteStatusResult = suiteStatusResult;
   }
 
   @Override
   public void process() throws AETException {
-    if (data != null && data.getProcessingError() != null) {
-      Logger.warn(this, data.getProcessingError().getDescription());
-    } else {
-      throw new AETException("ProcessingErrorMessageProcessor has received empty message!");
-    }
+    throw new AETException(suiteStatusResult.getMessage());
   }
 }

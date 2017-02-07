@@ -19,6 +19,8 @@ package com.cognifide.aet.communication.api.suiteexecution;
 
 public class SuiteExecutionResult {
 
+  private String correlationId;
+
   private String statusUrl;
 
   private String htmlReportUrl;
@@ -31,9 +33,10 @@ public class SuiteExecutionResult {
     //Use create methods to get instance
   }
 
-  public static SuiteExecutionResult createSuccessResult(String statusUrl, String htmlReportUrl,
-      String xunitReportUrl) {
+  public static SuiteExecutionResult createSuccessResult(String correlationId, String statusUrl,
+      String htmlReportUrl, String xunitReportUrl) {
     SuiteExecutionResult suiteExecutionResult = new SuiteExecutionResult();
+    suiteExecutionResult.setCorrelationId(correlationId);
     suiteExecutionResult.setStatusUrl(statusUrl);
     suiteExecutionResult.setHtmlReportUrl(htmlReportUrl);
     suiteExecutionResult.setXunitReportUrl(xunitReportUrl);
@@ -44,6 +47,10 @@ public class SuiteExecutionResult {
     SuiteExecutionResult suiteExecutionResult = new SuiteExecutionResult();
     suiteExecutionResult.setErrorMessage(errorMessage);
     return suiteExecutionResult;
+  }
+
+  public String getCorrelationId() {
+    return correlationId;
   }
 
   public String getStatusUrl() {
@@ -60,6 +67,10 @@ public class SuiteExecutionResult {
 
   public String getErrorMessage() {
     return errorMessage;
+  }
+
+  private void setCorrelationId(String correlationId) {
+    this.correlationId = correlationId;
   }
 
   private void setStatusUrl(String statusUrl) {

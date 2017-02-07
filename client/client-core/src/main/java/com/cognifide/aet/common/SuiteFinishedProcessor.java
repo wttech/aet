@@ -18,12 +18,9 @@
 package com.cognifide.aet.common;
 
 import com.cognifide.aet.communication.api.exceptions.AETException;
-import com.cognifide.aet.communication.api.messages.FinishedSuiteProcessingMessage;
 import com.jcabi.log.Logger;
 
-class SuiteFinishedProcessor implements MessageProcessor {
-
-  private final FinishedSuiteProcessingMessage data;
+class SuiteFinishedProcessor implements StatusProcessor {
 
   private final RunnerTerminator runnerTerminator;
 
@@ -31,9 +28,8 @@ class SuiteFinishedProcessor implements MessageProcessor {
 
   private final RedirectWriter redirectWriter;
 
-  public SuiteFinishedProcessor(FinishedSuiteProcessingMessage data, String reportUrl,
-                                RedirectWriter redirectWriter, RunnerTerminator runnerTerminator) {
-    this.data = data;
+  public SuiteFinishedProcessor(String reportUrl, RedirectWriter redirectWriter,
+      RunnerTerminator runnerTerminator) {
     this.reportUrl = reportUrl;
     this.redirectWriter = redirectWriter;
     this.runnerTerminator = runnerTerminator;
@@ -41,25 +37,8 @@ class SuiteFinishedProcessor implements MessageProcessor {
 
   @Override
   public void process() throws AETException {
-    Logger.info(this, String.format("Received report message: %s", data));
-    if (data.getStatus() == FinishedSuiteProcessingMessage.Status.OK) {
-      processSuccess();
-      runnerTerminator.update();
-    } else if (data.getStatus() == FinishedSuiteProcessingMessage.Status.FAILED) {
-      processError();
-    }
-  }
-
-  private void processSuccess() throws AETException {
     Logger.info(this, "Report is available at " + reportUrl);
     redirectWriter.write(reportUrl);
+    runnerTerminator.update();
   }
-
-  private void processError() throws AETException {
-    for (String error : data.getErrors()) {
-      Logger.error(this, error);
-    }
-    throw new AETException("Failed");
-  }
-
 }

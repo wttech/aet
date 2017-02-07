@@ -17,14 +17,8 @@
  */
 package com.cognifide.aet.common;
 
-import com.cognifide.aet.communication.api.messages.FatalErrorMessage;
-import com.cognifide.aet.communication.api.messages.FinishedSuiteProcessingMessage;
-import com.cognifide.aet.communication.api.messages.ProcessingErrorMessage;
-import com.cognifide.aet.communication.api.messages.ProgressMessage;
-
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.ObjectMessage;
+import com.cognifide.aet.communication.api.suiteexecution.ProcessingStatus;
+import com.cognifide.aet.communication.api.suiteexecution.SuiteStatusResult;
 
 final class ProcessorFactory {
 
@@ -32,20 +26,18 @@ final class ProcessorFactory {
     // private
   }
 
-  static MessageProcessor produce(Message message, String reportUrl, RedirectWriter redirectWriter,
-                                  RunnerTerminator runnerTerminator) throws JMSException {
-    MessageProcessor processor = null;
-    if (message instanceof ObjectMessage) {
-      Object object = ((ObjectMessage) message).getObject();
-      if (object instanceof ProcessingErrorMessage) {
-        processor = new ProcessingErrorMessageProcessor((ProcessingErrorMessage) object);
-      } else if (object instanceof FinishedSuiteProcessingMessage) {
-        processor = new SuiteFinishedProcessor((FinishedSuiteProcessingMessage) object, reportUrl,
-                redirectWriter, runnerTerminator);
-      } else if (object instanceof ProgressMessage) {
-        processor = new ProgressMessageProcessor((ProgressMessage) object);
-      } else if (object instanceof FatalErrorMessage) {
-        processor = new FatalErrorMessageProcessor((FatalErrorMessage) object);
+  static StatusProcessor produce(SuiteStatusResult suiteStatusResult, String reportUrl,
+                                 RedirectWriter redirectWriter, RunnerTerminator runnerTerminator) {
+    StatusProcessor processor = null;
+    if (suiteStatusResult != null) {
+      if (ProcessingStatus.PROGRESS.equals(suiteStatusResult.getStatus())) {
+        processor = new ProgressStatusProcessor(suiteStatusResult);
+      } else if (ProcessingStatus.ERROR.equals(suiteStatusResult.getStatus())) {
+        processor = new ProcessingErrorStatusProcessor(suiteStatusResult);
+      } else if (ProcessingStatus.FATAL_ERROR.equals(suiteStatusResult.getStatus())) {
+        processor = new FatalErrorStatusProcessor(suiteStatusResult);
+      } else if (ProcessingStatus.FINISHED.equals(suiteStatusResult.getStatus())) {
+        processor = new SuiteFinishedProcessor(reportUrl, redirectWriter, runnerTerminator);
       }
     }
     return processor;
