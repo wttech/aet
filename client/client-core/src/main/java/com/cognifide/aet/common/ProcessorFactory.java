@@ -17,7 +17,6 @@
  */
 package com.cognifide.aet.common;
 
-import com.cognifide.aet.communication.api.suiteexecution.ProcessingStatus;
 import com.cognifide.aet.communication.api.suiteexecution.SuiteStatusResult;
 
 final class ProcessorFactory {
@@ -30,14 +29,19 @@ final class ProcessorFactory {
                                  RedirectWriter redirectWriter, RunnerTerminator runnerTerminator) {
     StatusProcessor processor = null;
     if (suiteStatusResult != null) {
-      if (ProcessingStatus.PROGRESS.equals(suiteStatusResult.getStatus())) {
-        processor = new ProgressStatusProcessor(suiteStatusResult);
-      } else if (ProcessingStatus.ERROR.equals(suiteStatusResult.getStatus())) {
-        processor = new ProcessingErrorStatusProcessor(suiteStatusResult);
-      } else if (ProcessingStatus.FATAL_ERROR.equals(suiteStatusResult.getStatus())) {
-        processor = new FatalErrorStatusProcessor(suiteStatusResult);
-      } else if (ProcessingStatus.FINISHED.equals(suiteStatusResult.getStatus())) {
-        processor = new SuiteFinishedProcessor(reportUrl, redirectWriter, runnerTerminator);
+      switch (suiteStatusResult.getStatus()) {
+        case PROGRESS:
+          processor = new ProgressStatusProcessor(suiteStatusResult);
+          break;
+        case ERROR:
+          processor = new ProcessingErrorStatusProcessor(suiteStatusResult);
+          break;
+        case FATAL_ERROR:
+          processor = new FatalErrorStatusProcessor(suiteStatusResult);
+          break;
+        case FINISHED:
+          processor = new SuiteFinishedProcessor(reportUrl, redirectWriter, runnerTerminator);
+          break;
       }
     }
     return processor;
