@@ -32,8 +32,6 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 public class ProcessingErrorMessageProcessorTest {
 
-  public static final String DESCRIPTION = "Description";
-
   private ProcessingErrorStatusProcessor tested;
 
   @Mock
