@@ -17,11 +17,34 @@
  */
 package com.cognifide.aet.communication.api.suiteexecution;
 
+/**
+ * Represents the status of test suite processing.
+ */
 public enum ProcessingStatus {
 
+  /**
+   * The test suite is being processed by system.
+   */
   PROGRESS,
+
+  /**
+   * An error occurred during the test suite processing that does not terminate processing.
+   */
   ERROR,
+
+  /**
+   * An error occurred during the test suite processing that terminates processing.
+   */
   FATAL_ERROR,
+
+  /**
+   * Suite processing has finished successfully.
+   */
   FINISHED,
+
+  /**
+   * Suite status could not be established. This usually means that the client has already obtained
+   * all status messages available but new messages might be available later.
+   */
   UNKNOWN
 }

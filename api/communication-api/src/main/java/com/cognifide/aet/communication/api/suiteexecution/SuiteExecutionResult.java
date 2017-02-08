@@ -17,6 +17,9 @@
  */
 package com.cognifide.aet.communication.api.suiteexecution;
 
+/**
+ * The result of starting the test suite execution.
+ */
 public class SuiteExecutionResult {
 
   private String correlationId;
@@ -49,22 +52,37 @@ public class SuiteExecutionResult {
     return suiteExecutionResult;
   }
 
+  /**
+   * @return suite's correlation ID
+   */
   public String getCorrelationId() {
     return correlationId;
   }
 
+  /**
+   * @return link the client should use to get the status of test suite processing
+   */
   public String getStatusUrl() {
     return statusUrl;
   }
 
+  /**
+   * @return link to generated html report
+   */
   public String getHtmlReportUrl() {
     return htmlReportUrl;
   }
 
+  /**
+   * @return link to generated xUnit report
+   */
   public String getXunitReportUrl() {
     return xunitReportUrl;
   }
 
+  /**
+   * @return error message if the test suite execution failed to start
+   */
   public String getErrorMessage() {
     return errorMessage;
   }

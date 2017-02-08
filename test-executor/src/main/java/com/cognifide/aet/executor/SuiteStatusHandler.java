@@ -31,6 +31,13 @@ class SuiteStatusHandler {
     this.statusCache = statusCache;
   }
 
+  /**
+   * Adds given suite processing status to the statuses queue associated with the specified
+   * correlation ID of the test suite run.
+   *
+   * @param correlationId correlationId of the test suite run
+   * @param status suite processing status
+   */
   void handle(String correlationId, SuiteStatusResult status) {
     Queue<SuiteStatusResult> statusQueue = statusCache.getIfPresent(correlationId);
     if (statusQueue != null) {

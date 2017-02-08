@@ -66,6 +66,16 @@ public class SuiteServlet extends HttpServlet {
   @Reference
   private SuiteExecutor suiteExecutor;
 
+  /**
+   * Starts processing of the test suite defined in the XML file provided in post body. Overrides
+   * domain specified in the suite file if one has been provided in post body. Returns JSON defined
+   * by {@link SuiteExecutionResult}. The request's content type must be 'multipart/form-data'.
+   *
+   * @param request
+   * @param response
+   * @throws ServletException
+   * @throws IOException
+   */
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
     if (ServletFileUpload.isMultipartContent(request)) {

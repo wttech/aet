@@ -17,6 +17,11 @@
  */
 package com.cognifide.aet.communication.api.suiteexecution;
 
+import org.apache.commons.lang3.StringUtils;
+
+/**
+ * The status of test suite processing.
+ */
 public class SuiteStatusResult {
 
   private ProcessingStatus status;
@@ -24,7 +29,7 @@ public class SuiteStatusResult {
   private String message;
 
   public SuiteStatusResult(ProcessingStatus status) {
-    this(status, null);
+    this(status, StringUtils.EMPTY);
   }
 
   public SuiteStatusResult(ProcessingStatus status, String message) {
@@ -32,10 +37,16 @@ public class SuiteStatusResult {
     this.message = message;
   }
 
+  /**
+   * @return status of suite processing. See {@link ProcessingStatus} for available values
+   */
   public ProcessingStatus getStatus() {
     return status;
   }
 
+  /**
+   * @return optional status message
+   */
   public String getMessage() {
     return message;
   }

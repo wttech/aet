@@ -27,6 +27,11 @@ class RunnerCacheUpdater {
     this.runnerCache = runnerCache;
   }
 
+  /**
+   * Accesses the SuiteRunner cache entry for given correlation ID to prevent its expiration.
+   *
+   * @param key correlation ID of the suite runner cache entry to be updated.
+   */
   void update(String key) {
     runnerCache.getIfPresent(key);
   }

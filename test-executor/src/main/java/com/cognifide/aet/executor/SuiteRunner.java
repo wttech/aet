@@ -38,6 +38,9 @@ import javax.jms.MessageProducer;
 import javax.jms.ObjectMessage;
 import javax.jms.Session;
 
+/**
+ * This class is responsible for running a single test suite and checking the processing status.
+ */
 public class SuiteRunner implements Runnable {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SuiteRunner.class);
@@ -74,6 +77,11 @@ public class SuiteRunner implements Runnable {
     this.messageReceiveTimeout = messageReceiveTimeout;
   }
 
+  /**
+   * Runs the test suite processing and starts a thread which checks the processing status.
+   *
+   * @throws JMSException
+   */
   public void runSuite() throws JMSException {
     messageProducer = session.createProducer(session.createQueue(inQueueName));
     Destination outRunnerDestination = session.createTemporaryQueue();
@@ -87,6 +95,9 @@ public class SuiteRunner implements Runnable {
     startStatusUpdate();
   }
 
+  /**
+   * Closes the temporary JMS queue.
+   */
   public void close() {
     try {
       if (messageConsumer != null) {
@@ -103,10 +114,16 @@ public class SuiteRunner implements Runnable {
     }
   }
 
+  /**
+   * Terminates thread checking the suite processing status.
+   */
   public void terminate() {
     runnerTerminator.update();
   }
 
+  /**
+   * Checks the suite processing status.
+   */
   @Override
   public void run() {
     while (runnerTerminator.isActive()) {

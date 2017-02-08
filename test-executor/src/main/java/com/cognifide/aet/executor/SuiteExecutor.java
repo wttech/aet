@@ -60,6 +60,11 @@ import java.util.concurrent.TimeUnit;
 import javax.jms.JMSException;
 import javax.jms.Session;
 
+/**
+ * This service is responsible for executing the test suite and maintaining the processing statuses.
+ * It creates the {@link SuiteRunner} and {@link SuiteStatusResult} queue for each test suite run
+ * and keeps those items in cache.
+ */
 @Service(SuiteExecutor.class)
 @Component(label = "AET Suite Executor", description = "Executes received test suite", immediate = true,
     metatype = true)
@@ -129,6 +134,15 @@ public class SuiteExecutor {
     suiteStatusHandler = new SuiteStatusHandler(suiteStatusCache);
   }
 
+  /**
+   * Executes the test suite provided as a parameter.
+   *
+   * @param suiteString - content of the test suite XML file
+   * @param domain - overrides domain defined in the suite file
+   * @param endpointDomain - domain under which AET system is available, used to create links to
+   *                       xUnit report and status check
+   * @return status of the suite execution
+   */
   public SuiteExecutionResult execute(String suiteString, String domain, String endpointDomain) {
     SuiteRunner suiteRunner = null;
     SuiteExecutionResult result;
@@ -170,6 +184,12 @@ public class SuiteExecutor {
     return result;
   }
 
+  /**
+   * Returns the status of test suite processing.
+   *
+   * @param correlationId
+   * @return status of the test suite run identified by provided correlation ID
+   */
   public SuiteStatusResult getExecutionStatus(String correlationId) {
     SuiteStatusResult result = null;
 
