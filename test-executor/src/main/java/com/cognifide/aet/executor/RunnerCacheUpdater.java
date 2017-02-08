@@ -19,15 +19,15 @@ package com.cognifide.aet.executor;
 
 import com.google.common.cache.Cache;
 
-public class RunnerCacheUpdater {
+class RunnerCacheUpdater {
 
   private Cache<String, SuiteRunner> runnerCache;
 
-  public RunnerCacheUpdater(Cache<String, SuiteRunner> runnerCache) {
+  RunnerCacheUpdater(Cache<String, SuiteRunner> runnerCache) {
     this.runnerCache = runnerCache;
   }
 
-  public void update(String key) {
+  void update(String key) {
     runnerCache.getIfPresent(key);
   }
 }

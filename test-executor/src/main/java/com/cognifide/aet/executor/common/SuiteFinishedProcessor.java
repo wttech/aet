@@ -32,7 +32,7 @@ class SuiteFinishedProcessor implements MessageProcessor {
 
   private final RunnerTerminator runnerTerminator;
 
-  public SuiteFinishedProcessor(FinishedSuiteProcessingMessage data, RunnerTerminator runnerTerminator) {
+  SuiteFinishedProcessor(FinishedSuiteProcessingMessage data, RunnerTerminator runnerTerminator) {
     this.data = data;
     this.runnerTerminator = runnerTerminator;
   }

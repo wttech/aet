@@ -122,7 +122,7 @@ public class SuiteExecutor {
         .build();
 
     suiteStatusCache = CacheBuilder.newBuilder()
-        .expireAfterWrite(cacheExpirationTimeout, TimeUnit.MILLISECONDS)
+        .expireAfterAccess(cacheExpirationTimeout, TimeUnit.MILLISECONDS)
         .build();
 
     runnerCacheUpdater = new RunnerCacheUpdater(suiteRunnerCache);

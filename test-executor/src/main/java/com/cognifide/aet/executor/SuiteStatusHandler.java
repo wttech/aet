@@ -23,15 +23,15 @@ import com.cognifide.aet.communication.api.suiteexecution.SuiteStatusResult;
 
 import java.util.Queue;
 
-public class SuiteStatusHandler {
+class SuiteStatusHandler {
 
   private Cache<String, Queue<SuiteStatusResult>> statusCache;
 
-  public SuiteStatusHandler(Cache<String, Queue<SuiteStatusResult>> statusCache) {
+  SuiteStatusHandler(Cache<String, Queue<SuiteStatusResult>> statusCache) {
     this.statusCache = statusCache;
   }
 
-  public void handle(String correlationId, SuiteStatusResult status) {
+  void handle(String correlationId, SuiteStatusResult status) {
     Queue<SuiteStatusResult> statusQueue = statusCache.getIfPresent(correlationId);
     if (statusQueue != null) {
       statusQueue.add(status);

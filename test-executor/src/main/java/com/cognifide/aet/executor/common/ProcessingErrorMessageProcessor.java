@@ -21,13 +21,13 @@ import com.cognifide.aet.communication.api.messages.ProcessingErrorMessage;
 import com.cognifide.aet.communication.api.suiteexecution.ProcessingStatus;
 import com.cognifide.aet.communication.api.suiteexecution.SuiteStatusResult;
 
-public class ProcessingErrorMessageProcessor implements MessageProcessor {
+class ProcessingErrorMessageProcessor implements MessageProcessor {
 
   private final ProcessingErrorMessage data;
 
   private final RunnerTerminator runnerTerminator;
 
-  public ProcessingErrorMessageProcessor(ProcessingErrorMessage data, RunnerTerminator runnerTerminator) {
+  ProcessingErrorMessageProcessor(ProcessingErrorMessage data, RunnerTerminator runnerTerminator) {
     this.data = data;
     this.runnerTerminator = runnerTerminator;
   }

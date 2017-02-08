@@ -26,6 +26,7 @@ import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
 import org.apache.commons.fileupload.util.Streams;
+import org.apache.commons.lang3.CharEncoding;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
@@ -81,7 +82,7 @@ public class SuiteServlet extends HttpServlet {
         if (suiteExecutionResult.getErrorMessage() == null) {
           response.setStatus(200);
           response.setContentType("application/json");
-          response.setCharacterEncoding("UTF-8");
+          response.setCharacterEncoding(CharEncoding.UTF_8);
           response.getWriter().write(responseBody);
         } else {
           response.sendError(500, suiteExecutionResult.getErrorMessage());
@@ -118,7 +119,7 @@ public class SuiteServlet extends HttpServlet {
       while (itemIterator.hasNext()) {
         FileItemStream item = itemIterator.next();
         InputStream itemStream = item.openStream();
-        String value = Streams.asString(itemStream, "UTF-8");
+        String value = Streams.asString(itemStream, CharEncoding.UTF_8);
         requestData.put(item.getFieldName(), value);
       }
     } catch (FileUploadException | IOException e) {
