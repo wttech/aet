@@ -17,9 +17,14 @@ The AET System consists of 7 core units:
 #### Client
 
 The Client component has the following functions
-* sending request to the *AET System*.  
-* parsing the input *Test Suite* xml file.
+
+* sending request to the *AET System*.
+* checking the suite processing status.
 * downloading the Report after the *Test Suite* run is finished.
+
+#### Test Executor
+
+The Test Executor is an entry point of the test suite processing. It exposes endpoints which client applications can use to run the test suite and check the processing status by sending the simple HTTP requests.
 
 #### Runner
 
