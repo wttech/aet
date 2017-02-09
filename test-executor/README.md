@@ -7,3 +7,6 @@
 </p>
 
 ## Test-executor Module
+Provides endpoints used to start the execution of the test suite and to obtain the processing status.
+
+Parses received XML Test Suite. Starts the suite execution. Obtains and stores the processing statuses of all currently processed suites. Provides the status information to clients if requested.
