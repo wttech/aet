@@ -17,27 +17,19 @@ Each **test** element contains:
 
 ##### Proxy
 
-Proxy is provided by two separated implementations: *embedded* and *rest*.
+Web proxy is required for some of the AET features:
 
-###### *embedded*
+* [Status codes|StatusCodesCollector]
+* [Header modifier|HeaderModifier]
+* [Client-side performance|ClientSidePerformanceCollector] (beta)
 
-*Embedded* proxy does not need standalone *[[Browsermob Server|WindowsSetup#browsermob-proxy-setup]]*, but does not support SSL. *Embedded* proxy is used as default when `useProxy` is setted to "true" (which is equivalent to setting `useProxy="embedded"`*)*.
-
-**Example usage**
-
-```xml
-<?xml version="1.0" encoding="UTF-8" ?>
-<suite name="test-suite" company="cognifide" project="project">
-    <test name="header-modify-test" useProxy="embedded">
-      ...
-    </test>
-    ...
-</suite>
-```
+AET proxy is currently provided by [BrowserMob Proxy](https://bmp.lightbody.net/) .
 
 ###### rest
 
-*Rest* proxy requires standalone *[[Browsermob Server|WindowsSetup#browsermob-proxy-setup]]*.
+*Rest* proxy requires standalone Browsermob server.
+See [[Linux and Windows Setup|LinuxAndWindowsSetup]] for more details.
+This proxy is used as default when `useProxy` is set to "true" (which is equivalent to setting `useProxy="rest"`*)*.
 
 **Example usage**
 
