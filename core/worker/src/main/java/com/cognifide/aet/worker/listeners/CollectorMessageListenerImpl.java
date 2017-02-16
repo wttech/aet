@@ -31,7 +31,6 @@ import com.cognifide.aet.worker.drivers.WebDriverProvider;
 import com.cognifide.aet.worker.exceptions.WorkerException;
 
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.ConfigurationPolicy;
@@ -55,10 +54,6 @@ public class CollectorMessageListenerImpl extends AbstractTaskMessageListener {
 
   private static final String WEB_DRIVER_NAME = "webDriverName";
 
-  private static final String PORT_NAME = "portName";
-
-  private static final int DEFAULT_PORT = 4444;
-
   @Property(name = LISTENER_NAME, label = "Collector name", description = "Name of collector. Used in logs only", value = "Collector")
   private String name;
 
@@ -70,9 +65,6 @@ public class CollectorMessageListenerImpl extends AbstractTaskMessageListener {
 
   @Property(name = WEB_DRIVER_NAME, label = "Web Driver name", value = "ff")
   private String webDriverName;
-
-  @Property(name = PORT_NAME, label = "Embedded Proxy Server Port", value = "4501")
-  private int port;
 
   @Reference
   private JmsConnection jmsConnection;
@@ -87,7 +79,6 @@ public class CollectorMessageListenerImpl extends AbstractTaskMessageListener {
   void activate(Map<String, String> properties) {
     super.doActivate(properties);
     webDriverName = properties.get(WEB_DRIVER_NAME);
-    port = NumberUtils.toInt(properties.get(PORT_NAME), DEFAULT_PORT);
   }
 
   @Deactivate
@@ -115,7 +106,7 @@ public class CollectorMessageListenerImpl extends AbstractTaskMessageListener {
         //FIXME - proxy is now set per url
         final String usedProxy = collectorJobData.getUrls().get(0).getProxy();
         if (isProxyUsed(usedProxy)) {
-          webCommunicationWrapper = this.webDriverProvider.createWebDriverWithProxy(webDriverName, usedProxy, port);
+          webCommunicationWrapper = this.webDriverProvider.createWebDriverWithProxy(webDriverName, usedProxy);
         } else {
           webCommunicationWrapper = this.webDriverProvider.createWebDriver(webDriverName);
         }

@@ -24,6 +24,6 @@ public interface ProxyManager {
 
   String getName();
 
-  ProxyServerWrapper createProxy(int port) throws ProxyException;
+  ProxyServerWrapper createProxy() throws ProxyException;
 
 }
