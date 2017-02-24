@@ -21,7 +21,7 @@ public class RunnerTerminator {
 
   private volatile boolean runFinished;
 
-  public void update() {
+  public void finish() {
     runFinished = true;
   }
 

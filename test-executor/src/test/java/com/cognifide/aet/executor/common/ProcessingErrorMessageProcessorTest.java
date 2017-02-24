@@ -34,7 +34,7 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class ProcessingErrorMessageProcessorTest {
 
-  public static final String DESCRIPTION = "Description";
+  private static final String DESCRIPTION = "Description";
 
   private ProcessingErrorMessageProcessor tested;
 
@@ -55,18 +55,18 @@ public class ProcessingErrorMessageProcessorTest {
   }
 
   @Test
-  public void processTest() throws AETException {
+  public void process_whenMessageContainsProcessingError_expectProcessingErrorGetterCalledTwice() throws AETException {
     tested.process();
 
     verify(message, times(2)).getProcessingError();
   }
 
   @Test
-  public void processTest_nullData() throws AETException {
+  public void process_whenProcessingErrorIsNull_expectRunnerTerminatorFinishedCalled() throws AETException {
     when(message.getProcessingError()).thenReturn(null);
 
     tested.process();
 
-    verify(runnerTerminator, times(1)).update();
+    verify(runnerTerminator, times(1)).finish();
   }
 }

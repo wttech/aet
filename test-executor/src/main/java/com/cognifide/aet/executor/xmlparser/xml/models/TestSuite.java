@@ -86,7 +86,7 @@ public class TestSuite {
     this.company = ValidationUtils
             .validateNotHavingUnderscore(ValidationUtils.validateCaseSensitiveNameAttribute(
                     ATTRIBUTE_PARENT_NAME, "company", company),
-                    "Company can't contains underscore character. It is connected with the way how Version API reads companies. Underscores has been stripped.");
+                    "The company parameter can't contain underscores. It is connected with the way the Version API reads companies. Underscores have been stripped.");
     this.name = ValidationUtils.validateCaseSensitiveNameAttribute(ATTRIBUTE_PARENT_NAME, "name", name);
     this.project = ValidationUtils.validateCaseSensitiveNameAttribute(ATTRIBUTE_PARENT_NAME, "project",
             project);

@@ -46,7 +46,7 @@ class SuiteFinishedProcessor implements MessageProcessor {
     } else if (data.getStatus() == FinishedSuiteProcessingMessage.Status.FAILED) {
       result = processError();
     }
-    runnerTerminator.update();
+    runnerTerminator.finish();
     return result;
   }
 

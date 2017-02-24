@@ -34,8 +34,6 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class SuiteFinishedProcessorTest {
 
-  private static final String REPORT_URL = "http://cognifide.com";
-
   private SuiteFinishedProcessor tested;
 
   @Mock
@@ -54,7 +52,7 @@ public class SuiteFinishedProcessorTest {
   public void processTest() {
     tested.process();
 
-    verify(runnerTerminator, times(1)).update();
+    verify(runnerTerminator, times(1)).finish();
   }
 
   @Test
@@ -65,6 +63,6 @@ public class SuiteFinishedProcessorTest {
     tested.process();
 
     verify(reportMessage, times(1)).getErrors();
-    verify(runnerTerminator, times(1)).update();
+    verify(runnerTerminator, times(1)).finish();
   }
 }

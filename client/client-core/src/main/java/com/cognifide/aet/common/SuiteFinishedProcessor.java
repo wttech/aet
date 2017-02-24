@@ -39,6 +39,6 @@ class SuiteFinishedProcessor implements StatusProcessor {
   public void process() throws AETException {
     Logger.info(this, "Report is available at " + reportUrl);
     redirectWriter.write(reportUrl);
-    runnerTerminator.update();
+    runnerTerminator.finish();
   }
 }

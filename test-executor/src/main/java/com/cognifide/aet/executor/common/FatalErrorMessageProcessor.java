@@ -34,7 +34,7 @@ class FatalErrorMessageProcessor implements MessageProcessor {
 
   @Override
   public SuiteStatusResult process() {
-    runnerTerminator.update();
+    runnerTerminator.finish();
     return new SuiteStatusResult(ProcessingStatus.FATAL_ERROR, errorMessage.getMessage());
   }
 }

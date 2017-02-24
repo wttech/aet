@@ -52,6 +52,6 @@ public class SuiteFinishedProcessorTest {
   public void processTest() throws AETException, IOException {
     tested.process();
 
-    verify(runnerTerminator, times(1)).update();
+    verify(runnerTerminator, times(1)).finish();
   }
 }

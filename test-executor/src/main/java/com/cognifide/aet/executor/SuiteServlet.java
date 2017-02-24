@@ -49,7 +49,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Service
-@Component(label = "SuiteServlet", description = "Executes received test suite", immediate = true, metatype = true)
+@Component(label = "SuiteServlet", description = "Executes received test suite", immediate = true)
 public class SuiteServlet extends HttpServlet {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SuiteServlet.class);

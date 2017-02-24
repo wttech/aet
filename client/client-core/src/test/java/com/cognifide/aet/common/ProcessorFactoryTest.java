@@ -20,7 +20,6 @@ package com.cognifide.aet.common;
 import com.cognifide.aet.communication.api.suiteexecution.ProcessingStatus;
 import com.cognifide.aet.communication.api.suiteexecution.SuiteStatusResult;
 
-import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -42,14 +41,10 @@ public class ProcessorFactoryTest {
   @Mock
   private RunnerTerminator runnerTerminator;
 
-  @Before
-  public void setUp() {
-
-  }
-
   @Test
   public void processTest_statusIsNull() throws JMSException {
-    StatusProcessor processor = ProcessorFactory.produce(null, REPORT_URL, null, runnerTerminator);
+    SuiteStatusResult nullSuiteStatus = null;
+    StatusProcessor processor = ProcessorFactory.produce(nullSuiteStatus, REPORT_URL, null, runnerTerminator);
 
     assertThat(processor, is(nullValue()));
   }

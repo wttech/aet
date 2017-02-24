@@ -41,7 +41,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Service
 @Component(label = "SuiteStatusServlet", description = "Returns status of test suite processing",
-    immediate = true, metatype = true)
+    immediate = true)
 public class SuiteStatusServlet extends HttpServlet {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SuiteStatusServlet.class);

@@ -39,7 +39,7 @@ class ProcessingErrorMessageProcessor implements MessageProcessor {
       result = new SuiteStatusResult(ProcessingStatus.ERROR, data.getProcessingError().getDescription());
     } else {
       result = new SuiteStatusResult(ProcessingStatus.FATAL_ERROR, "Empty error message received");
-      runnerTerminator.update();
+      runnerTerminator.finish();
     }
     return result;
   }

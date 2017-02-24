@@ -81,7 +81,7 @@ public class TestSuiteRunner {
       SuiteExecutionResult suiteExecutionResult = startSuiteExecution(testSuite);
 
       String now = DATE_FORMATTER.get().format(new Date());
-      Logger.info(this, String.format("CorrelationID: %s", suiteExecutionResult.getCorrelationId()));
+      Logger.info(this, "CorrelationID: %s", suiteExecutionResult.getCorrelationId());
       Logger.info(this,
               "********************************************************************************");
       Logger.info(this,

@@ -118,7 +118,7 @@ public class SuiteRunner implements Runnable {
    * Terminates thread checking the suite processing status.
    */
   public void terminate() {
-    runnerTerminator.update();
+    runnerTerminator.finish();
   }
 
   /**
@@ -134,11 +134,11 @@ public class SuiteRunner implements Runnable {
           suiteStatusHandler.handle(suite.getCorrelationId(), status);
           lockService.setLock(suite.getSuiteIdentifier(), suite.getCorrelationId());
         } else {
-          runnerTerminator.update();
+          runnerTerminator.finish();
         }
       } catch (JMSException e) {
         LOGGER.error("Failed to receive error message", e);
-        runnerTerminator.update();
+        runnerTerminator.finish();
       }
     }
     close();

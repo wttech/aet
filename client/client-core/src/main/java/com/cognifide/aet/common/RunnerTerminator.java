@@ -21,7 +21,7 @@ class RunnerTerminator {
 
   private volatile boolean runFinished;
 
-  void update() {
+  void finish() {
     runFinished = true;
   }
 

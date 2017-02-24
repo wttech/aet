@@ -140,8 +140,7 @@
             <configuration>
               <instructions>
                 <Bundle-Vendor>Cognifide Ltd.</Bundle-Vendor>
-                <Export-Package>com.cognifide.aet.executor.*;version="${project.version}"
-                </Export-Package>
+                <Export-Package/>
               </instructions>
             </configuration>
           </execution>
