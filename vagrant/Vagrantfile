@@ -73,7 +73,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
           "java_max_mem" => "3072M",
           "enable_debug" => true
         },
-        "version" => "2.0.0"
+        "version" => "2.0.2"
       }
     }
     chef.run_list = [
