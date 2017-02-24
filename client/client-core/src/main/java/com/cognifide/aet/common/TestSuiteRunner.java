@@ -71,8 +71,8 @@ public class TestSuiteRunner {
     this.endpointDomain = endpointDomain;
     this.domain = domain;
     this.xUnit = xUnit;
-    suiteExecutionResponseHandler = new JSONResponseHandler<>(SuiteExecutionResult.class);
-    suiteStatusResponseHandler = new JSONResponseHandler<>(SuiteStatusResult.class);
+    suiteExecutionResponseHandler = new JsonResponseHandler<>(SuiteExecutionResult.class);
+    suiteStatusResponseHandler = new JsonResponseHandler<>(SuiteStatusResult.class);
   }
 
   public void runTestSuite(final File testSuite) throws AETException {

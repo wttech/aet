@@ -28,11 +28,11 @@ import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
 
-class JSONResponseHandler<T> implements ResponseHandler<T> {
+class JsonResponseHandler<T> implements ResponseHandler<T> {
 
   private Class<T> resultClass;
 
-  public JSONResponseHandler(Class<T> resultClass) {
+  public JsonResponseHandler(Class<T> resultClass) {
     this.resultClass = resultClass;
   }
 
