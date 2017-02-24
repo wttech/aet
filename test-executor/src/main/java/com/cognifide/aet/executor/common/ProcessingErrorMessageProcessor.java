@@ -18,8 +18,8 @@
 package com.cognifide.aet.executor.common;
 
 import com.cognifide.aet.communication.api.messages.ProcessingErrorMessage;
-import com.cognifide.aet.communication.api.suiteexecution.ProcessingStatus;
-import com.cognifide.aet.communication.api.suiteexecution.SuiteStatusResult;
+import com.cognifide.aet.communication.api.execution.ProcessingStatus;
+import com.cognifide.aet.communication.api.execution.SuiteStatusResult;
 
 class ProcessingErrorMessageProcessor implements MessageProcessor {
 

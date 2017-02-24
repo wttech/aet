@@ -18,8 +18,8 @@
 package com.cognifide.aet.common;
 
 import com.cognifide.aet.communication.api.exceptions.AETException;
-import com.cognifide.aet.communication.api.suiteexecution.SuiteExecutionResult;
-import com.cognifide.aet.communication.api.suiteexecution.SuiteStatusResult;
+import com.cognifide.aet.communication.api.execution.SuiteExecutionResult;
+import com.cognifide.aet.communication.api.execution.SuiteStatusResult;
 import com.jcabi.log.Logger;
 
 import org.apache.http.HttpEntity;

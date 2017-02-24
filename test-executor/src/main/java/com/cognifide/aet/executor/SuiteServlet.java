@@ -19,7 +19,7 @@ package com.cognifide.aet.executor;
 
 import com.google.gson.Gson;
 
-import com.cognifide.aet.communication.api.suiteexecution.SuiteExecutionResult;
+import com.cognifide.aet.communication.api.execution.SuiteExecutionResult;
 
 import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.FileItemStream;

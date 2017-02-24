@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cognifide.aet.communication.api.suiteexecution;
+package com.cognifide.aet.communication.api.execution;
 
 import org.apache.commons.lang3.StringUtils;
 

@@ -18,8 +18,8 @@
 package com.cognifide.aet.executor.common;
 
 import com.cognifide.aet.communication.api.messages.FinishedSuiteProcessingMessage;
-import com.cognifide.aet.communication.api.suiteexecution.ProcessingStatus;
-import com.cognifide.aet.communication.api.suiteexecution.SuiteStatusResult;
+import com.cognifide.aet.communication.api.execution.ProcessingStatus;
+import com.cognifide.aet.communication.api.execution.SuiteStatusResult;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

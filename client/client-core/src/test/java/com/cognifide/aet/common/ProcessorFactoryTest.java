@@ -17,8 +17,8 @@
  */
 package com.cognifide.aet.common;
 
-import com.cognifide.aet.communication.api.suiteexecution.ProcessingStatus;
-import com.cognifide.aet.communication.api.suiteexecution.SuiteStatusResult;
+import com.cognifide.aet.communication.api.execution.ProcessingStatus;
+import com.cognifide.aet.communication.api.execution.SuiteStatusResult;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

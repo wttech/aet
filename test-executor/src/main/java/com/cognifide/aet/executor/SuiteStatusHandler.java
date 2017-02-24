@@ -19,7 +19,7 @@ package com.cognifide.aet.executor;
 
 import com.google.common.cache.Cache;
 
-import com.cognifide.aet.communication.api.suiteexecution.SuiteStatusResult;
+import com.cognifide.aet.communication.api.execution.SuiteStatusResult;
 
 import java.util.Queue;
 

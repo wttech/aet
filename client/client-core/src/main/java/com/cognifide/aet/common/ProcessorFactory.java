@@ -17,7 +17,7 @@
  */
 package com.cognifide.aet.common;
 
-import com.cognifide.aet.communication.api.suiteexecution.SuiteStatusResult;
+import com.cognifide.aet.communication.api.execution.SuiteStatusResult;
 
 final class ProcessorFactory {
 
