@@ -101,10 +101,6 @@ public class RestProxyManager implements ProxyManager {
   }
 
   @Override
-  public RestProxyServer createProxy(int port) throws ProxyException {
-    return createProxy();
-  }
-
   public RestProxyServer createProxy() throws ProxyException {
     RestProxyServer proxy;
     if (manager == null) {

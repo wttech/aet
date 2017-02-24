@@ -50,7 +50,7 @@ public class TestRun implements Serializable {
    * @param urls - list of urls.
    * @param name - unique name of test.
    * @param useProxy - says what kind of proxy should be used, backward compatibility: set 'true' to use
-   * embedded, set 'false' to use none.
+   * 'rest' proxy, set 'false' to use none.
    * @param zIndex - specifies order of tests. A test with greater value is always before test with lower zIndex.
    */
   public TestRun(List<CollectorStep> collectorSteps, Set<ComparatorStep> comparatorSteps,

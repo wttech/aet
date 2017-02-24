@@ -37,14 +37,14 @@ import java.util.Map;
 @Component(immediate = true, label = "AET Proxy Server Provider", description = "AET Proxy Server Provider")
 @Properties({@Property(name = Constants.SERVICE_VENDOR, value = "Cognifide Ltd")})
 public class ProxyServerProvider {
-  private static final String DEFAULT_PROXY_MANAGER = "embedded";
+  private static final String DEFAULT_PROXY_MANAGER = "rest";
 
   @Reference(referenceInterface = ProxyManager.class, policy = ReferencePolicy.DYNAMIC,
           cardinality = ReferenceCardinality.OPTIONAL_MULTIPLE, bind = "bindProxyManager",
           unbind = "unbindProxyManager")
   private final Map<String, ProxyManager> collectorManagers = Maps.newConcurrentMap();
 
-  public ProxyServerWrapper createProxy(String useProxy, int port) throws ProxyException {
+  public ProxyServerWrapper createProxy(String useProxy) throws ProxyException {
     String proxyType = useProxy;
     if ("true".equals(useProxy)) {
       proxyType = DEFAULT_PROXY_MANAGER;
@@ -54,9 +54,10 @@ public class ProxyServerProvider {
       throw new ProxyException("Undefined ProxyManager with proxyType: " + proxyType);
     }
     try {
-      return proxyManager.createProxy(port);
+      return proxyManager.createProxy();
     } catch (ProxyException e) {
-      throw new ProxyException("Unable to create ProxyServer on port " + port + " by ProxyManager", e);
+      String managerClass = proxyManager.getClass().getCanonicalName();
+      throw new ProxyException("Unable to create ProxyServer with ProxyManager: " + managerClass, e);
     }
   }
 
