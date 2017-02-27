@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cognifide.aet.executor.common;
+package com.cognifide.aet.executor;
 
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
@@ -38,9 +38,9 @@ import org.apache.commons.lang3.StringUtils;
 import java.util.List;
 import java.util.Map;
 
-public class SuiteFactory {
+class SuiteFactory {
 
-  public Suite suiteFromTestSuiteRun(TestSuiteRun testSuiteRun) {
+  Suite suiteFromTestSuiteRun(TestSuiteRun testSuiteRun) {
     Suite suite = suiteFromTestRun(testSuiteRun);
 
     for (Map.Entry<String, TestRun> testRunEntry : testSuiteRun.getTestRunMap().entrySet()) {

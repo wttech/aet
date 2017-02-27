@@ -30,7 +30,6 @@ import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.communication.api.execution.ProcessingStatus;
 import com.cognifide.aet.communication.api.execution.SuiteExecutionResult;
 import com.cognifide.aet.communication.api.execution.SuiteStatusResult;
-import com.cognifide.aet.executor.common.SuiteFactory;
 import com.cognifide.aet.executor.model.CollectorStep;
 import com.cognifide.aet.executor.model.ComparatorStep;
 import com.cognifide.aet.executor.model.TestRun;
