@@ -24,14 +24,12 @@ import com.google.common.cache.RemovalNotification;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 
-import com.cognifide.aet.communication.api.metadata.Suite;
-import com.cognifide.aet.communication.api.metadata.ValidatorException;
-import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.communication.api.execution.ProcessingStatus;
 import com.cognifide.aet.communication.api.execution.SuiteExecutionResult;
 import com.cognifide.aet.communication.api.execution.SuiteStatusResult;
-import com.cognifide.aet.executor.model.CollectorStep;
-import com.cognifide.aet.executor.model.ComparatorStep;
+import com.cognifide.aet.communication.api.metadata.Suite;
+import com.cognifide.aet.communication.api.metadata.ValidatorException;
+import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.executor.model.TestRun;
 import com.cognifide.aet.executor.model.TestSuiteRun;
 import com.cognifide.aet.executor.xmlparser.api.ParseException;
@@ -70,8 +68,6 @@ import javax.jms.Session;
 public class SuiteExecutor {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SuiteExecutor.class);
-
-  private static final String SCREEN = "screen";
 
   private static final String RUNNER_IN_QUEUE = "AET.runner-in";
 
@@ -151,7 +147,7 @@ public class SuiteExecutor {
       TestSuiteRun testSuiteRun = xmlFileParser.parse(suiteString);
       testSuiteRun = overrideDomainIfDefined(testSuiteRun, domain);
 
-      String validationResult = validateTestSuiteRun(testSuiteRun);
+      String validationResult = SuiteValidator.validateTestSuiteRun(testSuiteRun);
       if (validationResult == null) {
         final Suite suite = new SuiteFactory().suiteFromTestSuiteRun(testSuiteRun);
         suite.validate(Sets.newHashSet("version", "runTimestamp"));
@@ -210,37 +206,6 @@ public class SuiteExecutor {
       localTestSuiteRun = new TestSuiteRun(localTestSuiteRun, domain, tests);
     }
     return localTestSuiteRun;
-  }
-
-  private String validateTestSuiteRun(TestSuiteRun testSuiteRun) {
-    for (TestRun testRun : testSuiteRun.getTestRunMap().values()) {
-      if (hasScreenCollector(testRun) && !hasScreenComparator(testRun)) {
-        return String.format(
-            "Test suite does not contain screen comparator for screen collector in '%s' test, please fix it",
-            testRun.getName());
-      }
-    }
-    return null;
-  }
-
-  private boolean hasScreenCollector(TestRun testRun) {
-    for (CollectorStep collectorStep : testRun.getCollectorSteps()) {
-      if (SCREEN.equalsIgnoreCase(collectorStep.getModule())) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  private boolean hasScreenComparator(TestRun testRun) {
-    for (List<ComparatorStep> comparatorSteps : testRun.getComparatorSteps().values()) {
-      for (ComparatorStep comparatorStep : comparatorSteps) {
-        if (SCREEN.equalsIgnoreCase(comparatorStep.getType())) {
-          return true;
-        }
-      }
-    }
-    return false;
   }
 
   private boolean lockTestSuite(Suite suite) {
