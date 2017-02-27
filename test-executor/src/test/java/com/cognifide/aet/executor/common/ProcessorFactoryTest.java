@@ -78,7 +78,7 @@ public class ProcessorFactoryTest {
 
     MessageProcessor processor = ProcessorFactory.produce(message, runnerTerminator);
 
-    assertThat(processor, is(nullValue()));
+    assertThat(processor, instanceOf(UnexpectedMessageProcessor.class));
   }
 
   @Test
