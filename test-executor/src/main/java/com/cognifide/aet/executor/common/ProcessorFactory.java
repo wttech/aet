@@ -44,6 +44,8 @@ public final class ProcessorFactory {
         processor = new ProgressMessageProcessor((ProgressMessage) object);
       } else if (object instanceof FatalErrorMessage) {
         processor = new FatalErrorMessageProcessor((FatalErrorMessage) object, runnerTerminator);
+      } else {
+        processor = new UnexpectedMessageProcessor(object);
       }
     }
     return processor;

@@ -42,6 +42,12 @@ final class ProcessorFactory {
         case FINISHED:
           processor = new SuiteFinishedProcessor(reportUrl, redirectWriter, runnerTerminator);
           break;
+        case UNKNOWN:
+          // There is no need to handle this message.
+          break;
+        default:
+          processor = new UnexpectedStatusProcessor(suiteStatusResult);
+          break;
       }
     }
     return processor;
