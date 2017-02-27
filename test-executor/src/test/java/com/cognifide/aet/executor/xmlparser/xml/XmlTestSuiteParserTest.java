@@ -17,8 +17,6 @@
  */
 package com.cognifide.aet.executor.xmlparser.xml;
 
-
-
 import com.cognifide.aet.executor.model.TestSuiteRun;
 import com.cognifide.aet.executor.xmlparser.api.TestSuiteParser;
 
