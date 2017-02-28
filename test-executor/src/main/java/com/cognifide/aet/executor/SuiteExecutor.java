@@ -110,7 +110,7 @@ public class SuiteExecutor {
   private SuiteStatusHandler suiteStatusHandler;
 
   @Activate
-  public void activate(Map properties) {
+  public void activate(Map<String, Object> properties) {
     messageReceiveTimeout = PropertiesUtil.toLong(
         properties.get(MESSAGE_RECEIVE_TIMEOUT_PROPERTY_NAME), DEFAULT_MESSAGE_RECEIVE_TIMEOUT);
     cacheExpirationTimeout = PropertiesUtil.toLong(

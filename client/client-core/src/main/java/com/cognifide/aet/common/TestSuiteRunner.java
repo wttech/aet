@@ -45,7 +45,7 @@ public class TestSuiteRunner {
     }
   };
 
-  private static final int STATUS_CHECK_INTERVAL = 1000;
+  private static final int STATUS_CHECK_INTERVAL_MILLIS = 1000;
 
   private final ResponseHandler<SuiteExecutionResult> suiteExecutionResponseHandler;
 
@@ -91,7 +91,7 @@ public class TestSuiteRunner {
       Logger.info(this,
               "********************************************************************************");
       while (runnerTerminator.isActive()) {
-        Thread.sleep(STATUS_CHECK_INTERVAL);
+        Thread.sleep(STATUS_CHECK_INTERVAL_MILLIS);
         SuiteStatusResult suiteStatus = getSuiteStatus(suiteExecutionResult.getStatusUrl());
         processStatus(runnerTerminator, suiteExecutionResult.getHtmlReportUrl(), suiteStatus);
       }

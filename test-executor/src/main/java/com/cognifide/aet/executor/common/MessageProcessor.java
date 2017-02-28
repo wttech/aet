@@ -19,7 +19,15 @@ package com.cognifide.aet.executor.common;
 
 import com.cognifide.aet.communication.api.execution.SuiteStatusResult;
 
+/**
+ * Processes messages received from the JMS queue.
+ */
 public interface MessageProcessor {
 
+  /**
+   * Processes a message received from the JMS queue.
+   *
+   * @return the status of the test suite processing obtained from a JMS message
+   */
   SuiteStatusResult process();
 }
