@@ -1,6 +1,6 @@
 ### Client Application
 
-The AET client application comes the a form of a plugin for the *Maven* build automation tool -- `aet-maven-plugin`. This plugin connects to the AET application in order to run the specified test suite.
+The AET client application comes with a sort of a plugin to the *Maven* build automation tool -- `aet-maven-plugin`. This plugin connects to the AET application in order to run the specified test suite.
 
 #### Usage
 
@@ -47,7 +47,7 @@ The result of successful command line execution of the AET test suite is the `re
 
 There are a few sample commands with a different parameter set below.
 
-By default, `aet-maven-plugin` connects to the AET application using the port 8181 of localhost. If your AET application is deployed on the other machine e.g. under the URL `http://aet.example.com`, you can tell the plugin to connect to that machine in the following way:
+By default, `aet-maven-plugin` connects to the AET application using the port 8181 of localhost. If your AET application has been deployed to some other machine e.g. under the URL `http://aet.example.com`, you can tell the plugin to connect to that machine in the following way:
 ```
 mvn aet:run -DtestSuite=suite.xml -DendpointDomain=http://aet.example.com
 ```
@@ -57,7 +57,7 @@ If all URLs in your test suite point to a single domain, you can specify it so i
 mvn aet:run -DtestSuite=suite.xml -Ddomain=https://en.wikipedia.org
 ```
 
-If you want the test run to fail if it's run takes too much time, you can specify the timeout (in milliseconds) in the following way:
+If you want the test run to fail if its run takes too much time, you can specify the timeout (in milliseconds) in the following way:
 ```
 mvn aet:run -DtestSuite=suite.xml -Dtimeout=2000
 ```

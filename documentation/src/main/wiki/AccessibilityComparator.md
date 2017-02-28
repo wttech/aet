@@ -14,8 +14,8 @@ Resource name: accessibility
 
 | Parameter | Value | Description | Mandatory |
 | --------- | ----- | ----------- | --------- |
-| `report-level` | ERROR (default)<br/><br/> WARN<br/><br/> NOTICE | Only violations of the ERROR type are displayed in the report.<br/><br/> Violations of the WARN and ERROR types are displayed in the report.<br/><br/> All violation types are displayed in the report. | no |
-| ignore-notice | boolean<br/> (default: `true`) | If  the `ignore-notice=true` test status does not depend on the number of notices.<br/> If `ignore-notice=false` notices are treated as warnings in calculating the test status. Enforces the report-level = NOTICE. | no |
+| `report-level` | ERROR (default)<br/><br/> WARN<br/><br/> NOTICE | Violations of the ERROR type are only displayed in the report.<br/><br/> Violations of WARN and ERROR types are displayed in the report.<br/><br/> All violation types are displayed in the report. | no |
+| ignore-notice | boolean<br/> (default: `true`) | If the `ignore-notice=true` test status does not depend on the number of notices.<br/> If `ignore-notice=false` notices are treated as warnings in calculating the test status. Enforces the report-level = NOTICE. | no |
 | `showExcluded` | boolean<br/> (default: `true`) | The flag that indicates if excluded issues (see [[Accessibility Data Filter|AccessibilityDataFilter]]) should be displayed in the report. By default set to `true`. | no |
 
 ##### Example Usage
