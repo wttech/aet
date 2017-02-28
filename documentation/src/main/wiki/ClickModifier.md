@@ -1,6 +1,6 @@
 #### Click Modifier
 
-Click Modifier allows to perform a click action on some element on the page. When the element is not found (e.g. because of the improper xpath value) warning will be logged but the test will be passed to the next steps.
+Click Modifier allows to perform a click action on some element on the page. When the element has not been found (e.g. because of an improper xpath value) a warning message will be logged but the test will be passed to next steps.
 
 Module name: **click**
 

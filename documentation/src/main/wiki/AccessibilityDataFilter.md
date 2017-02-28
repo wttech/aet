@@ -1,7 +1,7 @@
 #### Accessibility Data Filter
 
-Accessibility Data Filter filters out Accessibility issues - it removes the matched accessibility issues from reports.  
-This filter can be only applied to the `accessibility` comparator tag in the test case.  
+Accessibility Data Filter filters out Accessibility issues - it removes the matched accessibility issues from reports.
+This filter can be only applied to the `accessibility` comparator tag in the test case.
 When more than one parameter is provided then only issues fully matched are filtered out.
 
 Module name: **accessibility-filter**
@@ -12,14 +12,14 @@ Resource name: accessibility
 
 | Parameter | Value | Description | Mandatory |
 | --------------- | ----- | ----------- | --------- |
-| `error` | string error | The exact error message | At least one of parameters is required |
+| `error` | string error | The exact error message | At least one parameter is required |
 | `principle` | string principle | The exact accessibility issue principle |
 | `line` | integer line number |The line number in the file which the issue occurred in |
 | `column` | integer column number | The column number in the file which the issue occurred is |
 
 ##### Example Usage
 
-In this example the exact match of the accessibility issue breaking principle "WCAG2A.Principle4.Guideline4_1.4_1_2.H91.Button.Name", at the line 21, the column 5 with the message "This button element does not have a name available to an accessibility API. Valid names are: title attribute, element content." will be totally ignored.
+In this example the exact match of the accessibility issue breaking principle "WCAG2A.Principle4.Guideline4_1.4_1_2.H91.Button.Name", at the line 21, the column 5 with the message "This button element does not have a name available to the accessibility API. Valid names are: title attribute, element content." will be totally ignored.
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -36,7 +36,7 @@ In this example the exact match of the accessibility issue breaking principle "W
             ...
             <accessibility>
                 <accessibility-filter
-                    error="This button element does not have a name available to an accessibility API. Valid names are: title attribute, element content."
+                    error="This button element does not have a name available to the accessibility API. Valid names are: title attribute, element content."
                     principle="WCAG2A.Principle4.Guideline4_1.4_1_2.H91.Button.Name"
                     line="21"
                     column="5" />

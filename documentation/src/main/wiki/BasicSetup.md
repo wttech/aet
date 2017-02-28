@@ -23,7 +23,7 @@ All services run using default ports. For communication please use the following
 
 #### General Prerequisites
 
-By default the Vagrant virtual machine needs 3 GB of RAM and 2 vCPUs, so please make sure that you have enough memory on your machine (8 GB is minimum, 16 GB recommended though).
+By default the Vagrant virtual machine needs 3 GB of RAM and 2 vCPUs, so please make sure that you have enough memory on your machine (8 GB is minimum, 16 GB is recommended though).
 
 #### Installation
 
@@ -39,12 +39,12 @@ As the administrator execute the following commands:
 
 Whenever you'd like to keep all Vagrant related data and virtual machine disks in non-standard directories please:
 
-* set `VAGRANT_HOME` variable to new location (by default it is set to `$HOME/vagrant.d`).
+* set the `VAGRANT_HOME` variable for the location (by default it is set to `$HOME/vagrant.d`).
 * update VirtualBox settings (`File -> Preferences -> General`) to move all disks to other directory.
 
 #### Starting Virtual Machine
 
-Once you set all described things up just execute:
+Once you set all the thigs described above just execute:
 
 ```
 berks update && vagrant destroy -f && vagrant up
@@ -52,16 +52,16 @@ berks update && vagrant destroy -f && vagrant up
 
 #### First Run
 
-All commands have to be executed when you're inside a directory that contains `Vagrantfile`.
+All the commands need to be executed when you're inside a directory that contains `Vagrantfile`.
 
-Next please execute:
+Next you will need to execute:
 
 * `berks install` - downloads Chef dependencies from external sources. It acts as `mvn clean install`, but for Chef cookbooks.
-* `vagrant up` - creates new virtual machine (`.box` file will be downloaded during first run), runs Chef inside it, sets domains and port forwarding up.
+* `vagrant up` - creates a new virtual machine (the `.box` file will be downloaded during the first run), runs Chef inside it, sets domains and port forwarding up.
 
 #### Updates
 
-Whenever new version is released please execute the following:
+Whenever a new version is released please execute the following:
 
 * `git pull` to get the latest version of `Vagrantfile`.
 * `berks update` to update Chef dependencies.
@@ -79,11 +79,11 @@ If you prefer to use PuTTY, mRemote or any other connection manager, please log 
   `Vagrantfile`. It's useful whenever you've changed the port forwarding or synced
   folder configuration.
 * `vagrant destroy -f` deletes the entire virtual machine.
-* `vagrant reload --provision` restarts the virtual machine and re-run Chef
+* `vagrant reload --provision` restarts the virtual machine and re-runs Chef
   afterwards.
-* `vagrant suspend` suspends the currently running virtual machine.
+* `vagrant suspend` suspends the virtual machine that is currently running.
 * `vagrant resume` resumes the suspended virtual machine.
-* `vagrant status` show the status of the virtual machine described in `Vagrantfile`.
+* `vagrant status` shows the status of the virtual machine described in `Vagrantfile`.
 * `vagrant halt` halts/turns off the virtual machine.
 
 #### Port Forwarding
@@ -101,7 +101,7 @@ Port forwarding rules can be easily changed in `Vagrantfile`.
 
 #### Known Issues
 
-* When getting the following error on application deployment to the local Vagrant:
+* When getting the following error during application deployment to the local Vagrant:
     ```
     What went wrong: Execution failed for task ':deployDevClearCache'. > java.net.ConnectException: Connection timed out: connect
     ```

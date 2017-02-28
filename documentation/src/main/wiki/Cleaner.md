@@ -2,7 +2,7 @@
 
 The Cleaner is a mechanism that removes obsolete data from the AET Database.
 
-The Cleaner is a scheduled task (using the Quartz Scheduler library with a [Cron expresion](https://docs.oracle.com/cd/E12058_01/doc/doc.1014/e12030/cron_expressions.htm)). There may be multiple Cleaner instances running in the system, however it is recommended that they should not run over the same span of time (scheduled hours should be carefully picked).
+The Cleaner is a scheduled task (using the Quartz Scheduler library with a [Cron expression](https://docs.oracle.com/cd/E12058_01/doc/doc.1014/e12030/cron_expressions.htm)). There may be multiple Cleaner instances running in the system, however it is recommended that they should not run over the same span of time (scheduled hours should be carefully picked).
 
 #### Configuration
 
@@ -13,16 +13,16 @@ There are two parameters that define if the Suite in the AET Database is obsolet
 
 The **Version** of the suite is incremented each time the suite changes (e.g. during the next run of all suite tests or simply during suite rebasing/commenting). In case when the suite is run with all tests, `correlationId` of the suite changes. During rebasing/commenting, only the version is incremented, `correlationId` remains unchanged.
 
-The **Creation timestamp** is the time when the suite was run or last changed.
+The **Creation timestamp** is the time when the suite was run or when it was changed last time.
 
 Those parameters can be set in the Cleaner configuration:
 
 * Last N versions to keep - defines the number of artifact versions that will be left after the cleaning operation. If left empty, only one version will be kept after the cleaning operation.
-* Remove artifacts older than X days - defines how old files should be removed (older than X days). Works as a conjunction with the last versions to be kept.
+* Remove artifacts older than X days - defines how old files should be removed (older than X days). Works as a conjunction with last versions to be kept.
 
 #### Workflow
 
-The Cleaner uses Apache Camel as an execution processor. The following diagram shows a sample Cleaner execution:
+The Cleaner makes use of Apache Camel as an execution processor. The following diagram shows a sample Cleaner execution:
 
 ![aet-cleaner-workflow](assets/diagrams/aet-cleaner-workflow.png)
 

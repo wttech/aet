@@ -4,7 +4,7 @@
 |:------------   |
 | This AET Plugin is currently in a BETA version. |
 
-Accessibility Collector is responsible for collecting validation results containing violations of the defined coding standard found on the page. It uses the [HTML_CodeSniffer](http://squizlabs.github.io/HTML_CodeSniffer/) tool to find violations.
+Accessibility Collector is responsible for collecting validation results containing violations of the defined coding standard found on the page. It makes use of the [HTML_CodeSniffer](http://squizlabs.github.io/HTML_CodeSniffer/) tool to find violations.
 
 Module name: **accessibility**
 
@@ -12,7 +12,7 @@ Module name: **accessibility**
 
 | Parameter | Value | Description | Mandatory |
 | --------- | ----- | ----------- | --------- |
-| `standard` |WCAG2A<br/> WCAG2AA (default)<br/> WCAG2AAA | The parameter specifies the standard which the page is validated against. More information on the standards: [WCAG2](http://squizlabs.github.io/HTML_CodeSniffer/Standards/WCAG2/) | no |
+| `standard` |WCAG2A<br/> WCAG2AA (default)<br/> WCAG2AAA | The parameter specifies the standard which the page is validated against. More information on the standards is available at: [WCAG2](http://squizlabs.github.io/HTML_CodeSniffer/Standards/WCAG2/) | no |
 
 ##### Example Usage
 
