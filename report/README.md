@@ -29,6 +29,7 @@ You will need following tools installed locally:
             'getUrl': 'http://aet.server.com:8181/api/'
         };
    in order to fetch data displayed on the report from instance `http://aet.server.com:8181`.
+   (for vagrant setup url example: 'http://aet-vagrant/api/')
 2. got into `.../report/src/main/webapp` folder
 3. run `npm install` to install required npm modules
 4. run `grunt` to start your web application
