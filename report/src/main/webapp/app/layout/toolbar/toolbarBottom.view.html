@@ -19,18 +19,16 @@
 -->
 <div class="toolbar-bottom">
     <div class="toolbar-link">
-        <div class="ellipsis">
-            <h4 class="toolbar-link-header">
-                <span class="preformatted">{{toolbarBottom.viewMode}}:</span>
-                <span ng-if="toolbarBottom.viewMode != 'url'">{{toolbarBottom.model.name}}</span>
-                <a ng-if="toolbarBottom.viewMode == 'url'"
-                   href="{{toolbarBottom.model.domain + toolbarBottom.model.url}}" target="_blank"
-                   data-toggle="popover"
-                   data-content="Click to open: {{toolbarBottom.model.domain + toolbarBottom.model.url}}"
-                   data-trigger="hover"
-                   data-container="body">{{toolbarBottom.model.name}}</a>
-            </h4>
-        </div>
+        <h4 class="toolbar-link-header ellipsis">
+            <span class="preformatted">{{toolbarBottom.viewMode}}:</span>
+            <span ng-if="toolbarBottom.viewMode != 'url'">{{toolbarBottom.model.name}}</span>
+            <a ng-if="toolbarBottom.viewMode == 'url'"
+               href="{{toolbarBottom.model.domain + toolbarBottom.model.url}}" target="_blank"
+               data-toggle="popover"
+               data-content="Click to open: {{toolbarBottom.model.domain + toolbarBottom.model.url}}"
+               data-trigger="hover"
+               data-container="body">{{toolbarBottom.model.name}}</a>
+        </h4>
     </div>
     <div class="toolbar-blocks">
         <div class="toolbar-btns is-absolute">

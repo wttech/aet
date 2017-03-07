@@ -17,7 +17,7 @@
     limitations under the License.
 
 -->
-<div class="main page-main">
+<div class="page-main">
     <div class="row reports-list">
         <div class="reports-list-item {{url.getStatus()}}"
              ng-repeat="url in testView.urls | aetUrlStatusFilter:$root.activeFilters | aetUrlSearchFilter:$root.searchText | orderBy:'name'"

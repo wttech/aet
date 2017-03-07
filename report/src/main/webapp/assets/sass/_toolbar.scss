@@ -17,33 +17,28 @@
  */
 .toolbar {
   @include transition(left 0.3s, width 0.3s);
-  position: fixed;
-  left: 0;
-  height: 125px;
   width: 100%;
-
-  .menu-expanded & {
-    left: 350px;
-    width: calc(100% - 350px);
-  }
+  float: left;
 
   &-holder {
     z-index: 10;
   }
 
   &-top {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
     background: $gray_light;
     border-bottom: solid 1px #ededed;
     background: $gray_light;
     padding: 0 20px;
-    display: table;
-    width: 100%;
   }
 
   &-toggle {
-    float: left;
+    display: flex;
+    align-self: center;
     cursor: pointer;
-    padding-top: 17px;
+    margin-right: 20px;
 
     span {
       display: block;
@@ -55,9 +50,8 @@
   }
 
   &-link {
+    width: calc(100% - 200px);
     @include transition(width, 0.3s);
-    width: calc(100vw - 570px);
-    float: left;
     background: $white;
 
     > {
@@ -68,24 +62,26 @@
   &-block {
     text-align: center;
     border-left: solid 1px $border_color;
-    border-right: solid 1px $border_color;
     font-family: $font_light;
     color: rgb(119, 119, 124);
     font-size: 14px;
-    float: left;
-    line-height: 49px;
-    padding: 0 22px;
+    padding: 16px 22px;
 
     i {
       cursor: pointer;
       font-size: 20px;
-      vertical-align: middle;
+      align-self: center;
+    }
+
+    &:last-child {
+      display: flex;
+      border-right: solid 1px $border_color;
     }
   }
 
   &-blocks {
-    float: right;
-
+    display: flex;
+    flex-wrap: nowrap;
     &.is-absolute {
       right: 0;
       padding-right: 15px;
@@ -95,7 +91,8 @@
   }
 
   &-bottom {
-    display: table;
+    display: flex;
+    justify-content: space-between;
     width: 100%;
     padding: 0 20px;
     background: $white;
@@ -106,7 +103,6 @@
       color: $gray_darker;
       padding-right: 20px;
       line-height: 54px;
-      display: table;
       a {
         color: $gray_darker;
 
@@ -118,6 +114,7 @@
   }
 
   &-nav {
+    width: 80px;
     padding-top: 5px;
     margin-right: 20px;
 
@@ -181,13 +178,6 @@
 
   &.absent {
     color: $grayish;
-  }
-}
-
-.menu-expanded {
-
-  .toolbar-link {
-    width: calc(100vw - 920px);
   }
 }
 

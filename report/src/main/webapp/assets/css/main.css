@@ -3860,84 +3860,81 @@ table { border-collapse: collapse; border-spacing: 0; }
 /* line 155, ../sass/_typography.scss */
 .name { font-style: italic; }
 
-/* line 61, ../../../../../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+/* line 61, ../../../../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]:-moz-placeholder { color: #85898e; }
-/* line 64, ../../../../../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+/* line 64, ../../../../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]::-moz-placeholder { color: #85898e; }
-/* line 67, ../../../../../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+/* line 67, ../../../../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]:-ms-input-placeholder { color: #85898e; }
-/* line 56, ../../../../../../../../../Ruby23-x64/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+/* line 56, ../../../../../../../../../../../Library/Ruby/Gems/2.0.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]::-webkit-input-placeholder { color: #85898e; }
 
 /* Automated Exploratory Tests  Copyright (C) 2013 Cognifide Limited  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */
 /* line 18, ../sass/_toolbar.scss */
-.toolbar { -webkit-transition: left 0.3s, width 0.3s; -o-transition: left 0.3s, width 0.3s; transition: left 0.3s, width 0.3s; position: fixed; left: 0; height: 125px; width: 100%; }
-/* line 25, ../sass/_toolbar.scss */
-.menu-expanded .toolbar { left: 350px; width: calc(100% - 350px); }
-/* line 30, ../sass/_toolbar.scss */
+.toolbar { -webkit-transition: left 0.3s, width 0.3s; -o-transition: left 0.3s, width 0.3s; transition: left 0.3s, width 0.3s; width: 100%; float: left; }
+/* line 23, ../sass/_toolbar.scss */
 .toolbar-holder { z-index: 10; }
-/* line 34, ../sass/_toolbar.scss */
-.toolbar-top { background: #f9f9f9; border-bottom: solid 1px #ededed; background: #f9f9f9; padding: 0 20px; display: table; width: 100%; }
+/* line 27, ../sass/_toolbar.scss */
+.toolbar-top { display: flex; justify-content: space-between; width: 100%; background: #f9f9f9; border-bottom: solid 1px #ededed; background: #f9f9f9; padding: 0 20px; }
+/* line 37, ../sass/_toolbar.scss */
+.toolbar-toggle { display: flex; align-self: center; cursor: pointer; margin-right: 20px; }
 /* line 43, ../sass/_toolbar.scss */
-.toolbar-toggle { float: left; cursor: pointer; padding-top: 17px; }
-/* line 48, ../sass/_toolbar.scss */
 .toolbar-toggle span { display: block; width: 20px; background: #77777c; height: 3px; margin-bottom: 3px; }
+/* line 52, ../sass/_toolbar.scss */
+.toolbar-link { width: calc(100% - 200px); -webkit-transition: width, 0.3s; -o-transition: width, 0.3s; transition: width, 0.3s; background: #ffffff; }
 /* line 57, ../sass/_toolbar.scss */
-.toolbar-link { -webkit-transition: width, 0.3s; -o-transition: width, 0.3s; transition: width, 0.3s; width: calc(100vw - 570px); float: left; background: #ffffff; }
-/* line 63, ../sass/_toolbar.scss */
 .toolbar-link > { float: right; }
-/* line 68, ../sass/_toolbar.scss */
-.toolbar-block { text-align: center; border-left: solid 1px #ededed; border-right: solid 1px #ededed; font-family: "montserratlight", sans-serif; color: #77777c; font-size: 14px; float: left; line-height: 49px; padding: 0 22px; }
-/* line 79, ../sass/_toolbar.scss */
-.toolbar-block i { cursor: pointer; font-size: 20px; vertical-align: middle; }
-/* line 86, ../sass/_toolbar.scss */
-.toolbar-blocks { float: right; }
-/* line 89, ../sass/_toolbar.scss */
+/* line 62, ../sass/_toolbar.scss */
+.toolbar-block { text-align: center; border-left: solid 1px #ededed; font-family: "montserratlight", sans-serif; color: #77777c; font-size: 14px; padding: 16px 22px; }
+/* line 70, ../sass/_toolbar.scss */
+.toolbar-block i { cursor: pointer; font-size: 20px; align-self: center; }
+/* line 76, ../sass/_toolbar.scss */
+.toolbar-block:last-child { display: flex; border-right: solid 1px #ededed; }
+/* line 82, ../sass/_toolbar.scss */
+.toolbar-blocks { display: flex; flex-wrap: nowrap; }
+/* line 85, ../sass/_toolbar.scss */
 .toolbar-blocks.is-absolute { right: 0; padding-right: 15px; background: #ffffff; position: absolute; }
-/* line 97, ../sass/_toolbar.scss */
-.toolbar-bottom { display: table; width: 100%; padding: 0 20px; background: #ffffff; }
-/* line 103, ../sass/_toolbar.scss */
-.toolbar-bottom h4 { font-size: 24px; font-weight: normal; color: #85898e; padding-right: 20px; line-height: 54px; display: table; }
-/* line 110, ../sass/_toolbar.scss */
+/* line 93, ../sass/_toolbar.scss */
+.toolbar-bottom { display: flex; justify-content: space-between; width: 100%; padding: 0 20px; background: #ffffff; }
+/* line 100, ../sass/_toolbar.scss */
+.toolbar-bottom h4 { font-size: 24px; font-weight: normal; color: #85898e; padding-right: 20px; line-height: 54px; }
+/* line 106, ../sass/_toolbar.scss */
 .toolbar-bottom h4 a { color: #85898e; }
-/* line 113, ../sass/_toolbar.scss */
+/* line 109, ../sass/_toolbar.scss */
 .toolbar-bottom h4 a:hover { color: #6c7074; }
-/* line 120, ../sass/_toolbar.scss */
-.toolbar-nav { padding-top: 5px; margin-right: 20px; }
-/* line 124, ../sass/_toolbar.scss */
+/* line 116, ../sass/_toolbar.scss */
+.toolbar-nav { width: 80px; padding-top: 5px; margin-right: 20px; }
+/* line 121, ../sass/_toolbar.scss */
 .toolbar-nav.is-absolute { right: 15px; background: #ffffff; position: absolute; }
-/* line 130, ../sass/_toolbar.scss */
+/* line 127, ../sass/_toolbar.scss */
 .toolbar-nav div { float: left; border: solid 1px #ededed; margin-left: -1px; padding: 0 12px; cursor: pointer; background: #ffffff; }
-/* line 138, ../sass/_toolbar.scss */
+/* line 135, ../sass/_toolbar.scss */
 .toolbar-nav div i { margin: 5px 0 8px 0; display: block; color: #85898e; }
-/* line 145, ../sass/_toolbar.scss */
+/* line 142, ../sass/_toolbar.scss */
 .toolbar-btns { border-left: solid 1px #ededed; padding-left: 30px; padding-top: 15px; height: 73px; display: table; }
-/* line 152, ../sass/_toolbar.scss */
+/* line 149, ../sass/_toolbar.scss */
 .toolbar-btns .button { float: left; margin-left: 12px; }
-/* line 157, ../sass/_toolbar.scss */
+/* line 154, ../sass/_toolbar.scss */
 .tab-content-toolbar .toolbar-btns { padding-top: 3px; padding-right: 15px; height: 47px; }
 
-/* line 165, ../sass/_toolbar.scss */
+/* line 162, ../sass/_toolbar.scss */
 .comments-status { width: 45px; font-family: "montserratlight", sans-serif; font-size: 30px; display: block; line-height: 44px; cursor: pointer; }
-/* line 173, ../sass/_toolbar.scss */
+/* line 170, ../sass/_toolbar.scss */
 .comments-status.small { line-height: 37px; font-size: 11px; }
-/* line 178, ../sass/_toolbar.scss */
+/* line 175, ../sass/_toolbar.scss */
 .comments-status.present { color: #c08830; }
-/* line 182, ../sass/_toolbar.scss */
+/* line 179, ../sass/_toolbar.scss */
 .comments-status.absent { color: #3c4550; }
 
-/* line 189, ../sass/_toolbar.scss */
-.menu-expanded .toolbar-link { width: calc(100vw - 920px); }
-
-@media (max-width: 1300px) { /* line 194, ../sass/_toolbar.scss */
+@media (max-width: 1300px) { /* line 184, ../sass/_toolbar.scss */
   .tab-content-toolbar { height: 94px; } }
-/* line 200, ../sass/_toolbar.scss */
+/* line 190, ../sass/_toolbar.scss */
 .tab-content-toolbar .toolbar-btns, .tab-content-toolbar .comments-status { width: auto; }
 
-/* line 205, ../sass/_toolbar.scss */
+/* line 195, ../sass/_toolbar.scss */
 .button-dark.js-trigger-modal { display: inline-block; }
 
-/* line 209, ../sass/_toolbar.scss */
+/* line 199, ../sass/_toolbar.scss */
 .preformatted { font-family: monospace; }
 
 /* Automated Exploratory Tests  Copyright (C) 2013 Cognifide Limited  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */
@@ -4116,146 +4113,143 @@ input[type=text]::-webkit-input-placeholder { color: #85898e; }
 
 /* Automated Exploratory Tests  Copyright (C) 2013 Cognifide Limited  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */
 /* line 18, ../sass/_test.scss */
-.tab-content { margin-top: 130px; z-index: 1; }
+.tab-content { margin-top: 10px; z-index: 1; }
 
-/* line 25, ../sass/_test.scss */
-.menu-expanded .tab-content-toolbar { left: 350px; width: calc(100% - 350px); }
-
-/* line 31, ../sass/_test.scss */
-.tab-content-toolbar { -webkit-transition: left, 0.3s; -o-transition: left, 0.3s; transition: left, 0.3s; position: fixed; top: 185px; left: 0; width: 100%; height: 47px; background: #ebebeb; border: solid #dcdce5; border-width: 1px 0; z-index: 1; }
-/* line 43, ../sass/_test.scss */
+/* line 23, ../sass/_test.scss */
+.tab-content-toolbar { -webkit-transition: left, 0.3s; -o-transition: left, 0.3s; transition: left, 0.3s; width: calc(100% + 50px); height: 47px; margin: 0 -25px; background: #ebebeb; border: solid #dcdce5; border-width: 1px 0; z-index: 1; }
+/* line 33, ../sass/_test.scss */
 .tab-content-toolbar-header { font-family: "montserratlight", sans-serif; color: #77777c; font-size: 11px; display: inline-block; padding: 0 20px; line-height: 30px; border-right: solid 1px #dcdce5; margin-top: 5px; }
 
-/* line 55, ../sass/_test.scss */
+/* line 45, ../sass/_test.scss */
 .checkboxes-inline { display: inline-block; margin: 0 0 20px 11px; }
-/* line 59, ../sass/_test.scss */
+/* line 49, ../sass/_test.scss */
 .checkboxes-inline .checkbox { display: inline-block; margin-bottom: 20px; }
 
-/* line 65, ../sass/_test.scss */
+/* line 55, ../sass/_test.scss */
 .checkbox { position: relative; width: 150px; }
-/* line 69, ../sass/_test.scss */
+/* line 59, ../sass/_test.scss */
 .checkbox label { cursor: pointer; position: absolute; width: 18px; height: 18px; left: 4px; top: 4px; background: #ffffff; border: solid 1px #000000; }
-/* line 79, ../sass/_test.scss */
+/* line 69, ../sass/_test.scss */
 .checkbox label span { position: absolute; width: 150px; left: 30px; }
-/* line 85, ../sass/_test.scss */
+/* line 75, ../sass/_test.scss */
 .checkbox label:after { opacity: 0; content: ''; top: 2px; left: 3px; position: absolute; width: 14px; height: 14px; background: #0097fe; }
-/* line 97, ../sass/_test.scss */
+/* line 87, ../sass/_test.scss */
 .checkbox input[type=checkbox] { opacity: 0; }
-/* line 100, ../sass/_test.scss */
+/* line 90, ../sass/_test.scss */
 .checkbox input[type=checkbox]:checked + label:after { opacity: 1; }
 
 /* Nav tabs
 */
-/* line 111, ../sass/_test.scss */
+/* line 101, ../sass/_test.scss */
 .menu-expanded .tabs { left: 370px; width: calc(100% - 370px); padding-left: 0; }
 
-/* line 118, ../sass/_test.scss */
+/* line 108, ../sass/_test.scss */
 .tabs { -webkit-transition: left, 0.3s; -o-transition: left, 0.3s; transition: left, 0.3s; display: table; background: #ffffff; position: fixed; left: 20px; top: 124px; width: 100%; z-index: 5; }
-/* line 128, ../sass/_test.scss */
+/* line 118, ../sass/_test.scss */
 .tabs .mCustomScrollBox { height: 61px; }
-/* line 132, ../sass/_test.scss */
+/* line 122, ../sass/_test.scss */
 .tabs .mCSB_scrollTools.mCSB_scrollTools_horizontal { bottom: -3px; }
-/* line 135, ../sass/_test.scss */
+/* line 125, ../sass/_test.scss */
 .tabs .mCSB_scrollTools.mCSB_scrollTools_horizontal .mCSB_dragger { width: 100px; }
 
-/* line 144, ../sass/_test.scss */
+/* line 134, ../sass/_test.scss */
 .menu-expanded .nav-tabs-wrapper { width: calc(100vw - 400px); max-width: none; padding-right: 100px; }
 
-/* line 151, ../sass/_test.scss */
+/* line 141, ../sass/_test.scss */
 .nav-tabs-wrapper { max-width: calc(100% - 100px); padding-right: 30px; overflow: auto; position: relative; }
 
-/* line 158, ../sass/_test.scss */
+/* line 148, ../sass/_test.scss */
 .navbar-controls { position: absolute; right: 20px; top: -9px; }
 
 /* Layout comparison
 */
-/* line 168, ../sass/_test.scss */
+/* line 158, ../sass/_test.scss */
 .layout-compare-item { position: relative; width: 50%; text-align: center; padding: 0 15px; }
-/* line 174, ../sass/_test.scss */
+/* line 164, ../sass/_test.scss */
 .layout-compare-item .mask-container { position: relative; }
-/* line 179, ../sass/_test.scss */
+/* line 169, ../sass/_test.scss */
 .layout-compare-item .mask-container:hover .mask { display: none !important; }
-/* line 185, ../sass/_test.scss */
+/* line 175, ../sass/_test.scss */
 .layout-compare-item .mask { position: absolute; top: 0; display: none; -webkit-filter: drop-shadow(5px 5px 5px #222); filter: drop-shadow(5px 5px 5px #222); }
-/* line 192, ../sass/_test.scss */
+/* line 182, ../sass/_test.scss */
 .layout-compare-item .mask.is-visible { display: block; }
-/* line 199, ../sass/_test.scss */
+/* line 189, ../sass/_test.scss */
 .layout-compare-description { padding: 10px 0; font-size: 20px; color: #85898e; }
 
 /* Source codes
 */
-/* line 209, ../sass/_test.scss */
+/* line 199, ../sass/_test.scss */
 .diff-report table { table-layout: fixed; }
-/* line 212, ../sass/_test.scss */
+/* line 202, ../sass/_test.scss */
 .diff-report table thead { position: relative; display: block; }
-/* line 216, ../sass/_test.scss */
+/* line 206, ../sass/_test.scss */
 .diff-report table tbody { white-space: nowrap; font-size: 11px; display: block; height: 500px; overflow: auto; }
-/* line 226, ../sass/_test.scss */
+/* line 216, ../sass/_test.scss */
 .diff-report table.table-w3c thead { border: 1px solid #ddd; }
-/* line 228, ../sass/_test.scss */
+/* line 218, ../sass/_test.scss */
 .diff-report table.table-w3c thead th { border-bottom: 0 none; }
-/* line 236, ../sass/_test.scss */
+/* line 226, ../sass/_test.scss */
 .diff-report table.table-w3c th.num, .diff-report table.table-w3c td.num { width: 50px; display: block; }
-/* line 242, ../sass/_test.scss */
+/* line 232, ../sass/_test.scss */
 .diff-report table.table-w3c td.code { white-space: normal; }
-/* line 246, ../sass/_test.scss */
+/* line 236, ../sass/_test.scss */
 .diff-report table.table-w3c tbody { height: auto; font-size: 14px; }
-/* line 254, ../sass/_test.scss */
+/* line 244, ../sass/_test.scss */
 .diff-report table th.num { min-width: 50px; }
-/* line 258, ../sass/_test.scss */
+/* line 248, ../sass/_test.scss */
 .diff-report table th.code { width: 100%; }
-/* line 263, ../sass/_test.scss */
+/* line 253, ../sass/_test.scss */
 .diff-report table td.code { min-width: 100px; white-space: pre-wrap; }
-/* line 267, ../sass/_test.scss */
+/* line 257, ../sass/_test.scss */
 .diff-report table td.code.code { width: 100%; }
-/* line 270, ../sass/_test.scss */
+/* line 260, ../sass/_test.scss */
 .diff-report table td.code.code p { margin: 0; }
-/* line 274, ../sass/_test.scss */
+/* line 264, ../sass/_test.scss */
 .diff-report table td.code.code span, .diff-report table td.code.code small { white-space: normal; }
-/* line 280, ../sass/_test.scss */
+/* line 270, ../sass/_test.scss */
 .diff-report table td.code.num { min-width: 50px; }
 
-/* line 286, ../sass/_test.scss */
+/* line 276, ../sass/_test.scss */
 .w3c-error { white-space: nowrap; }
-/* line 289, ../sass/_test.scss */
+/* line 279, ../sass/_test.scss */
 .w3c-error span, .w3c-error mark { padding: 0; }
 
-/* line 297, ../sass/_test.scss */
+/* line 287, ../sass/_test.scss */
 tr.no-change { background: #ffffff; }
-/* line 301, ../sass/_test.scss */
+/* line 291, ../sass/_test.scss */
 tr.insert, tr.info, tr.notice { background: #d9edf7; }
-/* line 307, ../sass/_test.scss */
+/* line 297, ../sass/_test.scss */
 tr.change { background: #fcf8e3; }
-/* line 311, ../sass/_test.scss */
+/* line 301, ../sass/_test.scss */
 tr.warn { background: #faf2cc; }
-/* line 315, ../sass/_test.scss */
+/* line 305, ../sass/_test.scss */
 tr.delete, tr.err, tr.error { background: #f2dede; }
 
-/* line 324, ../sass/_test.scss */
+/* line 314, ../sass/_test.scss */
 .tab-content .tab-pane { display: none; }
-/* line 328, ../sass/_test.scss */
+/* line 318, ../sass/_test.scss */
 .tab-content .active { display: block; }
 
 /* performance table
 */
-/* line 337, ../sass/_test.scss */
+/* line 327, ../sass/_test.scss */
 .performance-table { margin-top: 0; }
-/* line 340, ../sass/_test.scss */
+/* line 330, ../sass/_test.scss */
 .performance-table .nav-tabs { width: 400px; float: left; }
-/* line 344, ../sass/_test.scss */
+/* line 334, ../sass/_test.scss */
 .performance-table .nav-tabs li { display: block; float: none; }
 
-/* line 351, ../sass/_test.scss */
+/* line 341, ../sass/_test.scss */
 .tab-content-performance { margin-top: 0; }
 
-/* line 355, ../sass/_test.scss */
+/* line 345, ../sass/_test.scss */
 .links-list { margin-top: 10px; padding-top: 10px; border-top: solid 1px #ebebeb; }
-/* line 360, ../sass/_test.scss */
+/* line 350, ../sass/_test.scss */
 .links-list a { display: block; color: #77777c; }
 
-/* line 369, ../sass/_test.scss */
+/* line 359, ../sass/_test.scss */
 .label-A { background-color: #5cb85c !important; }
-/* line 373, ../sass/_test.scss */
+/* line 363, ../sass/_test.scss */
 .label-F { background-color: #d9534f !important; }
 
 /* Automated Exploratory Tests  Copyright (C) 2013 Cognifide Limited  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */
@@ -4345,16 +4339,10 @@ ul li.rebased a.nav-link, ul li.rebased a.nav-link:focus, ul li.rebased a.nav-li
 /* line 305, ../sass/_report.scss */
 ul li.warning a.nav-link, ul li.warning a.nav-link:focus, ul li.warning a.nav-link:hover { color: #f0ad4e; }
 
-/* line 312, ../sass/_report.scss */
-.bg-shield { height: 60px; width: 100%; position: fixed; top: 125px; background-color: #fff; z-index: 1; }
-
-/* line 320, ../sass/_report.scss */
-.test-tabs .nav-tabs { position: fixed; top: 128px; z-index: 2; }
-
-/* line 329, ../sass/_report.scss */
+/* line 316, ../sass/_report.scss */
 .failed .cookie-test { font-weight: bold; display: inline !important; color: #bb5a5a !important; }
 
-/* line 337, ../sass/_report.scss */
+/* line 324, ../sass/_report.scss */
 .passed .cookie-test { font-weight: bold; display: inline !important; color: #6f9f00 !important; }
 
 /* line 31, ../sass/main.scss */
@@ -4384,53 +4372,53 @@ body { color: #333333; font-family: "montserratregular", sans-serif; }
 .menu-expanded .main { left: 350px; width: calc(100% - 350px); }
 
 /* line 80, ../sass/main.scss */
-.page-main { z-index: 1; padding: 130px 25px 0 25px; }
+.page-main { z-index: 1; width: 100%; float: left; padding: 0 25px; }
 
-/* line 85, ../sass/main.scss */
+/* line 87, ../sass/main.scss */
 .is-hidden { display: none !important; }
 
-/* line 89, ../sass/main.scss */
+/* line 91, ../sass/main.scss */
 .is-disabled { pointer-events: none; opacity: 0.5; cursor: not-allowed !important; }
 
-/* line 95, ../sass/main.scss */
+/* line 97, ../sass/main.scss */
 .screen-cover { background-repeat: no-repeat; background-position: center center; position: absolute; left: 0; width: 100%; opacity: 1; height: 100vh; }
-/* line 104, ../sass/main.scss */
+/* line 106, ../sass/main.scss */
 .screen-cover.js-loader-app { top: 0; height: 100%; z-index: 999; background-color: #2c333b; background-image: url(../img/tail-spin-light.svg); }
-/* line 112, ../sass/main.scss */
+/* line 114, ../sass/main.scss */
 .screen-cover.data-loading-error { top: 0; height: 100%; z-index: 999; background-color: #000000; }
-/* line 120, ../sass/main.scss */
+/* line 122, ../sass/main.scss */
 .menu-expanded .screen-cover.js-loader-content { width: calc(100vw - 365px); }
-/* line 125, ../sass/main.scss */
+/* line 127, ../sass/main.scss */
 .screen-cover h1 { color: #ffffff; text-align: center; }
-/* line 130, ../sass/main.scss */
+/* line 132, ../sass/main.scss */
 .screen-cover p { color: #ffffff; text-align: center; }
 
-/* line 137, ../sass/main.scss */
+/* line 139, ../sass/main.scss */
 .status { font-weight: bold; display: inline !important; }
-/* line 140, ../sass/main.scss */
+/* line 142, ../sass/main.scss */
 .status.failed { color: #bb5a5a !important; }
-/* line 144, ../sass/main.scss */
+/* line 146, ../sass/main.scss */
 .status.warning { color: #f0ad4e !important; }
-/* line 148, ../sass/main.scss */
+/* line 150, ../sass/main.scss */
 .status.rebased { color: #0097fe !important; }
-/* line 152, ../sass/main.scss */
+/* line 154, ../sass/main.scss */
 .status.passed { color: #6f9f00 !important; }
 
-/* line 157, ../sass/main.scss */
+/* line 159, ../sass/main.scss */
 .url-tile { text-align: center; word-break: break-all; }
-/* line 161, ../sass/main.scss */
+/* line 163, ../sass/main.scss */
 .url-tile.passed { color: #6f9f00; }
-/* line 165, ../sass/main.scss */
-.url-tile.rebased { color: #0097fe; }
 /* line 167, ../sass/main.scss */
+.url-tile.rebased { color: #0097fe; }
+/* line 169, ../sass/main.scss */
 .url-tile.rebased span, .url-tile.rebased i { color: #ffffff; }
-/* line 172, ../sass/main.scss */
+/* line 174, ../sass/main.scss */
 .url-tile.warning { color: #f0ad4e; }
-/* line 176, ../sass/main.scss */
+/* line 178, ../sass/main.scss */
 .url-tile.failed { color: #bb5a5a; }
-/* line 180, ../sass/main.scss */
+/* line 182, ../sass/main.scss */
 .url-tile .glyphicon { font-size: 60px; line-height: 60px; }
-/* line 185, ../sass/main.scss */
+/* line 187, ../sass/main.scss */
 .url-tile .statistics { color: #77777c !important; }
-/* line 189, ../sass/main.scss */
+/* line 191, ../sass/main.scss */
 .url-tile .name { font-family: "montserratbold", sans-serif; font-size: 18px; }
