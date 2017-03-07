@@ -146,9 +146,11 @@
         }
 
         a {
+          display: block;
           color: inherit;
           text-align: left;
           padding-left: 10px;
+          @extend .ellipsis;
         }
 
         &:before {
