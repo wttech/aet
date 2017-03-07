@@ -24,7 +24,7 @@
   @include transition(left, .3s);
   width: calc(100% + 50px);
   height: 47px;
-  margin: 0 -25px;
+  margin: 0 -25px 10px -25px;;
   background: #ebebeb;
   border: solid $border_color_darken;
   border-width: 1px 0;
