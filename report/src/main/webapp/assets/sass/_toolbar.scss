@@ -115,7 +115,7 @@
   }
 
   &-nav {
-    width: 80px;
+    width: 95px;
     padding-top: 5px;
     margin-right: 20px;
 
@@ -145,7 +145,7 @@
     padding-left: 30px;
     padding-top: 15px;
     height: 73px;
-    display: table;
+    display: flex;
 
     .button {
       float: left;
