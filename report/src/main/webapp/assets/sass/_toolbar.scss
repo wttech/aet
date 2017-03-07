@@ -50,8 +50,8 @@
   }
 
   &-link {
-    width: calc(100% - 200px);
     @include transition(width, 0.3s);
+    width: calc(100% - 200px);
     background: $white;
 
     > {
@@ -82,6 +82,7 @@
   &-blocks {
     display: flex;
     flex-wrap: nowrap;
+
     &.is-absolute {
       right: 0;
       padding-right: 15px;
