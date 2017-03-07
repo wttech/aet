@@ -134,11 +134,11 @@ public class SuiteRunner implements Runnable {
           suiteStatusHandler.handle(suite.getCorrelationId(), status);
           lockService.setLock(suite.getSuiteIdentifier(), suite.getCorrelationId());
         } else {
-          runnerTerminator.finish();
+          handleFatalError("Timeout was reached while receiving status message");
         }
       } catch (JMSException e) {
-        LOGGER.error("Failed to receive error message", e);
-        runnerTerminator.finish();
+        LOGGER.error("Failed to receive status message", e);
+        handleFatalError(e.getMessage());
       }
     }
     close();
@@ -161,5 +161,11 @@ public class SuiteRunner implements Runnable {
       }
     }
     return status;
+  }
+
+  private void handleFatalError(String errorMessage) {
+    SuiteStatusResult status = new SuiteStatusResult(ProcessingStatus.FATAL_ERROR, errorMessage);
+    suiteStatusHandler.handle(suite.getCorrelationId(), status);
+    runnerTerminator.finish();
   }
 }
