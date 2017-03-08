@@ -49,7 +49,7 @@
       // TODO change this URL  before deploying to server
       // ... when deployed,  url of this report will be in  form eg 'https://aet.cognifide.com/report-flat?company=aet&project=aet&correlationId=aet-aet-main-1484893457967'
       // so we need to get corelationId param from url and maeke a call for metadata.
-      this.$http.get('https://karaf-integration-aet.cognifide.com/api/metadata?company=aet&project=aet&correlationId=aet-aet-main-1484893457967').then((response) => {
+      this.$http.get('https://karaf-staging-aet.cognifide.com/api/metadata?company=aet&project=aet&correlationId=aet-aet-main-1488969677485').then((response) => {
         this.suite = response.body;
       }, (response) => {
         alert("unable to get metadata report");
