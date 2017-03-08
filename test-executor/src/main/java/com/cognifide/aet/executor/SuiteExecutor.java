@@ -77,20 +77,13 @@ public class SuiteExecutor {
 
   private static final String MESSAGE_RECEIVE_TIMEOUT_PROPERTY_NAME = "messageReceiveTimeout";
 
-  private static final long DEFAULT_MESSAGE_RECEIVE_TIMEOUT = 20000L;
+  private static final long CACHE_EXPIRATION_TIMEOUT = 20000L;
+
+  private static final long DEFAULT_MESSAGE_RECEIVE_TIMEOUT = 300000L;
 
   @Property(name = MESSAGE_RECEIVE_TIMEOUT_PROPERTY_NAME, label = "ActiveMQ message receive timeout",
       description = "ActiveMQ message receive timeout", longValue = DEFAULT_MESSAGE_RECEIVE_TIMEOUT)
   private Long messageReceiveTimeout;
-
-  private static final String CACHE_EXPIRATION_TIMEOUT_PROPERTY_NAME = "cacheExpirationTimeout";
-
-  private static final long DEFAULT_CACHE_EXPIRATION_TIMEOUT = 30000L;
-
-  @Property(name = CACHE_EXPIRATION_TIMEOUT_PROPERTY_NAME, label = "Suite runner cache expiration timeout",
-      description = "Suite runner cache expiration timeout. Should be longer than 'ActiveMQ message receive timeout'.",
-      longValue = DEFAULT_CACHE_EXPIRATION_TIMEOUT)
-  private Long cacheExpirationTimeout;
 
   @Reference
   private JmsConnection jmsConnection;
@@ -105,7 +98,7 @@ public class SuiteExecutor {
 
   private Cache<String, Queue<SuiteStatusResult>> suiteStatusCache;
 
-  private RunnerCacheUpdater runnerCacheUpdater;
+  private CacheUpdater cacheUpdater;
 
   private SuiteStatusHandler suiteStatusHandler;
 
@@ -113,19 +106,17 @@ public class SuiteExecutor {
   public void activate(Map<String, Object> properties) {
     messageReceiveTimeout = PropertiesUtil.toLong(
         properties.get(MESSAGE_RECEIVE_TIMEOUT_PROPERTY_NAME), DEFAULT_MESSAGE_RECEIVE_TIMEOUT);
-    cacheExpirationTimeout = PropertiesUtil.toLong(
-        properties.get(CACHE_EXPIRATION_TIMEOUT_PROPERTY_NAME), DEFAULT_CACHE_EXPIRATION_TIMEOUT);
 
     suiteRunnerCache = CacheBuilder.newBuilder()
-        .expireAfterAccess(cacheExpirationTimeout, TimeUnit.MILLISECONDS)
+        .expireAfterAccess(CACHE_EXPIRATION_TIMEOUT, TimeUnit.MILLISECONDS)
         .removalListener(new RunnerCacheRemovalListener())
         .build();
 
     suiteStatusCache = CacheBuilder.newBuilder()
-        .expireAfterAccess(cacheExpirationTimeout, TimeUnit.MILLISECONDS)
+        .expireAfterAccess(CACHE_EXPIRATION_TIMEOUT, TimeUnit.MILLISECONDS)
         .build();
 
-    runnerCacheUpdater = new RunnerCacheUpdater(suiteRunnerCache);
+    cacheUpdater = new CacheUpdater(suiteRunnerCache, suiteStatusCache, lockService);
     suiteStatusHandler = new SuiteStatusHandler(suiteStatusCache);
   }
 
@@ -214,7 +205,7 @@ public class SuiteExecutor {
 
   private SuiteRunner createSuiteRunner(Suite suite) throws JMSException {
     Session session = jmsConnection.getJmsSession();
-    SuiteRunner suiteRunner = new SuiteRunner(session, lockService, runnerCacheUpdater,
+    SuiteRunner suiteRunner = new SuiteRunner(session, cacheUpdater,
         suiteStatusHandler, suite, RUNNER_IN_QUEUE, messageReceiveTimeout);
     suiteRunnerCache.put(suite.getCorrelationId(), suiteRunner);
     suiteStatusCache.put(suite.getCorrelationId(), new ConcurrentLinkedQueue<SuiteStatusResult>());

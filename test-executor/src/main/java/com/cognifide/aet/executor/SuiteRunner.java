@@ -17,15 +17,14 @@
  */
 package com.cognifide.aet.executor;
 
+import com.cognifide.aet.communication.api.execution.ProcessingStatus;
+import com.cognifide.aet.communication.api.execution.SuiteStatusResult;
 import com.cognifide.aet.communication.api.messages.MessageType;
 import com.cognifide.aet.communication.api.messages.TaskMessage;
 import com.cognifide.aet.communication.api.metadata.Suite;
-import com.cognifide.aet.communication.api.execution.ProcessingStatus;
-import com.cognifide.aet.communication.api.execution.SuiteStatusResult;
 import com.cognifide.aet.executor.common.MessageProcessor;
 import com.cognifide.aet.executor.common.ProcessorFactory;
 import com.cognifide.aet.executor.common.RunnerTerminator;
-import com.cognifide.aet.rest.LockService;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -51,13 +50,11 @@ public class SuiteRunner implements Runnable {
 
   private MessageConsumer messageConsumer;
 
-  private LockService lockService;
-
-  private RunnerCacheUpdater runnerCacheUpdater;
-
   private SuiteStatusHandler suiteStatusHandler;
 
   private RunnerTerminator runnerTerminator;
+
+  private SuiteCacheUpdater suiteCacheUpdater;
 
   private Suite suite;
 
@@ -65,16 +62,15 @@ public class SuiteRunner implements Runnable {
 
   private long messageReceiveTimeout;
 
-  public SuiteRunner(Session session, LockService lockService, RunnerCacheUpdater runnerCacheUpdater,
-      SuiteStatusHandler suiteStatusHandler, Suite suite, String inQueueName, long messageReceiveTimeout) {
+  public SuiteRunner(Session session, CacheUpdater cacheUpdater,
+                     SuiteStatusHandler suiteStatusHandler, Suite suite, String inQueueName, long messageReceiveTimeout) {
     this.session = session;
-    this.lockService = lockService;
-    this.runnerCacheUpdater = runnerCacheUpdater;
     this.suiteStatusHandler = suiteStatusHandler;
     this.runnerTerminator = new RunnerTerminator();
     this.suite = suite;
     this.inQueueName = inQueueName;
     this.messageReceiveTimeout = messageReceiveTimeout;
+    this.suiteCacheUpdater = new SuiteCacheUpdater(cacheUpdater, runnerTerminator, suite);
   }
 
   /**
@@ -93,6 +89,7 @@ public class SuiteRunner implements Runnable {
     messageProducer.send(message);
 
     startStatusUpdate();
+    suiteCacheUpdater.start();
   }
 
   /**
@@ -130,9 +127,7 @@ public class SuiteRunner implements Runnable {
       try {
         SuiteStatusResult status = getSuiteStatus();
         if (status != null) {
-          runnerCacheUpdater.update(suite.getCorrelationId());
           suiteStatusHandler.handle(suite.getCorrelationId(), status);
-          lockService.setLock(suite.getSuiteIdentifier(), suite.getCorrelationId());
         } else {
           handleFatalError("Timeout was reached while receiving status message");
         }

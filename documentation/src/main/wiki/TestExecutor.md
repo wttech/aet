@@ -60,4 +60,4 @@ This service processes the requests sent to endpoints. It parses provided suite 
 
 The service returns processing status when requested. It returns one status at a time and removes it from cache, so the status message can be obtained only once. When there are no status requests made for a specified amount of time, then the statuses for the specific suite run are removed from the cache permanently.
 
-The cache expiration timeout and the ActiveMQ message receive timeout can be configured in the OSGi Console, under the `AET Suite Executor` entry. Both timeouts are specified in milliseconds.
+The ActiveMQ message receive timeout can be configured in the OSGi Console, under the `AET Suite Executor` entry. It is specified in milliseconds.
