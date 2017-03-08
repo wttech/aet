@@ -22,6 +22,6 @@ maintainer_email 'karol.drazek@cognifide.com'
 license          'Apache 2.0'
 description      'Installs/Configures aet-vagrant'
 long_description 'Installs/Configures aet-vagrant'
-version          '1.4.8'
+version          '1.4.9'
 
-depends 'aet', '~> 1.4.11'
+depends 'aet', '~> 1.4.13'

@@ -27,9 +27,9 @@ By default the Vagrant virtual machine needs 3 GB of RAM and 2 vCPUs, so please 
 
 #### Installation
 
-* Download and install [VirtualBox 5.0.26](https://www.virtualbox.org/wiki/Download_Old_Builds_5_0)
-* Download and install [Vagrant 1.8.4](https://releases.hashicorp.com/vagrant/)
-* Download and install [ChefDK 0.17.17](https://downloads.chef.io/chef-dk/)
+* Download and install [VirtualBox 5.1.14](https://www.virtualbox.org/wiki/Downloads)
+* Download and install [Vagrant 1.9.2](https://releases.hashicorp.com/vagrant/)
+* Download and install [ChefDK 1.1.16](https://downloads.chef.io/chef-dk/)
 
 As the administrator execute the following commands:
 
