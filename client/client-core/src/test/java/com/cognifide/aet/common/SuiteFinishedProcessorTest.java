@@ -17,10 +17,7 @@
  */
 package com.cognifide.aet.common;
 
-import com.google.common.collect.Lists;
-
 import com.cognifide.aet.communication.api.exceptions.AETException;
-import com.cognifide.aet.communication.api.messages.FinishedSuiteProcessingMessage;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -32,7 +29,6 @@ import java.io.IOException;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SuiteFinishedProcessorTest {
@@ -42,9 +38,6 @@ public class SuiteFinishedProcessorTest {
   private SuiteFinishedProcessor tested;
 
   @Mock
-  private FinishedSuiteProcessingMessage reportMessage;
-
-  @Mock
   private RunnerTerminator runnerTerminator;
 
   @Mock
@@ -52,25 +45,13 @@ public class SuiteFinishedProcessorTest {
 
   @Before
   public void setUp() {
-    when(reportMessage.getStatus()).thenReturn(FinishedSuiteProcessingMessage.Status.OK);
-    tested = new SuiteFinishedProcessor(reportMessage, REPORT_URL, redirectWriter, runnerTerminator);
+    tested = new SuiteFinishedProcessor(REPORT_URL, redirectWriter, runnerTerminator);
   }
 
   @Test
   public void processTest() throws AETException, IOException {
     tested.process();
 
-    verify(runnerTerminator, times(1)).update();
-  }
-
-  @Test(expected = AETException.class)
-  public void processTest_error() throws AETException {
-    when(reportMessage.getStatus()).thenReturn(FinishedSuiteProcessingMessage.Status.FAILED);
-    when(reportMessage.getErrors()).thenReturn(Lists.newArrayList("Error1", "Error2", "Error3"));
-
-    tested.process();
-
-    verify(reportMessage, times(1)).getErrors();
-    verify(runnerTerminator, times(1)).update();
+    verify(runnerTerminator, times(1)).finish();
   }
 }

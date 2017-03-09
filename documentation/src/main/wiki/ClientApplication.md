@@ -31,12 +31,8 @@ mvn aet:run -DtestSuite=FULL_PATH_TO_TEST_SUITE
 | --------- | ----------- | ------------- | --------- |
 | `testSuite` | The full path to the suite definition file (at least a file name with an extension, e.g. `testSuite.xml`).| suite.xml | no |
 | `endpointDomain` | the URL to the main AET domain | http://localhost:8181 | no |
-| `userName` | ActiveMQ user name. | karaf | no |
-| `password` | ActiveMQ password. | karaf | no |
-| `outTopic` | Active MQ outgoing queue name. | AET.runner-out | no |
-| `inQueue` | Active MQ incomming queue name. | AET.runner-in | no |
 | `domain` | Overrides the *domain* parameter value from the test suite definition. | - | no |
-| `timeout` | Milliseconds to detect the timeout since the last message received from AET. This is useful to abort the test run if there is no activity for a long time. | 300000 (5 minutes) | no |
+| `timeout` | Milliseconds to detect the timeout since the last status received from AET. This is useful to abort the test run if there is no activity for a long time. | 300000 (5 minutes) | no |
 | `xUnit` | The flag that indicates whether the xUnit report should be generated and downloaded or not.| false | no |
 
 ##### Test results

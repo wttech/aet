@@ -17,14 +17,7 @@
  */
 package com.cognifide.aet.common;
 
-import com.cognifide.aet.communication.api.messages.FatalErrorMessage;
-import com.cognifide.aet.communication.api.messages.FinishedSuiteProcessingMessage;
-import com.cognifide.aet.communication.api.messages.ProcessingErrorMessage;
-import com.cognifide.aet.communication.api.messages.ProgressMessage;
-
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.ObjectMessage;
+import com.cognifide.aet.communication.api.execution.SuiteStatusResult;
 
 final class ProcessorFactory {
 
@@ -32,20 +25,29 @@ final class ProcessorFactory {
     // private
   }
 
-  static MessageProcessor produce(Message message, String reportUrl, RedirectWriter redirectWriter,
-                                  RunnerTerminator runnerTerminator) throws JMSException {
-    MessageProcessor processor = null;
-    if (message instanceof ObjectMessage) {
-      Object object = ((ObjectMessage) message).getObject();
-      if (object instanceof ProcessingErrorMessage) {
-        processor = new ProcessingErrorMessageProcessor((ProcessingErrorMessage) object);
-      } else if (object instanceof FinishedSuiteProcessingMessage) {
-        processor = new SuiteFinishedProcessor((FinishedSuiteProcessingMessage) object, reportUrl,
-                redirectWriter, runnerTerminator);
-      } else if (object instanceof ProgressMessage) {
-        processor = new ProgressMessageProcessor((ProgressMessage) object);
-      } else if (object instanceof FatalErrorMessage) {
-        processor = new FatalErrorMessageProcessor((FatalErrorMessage) object);
+  static StatusProcessor produce(SuiteStatusResult suiteStatusResult, String reportUrl,
+                                 RedirectWriter redirectWriter, RunnerTerminator runnerTerminator) {
+    StatusProcessor processor = null;
+    if (suiteStatusResult != null) {
+      switch (suiteStatusResult.getStatus()) {
+        case PROGRESS:
+          processor = new ProgressStatusProcessor(suiteStatusResult);
+          break;
+        case ERROR:
+          processor = new ProcessingErrorStatusProcessor(suiteStatusResult);
+          break;
+        case FATAL_ERROR:
+          processor = new FatalErrorStatusProcessor(suiteStatusResult);
+          break;
+        case FINISHED:
+          processor = new SuiteFinishedProcessor(reportUrl, redirectWriter, runnerTerminator);
+          break;
+        case UNKNOWN:
+          // There is no need to handle this message.
+          break;
+        default:
+          processor = new UnexpectedStatusProcessor(suiteStatusResult);
+          break;
       }
     }
     return processor;

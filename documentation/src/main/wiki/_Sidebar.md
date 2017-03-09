@@ -66,6 +66,7 @@
 * [[How It Works|HowItWorks]]
     * [[System Components|SystemComponents]]
         * [[Client Application|ClientApplication]]
+        * [[Test Executor|TestExecutor]]
         * [[Runner|Runner]]
         * [[Worker|Worker]]
         * [[REST API|RestAPI]]

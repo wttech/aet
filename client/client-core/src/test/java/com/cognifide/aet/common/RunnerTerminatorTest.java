@@ -32,7 +32,7 @@ public class RunnerTerminatorTest {
     RunnerTerminator tested = new RunnerTerminator();
 
     assertThat(tested.isActive(), is(true));
-    tested.update();
+    tested.finish();
     assertThat(tested.isActive(), is(false));
   }
 

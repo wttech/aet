@@ -101,6 +101,11 @@
         <version>4.5.2</version>
       </dependency>
       <dependency>
+        <groupId>org.apache.httpcomponents</groupId>
+        <artifactId>httpmime</artifactId>
+        <version>4.5.2</version>
+      </dependency>
+      <dependency>
         <groupId>commons-io</groupId>
         <artifactId>commons-io</artifactId>
         <version>2.4</version>
@@ -108,7 +113,7 @@
       <dependency>
         <groupId>com.jcabi</groupId>
         <artifactId>jcabi-log</artifactId>
-        <version>0.9</version>
+        <version>0.12.2</version>
       </dependency>
       <dependency>
         <groupId>org.slf4j</groupId>

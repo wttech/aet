@@ -128,6 +128,8 @@
 
 #include "wiki/ClientApplication.md"
 
+#include "wiki/TestExecutor.md"
+
 #include "wiki/Runner.md"
 
 #include "wiki/Worker.md"

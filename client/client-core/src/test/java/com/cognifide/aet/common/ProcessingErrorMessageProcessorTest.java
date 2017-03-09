@@ -17,9 +17,8 @@
  */
 package com.cognifide.aet.common;
 
-import com.cognifide.aet.communication.api.ProcessingError;
 import com.cognifide.aet.communication.api.exceptions.AETException;
-import com.cognifide.aet.communication.api.messages.ProcessingErrorMessage;
+import com.cognifide.aet.communication.api.execution.SuiteStatusResult;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -29,39 +28,24 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ProcessingErrorMessageProcessorTest {
 
-  public static final String DESCRIPTION = "Description";
-
-  private ProcessingErrorMessageProcessor tested;
+  private ProcessingErrorStatusProcessor tested;
 
   @Mock
-  private ProcessingErrorMessage message;
-
-  private ProcessingError processingError;
+  private SuiteStatusResult result;
 
   @Before
   public void setUp() {
-    processingError = ProcessingError.comparingError(DESCRIPTION);
-    when(message.getProcessingError()).thenReturn(processingError);
-
-    tested = new ProcessingErrorMessageProcessor(message);
+    tested = new ProcessingErrorStatusProcessor(result);
   }
 
   @Test
   public void processTest() throws AETException {
     tested.process();
 
-    verify(message, times(2)).getProcessingError();
-  }
-
-  @Test(expected = AETException.class)
-  public void processTest_nullData() throws AETException {
-    when(message.getProcessingError()).thenReturn(null);
-
-    tested.process();
+    verify(result, times(1)).getMessage();
   }
 }
