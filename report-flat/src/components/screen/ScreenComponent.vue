@@ -1,9 +1,11 @@
 <template>
   <div class="AetScreenStepContainer">
-    <div v-if="options.showPattern" class="imgPattern">Pattern:<br>
+    <div v-if="options.showPattern" class="imgPattern">
+      <p class="grey">Pattern:</p>
       <img :src="getPatternArtifactUrl()">
     </div>
-    <div v-if="options.showCollected" class="imgCollected">COLLECTED:<br>
+    <div v-if="options.showCollected" class="imgCollected">
+      <p class="grey">Collected:</p>
       <img v-if="model.stepResult.status=='COLLECTED'" :src="getCollectedArtifactUrl()">
       <span v-if="!model.stepResult.status=='COLLECTED'"> {{model.stepResult.status}}</span>
     </div>
@@ -46,8 +48,15 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .imgPattern {
-    float: left; /* add this */
+  .imgPattern, .imgCollected {
+    float: left;
+    width: 33%;
+    box-sizing: border-box;
+    padding-right: 10px;
+  }
+
+  img {
+    width: 100%
   }
 
   .AetScreenStepContainer {
@@ -55,13 +64,5 @@
     overflow: hidden; /* will contain if #first is longer than #second */
   }
 
-  .imgCollected {
-    float: left; /* add this */
-    overflow: hidden;
-  }
-
-  img {
-    width: 100px;
-  }
 
 </style>

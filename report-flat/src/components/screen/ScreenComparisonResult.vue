@@ -1,6 +1,7 @@
 <template>
-  <div class="AetScreenComparison">DIFF:<br>
-    <img :src="getResultArtifactUrl()">
+  <div class="AetScreenComparison">
+    <p class="grey">Diff:</p>
+    <img :src="getResultArtifactUrl()" class="imgComparison">
   </div>
 </template>
 
@@ -31,7 +32,12 @@
     overflow: hidden;
   }
 
+  .imgComparison {
+    float: left;
+    width: 33%;
+  }
+
   img {
-    width: 100px;
+    width: 100%;
   }
 </style>

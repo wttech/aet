@@ -1,6 +1,7 @@
 <template>
   <div v-if="showStep">
-    {{model.type}}|{{model.name}} <span v-if="model.stepResult">{{model.stepResult.status}}</span>
+    <p> {{model.type}} | {{model.name}}</p>
+    <p v-if="model.stepResult">Status: <b>{{model.stepResult.status}}</b></p>
     <ScreenComponent :options="options" :model="model" v-if="model.type=='screen' && options.showScreen"/>
     <JsErrorsComponent :options="options" :model="model" v-if="model.type=='js-errors'  && options.showJS"/>
   </div>
@@ -32,5 +33,4 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
 </style>

@@ -16,7 +16,6 @@
         <div class="url" v-for="url in test.urls">
           <p class="domain">Domain: <span>{{url.domain}}</span></p>
           <p class="urlname">Url name: <span>{{url.name}}</span></p>
-          <br>
           <div class="step" v-for="step in url.steps">
             <AetStep :options="options" :model="step"></AetStep>
           </div>
@@ -141,5 +140,11 @@
 
   .domain span, .urlname span {
     color: #0097fe;
+  }
+
+  .grey {
+    color: #85898e;
+    margin-bottom: 5px;
+    font-size: 14px;
   }
 </style>
