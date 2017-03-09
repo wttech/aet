@@ -1,21 +1,27 @@
 <template>
-  <div class="ReportOptions">
-
-    <input type="checkbox" id="showPattern" v-model="options.showPattern">
-    <label for="showPattern">showPattern: {{ options.showPattern }}</label>
-
-    <input type="checkbox" id="showCollected" v-model="options.showCollected">
-    <label for="showCollected">showCollected: {{ options.showCollected }}</label>
-
-    <input type="checkbox" id="showMask" v-model="options.showMask">
-    <label for="showMask">showMask: {{ options.showMask }}</label>
-
-    <input type="checkbox" id="showJS" v-model="options.showJS">
-    <label for="showJS">showJS: {{ options.showJS }}</label>
-
-    <input type="checkbox" id="showScreen" v-model="options.showScreen">
-    <label for="showScreen">showScreen: {{ options.showScreen }}</label>
-
+  <div class="ReportOptions container">
+    <div class="wrapper">
+      <div class="option">
+        <input type="checkbox" id="showPattern" v-model="options.showPattern">
+        <label for="showPattern">Show Pattern</label>
+      </div>
+      <div class="option">
+        <input type="checkbox" id="showCollected" v-model="options.showCollected">
+        <label for="showCollected">Show Collected</label>
+      </div>
+      <div class="option">
+        <input type="checkbox" id="showMask" v-model="options.showMask">
+        <label for="showMask">Show Mask</label>
+      </div>
+      <div class="option">
+        <input type="checkbox" id="showJS" v-model="options.showJS">
+        <label for="showJS">Show JS</label>
+      </div>
+      <div class="option">
+        <input type="checkbox" id="showScreen" v-model="options.showScreen">
+        <label for="showScreen">Show Screen</label>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -31,4 +37,30 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+  .ReportOptions {
+    position: fixed;
+    background-color: white;
+    width: 100%;
+    left: 0;
+    top: 0;
+    z-index: 10;
+  }
+
+  .ReportOptions .wrapper {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .option {
+    display: flex;
+    align-items: center;
+    padding: 10px 0;
+    font-weight: bold;
+  }
+
+  @media print {
+    .ReportOptions {
+      display: none;
+    }
+  }
 </style>

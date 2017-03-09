@@ -1,23 +1,26 @@
 <template>
-  <div id="app">
+  <div id="app" class="app-container wrapper">
     <ReportOptions :options="options"/>
+    <div class="header container">
+      <img id="logo" class="logo" src="./assets/logo.png">
+      <h3>
+        <span>Company:</span>{{suite.company}}
+        <span>Project:</span>{{suite.project}}
+        <span>Name:</span>{{suite.name}}
+        <span>CorrelationID:</span>{{suite.correlationId}}
+      </h3>
+    </div>
     <div class="suite">
-      <hr/>
-      <img id="logo" src="./assets/logo.png">
-      Company: {{suite.company}} Project: {{suite.project}} Name: {{suite.name}} CorrelationID:
-      {{suite.correlationId}}
-      <hr/>
-      <div class="test" v-for="test in suite.tests">
-        <span class="testName"/> TEST: {{test.name}}
+      <div class="test container" v-for="test in suite.tests">
+        <h4 class="testName"> TEST: {{test.name}} </h4>
         <div class="url" v-for="url in test.urls">
-          <span class="domain">{{url.domain}}</span>
-          <span class="urlname">{{url.name}}</span>
+          <p class="domain">Domain: <span>{{url.domain}}</span></p>
+          <p class="urlname">Url name: <span>{{url.name}}</span></p>
           <br>
           <div class="step" v-for="step in url.steps">
             <AetStep :options="options" :model="step"></AetStep>
           </div>
         </div>
-        <hr/>
       </div>
     </div>
   </div>
@@ -59,15 +62,84 @@
 </script>
 
 <style>
-  #app {
+  body {
+    margin: 0;
+    padding: 0;
+    background-color: #fff;
+  }
+
+  .wrapper {
+    width: 960px;
+    margin: auto;
+  }
+
+  .app-container {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     color: #2c3e50;
-    margin-top: 10px;
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
   }
 
-  #logo {
-    height: 20px;
+  @media (max-width: 959px) {
+    .wrapper {
+      width: 100%;
+    }
+  }
+
+  @media print {
+    .wrapper {
+      width: 100%;
+    }
+  }
+
+  .container {
+    padding: 0 15px;
+    box-sizing: border-box;
+    border-bottom: 1px solid #2c3e50;
+  }
+
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    margin-top: 43px;;
+    background-color: #efefef;
+  }
+
+  .header h3 {
+    margin: 0;
+    font-weight: bold;
+  }
+
+  .header h3 span {
+    margin-right: 5px;
+    margin-left: 10px;
+    font-weight: normal;
+  }
+
+  .header h3 span:first-child {
+    margin-left: 0;
+  }
+
+  .logo {
+    height: 40px;
+    margin-right: 20px;
+  }
+
+  .test {
+    padding-top: 20px;
+    padding-bottom: 20px;
+  }
+
+  .testName {
+    margin-top: 0;
+  }
+
+  .domain span, .urlname span {
+    color: #0097fe;
   }
 </style>
