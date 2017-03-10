@@ -79,7 +79,9 @@ body {
 
 .page-main {
 	z-index: 1;
-	padding: 130px 25px 0 25px;
+	width: 100%;
+	float: left;
+	padding: 0 25px;
 }
 
 .is-hidden {

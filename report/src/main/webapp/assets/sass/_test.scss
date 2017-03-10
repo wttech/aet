@@ -16,25 +16,15 @@
  * limitations under the License.
  */
 .tab-content {
-  margin-top: 130px;
+  margin-top: 10px;
   z-index: 1;
-}
-
-.menu-expanded {
-
-  .tab-content-toolbar {
-    left: 350px;
-    width: calc(100% - 350px);
-  }
 }
 
 .tab-content-toolbar {
   @include transition(left, .3s);
-  position: fixed;
-  top: 185px;
-  left: 0;
-  width: 100%;
+  width: calc(100% + 50px);
   height: 47px;
+  margin: 0 -25px 10px -25px;;
   background: #ebebeb;
   border: solid $border_color_darken;
   border-width: 1px 0;
