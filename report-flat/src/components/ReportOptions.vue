@@ -21,6 +21,10 @@
         <input type="checkbox" id="showScreen" v-model="options.showScreen">
         <label for="showScreen">Show Screen</label>
       </div>
+      <div class="option">
+        <input type="checkbox" id="showStatusCodes" v-model="options.showStatusCodes">
+        <label for="showStatusCodes">Show Status Codes</label>
+      </div>
     </div>
   </div>
 </template>

@@ -1,17 +1,17 @@
 <template>
   <div>
     <div v-for="comparator in model.comparators">
-      <JsErrorsResultComponent :model="comparator" :options="options"/>
+      <StatusCodesResultComponent :model="comparator" :options="options"/>
     </div>
   </div>
 </template>
 
 <script>
-  import JsErrorsResultComponent from './JsErrorsResultComponent';
+  import StatusCodesResultComponent from './StatusCodesResultComponent';
   export default {
-    name: 'JsErrorsComponent',
+    name: 'StatusCodesComponent',
     components: {
-      JsErrorsResultComponent
+      StatusCodesResultComponent
     },
     props: {
       model: Object,

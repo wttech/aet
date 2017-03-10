@@ -4,6 +4,7 @@
     <p v-if="model.stepResult">Status: <b>{{model.stepResult.status}}</b></p>
     <ScreenComponent :options="options" :model="model" v-if="model.type=='screen' && options.showScreen"/>
     <JsErrorsComponent :options="options" :model="model" v-if="model.type=='js-errors'  && options.showJS"/>
+    <StatusCodesComponent :options="options" :model="model" v-if="model.type=='status-codes' && options.showStatusCodes"/>
   </div>
 </template>
 
@@ -11,10 +12,11 @@
 
   import ScreenComponent from './screen/ScreenComponent';
   import JsErrorsComponent from './jserrors/JsErrorsComponent';
+  import StatusCodesComponent from './statuscodes/StatusCodesComponent';
 
   export default {
     components: {
-      ScreenComponent, JsErrorsComponent
+      ScreenComponent, JsErrorsComponent, StatusCodesComponent
     },
     name: 'AetStep',
     props: {

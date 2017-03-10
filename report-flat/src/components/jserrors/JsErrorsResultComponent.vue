@@ -84,7 +84,7 @@
           alert("unable to get metadata report");
         });
       }
-    },
+    }
 
   };
 </script>

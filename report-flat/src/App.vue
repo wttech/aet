@@ -43,7 +43,8 @@
           showCollected: true,
           showMask: true,
           showJS: true,
-          showScreen: true
+          showScreen: true,
+          showStatusCodes: true
         },
       };
     },
