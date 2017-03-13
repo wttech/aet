@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <p>Source W3C-HTML5: <span v-if="items.length < 0"> success</span></p>
+  <div v-if="items != [] && items != undefined">
+    <p>Source W3C-HTML5: <span v-if="items.length == 0">success</span></p>
     <ul class="sourceHTML5">
       <li v-for="item in items">
         <span>Line: {{item.line}}, column: {{item.column}};</span> {{ item.message }}
@@ -51,6 +51,7 @@
           alert("unable to get metadata report");
         });
       }
+
       this.getSource();
     }
 
