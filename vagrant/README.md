@@ -47,10 +47,10 @@ recommended though).
 ### Installation
 
 * Download and install
-  [VirtualBox 5.0.26](https://www.virtualbox.org/wiki/Downloads)
+  [VirtualBox 5.1.14](https://www.virtualbox.org/wiki/Downloads)
 * Download and install
-  [Vagrant 1.8.4](https://releases.hashicorp.com/vagrant/)
-* Download and install [ChefDK 0.17.17](https://downloads.chef.io/chef-dk/)
+  [Vagrant 1.9.2](https://releases.hashicorp.com/vagrant/)
+* Download and install [ChefDK 1.1.16](https://downloads.chef.io/chef-dk/)
 
 As an administrator execute the following commands:
 
@@ -78,7 +78,7 @@ git pull && berks update && vagrant destroy -f && vagrant up
 
 Please clone AET [application](https://github.com/Cognifide/AET)
 using `git clone` command if you haven't done it yet. All commands have to be
-executed when you're inside an `application/vagrant` directory - it contains 
+executed when you're inside an `application/vagrant` directory - it contains
 `Vagrantfile` necessary to execute Vagrant.
 
 Next please execute:
