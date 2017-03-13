@@ -25,6 +25,10 @@
         <input type="checkbox" id="showStatusCodes" v-model="options.showStatusCodes">
         <label for="showStatusCodes">Show Status Codes</label>
       </div>
+      <div class="option">
+        <input type="checkbox" id="showHTML5" v-model="options.showHTML5">
+        <label for="showHTML5">Show Source W3C-HTML5</label>
+      </div>
     </div>
   </div>
 </template>
@@ -60,6 +64,10 @@
     align-items: center;
     padding: 10px 0;
     font-weight: bold;
+  }
+
+  .option label {
+    font-size: 14px;
   }
 
   @media print {

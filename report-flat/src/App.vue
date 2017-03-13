@@ -44,7 +44,8 @@
           showMask: true,
           showJS: true,
           showScreen: true,
-          showStatusCodes: true
+          showStatusCodes: true,
+          showHTML5: true
         },
       };
     },
@@ -106,7 +107,7 @@
     justify-content: space-between;
     padding-top: 20px;
     padding-bottom: 20px;
-    margin-top: 43px;;
+    margin-top: 40px;;
     background-color: #efefef;
   }
 
