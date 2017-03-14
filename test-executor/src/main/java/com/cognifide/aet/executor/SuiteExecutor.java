@@ -125,11 +125,9 @@ public class SuiteExecutor {
    *
    * @param suiteString - content of the test suite XML file
    * @param domain - overrides domain defined in the suite file
-   * @param endpointDomain - domain under which AET system is available, used to create links to
-   *                       xUnit report and status check
    * @return status of the suite execution
    */
-  public SuiteExecutionResult execute(String suiteString, String domain, String endpointDomain) {
+  public SuiteExecutionResult execute(String suiteString, String domain) {
     SuiteRunner suiteRunner = null;
     SuiteExecutionResult result;
 
@@ -147,10 +145,10 @@ public class SuiteExecutor {
           suiteRunner = createSuiteRunner(suite);
           suiteRunner.runSuite();
 
-          String statusUrl = getStatusUrl(endpointDomain, suite);
+          String statusUrl = getStatusUrl(suite);
           String htmlReportUrl = getReportUrl(HTML_REPORT_URL_FORMAT,
               reportConfigurationManager.getReportDomain(), suite);
-          String xunitReportUrl = getReportUrl(XUNIT_REPORT_URL_FORMAT, endpointDomain, suite);
+          String xunitReportUrl = getReportUrl(XUNIT_REPORT_URL_FORMAT, StringUtils.EMPTY, suite);
           result = SuiteExecutionResult.createSuccessResult(suite.getCorrelationId(), statusUrl,
               htmlReportUrl, xunitReportUrl);
         } else {
@@ -216,8 +214,8 @@ public class SuiteExecutor {
     return String.format(format, domain, suite.getCompany(), suite.getProject(), suite.getCorrelationId());
   }
 
-  private String getStatusUrl(String domain, Suite suite) {
-    return domain + SuiteStatusServlet.SERVLET_PATH + "/" + suite.getCorrelationId();
+  private String getStatusUrl(Suite suite) {
+    return SuiteStatusServlet.SERVLET_PATH + "/" + suite.getCorrelationId();
   }
 
   private static class RunnerCacheRemovalListener implements RemovalListener<String, SuiteRunner> {

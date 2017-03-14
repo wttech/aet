@@ -92,7 +92,8 @@ public class TestSuiteRunner {
               "********************************************************************************");
       while (runnerTerminator.isActive()) {
         Thread.sleep(STATUS_CHECK_INTERVAL_MILLIS);
-        SuiteStatusResult suiteStatus = getSuiteStatus(suiteExecutionResult.getStatusUrl());
+        String statusFullUrl = endpointDomain + suiteExecutionResult.getStatusUrl();
+        SuiteStatusResult suiteStatus = getSuiteStatus(statusFullUrl);
         processStatus(runnerTerminator, suiteExecutionResult.getHtmlReportUrl(), suiteStatus);
       }
       if (xUnit) {
@@ -134,7 +135,8 @@ public class TestSuiteRunner {
 
   private void downloadXUnitTest(String xUnitUrl) {
     try {
-      new ReportWriter().write(buildDirectory, xUnitUrl, "xunit-report.xml");
+      String xUnitFullUrl = endpointDomain + xUnitUrl;
+      new ReportWriter().write(buildDirectory, xUnitFullUrl, "xunit-report.xml");
     } catch (IOException e) {
       Logger.error(this, "Failed to obtain xUnit report from: %s", xUnitUrl, e);
     }
