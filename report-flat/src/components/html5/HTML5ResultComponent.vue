@@ -3,7 +3,8 @@
     <p>Source W3C-HTML5: <span v-if="items.length == 0">success</span></p>
     <ul class="sourceHTML5">
       <li v-for="item in items">
-        <span>Line: {{item.line}}, column: {{item.column}};</span> {{ item.message }}
+        <span>Line: {{item.line}}, column: {{item.column}}</span>
+        <p v-html="item.message"></p>
       </li>
     </ul>
   </div>
