@@ -2,7 +2,7 @@
  * Automated Exploratory Tests
  * <p>
  * Author: pnad@github
- * used code - Copyright (C) 2017 Cognifide Limited
+ * used HideModifier code - Copyright (C) 2017 Cognifide Limited
  * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -16,7 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cognifide.aet.job.common.modifiers.js;
+package com.cognifide.aet.job.common.modifiers.executejavascript;
 
 import com.cognifide.aet.communication.api.metadata.CollectorStepResult;
 import com.cognifide.aet.job.api.ParametersValidator;
@@ -24,24 +24,18 @@ import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
-
-import org.apache.commons.lang3.BooleanUtils;
-import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.util.List;
 import java.util.Map;
 
-public class JsModifier implements CollectorJob {
+public class ExecuteJavaScriptModifier implements CollectorJob {
 
-    public static final String NAME = "js";
+    public static final String NAME = "executejavascript";
 
-    private static final Logger LOG = LoggerFactory.getLogger(JsModifier.class);
+    private static final Logger LOG = LoggerFactory.getLogger(ExecuteJavaScriptModifier.class);
 
     private static final String CMD_PARAM = "cmd";
 
@@ -51,7 +45,7 @@ public class JsModifier implements CollectorJob {
 
     private String cmd;
 
-    public JsModifier(WebDriver webDriver, CollectorProperties properties) {
+    public ExecuteJavaScriptModifier(WebDriver webDriver, CollectorProperties properties) {
         this.webDriver = webDriver;
         this.properties = properties;
     }
@@ -59,11 +53,9 @@ public class JsModifier implements CollectorJob {
     @Override
     public CollectorStepResult collect() throws ProcessingException {
         if (LOG.isDebugEnabled()) {
-            LOG.debug("Execute JS cmd: {} on page: {} properties url: {}",
-                    cmd, webDriver.getCurrentUrl(), properties.getUrl(),
-                    properties.getUrl());
+            LOG.debug("Execute JavaScript command: {} on page: {} properties url: {}", cmd, webDriver.getCurrentUrl(), properties.getUrl());
         }
-        return jsElement(webDriver, cmd);
+        return javaScriptElement(webDriver, cmd);
     }
 
     @Override
@@ -72,15 +64,17 @@ public class JsModifier implements CollectorJob {
         ParametersValidator.checkNotBlank(cmd, "cmd parameter is mandatory");
     }
 
-    public CollectorStepResult jsElement(WebDriver driver, String cmd) throws ProcessingException {
+    public CollectorStepResult javaScriptElement(WebDriver driver, String cmd) throws ProcessingException {
         CollectorStepResult result;
-
         try {
             ((JavascriptExecutor) driver).executeScript(cmd);
-
             result = CollectorStepResult.newModifierResult();
         } catch (Exception e) {
-            throw new ProcessingException("Can't execute cmd = " + cmd, e);
+            final String message = String
+                    .format("Can't execute JavaScript command. cmd: \"%s\". Error: %s ",
+                            cmd, e.getMessage());
+            result = CollectorStepResult.newProcessingErrorResult(message);
+            LOG.warn(message, e);
         }
         return result;
     }

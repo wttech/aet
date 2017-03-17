@@ -16,7 +16,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cognifide.aet.job.common.modifiers.js;
+package com.cognifide.aet.job.common.modifiers.executejavascript;
 
 import com.cognifide.aet.job.api.collector.CollectorFactory;
 import com.cognifide.aet.job.api.collector.CollectorJob;
@@ -31,17 +31,17 @@ import java.util.Map;
 
 @Component
 @Service
-public class JsModifierFactory implements CollectorFactory {
+public class ExecuteJavaScriptModifierFactory implements CollectorFactory {
 
   @Override
   public String getName() {
-    return JsModifier.NAME;
+    return ExecuteJavaScriptModifier.NAME;
   }
 
   @Override
   public CollectorJob createInstance(CollectorProperties properties, Map<String, String> parameters,
                                      WebCommunicationWrapper webCommunicationWrapper) throws ParametersException {
-    JsModifier modifier = new JsModifier(webCommunicationWrapper.getWebDriver(), properties);
+    ExecuteJavaScriptModifier modifier = new ExecuteJavaScriptModifier(webCommunicationWrapper.getWebDriver(), properties);
     modifier.setParameters(parameters);
     return modifier;
   }
