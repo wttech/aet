@@ -77,5 +77,6 @@
     * [[Logs|Logs]]
 * [[What's new|WhatsNew]]
     * [[Migrate AET suite from 1.3.2 to 2.0|AetSuiteMigration]]
+* [[FAQ|FAQ]]
 * Releases
     * [[AET 2.0.0|Documentation-2.0.0]]

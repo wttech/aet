@@ -28,6 +28,7 @@ Module name: **resolution**
         <collect>
             ...
             <resolution width="200" height="300"/>
+            <sleep duration="1000"/>
             <screen />
             ...
         </collect>

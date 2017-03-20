@@ -148,4 +148,6 @@
 
 #include "wiki/WhatsNew.md"
 
+#include "wiki/FAQ.md"
+
 #include "wiki/AetSuiteMigration.md"

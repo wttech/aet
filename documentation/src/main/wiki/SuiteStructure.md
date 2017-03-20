@@ -19,9 +19,9 @@ Each **test** element contains:
 
 Web proxy is required for some of the AET features:
 
-* [Status codes|StatusCodesCollector]
-* [Header modifier|HeaderModifier]
-* [Client-side performance|ClientSidePerformanceCollector] (beta)
+* [[Status codes|StatusCodesCollector]]
+* [[Header modifier|HeaderModifier]]
+* [[Client-side performance|ClientSidePerformanceCollector]] (beta)
 
 AET proxy is currently provided by [BrowserMob Proxy](https://bmp.lightbody.net/) .
 
