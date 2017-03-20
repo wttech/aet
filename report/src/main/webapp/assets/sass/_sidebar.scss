@@ -23,8 +23,8 @@
   left: -350px;
   width: 350px;
   height: 100%;
-  padding: 100px 0 148px 0;
-  overflow: auto;
+  padding-bottom: 148px;
+  overflow: hidden;
   text-align: center;
   z-index: 99;
 
@@ -33,8 +33,8 @@
   }
 
   .logo-holder {
-    position: fixed;
-    width: $width_for_fixed_element_in_sidebar;
+    width: 100%;
+    padding-top: 10px;
     text-align: center;
     background: $aside_background;
     height: 80px;
@@ -49,7 +49,8 @@
     position: relative;
 
     &.is-expanded {
-      max-height: none;
+      max-height: calc(100vh - 250px);
+      overflow-y: auto;
 
       ul {
         display: block;
@@ -145,9 +146,11 @@
         }
 
         a {
+          display: block;
           color: inherit;
           text-align: left;
           padding-left: 10px;
+          @extend .ellipsis;
         }
 
         &:before {
