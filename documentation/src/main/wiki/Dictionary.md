@@ -4,10 +4,10 @@
 a *JMS (Java Message Service)* Server which is a basic communication channel between AET System components.
 
 *AET*  
-an acronym for **A**utomatic **E**xploratory **T**esting, a testing tool developed by Cognifide.
+an open source testing tool developed by Cognifide.
 
 *AET Core*  
-a set of system modules that are crucial to whole system work. The AET system will not work properly without all core modules configured and running properly.
+a set of system modules that are crucial to the whole system to work. The AET system will not work properly without all core modules configured and running properly.
 
 *AET Jobs*  
 implementations of jobs that can perform a particular task (e.g. collect screenshots, compare sources, validate a page against *W3C HTML5*).
@@ -16,7 +16,7 @@ implementations of jobs that can perform a particular task (e.g. collect screens
 a default client application for the AET system that is used to trigger the execution of the *Test Suite*.
 
 *Amazon Web Services*  
-Cloud computing services where the AET environment can be deployed to.
+cloud computing services where the AET environment can be deployed to.
 
 *Apache Karaf*  
 see *Karaf*.
@@ -28,7 +28,7 @@ usually used in the context of a small piece of data, the result of some operati
 see *Amazon Web Services*.
 
 *Baseline*  
-The act of taking a snapshot of the url/page and saving it to a file for future comparison in a number of ways to find differences.
+the act of taking a snapshot of the url/page and saving it to a file for its future comparison in a number of ways to find differences.
 
 *Browsermob*  
 a proxy server used by AET to collect some kinds of data from tested pages.

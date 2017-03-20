@@ -20,7 +20,7 @@ Module name: **modify-cookie**
 
 | ! Note |
 |:------ |
-| If `cookie-domain` is provided WebDriver will reject cookies unless the Domain attribute specifies a scope for the cookie that would include the origin server. For example, the user agent will accept a cookie with the Domain attribute `example.com` or `foo.example.com` from `foo.example.com`, but the user agent will not accept a cookie with a Domain attribute of `bar.example.com` or of `baz.foo.example.com`. For more information read [here](https://tools.ietf.org/html/rfc6265#section-4.1.2.3). |
+| If `cookie-domain` is provided WebDriver will reject cookies unless the Domain attribute specifies a scope for the cookie that includes the origin server. For example, the user agent will accept a cookie with the Domain attribute `example.com` or `foo.example.com` from `foo.example.com`, but the user agent will not accept a cookie with a Domain attribute of `bar.example.com` or of `baz.foo.example.com`. For more information read [here](https://tools.ietf.org/html/rfc6265#section-4.1.2.3). |
 
 | ! Note |
 |:------ |
