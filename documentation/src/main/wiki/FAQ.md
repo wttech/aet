@@ -1,6 +1,25 @@
 # FAQ
-This section contains frequent questions and answers. If you can't find an answer for your question here
+This section contains answers for frequently asked questions. If you can't find an answer for your question here
 please use [Issues Tool](https://github.com/Cognifide/aet/issues) to ask a question.
+
+- [1. Setup and first steps](#1-setup-and-first-steps)
+  - [1.1. What do I need to star using AET?](#11-what-do-i-need-to-star-using-aet)
+  - [1.2. I have AET environment, how can I run tests?](#12-i-have-aet-environment-how-can-i-run-tests)
+  - [1.3. How can I integrate AET with continuous integration tools?](#13-how-can-i-integrate-aet-with-continuous-integration-tools)
+  - [1.4. I run AET the first time, how the tool will know patterns?](#14-i-run-aet-the-first-time-how-the-tool-will-know-patterns)
+- [2. Environment and software](#2-environment-and-software)
+  - [2.1. Which browser is used by AET?](#21-which-browser-is-used-by-aet)
+  - [2.2. Does AET use database for storing data?](#22-does-aet-use-database-for-storing-data)
+  - [2.3. My page is not english and I have problem with missing fonts. What should I do?](#23-my-page-is-not-english-and-i-have-problem-with-missing-fonts-what-should-i-do)
+- [3. User interface and reports](#3-user-interface-and-reports)
+  - [3.1 I would like to compare pages between two environments/domains. How can I do that with the AET Tool?](#31-i-would-like-to-compare-pages-between-two-environmentsdomains-how-can-i-do-that-with-the-aet-tool)
+  - [3.2 How can I access pages that require authentication to enter?](#32-how-can-i-access-pages-that-require-authentication-to-enter)
+  - [3.3 How can I change User-Agent header?](#33-how-can-i-change-user-agent-header)
+  - [3.4 What can I do with elements that render differently each time page is open and it occurs in changes detected each time?](#34-what-can-i-do-with-elements-that-render-differently-each-time-page-is-open-and-it-occurs-in-changes-detected-each-time)
+  - [3.5 I want to check how my page behaves on mobile devices, how can I do that?](#35-i-want-to-check-how-my-page-behaves-on-mobile-devices-how-can-i-do-that)
+- [4. Best practices](#4-best-practices)
+  - [4.1 I want to check how my page looks on several devices - what is the best way do configure suite?](#41-i-want-to-check-how-my-page-looks-on-several-devices---what-is-the-best-way-do-configure-suite)
+
 
 ## 1. Setup and first steps
 
@@ -82,7 +101,7 @@ with `Authorization` key set:
 The other way is to use [[Login Modifier|LoginModifier]] that can pass simple login form.
 
 
-### 3.3 How can I change User-Agent header?
+### 3.3 How can I simulate another user agent?
 Use [[Header Modifier|HeaderModifier]] to achieve that. Just add header modifier with key `'User-Agent'`
  and requested value.
 
