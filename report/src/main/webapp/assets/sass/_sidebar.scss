@@ -23,7 +23,6 @@
   left: -350px;
   width: 350px;
   height: 100%;
-  padding-bottom: 148px;
   overflow: hidden;
   text-align: center;
   z-index: 99;
@@ -55,6 +54,11 @@
       ul {
         display: block;
       }
+    }
+
+    &-container {
+      height: calc(100vh - 240px);
+      overflow: auto;
     }
 
     .test-name {
