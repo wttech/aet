@@ -103,6 +103,8 @@ with `Authorization` key set:
 ```xml
 <header key="Authorization" value="Basic emVuT2FyZXVuOnozbkdAckQZbiE=" />
 ```
+The string in `value` is [base64 encoded](https://en.wikipedia.org/wiki/Basic_access_authentication) 
+`username:password` string.
 The other way is to use [[Login Modifier|LoginModifier]] that can pass simple login form.
 
 
