@@ -53,6 +53,7 @@
 
       ul {
         display: block;
+        overflow: hidden;
       }
     }
 
@@ -142,7 +143,7 @@
         position: relative;
         line-height: normal;
         margin-bottom: 20px;
-        margin-left: 14px;
+        margin-left: 15px;
         color: $gray_dark;
 
         &:last-of-type {
