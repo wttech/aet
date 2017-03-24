@@ -17,6 +17,7 @@
  */
 package com.cognifide.aet.communication.api.util;
 
+import com.cognifide.aet.communication.api.metadata.Statistics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -110,5 +111,12 @@ public final class ExecutionTimer {
    */
   public long getEnd() {
     return end;
+  }
+
+  public Statistics toStatistics() {
+    final Statistics statistics = new Statistics();
+    statistics.setStartTimestamp(TimeUnit.NANOSECONDS.toMillis(start));
+    statistics.setEndTimestamp(TimeUnit.NANOSECONDS.toMillis(end));
+    return statistics;
   }
 }

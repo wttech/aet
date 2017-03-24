@@ -17,6 +17,7 @@
  */
 package com.cognifide.aet.runner.distribution.dispatch;
 
+import com.cognifide.aet.communication.api.util.ExecutionTimer;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
 
@@ -60,6 +61,8 @@ public class CollectionResultsRouter extends StepManager implements TaskFinishPo
 
   private final SuiteIndexWrapper suite;
 
+  private final ExecutionTimer timer;
+
   @Inject
   public CollectionResultsRouter(TimeoutWatch timeoutWatch, JmsConnection jmsConnection,
                                  @Named("messageTimeToLive") Long messageTimeToLive,
@@ -69,6 +72,7 @@ public class CollectionResultsRouter extends StepManager implements TaskFinishPo
     this.suite = suite;
     this.messagesToReceive.getAndSet(countUrls());
     this.changeListeners = new CopyOnWriteArrayList<>();
+    timer = ExecutionTimer.createAndRun("collection");
   }
 
   private int countUrls() {
@@ -123,6 +127,8 @@ public class CollectionResultsRouter extends StepManager implements TaskFinishPo
     for (ChangeObserver changeListener : changeListeners) {
       changeListener.informChangesCompleted();
     }
+    timer.finishAndLog(suite.get().getName());
+    suite.get().setCollectStatistics(timer.toStatistics());
     LOGGER.debug("Closing consumer!");
     consumer.close();
   }

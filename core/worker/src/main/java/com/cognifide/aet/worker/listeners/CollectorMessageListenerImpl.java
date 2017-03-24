@@ -24,6 +24,7 @@ import com.cognifide.aet.communication.api.metadata.CollectorStepResult;
 import com.cognifide.aet.communication.api.metadata.Step;
 import com.cognifide.aet.communication.api.metadata.Url;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
+import com.cognifide.aet.communication.api.util.ExecutionTimer;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.queues.JmsUtils;
 import com.cognifide.aet.worker.api.CollectorDispatcher;
@@ -135,11 +136,14 @@ public class CollectorMessageListenerImpl extends AbstractTaskMessageListener {
     int result = 0;
     for (Url url : collectorJobData.getUrls()) {
       try {
+        ExecutionTimer timer = ExecutionTimer.createAndRun("url");
         final Url processedUrl = dispatcher.run(url, collectorJobData, webCommunicationWrapper);
 
         final CollectorResultData collectorResultData = CollectorResultData.createSuccessResult(processedUrl, requestMessageId,
                 collectorJobData.getTestName());
         result++;
+        timer.finishAndLog(processedUrl.getUrl());
+        processedUrl.setStatistics(timer.toStatistics());
         feedbackQueue.sendObjectMessageWithCorrelationID(collectorResultData, correlationId);
       } catch (Exception e) {
         LOGGER.error("Unrecognized collector error", e);

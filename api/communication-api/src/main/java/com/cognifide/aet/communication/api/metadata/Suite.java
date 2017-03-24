@@ -39,7 +39,7 @@ import javax.validation.constraints.Size;
 
 public class Suite implements Serializable, Commentable, Named, Validatable {
 
-  private static final long serialVersionUID = 1753463358391058190L;
+  private static final long serialVersionUID = -4621145477713271743L;
 
   @NotBlank
   private final String correlationId;
@@ -69,6 +69,10 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
   private final List<Test> tests = new ArrayList<>();
 
   private String comment;
+
+  private Statistics collectStatistics;
+
+  private Statistics compareStatistics;
 
   public Suite(String correlationId, String company, String project, String name) {
     this.correlationId = correlationId;
@@ -121,6 +125,24 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
 
   public void setRunTimestamp(Timestamp runTimestamp) {
     this.runTimestamp = runTimestamp;
+  }
+
+  public Statistics getCollectStatistics() {
+    return collectStatistics;
+  }
+
+  public void setCollectStatistics(
+      Statistics collectStatistics) {
+    this.collectStatistics = collectStatistics;
+  }
+
+  public Statistics getCompareStatistics() {
+    return compareStatistics;
+  }
+
+  public void setCompareStatistics(
+      Statistics compareStatistics) {
+    this.compareStatistics = compareStatistics;
   }
 
   @Override

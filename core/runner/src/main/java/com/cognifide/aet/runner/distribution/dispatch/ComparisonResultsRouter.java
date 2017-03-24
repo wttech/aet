@@ -17,6 +17,7 @@
  */
 package com.cognifide.aet.runner.distribution.dispatch;
 
+import com.cognifide.aet.communication.api.util.ExecutionTimer;
 import com.google.common.base.Optional;
 import com.google.inject.Inject;
 import com.google.inject.name.Named;
@@ -46,6 +47,8 @@ public class ComparisonResultsRouter extends StepManager implements ChangeObserv
 
   private final SuiteIndexWrapper suite;
 
+  private final ExecutionTimer timer;
+
   private MetadataPersister metadataPersister;
 
   private boolean collectingFinished;
@@ -58,6 +61,7 @@ public class ComparisonResultsRouter extends StepManager implements ChangeObserv
                                  SuiteIndexWrapper suite) throws JMSException {
     super(timeoutWatch, jmsConnection, suite.get().getCorrelationId(), messageTimeToLive);
     this.suite = suite;
+    timer = ExecutionTimer.createAndRun("comparison");
   }
 
   @Override
@@ -103,6 +107,8 @@ public class ComparisonResultsRouter extends StepManager implements ChangeObserv
     if (allResultsReceived()) {
       LOGGER.info("All results received ({})! Persisting metadata. CorrelationId: {}",
               messagesToReceive.get(), correlationId);
+      timer.finishAndLog(suite.get().getName());
+      suite.get().setCompareStatistics(timer.toStatistics());
       metadataPersister.persistMetadataAndNotifyObservers();
     }
   }
