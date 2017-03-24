@@ -19,19 +19,18 @@
 package com.cognifide.aet.job.common.modifiers.executejavascript;
 
 import com.cognifide.aet.job.api.exceptions.ParametersException;
-import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
 import java.util.Map;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
+
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExecuteJavaScriptModifierTest {
@@ -39,8 +38,6 @@ public class ExecuteJavaScriptModifierTest {
     private static final String PARAM_CMD = "cmd";
 
     private static final String PARAM_CMD_VALUE = "document.getElementById('toRemove').style.display='none'";
-
-    private static final String PARAM_XPATH_VALUE = "//*[@id='toRemove']";
 
     private static final String URL = "http://www.cognifide.com";
 
@@ -59,26 +56,17 @@ public class ExecuteJavaScriptModifierTest {
     }
 
     @Test
-    public void setParameters_XPathIsValid_ValidationPassedSuccessfuly() throws ParametersException {
+    public void setParameters_CmdIsValid_ValidationPassedSuccessfuly() throws ParametersException {
         when(params.containsKey(PARAM_CMD)).thenReturn(true);
         when(params.get(PARAM_CMD)).thenReturn(PARAM_CMD_VALUE);
         tested.setParameters(params);
     }
 
     @Test(expected = ParametersException.class)
-    public void setParameters_CssAndXpathAreNotPassed_ValidationPassedUnsuccessfuly()
+    public void setParameters_CmdIsNotPassed_ValidationPassedUnsuccessfuly()
             throws ParametersException {
         tested.setParameters(params);
     }
 
-    @Test
-    public void ExecuteJavaScriptModifier_HideElements()
-            throws ProcessingException, ParametersException {
-        when(params.containsKey(PARAM_CMD)).thenReturn(true);
-        when(params.get(PARAM_CMD)).thenReturn(PARAM_CMD_VALUE);
-        tested.setParameters(params);
-        tested.collect();
-        verify(webDriver, never()).findElement(By.xpath(PARAM_XPATH_VALUE));
-    }
 
 }
