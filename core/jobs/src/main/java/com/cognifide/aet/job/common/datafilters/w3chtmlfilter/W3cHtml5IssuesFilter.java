@@ -24,34 +24,35 @@ import com.cognifide.aet.job.common.comparators.w3chtml5.W3cHtml5ComparatorResul
 import com.cognifide.aet.job.common.comparators.w3chtml5.W3cHtml5Issue;
 import com.cognifide.aet.job.common.comparators.w3chtml5.W3cHtml5IssueComparator;
 import com.cognifide.aet.job.common.comparators.w3chtml5.W3cHtml5IssueType;
-
-import org.apache.commons.lang3.StringUtils;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 public class W3cHtml5IssuesFilter extends AbstractDataModifierJob<W3cHtml5ComparatorResult> {
 
   public static final String NAME = "w3c-filter";
 
-  private static final String PARAM_MESSAGE = "message";
+  private static final String PARAM_MESSAGE = "messagePattern";
 
   private static final String PARAM_LINE = "line";
 
   private static final String PARAM_COLUMN = "column";
+
   private static final Comparator<? super W3cHtml5Issue> W3C_ISSUE_COMPARATOR = new W3cHtml5IssueComparator();
 
-  private String message;
+  private Pattern messagePattern;
 
   private int line;
 
   private int column;
 
   @Override
-  public W3cHtml5ComparatorResult modifyData(W3cHtml5ComparatorResult data) throws ProcessingException {
+  public W3cHtml5ComparatorResult modifyData(W3cHtml5ComparatorResult data)
+      throws ProcessingException {
     int errorsCount = data.getErrorsCount();
     int warningsCount = data.getWarningsCount();
     List<W3cHtml5Issue> excluded = data.getExcludedIssues();
@@ -64,7 +65,7 @@ public class W3cHtml5IssuesFilter extends AbstractDataModifierJob<W3cHtml5Compar
           errorsCount--;
         }
         if (W3cHtml5IssueType.WARN.equals(issue.getIssueType())
-                || W3cHtml5IssueType.INFO.equals(issue.getIssueType())) {
+            || W3cHtml5IssueType.INFO.equals(issue.getIssueType())) {
           warningsCount--;
         }
       } else {
@@ -77,7 +78,7 @@ public class W3cHtml5IssuesFilter extends AbstractDataModifierJob<W3cHtml5Compar
 
   private boolean match(W3cHtml5Issue issue) {
     final boolean messageNotSetOrIgnored =
-            StringUtils.isBlank(message) || StringUtils.startsWithIgnoreCase(issue.getMessage(), message);
+        messagePattern == null || messagePattern.matcher(issue.getMessage()).matches();
     final boolean lineNotSetOrIgnored = line == 0 || line == issue.getLine();
     final boolean columnNotSetOrIgnored = column == 0 || column == issue.getColumn();
     return messageNotSetOrIgnored && lineNotSetOrIgnored && columnNotSetOrIgnored;
@@ -86,7 +87,11 @@ public class W3cHtml5IssuesFilter extends AbstractDataModifierJob<W3cHtml5Compar
   @Override
   public void setParameters(Map<String, String> params) throws ParametersException {
     if (params.containsKey(PARAM_MESSAGE)) {
-      message = params.get(PARAM_MESSAGE);
+      try {
+        messagePattern = Pattern.compile(params.get(PARAM_MESSAGE));
+      } catch (PatternSyntaxException e) {
+        throw new ParametersException("MessagePattern value is invalid regular-expression pattern.", e);
+      }
     }
     line = getNumericParam(PARAM_LINE, params);
     column = getNumericParam(PARAM_COLUMN, params);
@@ -96,7 +101,8 @@ public class W3cHtml5IssuesFilter extends AbstractDataModifierJob<W3cHtml5Compar
     }
   }
 
-  private int getNumericParam(String paramName, Map<String, String> params) throws ParametersException {
+  private int getNumericParam(String paramName, Map<String, String> params)
+      throws ParametersException {
     int paramValue = 0;
     if (params.containsKey(paramName)) {
       try {
@@ -110,11 +116,11 @@ public class W3cHtml5IssuesFilter extends AbstractDataModifierJob<W3cHtml5Compar
 
   @Override
   public String getInfo() {
-    return NAME + " DataModifier with parameters: " + PARAM_MESSAGE + ": '" + message + "' " + PARAM_LINE
-            + ": " + line + " " + PARAM_COLUMN + ": " + column;
+    return NAME + " DataModifier with parameters: " + PARAM_MESSAGE + ": '" + messagePattern + "' "
+        + PARAM_LINE + ": " + line + " " + PARAM_COLUMN + ": " + column;
   }
 
   private boolean isParametersEmpty() {
-    return line == 0 && column == 0 && StringUtils.isBlank(message);
+    return line == 0 && column == 0 && messagePattern == null;
   }
 }

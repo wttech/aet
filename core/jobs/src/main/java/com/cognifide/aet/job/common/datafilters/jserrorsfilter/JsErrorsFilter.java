@@ -17,32 +17,30 @@
  */
 package com.cognifide.aet.job.common.datafilters.jserrorsfilter;
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.FluentIterable;
-
 import com.cognifide.aet.job.api.collector.JsErrorLog;
 import com.cognifide.aet.job.api.datafilter.AbstractDataModifierJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
-
-import org.apache.commons.lang3.StringUtils;
-
+import com.google.common.base.Predicate;
+import com.google.common.collect.FluentIterable;
 import java.util.Map;
 import java.util.Set;
-
+import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 import javax.annotation.Nullable;
+import org.apache.commons.lang3.StringUtils;
 
 public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
 
   public static final String NAME = "js-errors-filter";
 
-  private static final String PARAM_ERROR = "error";
+  private static final String PARAM_ERROR = "errorPattern";
 
   private static final String PARAM_SOURCE = "source";
 
   private static final String PARAM_LINE = "line";
 
-  private String errorMessage;
+  private Pattern errorMessagePattern;
 
   private String sourceFile;
 
@@ -50,17 +48,23 @@ public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
 
   @Override
   public void setParameters(Map<String, String> params) throws ParametersException {
-    errorMessage = params.get(PARAM_ERROR);
+    if (params.containsKey(PARAM_ERROR)) {
+      try {
+        errorMessagePattern = Pattern.compile(params.get(PARAM_ERROR));
+      } catch (PatternSyntaxException e) {
+        throw new ParametersException("errorPattern value is invalid regular-expression pattern.", e);
+      }
+    }
     sourceFile = params.get(PARAM_SOURCE);
     if (params.containsKey(PARAM_LINE)) {
       try {
         line = Integer.parseInt(params.get(PARAM_LINE));
       } catch (NumberFormatException e) {
         throw new ParametersException(
-                "Provided line: " + params.get(PARAM_LINE) + " is not a numeric value.", e);
+            "Provided line: " + params.get(PARAM_LINE) + " is not a numeric value.", e);
       }
     }
-    validateParameters(errorMessage, sourceFile, line);
+    validateParameters(errorMessagePattern, sourceFile, line);
   }
 
   @Override
@@ -75,25 +79,25 @@ public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
 
   private boolean shouldFilterOut(JsErrorLog jse) {
     return matchSourceFile(sourceFile, jse.getSourceName())
-            && matchStrings(errorMessage, jse.getErrorMessage())
-            && matchNumbers(line, jse.getLineNumber());
+        && matchPattern(errorMessagePattern, jse.getErrorMessage())
+        && matchNumbers(line, jse.getLineNumber());
   }
 
   @Override
   public String getInfo() {
-    return NAME + " DataModifier with parameters: " + PARAM_SOURCE + ": " + sourceFile + " " + PARAM_ERROR
-            + ": " + errorMessage + " " + PARAM_LINE + ": " + line;
+    return NAME + " DataModifier with parameters: " + PARAM_SOURCE + ": " + sourceFile + " "
+        + PARAM_ERROR + ": " + errorMessagePattern + " " + PARAM_LINE + ": " + line;
   }
 
-  private void validateParameters(String errorMessege, String sourceFile, Integer line)
-          throws ParametersException {
+  private void validateParameters(Pattern errorMessege, String sourceFile, Integer line)
+      throws ParametersException {
     if (errorMessege == null && sourceFile == null && line == null) {
       throw new ParametersException("At least one parameter must be provided");
     }
   }
 
-  private boolean matchStrings(String paramValue, String errorValue) {
-    return StringUtils.isEmpty(paramValue) || StringUtils.equalsIgnoreCase(paramValue, errorValue);
+  private boolean matchPattern(Pattern errorMessagePattern, String errorValue) {
+    return errorMessagePattern == null ||  errorMessagePattern.matcher(errorValue).matches();
   }
 
   private boolean matchSourceFile(String paramValue, String errorValue) {
