@@ -30,7 +30,7 @@ import javax.validation.constraints.NotNull;
 
 public class Url implements Serializable, Commentable, Named {
 
-  private static final long serialVersionUID = -7274719366039086486L;
+  private static final long serialVersionUID = 565360892414644589L;
 
   @NotBlank
   private final String name;
@@ -46,7 +46,7 @@ public class Url implements Serializable, Commentable, Named {
 
   private String proxy;
 
-  private Statistics statistics;
+  private Statistics collectionStats;
 
   @Valid
   @NotNull
@@ -105,12 +105,12 @@ public class Url implements Serializable, Commentable, Named {
     return comment;
   }
 
-  public Statistics getStatistics() {
-    return statistics;
+  public Statistics getCollectionStats() {
+    return collectionStats;
   }
 
-  public void setStatistics(Statistics statistics) {
-    this.statistics = statistics;
+  public void setCollectionStats(Statistics collectionStats) {
+    this.collectionStats = collectionStats;
   }
 
   @Override

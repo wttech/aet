@@ -36,6 +36,8 @@ public class Comparator extends Operation implements Commentable, Named {
 
   private String comment;
 
+  private Statistics statistics;
+
   public Comparator(String type) {
     super(type);
   }
@@ -58,6 +60,14 @@ public class Comparator extends Operation implements Commentable, Named {
 
   public void addFilters(List<Operation> operations) {
     filters.addAll(operations);
+  }
+
+  public Statistics getStatistics() {
+    return statistics;
+  }
+
+  public void setStatistics(Statistics statistics) {
+    this.statistics = statistics;
   }
 
   @Override

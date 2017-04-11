@@ -26,8 +26,6 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * ExecutionTimer which measures execution time.
- *
- * @author: Maciej Laskowski
  */
 public final class ExecutionTimer {
 
@@ -114,9 +112,6 @@ public final class ExecutionTimer {
   }
 
   public Statistics toStatistics() {
-    final Statistics statistics = new Statistics();
-    statistics.setStartTimestamp(TimeUnit.NANOSECONDS.toMillis(start));
-    statistics.setEndTimestamp(TimeUnit.NANOSECONDS.toMillis(end));
-    return statistics;
+    return new Statistics(getExecutionTimeInMillis());
   }
 }

@@ -64,15 +64,15 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
   @NotNull
   private Timestamp runTimestamp;
 
-  @NotNull
-  @Valid
-  private final List<Test> tests = new ArrayList<>();
+  private Timestamp finishedTimestamp;
 
   private String comment;
 
-  private Statistics collectStatistics;
+  private Statistics statistics;
 
-  private Statistics compareStatistics;
+  @NotNull
+  @Valid
+  private final List<Test> tests = new ArrayList<>();
 
   public Suite(String correlationId, String company, String project, String name) {
     this.correlationId = correlationId;
@@ -127,22 +127,21 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
     this.runTimestamp = runTimestamp;
   }
 
-  public Statistics getCollectStatistics() {
-    return collectStatistics;
+  public Statistics getStatistics() {
+    return statistics;
   }
 
-  public void setCollectStatistics(
-      Statistics collectStatistics) {
-    this.collectStatistics = collectStatistics;
+  public void setStatistics(Statistics statistics) {
+    this.statistics = statistics;
   }
 
-  public Statistics getCompareStatistics() {
-    return compareStatistics;
+  public Timestamp getFinishedTimestamp() {
+    return finishedTimestamp;
   }
 
-  public void setCompareStatistics(
-      Statistics compareStatistics) {
-    this.compareStatistics = compareStatistics;
+  public void setFinishedTimestamp(
+      Timestamp finishedTimestamp) {
+    this.finishedTimestamp = finishedTimestamp;
   }
 
   @Override

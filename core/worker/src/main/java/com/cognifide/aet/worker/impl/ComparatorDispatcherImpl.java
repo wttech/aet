@@ -77,6 +77,7 @@ public class ComparatorDispatcherImpl implements ComparatorDispatcher {
     } finally {
       timer.finishAndLog(comparator.getType());
       comparator.setStepResult(comparisonResult);
+      comparator.setStatistics(timer.toStatistics());
     }
     return comparator;
   }

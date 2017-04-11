@@ -143,7 +143,7 @@ public class CollectorMessageListenerImpl extends AbstractTaskMessageListener {
                 collectorJobData.getTestName());
         result++;
         timer.finishAndLog(processedUrl.getUrl());
-        processedUrl.setStatistics(timer.toStatistics());
+        processedUrl.setCollectionStats(timer.toStatistics());
         feedbackQueue.sendObjectMessageWithCorrelationID(collectorResultData, correlationId);
       } catch (Exception e) {
         LOGGER.error("Unrecognized collector error", e);
