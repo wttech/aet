@@ -49,7 +49,8 @@ define(['angularAMD', 'metadataService'], function (angularAMD) {
 					project: suite.project,
 					name: suite.name,
 					version: suite.version,
-					lastUpdate: suite.runTimestamp.value
+					lastUpdate: suite.runTimestamp.value,
+          duration: suite.statistics.duration
 				};
 			}
 			return suiteInfo;
