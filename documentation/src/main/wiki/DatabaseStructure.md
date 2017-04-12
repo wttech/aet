@@ -180,4 +180,6 @@ Metadata is persisted after a full suite run. At the beginning of processing, pa
 
 ### Artifacts
 
-Artifacts is a GridFS collection (it consists of 2 collections: .files and .chunks). It holds binary artifacts (e.g. screenshots, source etc.). Each file has its ObjectId which is a reference to it. This collection has no knowledge of its context, artifacts are not marked as pattern/result etc.
+Artifacts is a GridFS collection (it consists of two collections: .files and .chunks). It holds binary 
+artifacts (e.g. screenshots, source etc.). Each file has its ObjectId which is a reference to it. 
+This collection has no knowledge of its context, artifacts are not marked as pattern/result etc.

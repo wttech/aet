@@ -49,7 +49,7 @@ When the test defined as shown above is executed, collection of a page source is
 
 This is a set of key-value pairs allowing the user to pass some configuration and information to the comparator. Parameters for comparators can be divided into the following two groups:
 
-* mandatory - parameters which comparison will be not possiblewithout,
+* mandatory - parameters which comparison will be not possible without,
 * optional - passing this parameter is not obligatory, usually this is the extension of some comparator functionality.
 
 ###### collectorName

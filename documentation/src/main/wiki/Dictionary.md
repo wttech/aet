@@ -7,7 +7,7 @@ a *JMS (Java Message Service)* Server which is a basic communication channel bet
 an open source testing tool developed by Cognifide.
 
 *AET Core*  
-a set of system modules that are crucial to the whole system to work. The AET system will not work properly without all core modules configured and running properly.
+a set of system modules that are crucial for the whole system to work. The AET system will not work properly without all core modules configured and running properly.
 
 *AET Jobs*  
 implementations of jobs that can perform a particular task (e.g. collect screenshots, compare sources, validate a page against *W3C HTML5*).
@@ -28,7 +28,7 @@ usually used in the context of a small piece of data, the result of some operati
 see *Amazon Web Services*.
 
 *Baseline*  
-the act of taking a snapshot of the url/page and saving it to a file for its future comparison in a number of ways to find differences.
+a snapshot of the page, stored in a file, against which future versions will be compared. It is called also a **Pattern**.
 
 *Browsermob*  
 a proxy server used by AET to collect some kinds of data from tested pages.
