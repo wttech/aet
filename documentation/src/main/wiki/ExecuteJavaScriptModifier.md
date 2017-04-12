@@ -19,7 +19,7 @@ Module name: **executejavascript**
         <collect>
             <open />
             ...
-            <executejavascript cmd="document.getElementById('toRemove').style.display='none'" />
+            <executejavascript cmd="document.body.style.background = 'green';" />
             ...
             <resolution width="1200" height="760" />
             <screen />
