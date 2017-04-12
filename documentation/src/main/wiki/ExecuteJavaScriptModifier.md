@@ -1,6 +1,6 @@
 #### Execute Java Script Modifier
 
-Execute Java Script Modifier is responsible for execute command as in webbrowser console.
+Execute Java Script Modifier is responsible for executing specified js command.
 
 Module name: **executejavascript**
 
@@ -8,7 +8,7 @@ Module name: **executejavascript**
 
 | Parameter | Value | Description | Mandatory |
 | --------- | ----- | ----------- | --------- |
-| `cmd` | command | webbrowser command | yes |
+| `cmd` | js script | Javascript command that will be executed | yes |
 
 ##### Example Usage
 
