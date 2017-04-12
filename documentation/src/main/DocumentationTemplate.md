@@ -64,6 +64,8 @@
 
 #include "wiki/WaitForPageLoadedModifier.md"
 
+#include "wiki/ExecuteJavaScriptModifier.md"
+
 #include "wiki/Comparators.md"
 
 #include "wiki/AccessibilityComparator.md"

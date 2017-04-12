@@ -90,7 +90,7 @@
 			<url href="comparators/layout/different_sized_divs.jsp" />
 		</urls>
 	</test>
-	<test name="comparator-Layout-executejavascript-SUCCESS-hide">
+	<test name="comparator-Layout-Executejavascript-SUCCESS-hide">
 		<collect>
 			<open />
 			<sleep duration="3000" />
@@ -105,18 +105,18 @@
 			<url href="comparators/layout/failed.jsp" />
 		</urls>
 	</test>
-	<test name="comparator-Layout-executejavascript-SUCCESS-background">
+	<test name="comparator-Layout-Executejavascript-SUCCESS-background">
 		<collect>
 			<open />
 			<sleep duration="3000" />
-			<executejavascript cmd="document.body.style.background = 'red';" />
+			<executejavascript cmd="document.body.style.background = 'green';" />
 			<screen />
 		</collect>
 		<compare>
 			<screen comparator="layout" />
 		</compare>
 		<urls>
-			<url href="comparators/layout/different_sized_divs.jsp" />
+			<url href="comparators/layout/success.jsp" />
 		</urls>
 	</test>
 	<test name="comparator-Layout-Resolution-SUCCESS">

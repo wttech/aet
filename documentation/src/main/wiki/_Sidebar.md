@@ -32,6 +32,7 @@
             * [[Resolution|ResolutionModifier]]
             * [[Sleep|SleepModifier]]
             * [[Wait For Page Loaded|WaitForPageLoadedModifier]]
+            * [[Execute Java Script|ExecuteJavaScriptModifier]]
         * [[Comparators|Comparators]]
             * [[Accessibility|AccessibilityComparator]]
             * [[Client Side Performance|ClientSidePerformanceComparator]]

@@ -31,9 +31,9 @@ import org.junit.runner.RunWith;
 @Modules(GuiceModule.class)
 public class UrlTilesTest {
 
-  private static final int URLS = 101;
+  private static final int URLS = 103;
 
-  private static final int EXPECTED_URLS_SUCCESS = 53;
+  private static final int EXPECTED_URLS_SUCCESS = 55;
 
   private static final int EXPECTED_URLS_WARN = 6;
 
