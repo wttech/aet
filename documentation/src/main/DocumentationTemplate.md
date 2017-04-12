@@ -54,6 +54,8 @@
 
 #include "wiki/HideModifier.md"
 
+#include "wiki/ExecuteJavaScriptModifier.md"
+
 #include "wiki/LoginModifier.md"
 
 #include "wiki/ResolutionModifier.md"
@@ -61,6 +63,8 @@
 #include "wiki/SleepModifier.md"
 
 #include "wiki/WaitForPageLoadedModifier.md"
+
+#include "wiki/ExecuteJavaScriptModifier.md"
 
 #include "wiki/Comparators.md"
 

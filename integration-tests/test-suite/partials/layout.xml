@@ -90,6 +90,35 @@
 			<url href="comparators/layout/different_sized_divs.jsp" />
 		</urls>
 	</test>
+	<test name="comparator-Layout-Executejavascript-SUCCESS-hide">
+		<collect>
+			<open />
+			<sleep duration="3000" />
+			<executejavascript cmd="document.getElementById('demo1').style.display='none'" />
+			<executejavascript cmd="document.getElementById('demo2').style.display='none'" />
+			<screen />
+		</collect>
+		<compare>
+			<screen comparator="layout" />
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp" />
+		</urls>
+	</test>
+	<test name="comparator-Layout-Executejavascript-SUCCESS-background">
+		<collect>
+			<open />
+			<sleep duration="3000" />
+			<executejavascript cmd="document.body.style.background = 'green';" />
+			<screen />
+		</collect>
+		<compare>
+			<screen comparator="layout" />
+		</compare>
+		<urls>
+			<url href="comparators/layout/success.jsp" />
+		</urls>
+	</test>
 	<test name="comparator-Layout-Resolution-SUCCESS">
 		<collect>
 			<open />
