@@ -50,7 +50,7 @@ define(['angularAMD', 'metadataService'], function (angularAMD) {
 					name: suite.name,
 					version: suite.version,
 					lastUpdate: suite.runTimestamp.value,
-          duration: suite.statistics.duration
+          duration: suite.statistics ? suite.statistics.duration : 'Not available'
 				};
 			}
 			return suiteInfo;
