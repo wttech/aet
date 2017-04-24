@@ -19,6 +19,7 @@ package com.cognifide.aet.executor.model;
 
 import com.google.common.base.Objects;
 
+import com.google.common.base.Optional;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
@@ -45,6 +46,8 @@ public class TestSuiteRun implements Serializable {
   private final String correlationId;
 
   private Long version;
+
+  private Optional<String> patternSuite;
 
   /**
    * Parameters: name, company, project are part of identifier of test suite.
@@ -146,5 +149,13 @@ public class TestSuiteRun implements Serializable {
     return Objects.toStringHelper(this).add("name", name).add("company", company).add("project", project)
             .add("domain", domain).add("correlationId", correlationId)
             .add("version", version).toString();
+  }
+
+  public void setPatternSuite(Optional<String> patternSuite) {
+    this.patternSuite = patternSuite;
+  }
+
+  public Optional<String> getPatternSuite() {
+    return patternSuite;
   }
 }

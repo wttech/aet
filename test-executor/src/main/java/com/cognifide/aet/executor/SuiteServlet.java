@@ -17,6 +17,7 @@
  */
 package com.cognifide.aet.executor;
 
+import com.google.common.base.Optional;
 import com.google.gson.Gson;
 
 import com.cognifide.aet.communication.api.execution.SuiteExecutionResult;
@@ -52,13 +53,14 @@ import javax.servlet.http.HttpServletResponse;
 @Component(label = "SuiteServlet", description = "Executes received test suite", immediate = true)
 public class SuiteServlet extends HttpServlet {
 
+  private static final long serialVersionUID = 5266041156537459410L;
+
   private static final Logger LOGGER = LoggerFactory.getLogger(SuiteServlet.class);
-
   private static final String SERVLET_PATH = "/suite";
-
   private static final String SUITE_PARAM = "suite";
-
   private static final String DOMAIN_PARAM = "domain";
+  private static final String PATTERN_PARAM = "pattern";
+
 
   @Reference
   private HttpService httpService;
@@ -70,21 +72,18 @@ public class SuiteServlet extends HttpServlet {
    * Starts processing of the test suite defined in the XML file provided in post body. Overrides
    * domain specified in the suite file if one has been provided in post body. Returns JSON defined
    * by {@link SuiteExecutionResult}. The request's content type must be 'multipart/form-data'.
-   *
-   * @param request
-   * @param response
-   * @throws ServletException
-   * @throws IOException
    */
   @Override
-  protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+  protected void doPost(HttpServletRequest request, HttpServletResponse response)
+      throws ServletException, IOException {
     if (ServletFileUpload.isMultipartContent(request)) {
       Map<String, String> requestData = getRequestData(request);
-      String suite = requestData.get(SUITE_PARAM);
-      String domain = requestData.get(DOMAIN_PARAM);
+      final String suite = requestData.get(SUITE_PARAM);
+      final String domain = requestData.get(DOMAIN_PARAM);
+      final Optional<String> pattern = Optional.fromNullable(requestData.get(PATTERN_PARAM));
 
       if (StringUtils.isNotBlank(suite)) {
-        SuiteExecutionResult suiteExecutionResult = suiteExecutor.execute(suite, domain);
+        SuiteExecutionResult suiteExecutionResult = suiteExecutor.execute(suite, domain, pattern);
         Gson gson = new Gson();
         String responseBody = gson.toJson(suiteExecutionResult);
 

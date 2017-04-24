@@ -17,6 +17,7 @@
  */
 package com.cognifide.aet.executor;
 
+import com.google.common.base.Optional;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.RemovalListener;
@@ -125,9 +126,10 @@ public class SuiteExecutor {
    *
    * @param suiteString - content of the test suite XML file
    * @param domain - overrides domain defined in the suite file
+   * @param pattern - optional pattern to set, this is a name of a suite that will be used as patterns source
    * @return status of the suite execution
    */
-  public SuiteExecutionResult execute(String suiteString, String domain) {
+  public SuiteExecutionResult execute(String suiteString, String domain, Optional<String> pattern) {
     SuiteRunner suiteRunner = null;
     SuiteExecutionResult result;
 
@@ -135,6 +137,7 @@ public class SuiteExecutor {
     try {
       TestSuiteRun testSuiteRun = xmlFileParser.parse(suiteString);
       testSuiteRun = overrideDomainIfDefined(testSuiteRun, domain);
+      testSuiteRun.setPatternSuite(pattern);
 
       String validationResult = SuiteValidator.validateTestSuiteRun(testSuiteRun);
       if (validationResult == null) {

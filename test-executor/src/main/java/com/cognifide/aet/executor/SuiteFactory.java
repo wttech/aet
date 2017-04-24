@@ -96,7 +96,10 @@ class SuiteFactory {
   }
 
   private Suite suiteFromTestRun(TestSuiteRun testSuiteRun) {
-    return new Suite(testSuiteRun.getCorrelationId(), testSuiteRun.getCompany(), testSuiteRun.getProject(), testSuiteRun.getName());
+    final Suite suite = new Suite(testSuiteRun.getCorrelationId(), testSuiteRun.getCompany(),
+        testSuiteRun.getProject(), testSuiteRun.getName());
+    suite.setPatternSuite(testSuiteRun.getPatternSuite());
+    return suite;
   }
 
   private boolean comparatorMatchesCollector(CollectorStep collectorStep, ComparatorStep comparatorStep) {

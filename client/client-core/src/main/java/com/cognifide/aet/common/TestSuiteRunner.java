@@ -61,15 +61,18 @@ public class TestSuiteRunner {
 
   private final String domain;
 
+  private final String patternSuite;
+
   private final boolean xUnit;
 
   public TestSuiteRunner(String endpointDomain, String buildDirectory, int timeout, String domain,
-      boolean xUnit) {
+      String patternSuite, boolean xUnit) {
     this.redirectWriter = new RedirectWriter(buildDirectory);
     this.buildDirectory = buildDirectory;
     this.timeout = timeout;
     this.endpointDomain = endpointDomain;
     this.domain = domain;
+    this.patternSuite = patternSuite;
     this.xUnit = xUnit;
     suiteExecutionResponseHandler = new JsonResponseHandler<>(SuiteExecutionResult.class);
     suiteStatusResponseHandler = new JsonResponseHandler<>(SuiteStatusResult.class);
@@ -111,6 +114,9 @@ public class TestSuiteRunner {
         .addBinaryBody("suite", testSuite, ContentType.APPLICATION_XML, testSuite.getName());
     if (domain != null) {
       entityBuilder.addTextBody("domain", domain);
+    }
+    if (patternSuite != null) {
+      entityBuilder.addTextBody("pattern", patternSuite);
     }
     HttpEntity entity = entityBuilder.build();
     return Request.Post(getSuiteUrl())

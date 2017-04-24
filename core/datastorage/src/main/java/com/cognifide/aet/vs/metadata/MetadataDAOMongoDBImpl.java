@@ -18,6 +18,7 @@
 package com.cognifide.aet.vs.metadata;
 
 import com.google.common.base.Function;
+import com.google.common.base.Optional;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.FluentIterable;
@@ -57,6 +58,8 @@ import java.util.Map;
 @Component(label = "AET Metadata DAO implementation for MongoDB", immediate = true)
 public class MetadataDAOMongoDBImpl implements MetadataDAO {
 
+  private static final long serialVersionUID = 3031952772776598636L;
+
   private static final Logger LOGGER = LoggerFactory.getLogger(MetadataDAOMongoDBImpl.class);
 
   public static final String METADATA_COLLECTION_NAME = "metadata";
@@ -64,6 +67,7 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
   private static final Gson GSON = new GsonBuilder()
           .registerTypeHierarchyAdapter(Collection.class, new CollectionSerializer())
           .registerTypeHierarchyAdapter(Map.class, new MapSerializer())
+          .registerTypeHierarchyAdapter(Optional.class, new OptionalSerializer())
           .registerTypeAdapter(Suite.Timestamp.class, new TimestampSerializer())
           .create();
 

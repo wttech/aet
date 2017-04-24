@@ -18,6 +18,7 @@
 package com.cognifide.aet.communication.api.metadata;
 
 import com.google.common.base.Objects;
+import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 
@@ -39,7 +40,7 @@ import javax.validation.constraints.Size;
 
 public class Suite implements Serializable, Commentable, Named, Validatable {
 
-  private static final long serialVersionUID = 1753463358391058190L;
+  private static final long serialVersionUID = -8481418728450710751L;
 
   @NotBlank
   private final String correlationId;
@@ -67,6 +68,8 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
   @NotNull
   @Valid
   private final List<Test> tests = new ArrayList<>();
+
+  private Optional<String> patternSuite;
 
   private String comment;
 
@@ -121,6 +124,14 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
 
   public void setRunTimestamp(Timestamp runTimestamp) {
     this.runTimestamp = runTimestamp;
+  }
+
+  public Optional<String> getPatternSuite() {
+    return patternSuite;
+  }
+
+  public void setPatternSuite(Optional<String> patternSuite) {
+    this.patternSuite = patternSuite;
   }
 
   @Override
