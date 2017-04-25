@@ -23,6 +23,9 @@
         <i class="glyphicon glyphicon-chevron-left" data-ng-class="sidebarExpanded ? 'glyphicon-chevron-left' : 'glyphicon-chevron-right'"></i>
     </div>
     <div class="toolbar-blocks">
+        <div class="toolbar-block important-message" ng-if="toolbarTop.patternSuite">
+            This suite comparison is based on <a href="{{toolbarTop.patternSuite.url}}">{{toolbarTop.patternSuite.name}}</a> suite patterns.
+        </div>
         <div class="toolbar-block">
             Total cases: <span class="name">{{toolbarTop.suiteStatistics.total}}</span>
             ( <span class="status failed" data-toggle="popover" data-content="Failed cases" data-trigger="hover" data-container="body">{{toolbarTop.suiteStatistics.failed}}</span> /

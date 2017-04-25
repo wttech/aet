@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cognifide.aet.vs.metadata;
+package com.cognifide.aet.communication.api.metadata.gson;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
@@ -32,7 +32,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-class TimestampSerializer implements JsonSerializer<Suite.Timestamp>, JsonDeserializer<Suite.Timestamp> {
+public class TimestampSerializer implements JsonSerializer<Suite.Timestamp>, JsonDeserializer<Suite.Timestamp> {
 
   @Override
   public JsonElement serialize(Suite.Timestamp src, Type typeOfSrc, JsonSerializationContext context) {

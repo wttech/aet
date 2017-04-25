@@ -36,6 +36,13 @@ define([], function () {
 		function updateToolbar() {
 			vm.suiteInfo = suiteInfoService.getInfo();
 			vm.suiteStatistics = metadataAccessService.getSuite();
+      if (vm.suiteStatistics.patternSuite) {
+        vm.patternSuite = {
+          name: vm.suiteStatistics.patternSuite,
+          url: 'report.html?company=' + vm.suiteStatistics.company + '&project=' +
+               vm.suiteStatistics.project + '&suite=' + vm.suiteStatistics.patternSuite
+        };
+      }
 		}
 
 	}

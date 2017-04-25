@@ -15,29 +15,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cognifide.aet.vs.metadata;
+package com.cognifide.aet.communication.api.metadata.gson;
 
-import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
 import java.lang.reflect.Type;
-import java.util.Collection;
+import java.util.Map;
 
-class CollectionSerializer implements JsonSerializer<Collection<?>> {
+public class MapSerializer implements JsonSerializer<Map<?, ?>> {
 
   @Override
-  public JsonElement serialize(Collection<?> src, Type typeOfSrc, JsonSerializationContext context) {
+  public JsonElement serialize(Map<?, ?> src, Type typeOfSrc, JsonSerializationContext context) {
     if (src == null || src.isEmpty()) {
       return null;
     }
 
-    JsonArray array = new JsonArray();
-    for (Object child : src) {
-      JsonElement element = context.serialize(child);
-      array.add(element);
+    JsonObject map = new JsonObject();
+    for (Map.Entry<?, ?> entry : src.entrySet()) {
+      final Object entryKey = entry.getKey();
+      final String key = entryKey != null ? entryKey.toString() : "";
+      map.add(key, context.serialize(entry.getValue()));
     }
-    return array;
+    return map;
   }
 }

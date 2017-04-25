@@ -17,6 +17,10 @@
  */
 package com.cognifide.aet.communication.api.metadata;
 
+import com.cognifide.aet.communication.api.metadata.gson.CollectionSerializer;
+import com.cognifide.aet.communication.api.metadata.gson.MapSerializer;
+import com.cognifide.aet.communication.api.metadata.gson.OptionalSerializer;
+import com.cognifide.aet.communication.api.metadata.gson.TimestampSerializer;
 import com.google.common.base.Objects;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
@@ -24,6 +28,12 @@ import com.google.common.collect.FluentIterable;
 
 import com.cognifide.aet.communication.api.util.ValidatorProvider;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
+import java.util.Collection;
+import java.util.Map;
 import org.hibernate.validator.constraints.NotBlank;
 
 import java.io.Serializable;
@@ -40,7 +50,15 @@ import javax.validation.constraints.Size;
 
 public class Suite implements Serializable, Commentable, Named, Validatable {
 
-  private static final long serialVersionUID = -8481418728450710751L;
+  private static final long serialVersionUID = 3602287822306302730L;
+  private static final Gson GSON = new GsonBuilder()
+      .registerTypeHierarchyAdapter(Collection.class, new CollectionSerializer())
+      .registerTypeHierarchyAdapter(Map.class, new MapSerializer())
+      .registerTypeHierarchyAdapter(Optional.class, new OptionalSerializer())
+      .registerTypeAdapter(Suite.Timestamp.class, new TimestampSerializer())
+      .create();
+  private static final Type SUITE_TYPE = new TypeToken<Suite>() {
+  }.getType();
 
   @NotBlank
   private final String correlationId;
@@ -79,6 +97,10 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
     this.project = project;
     this.name = name;
     runTimestamp = new Timestamp(System.currentTimeMillis());
+  }
+
+  public static Suite fromJson(String json) {
+    return GSON.fromJson(json, SUITE_TYPE);
   }
 
   public String getCorrelationId() {
@@ -185,6 +207,10 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
     }
   }
 
+  public String toJson() {
+    return GSON.toJson(this, SUITE_TYPE);
+  }
+
   @Override
   public void setComment(String comment) {
     this.comment = comment;
@@ -194,7 +220,6 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
   public String getComment() {
     return comment;
   }
-
 
   public static class Timestamp implements Serializable {
 

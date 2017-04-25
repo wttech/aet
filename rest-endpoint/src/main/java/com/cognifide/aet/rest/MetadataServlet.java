@@ -17,18 +17,26 @@
  */
 package com.cognifide.aet.rest;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonIOException;
-import com.google.gson.JsonSyntaxException;
-
 import com.cognifide.aet.communication.api.exceptions.AETException;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.StorageException;
-
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonIOException;
+import com.google.gson.JsonParser;
+import com.google.gson.JsonSyntaxException;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.nio.charset.StandardCharsets;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.lang3.BooleanUtils;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.ConfigurationPolicy;
@@ -37,16 +45,6 @@ import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.nio.charset.StandardCharsets;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @Service
 @Component(label = "MetadataServlet", description = "Returns Suite Metadata", immediate = true, metatype = true,
@@ -58,6 +56,8 @@ public class MetadataServlet extends BasicDataServlet {
   private static final Logger LOGGER = LoggerFactory.getLogger(MetadataServlet.class);
 
   private static final String FORMATTED_PARAM = "formatted";
+  private static final Gson PRETTY_PRINT_GSON = new GsonBuilder().setPrettyPrinting().create();
+  private static final JsonParser JSON_PARSER = new JsonParser();
 
   @Reference
   private MetadataDAO metadataDAO;
@@ -90,14 +90,13 @@ public class MetadataServlet extends BasicDataServlet {
       resp.getWriter().write(responseAsJson("Failed to get suite: %s", e.getMessage()));
       return;
     }
-    GsonBuilder gsonBuilder = new GsonBuilder();
-    if (formatted != null && "true".equals(formatted)) {
-      gsonBuilder.setPrettyPrinting();
-    }
-    String result = gsonBuilder.create().toJson(suite, Suite.class);
 
-    resp.setContentType("application/json");
-    if (result != null) {
+    if (suite != null) {
+      String result = suite.toJson();
+      if (BooleanUtils.toBoolean(formatted)) {
+        result = PRETTY_PRINT_GSON.toJson(JSON_PARSER.parse(result).getAsJsonObject());
+      }
+      resp.setContentType("application/json");
       resp.getWriter().write(result);
     } else {
       resp.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);

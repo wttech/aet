@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cognifide.aet.vs.metadata;
+package com.cognifide.aet.communication.api.metadata.gson;
 
 import com.google.common.base.Optional;
 import com.google.gson.JsonDeserializationContext;
@@ -26,7 +26,7 @@ import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 import java.lang.reflect.Type;
 
-class OptionalSerializer implements JsonSerializer<Optional<?>>, JsonDeserializer<Optional<?>> {
+public class OptionalSerializer implements JsonSerializer<Optional<?>>, JsonDeserializer<Optional<?>> {
 
   @Override
   public JsonElement serialize(Optional<?> src, Type typeOfSrc, JsonSerializationContext context) {
