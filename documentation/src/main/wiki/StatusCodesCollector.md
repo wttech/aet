@@ -1,6 +1,6 @@
 #### Status Codes Collector
 
-Status Codes Collector is responsible for collecting status codes of links to resources on the page under given URL.
+Status Codes Collector is responsible for collecting status codes returned by resources on the processed page.
 
 Module name: **status-codes**
 
