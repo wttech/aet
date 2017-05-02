@@ -34,20 +34,11 @@ import static org.mockito.Mockito.when;
 @RunWith(MockitoJUnitRunner.class)
 public class ExcludeStatusCodesFilterTest extends StatusCodesFilterTestBase {
 
-  @Test
-  public void modifyData_ExcludeByUrl_OneExcludedResultIsReturned() throws ProcessingException, ParametersException {
-    when(params.get(PARAM_URL)).thenReturn(PARAM_URL_VALUE);
-    tested.setParameters(params);
-    StatusCodesCollectorResult result = tested.modifyData(data);
-    assertThat(result.getStatusCodes(), hasSize(3));
-    assertTrue(result.getStatusCodes().get(0).isExcluded());
-    assertFalse(result.getStatusCodes().get(1).isExcluded());
-    assertFalse(result.getStatusCodes().get(2).isExcluded());
-  }
 
   @Test
   public void modifyData_ExcludeByPattern_TwoExcludedResultsAreReturned() throws ProcessingException,
           ParametersException {
+    when(params.containsKey(PARAM_PATTERN)).thenReturn(true);
     when(params.get(PARAM_PATTERN)).thenReturn(PARAM_PATTERN_VALUE);
     tested.setParameters(params);
     StatusCodesCollectorResult result = tested.modifyData(data);
@@ -57,29 +48,6 @@ public class ExcludeStatusCodesFilterTest extends StatusCodesFilterTestBase {
     assertTrue(result.getStatusCodes().get(2).isExcluded());
   }
 
-  @Test
-  public void modifyData_ExcludeByUrlAndPattern_AllReturnedResultsAreExcluded() throws ProcessingException,
-          ParametersException {
-    when(params.get(PARAM_URL)).thenReturn(PARAM_URL_ANOTHER_VALUE);
-    when(params.get(PARAM_PATTERN)).thenReturn(PARAM_PATTERN_VALUE);
-    tested.setParameters(params);
-    StatusCodesCollectorResult result = tested.modifyData(data);
-    assertThat(result.getStatusCodes(), hasSize(3));
-    assertTrue(result.getStatusCodes().get(0).isExcluded());
-    assertTrue(result.getStatusCodes().get(1).isExcluded());
-    assertTrue(result.getStatusCodes().get(2).isExcluded());
-  }
-
-  @Test
-  public void modifyData_ExcludeByNotFullUrl_OneExcludedResultIsReturned() throws Exception {
-    when(params.get(PARAM_URL)).thenReturn(NOT_FULL_URL_PARAM);
-    tested.setParameters(params);
-    StatusCodesCollectorResult result = tested.modifyData(data);
-    assertThat(result.getStatusCodes(), hasSize(3));
-    assertTrue(result.getStatusCodes().get(0).isExcluded());
-    assertFalse(result.getStatusCodes().get(1).isExcluded());
-    assertFalse(result.getStatusCodes().get(2).isExcluded());
-  }
 
 
   @Override

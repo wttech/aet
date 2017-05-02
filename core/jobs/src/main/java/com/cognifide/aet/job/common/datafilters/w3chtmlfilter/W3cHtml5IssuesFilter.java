@@ -24,13 +24,13 @@ import com.cognifide.aet.job.common.comparators.w3chtml5.W3cHtml5ComparatorResul
 import com.cognifide.aet.job.common.comparators.w3chtml5.W3cHtml5Issue;
 import com.cognifide.aet.job.common.comparators.w3chtml5.W3cHtml5IssueComparator;
 import com.cognifide.aet.job.common.comparators.w3chtml5.W3cHtml5IssueType;
+import com.cognifide.aet.job.common.utils.ParamsHelper;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
-import java.util.regex.PatternSyntaxException;
 
 public class W3cHtml5IssuesFilter extends AbstractDataModifierJob<W3cHtml5ComparatorResult> {
 
@@ -46,9 +46,9 @@ public class W3cHtml5IssuesFilter extends AbstractDataModifierJob<W3cHtml5Compar
 
   private Pattern messagePattern;
 
-  private int line;
+  private Integer line;
 
-  private int column;
+  private Integer column;
 
   @Override
   public W3cHtml5ComparatorResult modifyData(W3cHtml5ComparatorResult data)
@@ -79,39 +79,17 @@ public class W3cHtml5IssuesFilter extends AbstractDataModifierJob<W3cHtml5Compar
   private boolean match(W3cHtml5Issue issue) {
     final boolean messageNotSetOrIgnored =
         messagePattern == null || messagePattern.matcher(issue.getMessage()).matches();
-    final boolean lineNotSetOrIgnored = line == 0 || line == issue.getLine();
-    final boolean columnNotSetOrIgnored = column == 0 || column == issue.getColumn();
+    final boolean lineNotSetOrIgnored = line == null || line == issue.getLine();
+    final boolean columnNotSetOrIgnored = column == null || column == issue.getColumn();
     return messageNotSetOrIgnored && lineNotSetOrIgnored && columnNotSetOrIgnored;
   }
 
   @Override
   public void setParameters(Map<String, String> params) throws ParametersException {
-    if (params.containsKey(PARAM_MESSAGE)) {
-      try {
-        messagePattern = Pattern.compile(params.get(PARAM_MESSAGE));
-      } catch (PatternSyntaxException e) {
-        throw new ParametersException("MessagePattern value is invalid regular-expression pattern.", e);
-      }
-    }
-    line = getNumericParam(PARAM_LINE, params);
-    column = getNumericParam(PARAM_COLUMN, params);
-
-    if (isParametersEmpty()) {
-      throw new ParametersException("Parameters for w3c filter cannot be empty.");
-    }
-  }
-
-  private int getNumericParam(String paramName, Map<String, String> params)
-      throws ParametersException {
-    int paramValue = 0;
-    if (params.containsKey(paramName)) {
-      try {
-        paramValue = Integer.valueOf(params.get(paramName));
-      } catch (NumberFormatException e) {
-        throw new ParametersException(paramName + " parameter for w3c filter should be numeric.", e);
-      }
-    }
-    return paramValue;
+    messagePattern = ParamsHelper.getAsPattern(PARAM_MESSAGE, params);
+    line = ParamsHelper.getParamAsInteger(PARAM_LINE, params);
+    column = ParamsHelper.getParamAsInteger(PARAM_COLUMN, params);
+    ParamsHelper.atLeastOneIsProvided(messagePattern, line, column);
   }
 
   @Override
@@ -120,7 +98,4 @@ public class W3cHtml5IssuesFilter extends AbstractDataModifierJob<W3cHtml5Compar
         + PARAM_LINE + ": " + line + " " + PARAM_COLUMN + ": " + column;
   }
 
-  private boolean isParametersEmpty() {
-    return line == 0 && column == 0 && messagePattern == null;
-  }
 }
