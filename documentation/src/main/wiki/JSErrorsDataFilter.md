@@ -13,9 +13,9 @@ Resource name: js-errors
 
 | Parameter | Value | Description | Mandatory |
 | --------- | ----- | ----------- | --------- |
-|`errorPattern`|string error|Regular expression that matches message text of issue to be filter out|At least one of parameter is required|
-|`source`|string file name|Source file name (full path including `http://`) in which error occurred|
-|`line`|integer line number|Line number in file in which error occurred|
+|`errorPattern` | pattern error text | Regular expression that matches message text of issue to be filter out|At least one parameter is required|
+|`sourcePattern` | pattern file name | Regular expression that should match file name to be filter out (full path including `http://`) in which error occurred|
+|`line`  integer line number|Line number in file in which error occurred|
 
 ##### Example Usage
 

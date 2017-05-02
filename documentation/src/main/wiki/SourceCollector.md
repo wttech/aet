@@ -6,7 +6,7 @@ Module name: **source**
 
 | ! Note    |
 | :-------- |
-| System is waiting up to 20 seconds before request is timed out. This parameter is configurable via OSGi configuration (`AET Source Collector Factory`). |
+| System is waiting up to 40 seconds before request is timed out. This parameter is configurable via OSGi configuration (`AET Source Collector Factory`). |
 
 ##### Parameters
 
