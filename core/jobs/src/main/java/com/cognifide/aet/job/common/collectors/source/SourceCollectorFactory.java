@@ -39,7 +39,7 @@ public class SourceCollectorFactory implements CollectorFactory {
 
   private static final String SOURCE_COLLECTOR_TIMEOUT_VALUE = "sourceCollectorTimeoutValue";
 
-  private static final int DEFAULT_TIMEOUT = 20000;
+  private static final int DEFAULT_TIMEOUT = 40000;
 
   @Property(name = SOURCE_COLLECTOR_TIMEOUT_VALUE, label = "Timeout value for source collector [ms]", intValue = DEFAULT_TIMEOUT, description = "Timeout value for source collector [ms]")
   private int timeoutValue;

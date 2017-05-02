@@ -32,12 +32,12 @@ public class RemoveRegexpDataFilterFactory implements DataFilterFactory {
 
   @Override
   public String getName() {
-    return RemoveRegexpDataModifier.NAME;
+    return ReplaceRegexpDataModifier.NAME;
   }
 
   @Override
   public DataFilterJob createInstance(Map<String, String> params) throws ParametersException {
-    RemoveRegexpDataModifier modifier = new RemoveRegexpDataModifier();
+    ReplaceRegexpDataModifier modifier = new ReplaceRegexpDataModifier();
     modifier.setParameters(params);
     return modifier;
   }

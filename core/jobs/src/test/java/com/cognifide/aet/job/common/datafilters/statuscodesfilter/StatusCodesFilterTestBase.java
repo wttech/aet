@@ -36,7 +36,6 @@ import static org.mockito.Mockito.when;
 
 public abstract class StatusCodesFilterTestBase<T extends StatusCodesFilter> {
 
-  protected static final String PARAM_URL = "url";
 
   protected static final String PARAM_PATTERN = "pattern";
 
@@ -65,31 +64,9 @@ public abstract class StatusCodesFilterTestBase<T extends StatusCodesFilter> {
   @Before
   public void setUp() {
     tested = getStatusCodeFilterInstance();
-    infoPattern = getName() + " DataModifier with parameters: " + PARAM_URL + ": %s " + PARAM_PATTERN + ": %s";
+    infoPattern = getName() + " DataModifier with parameters: : " + PARAM_PATTERN + ": %s";
     initStatusCodesList();
     when(data.getStatusCodes()).thenReturn(statusCodesList);
-  }
-
-  @Test
-  public void setParameters_UrlAndPatternpAreProvided_ExpectValidModifierInfo() throws ParametersException {
-    when(params.get(PARAM_URL)).thenReturn(PARAM_URL_VALUE);
-    when(params.get(PARAM_PATTERN)).thenReturn(PARAM_PATTERN_VALUE);
-    tested.setParameters(params);
-    assertThat(tested.getInfo(), is(String.format(infoPattern, PARAM_URL_VALUE, PARAM_PATTERN_VALUE)));
-  }
-
-  @Test
-  public void setParameters_OnlyUrlIsProvided_ExpectModifierInfoWithNullPatternValue() throws ParametersException {
-    when(params.get(PARAM_URL)).thenReturn(PARAM_URL_VALUE);
-    tested.setParameters(params);
-    assertThat(tested.getInfo(), is(String.format(infoPattern, PARAM_URL_VALUE, "null")));
-  }
-
-  @Test
-  public void setParameters_OnlyPatternIsProvided_ExpectModifierInfoWithNullUrlValue() throws ParametersException {
-    when(params.get(PARAM_PATTERN)).thenReturn(PARAM_PATTERN_VALUE);
-    tested.setParameters(params);
-    assertThat(tested.getInfo(), is(String.format(infoPattern, "null", PARAM_PATTERN_VALUE)));
   }
 
   @Test(expected = ParametersException.class)

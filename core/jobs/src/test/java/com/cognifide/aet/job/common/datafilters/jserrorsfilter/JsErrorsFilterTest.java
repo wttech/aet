@@ -46,7 +46,7 @@ public class JsErrorsFilterTest {
 
   private static final String PARAM_ERROR = "errorPattern";
 
-  private static final String PARAM_SOURCE = "source";
+  private static final String PARAM_SOURCE = "sourcePattern";
 
   private static final String PARAM_LINE = "line";
 
