@@ -1,4 +1,4 @@
-#### Extranct Element Data Filter
+#### Extract Element Data Filter
 
 Extract Element Data Filter allows to extract an element from the html source (collected by Screen Collector) by providing an id attribute or a class attribute. The found source of the element is processed by the comparator.
 

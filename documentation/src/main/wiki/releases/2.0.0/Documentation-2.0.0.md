@@ -2554,7 +2554,7 @@ There can be more than one `accessibility-filter` tag in `accessibility` compara
 ```
 
 
-#### Extranct Element Data Filter
+#### Extract Element Data Filter
 
 Extract Element Data Filter allows to extract element from html source (collected by Source Collector) by providing id attribute or class attribute. Found element's source is processed by comparator.
 

@@ -96,7 +96,7 @@ public class AccessibilityIssue implements Serializable, Excludable {
   }
 
   @Override
-  public void exclude() {
+  public void setRxclude(boolean value) {
     this.excluded = true;
   }
 

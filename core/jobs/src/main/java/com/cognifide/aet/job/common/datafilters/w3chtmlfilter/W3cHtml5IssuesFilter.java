@@ -36,7 +36,9 @@ public class W3cHtml5IssuesFilter extends AbstractDataModifierJob<W3cHtml5Compar
 
   public static final String NAME = "w3c-filter";
 
-  private static final String PARAM_MESSAGE = "messagePattern";
+  public static final String PARAM_MESSAGE = "message";
+
+  private static final String PARAM_MESSAGE_PATTERN = "messagePattern";
 
   private static final String PARAM_LINE = "line";
 
@@ -86,7 +88,8 @@ public class W3cHtml5IssuesFilter extends AbstractDataModifierJob<W3cHtml5Compar
 
   @Override
   public void setParameters(Map<String, String> params) throws ParametersException {
-    messagePattern = ParamsHelper.getAsPattern(PARAM_MESSAGE, params);
+    messagePattern = ParamsHelper
+        .getPatternFromPatternParameterOrPlainText(PARAM_MESSAGE_PATTERN, PARAM_MESSAGE, params);
     line = ParamsHelper.getParamAsInteger(PARAM_LINE, params);
     column = ParamsHelper.getParamAsInteger(PARAM_COLUMN, params);
     ParamsHelper.atLeastOneIsProvided(messagePattern, line, column);
@@ -94,7 +97,7 @@ public class W3cHtml5IssuesFilter extends AbstractDataModifierJob<W3cHtml5Compar
 
   @Override
   public String getInfo() {
-    return NAME + " DataModifier with parameters: " + PARAM_MESSAGE + ": '" + messagePattern + "' "
+    return NAME + " DataModifier with parameters: " + PARAM_MESSAGE_PATTERN + ": '" + messagePattern + "' "
         + PARAM_LINE + ": " + line + " " + PARAM_COLUMN + ": " + column;
   }
 

@@ -27,9 +27,16 @@ import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class ParamsHelper {
 
+  /***
+   * @param key property name that should store regexp
+   * @param params map of parameters
+   * @return Pattern  or null if there is no key in params map
+   * @throws ParametersException if Pattern under key is provided but invalid
+   */
   public static Pattern getAsPattern(String key, Map<String, String> params) throws ParametersException {
     Pattern result = null;
     if (params.containsKey(key)) {
@@ -42,7 +49,12 @@ public class ParamsHelper {
     return result;
   }
 
-
+  /***
+   * @param key property name that should sore textual representation of Integer
+   * @param params map of parameters
+   * @return integer or null if there is no key in params map
+   * @throws ParametersException if value under key is provided but can not be parsed into Integer
+   */
   public static Integer getParamAsInteger(String key, Map<String, String> params) throws ParametersException {
     Integer result = null;
     if (params.containsKey(key)) {
@@ -56,15 +68,15 @@ public class ParamsHelper {
     return result;
   }
 
+
   public static String getParamAsString(String key, Map<String, String> params) {
-    String result = null;
-    if (params.containsKey(key)) {
-      result = params.get(key);
-    }
-    return result;
+    return params.containsKey(key) ? params.get(key) : null;
   }
 
-
+  /***
+   * @param values array of objects
+   * @throws ParametersException if all passed objects are null
+   */
   public static void atLeastOneIsProvided(Object... values)
       throws ParametersException {
     if (!ObjectUtils.anyNotNull(values)) {
@@ -72,6 +84,11 @@ public class ParamsHelper {
     }
   }
 
+  /***
+   *
+   * @param params  array of objects
+   * @throws ParametersException if none or more that one of the parameters are not null
+   */
   public static void onlyOneIsProvided(Object... params) throws ParametersException {
     int counter = 0;
     for (Object param : params) {
@@ -84,9 +101,16 @@ public class ParamsHelper {
     }
   }
 
+  /***
+   *
+   * @param pattern
+   * @param value
+   * @return true if pattern is empty or if its match with given value, false otherwise
+   */
   public static boolean matches(Pattern pattern, String value) {
     return pattern == null || pattern.matcher(value).matches();
   }
+
 
   public static boolean equalOrNotSet(Object expected, Object actual) {
     return expected == null || expected.equals(actual);
@@ -107,6 +131,30 @@ public class ParamsHelper {
       throw new ParametersException("Valid XPath must be provided");
     }
     return result;
+  }
+
+  /**
+   * @param key property name that should store plain text
+   * @param params map of parameters
+   * @return returns Pattern from quoted plain text under key property or null if there is no value with given key
+   */
+  public static Pattern getPatternFromPlainText(String key, Map<String, String> params) {
+    String plainMessage = ParamsHelper.getParamAsString(key, params);
+    return StringUtils.isNotBlank(plainMessage) ? Pattern.compile(Pattern.quote(plainMessage)) : null;
+  }
+
+  /***
+   * @param primaryKey property name that should stores regexp pattern
+   * @param secondaryKey property name that should store plain text
+   * @param params map of parameters
+   * @return pattern under primaryKey or if retrurns null Pattern from quoted plain text under secondaryKey
+   * @throws ParametersException if Pattern under primaryKey is provided but invalid
+   */
+
+  public static Pattern getPatternFromPatternParameterOrPlainText(String primaryKey, String secondaryKey,
+      Map<String, String> params) throws ParametersException {
+    Pattern result = getAsPattern(primaryKey, params);
+    return result != null ? result : getPatternFromPlainText(secondaryKey, params);
   }
 
 }

@@ -36,9 +36,11 @@ public class AccessibilityFilter extends AbstractDataModifierJob<List<Accessibil
 
   private static final String PARAM_COLUMN = "column";
 
-  private static final String PARAM_ERROR = "error";
+  private static final String PARAM_ERROR_PATTERN = "errorPattern";
 
-  private Pattern errorMessage;
+  private static final String PARAM_ERROR_TEXT = "error";
+
+  private Pattern errorMessagePattern;
 
   private String principle;
 
@@ -48,21 +50,22 @@ public class AccessibilityFilter extends AbstractDataModifierJob<List<Accessibil
 
   @Override
   public void setParameters(Map<String, String> params) throws ParametersException {
-    errorMessage = ParamsHelper.getAsPattern(PARAM_ERROR, params);
+    errorMessagePattern = ParamsHelper
+        .getPatternFromPatternParameterOrPlainText(PARAM_ERROR_PATTERN, PARAM_ERROR_TEXT, params);
     principle = ParamsHelper.getParamAsString(PARAM_PRINCIPLE, params);
     line = ParamsHelper.getParamAsInteger(PARAM_LINE, params);
     column = ParamsHelper.getParamAsInteger(PARAM_COLUMN, params);
-    ParamsHelper.atLeastOneIsProvided(principle, errorMessage, line, column);
+    ParamsHelper.atLeastOneIsProvided(principle, errorMessagePattern, line, column);
   }
 
   @Override
   public List<AccessibilityIssue> modifyData(List<AccessibilityIssue> data) throws ProcessingException {
     for (AccessibilityIssue issue : data) {
       if (ParamsHelper.equalOrNotSet(principle, issue.getCode())
-          && ParamsHelper.matches(errorMessage, issue.getMessage())
+          && ParamsHelper.matches(errorMessagePattern, issue.getMessage())
           && ParamsHelper.equalOrNotSet(line, issue.getLineNumber())
           && ParamsHelper.equalOrNotSet(column, issue.getColumnNumber())) {
-        issue.exclude();
+        issue.setRxclude(true);
       }
     }
     return data;
@@ -71,7 +74,8 @@ public class AccessibilityFilter extends AbstractDataModifierJob<List<Accessibil
   @Override
   public String getInfo() {
     return NAME + " DataModifier with parameters: " + PARAM_PRINCIPLE + ": " + principle + " "
-        + PARAM_ERROR + ": " + errorMessage + " " + PARAM_LINE + ": " + line + " " + PARAM_COLUMN + ": " + column;
+        + PARAM_ERROR_PATTERN + ": " + errorMessagePattern + " " + PARAM_LINE + ": " + line + " " + PARAM_COLUMN + ": "
+        + column;
   }
 
 }

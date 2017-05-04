@@ -12,8 +12,8 @@ Resource name: status-codes
 
 | Parameter | Value | Description | Mandatory |
 | --------- | ----- | ----------- | --------- |
-| `url` | String url | Exact url to be removed from results. | At least one of parameter is required. |
-| `pattern` | String regex pattern| Regex pattern that urls should match to be removed from results. | |
+| `pattern` | String regex pattern| Regex pattern that urls should match to be removed from results. | At least one of parameter is required. |
+| `url` | String url | Exact url to be removed from results. | At least one of parameter is required. Will be ignored if pattern parameter is provided |
 
 If both parameters are provided then result is removed when it matches at least one of the parameters.
 

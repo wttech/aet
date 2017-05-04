@@ -21,7 +21,6 @@ import static com.google.common.testing.GuavaAsserts.assertTrue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertFalse;
-import static org.mockito.Mockito.when;
 
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
@@ -34,10 +33,28 @@ import org.mockito.runners.MockitoJUnitRunner;
 public class IncludeStatusCodesFilterTest extends StatusCodesFilterTestBase {
 
   @Test
-  public void modifyData_IncludeByPattern_OneExcludedResultsIsReturned() throws ProcessingException,
+  public void modifyData_IncludeByUrlAndPattern_UrlParamIsIgnored_NothingIsExcluded() throws ProcessingException,
       ParametersException {
-    when(params.containsKey(PARAM_PATTERN)).thenReturn(true);
-    when(params.get(PARAM_PATTERN)).thenReturn(PARAM_PATTERN_VALUE);
+    params = getParams(PARAM_URL_ANOTHER_VALUE, PARAM_PATTERN_VALUE);
+    tested.setParameters(params);
+    StatusCodesCollectorResult result = tested.modifyData(data);
+    assertThat(result.getStatusCodes(), hasSize(3));
+    assertFalse(result.getStatusCodes().get(0).isExcluded());
+    assertFalse(result.getStatusCodes().get(1).isExcluded());
+    assertFalse(result.getStatusCodes().get(2).isExcluded());
+  }
+
+
+  @Override
+  protected StatusCodesFilter getStatusCodeFilterInstance() {
+    return new IncludeStatusCodesFilter();
+  }
+
+  @Test
+  public void modifyData_IncludeByPattern_After_Excluding_All() throws ProcessingException,
+      ParametersException {
+    excludeAllStatusCodes();
+    params = getParams(null, PARAM_PATTERN_VALUE);
     tested.setParameters(params);
     StatusCodesCollectorResult result = tested.modifyData(data);
     assertThat(result.getStatusCodes(), hasSize(3));
@@ -46,9 +63,18 @@ public class IncludeStatusCodesFilterTest extends StatusCodesFilterTestBase {
     assertFalse(result.getStatusCodes().get(2).isExcluded());
   }
 
-  @Override
-  protected StatusCodesFilter getStatusCodeFilterInstance() {
-    return new IncludeStatusCodesFilter();
+
+  @Test
+  public void modifyData_IncludeByUrl__After_Excluding_All_TwoExcludedResultAreReturned()
+      throws ProcessingException, ParametersException {
+    excludeAllStatusCodes();
+    params = getParams(PARAM_URL_VALUE, null);
+    tested.setParameters(params);
+    StatusCodesCollectorResult result = tested.modifyData(data);
+    assertThat(result.getStatusCodes(), hasSize(3));
+    assertFalse(result.getStatusCodes().get(0).isExcluded());
+    assertTrue(result.getStatusCodes().get(1).isExcluded());
+    assertTrue(result.getStatusCodes().get(2).isExcluded());
   }
 
 }
