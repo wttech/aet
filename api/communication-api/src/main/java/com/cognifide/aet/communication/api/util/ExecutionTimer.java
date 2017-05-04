@@ -17,6 +17,7 @@
  */
 package com.cognifide.aet.communication.api.util;
 
+import com.cognifide.aet.communication.api.metadata.Statistics;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,8 +26,6 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * ExecutionTimer which measures execution time.
- *
- * @author: Maciej Laskowski
  */
 public final class ExecutionTimer {
 
@@ -110,5 +109,9 @@ public final class ExecutionTimer {
    */
   public long getEnd() {
     return end;
+  }
+
+  public Statistics toStatistics() {
+    return new Statistics(getExecutionTimeInMillis());
   }
 }
