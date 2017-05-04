@@ -17,25 +17,25 @@
  */
 package com.cognifide.aet.job.common.datafilters.statuscodesfilter;
 
-import com.google.common.collect.Lists;
-
-import com.cognifide.aet.job.api.exceptions.ParametersException;
-import com.cognifide.aet.job.common.collectors.statuscodes.StatusCode;
-import com.cognifide.aet.job.common.collectors.statuscodes.StatusCodesCollectorResult;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mock;
-
-import java.util.List;
-import java.util.Map;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.when;
 
+import com.cognifide.aet.job.api.exceptions.ParametersException;
+import com.cognifide.aet.job.common.collectors.statuscodes.StatusCode;
+import com.cognifide.aet.job.common.collectors.statuscodes.StatusCodesCollectorResult;
+import com.google.common.collect.Lists;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.apache.commons.lang3.StringUtils;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mock;
+
 public abstract class StatusCodesFilterTestBase<T extends StatusCodesFilter> {
 
+  protected static final String PARAM_URL = "url";
 
   protected static final String PARAM_PATTERN = "pattern";
 
@@ -53,7 +53,6 @@ public abstract class StatusCodesFilterTestBase<T extends StatusCodesFilter> {
 
   protected T tested;
 
-  @Mock
   protected Map<String, String> params;
 
   @Mock
@@ -64,20 +63,42 @@ public abstract class StatusCodesFilterTestBase<T extends StatusCodesFilter> {
   @Before
   public void setUp() {
     tested = getStatusCodeFilterInstance();
-    infoPattern = getName() + " DataModifier with parameters: : " + PARAM_PATTERN + ": %s";
+    infoPattern = getName() + " DataModifier with parameters: " + PARAM_URL + ": %s " + PARAM_PATTERN + ": %s";
     initStatusCodesList();
     when(data.getStatusCodes()).thenReturn(statusCodesList);
   }
 
+  @Test
+  public void setParameters_UrlAndPatternpAreProvided_ExpectValidModifierInfo() throws ParametersException {
+    params = getParams(PARAM_URL_VALUE, PARAM_PATTERN_VALUE);
+    tested.setParameters(params);
+    assertThat(tested.getInfo(), is(String.format(infoPattern, PARAM_URL_VALUE, PARAM_PATTERN_VALUE)));
+  }
+
+  @Test
+  public void setParameters_OnlyUrlIsProvided_ExpectModifierInfoWithNullPatternValue() throws ParametersException {
+    params = getParams(PARAM_URL_VALUE, null);
+    tested.setParameters(params);
+    assertThat(tested.getInfo(), is(String.format(infoPattern, PARAM_URL_VALUE, "null")));
+  }
+
+  @Test
+  public void setParameters_OnlyPatternIsProvided_ExpectModifierInfoWithNullUrlValue() throws ParametersException {
+    params = getParams(null, PARAM_PATTERN_VALUE);
+    tested.setParameters(params);
+    assertThat(tested.getInfo(), is(String.format(infoPattern, "null", PARAM_PATTERN_VALUE)));
+  }
+
   @Test(expected = ParametersException.class)
   public void setParameters_AllParametersAreEmpty_ExceptionIsThrown() throws ParametersException {
+    params = getParams(null, null);
     tested.setParameters(params);
 
   }
 
   @Test(expected = ParametersException.class)
   public void setParameters_PatternIsInvalid_ExceptionIsThrown() throws ParametersException {
-    when(params.get(PARAM_PATTERN)).thenReturn(PARAM_PATTERN_INVALID_VALUE);
+    params = getParams(null, PARAM_PATTERN_INVALID_VALUE);
     tested.setParameters(params);
   }
 
@@ -88,10 +109,28 @@ public abstract class StatusCodesFilterTestBase<T extends StatusCodesFilter> {
     statusCodesList.add(new StatusCode(404, "http://anotherurl.jsp"));
   }
 
+  protected void excludeAllStatusCodes() {
+    for (StatusCode statusCode : statusCodesList) {
+      statusCode.setRxclude(true);
+    }
+  }
+
+
   protected abstract T getStatusCodeFilterInstance();
 
   protected String getName() {
     return tested.getName();
   }
 
+
+  protected Map<String, String> getParams(String url, String pattern) {
+    Map<String, String> params = new HashMap<>();
+    if (StringUtils.isNotBlank(url)) {
+      params.put(PARAM_URL, url);
+    }
+    if (StringUtils.isNotBlank(pattern)) {
+      params.put(PARAM_PATTERN, pattern);
+    }
+    return params;
+  }
 }

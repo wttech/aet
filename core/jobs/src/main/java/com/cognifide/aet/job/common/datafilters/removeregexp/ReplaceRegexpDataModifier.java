@@ -51,6 +51,7 @@ public class ReplaceRegexpDataModifier implements DataFilterJob<String> {
   public void setParameters(Map<String, String> params) throws ParametersException {
 
     replacement = ParamsHelper.getParamAsString(NEW_VALUE, params);
+    replacement = replacement != null ? replacement : StringUtils.EMPTY;
 
     if (StringUtils.isBlank(params.get(REGEXP))) {
       dataRegExp = ParamsHelper.getAsPattern(DATA_REGEXP, params);

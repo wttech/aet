@@ -29,24 +29,30 @@ import org.apache.commons.lang3.StringUtils;
 
 abstract class StatusCodesFilter extends AbstractDataModifierJob<StatusCodesCollectorResult> {
 
+  private static final String PARAM_URL = "url";
+
   private static final String PARAM_PATTERN = "pattern";
 
   private Pattern regexPattern;
-  private String patternString;
+
+  private String patternParam;
+
+  private String urlParam;
 
   @Override
   public void setParameters(Map<String, String> params) throws ParametersException {
-    regexPattern = ParamsHelper.getAsPattern(PARAM_PATTERN, params);
+    regexPattern = ParamsHelper.getPatternFromPatternParameterOrPlainText(PARAM_PATTERN, PARAM_URL, params);
     ParamsHelper.atLeastOneIsProvided(regexPattern);
+    patternParam = ParamsHelper.getParamAsString(PARAM_PATTERN, params); //just for logging
+    urlParam = ParamsHelper.getParamAsString(PARAM_URL, params); //just for logging
 
-    patternString = ParamsHelper.getParamAsString(PARAM_PATTERN, params); //just for logging
   }
 
   @Override
   public StatusCodesCollectorResult modifyData(StatusCodesCollectorResult data) throws ProcessingException {
     for (StatusCode statusCode : data.getStatusCodes()) {
-      if (regexPattern != null && removeIfMatches() == matchPattern(statusCode.getUrl())) {
-        statusCode.exclude();
+      if (regexPattern != null && matchPattern(statusCode.getUrl())) {
+        statusCode.setRxclude(removeIfMatches());
       }
     }
     return data;
@@ -62,8 +68,8 @@ abstract class StatusCodesFilter extends AbstractDataModifierJob<StatusCodesColl
 
   @Override
   public String getInfo() {
-    return getName() + " DataModifier with parameters: " + " " + PARAM_PATTERN
-        + ": " + patternString;
+    return getName() + " DataModifier with parameters: " + PARAM_URL + ": " + urlParam + " " + PARAM_PATTERN
+        + ": " + patternParam;
   }
 
   protected abstract String getName();

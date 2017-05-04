@@ -18,14 +18,13 @@
 package com.cognifide.aet.job.common;
 
 import com.google.common.base.Predicate;
-
 import javax.annotation.Nullable;
 
 public interface Excludable {
 
   boolean isExcluded();
 
-  void exclude();
+  void setRxclude(boolean value);
 
   class ExcludedPredicate implements Predicate<Excludable> {
 
