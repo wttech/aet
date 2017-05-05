@@ -2,7 +2,7 @@
 
 The comparator is a module which is responsible for consuming data and comparing it to the pattern or against a defined set of rules.
 
-Each comparator presented in the section below consists of three elements:
+Each comparator presented in the section below consists of the following three elements:
 
 * consumed resource type,
 * module name (comparator),
@@ -10,15 +10,15 @@ Each comparator presented in the section below consists of three elements:
 
 ##### Consumed resource type
 
-This is the name of the resource type consumed by the defined comparator. This is always the name of a tag definition for the comparator.
+This is a name of the resource type consumed by the defined comparator. This is always a name of the tag definition for the comparator.
 
-This name says the system which **resource type** should be consumed by the defined comparator. When no comparator in the system can consume the defined resource type, a system exception will occur and the test will not be performed. This solution enables adding new features to the system with no system downtime (just by installing a new feature bundle).
+This name tells the system which **resource type** should be consumed by the defined comparator. When no comparator in the system can consume the defined resource type, a system exception will occur and the test will not be performed. This solution enables to add new features to the system with no system downtime (just by installing a new feature bundle).
 
 Each comparator can consume only one resource type.
 
 ##### Module name (comparator)
 
-This is a special parameter, a unique name for the comparator type treated as an interpretation of a given resource type. The system will recognize which implementation of the comparator should be called by this name. This parameter is required for each comparator but system will assume a default comparator for each resource type when no `comparator` property is defined.
+This is a special parameter, a unique name for the comparator type treated as the interpretation of a given resource type. The system will recognize which implementation of the comparator should be called by this name. This parameter is required for each comparator but the system will assume a default comparator for each resource type when no `comparator` property is defined.
 
 ###### Default comparators for the consumed resource names
 
@@ -43,18 +43,18 @@ Sample usage can be found in the system for the *source* comparison where two co
 ...
 ```
 
-When a test defined as above is executed, only one collection of a page source is performed. But the result of this collection is used twice during the comparison phase. First by [[Source Comparator|SourceComparator]] and then by [[W3C HTML5 Comparator|W3C HTML5 Comparator]].
+When the test defined as shown above is executed, collection of a page source is performed only once but the result of this collection is used twice during the comparison phase. First by [[Source Comparator|SourceComparator]] and then by [[W3C HTML5 Comparator|W3C HTML5 Comparator]].
 
 ##### Parameters
 
 This is a set of key-value pairs allowing the user to pass some configuration and information to the comparator. Parameters for comparators can be divided into the following two groups:
 
-* mandatory - parameters without which comparison will be not possible,
-* optional - passing this parameter is not obligatory, usually this is thr extension of some comparator functionality.
+* mandatory - parameters which comparison will be not possible without,
+* optional - passing this parameter is not obligatory, usually this is the extension of some comparator functionality.
 
 ###### collectorName
 
-There exists the special comparator property `collectorName` which is connected to the collector `name` property. By using the `collectorName` property combined with the collector `name` property, the user can control which comparator instance compares results collected by a particular collector. See examples below:
+There exists the special comparator property `collectorName` which is connected to the collector `name` property. By using the `collectorName` property combined with the collector `name` property the user can control which comparator instance compares results collected by a particular collector. See examples below:
 
 ```xml
 ...
@@ -76,7 +76,7 @@ There exists the special comparator property `collectorName` which is connected 
 ...
 ```
 
-The configuration above will trigger three screens collections (desktop, tablet and mobile) and two comparisons (mobile and tablet). Screenshot taken for *desktop* will not be compared.
+The configuration above will trigger three screens collections (desktop, tablet and mobile) and two comparisons (mobile and tablet). The screenshot taken for *desktop* will not be compared.
 
 ```xml
 ...
