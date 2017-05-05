@@ -34,7 +34,7 @@ import java.util.regex.Pattern;
 
 public class W3cHtml5IssuesFilter extends AbstractDataModifierJob<W3cHtml5ComparatorResult> {
 
-  private static final String NAME = "w3c-filter";
+  public static final String NAME = "w3c-filter";
 
   private static final String PARAM_MESSAGE = "message";
 
