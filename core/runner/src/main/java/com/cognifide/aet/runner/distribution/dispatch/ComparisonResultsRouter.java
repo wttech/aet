@@ -17,26 +17,27 @@
  */
 package com.cognifide.aet.runner.distribution.dispatch;
 
-import com.google.common.base.Optional;
-import com.google.inject.Inject;
-import com.google.inject.name.Named;
-
 import com.cognifide.aet.communication.api.JobStatus;
 import com.cognifide.aet.communication.api.ProcessingError;
 import com.cognifide.aet.communication.api.job.ComparatorResultData;
+import com.cognifide.aet.communication.api.metadata.Statistics;
 import com.cognifide.aet.communication.api.metadata.Step;
+import com.cognifide.aet.communication.api.metadata.Suite;
+import com.cognifide.aet.communication.api.metadata.Suite.Timestamp;
 import com.cognifide.aet.communication.api.metadata.Url;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
+import com.cognifide.aet.communication.api.util.ExecutionTimer;
 import com.cognifide.aet.runner.conversion.SuiteIndexWrapper;
 import com.cognifide.aet.runner.distribution.watch.TimeoutWatch;
 import com.cognifide.aet.runner.util.MessagesManager;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.google.common.base.Optional;
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.ObjectMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ComparisonResultsRouter extends StepManager implements ChangeObserver, TaskFinishPoint {
 
@@ -45,6 +46,8 @@ public class ComparisonResultsRouter extends StepManager implements ChangeObserv
   private static final String STEP_NAME = "COMPARED";
 
   private final SuiteIndexWrapper suite;
+
+  private final ExecutionTimer timer;
 
   private MetadataPersister metadataPersister;
 
@@ -58,6 +61,7 @@ public class ComparisonResultsRouter extends StepManager implements ChangeObserv
                                  SuiteIndexWrapper suite) throws JMSException {
     super(timeoutWatch, jmsConnection, suite.get().getCorrelationId(), messageTimeToLive);
     this.suite = suite;
+    timer = ExecutionTimer.createAndRun("comparison");
   }
 
   @Override
@@ -103,6 +107,11 @@ public class ComparisonResultsRouter extends StepManager implements ChangeObserv
     if (allResultsReceived()) {
       LOGGER.info("All results received ({})! Persisting metadata. CorrelationId: {}",
               messagesToReceive.get(), correlationId);
+      final Suite suite = this.suite.get();
+      timer.finishAndLog(suite.getName());
+      suite.setFinishedTimestamp(new Timestamp(System.currentTimeMillis()));
+      long delta = suite.getFinishedTimestamp().get() - suite.getRunTimestamp().get();
+      suite.setStatistics(new Statistics(delta));
       metadataPersister.persistMetadataAndNotifyObservers();
     }
   }

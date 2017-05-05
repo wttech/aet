@@ -82,6 +82,7 @@ public class CollectorDispatcherImpl implements CollectorDispatcher {
       } finally {
         timer.finishAndLog(step.getType());
         step.setStepResult(result);
+        step.setStatistics(timer.toStatistics());
       }
     }
 
