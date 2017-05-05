@@ -1,0 +1,235 @@
+/**
+ * Automated Exploratory Tests
+ *
+ * Copyright (C) 2013 Cognifide Limited
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+ 
+buildscript {
+    repositories {
+        mavenCentral()
+        mavenLocal()
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+    dependencies {
+        classpath 'org.hidetake:gradle-ssh-plugin:1.3.0'
+    }
+}
+
+// Apply the java-library plugin to add support for Java Library
+apply plugin: 'java-library'
+
+// In this section you declare where to find the dependencies of your project
+repositories {
+    // Use jcenter for resolving your dependencies.
+    // You can declare any Maven/Ivy/file repository here.
+    jcenter()
+}
+
+dependencies {
+    // This dependency is exported to consumers, that is to say found on their compile classpath.
+    api 'org.apache.commons:commons-math3:3.6.1'
+
+    // This dependency is used internally, and not exposed to consumers on their own compile classpath.
+    implementation 'com.google.guava:guava:20.0'
+
+    // Use JUnit test framework
+    testImplementation 'junit:junit:4.12'
+}
+
+/*
+ * Set of tasks helpful to maintain and deploy bundles on Karaf
+ * collect all jars
+ * clearKaraf's data folder,
+ * stop,start,restart karaf,
+ * transfer jars via ssh to karafs deplo folder.
+ * creates zip package with jars.
+*/
+
+allprojects {
+
+    apply plugin: 'org.hidetake.ssh'
+
+    remotes {
+        vagrant {
+            role 'localhost'
+			host = 'localhost'
+			port = 2222
+			user = 'root'
+			password = vagrant_password
+			knownHosts = allowAnyHosts
+        }
+
+        int1 {
+            role 'integration'
+            host = int1_host
+            port = 22
+            user = int1_user
+            password = int1_password
+            knownHosts = allowAnyHosts
+        }
+
+        int2 {
+            role 'integration'
+            host = '192.168.180.28'
+            port = 22
+            user = int2_user
+            password = int2_password
+            knownHosts = allowAnyHosts
+        }
+
+        stg1 {
+            role 'staging'
+            host = stg1_host
+            port = 22
+            user = stg1_user
+            password = stg1_password
+            knownHosts = allowAnyHosts
+        }
+
+        stg2 {
+            role 'staging'
+            host = stg2_host
+            port = 22
+            user = stg2_user
+            password = stg2_password
+            knownHosts = allowAnyHosts
+        }
+
+        relshare {
+            host = relshare_host
+            user = relshare_user
+            password = relshare_password
+            knownHosts = allowAnyHosts
+        }
+    }
+}
+
+project.ext.deployfolder = project.buildDir.absolutePath + '/../../../' + '/deploy'
+project.ext.allJars = []
+def version = '2.0.3'
+
+task zipJars(type: Zip, dependsOn: [getTasksByName('build', true), 'getAllJars']) {
+    outputs.upToDateWhen { false }
+    destinationDir project.buildDir
+    archiveName 'package.zip'
+    from(project.ext.allJars) {
+        exclude '*maven-plugin*'
+        exclude '*client-core*'
+        exclude '*gradle-plugin*'
+    }
+}
+
+task cleanup(type: Delete) {
+    delete project.ext.deployfolder
+}
+
+task unzipJars(type: Copy, dependsOn: ['zipJars', 'cleanup']) {
+	def path = project.buildDir.absolutePath + '/../../../' + '/zip/target/packages-'
+    def zipFile = file( path + version + '-SNAPSHOT/bundles.zip')
+    def outputDir = file(project.ext.deployfolder)
+    from zipTree(zipFile)
+    into outputDir
+}
+
+task getAllJars() << {
+    allprojects.each {
+        if (!it.extensions.extraProperties.has('allJars')) {
+            project.ext.allJars.add(it.configurations.archives.artifacts.files.files)
+        }
+
+    }
+    subprojects.each {
+        if (it.extensions.extraProperties.has('allJars')) {
+            project.ext.allJars.add(it.extensions.extraProperties.allJars)
+        }
+    }
+}
+
+getAllJars { outputs.upToDateWhen { false } }
+
+task deployDevClearCache(dependsOn: 'unzipJars', group: "Environment deployment", description: "Performs deployment on vagrant machine with karafs restart and removing cache") << {
+    ssh.run {
+        session(remotes.vagrant) {
+            execute 'sudo /etc/init.d/karaf stop', ignoreError: true
+            execute 'sudo rm -rf /opt/aet/karaf/current/data/cache/*'
+            execute 'sudo rm -rf /opt/aet/karaf/current/data/generated-bundles/*'
+            execute 'sudo rm -rf /opt/aet/karaf/current/data/tmp/*'
+            execute 'rm -rf /opt/aet/karaf/current/data/log/*'
+            execute 'sudo rm -rf /opt/aet/karaf/current/deploy/*'
+            put from: fileTree(project.ext.deployfolder), into: '/opt/aet/karaf/current/deploy'
+			put from: file(project.buildDir.absolutePath + '/../../../' + '/zip/target/aet-features.xml'), into: '/opt/aet/karaf/current/deploy'
+            execute 'sudo /etc/init.d/karaf start'
+        }
+    }
+}
+
+task devClearCache(group: "Environment deployment", description: "Clears karafs cache on vagrant") << {
+    ssh.run {
+        session(remotes.vagrant) {
+            execute 'sudo /etc/init.d/karaf stop'
+            execute 'sudo rm -rf /content/karaf/current/data/*'
+            execute 'sudo /etc/init.d/karaf start'
+        }
+    }
+}
+
+task deployInt(dependsOn: "unzipJars", group: "Environment deployment", description: "Performs deployment on integration servers") << {
+    ssh.run {
+        remotes.role('integration').each() { targetServer ->
+            session(targetServer) {
+                execute 'net stop ApacheKaraf', ignoreError: true
+            }
+
+            session(targetServer) {
+                execute 'rm -rf /cygdrive/c/content/karaf/data/tmp/*'
+            }
+
+            session(targetServer) {
+                execute 'rm -rf /cygdrive/c/content/karaf/data/generated-bundles/*'
+            }
+
+            session(targetServer) {
+                execute 'rm -rf /cygdrive/c/content/karaf/data/cache/*'
+            }
+
+            session(targetServer) {
+                execute 'rm -rf /cygdrive/c/content/karaf/deploy/*'
+            }
+
+            session(targetServer) {
+                put from: fileTree(project.ext.deployfolder), into: '/cygdrive/c/content/karaf/deploy'
+            }
+			
+            session(targetServer) {
+                put from: file(project.buildDir.absolutePath + '/../../../' + '/zip/target/aet-features.xml'), into: '/cygdrive/c/content/karaf/deploy'
+            }
+			
+            session(targetServer) {
+                execute 'net start ApacheKaraf'
+            }
+        }
+
+    }
+}
+
+allprojects {
+    task deployDev(dependsOn: "build", group: "Environment deployment", description: "Performs deployment on vagrant machine") << {
+        ssh.run {
+            session(remotes.vagrant) {
+                put from: project.configurations.archives.artifacts.files, into: '/content/karaf/current/deploy'
+            }
+        }
+    }
+}
