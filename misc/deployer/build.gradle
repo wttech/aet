@@ -47,12 +47,12 @@ allprojects {
 
     remotes {
         vagrant {
-			role 'localhost'
-			host = 'localhost'
-			port = 2222
-			user = 'root'
-			password = "vagrant"
-			knownHosts = allowAnyHosts
+            role 'localhost'
+            host = 'localhost'
+            port = 2222
+            user = 'root'
+            password = "vagrant"
+            knownHosts = allowAnyHosts
         }
 
         int1 {
@@ -153,7 +153,7 @@ task deployDevClearCache(dependsOn: 'unzipJars', group: "Environment deployment"
             execute 'rm -rf /opt/aet/karaf/current/data/log/*'
             execute 'sudo rm -rf /opt/aet/karaf/current/deploy/*'
             put from: fileTree(project.ext.deployfolder), into: '/opt/aet/karaf/current/deploy'
-			put from: file(project.buildDir.absolutePath + '/../../../' + '/zip/target/aet-features.xml'), into: '/opt/aet/karaf/current/deploy'
+            put from: file(project.buildDir.absolutePath + '/../../../' + '/zip/target/aet-features.xml'), into: '/opt/aet/karaf/current/deploy'
             execute 'sudo /etc/init.d/karaf start'
         }
     }
@@ -164,10 +164,10 @@ task deployReport(group: "Environment deployment", description: "Deploy report")
         session(remotes.vagrant) {
             execute 'sudo /etc/init.d/karaf stop'
             execute 'sudo rm -rf /opt/aet/apache/aet_reports/current/*'
-			put from: file(project.buildDir.absolutePath + '/../../../' + '/report/src/main/webapp/report.html'), into: '/opt/aet/apache/aet_reports/current'
-			put from: (project.buildDir.absolutePath + '/../../../' + '/report/src/main/webapp/app'), into: '/opt/aet/apache/aet_reports/current'
-			put from: (project.buildDir.absolutePath + '/../../../' + '/report/src/main/webapp/assets'), into: '/opt/aet/apache/aet_reports/current'
-			put from: file(project.buildDir.absolutePath + '/../../../' + '/report/src/main/webapp/html/index.html'), into: '/opt/aet/apache/aet_reports/current'
+            put from: file(project.buildDir.absolutePath + '/../../../' + '/report/src/main/webapp/report.html'), into: '/opt/aet/apache/aet_reports/current'
+            put from: (project.buildDir.absolutePath + '/../../../' + '/report/src/main/webapp/app'), into: '/opt/aet/apache/aet_reports/current'
+            put from: (project.buildDir.absolutePath + '/../../../' + '/report/src/main/webapp/assets'), into: '/opt/aet/apache/aet_reports/current'
+            put from: file(project.buildDir.absolutePath + '/../../../' + '/report/src/main/webapp/html/index.html'), into: '/opt/aet/apache/aet_reports/current'
             execute 'sudo /etc/init.d/karaf start'
         }
     }
