@@ -31,7 +31,7 @@ public class ReplaceRegexpDataModifier implements DataFilterJob<String> {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(ReplaceRegexpDataModifier.class);
 
-  public static final String NAME = "remove-regexp";
+  public static final String NAME = "replace-regexp";
 
   private static final String DATA_REGEXP = "dataRegExp";
 

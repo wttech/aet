@@ -1,10 +1,10 @@
-#### Remove Regex Data Filters
+#### Replace Regex Data Filters
 
-Remove Regex Data Filter allows to remove parts of source based on regex expressions from compared source (data and/or pattern).   
+Replace Regex Data Filter allows to replace parts of source based on regex expressions from compared source (data and/or pattern).   
 This may be helpful when we need to compare page sources with dynamic content. We can then remove these dynamic content markup.  
 See also Remove Lines and Remove Nodes data Filters.
 
-Module name: **remove-regexp**
+Module name: **replace-regexp**
 
 Resource name: source
 
@@ -12,9 +12,10 @@ Resource name: source
 
 | Parameter | Value | Mandatory |
 | --------- | ----- | --------- |
-| `dataRegExp` |RegExp that will replace matched parts of *data* sources  |At least one of parameter is required. |
-| `patternRegExp` | RegExp that will replace matched parts of *pattern* sources |
-| `regExp` | RegExp that will replace matched parts of  *pattern and data* sources |
+| `dataRegExp` |RegExp that will replace matched parts of *data* sources  | At least one of -RegExp parameter is required. |
+| `patternRegExp` | RegExp that will replace matched parts of *pattern* sources | At least one of -RegExp parameter is required. |
+| `regExp` | RegExp | that will replace matched parts of  *pattern and data* sources | At least one of -RegExp parameter is required. |
+| `value` | string | content of value will be used to replace matched parts| no, default: ""|
 
 | ! Note |
 |:------ |
@@ -28,7 +29,7 @@ Use [http://www.regexplanet.com/advanced/java/index.html](http://www.regexplanet
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
 <suite name="my-test-suite" company="cognifide" project="project">
-    <test name="remove-regex-test">
+    <test name="replace-regex-test">
         <collect>
             ...
             <source/>
@@ -37,7 +38,7 @@ Use [http://www.regexplanet.com/advanced/java/index.html](http://www.regexplanet
         <compare>
             ...
             <source comparator="source">
-                 <remove-regexp regExp='\"correlationId\": \".*\"'/>
+                 <replace-regexp regExp='\"correlationId\": \".*\"' value="."/>
             </source>
             ...
         </compare>

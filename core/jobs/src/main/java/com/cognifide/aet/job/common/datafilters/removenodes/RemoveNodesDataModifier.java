@@ -51,7 +51,6 @@ public class RemoveNodesDataModifier extends AbstractDataModifierJob<String> {
 
   private String exprString;
 
-
   @Override
   public void setParameters(Map<String, String> params) throws ParametersException {
     expr = ParamsHelper.getParamAsXpath(PARAM_XPATH, params);
