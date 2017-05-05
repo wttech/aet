@@ -52,7 +52,7 @@ abstract class StatusCodesFilter extends AbstractDataModifierJob<StatusCodesColl
   public StatusCodesCollectorResult modifyData(StatusCodesCollectorResult data) throws ProcessingException {
     for (StatusCode statusCode : data.getStatusCodes()) {
       if (regexPattern != null && matchPattern(statusCode.getUrl())) {
-        statusCode.setRxclude(removeIfMatches());
+        statusCode.setExcluded(removeIfMatches());
       }
     }
     return data;

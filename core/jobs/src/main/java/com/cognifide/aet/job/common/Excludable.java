@@ -24,7 +24,7 @@ public interface Excludable {
 
   boolean isExcluded();
 
-  void setRxclude(boolean value);
+  void setExcluded(boolean value);
 
   class ExcludedPredicate implements Predicate<Excludable> {
 

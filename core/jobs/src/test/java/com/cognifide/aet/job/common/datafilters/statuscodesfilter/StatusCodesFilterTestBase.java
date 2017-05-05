@@ -111,7 +111,7 @@ public abstract class StatusCodesFilterTestBase<T extends StatusCodesFilter> {
 
   protected void excludeAllStatusCodes() {
     for (StatusCode statusCode : statusCodesList) {
-      statusCode.setRxclude(true);
+      statusCode.setExcluded(true);
     }
   }
 
