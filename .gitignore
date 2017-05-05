@@ -47,3 +47,5 @@ atlassian-ide-plugin.xml
 misc/deployer/.gradle/
 misc/deployer/gradle.properties
 misc/deployer/build/
+misc/deployer/gradlew
+misc/deployer/gradlew.bat
