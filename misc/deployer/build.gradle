@@ -48,53 +48,19 @@ allprojects {
     remotes {
         vagrant {
             role 'localhost'
-            host = 'localhost'
+            host = vagrant_host
             port = 2222
-            user = 'root'
-            password = "vagrant"
+            user = vagrant_user
+            password = vagrant_password
             knownHosts = allowAnyHosts
         }
 
         int1 {
             role 'integration'
-            host = int1_host
+            host = int_host
             port = 22
-            user = int1_user
-            password = int1_password
-            knownHosts = allowAnyHosts
-        }
-
-        int2 {
-            role 'integration'
-            host = '192.168.180.28'
-            port = 22
-            user = int2_user
-            password = int2_password
-            knownHosts = allowAnyHosts
-        }
-
-        stg1 {
-            role 'staging'
-            host = stg1_host
-            port = 22
-            user = stg1_user
-            password = stg1_password
-            knownHosts = allowAnyHosts
-        }
-
-        stg2 {
-            role 'staging'
-            host = stg2_host
-            port = 22
-            user = stg2_user
-            password = stg2_password
-            knownHosts = allowAnyHosts
-        }
-
-        relshare {
-            host = relshare_host
-            user = relshare_user
-            password = relshare_password
+            user = int_user
+            password = int_password
             knownHosts = allowAnyHosts
         }
     }
@@ -177,7 +143,7 @@ task devClearCache(group: "Environment deployment", description: "Clears karafs 
     ssh.run {
         session(remotes.vagrant) {
             execute 'sudo /etc/init.d/karaf stop'
-            execute 'sudo rm -rf /content/karaf/current/data/*'
+            execute 'sudo rm -rf opt/aet/karaf/current/data/*'
             execute 'sudo /etc/init.d/karaf start'
         }
     }
