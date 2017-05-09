@@ -22,12 +22,12 @@ import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.job.common.collectors.statuscodes.StatusCode;
 import com.cognifide.aet.job.common.collectors.statuscodes.StatusCodesCollectorResult;
-import com.cognifide.aet.job.common.utils.ParamsHelper;
 
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Map;
 import java.util.regex.Pattern;
+import java.util.regex.PatternSyntaxException;
 
 abstract class StatusCodesFilter extends AbstractDataModifierJob<StatusCodesCollectorResult> {
 
@@ -35,26 +35,39 @@ abstract class StatusCodesFilter extends AbstractDataModifierJob<StatusCodesColl
 
   private static final String PARAM_PATTERN = "pattern";
 
-  private Pattern regexPattern;
+  protected String url;
 
-  private String patternParam;
+  protected String pattern;
 
-  private String urlParam;
+  private Pattern regexPattern = null;
 
   @Override
   public void setParameters(Map<String, String> params) throws ParametersException {
-    regexPattern = ParamsHelper.getPatternFromPatternParameterOrPlainText(PARAM_PATTERN, PARAM_URL, params);
-    ParamsHelper.atLeastOneIsProvided(regexPattern);
-    patternParam = ParamsHelper.getParamAsString(PARAM_PATTERN, params); //just for logging
-    urlParam = ParamsHelper.getParamAsString(PARAM_URL, params); //just for logging
+    url = params.get(PARAM_URL);
+    pattern = params.get(PARAM_PATTERN);
+    validateParameters(url, pattern);
+  }
 
+  private void validateParameters(String url, String pattern) throws ParametersException {
+    if (url == null && pattern == null) {
+      throw new ParametersException("Url or pattern must be provided");
+    } else if (pattern != null) {
+      try {
+        regexPattern = Pattern.compile(pattern);
+      } catch (PatternSyntaxException e) {
+        throw new ParametersException("Pattern is invalid", e);
+      }
+    }
   }
 
   @Override
   public StatusCodesCollectorResult modifyData(StatusCodesCollectorResult data) throws ProcessingException {
     for (StatusCode statusCode : data.getStatusCodes()) {
-      if (regexPattern != null && matchPattern(statusCode.getUrl())) {
-        statusCode.setExcluded(removeIfMatches());
+      if (provided(url) && removeIfMatches() == matchUrl(url, statusCode.getUrl())) {
+        statusCode.setExcluded(true);
+      }
+      if (regexPattern != null && removeIfMatches() == matchPattern(statusCode.getUrl())) {
+        statusCode.setExcluded(true);
       }
     }
     return data;
@@ -62,17 +75,17 @@ abstract class StatusCodesFilter extends AbstractDataModifierJob<StatusCodesColl
 
   protected boolean matchUrl(String paramValue, String statusCodeUrl) {
     return StringUtils.endsWithIgnoreCase(statusCodeUrl, paramValue);
-
   }
 
   protected boolean matchPattern(String statusCodeUrl) {
     return regexPattern.matcher(statusCodeUrl).matches();
+
   }
 
   @Override
   public String getInfo() {
-    return getName() + " DataModifier with parameters: " + PARAM_URL + ": " + urlParam + " " + PARAM_PATTERN
-        + ": " + patternParam;
+    return getName() + " DataModifier with parameters: " + PARAM_URL + ": " + url + " " + PARAM_PATTERN
+            + ": " + pattern;
   }
 
   protected abstract String getName();

@@ -17,16 +17,19 @@
  */
 package com.cognifide.aet.job.common.datafilters.jserrorsfilter;
 
+import com.cognifide.aet.job.common.utils.ParamsHelper;
+import com.google.common.base.Predicate;
+import com.google.common.collect.FluentIterable;
+
 import com.cognifide.aet.job.api.collector.JsErrorLog;
 import com.cognifide.aet.job.api.datafilter.AbstractDataModifierJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
-import com.cognifide.aet.job.common.utils.ParamsHelper;
-import com.google.common.base.Predicate;
-import com.google.common.collect.FluentIterable;
+
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
+
 import javax.annotation.Nullable;
 
 public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
@@ -39,13 +42,9 @@ public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
 
   private static final String PARAM_SOURCE = "source";
 
-  private static final String PARAM_SOURCE_PATTERN = "sourcePattern";
-
   private static final String PARAM_LINE = "line";
 
   private Pattern errorMessagePattern;
-
-  private Pattern sourceFilePattern;
 
   private String errorMessage;
 
@@ -55,8 +54,6 @@ public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
 
   @Override
   public void setParameters(Map<String, String> params) throws ParametersException {
-    sourceFilePattern = ParamsHelper
-        .getPatternFromPatternParameterOrPlainText(PARAM_SOURCE_PATTERN, PARAM_SOURCE, params);
     errorMessagePattern = ParamsHelper
         .getPatternFromPatternParameterOrPlainText(PARAM_ERROR_PATTERN, PARAM_ERROR, params);
     line = ParamsHelper.getParamAsInteger(PARAM_LINE, params);
@@ -64,7 +61,7 @@ public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
     errorMessage = ParamsHelper.getParamAsString(PARAM_ERROR, params);
     sourceFile = ParamsHelper.getParamAsString(PARAM_SOURCE, params);
 
-    ParamsHelper.atLeastOneIsProvided(errorMessagePattern, sourceFilePattern, line);
+    ParamsHelper.atLeastOneIsProvided(errorMessagePattern, sourceFile, line);
   }
 
   @Override
@@ -78,20 +75,22 @@ public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
   }
 
   private boolean shouldFilterOut(JsErrorLog jse) {
-    boolean sourceMatches = ParamsHelper.matches(sourceFilePattern, jse.getSourceName());
+    boolean sourceNotSpecified = sourceFile == null;
     boolean sourceEquals = jse.getSourceName().equals(sourceFile);
     boolean sourceEndsWith = jse.getSourceName().endsWith("/" + sourceFile);
 
-    return (sourceMatches || sourceEquals || sourceEndsWith)
+    return (sourceNotSpecified || sourceEquals || sourceEndsWith)
         && ParamsHelper.matches(errorMessagePattern, jse.getErrorMessage())
         && ParamsHelper.equalOrNotSet(line, jse.getLineNumber());
   }
 
   @Override
   public String getInfo() {
-    return NAME + " DataModifier with parameters: " + PARAM_SOURCE_PATTERN + ": " + sourceFilePattern + " "
-        + PARAM_ERROR_PATTERN + ": " + errorMessagePattern + " " + PARAM_SOURCE + ": " + sourceFile + " " + PARAM_ERROR
-        + ": " + errorMessage + " " + PARAM_LINE + ": " + line;
+    return NAME + " DataModifier with parameters: "
+        + PARAM_ERROR_PATTERN + ": " + errorMessagePattern + " "
+        + PARAM_SOURCE + ": " + sourceFile + " "
+        + PARAM_ERROR + ": " + errorMessage + " "
+        + PARAM_LINE + ": " + line;
   }
 
 }

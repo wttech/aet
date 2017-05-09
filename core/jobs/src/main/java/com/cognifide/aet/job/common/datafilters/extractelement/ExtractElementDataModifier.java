@@ -20,14 +20,18 @@ package com.cognifide.aet.job.common.datafilters.extractelement;
 import com.cognifide.aet.job.api.datafilter.AbstractDataModifierJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
-import com.cognifide.aet.job.common.utils.ParamsHelper;
-import java.util.Map;
+
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.util.Map;
+
+/**
+ * @author magdalena.biala
+ */
 public class ExtractElementDataModifier extends AbstractDataModifierJob<String> {
 
   public static final String NAME = "extract-element";
@@ -42,11 +46,16 @@ public class ExtractElementDataModifier extends AbstractDataModifierJob<String> 
 
   @Override
   public void setParameters(Map<String, String> params) throws ParametersException {
-    elementId = ParamsHelper.getParamAsString(PARAM_ELEMENT_ID, params);
-    elementClass = ParamsHelper.getParamAsString(PARAM_ELEMENT_CLASS, params);
-    ParamsHelper.onlyOneIsProvided(elementClass, elementId);
+    elementId = params.get(PARAM_ELEMENT_ID);
+    elementClass = params.get(PARAM_ELEMENT_CLASS);
+    validateParameters();
   }
 
+  private void validateParameters() throws ParametersException {
+    if (!(StringUtils.isBlank(elementId) ^ StringUtils.isBlank(elementClass))) {
+      throw new ParametersException("Exactly one attribute must be defined!");
+    }
+  }
 
   @Override
   public String modifyData(String data) throws ProcessingException {
@@ -63,8 +72,7 @@ public class ExtractElementDataModifier extends AbstractDataModifierJob<String> 
 
   @Override
   public String getInfo() {
-    return NAME + " DataModifier with parameters: " + PARAM_ELEMENT_CLASS + ": " + elementClass + " " + PARAM_ELEMENT_ID
-        + ": " + elementId;
+    return NAME + " DataModifier with parameters: " + PARAM_ELEMENT_CLASS + ": " + elementClass + " " + PARAM_ELEMENT_ID + ": " + elementId;
   }
 
   private String modifyDataForElementParam(Document document) throws ProcessingException {

@@ -37,9 +37,9 @@ public class AccessibilityFilter extends AbstractDataModifierJob<List<Accessibil
 
   private static final String PARAM_COLUMN = "column";
 
-  private static final String PARAM_ERROR_PATTERN = "errorPattern";
+  private static final String PARAM_ERROR = "error";
 
-  private static final String PARAM_ERROR_TEXT = "error";
+  private static final String PARAM_ERROR_PATTERN = "errorPattern";
 
   private Pattern errorMessagePattern;
 
@@ -52,7 +52,7 @@ public class AccessibilityFilter extends AbstractDataModifierJob<List<Accessibil
   @Override
   public void setParameters(Map<String, String> params) throws ParametersException {
     errorMessagePattern = ParamsHelper
-        .getPatternFromPatternParameterOrPlainText(PARAM_ERROR_PATTERN, PARAM_ERROR_TEXT, params);
+        .getPatternFromPatternParameterOrPlainText(PARAM_ERROR_PATTERN, PARAM_ERROR, params);
     principle = ParamsHelper.getParamAsString(PARAM_PRINCIPLE, params);
     line = ParamsHelper.getParamAsInteger(PARAM_LINE, params);
     column = ParamsHelper.getParamAsInteger(PARAM_COLUMN, params);

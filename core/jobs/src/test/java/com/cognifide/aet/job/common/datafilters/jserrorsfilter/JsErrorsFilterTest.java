@@ -59,18 +59,14 @@ public class JsErrorsFilterTest {
 
   private static final String PARAM_ERROR_PATTERN = "errorPattern";
 
-  private static final String PARAM_SOURCE_PATTERN = "sourcePattern";
-
   private static final String PARAM_ERROR_PATTERN_VALUE = "^Error message.*$";
-
-  private static final String PARAM_SOURCE_PATTERN_VALUE = "^Source Value$";
 
   private static final String PARAM_LINE_VALUE = "10";
 
   private static final String PARAM_LINE_VALUE_NAN = "not a number";
 
   private static final String INFO_PATTERN = JsErrorsFilter.NAME + " DataModifier with parameters: "
-      + PARAM_SOURCE_PATTERN + ": %s " + PARAM_ERROR_PATTERN + ": %s " + PARAM_SOURCE + ": %s " + PARAM_ERROR + ": %s "
+      + PARAM_ERROR_PATTERN + ": %s " + PARAM_SOURCE + ": %s " + PARAM_ERROR + ": %s "
       + PARAM_LINE + ": %s";
   @Mock
   private Set<JsErrorLog> data;
@@ -89,7 +85,7 @@ public class JsErrorsFilterTest {
 
   @Test
   public void setParametersTest() throws ParametersException {
-    params = createParams(PARAM_LINE_VALUE, PARAM_SOURCE_PATTERN_VALUE, PARAM_ERROR_PATTERN_VALUE, PARAM_SOURCE_VALUE,
+    params = createParams(PARAM_LINE_VALUE, PARAM_ERROR_PATTERN_VALUE, PARAM_SOURCE_VALUE,
         PARAM_ERROR_VALUE);
     // no exceptions should occur
     tested.setParameters(params);
@@ -97,28 +93,27 @@ public class JsErrorsFilterTest {
 
   @Test
   public void setParametersTest_onlyOneSet() throws ParametersException {
-    params = createParams(null, PARAM_SOURCE_VALUE, null, null, null);
+    params = createParams(null, null, PARAM_SOURCE_VALUE, null);
     tested.setParameters(params);
-    assertThat(tested.getInfo(),
-        is(String.format(INFO_PATTERN, PARAM_SOURCE_VALUE, null, null,
-            null, null)));
+    String expected = String.format(INFO_PATTERN, null, PARAM_SOURCE_VALUE, null, null);
+    assertThat(tested.getInfo(), is(expected));
   }
 
   @Test(expected = ParametersException.class)
   public void setParametersTest_allEmpty() throws ParametersException {
-    params = createParams(null, null, null, null, null);
+    params = createParams(null, null, null, null);
     tested.setParameters(params);
   }
 
   @Test(expected = ParametersException.class)
   public void setParametersTest_lineNotANumber() throws ParametersException {
-    params = createParams(PARAM_LINE_VALUE_NAN, null, null, null, null);
+    params = createParams(PARAM_LINE_VALUE_NAN, null, null, null);
     tested.setParameters(params);
   }
 
   @Test
   public void modifyDataTest_filterByErrorMessagePattern() throws ProcessingException, ParametersException {
-    params = createParams(null, null, PARAM_ERROR_PATTERN_VALUE, null, null);
+    params = createParams(null, PARAM_ERROR_PATTERN_VALUE, null, null);
     tested.setParameters(params);
     Set<JsErrorLog> result = tested.modifyData(data);
     assertThat(result, hasSize(4));
@@ -127,7 +122,7 @@ public class JsErrorsFilterTest {
 
   @Test
   public void modifyDataTest_filterBySource() throws ProcessingException, ParametersException {
-    params = createParams(null, PARAM_SOURCE_PATTERN_VALUE, null, null, null);
+    params = createParams(null, null, PARAM_SOURCE_VALUE, null);
     tested.setParameters(params);
     Set<JsErrorLog> result = tested.modifyData(data);
     assertThat(result, hasSize(6));
@@ -136,7 +131,7 @@ public class JsErrorsFilterTest {
 
   @Test
   public void modifyDataTest_filterByLine() throws ProcessingException, ParametersException {
-    params = createParams(PARAM_LINE_VALUE, null, null, null, null);
+    params = createParams(PARAM_LINE_VALUE, null, null, null);
     tested.setParameters(params);
     Set<JsErrorLog> result = tested.modifyData(data);
     assertThat(result, hasSize(4));
@@ -144,12 +139,12 @@ public class JsErrorsFilterTest {
   }
 
   @Test
-  public void modifyDataTest_filterByAll() throws ProcessingException, ParametersException {
-    params = createParams(PARAM_LINE_VALUE, PARAM_SOURCE_PATTERN_VALUE, PARAM_ERROR_PATTERN_VALUE, null, null);
+  public void modifyDataTest_excludeByLineAndErrorMessage() throws ProcessingException, ParametersException {
+    params = createParams(PARAM_LINE_VALUE, PARAM_ERROR_PATTERN_VALUE, null, null);
     tested.setParameters(params);
     Set<JsErrorLog> result = tested.modifyData(data);
-    assertThat(result, hasSize(6));
-    assertThat(result, not(hasItems(errorLogsList.get(6))));
+    assertThat(result, hasSize(5));
+    assertThat("Should not contain last item", result, not(hasItems(errorLogsList.get(6))));
   }
 
   private void initErrorLogs() {
@@ -164,20 +159,16 @@ public class JsErrorsFilterTest {
   }
 
 
-  private Map<String, String> createParams(String line, String sourcePattern, String errorPattern, String source,
-      String error) {
+  private Map<String, String> createParams(String line, String errorPattern, String source, String error) {
     Map<String, String> params = new HashMap<>();
     if (StringUtils.isNotBlank(line)) {
       params.put(PARAM_LINE, line);
-    }
-    if (StringUtils.isNotBlank(sourcePattern)) {
-      params.put(PARAM_SOURCE_PATTERN, sourcePattern);
     }
     if (StringUtils.isNotBlank(errorPattern)) {
       params.put(PARAM_ERROR_PATTERN, errorPattern);
     }
     if (StringUtils.isNotBlank(source)) {
-      params.put(PARAM_SOURCE_PATTERN, source);
+      params.put(PARAM_SOURCE, source);
     }
     if (StringUtils.isNotBlank(error)) {
       params.put(PARAM_ERROR_PATTERN, error);

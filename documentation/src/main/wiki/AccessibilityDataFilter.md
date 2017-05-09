@@ -65,6 +65,5 @@ There can be more than one `accessibility-filter` tag in the `accessibility` com
     <accessibility-filter line="314" />
     <accessibility-filter column="5" />
     <accessibility-filter errorPattern="^This button .* element content.$" />
-    <accessibility-filter errorPattern="^This button .* element content.$" />
 </accessibility>
 ```

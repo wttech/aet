@@ -17,7 +17,6 @@
  */
 package com.cognifide.aet.job.common.datafilters.removelines;
 
-import com.cognifide.aet.job.common.utils.ParamsHelper;
 import com.google.common.collect.ContiguousSet;
 import com.google.common.collect.DiscreteDomain;
 import com.google.common.collect.Range;
@@ -63,8 +62,8 @@ public class RemoveLinesDataModifier implements DataFilterJob<String> {
 
   @Override
   public void setParameters(Map<String, String> params) throws ParametersException {
-    dataRanges = ParamsHelper.getParamAsString(DATA_RANGES, params);
-    patternRanges = ParamsHelper.getParamAsString(PATTERN_RANGES, params);
+    dataRanges = params.get(DATA_RANGES);
+    patternRanges = params.get(PATTERN_RANGES);
     validateParameters(dataRanges, patternRanges);
     dataIndexesToRemove = extractIndexes(dataRanges);
     patternIndexesToRemove = extractIndexes(patternRanges);
@@ -77,8 +76,8 @@ public class RemoveLinesDataModifier implements DataFilterJob<String> {
         try {
           String[] split = range.split(",");
           indexesToRemove.addAll(ContiguousSet.create(
-              Range.closed(Integer.valueOf(split[0]), Integer.valueOf(split[1])),
-              DiscreteDomain.integers()));
+                  Range.closed(Integer.valueOf(split[0]), Integer.valueOf(split[1])),
+                  DiscreteDomain.integers()));
         } catch (IllegalArgumentException e) {
           throw new ParametersException("Bad range: " + range, e);
         }

@@ -20,18 +20,18 @@ package com.cognifide.aet.job.common.datafilters.removeregexp;
 import com.cognifide.aet.job.api.datafilter.DataFilterJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
-import com.cognifide.aet.job.common.utils.ParamsHelper;
-import java.util.Map;
-import java.util.regex.Pattern;
+
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ReplaceRegexpDataModifier implements DataFilterJob<String> {
+import java.util.Map;
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(ReplaceRegexpDataModifier.class);
+public class RemoveRegexpDataModifier implements DataFilterJob<String> {
 
-  public static final String NAME = "replace-regexp";
+  private static final Logger LOGGER = LoggerFactory.getLogger(RemoveRegexpDataModifier.class);
+
+  public static final String NAME = "remove-regexp";
 
   private static final String DATA_REGEXP = "dataRegExp";
 
@@ -39,26 +39,19 @@ public class ReplaceRegexpDataModifier implements DataFilterJob<String> {
 
   private static final String PATTERN_REGEXP = "patternRegExp";
 
-  private static final String NEW_VALUE = "value";
+  private String dataRegExp;
 
-  private Pattern dataRegExp;
-
-  private Pattern patternRanges;
-
-  private String replacement;
+  private String patternRanges;
 
   @Override
   public void setParameters(Map<String, String> params) throws ParametersException {
 
-    replacement = ParamsHelper.getParamAsString(NEW_VALUE, params);
-    replacement = replacement != null ? replacement : StringUtils.EMPTY;
-
     if (StringUtils.isBlank(params.get(REGEXP))) {
-      dataRegExp = ParamsHelper.getAsPattern(DATA_REGEXP, params);
-      patternRanges = ParamsHelper.getAsPattern(PATTERN_REGEXP, params);
+      dataRegExp = params.get(DATA_REGEXP);
+      patternRanges = params.get(PATTERN_REGEXP);
     } else {
-      dataRegExp = ParamsHelper.getAsPattern(REGEXP, params);
-      patternRanges = ParamsHelper.getAsPattern(REGEXP, params);
+      dataRegExp = params.get(REGEXP);
+      patternRanges = params.get(REGEXP);
     }
 
   }
@@ -78,10 +71,10 @@ public class ReplaceRegexpDataModifier implements DataFilterJob<String> {
     return NAME + " DataModifier with parameters: " + DATA_REGEXP + ": " + dataRegExp + " " + PATTERN_REGEXP + ": " + patternRanges;
   }
 
-  private String modify(String data, Pattern pattern) throws ProcessingException {
+  private String modify(String data, String regexp) throws ProcessingException {
     String result = null;
     try {
-      result = pattern.matcher(data).replaceAll(replacement);
+      result = data.replaceAll(regexp, StringUtils.EMPTY);
     } catch (Exception e) {
       LOGGER.error(e.getMessage(), e);
       throw new ProcessingException(e.getMessage(), e);

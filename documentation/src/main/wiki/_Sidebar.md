@@ -48,7 +48,7 @@
             * [[JS Errors|JSErrorsDataFilter]]
             * [[Remove Lines|RemoveLinesDataFilter]]
             * [[Remove Nodes|RemoveNodesDataFilter]]
-            * [[Replace Regex|ReplaceRegexDataFilter]]
+            * [[Remove Regex|RemoveRegexDataFilter]]
             * [[Status Codes|StatusCodesDataFilters]]
             * [[W3C HTML5 Issues Filter|W3CHTML5IssuesFilter]]
         * [[Urls|Urls]]

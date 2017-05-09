@@ -28,16 +28,16 @@ import java.util.Map;
 
 @Component
 @Service
-public class ReplaceRegexpDataFilterFactory implements DataFilterFactory {
+public class RemoveRegexpDataFilterFactory implements DataFilterFactory {
 
   @Override
   public String getName() {
-    return ReplaceRegexpDataModifier.NAME;
+    return RemoveRegexpDataModifier.NAME;
   }
 
   @Override
   public DataFilterJob createInstance(Map<String, String> params) throws ParametersException {
-    ReplaceRegexpDataModifier modifier = new ReplaceRegexpDataModifier();
+    RemoveRegexpDataModifier modifier = new RemoveRegexpDataModifier();
     modifier.setParameters(params);
     return modifier;
   }

@@ -20,7 +20,6 @@ package com.cognifide.aet.job.common.datafilters.removenodes;
 import com.cognifide.aet.job.api.datafilter.AbstractDataModifierJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
-import com.cognifide.aet.job.common.utils.ParamsHelper;
 
 import org.apache.commons.io.IOUtils;
 import org.w3c.dom.Document;
@@ -40,9 +39,11 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathConstants;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
+import javax.xml.xpath.XPathFactory;
 
 public class RemoveNodesDataModifier extends AbstractDataModifierJob<String> {
 
@@ -52,14 +53,23 @@ public class RemoveNodesDataModifier extends AbstractDataModifierJob<String> {
 
   private XPathExpression expr;
 
-  private String exprString;
+  private String xpathString;
 
   @Override
   public void setParameters(Map<String, String> params) throws ParametersException {
-    expr = ParamsHelper.getParamAsXpath(PARAM_XPATH, params);
+    if (params.containsKey(PARAM_XPATH)) {
+      xpathString = params.get(PARAM_XPATH);
+      XPathFactory xPathfactory = XPathFactory.newInstance();
+      XPath xpath = xPathfactory.newXPath();
+      try {
+        expr = xpath.compile(xpathString);
+      } catch (XPathExpressionException e) {
+        throw new ParametersException(e.getMessage(), e);
+      }
+    } else {
+      throw new ParametersException("XPath must be provided");
+    }
 
-    //just for logs
-    exprString = ParamsHelper.getParamAsString(PARAM_XPATH, params);
   }
 
   @Override
@@ -72,7 +82,7 @@ public class RemoveNodesDataModifier extends AbstractDataModifierJob<String> {
 
   @Override
   public String getInfo() {
-    return NAME + " DataModifier with parameters: " + PARAM_XPATH + ": " + exprString;
+    return NAME + " DataModifier with parameters: " + PARAM_XPATH + ": " + xpathString;
   }
 
   private StreamResult transform(Document document) throws ProcessingException {

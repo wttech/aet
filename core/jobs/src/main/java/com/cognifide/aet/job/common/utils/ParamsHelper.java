@@ -26,7 +26,6 @@ import javax.xml.xpath.XPath;
 import javax.xml.xpath.XPathExpression;
 import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
-import org.apache.commons.lang3.ObjectUtils;
 import org.apache.commons.lang3.StringUtils;
 
 public class ParamsHelper {
@@ -92,23 +91,6 @@ public class ParamsHelper {
 
   /***
    *
-   * @param params  array of objects
-   * @throws ParametersException if none or more that one of the parameters are not null
-   */
-  public static void onlyOneIsProvided(Object... params) throws ParametersException {
-    int counter = 0;
-    for (Object param : params) {
-      if (param != null) {
-        counter++;
-      }
-    }
-    if (counter != 1) {
-      throw new ParametersException("Exactly one parameter must be set!");
-    }
-  }
-
-  /***
-   *
    * @param pattern
    * @param value
    * @return true if pattern is empty or if its match with given value, false otherwise
@@ -120,23 +102,6 @@ public class ParamsHelper {
 
   public static boolean equalOrNotSet(Object expected, Object actual) {
     return expected == null || expected.equals(actual);
-  }
-
-
-  public static XPathExpression getParamAsXpath(String key, Map<String, String> params) throws ParametersException {
-    XPathExpression result = null;
-    if (params.containsKey(key)) {
-      XPathFactory xPathfactory = XPathFactory.newInstance();
-      XPath xpath = xPathfactory.newXPath();
-      try {
-        result = xpath.compile(params.get(key));
-      } catch (XPathExpressionException e) {
-        throw new ParametersException(e.getMessage(), e);
-      }
-    } else {
-      throw new ParametersException("Valid XPath must be provided");
-    }
-    return result;
   }
 
   /**
