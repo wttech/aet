@@ -29,15 +29,15 @@ import org.junit.runner.RunWith;
 
 @RunWith(TestRunner.class)
 @Modules(GuiceModule.class)
-public class UrlTilesTest {
+public class HomePageTilesTest {
 
-  private static final int URLS = 103;
+  private static final int TESTS = 101;
 
-  private static final int EXPECTED_URLS_SUCCESS = 55;
+  private static final int EXPECTED_TESTS_SUCCESS = 59;
 
-  private static final int EXPECTED_URLS_WARN = 6;
+  private static final int EXPECTED_TESTS_WARN = 5;
 
-  private static final int EXPECTED_URLS_FAIL = 42;
+  private static final int EXPECTED_TESTS_FAIL = 37;
 
   @Inject
   private ReportHomePage page;
@@ -48,29 +48,29 @@ public class UrlTilesTest {
   }
 
   @Test
-  public void checkNumberOfUrlTiles() {
+  public void checkNumberOfTiles() {
     int tilesAll = page.findTiles().size();
-    assertEquals("should render all tiles for URLs", URLS, tilesAll);
+    assertEquals("should render all tiles for tests", TESTS, tilesAll);
   }
 
   @Test
-  public void checkNumberOfSuccessUrlTiles() {
-    String cssClassToSearch = TestStatus.SUCCESS.getTileCssClass();
+  public void checkNumberOfSuccessTiles() {
+    String cssClassToSearch = TestStatus.SUCCESS.getCssClass();
     int tiles = page.findTiles(cssClassToSearch).size();
-    assertEquals("number of URL tiles with SUCCESS status is incorrect", EXPECTED_URLS_SUCCESS, tiles);
+    assertEquals("number of tests tiles with SUCCESS status is incorrect", EXPECTED_TESTS_SUCCESS, tiles);
   }
 
   @Test
-  public void checkNumberOfWarningUrlTiles() {
-    String cssClassToSearch = TestStatus.WARN.getTileCssClass();
+  public void checkNumberOfWarningTiles() {
+    String cssClassToSearch = TestStatus.WARN.getCssClass();
     int tiles = page.findTiles(cssClassToSearch).size();
-    assertEquals("number of URL tiles with WARNING status is incorrect", EXPECTED_URLS_WARN, tiles);
+    assertEquals("number of tests tiles with WARNING status is incorrect", EXPECTED_TESTS_WARN, tiles);
   }
 
   @Test
-  public void checkNumberOfErrorUrlTiles() {
-    String cssClassToSearch = TestStatus.FAIL.getTileCssClass();
+  public void checkNumberOfErrorTiles() {
+    String cssClassToSearch = TestStatus.FAIL.getCssClass();
     int tiles = page.findTiles(cssClassToSearch).size();
-    assertEquals("number of URL tiles with ERROR status is incorrect", EXPECTED_URLS_FAIL, tiles);
+    assertEquals("number of tests tiles with ERROR status is incorrect", EXPECTED_TESTS_FAIL, tiles);
   }
 }
