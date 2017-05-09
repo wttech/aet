@@ -28,7 +28,7 @@ import java.util.Map;
 
 @Component
 @Service
-public class RemoveRegexpDataFilterFactory implements DataFilterFactory {
+public class ReplaceRegexpDataFilterFactory implements DataFilterFactory {
 
   @Override
   public String getName() {

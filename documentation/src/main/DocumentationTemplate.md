@@ -96,7 +96,7 @@
 
 #include "wiki/RemoveNodesDataFilter.md"
 
-#include "wiki/RemoveRegexDataFilter.md"
+#include "wiki/ReplaceRegexDataFilter.md"
 
 #include "wiki/StatusCodesDataFilters.md"
 

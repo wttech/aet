@@ -38,6 +38,6 @@ Contains implementations for `Modifiers`, `Collectors`, `Data Filters` and `Comp
 - JS Errors Data Filter,
 - Remove Lines Data Filter,
 - Remove Nodes Data Filter,
-- Remove Regex Data Filter,
+- Replace Regex Data Filter,
 - Status Codes Data Filters,
 - W3c Filter.
