@@ -67,7 +67,7 @@ public class W3cHtml5IssuesFilter extends AbstractDataModifierJob<W3cHtml5Compar
           errorsCount--;
         }
         if (W3cHtml5IssueType.WARN.equals(issue.getIssueType())
-            || W3cHtml5IssueType.INFO.equals(issue.getIssueType())) {
+                || W3cHtml5IssueType.INFO.equals(issue.getIssueType())) {
           warningsCount--;
         }
       } else {

@@ -70,35 +70,35 @@ public abstract class StatusCodesFilterTestBase<T extends StatusCodesFilter> {
 
   @Test
   public void setParameters_UrlAndPatternpAreProvided_ExpectValidModifierInfo() throws ParametersException {
-    params = getParams(PARAM_URL_VALUE, PARAM_PATTERN_VALUE);
+    params = createParams(PARAM_URL_VALUE, PARAM_PATTERN_VALUE);
     tested.setParameters(params);
     assertThat(tested.getInfo(), is(String.format(infoPattern, PARAM_URL_VALUE, PARAM_PATTERN_VALUE)));
   }
 
   @Test
   public void setParameters_OnlyUrlIsProvided_ExpectModifierInfoWithNullPatternValue() throws ParametersException {
-    params = getParams(PARAM_URL_VALUE, null);
+    params = createParams(PARAM_URL_VALUE, null);
     tested.setParameters(params);
     assertThat(tested.getInfo(), is(String.format(infoPattern, PARAM_URL_VALUE, "null")));
   }
 
   @Test
   public void setParameters_OnlyPatternIsProvided_ExpectModifierInfoWithNullUrlValue() throws ParametersException {
-    params = getParams(null, PARAM_PATTERN_VALUE);
+    params = createParams(null, PARAM_PATTERN_VALUE);
     tested.setParameters(params);
     assertThat(tested.getInfo(), is(String.format(infoPattern, "null", PARAM_PATTERN_VALUE)));
   }
 
   @Test(expected = ParametersException.class)
   public void setParameters_AllParametersAreEmpty_ExceptionIsThrown() throws ParametersException {
-    params = getParams(null, null);
+    params = createParams(null, null);
     tested.setParameters(params);
 
   }
 
   @Test(expected = ParametersException.class)
   public void setParameters_PatternIsInvalid_ExceptionIsThrown() throws ParametersException {
-    params = getParams(null, PARAM_PATTERN_INVALID_VALUE);
+    params = createParams(null, PARAM_PATTERN_INVALID_VALUE);
     tested.setParameters(params);
   }
 
@@ -123,7 +123,7 @@ public abstract class StatusCodesFilterTestBase<T extends StatusCodesFilter> {
   }
 
 
-  protected Map<String, String> getParams(String url, String pattern) {
+  protected Map<String, String> createParams(String url, String pattern) {
     Map<String, String> params = new HashMap<>();
     if (StringUtils.isNotBlank(url)) {
       params.put(PARAM_URL, url);

@@ -23,9 +23,11 @@ import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.job.common.collectors.statuscodes.StatusCode;
 import com.cognifide.aet.job.common.collectors.statuscodes.StatusCodesCollectorResult;
 import com.cognifide.aet.job.common.utils.ParamsHelper;
+
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.Map;
 import java.util.regex.Pattern;
-import org.apache.commons.lang3.StringUtils;
 
 abstract class StatusCodesFilter extends AbstractDataModifierJob<StatusCodesCollectorResult> {
 
@@ -60,6 +62,7 @@ abstract class StatusCodesFilter extends AbstractDataModifierJob<StatusCodesColl
 
   protected boolean matchUrl(String paramValue, String statusCodeUrl) {
     return StringUtils.endsWithIgnoreCase(statusCodeUrl, paramValue);
+
   }
 
   protected boolean matchPattern(String statusCodeUrl) {

@@ -34,7 +34,7 @@ public class ExcludeStatusCodesFilterTest extends StatusCodesFilterTestBase {
 
   @Test
   public void modifyData_ExcludeByUrl_OneExcludedResultIsReturned() throws ProcessingException, ParametersException {
-    params = getParams(PARAM_URL_VALUE, null);
+    params = createParams(PARAM_URL_VALUE, null);
     tested.setParameters(params);
     StatusCodesCollectorResult result = tested.modifyData(data);
     assertThat(result.getStatusCodes(), hasSize(3));
@@ -46,7 +46,7 @@ public class ExcludeStatusCodesFilterTest extends StatusCodesFilterTestBase {
   @Test
   public void modifyData_ExcludeByPattern_TwoExcludedResultsAreReturned() throws ProcessingException,
       ParametersException {
-    params = getParams(null, PARAM_PATTERN_VALUE);
+    params = createParams(null, PARAM_PATTERN_VALUE);
     tested.setParameters(params);
     StatusCodesCollectorResult result = tested.modifyData(data);
     assertThat(result.getStatusCodes(), hasSize(3));
@@ -58,7 +58,7 @@ public class ExcludeStatusCodesFilterTest extends StatusCodesFilterTestBase {
   @Test
   public void modifyData_ExcludeByUrlAndPattern_UrlParamIsIgnored() throws ProcessingException,
       ParametersException {
-    params = getParams(PARAM_URL_ANOTHER_VALUE, PARAM_PATTERN_VALUE);
+    params = createParams(PARAM_URL_ANOTHER_VALUE, PARAM_PATTERN_VALUE);
     tested.setParameters(params);
     StatusCodesCollectorResult result = tested.modifyData(data);
     assertThat(result.getStatusCodes(), hasSize(3));

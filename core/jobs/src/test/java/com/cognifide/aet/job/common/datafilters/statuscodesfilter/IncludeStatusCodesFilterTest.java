@@ -35,7 +35,7 @@ public class IncludeStatusCodesFilterTest extends StatusCodesFilterTestBase {
   @Test
   public void modifyData_IncludeByUrlAndPattern_UrlParamIsIgnored_NothingIsExcluded() throws ProcessingException,
       ParametersException {
-    params = getParams(PARAM_URL_ANOTHER_VALUE, PARAM_PATTERN_VALUE);
+    params = createParams(PARAM_URL_ANOTHER_VALUE, PARAM_PATTERN_VALUE);
     tested.setParameters(params);
     StatusCodesCollectorResult result = tested.modifyData(data);
     assertThat(result.getStatusCodes(), hasSize(3));
@@ -54,7 +54,7 @@ public class IncludeStatusCodesFilterTest extends StatusCodesFilterTestBase {
   public void modifyData_IncludeByPattern_After_Excluding_All() throws ProcessingException,
       ParametersException {
     excludeAllStatusCodes();
-    params = getParams(null, PARAM_PATTERN_VALUE);
+    params = createParams(null, PARAM_PATTERN_VALUE);
     tested.setParameters(params);
     StatusCodesCollectorResult result = tested.modifyData(data);
     assertThat(result.getStatusCodes(), hasSize(3));
@@ -68,7 +68,7 @@ public class IncludeStatusCodesFilterTest extends StatusCodesFilterTestBase {
   public void modifyData_IncludeByUrl__After_Excluding_All_TwoExcludedResultAreReturned()
       throws ProcessingException, ParametersException {
     excludeAllStatusCodes();
-    params = getParams(PARAM_URL_VALUE, null);
+    params = createParams(PARAM_URL_VALUE, null);
     tested.setParameters(params);
     StatusCodesCollectorResult result = tested.modifyData(data);
     assertThat(result.getStatusCodes(), hasSize(3));

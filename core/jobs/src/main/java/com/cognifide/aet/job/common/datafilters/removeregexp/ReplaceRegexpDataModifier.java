@@ -75,8 +75,7 @@ public class ReplaceRegexpDataModifier implements DataFilterJob<String> {
 
   @Override
   public String getInfo() {
-    return NAME + " DataModifier with parameters: " + DATA_REGEXP + ": " + dataRegExp + " " + PATTERN_REGEXP + ": "
-        + patternRanges;
+    return NAME + " DataModifier with parameters: " + DATA_REGEXP + ": " + dataRegExp + " " + PATTERN_REGEXP + ": " + patternRanges;
   }
 
   private String modify(String data, Pattern pattern) throws ProcessingException {
