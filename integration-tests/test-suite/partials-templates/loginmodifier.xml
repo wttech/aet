@@ -26,7 +26,7 @@
 			<login
 					login="admin"
 					password="password"
-					login-page="http://192.168.123.100:9090/sample-site/sanity/modifiers/login/loginForm.jsp"
+					login-page="${login.page.domain}modifiers/login/loginForm.jsp"
 					login-input-selector="//input[@name='j_username']"
 					password-input-selector="//input[@name='j_password']"
 					submit-button-selector="//input[@id='input-submit']"
