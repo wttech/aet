@@ -28,24 +28,10 @@ import javax.xml.xpath.XPathExpressionException;
 import javax.xml.xpath.XPathFactory;
 import org.apache.commons.lang3.StringUtils;
 
-public class ParamsHelper {
+public final class ParamsHelper {
 
-  /***
-   * @param key property name that should store regexp
-   * @param params map of parameters
-   * @return Pattern  or null if there is no key in params map
-   * @throws ParametersException if Pattern under key is provided but invalid
-   */
-  public static Pattern getAsPattern(String key, Map<String, String> params) throws ParametersException {
-    Pattern result = null;
-    if (params.containsKey(key)) {
-      try {
-        result = Pattern.compile(params.get(key));
-      } catch (PatternSyntaxException e) {
-        throw new ParametersException("errorPattern value is invalid regular-expression pattern.", e);
-      }
-    }
-    return result;
+  private ParamsHelper() {
+    // private constructor for utility class
   }
 
   /***
@@ -90,7 +76,6 @@ public class ParamsHelper {
   }
 
   /***
-   *
    * @param pattern
    * @param value
    * @return true if pattern is empty or if its match with given value, false otherwise
@@ -124,7 +109,14 @@ public class ParamsHelper {
 
   public static Pattern getPatternFromPatternParameterOrPlainText(String primaryKey, String secondaryKey,
       Map<String, String> params) throws ParametersException {
-    Pattern result = getAsPattern(primaryKey, params);
+    Pattern result = null;
+    if (params.containsKey(primaryKey)) {
+      try {
+        result = Pattern.compile(params.get(primaryKey));
+      } catch (PatternSyntaxException e) {
+        throw new ParametersException("errorPattern value is invalid regular-expression pattern.", e);
+      }
+    }
     return result != null ? result : getPatternFromPlainText(secondaryKey, params);
   }
 

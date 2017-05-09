@@ -16,8 +16,8 @@ Comparators: **w3c-html5**
 | `messagePattern` | regexp | Regular expression that matches message text of issue to be filter out. *see notes below | At least one of params should be used and all of used params should be not empty. |
 | `line` | integer | Line in source file where issue appear | |
 | `column` | integer | Column in source file where issue appear | |
-*Note: 
-- 'message' will be overridden by 'messagePattern' if set.
+*Note:*
+- `message` will be overridden by `messagePattern` if set.
 - there is an issue with some characters encoding in messages that comes from w3c-html5 output,
 e.g. for message 
 ```` 'Bad value “Cache-Control” for attribute “http-equiv” on element “meta”.' ````

@@ -17,6 +17,8 @@ Resource name: accessibility
 | `principle` | string principle | The exact accessibility issue principle |
 | `line` | integer line number |The line number in the file which the issue occurred in |
 | `column` | integer column number | The column number in the file which the issue occurred is |
+*Note:*
+- `error` will be overridden by `errorPattern` if set.
 
 ##### Example Usage
 
