@@ -19,6 +19,6 @@
 --%>
 <%
 // should sleep longer than timeout provided at SourceCollectorFactory.java
-Thread.sleep(45000);
+Thread.sleep(25000);
 %>
 <%@ include file="/includes/basePage.jsp" %>
