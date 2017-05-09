@@ -106,7 +106,6 @@ public final class ParamsHelper {
    * @return pattern under primaryKey or if retrurns null Pattern from quoted plain text under secondaryKey
    * @throws ParametersException if Pattern under primaryKey is provided but invalid
    */
-
   public static Pattern getPatternFromPatternParameterOrPlainText(String primaryKey, String secondaryKey,
       Map<String, String> params) throws ParametersException {
     Pattern result = null;
