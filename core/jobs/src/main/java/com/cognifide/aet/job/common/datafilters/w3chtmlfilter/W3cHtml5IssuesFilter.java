@@ -24,14 +24,13 @@ import com.cognifide.aet.job.common.comparators.w3chtml5.W3cHtml5ComparatorResul
 import com.cognifide.aet.job.common.comparators.w3chtml5.W3cHtml5Issue;
 import com.cognifide.aet.job.common.comparators.w3chtml5.W3cHtml5IssueComparator;
 import com.cognifide.aet.job.common.comparators.w3chtml5.W3cHtml5IssueType;
-
-import org.apache.commons.lang3.StringUtils;
-
+import com.cognifide.aet.job.common.utils.ParamsHelper;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class W3cHtml5IssuesFilter extends AbstractDataModifierJob<W3cHtml5ComparatorResult> {
 
@@ -39,19 +38,23 @@ public class W3cHtml5IssuesFilter extends AbstractDataModifierJob<W3cHtml5Compar
 
   private static final String PARAM_MESSAGE = "message";
 
+  private static final String PARAM_MESSAGE_PATTERN = "messagePattern";
+
   private static final String PARAM_LINE = "line";
 
   private static final String PARAM_COLUMN = "column";
+
   private static final Comparator<? super W3cHtml5Issue> W3C_ISSUE_COMPARATOR = new W3cHtml5IssueComparator();
 
-  private String message;
+  private Pattern messagePattern;
 
-  private int line;
+  private Integer line;
 
-  private int column;
+  private Integer column;
 
   @Override
-  public W3cHtml5ComparatorResult modifyData(W3cHtml5ComparatorResult data) throws ProcessingException {
+  public W3cHtml5ComparatorResult modifyData(W3cHtml5ComparatorResult data)
+      throws ProcessingException {
     int errorsCount = data.getErrorsCount();
     int warningsCount = data.getWarningsCount();
     List<W3cHtml5Issue> excluded = data.getExcludedIssues();
@@ -64,7 +67,7 @@ public class W3cHtml5IssuesFilter extends AbstractDataModifierJob<W3cHtml5Compar
           errorsCount--;
         }
         if (W3cHtml5IssueType.WARN.equals(issue.getIssueType())
-                || W3cHtml5IssueType.INFO.equals(issue.getIssueType())) {
+            || W3cHtml5IssueType.INFO.equals(issue.getIssueType())) {
           warningsCount--;
         }
       } else {
@@ -77,44 +80,25 @@ public class W3cHtml5IssuesFilter extends AbstractDataModifierJob<W3cHtml5Compar
 
   private boolean match(W3cHtml5Issue issue) {
     final boolean messageNotSetOrIgnored =
-            StringUtils.isBlank(message) || StringUtils.startsWithIgnoreCase(issue.getMessage(), message);
-    final boolean lineNotSetOrIgnored = line == 0 || line == issue.getLine();
-    final boolean columnNotSetOrIgnored = column == 0 || column == issue.getColumn();
+        messagePattern == null || messagePattern.matcher(issue.getMessage()).matches();
+    final boolean lineNotSetOrIgnored = line == null || line == issue.getLine();
+    final boolean columnNotSetOrIgnored = column == null || column == issue.getColumn();
     return messageNotSetOrIgnored && lineNotSetOrIgnored && columnNotSetOrIgnored;
   }
 
   @Override
   public void setParameters(Map<String, String> params) throws ParametersException {
-    if (params.containsKey(PARAM_MESSAGE)) {
-      message = params.get(PARAM_MESSAGE);
-    }
-    line = getNumericParam(PARAM_LINE, params);
-    column = getNumericParam(PARAM_COLUMN, params);
-
-    if (isParametersEmpty()) {
-      throw new ParametersException("Parameters for w3c filter cannot be empty.");
-    }
-  }
-
-  private int getNumericParam(String paramName, Map<String, String> params) throws ParametersException {
-    int paramValue = 0;
-    if (params.containsKey(paramName)) {
-      try {
-        paramValue = Integer.valueOf(params.get(paramName));
-      } catch (NumberFormatException e) {
-        throw new ParametersException(paramName + " parameter for w3c filter should be numeric.", e);
-      }
-    }
-    return paramValue;
+    messagePattern = ParamsHelper
+        .getPatternFromPatternParameterOrPlainText(PARAM_MESSAGE_PATTERN, PARAM_MESSAGE, params);
+    line = ParamsHelper.getParamAsInteger(PARAM_LINE, params);
+    column = ParamsHelper.getParamAsInteger(PARAM_COLUMN, params);
+    ParamsHelper.atLeastOneIsProvided(messagePattern, line, column);
   }
 
   @Override
   public String getInfo() {
-    return NAME + " DataModifier with parameters: " + PARAM_MESSAGE + ": '" + message + "' " + PARAM_LINE
-            + ": " + line + " " + PARAM_COLUMN + ": " + column;
+    return NAME + " DataModifier with parameters: " + PARAM_MESSAGE_PATTERN + ": '" + messagePattern + "' "
+        + PARAM_LINE + ": " + line + " " + PARAM_COLUMN + ": " + column;
   }
 
-  private boolean isParametersEmpty() {
-    return line == 0 && column == 0 && StringUtils.isBlank(message);
-  }
 }

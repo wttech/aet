@@ -17,19 +17,14 @@
  */
 package com.cognifide.aet.job.common.datafilters.removelines;
 
+import com.cognifide.aet.job.api.datafilter.DataFilterJob;
+import com.cognifide.aet.job.api.exceptions.ParametersException;
+import com.cognifide.aet.job.api.exceptions.ProcessingException;
+import com.cognifide.aet.job.common.utils.ParamsHelper;
 import com.google.common.collect.ContiguousSet;
 import com.google.common.collect.DiscreteDomain;
 import com.google.common.collect.Range;
 import com.google.common.collect.Sets;
-
-import com.cognifide.aet.job.api.datafilter.DataFilterJob;
-import com.cognifide.aet.job.api.exceptions.ParametersException;
-import com.cognifide.aet.job.api.exceptions.ProcessingException;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -37,6 +32,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RemoveLinesDataModifier implements DataFilterJob<String> {
 
@@ -62,8 +60,8 @@ public class RemoveLinesDataModifier implements DataFilterJob<String> {
 
   @Override
   public void setParameters(Map<String, String> params) throws ParametersException {
-    dataRanges = params.get(DATA_RANGES);
-    patternRanges = params.get(PATTERN_RANGES);
+    dataRanges = ParamsHelper.getParamAsString(DATA_RANGES, params);
+    patternRanges = ParamsHelper.getParamAsString(PATTERN_RANGES, params);
     validateParameters(dataRanges, patternRanges);
     dataIndexesToRemove = extractIndexes(dataRanges);
     patternIndexesToRemove = extractIndexes(patternRanges);
@@ -76,8 +74,8 @@ public class RemoveLinesDataModifier implements DataFilterJob<String> {
         try {
           String[] split = range.split(",");
           indexesToRemove.addAll(ContiguousSet.create(
-                  Range.closed(Integer.valueOf(split[0]), Integer.valueOf(split[1])),
-                  DiscreteDomain.integers()));
+              Range.closed(Integer.valueOf(split[0]), Integer.valueOf(split[1])),
+              DiscreteDomain.integers()));
         } catch (IllegalArgumentException e) {
           throw new ParametersException("Bad range: " + range, e);
         }
@@ -98,13 +96,14 @@ public class RemoveLinesDataModifier implements DataFilterJob<String> {
 
   @Override
   public String getInfo() {
-    return NAME + " DataModifier with parameters: " + DATA_RANGES + ": " + dataRanges + " " + PATTERN_RANGES + ": " + patternRanges;
+    return NAME + " DataModifier with parameters: " + DATA_RANGES + ": " + dataRanges + " " + PATTERN_RANGES + ": "
+        + patternRanges;
   }
 
   private String modify(String data, Set<Integer> indexesToRemove) {
     List<String> lines = Arrays.asList(StringUtils.split(data, NEWLINE));
     Set<Integer> dataIndexes = ContiguousSet.create(Range.closed(1, lines.size()),
-            DiscreteDomain.integers());
+        DiscreteDomain.integers());
     if (!dataIndexes.containsAll(indexesToRemove)) {
       LOGGER.warn("Some of defined ranges exceed source lenght. Source length is: " + lines.size());
     }

@@ -12,9 +12,17 @@ Comparators: **w3c-html5**
 
 | Parameter | Value | Description | Mandatory |
 | --------- | ----- | ----------- | --------- |
-| `message` | string | Prefix or all message text of issue to be filter out | At least one of params should be used and all of used params should be not empty. |
+| `message` | string | Prefix or all message text of issue to be filter out. *see notes below | At least one of params should be used and all of used params should be not empty. |
+| `messagePattern` | regexp | Regular expression that matches message text of issue to be filter out. *see notes below | At least one of params should be used and all of used params should be not empty. |
 | `line` | integer | Line in source file where issue appear | |
 | `column` | integer | Column in source file where issue appear | |
+*Note: 
+- 'message' will be overridden by 'messagePattern' if set.
+- there is an issue with some characters encoding in messages that comes from w3c-html5 output,
+e.g. for message 
+```` 'Bad value “Cache-Control” for attribute “http-equiv” on element “meta”.' ````
+change '“' and '”' into '.{7}' (or '.+'); see example below so it would look like:
+```` 'Bad value .{7}Cache-Control.{7} for attribute .{7}http-equiv.{7} on element .{7}meta.{7}.' ````             
 
 | ! Note |
 |:------ |
@@ -39,6 +47,7 @@ Comparators: **w3c-html5**
                 <w3c-filter message = "The first occurrence of" />
                 <w3c-filter message = "&#8220;&amp;&#8221; did not start a character reference"/>
                 <w3c-filter line="1" column="119"/>
+                <w3c-filter messagePattern="^Element .{7}img.{7} is missing required attribute .{7}src.{7}.$"/>
             </source>
             ...
         </compare>

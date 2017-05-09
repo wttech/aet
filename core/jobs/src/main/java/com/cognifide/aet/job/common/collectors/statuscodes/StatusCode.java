@@ -18,7 +18,6 @@
 package com.cognifide.aet.job.common.collectors.statuscodes;
 
 import com.cognifide.aet.job.common.Excludable;
-
 import java.io.Serializable;
 
 public class StatusCode implements Serializable, Excludable {
@@ -54,8 +53,8 @@ public class StatusCode implements Serializable, Excludable {
   }
 
   @Override
-  public void exclude() {
-    this.excluded = true;
+  public void setExcluded(boolean value) {
+    this.excluded = value;
   }
 
 }

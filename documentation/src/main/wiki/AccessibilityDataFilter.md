@@ -12,7 +12,8 @@ Resource name: accessibility
 
 | Parameter | Value | Description | Mandatory |
 | --------------- | ----- | ----------- | --------- |
-| `error` | string error | The exact error message | At least one parameter is required |
+| `error` | string error | The exact error message | At least one parameter is required, ignored if 'errorPattern' parameter is provided |
+| `errorPattern` | regexp| Regular expression that matches message text of issue to be filter out | At least one parameter is required, |
 | `principle` | string principle | The exact accessibility issue principle |
 | `line` | integer line number |The line number in the file which the issue occurred in |
 | `column` | integer column number | The column number in the file which the issue occurred is |
@@ -63,5 +64,7 @@ There can be more than one `accessibility-filter` tag in the `accessibility` com
     <accessibility-filter line="270" />
     <accessibility-filter line="314" />
     <accessibility-filter column="5" />
+    <accessibility-filter errorPattern="^This button .* element content.$" />
+    <accessibility-filter errorPattern="^This button .* element content.$" />
 </accessibility>
 ```
