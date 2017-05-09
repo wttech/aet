@@ -34,9 +34,12 @@
 			<url href="modifiers/wait/success.jsp" />
 		</urls>
 	</test>
+	<!-- should fail as contains timestamp that is visible until end of AJAX calls -->
 	<test name="modifier-Wait-FAILED">
 		<collect>
 			<open />
+			<!-- needed for initial timestamp rendering -->
+			<sleep duration="1000" />
 			<screen />
 		</collect>
 		<compare>
