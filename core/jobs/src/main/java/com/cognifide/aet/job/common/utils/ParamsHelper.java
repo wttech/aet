@@ -17,16 +17,14 @@
  */
 package com.cognifide.aet.job.common.utils;
 
-
 import com.cognifide.aet.job.api.exceptions.ParametersException;
+
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
+
 import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
-import javax.xml.xpath.XPath;
-import javax.xml.xpath.XPathExpression;
-import javax.xml.xpath.XPathExpressionException;
-import javax.xml.xpath.XPathFactory;
-import org.apache.commons.lang3.StringUtils;
 
 public final class ParamsHelper {
 
@@ -62,14 +60,9 @@ public final class ParamsHelper {
    * @param values array of objects
    * @throws ParametersException if all passed objects are null
    */
-  public static void atLeastOneIsProvided(Object... values)
-      throws ParametersException {
-    boolean allNull = true;
-    for (Object value: values) {
-      if (value != null) {
-        allNull = false;
-      }
-    }
+  public static void atLeastOneIsProvided(Object... values) throws ParametersException {
+    Object firstNonNull = ObjectUtils.firstNonNull(values);
+    boolean allNull = (firstNonNull == null);
     if (allNull) {
       throw new ParametersException("At least one parameter must be provided");
     }
