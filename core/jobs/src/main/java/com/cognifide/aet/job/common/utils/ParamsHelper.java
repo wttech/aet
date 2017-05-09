@@ -79,7 +79,13 @@ public class ParamsHelper {
    */
   public static void atLeastOneIsProvided(Object... values)
       throws ParametersException {
-    if (!ObjectUtils.anyNotNull(values)) {
+    boolean allNull = true;
+    for (Object value: values) {
+      if (value != null) {
+        allNull = false;
+      }
+    }
+    if (allNull) {
       throw new ParametersException("At least one parameter must be provided");
     }
   }
