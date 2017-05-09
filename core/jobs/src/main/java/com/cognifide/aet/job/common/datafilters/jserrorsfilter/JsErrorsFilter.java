@@ -61,8 +61,8 @@ public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
         .getPatternFromPatternParameterOrPlainText(PARAM_ERROR_PATTERN, PARAM_ERROR, params);
     line = ParamsHelper.getParamAsInteger(PARAM_LINE, params);
 
-    errorMessage = ParamsHelper.getParamAsString(PARAM_ERROR, params); //just for logs
-    sourceFile = ParamsHelper.getParamAsString(PARAM_SOURCE, params); //just for logs
+    errorMessage = ParamsHelper.getParamAsString(PARAM_ERROR, params);
+    sourceFile = ParamsHelper.getParamAsString(PARAM_SOURCE, params);
 
     ParamsHelper.atLeastOneIsProvided(errorMessagePattern, sourceFilePattern, line);
   }
@@ -78,7 +78,11 @@ public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
   }
 
   private boolean shouldFilterOut(JsErrorLog jse) {
-    return ParamsHelper.matches(sourceFilePattern, jse.getSourceName())
+    boolean sourceMatches = ParamsHelper.matches(sourceFilePattern, jse.getSourceName());
+    boolean sourceEquals = jse.getSourceName().equals(sourceFile);
+    boolean sourceEndsWith = jse.getSourceName().endsWith("/" + sourceFile);
+
+    return (sourceMatches || sourceEquals || sourceEndsWith)
         && ParamsHelper.matches(errorMessagePattern, jse.getErrorMessage())
         && ParamsHelper.equalOrNotSet(line, jse.getLineNumber());
   }
