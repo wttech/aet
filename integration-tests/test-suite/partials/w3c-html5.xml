@@ -79,12 +79,12 @@
         </collect>
         <compare>
             <source comparator="w3c-html5" ignore-warnings="false">
-                <w3c-filter message="Saw"/>
-                <w3c-filter message="Attribute"/>
-                <w3c-filter message="Unclosed "/>
-                <w3c-filter message="End tag for "/>
-                <w3c-filter message="Element "/>
-                <w3c-filter message="A slash was not immed"/>
+                <w3c-filter messagePattern="Saw .*"/>
+                <w3c-filter messagePattern="Attribute .*"/>
+                <w3c-filter messagePattern="Unclosed .*"/>
+                <w3c-filter messagePattern="End tag for .*"/>
+                <w3c-filter messagePattern="Element .*"/>
+                <w3c-filter messagePattern="A slash was not immed.*"/>
             </source>
         </compare>
         <urls>

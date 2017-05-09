@@ -12,7 +12,7 @@ Comparators: **w3c-html5**
 
 | Parameter | Value | Description | Mandatory |
 | --------- | ----- | ----------- | --------- |
-| `message` | string | Prefix or all message text of issue to be filter out. *see notes below | At least one of params should be used and all of used params should be not empty. |
+| `message` | string | Exact message text of issue to be filter out. *see notes below | At least one of params should be used and all of used params should be not empty. |
 | `messagePattern` | regexp | Regular expression that matches message text of issue to be filter out. *see notes below | At least one of params should be used and all of used params should be not empty. |
 | `line` | integer | Line in source file where issue appear | |
 | `column` | integer | Column in source file where issue appear | |
