@@ -66,7 +66,7 @@ public class AccessibilityFilter extends AbstractDataModifierJob<List<Accessibil
           && ParamsHelper.matches(errorMessagePattern, issue.getMessage())
           && ParamsHelper.equalOrNotSet(line, issue.getLineNumber())
           && ParamsHelper.equalOrNotSet(column, issue.getColumnNumber())) {
-        issue.setExcluded(true);
+        issue.exclude();
       }
     }
     return data;

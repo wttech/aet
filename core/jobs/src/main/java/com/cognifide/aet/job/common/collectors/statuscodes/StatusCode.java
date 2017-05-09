@@ -54,8 +54,8 @@ public class StatusCode implements Serializable, Excludable {
   }
 
   @Override
-  public void setExcluded(boolean value) {
-    this.excluded = value;
+  public void exclude() {
+    this.excluded = true;
   }
 
 }

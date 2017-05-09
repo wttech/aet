@@ -64,10 +64,10 @@ abstract class StatusCodesFilter extends AbstractDataModifierJob<StatusCodesColl
   public StatusCodesCollectorResult modifyData(StatusCodesCollectorResult data) throws ProcessingException {
     for (StatusCode statusCode : data.getStatusCodes()) {
       if (provided(url) && removeIfMatches() == matchUrl(url, statusCode.getUrl())) {
-        statusCode.setExcluded(true);
+        statusCode.exclude();
       }
       if (regexPattern != null && removeIfMatches() == matchPattern(statusCode.getUrl())) {
-        statusCode.setExcluded(true);
+        statusCode.exclude();
       }
     }
     return data;
