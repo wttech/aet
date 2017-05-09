@@ -46,8 +46,6 @@ public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
 
   private Pattern errorMessagePattern;
 
-  private String errorMessage;
-
   private String sourceFile;
 
   private Integer line;
@@ -58,7 +56,6 @@ public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
         .getPatternFromPatternParameterOrPlainText(PARAM_ERROR_PATTERN, PARAM_ERROR, params);
     line = ParamsHelper.getParamAsInteger(PARAM_LINE, params);
 
-    errorMessage = ParamsHelper.getParamAsString(PARAM_ERROR, params);
     sourceFile = ParamsHelper.getParamAsString(PARAM_SOURCE, params);
 
     ParamsHelper.atLeastOneIsProvided(errorMessagePattern, sourceFile, line);
@@ -89,7 +86,6 @@ public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
     return NAME + " DataModifier with parameters: "
         + PARAM_ERROR_PATTERN + ": " + errorMessagePattern + " "
         + PARAM_SOURCE + ": " + sourceFile + " "
-        + PARAM_ERROR + ": " + errorMessage + " "
         + PARAM_LINE + ": " + line;
   }
 

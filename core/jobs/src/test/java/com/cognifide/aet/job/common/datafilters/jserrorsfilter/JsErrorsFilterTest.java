@@ -66,7 +66,8 @@ public class JsErrorsFilterTest {
   private static final String PARAM_LINE_VALUE_NAN = "not a number";
 
   private static final String INFO_PATTERN = JsErrorsFilter.NAME + " DataModifier with parameters: "
-      + PARAM_ERROR_PATTERN + ": %s " + PARAM_SOURCE + ": %s " + PARAM_ERROR + ": %s "
+      + PARAM_ERROR_PATTERN + ": %s "
+      + PARAM_SOURCE + ": %s "
       + PARAM_LINE + ": %s";
   @Mock
   private Set<JsErrorLog> data;
