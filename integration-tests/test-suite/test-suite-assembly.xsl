@@ -24,8 +24,12 @@
 		<xsl:copy>
 			<xsl:copy-of select="@*"/> 
 			<xsl:apply-templates select="document('partials/js-errors.xml')/*/test"/>
+			<xsl:apply-templates select="document('partials/js-errors-filter-by-error.xml')/*/test"/>
+			<xsl:apply-templates select="document('partials/js-errors-filter-by-errorPattern.xml')/*/test"/>
+			<xsl:apply-templates select="document('partials/js-errors-filter-by-source-and-line.xml')/*/test"/>
 			<xsl:apply-templates select="document('partials/status-codes.xml')/*/test"/>
 			<xsl:apply-templates select="document('partials/w3c-html5.xml')/*/test"/>
+			<xsl:apply-templates select="document('partials/w3c-html5-filtered.xml')/*/test"/>
 			<xsl:apply-templates select="document('partials/source.xml')/*/test"/>
 			<xsl:apply-templates select="document('partials/layout.xml')/*/test"/>
 			<xsl:apply-templates select="document('partials/sleep-modifier.xml')/*/test"/>
@@ -34,6 +38,7 @@
 			<xsl:apply-templates select="document('partials/wait-for-page-modifier.xml')/*/test"/>
 			<xsl:apply-templates select="document('partials/client-side-performance.xml')/*/test"/>
 			<xsl:apply-templates select="document('partials/accessibility.xml')/*/test"/>
+			<xsl:apply-templates select="document('partials/accessibility-filtered.xml')/*/test"/>
 			<xsl:apply-templates select="document('partials/header.xml')/*/test"/>
 			<xsl:apply-templates select="document('partials/loginmodifier.xml')/*/test"/>
 			<xsl:apply-templates select="document('partials/replacetext.xml')/*/test"/>

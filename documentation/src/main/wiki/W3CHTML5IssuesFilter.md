@@ -44,7 +44,7 @@ change '“' and '”' into '.{7}' (or '.+'); see example below so it would look
         <compare>
             ...
             <source comparator="w3c-html5" errors-only="false">
-                <w3c-filter message = "The first occurrence of" />
+                <w3c-filter messagePattern = "The first occurrence of.*" />
                 <w3c-filter message = "&#8220;&amp;&#8221; did not start a character reference"/>
                 <w3c-filter line="1" column="119"/>
                 <w3c-filter messagePattern="^Element .{7}img.{7} is missing required attribute .{7}src.{7}.$"/>

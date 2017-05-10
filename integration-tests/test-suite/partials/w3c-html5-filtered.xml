@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Automated Exploratory Tests
+
+    Copyright (C) 2013 Cognifide Limited
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<suite name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
+
+	<!-- W3C-HTML5-Comparator START -->
+    <test name="comparator-w3c-html5-SUCCESS-with-filtering-messagePattern">
+        <collect>
+            <open/>
+            <source/>
+        </collect>
+        <compare>
+            <source comparator="w3c-html5" ignore-warnings="false">
+                <w3c-filter messagePattern="Saw .*"/>
+                <w3c-filter messagePattern="Attribute .*"/>
+                <w3c-filter messagePattern="Unclosed .*"/>
+                <w3c-filter messagePattern="End tag for .*"/>
+                <w3c-filter messagePattern="Element .*"/>
+                <w3c-filter messagePattern="A slash was not immed.*"/>
+            </source>
+        </compare>
+        <urls>
+            <url href="comparators/w3c-html5/failed.jsp"/>
+        </urls>
+    </test>
+
+    <test name="comparator-w3c-html5-SUCCESS-with-filtering-lines">
+        <collect>
+            <open/>
+            <source/>
+        </collect>
+        <compare>
+            <source comparator="w3c-html5" ignore-warnings="false">
+                <w3c-filter line="389"/>
+                <w3c-filter line="388"/>
+            </source>
+        </compare>
+        <urls>
+            <url href="comparators/w3c-html5/failed.jsp"/>
+        </urls>
+    </test>
+
+    <test name="comparator-w3c-html5-SUCCESS-with-filtering-columns">
+        <collect>
+            <open/>
+            <source/>
+        </collect>
+        <compare>
+            <source comparator="w3c-html5" ignore-warnings="false">
+                <w3c-filter column="3"/>
+                <w3c-filter column="7"/>
+                <w3c-filter column="1"/>
+            </source>
+        </compare>
+        <urls>
+            <url href="comparators/w3c-html5/failed.jsp"/>
+        </urls>
+    </test>
+
+    <test name="comparator-w3c-html5-SUCCESS-with-filtering-all">
+        <collect>
+            <open/>
+            <source/>
+        </collect>
+        <compare>
+            <source comparator="w3c-html5" ignore-warnings="false">
+                <!--
+                    it is not easy to filter W3C quote characters
+                    see https://github.com/Cognifide/aet/wiki/W3CHTML5IssuesFilter#parameters
+                -->
+                <w3c-filter messagePattern="A slash was not immediately followed by .*"/>
+                <w3c-filter line="388" messagePattern="Saw .+ when expecting an attribute name.*"/>
+                <w3c-filter line="388" column="7" messagePattern="Element .* not allowed .*"/>
+                <w3c-filter line="388" column="7" messagePattern="Unclosed element .*"/>
+                <w3c-filter line="388" column="7" messagePattern="Attribute .* is not serializable as XML 1.0."/>
+                <w3c-filter line="389" column="7"/>
+            </source>
+        </compare>
+        <urls>
+            <url href="comparators/w3c-html5/failed.jsp"/>
+        </urls>
+    </test>
+	<!-- W3C-HTML5-Comparator END -->
+</suite>

@@ -72,58 +72,6 @@
 			<url href="comparators/w3c-html5/failed.jsp" />
 		</urls>
 	</test>
-    <test name="comparator-w3c-html5-SUCCESS-with-filtering-messages">
-        <collect>
-            <open/>
-            <source/>
-        </collect>
-        <compare>
-            <source comparator="w3c-html5" ignore-warnings="false">
-                <w3c-filter messagePattern="Saw .*"/>
-                <w3c-filter messagePattern="Attribute .*"/>
-                <w3c-filter messagePattern="Unclosed .*"/>
-                <w3c-filter messagePattern="End tag for .*"/>
-                <w3c-filter messagePattern="Element .*"/>
-                <w3c-filter messagePattern="A slash was not immed.*"/>
-            </source>
-        </compare>
-        <urls>
-            <url href="comparators/w3c-html5/failed.jsp"/>
-        </urls>
-    </test>
 
-
-    <test name="comparator-w3c-html5-SUCCESS-with-filtering-lines">
-        <collect>
-            <open/>
-            <source/>
-        </collect>
-        <compare>
-            <source comparator="w3c-html5" ignore-warnings="false">
-                <w3c-filter line="389"/>
-                <w3c-filter line="388"/>
-            </source>
-        </compare>
-        <urls>
-            <url href="comparators/w3c-html5/failed.jsp"/>
-        </urls>
-    </test>
-
-    <test name="comparator-w3c-html5-SUCCESS-with-filtering-columns">
-        <collect>
-            <open/>
-            <source/>
-        </collect>
-        <compare>
-            <source comparator="w3c-html5" ignore-warnings="false">
-                <w3c-filter column="3"/>
-                <w3c-filter column="7"/>
-                <w3c-filter column="1"/>
-            </source>
-        </compare>
-        <urls>
-            <url href="comparators/w3c-html5/failed.jsp"/>
-        </urls>
-    </test>
 	<!-- W3C-HTML5-Comparator END -->
 </suite>
