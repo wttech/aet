@@ -8,9 +8,17 @@
 All notable changes to AET will be documented in this file.
 
 ## Unreleased
+
+## Version 2.0.3-rc1
 **List of changes that are finished but not yet released in any final version.**
+
+- UI improvements: [PR-72](https://github.com/Cognifide/aet/pull/72), [PR-74](https://github.com/Cognifide/aet/pull/74), [PR-83](https://github.com/Cognifide/aet/pull/83), [PR-84](https://github.com/Cognifide/aet/pull/84)
 - [PR-86](https://github.com/Cognifide/aet/pull/86) New modifier: [Execute Java Script](https://github.com/Cognifide/aet/wiki/ExecuteJavaScriptModifier).
+- [PR-85](https://github.com/Cognifide/aet/pull/85) Displaying suite execution time
+- [PR-81](https://github.com/Cognifide/aet/pull/81) Wiki FAQ page
+- [PR-77]() Upgrade for used AET cookbook to [version 1.4.13](https://supermarket.chef.io/cookbooks/aet/versions/1.4.13)
 - [PR-57](https://github.com/Cognifide/aet/pull/57) Part of Maven Client application moved to the new Test-executor module.
+- [PR-54](https://github.com/Cognifide/aet/pull/54) Bobcat version upgrade to [version 1.1.3](https://github.com/Cognifide/bobcat/releases/tag/1.1.3)
 
 ## Version 2.0.2
 - [PR-44](https://github.com/Cognifide/aet/pull/44) [ScreenCollector](https://github.com/Cognifide/aet/wiki/ScreenCollector) enhancement: added ability to take screenshots of parts of the page by using css or xpath element selectors
