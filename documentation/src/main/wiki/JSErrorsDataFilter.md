@@ -43,6 +43,8 @@ In this sample exact match of js error from file  "[http://w.iplsc.com/external/
                     line="2"
                     source="http://w.iplsc.com/external/jquery/jquery-1.8.3.js" />
                 <js-errors-filter
+                    source="custom.js" />
+                <js-errors-filter
                     errorPattern="^.*Syntax error, unrecognized expression.*$" />                    
             </js-errors>
             ...
