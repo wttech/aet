@@ -34,7 +34,6 @@
                 <w3c-filter messagePattern="End tag for .*"/>
                 <w3c-filter messagePattern="Element .*"/>
                 <w3c-filter messagePattern="A slash was not immed.*"/>
-                <w3c-filter messagePattern="^Stray end tag “img”.$"/>
             </source>
         </compare>
         <urls>
