@@ -89,7 +89,7 @@
                 -->
                 <w3c-filter message="Element “img” is missing required attribute “src”."/>
                 <w3c-filter message="A slash was not immediately followed by “&gt;”."/>
-                <w3c-filter line="389" messagePattern="Saw .+ when expecting an attribute name.*"/>
+                <w3c-filter messagePattern="Saw .+ when expecting an attribute name.*"/>
                 <w3c-filter line="389" column="7" messagePattern="Element .* not allowed as child of element .*"/>
                 <w3c-filter line="389" column="7" messagePattern="Unclosed element .*"/>
                 <w3c-filter line="389" column="7" messagePattern="Attribute .* is not serializable as XML 1.0."/>
