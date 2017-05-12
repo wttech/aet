@@ -34,6 +34,7 @@
                 <w3c-filter messagePattern="End tag for .*"/>
                 <w3c-filter messagePattern="Element .*"/>
                 <w3c-filter messagePattern="A slash was not immed.*"/>
+                <w3c-filter messagePattern="^Stray end tag “img”.$"/>
             </source>
         </compare>
         <urls>
@@ -48,8 +49,9 @@
         </collect>
         <compare>
             <source comparator="w3c-html5" ignore-warnings="false">
+                <w3c-filter line="386"/>
                 <w3c-filter line="389"/>
-                <w3c-filter line="388"/>
+                <w3c-filter line="390"/>
             </source>
         </compare>
         <urls>
@@ -67,6 +69,7 @@
                 <w3c-filter column="3"/>
                 <w3c-filter column="7"/>
                 <w3c-filter column="1"/>
+                <w3c-filter column="46"/>
             </source>
         </compare>
         <urls>
@@ -85,12 +88,13 @@
                     it is not easy to filter W3C quote characters
                     see https://github.com/Cognifide/aet/wiki/W3CHTML5IssuesFilter#parameters
                 -->
-                <w3c-filter messagePattern="A slash was not immediately followed by .*"/>
-                <w3c-filter line="388" messagePattern="Saw .+ when expecting an attribute name.*"/>
-                <w3c-filter line="388" column="7" messagePattern="Element .* not allowed .*"/>
-                <w3c-filter line="388" column="7" messagePattern="Unclosed element .*"/>
-                <w3c-filter line="388" column="7" messagePattern="Attribute .* is not serializable as XML 1.0."/>
-                <w3c-filter line="389" column="7"/>
+                <w3c-filter message="Element “img” is missing required attribute “src”."/>
+                <w3c-filter message="A slash was not immediately followed by “&gt;”."/>
+                <w3c-filter line="389" messagePattern="Saw .+ when expecting an attribute name.*"/>
+                <w3c-filter line="389" column="7" messagePattern="Element .* not allowed as child of element .*"/>
+                <w3c-filter line="389" column="7" messagePattern="Unclosed element .*"/>
+                <w3c-filter line="389" column="7" messagePattern="Attribute .* is not serializable as XML 1.0."/>
+                <w3c-filter message="End tag for  “html” seen, but there were unclosed elements."/>
             </source>
         </compare>
         <urls>
