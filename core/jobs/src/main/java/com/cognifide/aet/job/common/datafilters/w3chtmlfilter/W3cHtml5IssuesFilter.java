@@ -82,11 +82,11 @@ public class W3cHtml5IssuesFilter extends AbstractDataModifierJob<W3cHtml5Compar
 
   private boolean shouldExclude(W3cHtml5Issue issue) {
     final String decodedMessage = StringEscapeUtils.unescapeHtml4(issue.getMessage());
-    final boolean messageMatchOrPatternNotSet = ParamsHelper.matches(messagePattern, decodedMessage);
-    final boolean lineNotSetOrIgnored = line == null || line == issue.getLine();
-    final boolean columnNotSetOrIgnored = column == null || column == issue.getColumn();
+    final boolean messageMatchesOrPatternNotSet = ParamsHelper.matches(messagePattern, decodedMessage);
+    final boolean lineMatchesOrNotSet = line == null || line == issue.getLine();
+    final boolean columnMatchesOrNotSet = column == null || column == issue.getColumn();
 
-    return messageMatchOrPatternNotSet && lineNotSetOrIgnored && columnNotSetOrIgnored;
+    return messageMatchesOrPatternNotSet && lineMatchesOrNotSet && columnMatchesOrNotSet;
   }
 
   @Override
