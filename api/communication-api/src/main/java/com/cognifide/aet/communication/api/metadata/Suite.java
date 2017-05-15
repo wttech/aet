@@ -83,13 +83,17 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
   @NotNull
   private Timestamp runTimestamp;
 
+  private Timestamp finishedTimestamp;
+
+  private String comment;
+
+  private Statistics statistics;
+
   @NotNull
   @Valid
   private final List<Test> tests = new ArrayList<>();
 
   private Optional<String> patternSuite;
-
-  private String comment;
 
   public Suite(String correlationId, String company, String project, String name) {
     this.correlationId = correlationId;
@@ -154,6 +158,23 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
 
   public void setPatternSuite(Optional<String> patternSuite) {
     this.patternSuite = patternSuite;
+  }
+
+  public Statistics getStatistics() {
+    return statistics;
+  }
+
+  public void setStatistics(Statistics statistics) {
+    this.statistics = statistics;
+  }
+
+  public Timestamp getFinishedTimestamp() {
+    return finishedTimestamp;
+  }
+
+  public void setFinishedTimestamp(
+      Timestamp finishedTimestamp) {
+    this.finishedTimestamp = finishedTimestamp;
   }
 
   @Override

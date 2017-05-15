@@ -22,6 +22,7 @@ import com.google.common.base.Optional;
 import com.cognifide.aet.communication.api.JobStatus;
 import com.cognifide.aet.communication.api.job.ComparatorResultData;
 import com.cognifide.aet.communication.api.metadata.Step;
+import com.cognifide.aet.communication.api.metadata.Suite.Timestamp;
 import com.cognifide.aet.communication.api.metadata.Url;
 import com.cognifide.aet.runner.distribution.progress.ProgressLog;
 
@@ -66,6 +67,10 @@ public class ComparisonResultsRouterTest extends StepManagerTest {
 
   @Test
   public void informChangesCompleted_whenCollectingFinished_expectMetadataPersisted() throws Exception {
+    Timestamp mockedTimestamp = Mockito.mock(Timestamp.class);
+    when(suiteIndexWrapper.get()).thenReturn(suite);
+    when(suite.getRunTimestamp()).thenReturn(mockedTimestamp);
+    when(suite.getFinishedTimestamp()).thenReturn(mockedTimestamp);
     ((ComparisonResultsRouter) tested).informChangesCompleted();
     verify(metadataPersister, times(1)).persistMetadataAndNotifyObservers();
   }

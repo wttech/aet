@@ -17,12 +17,12 @@
  */
 package com.cognifide.aet.sanity.functional.suites;
 
-import com.cognifide.aet.sanity.functional.UrlTilesTest;
+import com.cognifide.aet.sanity.functional.HomePageTilesTest;
 
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
 @RunWith(Suite.class)
-@Suite.SuiteClasses({UrlTilesTest.class})
+@Suite.SuiteClasses({HomePageTilesTest.class})
 public class BobcatSuite {
 }

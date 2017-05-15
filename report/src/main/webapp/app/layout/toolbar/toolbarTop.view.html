@@ -45,6 +45,9 @@
         <div class="toolbar-block">
             Last change: {{toolbarTop.suiteInfo.lastUpdate | date: 'yyyy-MM-dd HH:mm:ss'}}
         </div>
+        <div class="toolbar-block">
+            Execution time: {{toolbarTop.suiteInfo.duration | date: 'mm:ss'}}
+        </div>
         <div class="toolbar-block" data-toggle="modal" data-target="#helpModal">
             <i class="glyphicon glyphicon-question-sign"></i>
         </div>

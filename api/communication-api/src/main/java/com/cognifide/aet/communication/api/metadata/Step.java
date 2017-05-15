@@ -30,7 +30,7 @@ import javax.validation.constraints.Pattern;
 
 public class Step extends Operation implements Commentable, Named {
 
-  private static final long serialVersionUID = 3092525262985959135L;
+  private static final long serialVersionUID = 3123747091786941360L;
 
   @NotNull
   private final Integer index;
@@ -45,6 +45,8 @@ public class Step extends Operation implements Commentable, Named {
   private CollectorStepResult stepResult;
 
   private String comment;
+
+  private Statistics statistics;
 
   @Valid
   private Set<Comparator> comparators = new HashSet<>();
@@ -113,6 +115,14 @@ public class Step extends Operation implements Commentable, Named {
   @Override
   public String getComment() {
     return comment;
+  }
+
+  public Statistics getStatistics() {
+    return statistics;
+  }
+
+  public void setStatistics(Statistics statistics) {
+    this.statistics = statistics;
   }
 
   @Override

@@ -17,9 +17,6 @@
  */
 package com.cognifide.aet.runner.distribution.dispatch;
 
-import com.google.inject.Inject;
-import com.google.inject.name.Named;
-
 import com.cognifide.aet.communication.api.JobStatus;
 import com.cognifide.aet.communication.api.ProcessingError;
 import com.cognifide.aet.communication.api.job.CollectorResultData;
@@ -29,20 +26,20 @@ import com.cognifide.aet.communication.api.metadata.Step;
 import com.cognifide.aet.communication.api.metadata.Test;
 import com.cognifide.aet.communication.api.metadata.Url;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
+import com.cognifide.aet.communication.api.util.ExecutionTimer;
 import com.cognifide.aet.runner.conversion.SuiteIndexWrapper;
 import com.cognifide.aet.runner.distribution.watch.TimeoutWatch;
 import com.cognifide.aet.runner.util.MessagesManager;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
-
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.ObjectMessage;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * CollectionResultsRouter - collects work from collector-workers, divides and schedules compare work among
@@ -60,6 +57,8 @@ public class CollectionResultsRouter extends StepManager implements TaskFinishPo
 
   private final SuiteIndexWrapper suite;
 
+  private final ExecutionTimer timer;
+
   @Inject
   public CollectionResultsRouter(TimeoutWatch timeoutWatch, JmsConnection jmsConnection,
                                  @Named("messageTimeToLive") Long messageTimeToLive,
@@ -69,6 +68,7 @@ public class CollectionResultsRouter extends StepManager implements TaskFinishPo
     this.suite = suite;
     this.messagesToReceive.getAndSet(countUrls());
     this.changeListeners = new CopyOnWriteArrayList<>();
+    timer = ExecutionTimer.createAndRun("collection");
   }
 
   private int countUrls() {
@@ -123,6 +123,7 @@ public class CollectionResultsRouter extends StepManager implements TaskFinishPo
     for (ChangeObserver changeListener : changeListeners) {
       changeListener.informChangesCompleted();
     }
+    timer.finishAndLog(suite.get().getName());
     LOGGER.debug("Closing consumer!");
     consumer.close();
   }

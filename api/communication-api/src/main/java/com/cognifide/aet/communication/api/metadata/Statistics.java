@@ -15,22 +15,20 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cognifide.aet.sanity.functional;
+package com.cognifide.aet.communication.api.metadata;
 
-public enum TestStatus {
+import java.io.Serializable;
 
-  SUCCESS("passed"),
-  WARN("warning"),
-  FAIL("failed"),
-  REBASED("rebased");
+public class Statistics implements Serializable {
 
-  private final String cssClass;
+  private static final long serialVersionUID = -6278402985736945498L;
+  protected final long duration;
 
-  TestStatus(String cssClass) {
-    this.cssClass = cssClass;
+  public Statistics(long duration) {
+    this.duration = duration;
   }
 
-  public String getCssClass() {
-    return cssClass;
+  public long getDuration() {
+    return duration;
   }
 }
