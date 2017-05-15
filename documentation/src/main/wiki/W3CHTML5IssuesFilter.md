@@ -26,7 +26,7 @@ change '“' and '”' into '.{7}' (or '.+'); see example below so it would look
 
 | ! Note |
 |:------ |
-| If there are some If some XML-specific charactes (e.g. `&`) are in parameter's value, then they have to be escaped. See example below. |
+| If there are some If some XML-specific charactes (e.g. `&`) are in parameter's value, then they have to be escaped. Suite should be valid XML document.
 
 ##### Example Usage for w3c-html5 comparator
 
@@ -45,9 +45,10 @@ change '“' and '”' into '.{7}' (or '.+'); see example below so it would look
             ...
             <source comparator="w3c-html5" errors-only="false">
                 <w3c-filter messagePattern = "The first occurrence of.*" />
-                <w3c-filter message = "&#8220;&amp;&#8221; did not start a character reference"/>
+                <w3c-filter message="A slash was not immediately followed by “&gt;”."/>
+                <w3c-filter message="Element “img” is missing required attribute “src”."/>
                 <w3c-filter line="1" column="119"/>
-                <w3c-filter messagePattern="^Element .{7}img.{7} is missing required attribute .{7}src.{7}.$"/>
+                <w3c-filter line="390" message="End tag for  “html” seen, but there were unclosed elements."/>
             </source>
             ...
         </compare>
