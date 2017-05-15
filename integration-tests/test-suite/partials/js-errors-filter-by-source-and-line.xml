@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Automated Exploratory Tests
+
+    Copyright (C) 2013 Cognifide Limited
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<suite name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
+
+	<!-- JS ERRORS-Comparator START -->
+	<test name="comparator-JsErrors-FAILED-filter-by-source-external-only">
+		<collect>
+			<open />
+			<sleep duration="2000" />
+			<js-errors />
+		</collect>
+		<compare>
+			<js-errors>
+				<js-errors-filter
+					source="sanity/comparators/jserrors/failed-mainAndExternalJS.jsp" />
+			</js-errors>
+		</compare>
+		<urls>
+			<url href="comparators/jserrors/failed-mainAndExternalJS.jsp" />
+		</urls>
+	</test>
+
+	<test name="comparator-JsErrors-FAILED-filter-by-source-mainpage-only">
+		<collect>
+			<open />
+			<sleep duration="2000" />
+			<js-errors />
+		</collect>
+		<compare>
+			<js-errors>
+				<js-errors-filter
+					source="sanity/comparators/jserrors/failed-externalJS.jsp" />
+			</js-errors>
+		</compare>
+		<urls>
+			<url href="comparators/jserrors/failed-externalJS.jsp" />
+		</urls>
+	</test>
+
+	<test
+		name="comparator-JsErrors-SUCCESS-filter-by-source-mainpage-and-external">
+		<collect>
+			<open />
+			<sleep duration="2000" />
+			<js-errors />
+		</collect>
+		<compare>
+			<js-errors>
+				<js-errors-filter source="comparators/jserrors/failed-mainAndExternalJS.jsp" />
+				<js-errors-filter source="comparators/jserrors/jsFileWithError.js" />
+			</js-errors>
+		</compare>
+		<urls>
+			<url href="comparators/jserrors/failed-mainAndExternalJS.jsp" />
+		</urls>
+	</test>
+
+
+	<test name="comparator-JsErrors-FAILED-filter-by-source-and-line-number-20">
+		<collect>
+			<open />
+			<sleep duration="1000" />
+			<js-errors />
+		</collect>
+		<compare>
+			<js-errors>
+				<js-errors-filter source="failed.jsp" line="20" />
+			</js-errors>
+		</compare>
+		<urls>
+			<url href="comparators/jserrors/failed.jsp" />
+		</urls>
+	</test>
+
+	<test
+		name="comparator-JsErrors-SUCCESS-filter-by-source-and-line-number-22-and-390">
+		<collect>
+			<open />
+			<sleep duration="1000" />
+			<js-errors />
+		</collect>
+		<compare>
+			<js-errors>
+				<js-errors-filter source="failed.jsp" line="22" />
+				<js-errors-filter source="failed.jsp" line="390" />
+			</js-errors>
+		</compare>
+		<urls>
+			<url href="comparators/jserrors/failed.jsp" />
+		</urls>
+	</test>
+
+	<test
+		name="comparator-JsErrors-SUCCESS-filter-by-file-source-external-resource">
+		<collect>
+			<open />
+			<sleep duration="1000" />
+			<js-errors />
+		</collect>
+		<compare>
+			<js-errors>
+				<js-errors-filter source="jsFileWithError.js" />
+			</js-errors>
+		</compare>
+		<urls>
+			<url href="comparators/jserrors/failed-externalJS.jsp" />
+		</urls>
+	</test>
+	<!-- JS ERRORS-Comparator END -->
+</suite>

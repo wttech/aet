@@ -12,10 +12,13 @@ Resource name: accessibility
 
 | Parameter | Value | Description | Mandatory |
 | --------------- | ----- | ----------- | --------- |
-| `error` | string error | The exact error message | At least one parameter is required |
+| `error` | string error | The exact error message | At least one parameter is required, ignored if 'errorPattern' parameter is provided |
+| `errorPattern` | regexp| Regular expression that matches message text of issue to be filter out | At least one parameter is required, |
 | `principle` | string principle | The exact accessibility issue principle |
 | `line` | integer line number |The line number in the file which the issue occurred in |
 | `column` | integer column number | The column number in the file which the issue occurred is |
+*Note:*
+- `error` will be overridden by `errorPattern` if set.
 
 ##### Example Usage
 
@@ -40,6 +43,12 @@ In this example the exact match of the accessibility issue breaking principle "W
                     principle="WCAG2A.Principle4.Guideline4_1.4_1_2.H91.Button.Name"
                     line="21"
                     column="5" />
+                <accessibility-filter errorPattern="[\w]* button element does not have a name available .*" />
+                <accessibility-filter error="This select element does not have a name available to an accessibility API. Valid names are: label element, title attribute." />
+                <accessibility-filter principle="WCAG2A.Principle1.Guideline1_3.1_3_1.F68" />
+                <accessibility-filter line="252" />
+                <accessibility-filter column="6" />
+                <accessibility-filter line="317" column="50" />
             </accessibility>
             ...
         </compare>
@@ -63,5 +72,6 @@ There can be more than one `accessibility-filter` tag in the `accessibility` com
     <accessibility-filter line="270" />
     <accessibility-filter line="314" />
     <accessibility-filter column="5" />
+    <accessibility-filter errorPattern="^This button .* element content.$" />
 </accessibility>
 ```

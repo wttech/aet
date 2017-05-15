@@ -21,49 +21,7 @@
 <suite name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
 
 	<!-- JS ERRORS-Comparator START -->
-	<test name="comparator-JsErrors-SUCCESS">
-		<collect>
-			<open />
-			<sleep duration="1000" />
-			<js-errors />
-		</collect>
-		<compare>
-			<js-errors />
-		</compare>
-		<urls>
-			<url href="comparators/jserrors/success.jsp" />
-		</urls>
-	</test>
-
-	<test name="comparator-JsErrors-SUCCESS-NONEXISTINGPAGE-404">
-		<collect>
-			<open />
-			<sleep duration="1000" />
-			<js-errors />
-		</collect>
-		<compare>
-			<js-errors />
-		</compare>
-		<urls>
-			<url href="comparators/jserrors/nonExistingPage.jsp" />
-		</urls>
-	</test>
-
-	<test name="comparator-JsErrors-FAILED">
-		<collect>
-			<open />
-			<sleep duration="1000" />
-			<js-errors />
-		</collect>
-		<compare>
-			<js-errors />
-		</compare>
-		<urls>
-			<url href="comparators/jserrors/failed.jsp" />
-		</urls>
-	</test>
-
-	<test name="comparator-JsErrors-SUCCESS-mix-of-filters">
+	<test name="comparator-JsErrors-FAILED-one-error-left-unfiltered">
 		<collect>
 			<open />
 			<sleep duration="1000" />
@@ -71,8 +29,8 @@
 		</collect>
 		<compare>
 			<js-errors>
-				<js-errors-filter errorPattern="\w+: nonExistingJsFunction is \d*(not |un)defined" />
-				<js-errors-filter line="22" />
+				<js-errors-filter errorPattern="[\w]+: nonExistingJsFunction is [\w]+" />
+				<js-errors-filter errorPattern="[\w]* some non-existing error \d+" />
 			</js-errors>
 		</compare>
 		<urls>
