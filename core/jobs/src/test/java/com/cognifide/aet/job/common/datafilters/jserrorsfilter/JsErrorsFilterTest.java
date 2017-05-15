@@ -24,12 +24,14 @@ import com.cognifide.aet.job.api.collector.JsErrorLog;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 
+import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -39,7 +41,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.IsNot.not;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class JsErrorsFilterTest {
@@ -56,18 +57,23 @@ public class JsErrorsFilterTest {
 
   private static final String PARAM_SOURCE_VALUE = "Source Value";
 
+  private static final String PARAM_ERROR_PATTERN = "errorPattern";
+
+  private static final String PARAM_ERROR_PATTERN_VALUE = "^Error message.*$";
+
   private static final String PARAM_LINE_VALUE = "10";
 
   private static final String PARAM_LINE_VALUE_NAN = "not a number";
 
   private static final String INFO_PATTERN = JsErrorsFilter.NAME + " DataModifier with parameters: "
-          + PARAM_SOURCE + ": %s " + PARAM_ERROR + ": %s " + PARAM_LINE + ": %s";
-
-  @Mock
-  private Map<String, String> params;
-
+      + PARAM_ERROR_PATTERN + ": %s "
+      + PARAM_SOURCE + ": %s "
+      + PARAM_LINE + ": %s";
   @Mock
   private Set<JsErrorLog> data;
+
+  private Map<String, String> params;
+
 
   private List<JsErrorLog> errorLogsList;
 
@@ -80,101 +86,96 @@ public class JsErrorsFilterTest {
 
   @Test
   public void setParametersTest() throws ParametersException {
-    when(params.containsKey(PARAM_LINE)).thenReturn(true);
-    when(params.get(PARAM_LINE)).thenReturn(PARAM_LINE_VALUE);
-    when(params.get(PARAM_ERROR)).thenReturn(PARAM_ERROR_VALUE);
-    when(params.get(PARAM_SOURCE)).thenReturn(PARAM_SOURCE_VALUE);
-
+    params = createParams(PARAM_LINE_VALUE, PARAM_ERROR_PATTERN_VALUE, PARAM_SOURCE_VALUE,
+        PARAM_ERROR_VALUE);
     // no exceptions should occur
     tested.setParameters(params);
-
-    assertThat(tested.getInfo(),
-            is(String.format(INFO_PATTERN, PARAM_SOURCE_VALUE, PARAM_ERROR_VALUE, PARAM_LINE_VALUE)));
   }
 
   @Test
   public void setParametersTest_onlyOneSet() throws ParametersException {
-    when(params.containsKey(PARAM_LINE)).thenReturn(false);
-    when(params.get(PARAM_SOURCE)).thenReturn(PARAM_SOURCE_VALUE);
-
+    params = createParams(null, null, PARAM_SOURCE_VALUE, null);
     tested.setParameters(params);
-
-    assertThat(tested.getInfo(), is(String.format(INFO_PATTERN, PARAM_SOURCE_VALUE, "null", "null")));
+    String expected = String.format(INFO_PATTERN, null, PARAM_SOURCE_VALUE, null, null);
+    assertThat(tested.getInfo(), is(expected));
   }
 
   @Test(expected = ParametersException.class)
   public void setParametersTest_allEmpty() throws ParametersException {
-    when(params.containsKey(PARAM_LINE)).thenReturn(false);
-
+    params = createParams(null, null, null, null);
     tested.setParameters(params);
   }
 
   @Test(expected = ParametersException.class)
   public void setParametersTest_lineNotANumber() throws ParametersException {
-    when(params.get(PARAM_LINE)).thenReturn(PARAM_LINE_VALUE_NAN);
-
+    params = createParams(PARAM_LINE_VALUE_NAN, null, null, null);
     tested.setParameters(params);
   }
 
   @Test
-  public void modifyDataTest_filterByErrorMessage() throws ProcessingException, ParametersException {
-    when(params.containsKey(PARAM_LINE)).thenReturn(false);
-    when(params.get(PARAM_ERROR)).thenReturn(PARAM_ERROR_VALUE);
+  public void modifyDataTest_filterByErrorMessagePattern() throws ProcessingException, ParametersException {
+    params = createParams(null, PARAM_ERROR_PATTERN_VALUE, null, null);
     tested.setParameters(params);
-
     Set<JsErrorLog> result = tested.modifyData(data);
-
-    assertThat(result, hasSize(3));
+    assertThat(result, hasSize(4));
     assertThat(result, hasItems(errorLogsList.get(2), errorLogsList.get(3), errorLogsList.get(4)));
   }
 
   @Test
   public void modifyDataTest_filterBySource() throws ProcessingException, ParametersException {
-    when(params.containsKey(PARAM_LINE)).thenReturn(false);
-    when(params.get(PARAM_SOURCE)).thenReturn(PARAM_SOURCE_VALUE);
+    params = createParams(null, null, PARAM_SOURCE_VALUE, null);
     tested.setParameters(params);
-
     Set<JsErrorLog> result = tested.modifyData(data);
-
     assertThat(result, hasSize(6));
     assertThat(result, not(hasItems(errorLogsList.get(6))));
   }
 
   @Test
   public void modifyDataTest_filterByLine() throws ProcessingException, ParametersException {
-    when(params.containsKey(PARAM_LINE)).thenReturn(true);
-    when(params.get(PARAM_LINE)).thenReturn(PARAM_LINE_VALUE);
+    params = createParams(PARAM_LINE_VALUE, null, null, null);
     tested.setParameters(params);
-
     Set<JsErrorLog> result = tested.modifyData(data);
-
     assertThat(result, hasSize(4));
     assertThat(result, not(hasItems(errorLogsList.get(6), errorLogsList.get(5), errorLogsList.get(3))));
   }
 
   @Test
-  public void modifyDataTest_filterByAll() throws ProcessingException, ParametersException {
-    when(params.containsKey(PARAM_LINE)).thenReturn(true);
-    when(params.get(PARAM_LINE)).thenReturn(PARAM_LINE_VALUE);
-    when(params.get(PARAM_SOURCE)).thenReturn(PARAM_SOURCE_VALUE);
-    when(params.get(PARAM_ERROR)).thenReturn(PARAM_ERROR_VALUE);
+  public void modifyDataTest_excludeByLineAndErrorMessage() throws ProcessingException, ParametersException {
+    params = createParams(PARAM_LINE_VALUE, PARAM_ERROR_PATTERN_VALUE, null, null);
     tested.setParameters(params);
-
     Set<JsErrorLog> result = tested.modifyData(data);
-
-    assertThat(result, hasSize(6));
-    assertThat(result, not(hasItems(errorLogsList.get(6))));
+    assertThat(result, hasSize(5));
+    assertThat("Should not contain last item", result, not(hasItems(errorLogsList.get(6))));
   }
 
   private void initErrorLogs() {
     errorLogsList = Lists.newArrayList();
     errorLogsList.add(new JsErrorLog("error message", "source", 1));
-    errorLogsList.add(new JsErrorLog("Error message", "source", 2));
+    errorLogsList.add(new JsErrorLog("Error message 2", "source", 2));
     errorLogsList.add(new JsErrorLog("this should stay here", "this should stay here", 3));
-    errorLogsList.add(new JsErrorLog("message", "source", 10));
-    errorLogsList.add(new JsErrorLog("message", "source", 1));
-    errorLogsList.add(new JsErrorLog(PARAM_ERROR_VALUE.toLowerCase(), PARAM_SOURCE_VALUE.toLowerCase(), 10));
-    errorLogsList.add(new JsErrorLog(PARAM_ERROR_VALUE, PARAM_SOURCE_VALUE, 10));
+    errorLogsList.add(new JsErrorLog("Another message", "source", 10));
+    errorLogsList.add(new JsErrorLog("Another message2", "source", 1));
+    errorLogsList.add(new JsErrorLog("Error message", PARAM_SOURCE_VALUE.toLowerCase(), 10));
+    errorLogsList.add(new JsErrorLog("Error message random string", PARAM_SOURCE_VALUE, 10));
   }
 
+
+  private Map<String, String> createParams(String line, String errorPattern, String source, String error) {
+    Map<String, String> params = new HashMap<>();
+    if (StringUtils.isNotBlank(line)) {
+      params.put(PARAM_LINE, line);
+    }
+    if (StringUtils.isNotBlank(errorPattern)) {
+      params.put(PARAM_ERROR_PATTERN, errorPattern);
+    }
+    if (StringUtils.isNotBlank(source)) {
+      params.put(PARAM_SOURCE, source);
+    }
+    if (StringUtils.isNotBlank(error)) {
+      params.put(PARAM_ERROR_PATTERN, error);
+    }
+    return params;
+  }
 }
+
+

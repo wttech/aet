@@ -43,8 +43,8 @@ Feature: Tests Results Filtering
    Scenario: Filtering Tests Results: jserrors
     Given I have opened sample tests report page
     When I search for tests containing "jserrors"
-    Then There are 12 tiles visible
-    And Statistics text contains "12 ( 5 / 0 / 7 / 0 )"
+    Then There are 14 tiles visible
+    And Statistics text contains "14 ( 7 / 0 / 7 / 0 )"
     
   Scenario: Filtering Tests Results: source
     Given I have opened sample tests report page
@@ -61,8 +61,8 @@ Feature: Tests Results Filtering
   Scenario: Filtering Tests Results: w3c-html5
     Given I have opened sample tests report page
     When I search for tests containing "w3c-html5"
-    Then There are 7 tiles visible
-    And Statistics text contains "7 ( 1 / 1 / 5 / 0 )"
+    Then There are 8 tiles visible
+    And Statistics text contains "8 ( 1 / 1 / 6 / 0 )"
 
   Scenario: Filtering Tests Results: click-modifier
     Given I have opened sample tests report page

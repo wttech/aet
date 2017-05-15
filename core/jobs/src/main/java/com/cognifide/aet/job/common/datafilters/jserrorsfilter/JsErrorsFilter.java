@@ -17,6 +17,7 @@
  */
 package com.cognifide.aet.job.common.datafilters.jserrorsfilter;
 
+import com.cognifide.aet.job.common.utils.ParamsHelper;
 import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 
@@ -25,10 +26,9 @@ import com.cognifide.aet.job.api.datafilter.AbstractDataModifierJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 
-import org.apache.commons.lang3.StringUtils;
-
 import java.util.Map;
 import java.util.Set;
+import java.util.regex.Pattern;
 
 import javax.annotation.Nullable;
 
@@ -38,11 +38,13 @@ public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
 
   private static final String PARAM_ERROR = "error";
 
+  private static final String PARAM_ERROR_PATTERN = "errorPattern";
+
   private static final String PARAM_SOURCE = "source";
 
   private static final String PARAM_LINE = "line";
 
-  private String errorMessage;
+  private Pattern errorMessagePattern;
 
   private String sourceFile;
 
@@ -50,17 +52,13 @@ public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
 
   @Override
   public void setParameters(Map<String, String> params) throws ParametersException {
-    errorMessage = params.get(PARAM_ERROR);
-    sourceFile = params.get(PARAM_SOURCE);
-    if (params.containsKey(PARAM_LINE)) {
-      try {
-        line = Integer.parseInt(params.get(PARAM_LINE));
-      } catch (NumberFormatException e) {
-        throw new ParametersException(
-                "Provided line: " + params.get(PARAM_LINE) + " is not a numeric value.", e);
-      }
-    }
-    validateParameters(errorMessage, sourceFile, line);
+    errorMessagePattern = ParamsHelper
+        .getPatternFromPatternParameterOrPlainText(PARAM_ERROR_PATTERN, PARAM_ERROR, params);
+    line = ParamsHelper.getParamAsInteger(PARAM_LINE, params);
+
+    sourceFile = ParamsHelper.getParamAsString(PARAM_SOURCE, params);
+
+    ParamsHelper.atLeastOneIsProvided(errorMessagePattern, sourceFile, line);
   }
 
   @Override
@@ -74,34 +72,21 @@ public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
   }
 
   private boolean shouldFilterOut(JsErrorLog jse) {
-    return matchSourceFile(sourceFile, jse.getSourceName())
-            && matchStrings(errorMessage, jse.getErrorMessage())
-            && matchNumbers(line, jse.getLineNumber());
+    boolean sourceNotSpecified = sourceFile == null;
+    boolean sourceEquals = jse.getSourceName().equals(sourceFile);
+    boolean sourceEndsWith = jse.getSourceName().endsWith("/" + sourceFile);
+
+    return (sourceNotSpecified || sourceEquals || sourceEndsWith)
+        && ParamsHelper.matches(errorMessagePattern, jse.getErrorMessage())
+        && ParamsHelper.equalOrNotSet(line, jse.getLineNumber());
   }
 
   @Override
   public String getInfo() {
-    return NAME + " DataModifier with parameters: " + PARAM_SOURCE + ": " + sourceFile + " " + PARAM_ERROR
-            + ": " + errorMessage + " " + PARAM_LINE + ": " + line;
-  }
-
-  private void validateParameters(String errorMessege, String sourceFile, Integer line)
-          throws ParametersException {
-    if (errorMessege == null && sourceFile == null && line == null) {
-      throw new ParametersException("At least one parameter must be provided");
-    }
-  }
-
-  private boolean matchStrings(String paramValue, String errorValue) {
-    return StringUtils.isEmpty(paramValue) || StringUtils.equalsIgnoreCase(paramValue, errorValue);
-  }
-
-  private boolean matchSourceFile(String paramValue, String errorValue) {
-    return StringUtils.isEmpty(paramValue) || StringUtils.endsWith(errorValue, paramValue);
-  }
-
-  private boolean matchNumbers(Integer paramValue, int errorValue) {
-    return paramValue == null || paramValue == errorValue;
+    return NAME + " DataModifier with parameters: "
+        + PARAM_ERROR_PATTERN + ": " + errorMessagePattern + " "
+        + PARAM_SOURCE + ": " + sourceFile + " "
+        + PARAM_LINE + ": " + line;
   }
 
 }

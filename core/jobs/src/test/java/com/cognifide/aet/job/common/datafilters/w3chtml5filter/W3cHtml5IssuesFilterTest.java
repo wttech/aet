@@ -49,6 +49,8 @@ public class W3cHtml5IssuesFilterTest {
 
   public static final String PARAM_MESSAGE = "message";
 
+  public static final String PARAM_MESSAGE_PATTERN = "messagePattern";
+
   private W3cHtml5IssuesFilter tested;
 
   Map<String, String> params;
@@ -61,7 +63,7 @@ public class W3cHtml5IssuesFilterTest {
 
   @Test
   public void setParameters_whenAllCorect_thenNoValidationErrors() throws ParametersException {
-    params = getParams("1", "3", "Some message...");
+    params = createParams("1", "3", "Some message...", null);
 
     tested.setParameters(params);
   }
@@ -74,15 +76,15 @@ public class W3cHtml5IssuesFilterTest {
 
   @Test(expected = ParametersException.class)
   public void setParameters_whenLineNonNumeric_thenValidationErrors()
-          throws ParametersException, ProcessingException {
-    params = getParams("xyz", "3", "Some message...");
+      throws ParametersException, ProcessingException {
+    params = createParams("xyz", "3", "Some message...", null);
     tested.setParameters(params);
 
   }
 
   @Test
   public void modifyData_whenLineMatch_issueIsRemoved() throws ParametersException, ProcessingException {
-    params = getParams("1", null, null);
+    params = createParams("1", null, null, null);
     tested.setParameters(params);
     W3cHtml5ComparatorResult data = prepareComparatorResult(1, 0, "Message...", W3cHtml5IssueType.ERR);
 
@@ -95,7 +97,7 @@ public class W3cHtml5IssuesFilterTest {
 
   @Test
   public void modifyData_whenColumnMatch_issueIsRemoved() throws ParametersException, ProcessingException {
-    params = getParams(null, "3", null);
+    params = createParams(null, "3", null, null);
     tested.setParameters(params);
     W3cHtml5ComparatorResult data = prepareComparatorResult(0, 3, "Message...", W3cHtml5IssueType.WARN);
 
@@ -108,8 +110,8 @@ public class W3cHtml5IssuesFilterTest {
 
   @Test
   public void modifyData_whenMessageMatch_issueIsRemoved()
-          throws ParametersException, ProcessingException {
-    params = getParams(null, null, "Message");
+      throws ParametersException, ProcessingException {
+    params = createParams(null, null, "^Message.*", null);
     tested.setParameters(params);
     W3cHtml5ComparatorResult data = prepareComparatorResult(0, 0, "Message...", W3cHtml5IssueType.WARN);
 
@@ -122,8 +124,8 @@ public class W3cHtml5IssuesFilterTest {
 
   @Test
   public void modifyData_whenIssuesExcluded_expectTwoIssuesRemoved()
-          throws ParametersException, ProcessingException {
-    params = getParams("1", null, null);
+      throws ParametersException, ProcessingException {
+    params = createParams("1", null, null, null);
     tested.setParameters(params);
     List<W3cHtml5Issue> issues = Lists.newArrayList(
             new W3cHtml5Issue(1, 2, "Message", null, null, null, null, W3cHtml5IssueType.WARN),
@@ -136,8 +138,8 @@ public class W3cHtml5IssuesFilterTest {
 
   @Test
   public void modifyData_whenPartiallyMatch_issueIsNotRemoved()
-          throws ParametersException, ProcessingException {
-    params = getParams("1", "3", "Message");
+      throws ParametersException, ProcessingException {
+    params = createParams("1", "3", "Message", null);
     tested.setParameters(params);
     W3cHtml5ComparatorResult data = prepareComparatorResult(2, 3, "Message...", W3cHtml5IssueType.WARN);
 
@@ -150,8 +152,8 @@ public class W3cHtml5IssuesFilterTest {
 
   @Test
   public void modifyData_whenManyCalls_excludedIssuesArePreserved()
-          throws ParametersException, ProcessingException {
-    params = getParams("1", "3", "Message");
+      throws ParametersException, ProcessingException {
+    params = createParams("1", "3", "Message", null);
     tested.setParameters(params);
     List<W3cHtml5Issue> issues = Lists.newArrayList(
             new W3cHtml5Issue(2, 3, "Message...", null, null, null, null, W3cHtml5IssueType.ERR),
@@ -168,7 +170,7 @@ public class W3cHtml5IssuesFilterTest {
     assertThat(data.getIssues().size(), is(2));
     assertThat(data.getExcludedIssues().size(), is(1));
 
-    params = getParams("2", "3", "Message");
+    params = createParams("2", "3", "^Message.*$", null);
     tested.setParameters(params);
 
     // second call
@@ -180,7 +182,7 @@ public class W3cHtml5IssuesFilterTest {
     assertThat(data.getExcludedIssues().size(), is(2));
   }
 
-  private Map<String, String> getParams(String line, String column, String message) {
+  private Map<String, String> createParams(String line, String column, String messagePattern, String plainMassage) {
     Map<String, String> params = new HashMap<>();
     if (StringUtils.isNotBlank(line)) {
       params.put(PARAM_LINE, line);
@@ -188,14 +190,17 @@ public class W3cHtml5IssuesFilterTest {
     if (StringUtils.isNotBlank(column)) {
       params.put(PARAM_COLUMN, column);
     }
-    if (StringUtils.isNotBlank(message)) {
-      params.put(PARAM_MESSAGE, message);
+    if (StringUtils.isNotBlank(messagePattern)) {
+      params.put(PARAM_MESSAGE_PATTERN, messagePattern);
+    }
+    if (StringUtils.isNotBlank(plainMassage)) {
+      params.put(PARAM_MESSAGE, plainMassage);
     }
     return params;
   }
 
   private W3cHtml5ComparatorResult prepareComparatorResult(int line, int column, String message,
-                                                      W3cHtml5IssueType type) {
+      W3cHtml5IssueType type) {
     List<W3cHtml5Issue> issues = new ArrayList<>();
     issues.add(new W3cHtml5Issue(line, column, message, null, null, null, null, type));
     List<W3cHtml5Issue> excludedIssues = new ArrayList<>();
@@ -203,7 +208,7 @@ public class W3cHtml5IssuesFilterTest {
   }
 
   private W3cHtml5ComparatorResult prepareComparatorResult(List<W3cHtml5Issue> issues,
-                                                      List<W3cHtml5Issue> excludedIssues) {
+      List<W3cHtml5Issue> excludedIssues) {
     int errorCount = 0;
     int warningCount = 0;
     for (W3cHtml5Issue issue : issues) {

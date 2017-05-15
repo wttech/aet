@@ -21,11 +21,11 @@ import com.cognifide.aet.job.api.datafilter.AbstractDataModifierJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.job.common.collectors.accessibility.AccessibilityIssue;
-
-import org.apache.commons.lang3.StringUtils;
+import com.cognifide.aet.job.common.utils.ParamsHelper;
 
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class AccessibilityFilter extends AbstractDataModifierJob<List<AccessibilityIssue>> {
 
@@ -39,7 +39,9 @@ public class AccessibilityFilter extends AbstractDataModifierJob<List<Accessibil
 
   private static final String PARAM_ERROR = "error";
 
-  private String errorMessage;
+  private static final String PARAM_ERROR_PATTERN = "errorPattern";
+
+  private Pattern errorMessagePattern;
 
   private String principle;
 
@@ -49,20 +51,21 @@ public class AccessibilityFilter extends AbstractDataModifierJob<List<Accessibil
 
   @Override
   public void setParameters(Map<String, String> params) throws ParametersException {
-    errorMessage = params.get(PARAM_ERROR);
-    principle = params.get(PARAM_PRINCIPLE);
-    line = getIntegerParam(params, PARAM_LINE);
-    column = getIntegerParam(params, PARAM_COLUMN);
-    validateParameters(principle, errorMessage, line, column);
+    errorMessagePattern = ParamsHelper
+        .getPatternFromPatternParameterOrPlainText(PARAM_ERROR_PATTERN, PARAM_ERROR, params);
+    principle = ParamsHelper.getParamAsString(PARAM_PRINCIPLE, params);
+    line = ParamsHelper.getParamAsInteger(PARAM_LINE, params);
+    column = ParamsHelper.getParamAsInteger(PARAM_COLUMN, params);
+    ParamsHelper.atLeastOneIsProvided(principle, errorMessagePattern, line, column);
   }
 
   @Override
   public List<AccessibilityIssue> modifyData(List<AccessibilityIssue> data) throws ProcessingException {
     for (AccessibilityIssue issue : data) {
-      if (matchStrings(principle, issue.getCode())
-              && matchStrings(errorMessage, issue.getMessage())
-              && matchNumbers(line, issue.getLineNumber())
-              && matchNumbers(column, issue.getColumnNumber())) {
+      if (ParamsHelper.equalOrNotSet(principle, issue.getCode())
+          && ParamsHelper.matches(errorMessagePattern, issue.getMessage())
+          && ParamsHelper.equalOrNotSet(line, issue.getLineNumber())
+          && ParamsHelper.equalOrNotSet(column, issue.getColumnNumber())) {
         issue.exclude();
       }
     }
@@ -72,35 +75,8 @@ public class AccessibilityFilter extends AbstractDataModifierJob<List<Accessibil
   @Override
   public String getInfo() {
     return NAME + " DataModifier with parameters: " + PARAM_PRINCIPLE + ": " + principle + " "
-            + PARAM_ERROR + ": " + errorMessage + " " + PARAM_LINE + ": " + line + " " + PARAM_COLUMN + ": " + column;
-  }
-
-  private Integer getIntegerParam(Map<String, String> params, String param) throws ParametersException {
-    Integer result = null;
-    if (params.containsKey(param)) {
-      try {
-        result = Integer.parseInt(params.get(param));
-      } catch (NumberFormatException e) {
-        throw new ParametersException("Provided " + param + ": " + params.get(param) + " is not a numeric value.", e);
-      }
-    }
-
-    return result;
-  }
-
-  private void validateParameters(String principle, String errorMessege, Integer line, Integer column)
-          throws ParametersException {
-    if (errorMessege == null && principle == null && line == null && column == null) {
-      throw new ParametersException("At least one parameter must be provided");
-    }
-  }
-
-  private boolean matchStrings(String paramValue, String errorValue) {
-    return StringUtils.isEmpty(paramValue) || paramValue.equalsIgnoreCase(errorValue);
-  }
-
-  private boolean matchNumbers(Integer paramValue, int errorValue) {
-    return paramValue == null || paramValue == errorValue;
+        + PARAM_ERROR_PATTERN + ": " + errorMessagePattern + " " + PARAM_LINE + ": " + line + " " + PARAM_COLUMN + ": "
+        + column;
   }
 
 }

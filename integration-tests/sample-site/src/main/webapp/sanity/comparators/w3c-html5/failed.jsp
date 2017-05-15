@@ -19,5 +19,6 @@
 --%>
 <%@ include file="/includes/header.jsp" %>
 <%@ include file="/includes/bodyContent.jsp" %>
+<img alt="image with missing src attribute" />
 <erorTag
 <%@ include file="/includes/footer.jsp" %>
