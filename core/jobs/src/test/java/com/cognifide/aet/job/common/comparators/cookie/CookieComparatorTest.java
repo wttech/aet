@@ -90,15 +90,4 @@ public class CookieComparatorTest extends AbstractComparatorTest {
     assertEquals(ComparatorStepResult.Status.FAILED, result.getStatus());
   }
 
-  @Test
-  public void testCompare_compareAdditionalCookie() throws Exception {
-    comparatorProperties = new ComparatorProperties(TEST_COMPANY, TEST_PROJECT,
-        "pattern-result.json", "data-result-additional.json");
-    tested = new CookieComparator(comparatorProperties, artifactDaoMock);
-    tested.setParameters(ImmutableMap.of("action", "compare"));
-    result = tested.compare();
-
-    assertEqualsToSavedArtifact("expected-compare-additional-result.json");
-    assertEquals(ComparatorStepResult.Status.FAILED, result.getStatus());
-  }
 }
