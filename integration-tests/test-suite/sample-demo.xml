@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+
+    Automated Exploratory Tests
+
+    Copyright (C) 2013 Cognifide Limited
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<suite name="demo" company="aet" domain="http://192.168.123.100:9090" project="aet">
+
+    <test name="Demo_Test">
+        <collect>
+            <open/>
+            <wait-for-page-loaded/>
+            <hide xpath="//p[@id='demo1']" />
+            <hide xpath="//p[@id='demo2']" />
+            <resolution width="480" height="720"/>
+            <screen name="480 px"/>
+            <accessibility standard="WCAG2A"/>
+            <js-errors/>
+        </collect>
+        <compare>
+            <screen comparator="layout"/>
+            <accessibility>
+                <accessibility-filter
+                    principle="WCAG2A.Principle4.Guideline4_1.4_1_2.H91.Button.Name"/>
+                <accessibility-filter
+                    principle="WCAG2A.Principle4.Guideline4_1.4_1_2.H91.Select.Name"/>
+                <accessibility-filter
+                    principle="WCAG2A.Principle1.Guideline1_3.1_3_1.F68"/>
+                <accessibility-filter
+                    principle="WCAG2A.Principle3.Guideline3_2.3_2_2.H32.2"/>
+                <accessibility-filter
+                    principle="WCAG2A.Principle4.Guideline4_1.4_1_2.H91.InputText.Name"/>
+            </accessibility>
+            <js-errors>
+                <js-errors-filter
+                    source="/sample-site/sanity/comparators/jserrors/failed.jsp"
+                    line="22"
+                    error="ReferenceError: nonExistingJsFunction is not defined"/>
+                <js-errors-filter
+                    source="/sample-site/sanity/comparators/jserrors/failed.jsp"
+                    line="390"
+                    error="ReferenceError: nonExistingVariable is not defined"/>
+            </js-errors>
+        </compare>
+        <urls>
+            <url href="/sample-site/sanity/comparators/jserrors/success.jsp"/>
+            <url href="/sample-site/sanity/comparators/jserrors/failed.jsp"/>
+            <url href="/sample-site/sanity/comparators/layout/failed.jsp" />
+            <url href="/sample-site/sanity/comparators/w3c-html5/success.jsp"/>
+        </urls>
+    </test>
+
+</suite>
