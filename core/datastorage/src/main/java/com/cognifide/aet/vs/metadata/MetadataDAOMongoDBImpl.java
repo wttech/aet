@@ -19,24 +19,36 @@ package com.cognifide.aet.vs.metadata;
 
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
+import com.cognifide.aet.communication.api.metadata.gson.CollectionSerializer;
+import com.cognifide.aet.communication.api.metadata.gson.MapSerializer;
+import com.cognifide.aet.communication.api.metadata.gson.OptionalSerializer;
+import com.cognifide.aet.communication.api.metadata.gson.TimestampSerializer;
 import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.SimpleDBKey;
 import com.cognifide.aet.vs.StorageException;
 import com.cognifide.aet.vs.mongodb.MongoDBClient;
 import com.google.common.base.Function;
+import com.google.common.base.Optional;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.FluentIterable;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Sorts;
 import com.mongodb.client.result.DeleteResult;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Reference;
@@ -93,7 +105,6 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
     return getSuite(new SimpleDBKey(suite), suite.getCorrelationId());
   }
 
-
   private boolean isNewestSuite(Suite suite) throws StorageException {
     final Suite latestSuite = getLatestRun(new SimpleDBKey(suite), suite.getName());
     return latestSuite == null || suite.getVersion().equals(latestSuite.getVersion());
@@ -102,7 +113,6 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
 
   @Override
   public Suite getSuite(DBKey dbKey, String correlationId) throws StorageException {
-    Suite suite = null;
     MongoCollection<Document> metadata = getMetadataCollection(dbKey);
 
     LOGGER.debug("Fetching suite with correlationId: {} ", correlationId);
@@ -112,16 +122,11 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
             .sort(Sorts.descending(SUITE_VERSION_PARAM_NAME))
             .limit(1);
     final Document result = found.first();
-    if (result != null) {
-      suite = Suite.fromJson(result.toJson());
-    }
-
-    return suite;
+    return new DocumentConverter(result).toSuite();
   }
 
   @Override
   public Suite getLatestRun(DBKey dbKey, String name) throws StorageException {
-    Suite suite = null;
     MongoCollection<Document> metadata = getMetadataCollection(dbKey);
     LOGGER.debug("Fetching latest suite run for company: `{}`, project: `{}`, name `{}`.",
             dbKey.getCompany(), dbKey.getProject(), name);
@@ -131,11 +136,7 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
             .sort(Sorts.descending(SUITE_VERSION_PARAM_NAME))
             .limit(1);
     final Document result = found.first();
-    if (result != null) {
-      suite = Suite.fromJson(result.toJson());
-    }
-
-    return suite;
+    return new DocumentConverter(result).toSuite();
   }
 
   @Override
@@ -150,7 +151,7 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
     return FluentIterable.from(found).transform(new Function<Document, Suite>() {
       @Override
       public Suite apply(Document result) {
-        return Suite.fromJson(result.toJson());
+        return new DocumentConverter(result).toSuite();
       }
     }).toList();
   }

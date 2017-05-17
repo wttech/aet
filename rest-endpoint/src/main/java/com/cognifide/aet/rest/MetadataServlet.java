@@ -146,7 +146,7 @@ public class MetadataServlet extends BasicDataServlet {
 
   private void updateSuite(HttpServletRequest req) throws StorageException, ValidatorException, AETException, IOException {
     BufferedReader reader = new BufferedReader(new InputStreamReader(req.getInputStream(), StandardCharsets.UTF_8));
-    Suite suite = new Gson().fromJson(reader, Suite.class);
+    Suite suite = Suite.fromJson(reader);
     checkLock(suite.getSuiteIdentifier());
     metadataDAO.updateSuite(suite);
   }

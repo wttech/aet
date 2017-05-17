@@ -31,6 +31,8 @@ import com.cognifide.aet.communication.api.util.ValidatorProvider;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+
+import java.io.Reader;
 import java.lang.reflect.Type;
 import java.util.Collection;
 import java.util.Map;
@@ -51,7 +53,7 @@ import javax.validation.constraints.Size;
 public class Suite implements Serializable, Commentable, Named, Validatable {
 
   private static final long serialVersionUID = 3602287822306302730L;
-  private static final Gson GSON = new GsonBuilder()
+  private static final Gson GSON_FOR_JSON = new GsonBuilder()
       .registerTypeHierarchyAdapter(Collection.class, new CollectionSerializer())
       .registerTypeHierarchyAdapter(Map.class, new MapSerializer())
       .registerTypeHierarchyAdapter(Optional.class, new OptionalSerializer())
@@ -101,10 +103,6 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
     this.project = project;
     this.name = name;
     runTimestamp = new Timestamp(System.currentTimeMillis());
-  }
-
-  public static Suite fromJson(String json) {
-    return GSON.fromJson(json, SUITE_TYPE);
   }
 
   public String getCorrelationId() {
@@ -228,8 +226,12 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
     }
   }
 
+  public static Suite fromJson(Reader jsonReader) {
+    return GSON_FOR_JSON.fromJson(jsonReader, SUITE_TYPE);
+  }
+
   public String toJson() {
-    return GSON.toJson(this, SUITE_TYPE);
+    return GSON_FOR_JSON.toJson(this, SUITE_TYPE);
   }
 
   @Override
