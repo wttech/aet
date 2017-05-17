@@ -72,13 +72,11 @@ public class ArtifactsDAOMongoDBImpl implements ArtifactsDAO {
   public String saveArtifact(DBKey dbKey, InputStream data, String contentType) {
     String resultObjectId = null;
     GridFS gfs = getGridFS(dbKey);
-    if (gfs != null) {
-      GridFSInputFile file = gfs.createFile(data);
-      if (file != null) {
-        file.setContentType(contentType);
-        file.save();
-        resultObjectId = file.getId().toString();
-      }
+    GridFSInputFile file = gfs.createFile(data);
+    if (file != null) {
+      file.setContentType(contentType);
+      file.save();
+      resultObjectId = file.getId().toString();
     }
     return resultObjectId;
   }
@@ -103,13 +101,11 @@ public class ArtifactsDAOMongoDBImpl implements ArtifactsDAO {
     Artifact artifact = null;
 
     GridFS gfs = getGridFS(dbKey);
-    if (gfs != null) {
-      BasicDBObject query = new BasicDBObject();
-      query.put(ID_FIELD_NAME, new ObjectId(objectID));
-      GridFSDBFile file = gfs.findOne(query);
-      if (file != null) {
-        artifact = new Artifact(file.getInputStream(), file.getContentType());
-      }
+    BasicDBObject query = new BasicDBObject();
+    query.put(ID_FIELD_NAME, new ObjectId(objectID));
+    GridFSDBFile file = gfs.findOne(query);
+    if (file != null) {
+      artifact = new Artifact(file.getInputStream(), file.getContentType());
     }
     return artifact;
   }
@@ -174,11 +170,9 @@ public class ArtifactsDAOMongoDBImpl implements ArtifactsDAO {
   @Override
   public void removeArtifacts(DBKey dbKey, Set<String> artifactsToRemove) {
     GridFS gfs = getGridFS(dbKey);
-    if (gfs != null) {
-      for (String artifactId : artifactsToRemove) {
-        LOGGER.debug("Removing artifact {} from {}", artifactId, dbKey);
-        gfs.remove(new ObjectId(artifactId));
-      }
+    for (String artifactId : artifactsToRemove) {
+      LOGGER.debug("Removing artifact {} from {}", artifactId, dbKey);
+      gfs.remove(new ObjectId(artifactId));
     }
   }
 
