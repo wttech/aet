@@ -72,13 +72,22 @@ public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
   }
 
   private boolean shouldFilterOut(JsErrorLog jse) {
-    boolean sourceNotSpecified = sourceFile == null;
-    boolean sourceEquals = jse.getSourceName().equals(sourceFile);
-    boolean sourceEndsWith = jse.getSourceName().endsWith("/" + sourceFile);
-
-    return (sourceNotSpecified || sourceEquals || sourceEndsWith)
+    String source = jse.getSourceName();
+    return shouldExcludeRegardingSource(source)
         && ParamsHelper.matches(errorMessagePattern, jse.getErrorMessage())
         && ParamsHelper.equalOrNotSet(line, jse.getLineNumber());
+  }
+
+  private boolean shouldExcludeRegardingSource(String errorSource) {
+    boolean shouldExclude;
+
+    boolean sourceParamNotSpecified = sourceFile == null;
+    if (sourceParamNotSpecified) {
+      shouldExclude = true;
+    } else {
+      shouldExclude = errorSource.equals(sourceFile) || errorSource.endsWith(sourceFile);
+    }
+    return shouldExclude;
   }
 
   @Override
