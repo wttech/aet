@@ -32,6 +32,8 @@ import java.util.regex.Pattern;
 
 import javax.annotation.Nullable;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
 
   public static final String NAME = "js-errors-filter";
@@ -72,13 +74,23 @@ public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
   }
 
   private boolean shouldFilterOut(JsErrorLog jse) {
-    boolean sourceNotSpecified = sourceFile == null;
-    boolean sourceEquals = jse.getSourceName().equals(sourceFile);
-    boolean sourceEndsWith = jse.getSourceName().endsWith("/" + sourceFile);
-
-    return (sourceNotSpecified || sourceEquals || sourceEndsWith)
+    String source = jse.getSourceName();
+    return shouldExcludeRegardingSource(source)
         && ParamsHelper.matches(errorMessagePattern, jse.getErrorMessage())
         && ParamsHelper.equalOrNotSet(line, jse.getLineNumber());
+  }
+
+  private boolean shouldExcludeRegardingSource(String errorSource) {
+    boolean shouldExclude;
+
+    boolean sourceParamNotSpecified = StringUtils.isBlank(sourceFile);
+    if (sourceParamNotSpecified) {
+      shouldExclude = true;
+    } else {
+      // covers equals as well
+      shouldExclude = errorSource.endsWith(sourceFile);
+    }
+    return shouldExclude;
   }
 
   @Override
