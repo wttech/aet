@@ -80,7 +80,7 @@ public class SuiteServlet extends HttpServlet {
       Map<String, String> requestData = getRequestData(request);
       final String suite = requestData.get(SUITE_PARAM);
       final String domain = requestData.get(DOMAIN_PARAM);
-      final Optional<String> pattern = Optional.fromNullable(requestData.get(PATTERN_PARAM));
+      final String pattern = requestData.get(PATTERN_PARAM);
 
       if (StringUtils.isNotBlank(suite)) {
         SuiteExecutionResult suiteExecutionResult = suiteExecutor.execute(suite, domain, pattern);

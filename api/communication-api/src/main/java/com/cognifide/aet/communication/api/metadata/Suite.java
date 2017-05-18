@@ -19,10 +19,8 @@ package com.cognifide.aet.communication.api.metadata;
 
 import com.cognifide.aet.communication.api.metadata.gson.CollectionSerializer;
 import com.cognifide.aet.communication.api.metadata.gson.MapSerializer;
-import com.cognifide.aet.communication.api.metadata.gson.OptionalSerializer;
 import com.cognifide.aet.communication.api.metadata.gson.TimestampSerializer;
 import com.google.common.base.Objects;
-import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 
@@ -56,7 +54,6 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
   private static final Gson GSON_FOR_JSON = new GsonBuilder()
       .registerTypeHierarchyAdapter(Collection.class, new CollectionSerializer())
       .registerTypeHierarchyAdapter(Map.class, new MapSerializer())
-      .registerTypeHierarchyAdapter(Optional.class, new OptionalSerializer())
       .registerTypeAdapter(Suite.Timestamp.class, new TimestampSerializer())
       .create();
   private static final Type SUITE_TYPE = new TypeToken<Suite>() {
@@ -95,7 +92,7 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
   @Valid
   private final List<Test> tests = new ArrayList<>();
 
-  private Optional<String> patternSuite;
+  private String patternSuite;
 
   public Suite(String correlationId, String company, String project, String name) {
     this.correlationId = correlationId;
@@ -150,11 +147,11 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
     this.runTimestamp = runTimestamp;
   }
 
-  public Optional<String> getPatternSuite() {
+  public String getPatternSuite() {
     return patternSuite;
   }
 
-  public void setPatternSuite(Optional<String> patternSuite) {
+  public void setPatternSuite(String patternSuite) {
     this.patternSuite = patternSuite;
   }
 

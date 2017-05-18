@@ -77,8 +77,8 @@ public class TestRunProcessor {
     final SimpleDBKey dbKey = new SimpleDBKey(currentRun);
     Suite lastVersion = metadataDAO.getLatestRun(dbKey, currentRun.getName());
     Suite patternSuite;
-    if (currentRun.getPatternSuite().isPresent()) {
-      patternSuite = metadataDAO.getLatestRun(dbKey, currentRun.getPatternSuite().get());
+    if (currentRun.getPatternSuite() != null) {
+      patternSuite = metadataDAO.getLatestRun(dbKey, currentRun.getPatternSuite());
     } else {
       patternSuite = lastVersion;
     }

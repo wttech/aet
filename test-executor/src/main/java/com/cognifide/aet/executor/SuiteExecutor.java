@@ -129,7 +129,7 @@ public class SuiteExecutor {
    * @param pattern - optional pattern to set, this is a name of a suite that will be used as patterns source
    * @return status of the suite execution
    */
-  public SuiteExecutionResult execute(String suiteString, String domain, Optional<String> pattern) {
+  public SuiteExecutionResult execute(String suiteString, String domain, String pattern) {
     SuiteRunner suiteRunner = null;
     SuiteExecutionResult result;
 
