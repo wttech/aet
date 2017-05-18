@@ -47,7 +47,7 @@ public class TestSuiteRun implements Serializable {
 
   private Long version;
 
-  private Optional<String> patternSuite;
+  private String patternSuite;
 
   /**
    * Parameters: name, company, project are part of identifier of test suite.
@@ -151,11 +151,11 @@ public class TestSuiteRun implements Serializable {
             .add("version", version).toString();
   }
 
-  public void setPatternSuite(Optional<String> patternSuite) {
+  public void setPatternSuite(String patternSuite) {
     this.patternSuite = patternSuite;
   }
 
-  public Optional<String> getPatternSuite() {
+  public String getPatternSuite() {
     return patternSuite;
   }
 }
