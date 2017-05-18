@@ -601,6 +601,9 @@
           <groupId>com.cognifide.aet</groupId>
           <artifactId>aet-maven-plugin</artifactId>
           <version>${project.version}</version>
+          <configuration>
+            <patternSuite></patternSuite>
+          </configuration>
         </plugin>
 
         <!-- plugin that keep our poms in good shape -->
