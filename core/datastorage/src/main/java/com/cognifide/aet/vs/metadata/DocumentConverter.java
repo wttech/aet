@@ -29,7 +29,6 @@ import com.google.gson.reflect.TypeToken;
 class DocumentConverter {
 
   private static final Gson GSON_FOR_MONGO_JSON = new GsonBuilder()
-      //.registerTypeHierarchyAdapter(Optional.class, new OptionalDeserializer())
       .registerTypeAdapter(Suite.Timestamp.class, new TimestampDeserializer())
       .create();
 
