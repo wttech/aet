@@ -602,7 +602,7 @@
           <artifactId>aet-maven-plugin</artifactId>
           <version>${project.version}</version>
           <configuration>
-            <patternSuite></patternSuite>
+            <pattern></pattern>
           </configuration>
         </plugin>
 

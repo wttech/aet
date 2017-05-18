@@ -61,18 +61,18 @@ public class TestSuiteRunner {
 
   private final String domain;
 
-  private final String patternSuite;
+  private final String patternCorrelationId;
 
   private final boolean xUnit;
 
   public TestSuiteRunner(String endpointDomain, String buildDirectory, int timeout, String domain,
-      String patternSuite, boolean xUnit) {
+      String patternCorrelationId, boolean xUnit) {
     this.redirectWriter = new RedirectWriter(buildDirectory);
     this.buildDirectory = buildDirectory;
     this.timeout = timeout;
     this.endpointDomain = endpointDomain;
     this.domain = domain;
-    this.patternSuite = patternSuite;
+    this.patternCorrelationId = patternCorrelationId;
     this.xUnit = xUnit;
     suiteExecutionResponseHandler = new JsonResponseHandler<>(SuiteExecutionResult.class);
     suiteStatusResponseHandler = new JsonResponseHandler<>(SuiteStatusResult.class);
@@ -115,8 +115,8 @@ public class TestSuiteRunner {
     if (domain != null) {
       entityBuilder.addTextBody("domain", domain);
     }
-    if (patternSuite != null) {
-      entityBuilder.addTextBody("pattern", patternSuite);
+    if (patternCorrelationId != null) {
+      entityBuilder.addTextBody("pattern", patternCorrelationId);
     }
     HttpEntity entity = entityBuilder.build();
     return Request.Post(getSuiteUrl())

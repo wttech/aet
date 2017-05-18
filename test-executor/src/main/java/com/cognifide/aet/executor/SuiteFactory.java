@@ -98,7 +98,7 @@ class SuiteFactory {
   private Suite suiteFromTestRun(TestSuiteRun testSuiteRun) {
     final Suite suite = new Suite(testSuiteRun.getCorrelationId(), testSuiteRun.getCompany(),
         testSuiteRun.getProject(), testSuiteRun.getName());
-    suite.setPatternSuite(testSuiteRun.getPatternSuite());
+    suite.setPatternCorrelationId(testSuiteRun.getPatternCorrelationId());
     return suite;
   }
 

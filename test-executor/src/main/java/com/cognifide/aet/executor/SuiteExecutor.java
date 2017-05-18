@@ -17,7 +17,6 @@
  */
 package com.cognifide.aet.executor;
 
-import com.google.common.base.Optional;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.RemovalListener;
@@ -137,7 +136,7 @@ public class SuiteExecutor {
     try {
       TestSuiteRun testSuiteRun = xmlFileParser.parse(suiteString);
       testSuiteRun = overrideDomainIfDefined(testSuiteRun, domain);
-      testSuiteRun.setPatternSuite(pattern);
+      testSuiteRun.setPatternCorrelationId(pattern);
 
       String validationResult = SuiteValidator.validateTestSuiteRun(testSuiteRun);
       if (validationResult == null) {
