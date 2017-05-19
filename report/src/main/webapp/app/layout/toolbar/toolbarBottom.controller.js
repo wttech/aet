@@ -17,12 +17,17 @@
  */
 define([], function () {
 	'use strict';
-	return ['$scope', '$rootScope', '$uibModal', '$stateParams', 'patternsService', 'metadataAccessService', 'notesService', 'viewModeService', ToolbarBottomController];
+	return ['$scope', '$rootScope', '$uibModal', '$stateParams',
+		'patternsService', 'metadataAccessService', 'notesService', 'viewModeService', 'suiteInfoService',
+		ToolbarBottomController];
 
-	function ToolbarBottomController($scope, $rootScope, $uibModal, $stateParams, patternsService, metadataAccessService, notesService, viewModeService) {
+	function ToolbarBottomController($scope, $rootScope, $uibModal, $stateParams,
+			patternsService, metadataAccessService, notesService, viewModeService, suiteInfoService) {
 		var vm = this;
 
 		vm.showAcceptButton = patternsMayBeUpdated;
+		// disables accept button if compared against another suite patterns
+		vm.acceptButtonDisabled = suiteInfoService.getInfo().patternCorrelationId != null;
 		vm.showRevertButton = patternsMarkedForUpdateMayBeReverted;
 		vm.displayCommentModal = displayCommentModal;
 

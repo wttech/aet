@@ -46,7 +46,9 @@
             <span class="preformatted" data-toggle="popover" data-content="Suite version" data-trigger="hover" data-container="body">v{{toolbarTop.suiteInfo.version}}</span>
         </div>
         <div class="toolbar-block">
-            Last change: {{toolbarTop.suiteInfo.lastUpdate | date: 'yyyy-MM-dd HH:mm:ss'}}
+            <span data-toggle="popover" data-content="Last modified" data-trigger="hover">
+                {{toolbarTop.suiteInfo.lastUpdate | date: 'yyyy-MM-dd HH:mm:ss'}}
+            </span>
         </div>
         <div class="toolbar-block">
             Execution time: {{toolbarTop.suiteInfo.duration | date: 'mm:ss'}}
