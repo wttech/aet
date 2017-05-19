@@ -27,7 +27,7 @@ define([], function () {
 
 		vm.showAcceptButton = patternsMayBeUpdated;
 		// disables accept button if compared against another suite patterns
-		vm.acceptButtonDisabled = suiteInfoService.getInfo().patternCorrelationId != null;
+		vm.acceptButtonDisabled = suiteInfoService.getInfo().patternCorrelationId !== null;
 		vm.showRevertButton = patternsMarkedForUpdateMayBeReverted;
 		vm.displayCommentModal = displayCommentModal;
 

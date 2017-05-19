@@ -101,7 +101,7 @@ define(['angularAMD', 'artifactsService', 'suiteInfoService'], function (angular
       caseModel.showAcceptButton =
           stepResult && stepResult.rebaseable && stepResult.status === 'FAILED';
       // disables accept button if compared against another suite patterns
-      caseModel.acceptButtonDisabled = suiteInfoService.getInfo().patternCorrelationId != null;
+      caseModel.acceptButtonDisabled = suiteInfoService.getInfo().patternCorrelationId !== null;
       caseModel.showRevertButton = comparator.hasNotSavedChanges;
       caseModel.index = index;
       caseModel.status = getCaseStatus(step, comparator);
