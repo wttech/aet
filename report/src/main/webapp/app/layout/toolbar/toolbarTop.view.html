@@ -23,6 +23,11 @@
         <i class="glyphicon glyphicon-chevron-left" data-ng-class="sidebarExpanded ? 'glyphicon-chevron-left' : 'glyphicon-chevron-right'"></i>
     </div>
     <div class="toolbar-blocks">
+        <div class="toolbar-block" ng-class="{'hidden': toolbarTop.pattern}">
+            <span class="preformatted" data-toggle="popover" data-content="Correlation id" data-trigger="hover" data-container="body">
+                {{toolbarTop.suiteInfo.correlationId}}
+            </span>
+        </div>
         <div class="toolbar-block important-message" ng-if="toolbarTop.pattern">
             Uses patterns from <a href="{{toolbarTop.pattern.url}}">{{toolbarTop.pattern.name}}</a>.
             <a href="https://github.com/Cognifide/aet/wiki/SharedPatterns" target="_blank">
