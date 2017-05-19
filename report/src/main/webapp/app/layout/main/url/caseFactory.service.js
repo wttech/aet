@@ -15,14 +15,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-define(['angularAMD', 'artifactsService'], function (angularAMD) {
+define(['angularAMD', 'artifactsService', 'suiteInfoService'], function (angularAMD) {
   'use strict';
   angularAMD.factory('caseFactory', CaseFactoryService);
 
   /**
    * Service responsible for producing case that is displayed on report.
    */
-  function CaseFactoryService($rootScope, artifactsService) {
+  function CaseFactoryService($rootScope, artifactsService, suiteInfoService) {
     var service = {
       getCase: getCase
     };
@@ -30,7 +30,7 @@ define(['angularAMD', 'artifactsService'], function (angularAMD) {
     return service;
 
     function getCase(step, comparator, index) {
-      return new BasicCaseModel(step, comparator, index, artifactsService);
+      return new BasicCaseModel(step, comparator, index, artifactsService, suiteInfoService);
     }
 
   }
@@ -42,7 +42,7 @@ define(['angularAMD', 'artifactsService'], function (angularAMD) {
    * @param index - index of comparator in step
    * @param artifactsService
    */
-  function BasicCaseModel(step, comparator, index, artifactsService) {
+  function BasicCaseModel(step, comparator, index, artifactsService, suiteInfoService) {
     var caseModel = {
       result: {},
       collectorResult: {},
@@ -70,7 +70,7 @@ define(['angularAMD', 'artifactsService'], function (angularAMD) {
 
     function getDataUrl() {
       return hasData() ?
-             artifactsService.getArtifactUrl(caseModel.step.stepResult.artifactId) : null;
+          artifactsService.getArtifactUrl(caseModel.step.stepResult.artifactId) : null;
     }
 
     function hasResult() {
@@ -79,7 +79,7 @@ define(['angularAMD', 'artifactsService'], function (angularAMD) {
 
     function getResultUrl() {
       return hasResult() ?
-             artifactsService.getArtifactUrl(caseModel.comparator.stepResult.artifactId) : null;
+          artifactsService.getArtifactUrl(caseModel.comparator.stepResult.artifactId) : null;
     }
 
     function getResultArtifact() {
@@ -100,6 +100,8 @@ define(['angularAMD', 'artifactsService'], function (angularAMD) {
       var stepResult = comparator.stepResult;
       caseModel.showAcceptButton =
           stepResult && stepResult.rebaseable && stepResult.status === 'FAILED';
+      // disables accept button if compared against another suite patterns
+      caseModel.acceptButtonDisabled = suiteInfoService.getInfo().patternCorrelationId != null;
       caseModel.showRevertButton = comparator.hasNotSavedChanges;
       caseModel.index = index;
       caseModel.status = getCaseStatus(step, comparator);

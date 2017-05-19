@@ -24,7 +24,10 @@
     </div>
     <div class="toolbar-blocks">
         <div class="toolbar-block important-message" ng-if="toolbarTop.pattern">
-            This suite comparison is based on <a href="{{toolbarTop.pattern.url}}">{{toolbarTop.pattern.name}}</a> suite patterns.
+            Uses patterns from <a href="{{toolbarTop.pattern.url}}">{{toolbarTop.pattern.name}}</a>.
+            <a href="https://github.com/Cognifide/aet/wiki/SharedPatterns" target="_blank">
+                <span class="glyphicon glyphicon-question-sign"></span>
+            </a>
         </div>
         <div class="toolbar-block">
             Total cases: <span class="name">{{toolbarTop.suiteStatistics.total}}</span>
