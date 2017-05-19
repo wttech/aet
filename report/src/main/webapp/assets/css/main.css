@@ -3934,11 +3934,13 @@ input[type=text]::-webkit-input-placeholder { color: #85898e; }
 .tab-content-toolbar .toolbar-blocks { display: inline; }
 
 /* line 201, ../sass/_toolbar.scss */
-.button-dark.js-trigger-modal { display: inline-block; }
+.important-message { background: #fff085; }
 
 /* line 205, ../sass/_toolbar.scss */
+.button-dark.js-trigger-modal { display: inline-block; }
+
+/* line 209, ../sass/_toolbar.scss */
 .preformatted { font-family: monospace; }
-.important-message { background: #fff085; }
 
 /* Automated Exploratory Tests  Copyright (C) 2013 Cognifide Limited  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */
 /* line 18, ../sass/_sidebar.scss */
@@ -4078,24 +4080,26 @@ input[type=text]::-webkit-input-placeholder { color: #85898e; }
 /* line 18, ../sass/_buttons.scss */
 .button { border: 0 none; border-radius: 0; color: #ffffff; cursor: pointer; display: table; font-family: "montserratlight", sans-serif; font-size: 15px; line-height: 41px; padding: 0 11px; }
 /* line 29, ../sass/_buttons.scss */
-.button-dark { background: #85898e; }
+.button-disabled { cursor: default; }
 /* line 33, ../sass/_buttons.scss */
-.button-red { background: #bb5a5a !important; }
+.button-dark { background: #85898e; }
 /* line 37, ../sass/_buttons.scss */
+.button-red { background: #bb5a5a !important; }
+/* line 41, ../sass/_buttons.scss */
 .button-darkred { background: #bb5a5a; }
-/* line 40, ../sass/_buttons.scss */
+/* line 44, ../sass/_buttons.scss */
 .button-darkred:hover { color: #ffffff; }
-/* line 45, ../sass/_buttons.scss */
-.button-warning { background-color: #f0ad4e; }
 /* line 49, ../sass/_buttons.scss */
-.button-gray { background: #c4c4cc !important; }
+.button-warning { background-color: #f0ad4e; }
 /* line 53, ../sass/_buttons.scss */
-.button-blue { background: #0097fe; }
+.button-gray { background: #c4c4cc !important; }
 /* line 57, ../sass/_buttons.scss */
-.button-wide { width: 100%; }
+.button-blue { background: #0097fe; }
 /* line 61, ../sass/_buttons.scss */
+.button-wide { width: 100%; }
+/* line 65, ../sass/_buttons.scss */
 .button-small { font-size: 11px; line-height: 33px; }
-/* line 66, ../sass/_buttons.scss */
+/* line 70, ../sass/_buttons.scss */
 .button i { margin-right: 6px; position: relative; top: 3px; }
 
 /* Automated Exploratory Tests  Copyright (C) 2013 Cognifide Limited  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */
