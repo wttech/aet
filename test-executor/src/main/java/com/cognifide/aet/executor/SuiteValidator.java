@@ -21,14 +21,26 @@ import com.cognifide.aet.executor.model.CollectorStep;
 import com.cognifide.aet.executor.model.ComparatorStep;
 import com.cognifide.aet.executor.model.TestRun;
 import com.cognifide.aet.executor.model.TestSuiteRun;
+import com.google.common.base.Joiner;
 
 import java.util.List;
+
+import org.apache.commons.lang3.StringUtils;
 
 class SuiteValidator {
 
   private static final String SCREEN = "screen";
 
+  private static final String CORRELATION_ID_SEPARATOR = "-";
+
   static String validateTestSuiteRun(TestSuiteRun testSuiteRun) {
+    boolean patternFromSameProject = isPatternFromSameProject(testSuiteRun);
+    if (!patternFromSameProject) {
+      return String.format("Incorrect pattern: '%s'. Must belong to same company (%s) and project (%s).",
+          testSuiteRun.getPatternCorrelationId(),
+          testSuiteRun.getCompany(),
+          testSuiteRun.getProject());
+    }
     for (TestRun testRun : testSuiteRun.getTestRunMap().values()) {
       if (hasScreenCollector(testRun) && !hasScreenComparator(testRun)) {
         return String.format(
@@ -37,6 +49,30 @@ class SuiteValidator {
       }
     }
     return null;
+  }
+
+  /**
+   * Validates if the pattern is from the same project and company.
+   * This is because currently AET is not supporting cross-projects patterns.
+   *
+   * @param testSuiteRun suite to be tested
+   * @return true if suite is OK
+   */
+  private static boolean isPatternFromSameProject(TestSuiteRun testSuiteRun) {
+    boolean sameProject = false;
+    String pattern = testSuiteRun.getPatternCorrelationId();
+    if (pattern == null) {
+      // patterns will be taken from same suite automatically
+      sameProject = true;
+    } else {
+      String suiteCorrelationIdPrefix = Joiner.on(CORRELATION_ID_SEPARATOR).join(
+          testSuiteRun.getCompany(),
+          testSuiteRun.getProject(),
+          StringUtils.EMPTY
+      );
+      sameProject = pattern.startsWith(suiteCorrelationIdPrefix);
+    }
+    return sameProject;
   }
 
   private static boolean hasScreenCollector(TestRun testRun) {

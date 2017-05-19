@@ -162,7 +162,7 @@ public class MetadataServlet extends BasicDataServlet {
 
   private void checkLock(String suiteIdentifier) throws AETException {
     if (lockService.isLockPresent(suiteIdentifier)) {
-      throw new AETException("Suite modification is currently locked. please try again later.");
+      throw new AETException("Suite modification is currently locked. Please try again later.");
     }
   }
 
