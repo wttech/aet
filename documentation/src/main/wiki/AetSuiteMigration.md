@@ -1,26 +1,19 @@
-## AET Suite Migration to AET 2.0
-### Preparing the XML suite
-You should perform the following changes in your project suite XML:
+## AET Suite Migration to AET 2.1.0
 
-* remove the `environment="win7-ff16` property from the `suite` tag,
+### Updating the XML suite
 
-  ![Win7-ff16 property's position](assets/aetSuiteMigration/win7-ff16.png)
-  
-* remove the whole `<reports>` selection from XML,
+With version 2.1.0 we are supporting regular expressions for following filters:
 
-  ![Reports' location](assets/aetSuiteMigration/reports.png)
-  
-| ! Important information |
-|:----------------------- |
-|Starting from this AET version, html reports are no longer generated as static files but are served by the dynamic web application. If you still need a xunit report please update your aet run command with the parameter `xUnit=true`. For more information refer to the [[Client Application|ClientApplication]] section. |
+* [Accessibility Data Filter](https://github.com/Cognifide/aet/wiki/AccessibilityDataFilter)
+* [JS Errors Data Filter](https://github.com/Cognifide/aet/wiki/JSErrorsDataFilter)
+* [W3C HTML5 Issues Filter](https://github.com/Cognifide/aet/wiki/W3CHTML5IssuesFilter)
 
-  
-* check your `screen` collector definition, remove deprecated parameters: `maximize`, `width`, `height` (see  the [[Screen Collector|ScreenColector]] documentation for recommended changes),
+Please notice that the change introduced for [W3C HTML5 Issues Filter](https://github.com/Cognifide/aet/wiki/W3CHTML5IssuesFilter) is backward **incompatible**:
 
-  ![Screen collector's position](assets/aetSuiteMigration/screen-collector.png)
-  
-* stop using the `w3c` comparator, use `w3c-html5` instead,
+For version **2.0.x** we were expecting that `message` parameter contains a prefix of error message.
 
-  ![w3c position](assets/aetSuiteMigration/w3c.png)
-  
-* [OPTIONAL] in `w3c-html5` use the `ignore-warnings` parameter instead of the `errors-only`parameter in `w3c-html5`.
+From **2.1.x** we need to use `messagePattern` parameter with JAVA regular expression. To match with a prefix we need to provide i.e.: `messagePattern="The first occurrence of.*"`. The `.*` is needed here to match all errors with given prefix.
+
+### Using new version of maven plugin
+
+With the new version we have refactored our maven plugin. Please update the AET plugin version in your `pom.xml`. Previous versions of maven plugin are not compatible with new AET version!

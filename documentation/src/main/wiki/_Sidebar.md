@@ -81,3 +81,4 @@
 * [[FAQ|FAQ]]
 * Releases
     * [[AET 2.0.0|Documentation-2.0.0]]
+    * [[AET 2.1.0|Documentation-2.1.0]]
