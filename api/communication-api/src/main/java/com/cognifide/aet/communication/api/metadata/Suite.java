@@ -92,7 +92,7 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
   @Valid
   private final List<Test> tests = new ArrayList<>();
 
-  private String patternSuite;
+  private String patternCorrelationId;
 
   public Suite(String correlationId, String company, String project, String name) {
     this.correlationId = correlationId;
@@ -147,12 +147,12 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
     this.runTimestamp = runTimestamp;
   }
 
-  public String getPatternSuite() {
-    return patternSuite;
+  public String getPatternCorrelationId() {
+    return patternCorrelationId;
   }
 
-  public void setPatternSuite(String patternSuite) {
-    this.patternSuite = patternSuite;
+  public void setPatternCorrelationId(String patternCorrelationId) {
+    this.patternCorrelationId = patternCorrelationId;
   }
 
   public Statistics getStatistics() {

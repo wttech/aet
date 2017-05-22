@@ -17,7 +17,6 @@
  */
 package com.cognifide.aet.executor;
 
-import com.google.common.base.Optional;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.RemovalListener;
@@ -78,6 +77,8 @@ public class SuiteExecutor {
 
   private static final String MESSAGE_RECEIVE_TIMEOUT_PROPERTY_NAME = "messageReceiveTimeout";
 
+  private static final String LOCKED_SUITE_MESSAGE = "Suite is currently locked. Please try again later.";
+
   private static final long CACHE_EXPIRATION_TIMEOUT = 20000L;
 
   private static final long DEFAULT_MESSAGE_RECEIVE_TIMEOUT = 300000L;
@@ -137,10 +138,10 @@ public class SuiteExecutor {
     try {
       TestSuiteRun testSuiteRun = xmlFileParser.parse(suiteString);
       testSuiteRun = overrideDomainIfDefined(testSuiteRun, domain);
-      testSuiteRun.setPatternSuite(pattern);
+      testSuiteRun.setPatternCorrelationId(pattern);
 
-      String validationResult = SuiteValidator.validateTestSuiteRun(testSuiteRun);
-      if (validationResult == null) {
+      String validationError = SuiteValidator.validateTestSuiteRun(testSuiteRun);
+      if (validationError == null) {
         final Suite suite = new SuiteFactory().suiteFromTestSuiteRun(testSuiteRun);
         suite.validate(Sets.newHashSet("version", "runTimestamp"));
 
@@ -155,10 +156,10 @@ public class SuiteExecutor {
           result = SuiteExecutionResult.createSuccessResult(suite.getCorrelationId(), statusUrl,
               htmlReportUrl, xunitReportUrl);
         } else {
-          result = SuiteExecutionResult.createErrorResult("Suite is currently locked");
+          result = SuiteExecutionResult.createErrorResult(LOCKED_SUITE_MESSAGE);
         }
       } else {
-        result = SuiteExecutionResult.createErrorResult(validationResult);
+        result = SuiteExecutionResult.createErrorResult(validationError);
       }
     } catch (ParseException | JMSException | ValidatorException e) {
       LOGGER.error("Failed to run test suite", e);

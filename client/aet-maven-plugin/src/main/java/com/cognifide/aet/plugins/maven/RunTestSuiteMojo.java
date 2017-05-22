@@ -45,8 +45,8 @@ public class RunTestSuiteMojo extends AbstractMojo {
   @Parameter(property = "domain")
   private String domain;
 
-  @Parameter(property = "patternSuite")
-  private String patternSuite;
+  @Parameter(property = "pattern")
+  private String pattern;
 
   @Parameter(property = "timeout", defaultValue = "300000")
   private int timeout;
@@ -62,7 +62,7 @@ public class RunTestSuiteMojo extends AbstractMojo {
     validateConfiguration();
     try {
       TestSuiteRunner testSuiteRunner = new TestSuiteRunner(endpointDomain,
-          mavenProject.getBuild().getDirectory(), timeout, domain, patternSuite, xUnit);
+          mavenProject.getBuild().getDirectory(), timeout, domain, pattern, xUnit);
       testSuiteRunner.runTestSuite(testSuite);
 
     } catch (AETException e) {
