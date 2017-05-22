@@ -18,11 +18,6 @@ Comparators: **w3c-html5**
 | `column` | integer | Column in source file where issue appear | |
 *Note:*
 - `message` will be overridden by `messagePattern` if set.
-- there is an issue with some characters encoding in messages that comes from w3c-html5 output,
-e.g. for message 
-```` 'Bad value “Cache-Control” for attribute “http-equiv” on element “meta”.' ````
-change '“' and '”' into '.{7}' (or '.+'); see example below so it would look like:
-```` 'Bad value .{7}Cache-Control.{7} for attribute .{7}http-equiv.{7} on element .{7}meta.{7}.' ````             
 
 | ! Note |
 |:------ |
