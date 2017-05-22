@@ -17,9 +17,11 @@ Resource name: js-errors
 |`source`|JavaScript filename suffix (see notes) below|Source file name in which error occurred|At least one of parameter is required|
 |`errorPattern` | pattern error text | Regular expression that matches message text of issue to be filter out|At least one parameter is required|
 |`line`  integer line number|Line number in file in which error occurred| |At least one of parameter is required|
+
 *Note:*
-- `error` param will be overridden by `errorPattern` if set
 - filter will check if value of `source` param is a suffix of JS error source. So we can use `"/jquery-1.8.3.js"` to filter errors from all JQuery files regardless of path or even filter errors from all JavaScript files with `".js"`.
+- `error` param will be overridden by `errorPattern` if set
+- If there are some If some XML-specific charactes (e.g. `&`) are in parameter's value, then they have to be escaped. Suite should be valid XML document.
 
 ##### Example Usage
 
