@@ -58,7 +58,7 @@
             </span>
 
             <span class="button button-dark button-disabled"
-                  data-ng-if="toolbarBottom.acceptButtonDisabled"
+                  data-ng-if="toolbarBottom.usesCrossSuitePattern"
                   data-aet-included-comment-popover
                   data-toggle="popover"
                   data-content="May not be accepted because compared against another suite patterns."
@@ -68,13 +68,13 @@
             </span>
 
             <span class="button js-rebase-suite button-blue"
-                  data-ng-if="toolbarBottom.showAcceptButton() && !toolbarBottom.acceptButtonDisabled"
+                  data-ng-if="toolbarBottom.showAcceptButton()"
                   data-ng-click="toolbarBottom.updatePatterns()"></i>
                 Accept {{toolbarBottom.viewMode}}
             </span>
 
             <span class="button js-rebase-suite button-red"
-                  data-ng-if="toolbarBottom.showRevertButton() && !toolbarBottom.acceptButtonDisabled"
+                  data-ng-if="toolbarBottom.showRevertButton()"
                   data-ng-click="toolbarBottom.revertAcceptedPatterns()">
                 <i class="glyphicon glyphicon-cloud-download"></i>
                 Revert {{toolbarBottom.viewMode}}

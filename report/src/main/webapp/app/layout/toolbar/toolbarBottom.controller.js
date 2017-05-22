@@ -25,12 +25,11 @@ define([], function () {
 			patternsService, metadataAccessService, notesService, viewModeService, suiteInfoService) {
 		var vm = this;
 
-		vm.showAcceptButton = patternsMayBeUpdated;
-		// disables accept button if compared against another suite patterns
 		// disables accept button if compared against another suite patterns
 		if (suiteInfoService.getInfo().patternCorrelationId) {
-			caseModel.acceptButtonDisabled = true;
+			vm.usesCrossSuitePattern = true;
 		}
+		vm.showAcceptButton = patternsMayBeUpdated;
 		vm.showRevertButton = patternsMarkedForUpdateMayBeReverted;
 		vm.displayCommentModal = displayCommentModal;
 
@@ -68,6 +67,9 @@ define([], function () {
 				var patternsToAcceptLeft = vm.model.patternsToAccept - vm.model.acceptedPatterns;
 				result = patternsToAcceptLeft > 0;
 			}
+			if (vm.usesCrossSuitePattern) {
+				result = false;
+			}
 			return result;
 
 		}
@@ -76,6 +78,9 @@ define([], function () {
 			var result = false;
 			if (vm.model) {
 				result = vm.model.acceptedPatterns > 0 && vm.model.acceptedPatterns <= vm.model.patternsToAccept;
+			}
+			if (vm.usesCrossSuitePattern) {
+				result = false;
 			}
 			return result;
 		}
