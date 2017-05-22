@@ -100,9 +100,8 @@ define(['angularAMD', 'artifactsService', 'suiteInfoService'], function (angular
       var stepResult = comparator.stepResult;
       caseModel.showAcceptButton =
           stepResult && stepResult.rebaseable && stepResult.status === 'FAILED';
-      // disables accept button if compared against another suite patterns
       if (suiteInfoService.getInfo().patternCorrelationId) {
-        caseModel.acceptButtonDisabled = true;
+        caseModel.usesCrossSuitePattern = true;
       }
       caseModel.showRevertButton = comparator.hasNotSavedChanges;
       caseModel.index = index;
