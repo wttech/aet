@@ -65,7 +65,7 @@ public class TestSuiteRun implements Serializable {
     this.project = project;
     this.domain = domain;
     this.correlationId = CorrelationIdGenerator.generateCorrelationId(company, project, name);
-    testRunMap = getMap(testRunList);
+    this.testRunMap = getMap(testRunList);
   }
 
   public TestSuiteRun(TestSuiteRun testSuiteRun, String domain, List<TestRun> tests) {
@@ -74,7 +74,7 @@ public class TestSuiteRun implements Serializable {
     this.project = testSuiteRun.getProject();
     this.domain = domain;
     this.correlationId = testSuiteRun.getCorrelationId();
-    testRunMap = getMap(tests);
+    this.testRunMap = getMap(tests);
   }
 
   private Map<String, TestRun> getMap(List<TestRun> testRunList) {
