@@ -33,7 +33,7 @@ mvn aet:run -DtestSuite=FULL_PATH_TO_TEST_SUITE
 | `endpointDomain` | the URL to the main AET domain | http://localhost:8181 | no |
 | `domain` | Overrides the *domain* parameter value from the test suite definition. | - | no |
 | `timeout` | Milliseconds to detect the timeout since the last status received from AET. This is useful to abort the test run if there is no activity for a long time. | 300000 (5 minutes) | no |
-| `patternCorrelationId` | Id of suite that will be used as patterns source. Identical structure of pattern and current suites is assumed. | - | no |
+| `pattern` | Id of suite that will be used as patterns source. Identical structure of pattern and current suites is assumed. | - | no |
 | `xUnit` | The flag that indicates whether the xUnit report should be generated and downloaded or not.| false | no |
 
 ##### Test results
