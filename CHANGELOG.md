@@ -8,15 +8,19 @@
 All notable changes to AET will be documented in this file.
 
 ## Unreleased
+**List of changes that are finished but not yet released in any final version.**
+
+- [PR-110](https://github.com/Cognifide/aet/pull/110) Bobcat version upgrade to [version 1.2.1](https://github.com/Cognifide/bobcat/releases/tag/1.2.1)
+- [aet-106](https://github.com/Cognifide/aet/issues/106) Compare against another suite patterns
+- [aet-67](https://github.com/Cognifide/aet/issues/67) Support for regular expressions in filters
 
 ## Version 2.0.3-rc1
-**List of changes that are finished but not yet released in any final version.**
 
 - UI improvements: [PR-72](https://github.com/Cognifide/aet/pull/72), [PR-74](https://github.com/Cognifide/aet/pull/74), [PR-83](https://github.com/Cognifide/aet/pull/83), [PR-84](https://github.com/Cognifide/aet/pull/84)
 - [PR-86](https://github.com/Cognifide/aet/pull/86) New modifier: [Execute Java Script](https://github.com/Cognifide/aet/wiki/ExecuteJavaScriptModifier).
 - [PR-85](https://github.com/Cognifide/aet/pull/85) Displaying suite execution time
 - [PR-81](https://github.com/Cognifide/aet/pull/81) Wiki FAQ page
-- [PR-77]() Upgrade for used AET cookbook to [version 1.4.13](https://supermarket.chef.io/cookbooks/aet/versions/1.4.13)
+- [PR-77](https://github.com/Cognifide/aet/pull/77) Upgrade for used AET cookbook to [version 1.4.13](https://supermarket.chef.io/cookbooks/aet/versions/1.4.13)
 - [PR-57](https://github.com/Cognifide/aet/pull/57) Part of Maven Client application moved to the new Test-executor module.
 - [PR-54](https://github.com/Cognifide/aet/pull/54) Bobcat version upgrade to [version 1.1.3](https://github.com/Cognifide/bobcat/releases/tag/1.1.3)
 
