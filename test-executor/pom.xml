@@ -40,6 +40,10 @@
     </dependency>
     <dependency>
       <groupId>com.cognifide.aet</groupId>
+      <artifactId>datastorage-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.cognifide.aet</groupId>
       <artifactId>rest-endpoint</artifactId>
     </dependency>
 
