@@ -56,13 +56,14 @@ public class SuiteValidator {
   public String validateTestSuiteRun(TestSuiteRun testSuiteRun) {
     boolean patternFromSameProject = isPatternFromSameProject(testSuiteRun);
     if (!patternFromSameProject) {
-      return String.format("Incorrect pattern: '%s'. Must belong to same company (%s) and project (%s).",
-          testSuiteRun.getPatternCorrelationId(),
-          testSuiteRun.getCompany(),
-          testSuiteRun.getProject());
+      return String
+          .format("Incorrect pattern: '%s'. Must belong to same company (%s) and project (%s).",
+              testSuiteRun.getPatternCorrelationId(),
+              testSuiteRun.getCompany(),
+              testSuiteRun.getProject());
     }
-    boolean patternExists = patternExists(testSuiteRun);
-    if (!patternExists) {
+    boolean patternValid = isPatternInDatabase(testSuiteRun);
+    if (!patternValid) {
       return String.format("Incorrect pattern: '%s'. Not found in database.",
           testSuiteRun.getPatternCorrelationId());
     }
@@ -120,20 +121,24 @@ public class SuiteValidator {
     return false;
   }
 
-  private boolean patternExists(TestSuiteRun testSuiteRun) {
-    boolean exists = false;
+  private boolean isPatternInDatabase(TestSuiteRun testSuiteRun) {
+    boolean valid = false;
     SimpleDBKey dbKey = new SimpleDBKey(testSuiteRun.getCompany(), testSuiteRun.getProject());
-    String correlationId = testSuiteRun.getCorrelationId();
-    Suite patternSuite = null;
-    try {
-      patternSuite = metadataDAO.getSuite(dbKey, correlationId);
-    } catch (StorageException se) {
-      LOG.error("error while retrieving suite from mongo db: '{}', correlationId: '{}'",
-          dbKey, correlationId, se);
+    String patternCorrelationId = testSuiteRun.getPatternCorrelationId();
+    if (patternCorrelationId == null) {
+      valid = true;
+    } else {
+      Suite patternSuite = null;
+      try {
+        patternSuite = metadataDAO.getSuite(dbKey, patternCorrelationId);
+      } catch (StorageException se) {
+        LOG.error("error while retrieving suite from mongo db: '{}', correlationId: '{}'",
+            dbKey, patternCorrelationId, se);
+      }
+      if (patternSuite != null) {
+        valid = true;
+      }
     }
-    if (patternSuite!=null) {
-      exists = true;
-    }
-    return exists;
+    return valid;
   }
 }
