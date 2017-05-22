@@ -15,29 +15,34 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cognifide.aet.vs.metadata;
+package com.cognifide.aet.communication.api.metadata.gson;
 
-import com.google.gson.JsonArray;
+import com.google.gson.JsonDeserializationContext;
+import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
 
-import java.lang.reflect.Type;
-import java.util.Collection;
+import com.cognifide.aet.communication.api.metadata.Suite;
 
-class CollectionSerializer implements JsonSerializer<Collection<?>> {
+import java.lang.reflect.Type;
+
+public class TimestampSerializer implements JsonSerializer<Suite.Timestamp>, JsonDeserializer<Suite.Timestamp> {
 
   @Override
-  public JsonElement serialize(Collection<?> src, Type typeOfSrc, JsonSerializationContext context) {
-    if (src == null || src.isEmpty()) {
-      return null;
-    }
-
-    JsonArray array = new JsonArray();
-    for (Object child : src) {
-      JsonElement element = context.serialize(child);
-      array.add(element);
-    }
-    return array;
+  public JsonElement serialize(Suite.Timestamp src, Type typeOfSrc, JsonSerializationContext context) {
+    return src == null ? null : new JsonPrimitive(src.get());
   }
+
+  @Override
+  public Suite.Timestamp deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {
+    Suite.Timestamp result = null;
+    if (json != null) {
+      long value = json.getAsLong();
+      result = new Suite.Timestamp(value);
+    }
+    return result;
+  }
+
 }

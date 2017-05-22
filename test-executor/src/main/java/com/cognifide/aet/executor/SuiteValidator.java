@@ -17,18 +17,56 @@
  */
 package com.cognifide.aet.executor;
 
+import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.executor.model.CollectorStep;
 import com.cognifide.aet.executor.model.ComparatorStep;
 import com.cognifide.aet.executor.model.TestRun;
 import com.cognifide.aet.executor.model.TestSuiteRun;
+import com.cognifide.aet.vs.MetadataDAO;
+import com.cognifide.aet.vs.SimpleDBKey;
+import com.cognifide.aet.vs.StorageException;
+import com.google.common.base.Joiner;
 
 import java.util.List;
 
-class SuiteValidator {
+import org.apache.commons.lang3.StringUtils;
+import org.apache.felix.scr.annotations.Component;
+import org.apache.felix.scr.annotations.Reference;
+import org.apache.felix.scr.annotations.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+@Service(SuiteValidator.class)
+@Component(
+    label = "AET Suite Validator",
+    description = "Validates received test suite",
+    immediate = true
+)
+public class SuiteValidator {
+
+  private static final Logger LOG = LoggerFactory.getLogger(SuiteValidator.class);
 
   private static final String SCREEN = "screen";
 
-  static String validateTestSuiteRun(TestSuiteRun testSuiteRun) {
+  private static final String CORRELATION_ID_SEPARATOR = "-";
+
+  @Reference
+  private MetadataDAO metadataDAO;
+
+  public String validateTestSuiteRun(TestSuiteRun testSuiteRun) {
+    boolean patternFromSameProject = isPatternFromSameProject(testSuiteRun);
+    if (!patternFromSameProject) {
+      return String
+          .format("Incorrect pattern: '%s'. Must belong to same company (%s) and project (%s).",
+              testSuiteRun.getPatternCorrelationId(),
+              testSuiteRun.getCompany(),
+              testSuiteRun.getProject());
+    }
+    boolean patternValid = isPatternInDatabase(testSuiteRun);
+    if (!patternValid) {
+      return String.format("Incorrect pattern: '%s'. Not found in database.",
+          testSuiteRun.getPatternCorrelationId());
+    }
     for (TestRun testRun : testSuiteRun.getTestRunMap().values()) {
       if (hasScreenCollector(testRun) && !hasScreenComparator(testRun)) {
         return String.format(
@@ -39,7 +77,31 @@ class SuiteValidator {
     return null;
   }
 
-  private static boolean hasScreenCollector(TestRun testRun) {
+  /**
+   * Validates if the pattern is from the same project and company.
+   * This is because currently AET is not supporting cross-projects patterns.
+   *
+   * @param testSuiteRun suite to be tested
+   * @return true if suite is OK
+   */
+  private boolean isPatternFromSameProject(TestSuiteRun testSuiteRun) {
+    boolean sameProject = false;
+    String pattern = testSuiteRun.getPatternCorrelationId();
+    if (pattern == null) {
+      // patterns will be taken from same suite automatically
+      sameProject = true;
+    } else {
+      String suiteCorrelationIdPrefix = Joiner.on(CORRELATION_ID_SEPARATOR).join(
+          testSuiteRun.getCompany(),
+          testSuiteRun.getProject(),
+          StringUtils.EMPTY
+      );
+      sameProject = pattern.startsWith(suiteCorrelationIdPrefix);
+    }
+    return sameProject;
+  }
+
+  private boolean hasScreenCollector(TestRun testRun) {
     for (CollectorStep collectorStep : testRun.getCollectorSteps()) {
       if (SCREEN.equalsIgnoreCase(collectorStep.getModule())) {
         return true;
@@ -48,7 +110,7 @@ class SuiteValidator {
     return false;
   }
 
-  private static boolean hasScreenComparator(TestRun testRun) {
+  private boolean hasScreenComparator(TestRun testRun) {
     for (List<ComparatorStep> comparatorSteps : testRun.getComparatorSteps().values()) {
       for (ComparatorStep comparatorStep : comparatorSteps) {
         if (SCREEN.equalsIgnoreCase(comparatorStep.getType())) {
@@ -57,5 +119,26 @@ class SuiteValidator {
       }
     }
     return false;
+  }
+
+  private boolean isPatternInDatabase(TestSuiteRun testSuiteRun) {
+    boolean valid = false;
+    SimpleDBKey dbKey = new SimpleDBKey(testSuiteRun.getCompany(), testSuiteRun.getProject());
+    String patternCorrelationId = testSuiteRun.getPatternCorrelationId();
+    if (patternCorrelationId == null) {
+      valid = true;
+    } else {
+      Suite patternSuite = null;
+      try {
+        patternSuite = metadataDAO.getSuite(dbKey, patternCorrelationId);
+      } catch (StorageException se) {
+        LOG.error("error while retrieving suite from mongo db: '{}', correlationId: '{}'",
+            dbKey, patternCorrelationId, se);
+      }
+      if (patternSuite != null) {
+        valid = true;
+      }
+    }
+    return valid;
   }
 }

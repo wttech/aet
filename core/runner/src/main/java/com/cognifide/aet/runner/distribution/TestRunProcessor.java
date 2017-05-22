@@ -75,8 +75,14 @@ public class TestRunProcessor {
    */
   void process(final Suite currentRun, Destination resultsDestination, boolean isMaintenanceMessage) throws StorageException {
     final SimpleDBKey dbKey = new SimpleDBKey(currentRun);
-    final Suite latestRun = metadataDAO.getLatestRun(dbKey, currentRun.getName());
-    final Suite suite = SuiteMergeStrategy.merge(currentRun, latestRun);
+    Suite lastVersion = metadataDAO.getLatestRun(dbKey, currentRun.getName());
+    Suite pattern;
+    if (currentRun.getPatternCorrelationId() != null) {
+      pattern = metadataDAO.getSuite(dbKey, currentRun.getPatternCorrelationId());
+    } else {
+      pattern = lastVersion;
+    }
+    final Suite suite = SuiteMergeStrategy.merge(currentRun, lastVersion, pattern);
 
     TestSuiteTask testSuitTask = testSuiteTaskFactory.create(new SuiteIndexWrapper(suite), resultsDestination, isMaintenanceMessage);
     executor.submit(testSuitTask);

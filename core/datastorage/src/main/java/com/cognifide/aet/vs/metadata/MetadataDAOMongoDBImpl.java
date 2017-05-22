@@ -21,9 +21,6 @@ import com.google.common.base.Function;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Collections2;
 import com.google.common.collect.FluentIterable;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
 
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
@@ -47,28 +44,19 @@ import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-import java.util.Map;
 
 @Service
 @Component(label = "AET Metadata DAO implementation for MongoDB", immediate = true)
 public class MetadataDAOMongoDBImpl implements MetadataDAO {
 
+  private static final long serialVersionUID = 3031952772776598636L;
+
   private static final Logger LOGGER = LoggerFactory.getLogger(MetadataDAOMongoDBImpl.class);
 
   public static final String METADATA_COLLECTION_NAME = "metadata";
-
-  private static final Gson GSON = new GsonBuilder()
-          .registerTypeHierarchyAdapter(Collection.class, new CollectionSerializer())
-          .registerTypeHierarchyAdapter(Map.class, new MapSerializer())
-          .registerTypeAdapter(Suite.Timestamp.class, new TimestampSerializer())
-          .create();
-
-  private static final Type SUITE_TYPE = new TypeToken<Suite>() {
-  }.getType();
 
   private static final String SUITE_VERSION_PARAM_NAME = "version";
 
@@ -82,7 +70,7 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
     MongoCollection<Document> metadata = getMetadataCollection(new SimpleDBKey(suite));
     suite.validate(null);
     LOGGER.debug("Saving suite {} to metadata collection.", suite);
-    metadata.insertOne(Document.parse(GSON.toJson(suite, SUITE_TYPE)));
+    metadata.insertOne(Document.parse(suite.toJson()));
     return getSuite(new SimpleDBKey(suite), suite.getCorrelationId());
   }
 
@@ -101,13 +89,12 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
       suite.incrementVersion();
       suite.setRunTimestamp(new Suite.Timestamp(System.currentTimeMillis()));
       suite.validate(null);
-      metadata.insertOne(Document.parse(GSON.toJson(suite, SUITE_TYPE)));
+      metadata.insertOne(Document.parse(suite.toJson()));
     } else {
       throw new StorageException("Trying to update old version or not existing suite.");
     }
     return getSuite(new SimpleDBKey(suite), suite.getCorrelationId());
   }
-
 
   private boolean isNewestSuite(Suite suite) throws StorageException {
     final Suite latestSuite = getLatestRun(new SimpleDBKey(suite), suite.getName());
@@ -117,7 +104,6 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
 
   @Override
   public Suite getSuite(DBKey dbKey, String correlationId) throws StorageException {
-    Suite suite = null;
     MongoCollection<Document> metadata = getMetadataCollection(dbKey);
 
     LOGGER.debug("Fetching suite with correlationId: {} ", correlationId);
@@ -127,16 +113,11 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
             .sort(Sorts.descending(SUITE_VERSION_PARAM_NAME))
             .limit(1);
     final Document result = found.first();
-    if (result != null) {
-      suite = GSON.fromJson(result.toJson(), SUITE_TYPE);
-    }
-
-    return suite;
+    return new DocumentConverter(result).toSuite();
   }
 
   @Override
   public Suite getLatestRun(DBKey dbKey, String name) throws StorageException {
-    Suite suite = null;
     MongoCollection<Document> metadata = getMetadataCollection(dbKey);
     LOGGER.debug("Fetching latest suite run for company: `{}`, project: `{}`, name `{}`.",
             dbKey.getCompany(), dbKey.getProject(), name);
@@ -146,11 +127,7 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
             .sort(Sorts.descending(SUITE_VERSION_PARAM_NAME))
             .limit(1);
     final Document result = found.first();
-    if (result != null) {
-      suite = GSON.fromJson(result.toJson(), SUITE_TYPE);
-    }
-
-    return suite;
+    return new DocumentConverter(result).toSuite();
   }
 
   @Override
@@ -165,7 +142,7 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
     return FluentIterable.from(found).transform(new Function<Document, Suite>() {
       @Override
       public Suite apply(Document result) {
-        return GSON.fromJson(result.toJson(), SUITE_TYPE);
+        return new DocumentConverter(result).toSuite();
       }
     }).toList();
   }

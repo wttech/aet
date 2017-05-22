@@ -18,16 +18,15 @@
 package com.cognifide.aet.runner.conversion;
 
 
-import com.google.common.base.Predicate;
-import com.google.common.collect.FluentIterable;
-import com.google.common.collect.ImmutableMap;
-
 import com.cognifide.aet.communication.api.metadata.Commentable;
 import com.cognifide.aet.communication.api.metadata.Comparator;
 import com.cognifide.aet.communication.api.metadata.Step;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.Test;
 import com.cognifide.aet.communication.api.metadata.Url;
+import com.google.common.base.Predicate;
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.ImmutableMap;
 
 public final class SuiteMergeStrategy {
 
@@ -54,24 +53,46 @@ public final class SuiteMergeStrategy {
    * Merges current and pattern suite. All comments, version and patterns in current suite are overwritten from pattern suite.
    *
    * @param current - current run suite.
-   * @param pattern - pattern suite, usually the last run.
+   * @param lastVersion - latest version of this suite execution, treated also as a pattern suite.
    * @return merged suite.
    */
-  public static Suite merge(Suite current, Suite pattern) {
-    final ImmutableMap<String, Test> tests = FluentIterable.from(current.getTests()).uniqueIndex(TEST_TO_MAP);
+  public static Suite merge(Suite current, Suite lastVersion) {
+    return merge(current, lastVersion, lastVersion);
+  }
 
+  /**
+   * Merges current and pattern suite. All comments, version and patterns in current suite are overwritten from pattern suite.
+   * Last version suite is used only to update current version number.
+   *
+   * @param current - current run suite.
+   * @param lastVersion - latest suite run version.
+   * @param pattern - pattern suite.
+   * @return merged suite.
+   */
+  public static Suite merge(Suite current, Suite lastVersion, Suite pattern) {
+    setVersion(current, lastVersion);
+    setPatterns(current, pattern);
+    return current;
+  }
+
+  private static void setVersion(Suite current, Suite lastVersion) {
+    if (lastVersion != null) {
+      current.setVersion(lastVersion.getVersion() + 1);
+    } else {
+      current.setVersion(1L);
+    }
+  }
+
+  private static void setPatterns(Suite current, Suite pattern) {
     if (pattern != null) {
-      current.setVersion(pattern.getVersion() + 1);
+      final ImmutableMap<String, Test> tests = FluentIterable.from(current.getTests()).uniqueIndex(TEST_TO_MAP);
       updateComment(current, pattern);
       for (Test patternTest : pattern.getTests()) {
         if (tests.containsKey(patternTest.getName())) {
           mergeTest(tests.get(patternTest.getName()), patternTest);
         }
       }
-    } else {
-      current.setVersion(1L);
     }
-    return current;
   }
 
   private static void mergeTest(Test currentTest, Test patternTest) {

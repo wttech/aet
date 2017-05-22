@@ -198,6 +198,10 @@
   }
 }
 
+.important-message {
+  background: $warning_bg;
+}
+
 .button-dark.js-trigger-modal {
   display: inline-block;
 }

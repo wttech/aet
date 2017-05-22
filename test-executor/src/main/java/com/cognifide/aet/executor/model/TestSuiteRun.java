@@ -46,6 +46,8 @@ public class TestSuiteRun implements Serializable {
 
   private Long version;
 
+  private String patternCorrelationId;
+
   /**
    * Parameters: name, company, project are part of identifier of test suite.
    *
@@ -63,7 +65,7 @@ public class TestSuiteRun implements Serializable {
     this.project = project;
     this.domain = domain;
     this.correlationId = CorrelationIdGenerator.generateCorrelationId(company, project, name);
-    testRunMap = getMap(testRunList);
+    this.testRunMap = getMap(testRunList);
   }
 
   public TestSuiteRun(TestSuiteRun testSuiteRun, String domain, List<TestRun> tests) {
@@ -72,7 +74,7 @@ public class TestSuiteRun implements Serializable {
     this.project = testSuiteRun.getProject();
     this.domain = domain;
     this.correlationId = testSuiteRun.getCorrelationId();
-    testRunMap = getMap(tests);
+    this.testRunMap = getMap(tests);
   }
 
   private Map<String, TestRun> getMap(List<TestRun> testRunList) {
@@ -146,5 +148,13 @@ public class TestSuiteRun implements Serializable {
     return Objects.toStringHelper(this).add("name", name).add("company", company).add("project", project)
             .add("domain", domain).add("correlationId", correlationId)
             .add("version", version).toString();
+  }
+
+  public void setPatternCorrelationId(String patternCorrelationId) {
+    this.patternCorrelationId = patternCorrelationId;
+  }
+
+  public String getPatternCorrelationId() {
+    return patternCorrelationId;
   }
 }

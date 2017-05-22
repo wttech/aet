@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.cognifide.aet.vs.metadata;
+package com.cognifide.aet.communication.api.metadata.gson;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -25,7 +25,7 @@ import com.google.gson.JsonSerializer;
 import java.lang.reflect.Type;
 import java.util.Map;
 
-class MapSerializer implements JsonSerializer<Map<?, ?>> {
+public class MapSerializer implements JsonSerializer<Map<?, ?>> {
 
   @Override
   public JsonElement serialize(Map<?, ?> src, Type typeOfSrc, JsonSerializationContext context) {

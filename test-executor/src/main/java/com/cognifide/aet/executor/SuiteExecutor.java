@@ -77,6 +77,8 @@ public class SuiteExecutor {
 
   private static final String MESSAGE_RECEIVE_TIMEOUT_PROPERTY_NAME = "messageReceiveTimeout";
 
+  private static final String LOCKED_SUITE_MESSAGE = "Suite is currently locked. Please try again later.";
+
   private static final long CACHE_EXPIRATION_TIMEOUT = 20000L;
 
   private static final long DEFAULT_MESSAGE_RECEIVE_TIMEOUT = 300000L;
@@ -93,6 +95,9 @@ public class SuiteExecutor {
 
   @Reference
   private ReportConfigurationManager reportConfigurationManager;
+
+  @Reference
+  private SuiteValidator suiteValidator;
 
   private Cache<String, SuiteRunner> suiteRunnerCache;
 
@@ -125,9 +130,10 @@ public class SuiteExecutor {
    *
    * @param suiteString - content of the test suite XML file
    * @param domain - overrides domain defined in the suite file
+   * @param pattern - optional pattern to set, this is a name of a suite that will be used as patterns source
    * @return status of the suite execution
    */
-  public SuiteExecutionResult execute(String suiteString, String domain) {
+  public SuiteExecutionResult execute(String suiteString, String domain, String pattern) {
     SuiteRunner suiteRunner = null;
     SuiteExecutionResult result;
 
@@ -135,9 +141,10 @@ public class SuiteExecutor {
     try {
       TestSuiteRun testSuiteRun = xmlFileParser.parse(suiteString);
       testSuiteRun = overrideDomainIfDefined(testSuiteRun, domain);
+      testSuiteRun.setPatternCorrelationId(pattern);
 
-      String validationResult = SuiteValidator.validateTestSuiteRun(testSuiteRun);
-      if (validationResult == null) {
+      String validationError = suiteValidator.validateTestSuiteRun(testSuiteRun);
+      if (validationError == null) {
         final Suite suite = new SuiteFactory().suiteFromTestSuiteRun(testSuiteRun);
         suite.validate(Sets.newHashSet("version", "runTimestamp"));
 
@@ -152,10 +159,10 @@ public class SuiteExecutor {
           result = SuiteExecutionResult.createSuccessResult(suite.getCorrelationId(), statusUrl,
               htmlReportUrl, xunitReportUrl);
         } else {
-          result = SuiteExecutionResult.createErrorResult("Suite is currently locked");
+          result = SuiteExecutionResult.createErrorResult(LOCKED_SUITE_MESSAGE);
         }
       } else {
-        result = SuiteExecutionResult.createErrorResult(validationResult);
+        result = SuiteExecutionResult.createErrorResult(validationError);
       }
     } catch (ParseException | JMSException | ValidatorException e) {
       LOGGER.error("Failed to run test suite", e);
