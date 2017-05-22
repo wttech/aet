@@ -96,6 +96,9 @@ public class SuiteExecutor {
   @Reference
   private ReportConfigurationManager reportConfigurationManager;
 
+  @Reference
+  private SuiteValidator suiteValidator;
+
   private Cache<String, SuiteRunner> suiteRunnerCache;
 
   private Cache<String, Queue<SuiteStatusResult>> suiteStatusCache;
@@ -140,7 +143,7 @@ public class SuiteExecutor {
       testSuiteRun = overrideDomainIfDefined(testSuiteRun, domain);
       testSuiteRun.setPatternCorrelationId(pattern);
 
-      String validationError = SuiteValidator.validateTestSuiteRun(testSuiteRun);
+      String validationError = suiteValidator.validateTestSuiteRun(testSuiteRun);
       if (validationError == null) {
         final Suite suite = new SuiteFactory().suiteFromTestSuiteRun(testSuiteRun);
         suite.validate(Sets.newHashSet("version", "runTimestamp"));
