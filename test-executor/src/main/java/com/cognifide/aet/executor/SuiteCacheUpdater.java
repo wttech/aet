@@ -54,7 +54,8 @@ class SuiteCacheUpdater implements Runnable {
         Thread.sleep(CACHE_UPDATE_INTERVAL_MILLIS);
         cacheUpdater.update(suite.getCorrelationId(), suite.getSuiteIdentifier());
       } catch (InterruptedException e) {
-        LOGGER.error("Failed to update cache for suite {}", suite.getCorrelationId(), e);
+        LOGGER.error("Failed to update cache for suite: '{}'.", suite.getCorrelationId(), e);
+        Thread.currentThread().interrupt();
       }
     }
   }
