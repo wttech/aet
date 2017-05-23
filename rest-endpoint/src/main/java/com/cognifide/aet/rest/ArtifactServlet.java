@@ -37,7 +37,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Service
-@Component(label = "ArtifactDataContent", description = "Data Storage information service", immediate = true, metatype = true, policy = ConfigurationPolicy.IGNORE)
+@Component(label = "ArtifactDataContent", description = "Data Storage information service", immediate = true, policy = ConfigurationPolicy.IGNORE)
 public class ArtifactServlet extends BasicDataServlet {
 
   private static final long serialVersionUID = 1867870883439947956L;

@@ -49,7 +49,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Service
-@Component(label = "ConfigsServlet", description = "Provides config for clients a", immediate = true, metatype = true,
+@Component(label = "ConfigsServlet", description = "Provides config for clients a", immediate = true,
     policy = ConfigurationPolicy.IGNORE)
 public class ConfigsServlet extends HttpServlet {
 
