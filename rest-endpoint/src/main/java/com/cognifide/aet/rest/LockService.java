@@ -36,7 +36,7 @@ import java.util.concurrent.TimeUnit;
 
 
 @Service(LockService.class)
-@Component(label = "LockService", description = "Provides lock service", immediate = true, metatype = true, policy = ConfigurationPolicy.IGNORE)
+@Component(label = "LockService", description = "Provides lock service", immediate = true, policy = ConfigurationPolicy.IGNORE)
 public class LockService implements Serializable {
 
   private static final long serialVersionUID = 101244102266582495L;

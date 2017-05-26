@@ -41,7 +41,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 @Service
-@Component(label = "LocksServlet", description = "Provides lock services for clients", immediate = true, metatype = true,
+@Component(label = "LocksServlet", description = "Provides lock services for clients", immediate = true,
         policy = ConfigurationPolicy.IGNORE)
 public class LockServlet extends HttpServlet {
 

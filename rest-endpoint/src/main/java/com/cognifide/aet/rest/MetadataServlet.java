@@ -47,7 +47,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Service
-@Component(label = "MetadataServlet", description = "Returns Suite Metadata", immediate = true, metatype = true,
+@Component(label = "MetadataServlet", description = "Returns Suite Metadata", immediate = true,
         policy = ConfigurationPolicy.IGNORE)
 public class MetadataServlet extends BasicDataServlet {
 

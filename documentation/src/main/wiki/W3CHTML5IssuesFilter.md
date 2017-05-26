@@ -19,7 +19,7 @@ Comparators: **w3c-html5**
 
 *Note:*
 - `message` will be overridden by `messagePattern` if set.
-- If there are some If some XML-specific charactes (e.g. `&`) are in parameter's value, then they have to be escaped. Suite should be valid XML document.
+- If there are some XML-specific charactes (e.g. `&`) in parameter's value, then they have to be escaped. Suite should be valid XML document.
 
 ##### Example Usage for w3c-html5 comparator
 

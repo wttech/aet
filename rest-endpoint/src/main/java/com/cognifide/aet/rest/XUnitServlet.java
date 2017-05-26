@@ -51,7 +51,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
 @Service
-@Component(label = "XUnitServlet", description = "Provides xunit test result", immediate = true, metatype = true,
+@Component(label = "XUnitServlet", description = "Provides xunit test result", immediate = true,
         policy = ConfigurationPolicy.IGNORE)
 public class XUnitServlet extends BasicDataServlet {
 
