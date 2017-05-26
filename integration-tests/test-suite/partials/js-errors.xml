@@ -72,7 +72,7 @@
 		<compare>
 			<js-errors>
 				<js-errors-filter errorPattern="\w+: nonExistingJsFunction is \d*(not |un)defined" />
-				<js-errors-filter line="22" />
+				<js-errors-filter line="390" />
 			</js-errors>
 		</compare>
 		<urls>

@@ -44,7 +44,7 @@ Feature: Tests Results Filtering
     Given I have opened sample tests report page
     When I search for tests containing "jserrors"
     Then There are 14 tiles visible
-    And Statistics text contains "14 ( 7 / 0 / 7 / 0 )"
+    And Statistics text contains "14 ( 6 / 0 / 8 / 0 )"
     
   Scenario: Filtering Tests Results: source
     Given I have opened sample tests report page
