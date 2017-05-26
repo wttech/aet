@@ -47,8 +47,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Service
-@Component(label = "MetadataServlet", description = "Returns Suite Metadata", immediate = true,
-        policy = ConfigurationPolicy.IGNORE)
+@Component(label = "MetadataServlet", description = "Returns Suite Metadata", immediate = true)
 public class MetadataServlet extends BasicDataServlet {
 
   private static final long serialVersionUID = 100244101178249562L;
