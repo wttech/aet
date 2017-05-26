@@ -17,33 +17,35 @@
     limitations under the License.
 
 -->
-<features xmlns="http://karaf.apache.org/xmlns/features/v1.0.0">
+<features xmlns="http://karaf.apache.org/xmlns/features/v1.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://karaf.apache.org/xmlns/features/v1.0.0 http://karaf.apache.org/xmlns/features/v1.0.0">
+
     <repository>mvn:org.apache.activemq/activemq-karaf/5.13.1/xml/features</repository>
     <repository>mvn:org.apache.cxf.karaf/apache-cxf/2.7.5/xml/features</repository>
-    <feature name="aet-features" version="0.6.0">
+
+    <feature name="aet-features" version="0.7.0">
+        <feature>wrap</feature>
+
         <feature>scr</feature>
         <feature>war</feature>
-        <feature>webconsole</feature>
-        <feature>webconsole-scr</feature>
         <feature>cxf</feature>
         <feature>cxf-http</feature>
+
         <bundle start-level="50">wrap:mvn:org.apache.ant/ant/1.8.2</bundle>
         <bundle start-level="50">wrap:mvn:aopalliance/aopalliance/1.0</bundle>
         <bundle start-level="50">mvn:org.bouncycastle/bcpkix-jdk15on/1.48</bundle>
         <bundle start-level="50">mvn:org.bouncycastle/bcprov-jdk15on/1.48</bundle>
         <bundle start-level="50">wrap:mvn:cglib/cglib-nodep/2.2.2</bundle>
-        <bundle start-level="50">mvn:commons-codec/commons-codec/1.8</bundle>
-        <bundle start-level="50">mvn:commons-collections/commons-collections/3.2.1</bundle>
-        <bundle start-level="50">mvn:commons-fileupload/commons-fileupload/1.3.2</bundle>
-        <bundle start-level="50">mvn:commons-io/commons-io/2.4</bundle>
-        <bundle start-level="50">mvn:org.apache.commons/commons-lang3/3.3.2</bundle>
-        <bundle start-level="50">mvn:org.apache.commons/commons-exec/1.1</bundle>
+
+        <feature>aet-commons-apache</feature>
+
         <bundle start-level="50">wrap:mvn:net.sourceforge.cssparser/cssparser/0.9.9</bundle>
         <bundle start-level="50">wrap:mvn:com.google.code.gson/gson/2.6.1</bundle>
         <bundle start-level="50">mvn:com.google.guava/guava/15.0</bundle>
-        <bundle start-level="50">mvn:com.google.inject/guice/3.0</bundle>
-        <bundle start-level="50">mvn:com.google.inject.extensions/guice-assistedinject/3.0</bundle>
-        <bundle start-level="50">mvn:com.google.inject.extensions/guice-servlet/3.0</bundle>
+
+        <feature>aet-guice</feature>
+
         <bundle start-level="50">mvn:org.apache.sling/org.apache.sling.commons.osgi/2.2.2</bundle>
         <bundle start-level="50">wrap:mvn:org.hamcrest/hamcrest-core/1.3</bundle>
         <bundle start-level="50">wrap:mvn:net.sourceforge.htmlunit/htmlunit/2.13</bundle>
@@ -53,7 +55,6 @@
         <bundle start-level="50">wrap:mvn:org.apache.httpcomponents/httpmime/4.3.3</bundle>
         <bundle start-level="50">mvn:org.codehaus.jackson/jackson-core-asl/1.9.13</bundle>
         <bundle start-level="50">mvn:org.codehaus.jackson/jackson-mapper-asl/1.9.13</bundle>
-        <bundle start-level="50">wrap:mvn:javax.inject/javax.inject/1</bundle>
         <bundle start-level="50">wrap:mvn:net.jcip/jcip-annotations/1.0</bundle>
         <bundle start-level="50">wrap:mvn:net.sf.jopt-simple/jopt-simple/3.2</bundle>
         <bundle start-level="50">wrap:mvn:mx4j/mx4j-tools/3.0.1</bundle>
@@ -83,7 +84,7 @@
         <bundle start-level="50">mvn:org.mongodb/mongo-java-driver/3.2.2</bundle>
         <bundle start-level="50">mvn:commons-beanutils/commons-beanutils/1.9.2</bundle>
         <!--GRID FS bundles-->
- 
+
         <!--  AET-344   (REST)-->
         <bundle start-level="50">wrap:mvn:org.codehaus.jackson/jackson-jaxrs/1.9.12</bundle>
         <bundle start-level="50">wrap:mvn:org.codehaus.jackson/jackson-xc/1.9.12</bundle>
@@ -91,5 +92,26 @@
 
 
         <feature>activemq-client</feature>
+    </feature>
+
+
+    <feature name="aet-commons-apache" version="0.7.0">
+        <bundle start-level="50">mvn:commons-codec/commons-codec/1.8</bundle>
+        <bundle start-level="50">mvn:commons-collections/commons-collections/3.2.1</bundle>
+        <bundle start-level="50">mvn:commons-fileupload/commons-fileupload/1.3.2</bundle>
+        <bundle start-level="50">mvn:commons-io/commons-io/2.4</bundle>
+        <bundle start-level="50">mvn:org.apache.commons/commons-lang3/3.3.2</bundle>
+        <bundle start-level="50">mvn:org.apache.commons/commons-exec/1.1</bundle>
+    </feature>
+
+
+    <feature name="aet-guice" version="0.7.0">
+        <feature>wrap</feature>
+
+        <bundle start-level="50">wrap:mvn:javax.inject/javax.inject/1</bundle>
+
+        <bundle start-level="50">mvn:com.google.inject/guice/3.0</bundle>
+        <bundle start-level="50">mvn:com.google.inject.extensions/guice-assistedinject/3.0</bundle>
+        <bundle start-level="50">mvn:com.google.inject.extensions/guice-servlet/3.0</bundle>
     </feature>
 </features>
