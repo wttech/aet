@@ -82,6 +82,7 @@
   &-blocks {
     display: flex;
     flex-wrap: nowrap;
+    z-index: 100;
 
     &.is-absolute {
       right: 0;
@@ -195,6 +196,10 @@
   .toolbar-blocks {
     display: inline;
   }
+}
+
+.important-message {
+  background: $warning_bg;
 }
 
 .button-dark.js-trigger-modal {

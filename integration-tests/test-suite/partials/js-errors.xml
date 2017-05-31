@@ -63,7 +63,7 @@
 		</urls>
 	</test>
 
-	<test name="comparator-JsErrors-FAILED-filter-by-error-name">
+	<test name="comparator-JsErrors-SUCCESS-mix-of-filters">
 		<collect>
 			<open />
 			<sleep duration="1000" />
@@ -71,155 +71,13 @@
 		</collect>
 		<compare>
 			<js-errors>
-				<js-errors-filter
-					error="ReferenceError: nonExistingJsFunction is not defined" />
+				<js-errors-filter errorPattern="\w+: nonExistingJsFunction is \d*(not |un)defined" />
+				<js-errors-filter line="390" />
 			</js-errors>
 		</compare>
 		<urls>
 			<url href="comparators/jserrors/failed.jsp" />
 		</urls>
 	</test>
-
-	<test name="comparator-JsErrors-FAILED-filter-by-source-external-only">
-		<collect>
-			<open />
-			<sleep duration="2000" />
-			<js-errors />
-		</collect>
-		<compare>
-			<js-errors>
-				<js-errors-filter
-					source="sanity/comparators/jserrors/failed-mainAndExternalJS.jsp" />
-			</js-errors>
-		</compare>
-		<urls>
-			<url href="comparators/jserrors/failed-mainAndExternalJS.jsp" />
-		</urls>
-	</test>
-
-	<test name="comparator-JsErrors-FAILED-filter-by-source-mainpage-only">
-		<collect>
-			<open />
-			<sleep duration="2000" />
-			<js-errors />
-		</collect>
-		<compare>
-			<js-errors>
-				<js-errors-filter
-					source="sanity/comparators/jserrors/failed-externalJS.jsp" />
-			</js-errors>
-		</compare>
-		<urls>
-			<url href="comparators/jserrors/failed-externalJS.jsp" />
-		</urls>
-	</test>
-
-	<test
-		name="comparator-JsErrors-SUCCESS-filter-by-source-mainpage-and-external">
-		<collect>
-			<open />
-			<sleep duration="2000" />
-			<js-errors />
-		</collect>
-		<compare>
-			<js-errors>
-				<js-errors-filter source="comparators/jserrors/failed-mainAndExternalJS.jsp" />
-				<js-errors-filter source="comparators/jserrors/jsFileWithError.js" />
-			</js-errors>
-		</compare>
-		<urls>
-			<url href="comparators/jserrors/failed-mainAndExternalJS.jsp" />
-		</urls>
-	</test>
-
-	<test name="comparator-JsErrors-FAILED-filter-by-source-and-line-number-20">
-		<collect>
-			<open />
-			<sleep duration="1000" />
-			<js-errors />
-		</collect>
-		<compare>
-			<js-errors>
-				<js-errors-filter source="failed.jsp" line="20" />
-			</js-errors>
-		</compare>
-		<urls>
-			<url href="comparators/jserrors/failed.jsp" />
-		</urls>
-	</test>
-
-
-	<test
-		name="comparator-JsErrors-SUCCESS-filter-by-source-and-line-number-22-and-390">
-		<collect>
-			<open />
-			<sleep duration="1000" />
-			<js-errors />
-		</collect>
-		<compare>
-			<js-errors>
-				<js-errors-filter source="failed.jsp" line="22" />
-				<js-errors-filter source="failed.jsp" line="390" />
-			</js-errors>
-		</compare>
-		<urls>
-			<url href="comparators/jserrors/failed.jsp" />
-		</urls>
-	</test>
-
-
-	<test name="comparator-JsErrors-SUCCESS-filter-by-error-name">
-		<collect>
-			<open />
-			<sleep duration="1000" />
-			<js-errors />
-		</collect>
-		<compare>
-			<js-errors>
-				<js-errors-filter error="ReferenceError: nonExistingJsFunction is not defined" />
-				<js-errors-filter error="ReferenceError: nonExistingVariable is not defined" />
-			</js-errors>
-		</compare>
-		<urls>
-			<url href="comparators/jserrors/failed.jsp" />
-		</urls>
-	</test>
-
-	<test
-		name="comparator-JsErrors-SUCCESS-filter-by-error-name-external-resource">
-		<collect>
-			<open />
-			<sleep duration="1000" />
-			<js-errors />
-		</collect>
-		<compare>
-			<js-errors>
-				<js-errors-filter
-					error="ReferenceError: nonExistingJsFunction is not defined" />
-				<js-errors-filter
-					error="ReferenceError: nonExistingVariable is not defined" />
-			</js-errors>
-		</compare>
-		<urls>
-			<url href="comparators/jserrors/failed.jsp" />
-		</urls>
-	</test>
-
-	<test
-		name="comparator-JsErrors-SUCCESS-filter-by-file-source-external-resource">
-		<collect>
-			<open />
-			<sleep duration="1000" />
-			<js-errors />
-		</collect>
-		<compare>
-			<js-errors>
-				<js-errors-filter source="jsFileWithError.js" />
-			</js-errors>
-		</compare>
-		<urls>
-			<url href="comparators/jserrors/failed-externalJS.jsp" />
-		</urls>
-	</test>
-	<!-- JS ERRORS -Comparator END -->
+	<!-- JS ERRORS-Comparator END -->
 </suite>

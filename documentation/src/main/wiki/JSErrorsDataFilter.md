@@ -14,8 +14,14 @@ Resource name: js-errors
 | Parameter | Value | Description | Mandatory |
 | --------- | ----- | ----------- | --------- |
 |`error`|string error|Exact error message|At least one of parameter is required|
-|`source`|string file name|Source file name (full path including `http://`) in which error occurred|
-|`line`|integer line number|Line number in file in which error occurred|
+|`source`|JavaScript filename suffix (see notes) below|Source file name in which error occurred|At least one of parameter is required|
+|`errorPattern` | pattern error text | Regular expression that matches message text of issue to be filter out|At least one parameter is required|
+|`line`  integer line number|Line number in file in which error occurred| |At least one of parameter is required|
+
+*Note:*
+- filter will check if value of `source` param is a suffix of JS error source. So we can use `"/jquery-1.8.3.js"` to filter errors from all JQuery files regardless of path or even filter errors from all JavaScript files with `".js"`.
+- `error` param will be overridden by `errorPattern` if set
+- If there are some If some XML-specific charactes (e.g. `&`) are in parameter's value, then they have to be escaped. Suite should be valid XML document.
 
 ##### Example Usage
 
@@ -39,6 +45,10 @@ In this sample exact match of js error from file  "[http://w.iplsc.com/external/
                     error="Error: Syntax error, unrecognized expression: .iwa_block=pasek-ding"
                     line="2"
                     source="http://w.iplsc.com/external/jquery/jquery-1.8.3.js" />
+                <js-errors-filter
+                    source="/some/path/to/custom.js" />
+                <js-errors-filter
+                    errorPattern="^.*Syntax error, unrecognized expression.*$" />                    
             </js-errors>
             ...
         </compare>

@@ -17,11 +17,18 @@
  */
 define([], function () {
 	'use strict';
-	return ['$scope', '$rootScope', '$uibModal', '$stateParams', 'patternsService', 'metadataAccessService', 'notesService', 'viewModeService', ToolbarBottomController];
+	return ['$scope', '$rootScope', '$uibModal', '$stateParams',
+		'patternsService', 'metadataAccessService', 'notesService', 'viewModeService', 'suiteInfoService',
+		ToolbarBottomController];
 
-	function ToolbarBottomController($scope, $rootScope, $uibModal, $stateParams, patternsService, metadataAccessService, notesService, viewModeService) {
+	function ToolbarBottomController($scope, $rootScope, $uibModal, $stateParams,
+			patternsService, metadataAccessService, notesService, viewModeService, suiteInfoService) {
 		var vm = this;
 
+		// disables accept button if compared against another suite patterns
+		if (suiteInfoService.getInfo().patternCorrelationId) {
+			vm.usesCrossSuitePattern = true;
+		}
 		vm.showAcceptButton = patternsMayBeUpdated;
 		vm.showRevertButton = patternsMarkedForUpdateMayBeReverted;
 		vm.displayCommentModal = displayCommentModal;
@@ -60,6 +67,9 @@ define([], function () {
 				var patternsToAcceptLeft = vm.model.patternsToAccept - vm.model.acceptedPatterns;
 				result = patternsToAcceptLeft > 0;
 			}
+			if (vm.usesCrossSuitePattern) {
+				result = false;
+			}
 			return result;
 
 		}
@@ -68,6 +78,9 @@ define([], function () {
 			var result = false;
 			if (vm.model) {
 				result = vm.model.acceptedPatterns > 0 && vm.model.acceptedPatterns <= vm.model.patternsToAccept;
+			}
+			if (vm.usesCrossSuitePattern) {
+				result = false;
 			}
 			return result;
 		}

@@ -17,12 +17,23 @@
  */
 package com.cognifide.aet.communication.api.metadata;
 
+import com.cognifide.aet.communication.api.metadata.gson.CollectionSerializer;
+import com.cognifide.aet.communication.api.metadata.gson.MapSerializer;
+import com.cognifide.aet.communication.api.metadata.gson.TimestampSerializer;
 import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 
 import com.cognifide.aet.communication.api.util.ValidatorProvider;
 
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+
+import java.io.Reader;
+import java.lang.reflect.Type;
+import java.util.Collection;
+import java.util.Map;
 import org.hibernate.validator.constraints.NotBlank;
 
 import java.io.Serializable;
@@ -39,7 +50,14 @@ import javax.validation.constraints.Size;
 
 public class Suite implements Serializable, Commentable, Named, Validatable {
 
-  private static final long serialVersionUID = -4621145477713271743L;
+  private static final long serialVersionUID = 3602287822306302730L;
+  private static final Gson GSON_FOR_JSON = new GsonBuilder()
+      .registerTypeHierarchyAdapter(Collection.class, new CollectionSerializer())
+      .registerTypeHierarchyAdapter(Map.class, new MapSerializer())
+      .registerTypeAdapter(Suite.Timestamp.class, new TimestampSerializer())
+      .create();
+  private static final Type SUITE_TYPE = new TypeToken<Suite>() {
+  }.getType();
 
   @NotBlank
   private final String correlationId;
@@ -74,12 +92,15 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
   @Valid
   private final List<Test> tests = new ArrayList<>();
 
-  public Suite(String correlationId, String company, String project, String name) {
+  private final String patternCorrelationId;
+
+  public Suite(String correlationId, String company, String project, String name, String patternCorrelationId) {
     this.correlationId = correlationId;
     this.company = company;
     this.project = project;
     this.name = name;
-    runTimestamp = new Timestamp(System.currentTimeMillis());
+    this.runTimestamp = new Timestamp(System.currentTimeMillis());
+    this.patternCorrelationId = patternCorrelationId;
   }
 
   public String getCorrelationId() {
@@ -127,8 +148,8 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
     this.runTimestamp = runTimestamp;
   }
 
-  public Statistics getStatistics() {
-    return statistics;
+  public String getPatternCorrelationId() {
+    return patternCorrelationId;
   }
 
   public void setStatistics(Statistics statistics) {
@@ -195,6 +216,14 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
     }
   }
 
+  public static Suite fromJson(Reader jsonReader) {
+    return GSON_FOR_JSON.fromJson(jsonReader, SUITE_TYPE);
+  }
+
+  public String toJson() {
+    return GSON_FOR_JSON.toJson(this, SUITE_TYPE);
+  }
+
   @Override
   public void setComment(String comment) {
     this.comment = comment;
@@ -204,7 +233,6 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
   public String getComment() {
     return comment;
   }
-
 
   public static class Timestamp implements Serializable {
 

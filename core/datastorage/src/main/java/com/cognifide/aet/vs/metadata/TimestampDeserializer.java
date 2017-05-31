@@ -21,9 +21,6 @@ import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
-import com.google.gson.JsonSerializationContext;
-import com.google.gson.JsonSerializer;
 
 import com.cognifide.aet.communication.api.metadata.Suite;
 
@@ -32,12 +29,8 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 
-class TimestampSerializer implements JsonSerializer<Suite.Timestamp>, JsonDeserializer<Suite.Timestamp> {
 
-  @Override
-  public JsonElement serialize(Suite.Timestamp src, Type typeOfSrc, JsonSerializationContext context) {
-    return src == null ? null : new JsonPrimitive(src.get());
-  }
+class TimestampDeserializer implements JsonDeserializer<Suite.Timestamp> {
 
   @Override
   public Suite.Timestamp deserialize(JsonElement json, Type typeOfT, JsonDeserializationContext context) {

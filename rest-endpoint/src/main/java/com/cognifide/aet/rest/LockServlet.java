@@ -41,8 +41,7 @@ import javax.servlet.http.HttpServletResponse;
 
 
 @Service
-@Component(label = "LocksServlet", description = "Provides lock services for clients", immediate = true, metatype = true,
-        policy = ConfigurationPolicy.IGNORE)
+@Component(label = "LocksServlet", description = "Provides lock services for clients", immediate = true)
 public class LockServlet extends HttpServlet {
 
   private static final long serialVersionUID = 101244102274582495L;

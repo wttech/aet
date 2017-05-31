@@ -24,7 +24,7 @@
   <parent>
     <artifactId>aet-root</artifactId>
     <groupId>com.cognifide.aet</groupId>
-    <version>2.0.3-SNAPSHOT</version>
+    <version>2.1.1-SNAPSHOT</version>
     <relativePath>../..</relativePath>
   </parent>
 
@@ -33,6 +33,11 @@
 
   <name>AET :: Integration Tests :: Test Suite</name>
   <description>AET test suites for integration (sanity) tests</description>
+
+  <properties>
+    <!-- Provided as maven property because we want to configure it for different environments. -->
+    <login.page.domain>http://192.168.123.100:9090/sample-site/sanity/</login.page.domain>
+  </properties>
 
   <build>
     <plugins>
@@ -53,11 +58,37 @@
       <build>
         <plugins>
           <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-resources-plugin</artifactId>
+            <executions>
+              <!-- process login modifier template to insert correct domain -->
+              <execution>
+                <phase>generate-sources</phase>
+                <goals>
+                  <goal>copy-resources</goal>
+                </goals>
+                <configuration>
+                  <outputDirectory>${project.basedir}/partials</outputDirectory>
+                  <resources>
+                    <resource>
+                      <directory>${project.basedir}/partials-templates</directory>
+                      <filtering>true</filtering>
+                      <includes>
+                        <include>loginmodifier.xml</include>
+                      </includes>
+                    </resource>
+                  </resources>
+                </configuration>
+              </execution>
+            </executions>
+          </plugin>
+          <plugin>
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>xml-maven-plugin</artifactId>
             <version>1.0.1</version>
             <executions>
               <execution>
+                <phase>generate-sources</phase>
                 <goals>
                   <goal>transform</goal>
                 </goals>

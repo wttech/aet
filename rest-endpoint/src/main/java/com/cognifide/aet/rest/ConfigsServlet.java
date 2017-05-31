@@ -49,8 +49,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Service
-@Component(label = "ConfigsServlet", description = "Provides config for clients a", immediate = true, metatype = true,
-    policy = ConfigurationPolicy.IGNORE)
+@Component(label = "ConfigsServlet", description = "Provides config for clients a", immediate = true)
 public class ConfigsServlet extends HttpServlet {
 
   private static final long serialVersionUID = 101244102274582495L;

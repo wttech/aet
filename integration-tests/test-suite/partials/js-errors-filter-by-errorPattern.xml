@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    Automated Exploratory Tests
+
+    Copyright (C) 2013 Cognifide Limited
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<suite name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
+
+	<!-- JS ERRORS-Comparator START -->
+	<test name="comparator-JsErrors-FAILED-one-error-left-unfiltered">
+		<collect>
+			<open />
+			<sleep duration="1000" />
+			<js-errors />
+		</collect>
+		<compare>
+			<js-errors>
+				<js-errors-filter errorPattern="[\w]+: nonExistingJsFunction is [\w]+" />
+				<js-errors-filter errorPattern="[\w]* some non-existing error \d+" />
+			</js-errors>
+		</compare>
+		<urls>
+			<url href="comparators/jserrors/failed.jsp" />
+		</urls>
+	</test>
+	<!-- JS ERRORS-Comparator END -->
+</suite>

@@ -26,6 +26,10 @@
   line-height: 41px;
   padding: 0 11px;
 
+  &-disabled {
+    cursor: default;
+  }
+
   &-dark {
     background: $gray-darker;
   }

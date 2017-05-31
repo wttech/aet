@@ -17,23 +17,20 @@
  */
 package com.cognifide.aet.sanity.functional;
 
-public enum TestStatus{
+public enum TestStatus {
 
-        SUCCESS("passed","PASSED"),
-        WARN("warning","WARNING"),
-        FAIL("failed","FAILED"),
-        REBASED("rebased","REBASED");
+  SUCCESS("passed"),
+  WARN("warning"),
+  FAIL("failed"),
+  REBASED("rebased");
 
-private final String asideUrlCssClass;
+  private final String cssClass;
 
-private final String tileCssClass;
+  TestStatus(String cssClass) {
+    this.cssClass = cssClass;
+  }
 
-        TestStatus(String asideUrlCssClass,String tileCssClass){
-        this.asideUrlCssClass=asideUrlCssClass;
-        this.tileCssClass=tileCssClass;
-        }
-
-public String getTileCssClass(){
-        return tileCssClass;
-        }
-        }
+  public String getCssClass() {
+    return cssClass;
+  }
+}

@@ -24,7 +24,7 @@
   <parent>
     <artifactId>core</artifactId>
     <groupId>com.cognifide.aet</groupId>
-    <version>2.0.3-SNAPSHOT</version>
+    <version>2.1.1-SNAPSHOT</version>
   </parent>
 
   <artifactId>cleaner</artifactId>
@@ -111,6 +111,11 @@
     <dependency>
       <groupId>org.powermock</groupId>
       <artifactId>powermock-api-mockito</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.google.code.gson</groupId>
+      <artifactId>gson</artifactId>
+      <scope>test</scope>
     </dependency>
 
     <dependency>

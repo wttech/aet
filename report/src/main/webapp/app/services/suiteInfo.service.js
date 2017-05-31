@@ -45,12 +45,13 @@ define(['angularAMD', 'metadataService'], function (angularAMD) {
 				suite = metadataService.getSuite();
 				suiteInfo = {
 					correlationId: suite.correlationId,
+					patternCorrelationId: suite.patternCorrelationId,
 					company: suite.company,
 					project: suite.project,
 					name: suite.name,
 					version: suite.version,
-					lastUpdate: suite.runTimestamp.value,
-          duration: suite.statistics ? suite.statistics.duration : 'Not available'
+					lastUpdate: suite.runTimestamp,
+					duration: suite.statistics ? suite.statistics.duration : 'Not available'
 				};
 			}
 			return suiteInfo;

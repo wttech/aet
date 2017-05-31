@@ -12,13 +12,14 @@ Comparators: **w3c-html5**
 
 | Parameter | Value | Description | Mandatory |
 | --------- | ----- | ----------- | --------- |
-| `message` | string | Prefix or all message text of issue to be filter out | At least one of params should be used and all of used params should be not empty. |
+| `message` | string | Exact message text of issue to be filter out. *see notes below | At least one of params should be used and all of used params should be not empty. |
+| `messagePattern` | regexp | Regular expression that matches message text of issue to be filter out. *see notes below | At least one of params should be used and all of used params should be not empty. |
 | `line` | integer | Line in source file where issue appear | |
 | `column` | integer | Column in source file where issue appear | |
 
-| ! Note |
-|:------ |
-| If there are some If some XML-specific charactes (e.g. `&`) are in parameter's value, then they have to be escaped. See example below. |
+*Note:*
+- `message` will be overridden by `messagePattern` if set.
+- If there are some XML-specific charactes (e.g. `&`) in parameter's value, then they have to be escaped. Suite should be valid XML document.
 
 ##### Example Usage for w3c-html5 comparator
 
@@ -36,9 +37,11 @@ Comparators: **w3c-html5**
         <compare>
             ...
             <source comparator="w3c-html5" errors-only="false">
-                <w3c-filter message = "The first occurrence of" />
-                <w3c-filter message = "&#8220;&amp;&#8221; did not start a character reference"/>
+                <w3c-filter messagePattern = "The first occurrence of.*" />
+                <w3c-filter message="A slash was not immediately followed by “&gt;”."/>
+                <w3c-filter message="Element “img” is missing required attribute “src”."/>
                 <w3c-filter line="1" column="119"/>
+                <w3c-filter line="390" message="End tag for  “html” seen, but there were unclosed elements."/>
             </source>
             ...
         </compare>
