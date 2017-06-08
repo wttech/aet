@@ -72,7 +72,7 @@ Then create another file named `pom.xml` with the following content:
     <url>http://www.example.com</url>
 
     <properties>
-        <aet.version>2.0.0</aet.version>
+        <aet.version>2.1.0</aet.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
