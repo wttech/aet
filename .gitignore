@@ -48,3 +48,6 @@ atlassian-ide-plugin.xml
 # aet-vagrant
 /vagrant/.vagrant
 /vagrant/Berksfile.lock
+misc/deployer/.gradle/
+misc/deployer/gradle.properties
+misc/deployer/build/
