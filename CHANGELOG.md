@@ -10,6 +10,12 @@ All notable changes to AET will be documented in this file.
 ## Unreleased
 **List of changes that are finished but not yet released in any final version.**
 
+## Version 2.1.1-rc1
+### something
+there
+### here
+test change
+
 ## Version 2.1.0
 
 - [PR-110](https://github.com/Cognifide/aet/pull/110) Bobcat version upgrade to [version 1.2.1](https://github.com/Cognifide/bobcat/releases/tag/1.2.1)
