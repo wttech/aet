@@ -19,6 +19,8 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+AET_VERSION = '2.1.0'
+
 VAGRANTFILE_API_VERSION = '2'
 
 Vagrant.require_version '>= 1.9.0'
@@ -72,7 +74,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
           "java_max_mem" => "3072M",
           "enable_debug" => true
         },
-        "version" => "2.1.0"
+        "version" => AET_VERSION
       }
     }
     chef.run_list = [

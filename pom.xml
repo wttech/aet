@@ -85,7 +85,7 @@
 
   <scm>
     <connection>scm:git:https://github.com/Cognifide/aet.git</connection>
-    <developerConnection>scm:git:git@github.com:Cognifide/aet.git</developerConnection>
+    <developerConnection>scm:git:https://github.com/Cognifide/aet.git</developerConnection>
     <tag>HEAD</tag>
     <url>https://github.com/Cognifide/aet</url>
   </scm>
@@ -883,7 +883,6 @@
               and http://maven.apache.org/maven-release/maven-release-plugin/prepare-mojo.html#arguments
             -->
             <keyname>${gpg.keyname}</keyname>
-            <executable>gpg2</executable>
           </configuration>
         </plugin>
       </plugins>
