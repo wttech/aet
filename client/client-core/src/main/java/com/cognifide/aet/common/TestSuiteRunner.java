@@ -143,8 +143,8 @@ public class TestSuiteRunner {
     try {
       String xUnitFullUrl = endpointDomain + xUnitUrl;
       new ReportWriter().write(buildDirectory, xUnitFullUrl, "xunit-report.xml");
-    } catch (IOException e) {
-      Logger.error(this, "Failed to obtain xUnit report from: %s", xUnitUrl, e);
+    } catch (IOException ioe) {
+      Logger.error(this, "Failed to obtain xUnit report from: %s. Error: %s", xUnitUrl, ioe.getMessage());
     }
   }
 
