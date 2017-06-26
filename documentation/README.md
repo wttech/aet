@@ -25,7 +25,6 @@ Below are instructions how to prepare documentation of a new released applicatio
 
 #### Prerequisites
 * `node.js` installed.
-* `doctoc` node module installed globally (`npm install -g doctoc`).
 
 #### Steps
 1. Make sure that `package.json` file contains correct version number.
