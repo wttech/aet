@@ -117,6 +117,15 @@
                   <arguments>build</arguments>
                 </configuration>
               </execution>
+              <execution>
+                <id>generates TOC</id>
+                <goals>
+                  <goal>npm</goal>
+                </goals>
+                <configuration>
+                  <arguments>run doctoc</arguments>
+                </configuration>
+              </execution>
             </executions>
             <configuration>
               <workingDirectory>src/main</workingDirectory>

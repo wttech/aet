@@ -2,6 +2,9 @@
   "name": "aet-documentation",
   "description": "AET Documentation",
   "version": "2.1.1-SNAPSHOT",
+  "scripts": {
+    "doctoc": "node node_modules/doctoc/doctoc.js --github --maxlevel 3 ./wiki/releases/2.1.1-SNAPSHOT/Documentation-2.1.1-SNAPSHOT.md"
+  },
   "devDependencies": {
     "doctoc": "^1.3.0",
     "fs-extra": "^0.30.0",
