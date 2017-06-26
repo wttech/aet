@@ -30,11 +30,10 @@ Below are instructions how to prepare documentation of a new released applicatio
 1. Make sure that `package.json` file contains correct version number.
 2. Run maven build with `process-docs` profile.
 3. There should be compiled single page `Documentation-<version>.md` file in `wiki/releases/<version>` directory.
-4. From `wiki/releases/<version>` directory run command: `doctoc --maxlevel 3 Documentation-<version>.md`.
-5. Check generated TOC in `Documentation-<version>.md`. You can modify its heading if you want.
-6. Add link to generated release file to `wiki/_Sidebar.md` file if it is not present. Note that link target should be just page name without path and extension, ie. `Documentation-1.0.0.md` rather than `releases/Documentation-1.0.0.md`.
-7. Commit changes to main AET repository.
-8. Copy contents of `wiki` directory to main directory of github wiki repository, commit and push changes.
+4. Check generated TOC in `Documentation-<version>.md`. You can modify its heading if you want.
+5. Add link to generated release file to `wiki/_Sidebar.md` file if it is not present. Note that link target should be just page name without path and extension, ie. `Documentation-1.0.0.md` rather than `releases/Documentation-1.0.0.md`.
+6. Commit changes to main AET repository.
+7. Copy contents of `wiki` directory to main directory of github wiki repository, commit and push changes.
 
 ### Known issues
 * Wiki pages cannot contain regular expressions inside inline block codes since it causes issues with generating of release documentation file. E.g. **\`^.\*js\`** is not allowed.
