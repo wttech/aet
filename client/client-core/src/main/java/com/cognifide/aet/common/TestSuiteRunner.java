@@ -111,7 +111,7 @@ public class TestSuiteRunner {
     }
   }
 
-  private SuiteExecutionResult startSuiteExecution(File testSuite) throws IOException {
+  private SuiteExecutionResult startSuiteExecution(File testSuite) {
     MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create()
         .addBinaryBody("suite", testSuite, ContentType.APPLICATION_XML, testSuite.getName());
     if (domain != null) {
