@@ -44,6 +44,8 @@ atlassian-ide-plugin.xml
 /documentation/src/main/node
 # npm packages
 /documentation/src/main/node_modules/
+# auto-generated file
+/documentation/src/main/markdown.json
 
 # aet-vagrant
 /vagrant/.vagrant
