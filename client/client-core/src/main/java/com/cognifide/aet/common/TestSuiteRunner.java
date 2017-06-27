@@ -23,8 +23,10 @@ import com.cognifide.aet.communication.api.execution.SuiteStatusResult;
 import com.jcabi.log.Logger;
 
 import org.apache.http.HttpEntity;
+import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.fluent.Request;
+import org.apache.http.client.fluent.Response;
 import org.apache.http.entity.ContentType;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
 
@@ -109,7 +111,7 @@ public class TestSuiteRunner {
     }
   }
 
-  private SuiteExecutionResult startSuiteExecution(File testSuite) throws IOException {
+  private SuiteExecutionResult startSuiteExecution(File testSuite) {
     MultipartEntityBuilder entityBuilder = MultipartEntityBuilder.create()
         .addBinaryBody("suite", testSuite, ContentType.APPLICATION_XML, testSuite.getName());
     if (domain != null) {
@@ -119,12 +121,30 @@ public class TestSuiteRunner {
       entityBuilder.addTextBody("pattern", patternCorrelationId);
     }
     HttpEntity entity = entityBuilder.build();
-    return Request.Post(getSuiteUrl())
-        .body(entity)
-        .connectTimeout(timeout)
-        .socketTimeout(timeout)
-        .execute()
-        .handleResponse(suiteExecutionResponseHandler);
+
+    return retrieveSuiteExecutionResult(entity, timeout);
+  }
+
+  private SuiteExecutionResult retrieveSuiteExecutionResult(HttpEntity entity, int httpTimeout) {
+    SuiteExecutionResult result;
+    try {
+      Response response = Request.Post(getSuiteUrl())
+          .body(entity)
+          .connectTimeout(httpTimeout)
+          .socketTimeout(httpTimeout)
+          .execute();
+      result = response.handleResponse(suiteExecutionResponseHandler);
+    } catch (HttpResponseException re) {
+      String msg = String.format("Unexpected response for suite status. Status: %s, message: %s.",
+          re.getStatusCode(),
+          re.getMessage()
+      );
+      result = SuiteExecutionResult.createErrorResult(msg);
+    } catch (IOException ioe) {
+      String msg = "Error while checking suite execution status: " + ioe.getMessage();
+      result = SuiteExecutionResult.createErrorResult(msg);
+    }
+    return result;
   }
 
   private String getSuiteUrl() {
