@@ -10,6 +10,9 @@ All notable changes to AET will be documented in this file.
 ## Unreleased
 **List of changes that are finished but not yet released in any final version.**
 
+## Version 2.1.1
+
+
 - [PR-128](https://github.com/Cognifide/aet/pull/128) Documentation update for advanced (Linux + Windows) AET setup
 - [PR-125](https://github.com/Cognifide/aet/pull/125), [PR-130](https://github.com/Cognifide/aet/pull/130) improvements for release process automation
 - [PR-127](https://github.com/Cognifide/aet/pull/127), [PR-129](https://github.com/Cognifide/aet/pull/129) updates for AET suite processing error logging
