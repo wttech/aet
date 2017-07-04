@@ -205,7 +205,10 @@ public class SuiteExecutor {
   }
 
   private boolean lockTestSuite(Suite suite) {
-    return lockService.trySetLock(suite.getSuiteIdentifier(), suite.getCorrelationId());
+    String suiteIdentifier = suite.getSuiteIdentifier();
+    String correlationId = suite.getCorrelationId();
+    LOGGER.debug("locking suite: '{}' with correlation id: '{}'", suiteIdentifier, correlationId);
+    return lockService.trySetLock(suiteIdentifier, correlationId);
   }
 
   private SuiteRunner createSuiteRunner(Suite suite) throws JMSException {
