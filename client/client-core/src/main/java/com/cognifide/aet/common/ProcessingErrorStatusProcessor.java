@@ -31,6 +31,7 @@ public class ProcessingErrorStatusProcessor implements StatusProcessor {
 
   @Override
   public void process() throws AETException {
-    Logger.warn(this, suiteStatusResult.getMessage());
+    Logger.warn(this, "Received processing error status: %s. Message: %s.",
+        suiteStatusResult.getStatus(), suiteStatusResult.getMessage());
   }
 }

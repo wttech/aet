@@ -31,6 +31,7 @@ public class UnexpectedStatusProcessor implements StatusProcessor {
 
   @Override
   public void process() throws AETException {
-    Logger.warn(this, "Received unexpected status: %s.", suiteStatusResult.getStatus());
+    Logger.warn(this, "Received unexpected status: %s. Message: %s.",
+        suiteStatusResult.getStatus(), suiteStatusResult.getMessage());
   }
 }
