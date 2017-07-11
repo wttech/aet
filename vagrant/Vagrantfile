@@ -19,7 +19,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-AET_VERSION = '2.1.1'
+AET_VERSION = '2.1.2'
 
 VAGRANTFILE_API_VERSION = '2'
 
