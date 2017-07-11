@@ -9,6 +9,7 @@ All notable changes to AET will be documented in this file.
 
 ## Unreleased
 **List of changes that are finished but not yet released in any final version.**
+- [PR-135](https://github.com/Cognifide/aet/pull/135) Fixed Cleaner removing still valid patterns
 
 ## Version 2.1.1
 

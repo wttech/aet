@@ -107,9 +107,11 @@ public class GetMetadataArtifactsProcessor implements Processor {
     final Set<String> stepArtifacts = new HashSet<>();
     final CollectorStepResult stepResult = step.getStepResult();
     if (stepResult != null && stepResult.getStatus().hasArtifacts()) {
-      stepArtifacts.add(step.getPattern());
       stepArtifacts.add(stepResult.getArtifactId());
       stepArtifacts.addAll(traverseComparators(step));
+    }
+    if (step.getPattern() != null) {
+      stepArtifacts.add(step.getPattern());
     }
     return stepArtifacts;
   }
