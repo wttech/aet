@@ -90,6 +90,6 @@ When you run `green` suite use [[following command|ClientApplication#parameters]
 
 `mvn aet:run -DtestSuite=green.xml -Dpattern=company-project-master-1495191612345`
 
-This option will enforce AET to use the latest version of `master` suite.
-**Remember that `master` suite must be ran before running `green` suite with `patternCorrelationId` option.**
+This option will enforce AET to use patterns from specific version of `master` suite.
+**Remember that `master` suite must be run before running `green` suite with `patternCorrelationId` option.**
  In other case, running `green` suite will be treated as running it for the first time.

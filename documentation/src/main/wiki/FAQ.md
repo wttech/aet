@@ -122,6 +122,21 @@ AET is not integrated with mobile devices. However, you may simulate mobile reso
 page changes its rendering breakpoints for different resolutions. Use [[Resolution Modifier|ResolutionModifier]]
 to simulate different resolutions.
 
+### 3.7 How to get the latest report for the AET test suite?
+AET report are accessible by an URL with suite execution identifier passed in query string, i.e.:
+```
+http://localhost:8181/report/report.html?company=aet&project=aet&correlationId=aet-main-1234567890
+```
+In the example above the latest version of suite with correlation ID of `aet-main-1234567890`.
+To see tha last version of suite without knowing `correlationId` use the URL of following form:
+```
+http://localhost:8181/report/report.html?company=<company>&project=<project>&suite=<suite>
+```
+i.e.:
+```
+http://localhost:8181/report/report.html?company=aet&project=aet&suite=main
+```
+
 ---
 
 ## 4. Best practices
