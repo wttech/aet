@@ -18,6 +18,7 @@ please use the [Issues Tool](https://github.com/Cognifide/aet/issues) to raise a
   - [3.4 How can I simulate another user agent?](#34-how-can-i-simulate-another-user-agent)
   - [3.5 What can I do with elements that render differently each time a page is opened and it occurs in changes detected each time?](#35-what-can-i-do-with-elements-that-render-differently-each-time-a-page-is-opened-and-it-occurs-in-changes-detected-each-time)
   - [3.6 I want to check how my page behaves on mobile devices, how can I do that?](#36-i-want-to-check-how-my-page-behaves-on-mobile-devices-how-can-i-do-that)
+  - [3.7 How to get the latest report for the AET test suite?](#37-how-to-get-the-latest-report-for-the-aet-test-suite)
 - [4. Best practices](#4-best-practices)
   - [4.1 I want to check how my page looks on several devices - what is the best way do configure a suite?](#41-i-want-to-check-how-my-page-looks-on-several-devices---what-is-the-best-way-do-configure-a-suite)
 
