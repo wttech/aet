@@ -87,10 +87,10 @@ public class ComparisonResultsRouterTest extends StepManagerTest {
     ((ComparisonResultsRouter) tested).updateAmountToReceive(1);
 
     ProgressLog progress = tested.getProgress();
-    assertThat(progress.toString(), is("COMPARED: [success: 0, total: 1]"));
+    assertThat(progress.toString(), is("COMPARED: [success:   0, total:   1]"));
     tested.onMessage(mockedMessage);
     progress = tested.getProgress();
-    assertThat(progress.toString(), is("COMPARED: [success: 1, total: 1]"));
+    assertThat(progress.toString(), is("COMPARED: [success:   1, total:   1]"));
   }
 
   @Test
@@ -105,11 +105,11 @@ public class ComparisonResultsRouterTest extends StepManagerTest {
     ((ComparisonResultsRouter) tested).updateAmountToReceive(1);
 
     ProgressLog progress = tested.getProgress();
-    assertThat(progress.toString(), is("COMPARED: [success: 0, total: 1]"));
+    assertThat(progress.toString(), is("COMPARED: [success:   0, total:   1]"));
     tested.onMessage(mockedMessage);
     verify(observer, times(1)).update(Matchers.<Observable>any(), any());
     progress = tested.getProgress();
-    assertThat(progress.toString(), is("COMPARED: [success: 0, failed: 1, total: 1]"));
+    assertThat(progress.toString(), is("COMPARED: [success:   0, failed:   1, total:   1]"));
   }
 
   @Override
