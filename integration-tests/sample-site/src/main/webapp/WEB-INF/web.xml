@@ -20,7 +20,7 @@
 -->
 <web-app version="3.0" xmlns="http://java.sun.com/xml/ns/javaee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3.0.xsd">
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
 
     <display-name>AET Sample Site</display-name>
 
@@ -49,14 +49,18 @@
     </login-config>
 
     <security-role>
-        <role-name>SAMPLE_ROLE</role-name>
         <description>sample role for testing basic authentication</description>
+        <role-name>SAMPLE_ROLE</role-name>
     </security-role>
 
     <!-- Enable directory listings by overriding the server default web.xml -->
     <!-- definition for the default servlet -->
     <servlet>
         <servlet-name>DirectoryListing</servlet-name>
+        <!--
+            For Maven Jetty Plugin please switch to Eclipse Jetty implementation
+        -->
+        <!--<servlet-class>org.eclipse.jetty.servlet.DefaultServlet</servlet-class>-->
         <servlet-class>org.apache.catalina.servlets.DefaultServlet</servlet-class>
         <init-param>
             <param-name>debug</param-name>
