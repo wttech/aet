@@ -39,15 +39,6 @@
     <login.page.domain>http://192.168.123.100:9090/sample-site/sanity/</login.page.domain>
   </properties>
 
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>com.cognifide.aet</groupId>
-        <artifactId>aet-maven-plugin</artifactId>
-      </plugin>
-    </plugins>
-  </build>
-
   <profiles>
     <profile>
       <!-- Assembly test suites from 'partials' catalog into one main-test.xml -->
