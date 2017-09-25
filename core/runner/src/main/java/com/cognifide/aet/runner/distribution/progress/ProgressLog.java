@@ -42,10 +42,10 @@ public class ProgressLog {
   public String toString() {
     String result;
     if (receivedMessagesFailed > 0) {
-      result = String.format("%s: [success: %d, failed: %d, total: %d]", name, receivedMessagesSuccess,
+      result = String.format("%s: [success:% 4d, failed:% 4d, total:% 4d]", name, receivedMessagesSuccess,
               receivedMessagesFailed, toReceiveMessages);
     } else {
-      result = String.format("%s: [success: %d, total: %d]", name, receivedMessagesSuccess,
+      result = String.format("%s: [success:% 4d, total:% 4d]", name, receivedMessagesSuccess,
               toReceiveMessages);
     }
     return result;

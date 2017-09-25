@@ -32,13 +32,13 @@ public class ProgressLogTest {
 
   @Test
   public void toString_withNoFailedMessages_expectMessageWithoutFailed() throws Exception {
-    ProgressLog progressLog = new ProgressLog("name", 5, 0, 5);
-    assertThat(progressLog.toString(), is("name: [success: 5, total: 5]"));
+    ProgressLog progressLog = new ProgressLog("name", 105, 0, 105);
+    assertThat(progressLog.toString(), is("name: [success: 105, total: 105]"));
   }
 
   @Test
   public void toString_withFailedMessages_expectMessageWithFailed() throws Exception {
-    ProgressLog progressLog = new ProgressLog("name", 3, 1, 5);
-    assertThat(progressLog.toString(), is("name: [success: 3, failed: 1, total: 5]"));
+    ProgressLog progressLog = new ProgressLog("name", 33, 1, 34);
+    assertThat(progressLog.toString(), is("name: [success:  33, failed:   1, total:  34]"));
   }
 }

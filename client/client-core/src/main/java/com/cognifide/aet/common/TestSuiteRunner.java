@@ -95,17 +95,21 @@ public class TestSuiteRunner {
               "*** Suite is now processed by the system, progress will be available below. ****");
       Logger.info(this,
               "********************************************************************************");
+      String statusFullUrl = endpointDomain + suiteExecutionResult.getStatusUrl();
+      Logger.debug(this, "Suite status URL: '%s'", statusFullUrl);
       while (runnerTerminator.isActive()) {
         Thread.sleep(STATUS_CHECK_INTERVAL_MILLIS);
-        String statusFullUrl = endpointDomain + suiteExecutionResult.getStatusUrl();
         SuiteStatusResult suiteStatus = getSuiteStatus(statusFullUrl);
         processStatus(runnerTerminator, suiteExecutionResult.getHtmlReportUrl(), suiteStatus);
       }
       if (xUnit) {
-        downloadXUnitTest(suiteExecutionResult.getXunitReportUrl());
+        String xUnitReportPath = suiteExecutionResult.getXunitReportUrl();
+        downloadXUnitTest(xUnitReportPath);
       }
     } catch (IOException | InterruptedException e) {
-      throw new AETException("Failed to process test suite", e);
+      String msg = String.format("Failed to process test suite: '%s'", e.getMessage());
+      Logger.error(this, msg);
+      throw new AETException(msg, e);
     } finally {
       Logger.info(this, "Suite processing finished.");
     }
@@ -162,6 +166,7 @@ public class TestSuiteRunner {
   private void downloadXUnitTest(String xUnitUrl) {
     try {
       String xUnitFullUrl = endpointDomain + xUnitUrl;
+      Logger.debug(this,"XUnit report URL: '%s'", xUnitFullUrl);
       new ReportWriter().write(buildDirectory, xUnitFullUrl, "xunit-report.xml");
     } catch (IOException ioe) {
       Logger.error(this, "Failed to obtain xUnit report from: %s. Error: %s", xUnitUrl, ioe.getMessage());
