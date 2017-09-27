@@ -140,6 +140,10 @@
     <min.maven.version>3.1.0</min.maven.version>
 
     <!--
+        which version of Maven AET plugin should be used for integration tests
+    -->
+    <aet.version>${project.version}</aet.version>
+    <!--
       this property should be overwritten from commandline
       (see "Release Procedure" section of documentation)
     -->
@@ -596,11 +600,12 @@
       <plugins>
         <!--
           whenever maven-aet-plugin is used we want to use its current version
+          this is set in maven properties nd may be overwritten
         -->
         <plugin>
           <groupId>com.cognifide.aet</groupId>
           <artifactId>aet-maven-plugin</artifactId>
-          <version>${project.version}</version>
+          <version>${aet.version}</version>
         </plugin>
 
         <!-- plugin that keep our poms in good shape -->
