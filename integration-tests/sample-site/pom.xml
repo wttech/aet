@@ -59,8 +59,10 @@
     <pluginManagement>
       <plugins>
         <!--
-            configuration within pluginManagement section
-            only because this plugin has no execution specified
+            for using this plugin please switch to Eclipse Jetty implementation in web.xml file
+
+            configuration within pluginManagement section only
+            because this plugin has no execution specified
             (it is run on-demand from command-line)
         -->
         <plugin>
@@ -88,10 +90,6 @@
     </pluginManagement>
 
     <plugins>
-      <plugin>
-        <groupId>org.eclipse.jetty</groupId>
-        <artifactId>jetty-maven-plugin</artifactId>
-      </plugin>
       <plugin>
         <groupId>org.apache.rat</groupId>
         <artifactId>apache-rat-plugin</artifactId>
