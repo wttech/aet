@@ -28,6 +28,7 @@
         <feature version="0.6.0">aet-crypto</feature>
         <feature version="0.6.0">aet-apache-commons</feature>
         <feature version="0.6.0">aet-features</feature>
+        <feature version="0.6.0">aet-dependencies</feature>
     </feature>
 
     <feature name="aet-features" version="0.6.0">
@@ -38,6 +39,28 @@
         <feature>webconsole-scr</feature>
         <feature>cxf</feature>
         <feature>cxf-http</feature>
+
+        <feature>activemq-client</feature>
+    </feature>
+
+    <feature name="aet-crypto" version="0.6.0" description="Cryptography libraries for AET">
+        <bundle>mvn:org.bouncycastle/bcpkix-jdk15on/1.48</bundle>
+        <bundle>mvn:org.bouncycastle/bcprov-jdk15on/1.48</bundle>
+    </feature>
+
+    <feature name="aet-apache-commons" version="0.6.0" description="Apache Commons for AET">
+        <bundle>mvn:commons-codec/commons-codec/1.8</bundle>
+        <bundle>mvn:commons-collections/commons-collections/3.2.1</bundle>
+        <bundle>mvn:commons-fileupload/commons-fileupload/1.3.2</bundle>
+        <bundle>mvn:commons-io/commons-io/2.4</bundle>
+        <bundle>mvn:org.apache.commons/commons-lang3/3.3.2</bundle>
+        <bundle>mvn:org.apache.commons/commons-exec/1.1</bundle>
+
+        <!-- required by fileupload -->
+        <bundle>mvn:org.apache.felix/org.apache.felix.http.servlet-api/1.1.2</bundle>
+    </feature>
+
+    <feature name="aet-dependencies" version="0.6.0" description="Additional libraries needed by AET">
 
         <bundle>wrap:mvn:org.apache.ant/ant/1.8.2</bundle>
         <bundle>wrap:mvn:aopalliance/aopalliance/1.0</bundle>
@@ -93,25 +116,5 @@
         <bundle>wrap:mvn:org.codehaus.jackson/jackson-jaxrs/1.9.12</bundle>
         <bundle>wrap:mvn:org.codehaus.jackson/jackson-xc/1.9.12</bundle>
         <bundle>wrap:mvn:com.wordnik/swagger-annotations/1.3.9</bundle>
-
-
-        <feature>activemq-client</feature>
-    </feature>
-
-    <feature name="aet-crypto" version="0.6.0" description="Cryptography libraries for AET">
-        <bundle>mvn:org.bouncycastle/bcpkix-jdk15on/1.48</bundle>
-        <bundle>mvn:org.bouncycastle/bcprov-jdk15on/1.48</bundle>
-    </feature>
-
-    <feature name="aet-apache-commons" version="0.6.0" description="Apache Commons for AET">
-        <bundle>mvn:commons-codec/commons-codec/1.8</bundle>
-        <bundle>mvn:commons-collections/commons-collections/3.2.1</bundle>
-        <bundle>mvn:commons-fileupload/commons-fileupload/1.3.2</bundle>
-        <bundle>mvn:commons-io/commons-io/2.4</bundle>
-        <bundle>mvn:org.apache.commons/commons-lang3/3.3.2</bundle>
-        <bundle>mvn:org.apache.commons/commons-exec/1.1</bundle>
-
-        <!-- required by fileupload -->
-        <bundle>mvn:org.apache.felix/org.apache.felix.http.servlet-api/1.1.2</bundle>
     </feature>
 </features>
