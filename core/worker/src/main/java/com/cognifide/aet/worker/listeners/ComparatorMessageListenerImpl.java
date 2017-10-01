@@ -87,8 +87,11 @@ public class ComparatorMessageListenerImpl extends AbstractTaskMessageListener {
     String jmsCorrelationId = JmsUtils.getJMSCorrelationID(message);
 
     if (comparatorJobData != null && StringUtils.isNotBlank(jmsCorrelationId)) {
-      LOGGER.info("ComparatorJobData  [{}] message arrived. CorrelationId: {} TestName: {} UrlName: {}",
-              jmsCorrelationId, comparatorJobData.getTestName(), comparatorJobData.getUrlName());
+      LOGGER.info("ComparatorJobData [{}] message arrived. CorrelationId: {} TestName: {} UrlName: {}",
+              comparatorJobData,
+              jmsCorrelationId,
+              comparatorJobData.getTestName(),
+              comparatorJobData.getUrlName());
       final Step step = comparatorJobData.getStep();
       final ComparatorProperties properties = new ComparatorProperties(comparatorJobData.getCompany(),
               comparatorJobData.getProject(), step.getPattern(), step.getStepResult().getArtifactId());
@@ -99,8 +102,11 @@ public class ComparatorMessageListenerImpl extends AbstractTaskMessageListener {
                 .newBuilder(comparatorJobData.getTestName(), comparatorJobData.getUrlName(), step.getIndex());
         try {
           Comparator processedComparator = dispatcher.run(comparator, properties);
-          LOGGER.info("Comparison successfully ended. CorrelationId: {} TestName: {} Comparator: {}",
-                  jmsCorrelationId, comparatorJobData.getTestName(), comparatorJobData.getUrlName(), comparator);
+          LOGGER.info("Comparison successfully ended. CorrelationId: {} TestName: {} Url: {} Comparator: {}",
+                  jmsCorrelationId,
+                  comparatorJobData.getTestName(),
+                  comparatorJobData.getUrlName(),
+                  comparator);
           resultBuilder.withComparisonResult(processedComparator)
                   .withStatus(JobStatus.SUCCESS);
         } catch (Exception e) {
