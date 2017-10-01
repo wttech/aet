@@ -76,7 +76,6 @@
         <bundle>wrap:mvn:org.apache.httpcomponents/fluent-hc/4.3.4</bundle>
         <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.quartz/2.1.7_1</bundle>
         <bundle>mvn:org.apache.camel/camel-core/2.17.0</bundle>
-        <bundle>mvn:org.apache.felix/org.apache.felix.http.servlet-api/1.1.2</bundle>
         <bundle>mvn:org.json/json/20160212</bundle>
         <bundle>mvn:javax.validation/validation-api/1.1.0.Final</bundle>
         <bundle>mvn:org.hibernate/hibernate-validator/4.3.2.Final</bundle>
@@ -109,5 +108,8 @@
         <bundle>mvn:commons-io/commons-io/2.4</bundle>
         <bundle>mvn:org.apache.commons/commons-lang3/3.3.2</bundle>
         <bundle>mvn:org.apache.commons/commons-exec/1.1</bundle>
+
+        <!-- required by fileupload -->
+        <bundle>mvn:org.apache.felix/org.apache.felix.http.servlet-api/1.1.2</bundle>
     </feature>
 </features>
