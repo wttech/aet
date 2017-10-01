@@ -24,6 +24,12 @@
     <repository>mvn:org.apache.activemq/activemq-karaf/5.13.1/xml/features</repository>
     <repository>mvn:org.apache.cxf.karaf/apache-cxf/2.7.5/xml/features</repository>
 
+    <feature name="aet-all" version="0.6.0" install="true">
+        <feature version="0.6.0">aet-crypto</feature>
+        <feature version="0.6.0">aet-apache-commons</feature>
+        <feature version="0.6.0">aet-features</feature>
+    </feature>
+
     <feature name="aet-features" version="0.6.0">
 
         <feature>scr</feature>
@@ -36,11 +42,7 @@
         <bundle>wrap:mvn:org.apache.ant/ant/1.8.2</bundle>
         <bundle>wrap:mvn:aopalliance/aopalliance/1.0</bundle>
 
-        <feature version="0.6.0">aet-crypto</feature>
-
         <bundle>wrap:mvn:cglib/cglib-nodep/2.2.2</bundle>
-
-        <feature version="0.6.0">aet-apache-commons</feature>
 
         <bundle>wrap:mvn:net.sourceforge.cssparser/cssparser/0.9.9</bundle>
         <bundle>wrap:mvn:com.google.code.gson/gson/2.6.1</bundle>
