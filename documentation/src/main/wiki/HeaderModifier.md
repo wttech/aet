@@ -4,9 +4,9 @@ Header Modifier is responsible for injecting additional headers to the page befo
 
 Module name: **header**
 
-| ! Important information |
-|:----------------------- |
-| In order to use this modifier it must be declared before the open module in the definition of the test suite XML and *[[proxy|SuiteStructure#proxy]]* must be used. |
+**Important information**
+
+In order to use this modifier it must be declared before the open module in the definition of the test suite XML and [[proxy|SuiteStructure#proxy]] must be used.
 
 ##### Parameters
 
@@ -20,7 +20,7 @@ Module name: **header**
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
 <suite name="test-suite" company="cognifide" project="project">
-    <test name="header-modify-test">
+    <test name="header-modify-test" useProxy="rest">
         <collect>
             ...
             <header key="Authorization" value="Basic emVuT2FyZXVuOnozbkdAckQZbiE=" />
