@@ -4,9 +4,9 @@ Status Codes Collector is responsible for collecting status codes returned by re
 
 Module name: **status-codes**
 
-| ! Important information |
-| :---------------------- |
-| In order to use this collector *[[proxy|SuiteStructure#proxy]]* must be used. |
+**Important information**
+
+In order to use this modifier it must be declared before the open module in the definition of the test suite XML and [[proxy|SuiteStructure#proxy]] must be used.
 
 ##### Parameters
 
