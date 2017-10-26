@@ -22,7 +22,6 @@ import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
-
 import java.util.Map;
 
 public class OpenPage implements CollectorJob {
@@ -44,7 +43,6 @@ public class OpenPage implements CollectorJob {
       webCommunicationWrapper.getProxyServer().newHar(url);
     }
     webCommunicationWrapper.getWebDriver().get(url);
-    webCommunicationWrapper.getHttpRequestBuilder().createRequest(url, "GET");
     return CollectorStepResult.newPageOpen();
   }
 

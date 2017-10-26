@@ -20,7 +20,7 @@ package com.cognifide.aet.job.common.modifiers.cookie;
 import com.google.common.collect.ImmutableMap;
 
 import com.cognifide.aet.job.api.collector.CollectorProperties;
-import com.cognifide.aet.job.api.collector.HttpRequestBuilder;
+import com.cognifide.aet.job.api.collector.HttpRequestExecutor;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.validation.ValidationResultBuilder;
@@ -48,7 +48,7 @@ public class CookieModifierTest {
   private WebDriver webDriver;
 
   @Mock
-  private HttpRequestBuilder builder;
+  private HttpRequestExecutor requestExecutor;
 
   @Mock
   private WebCommunicationWrapper wrapper;
@@ -71,7 +71,7 @@ public class CookieModifierTest {
   @Before
   public void setUp() throws Exception {
     when(wrapper.getWebDriver()).thenReturn(webDriver);
-    when(wrapper.getHttpRequestBuilder()).thenReturn(builder);
+    when(wrapper.getHttpRequestBuilder()).thenReturn(requestExecutor);
     when(webDriver.manage()).thenReturn(options);
 
     when(params.get(ACTION_PARAMETER)).thenReturn("add");
@@ -84,7 +84,7 @@ public class CookieModifierTest {
     tested.collect();
 
     verify(options).addCookie(new Cookie("session", "zaq12wsx"));
-    verify(builder).addCookie("session", "zaq12wsx");
+    verify(requestExecutor).addCookie("session", "zaq12wsx");
   }
 
   @Test
@@ -93,7 +93,7 @@ public class CookieModifierTest {
     tested.collect();
 
     verify(options).deleteCookieNamed("session");
-    verify(builder).removeCookie("session");
+    verify(requestExecutor).removeCookie("session");
   }
 
   @Test

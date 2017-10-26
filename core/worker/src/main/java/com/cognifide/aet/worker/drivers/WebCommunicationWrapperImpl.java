@@ -21,7 +21,7 @@ import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Ordering;
 
-import com.cognifide.aet.job.api.collector.HttpRequestBuilder;
+import com.cognifide.aet.job.api.collector.HttpRequestExecutor;
 import com.cognifide.aet.job.api.collector.JsErrorLog;
 import com.cognifide.aet.job.api.collector.ProxyServerWrapper;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
@@ -54,9 +54,9 @@ public class WebCommunicationWrapperImpl implements WebCommunicationWrapper {
 
   private final ProxyServerWrapper proxyServer;
 
-  private final HttpRequestBuilder builder;
+  private final HttpRequestExecutor builder;
 
-  public WebCommunicationWrapperImpl(WebDriver webDriver, ProxyServerWrapper server, HttpRequestBuilder builder) {
+  public WebCommunicationWrapperImpl(WebDriver webDriver, ProxyServerWrapper server, HttpRequestExecutor builder) {
     this.webDriver = webDriver;
     this.proxyServer = server;
     this.builder = builder;
@@ -85,7 +85,7 @@ public class WebCommunicationWrapperImpl implements WebCommunicationWrapper {
   }
 
   @Override
-  public HttpRequestBuilder getHttpRequestBuilder() {
+  public HttpRequestExecutor getHttpRequestBuilder() {
     return builder;
   }
 

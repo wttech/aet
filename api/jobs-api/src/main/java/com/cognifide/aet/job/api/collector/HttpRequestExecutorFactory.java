@@ -17,7 +17,7 @@
  */
 package com.cognifide.aet.job.api.collector;
 
-public interface HttpRequestBuilderFactory {
+public interface HttpRequestExecutorFactory {
 
-  HttpRequestBuilder createInstance();
+  HttpRequestExecutor createInstance();
 }

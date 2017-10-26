@@ -34,6 +34,6 @@ public interface WebCommunicationWrapper {
 
   Set<JsErrorLog> getJSErrorLogs();
 
-  HttpRequestBuilder getHttpRequestBuilder();
+  HttpRequestExecutor getHttpRequestBuilder();
 
 }

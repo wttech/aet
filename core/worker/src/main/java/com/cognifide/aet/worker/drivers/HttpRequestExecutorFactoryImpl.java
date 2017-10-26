@@ -17,18 +17,18 @@
  */
 package com.cognifide.aet.worker.drivers;
 
-import com.cognifide.aet.job.api.collector.HttpRequestBuilder;
-import com.cognifide.aet.job.api.collector.HttpRequestBuilderFactory;
+import com.cognifide.aet.job.api.collector.HttpRequestExecutor;
+import com.cognifide.aet.job.api.collector.HttpRequestExecutorFactory;
 
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Service;
 
 @Service
 @Component
-public class HttpRequestBuilderFactoryImpl implements HttpRequestBuilderFactory {
+public class HttpRequestExecutorFactoryImpl implements HttpRequestExecutorFactory {
 
   @Override
-  public HttpRequestBuilder createInstance() {
-    return new HttpRequestBuilderImpl();
+  public HttpRequestExecutor createInstance() {
+    return new TrustedHttpRequestExecutor();
   }
 }
