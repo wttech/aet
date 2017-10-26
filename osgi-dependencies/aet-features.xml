@@ -25,9 +25,10 @@
     <repository>mvn:org.apache.cxf.karaf/apache-cxf/2.7.5/xml/features</repository>
 
     <feature name="aet-all" version="0.6.0" install="true">
+        <feature version="0.6.0">aet-features</feature>
         <feature version="0.6.0">aet-crypto</feature>
         <feature version="0.6.0">aet-apache-commons</feature>
-        <feature version="0.6.0">aet-features</feature>
+        <feature version="0.6.0">aet-guice</feature>
         <feature version="0.6.0">aet-dependencies</feature>
     </feature>
 
@@ -36,7 +37,6 @@
         <feature>scr</feature>
         <feature>war</feature>
         <feature>webconsole</feature>
-        <feature>webconsole-scr</feature>
         <feature>cxf</feature>
         <feature>cxf-http</feature>
 
@@ -60,6 +60,18 @@
         <bundle>mvn:org.apache.felix/org.apache.felix.http.servlet-api/1.1.2</bundle>
     </feature>
 
+    <feature name="aet-guice" version="0.6.0" description="Bundles for Guice">
+
+        <bundle>wrap:mvn:javax.inject/javax.inject/1</bundle>
+
+        <!-- required by guice-servlet -->
+        <bundle>mvn:org.apache.felix/org.apache.felix.http.servlet-api/1.1.2</bundle>
+
+        <bundle>mvn:com.google.inject/guice/3.0</bundle>
+        <bundle>mvn:com.google.inject.extensions/guice-assistedinject/3.0</bundle>
+        <bundle>mvn:com.google.inject.extensions/guice-servlet/3.0</bundle>
+    </feature>
+
     <feature name="aet-dependencies" version="0.6.0" description="Additional libraries needed by AET">
 
         <bundle>wrap:mvn:org.apache.ant/ant/1.8.2</bundle>
@@ -70,9 +82,6 @@
         <bundle>wrap:mvn:net.sourceforge.cssparser/cssparser/0.9.9</bundle>
         <bundle>wrap:mvn:com.google.code.gson/gson/2.6.1</bundle>
         <bundle>mvn:com.google.guava/guava/15.0</bundle>
-        <bundle>mvn:com.google.inject/guice/3.0</bundle>
-        <bundle>mvn:com.google.inject.extensions/guice-assistedinject/3.0</bundle>
-        <bundle>mvn:com.google.inject.extensions/guice-servlet/3.0</bundle>
         <bundle>mvn:org.apache.sling/org.apache.sling.commons.osgi/2.2.2</bundle>
         <bundle>wrap:mvn:org.hamcrest/hamcrest-core/1.3</bundle>
         <bundle>wrap:mvn:net.sourceforge.htmlunit/htmlunit/2.13</bundle>
@@ -82,7 +91,6 @@
         <bundle>wrap:mvn:org.apache.httpcomponents/httpmime/4.3.3</bundle>
         <bundle>mvn:org.codehaus.jackson/jackson-core-asl/1.9.13</bundle>
         <bundle>mvn:org.codehaus.jackson/jackson-mapper-asl/1.9.13</bundle>
-        <bundle>wrap:mvn:javax.inject/javax.inject/1</bundle>
         <bundle>wrap:mvn:net.jcip/jcip-annotations/1.0</bundle>
         <bundle>wrap:mvn:net.sf.jopt-simple/jopt-simple/3.2</bundle>
         <bundle>wrap:mvn:mx4j/mx4j-tools/3.0.1</bundle>
