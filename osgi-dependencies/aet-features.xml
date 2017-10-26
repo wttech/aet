@@ -29,6 +29,7 @@
         <feature version="0.6.0">aet-crypto</feature>
         <feature version="0.6.0">aet-apache-commons</feature>
         <feature version="0.6.0">aet-guice</feature>
+        <feature version="0.6.0">aet-jackson</feature>
         <feature version="0.6.0">aet-dependencies</feature>
     </feature>
 
@@ -72,6 +73,20 @@
         <bundle>mvn:com.google.inject.extensions/guice-servlet/3.0</bundle>
     </feature>
 
+
+    <feature name="aet-jackson" version="0.6.0" description="Bundles for Jackson">
+
+        <bundle>mvn:javax.ws.rs/javax.ws.rs-api/2.0</bundle>
+
+        <bundle>mvn:org.codehaus.jackson/jackson-core-asl/1.9.13</bundle>
+        <bundle>mvn:org.codehaus.jackson/jackson-mapper-asl/1.9.13</bundle>
+
+        <bundle>wrap:mvn:org.codehaus.jackson/jackson-jaxrs/1.9.12</bundle>
+        <bundle>wrap:mvn:org.codehaus.jackson/jackson-xc/1.9.12</bundle>
+        <bundle>mvn:com.wordnik/swagger-annotations/1.3.9</bundle>
+    </feature>
+
+
     <feature name="aet-dependencies" version="0.6.0" description="Additional libraries needed by AET">
 
         <bundle>wrap:mvn:org.apache.ant/ant/1.8.2</bundle>
@@ -89,8 +104,6 @@
         <bundle>wrap:mvn:org.apache.httpcomponents/httpclient/4.3.3</bundle>
         <bundle>wrap:mvn:org.apache.httpcomponents/httpcore/4.3.2</bundle>
         <bundle>wrap:mvn:org.apache.httpcomponents/httpmime/4.3.3</bundle>
-        <bundle>mvn:org.codehaus.jackson/jackson-core-asl/1.9.13</bundle>
-        <bundle>mvn:org.codehaus.jackson/jackson-mapper-asl/1.9.13</bundle>
         <bundle>wrap:mvn:net.jcip/jcip-annotations/1.0</bundle>
         <bundle>wrap:mvn:net.sf.jopt-simple/jopt-simple/3.2</bundle>
         <bundle>wrap:mvn:mx4j/mx4j-tools/3.0.1</bundle>
@@ -119,10 +132,5 @@
         <bundle>mvn:org.mongodb/mongo-java-driver/3.2.2</bundle>
         <bundle>mvn:commons-beanutils/commons-beanutils/1.9.2</bundle>
         <!--GRID FS bundles-->
-
-        <!--  AET-344   (REST)-->
-        <bundle>wrap:mvn:org.codehaus.jackson/jackson-jaxrs/1.9.12</bundle>
-        <bundle>wrap:mvn:org.codehaus.jackson/jackson-xc/1.9.12</bundle>
-        <bundle>wrap:mvn:com.wordnik/swagger-annotations/1.3.9</bundle>
     </feature>
 </features>
