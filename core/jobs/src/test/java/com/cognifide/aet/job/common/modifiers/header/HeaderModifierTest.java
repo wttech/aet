@@ -54,7 +54,7 @@ public class HeaderModifierTest {
   public void setUp() throws Exception {
     when(webCommunicationWrapper.getProxyServer()).thenReturn(proxyServer);
     when(webCommunicationWrapper.isUseProxy()).thenReturn(true);
-    when(webCommunicationWrapper.getHttpRequestBuilder()).thenReturn(requestExecutor);
+    when(webCommunicationWrapper.getHttpRequestExecutor()).thenReturn(requestExecutor);
   }
 
   @Test

@@ -73,7 +73,7 @@ public class LoginModifier implements CollectorJob {
     } else {
       LOGGER.info("User is authenticated.");
       Cookie cookie = getLoginToken();
-      webCommunicationWrapper.getHttpRequestBuilder().addCookie(cookie.getName(), cookie.getValue());
+      webCommunicationWrapper.getHttpRequestExecutor().addCookie(cookie.getName(), cookie.getValue());
     }
     return CollectorStepResult.newModifierResult();
   }
@@ -87,7 +87,7 @@ public class LoginModifier implements CollectorJob {
       throw new ProcessingException("Unable to acquire Cookie; check credentials.");
     }
 
-    webCommunicationWrapper.getHttpRequestBuilder().addCookie(authCookie.getName(), authCookie.getValue());
+    webCommunicationWrapper.getHttpRequestExecutor().addCookie(authCookie.getName(), authCookie.getValue());
     LOGGER.info("User has been authenticated");
   }
 

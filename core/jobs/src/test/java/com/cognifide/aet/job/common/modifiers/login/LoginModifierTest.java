@@ -107,7 +107,7 @@ public class LoginModifierTest {
   public void setUp() throws ParametersException {
     // this will init modifier with default configuration
     webDriver = mock(WebDriver.class, withSettings().extraInterfaces(JavascriptExecutor.class));
-    when(webCommunicationWrapper.getHttpRequestBuilder()).thenReturn(requestExecutor);
+    when(webCommunicationWrapper.getHttpRequestExecutor()).thenReturn(requestExecutor);
     when(webCommunicationWrapper.getWebDriver()).thenReturn(webDriver);
     when(webDriver.manage()).thenReturn(options);
 

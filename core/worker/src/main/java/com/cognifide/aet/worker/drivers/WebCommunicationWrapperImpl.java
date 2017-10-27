@@ -32,9 +32,6 @@ import org.openqa.selenium.WebDriver;
 import java.util.List;
 import java.util.Set;
 
-/**
- * @author lukasz.wieczorek
- */
 public class WebCommunicationWrapperImpl implements WebCommunicationWrapper {
 
   private static final Function<JavaScriptError, JsErrorLog> ERROR_LOG_FUNCTION = new Function<JavaScriptError, JsErrorLog>() {
@@ -54,12 +51,12 @@ public class WebCommunicationWrapperImpl implements WebCommunicationWrapper {
 
   private final ProxyServerWrapper proxyServer;
 
-  private final HttpRequestExecutor builder;
+  private final HttpRequestExecutor requestExecutor;
 
-  public WebCommunicationWrapperImpl(WebDriver webDriver, ProxyServerWrapper server, HttpRequestExecutor builder) {
+  public WebCommunicationWrapperImpl(WebDriver webDriver, ProxyServerWrapper server, HttpRequestExecutor requestExecutor) {
     this.webDriver = webDriver;
     this.proxyServer = server;
-    this.builder = builder;
+    this.requestExecutor = requestExecutor;
   }
 
   @Override
@@ -85,8 +82,8 @@ public class WebCommunicationWrapperImpl implements WebCommunicationWrapper {
   }
 
   @Override
-  public HttpRequestExecutor getHttpRequestBuilder() {
-    return builder;
+  public HttpRequestExecutor getHttpRequestExecutor() {
+    return requestExecutor;
   }
 
 }

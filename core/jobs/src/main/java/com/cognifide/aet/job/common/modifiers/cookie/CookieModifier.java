@@ -71,12 +71,12 @@ public class CookieModifier implements CollectorJob {
     webDriver.get(properties.getUrl());
     Cookie cookie = new Cookie(name, value, domain, path, null);
     webDriver.manage().addCookie(cookie);
-    webCommunicationWrapper.getHttpRequestBuilder().addCookie(name, value);
+    webCommunicationWrapper.getHttpRequestExecutor().addCookie(name, value);
   }
 
   private void removeCookie(WebDriver webDriver) {
     webDriver.manage().deleteCookieNamed(name);
-    webCommunicationWrapper.getHttpRequestBuilder().removeCookie(name);
+    webCommunicationWrapper.getHttpRequestExecutor().removeCookie(name);
   }
 
   @Override

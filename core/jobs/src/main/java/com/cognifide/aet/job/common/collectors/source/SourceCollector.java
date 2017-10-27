@@ -15,6 +15,8 @@
  */
 package com.cognifide.aet.job.common.collectors.source;
 
+
+
 import com.cognifide.aet.communication.api.metadata.CollectorStepResult;
 import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.CollectorProperties;
@@ -22,11 +24,13 @@ import com.cognifide.aet.job.api.collector.HttpRequestExecutor;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.vs.ArtifactsDAO;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
 
 public class SourceCollector implements CollectorJob {
 
@@ -63,7 +67,6 @@ public class SourceCollector implements CollectorJob {
       dataInputStream = IOUtils.toInputStream(pageSource, CHAR_ENCODING);
       String resultId = artifactsDAO.saveArtifact(properties, dataInputStream, CONTENT_TYPE);
       stepResult = CollectorStepResult.newCollectedResult(resultId);
-
     } catch (Exception e) {
       throw new ProcessingException(e.getMessage(), e);
     } finally {

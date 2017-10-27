@@ -71,7 +71,7 @@ public class CookieModifierTest {
   @Before
   public void setUp() throws Exception {
     when(wrapper.getWebDriver()).thenReturn(webDriver);
-    when(wrapper.getHttpRequestBuilder()).thenReturn(requestExecutor);
+    when(wrapper.getHttpRequestExecutor()).thenReturn(requestExecutor);
     when(webDriver.manage()).thenReturn(options);
 
     when(params.get(ACTION_PARAMETER)).thenReturn("add");
