@@ -961,6 +961,9 @@
                 <exclude>/misc/dependencies-report.txt</exclude>
                 <exclude>/vagrant/.vagrant/**</exclude>
                 <exclude>/vagrant/Berksfile.lock</exclude>
+
+                <exclude>/vagrant/cookbooks/**</exclude>
+
                 <!-- TODO: update license headers in those files, see AET-1301 -->
                 <exclude>integration-tests/**/*.css</exclude>
                 <exclude>integration-tests/**/*.js</exclude>

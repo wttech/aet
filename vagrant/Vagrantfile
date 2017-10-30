@@ -69,8 +69,16 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provision :chef_solo do |chef|
     chef.json = {
+      "java" => {
+        "jdk_version" => "8"
+      },
       "aet" => {
+        "activemq" => {
+          "version" => "5.15.2",
+          "source" => "https://archive.apache.org/dist/activemq/5.15.2/apache-activemq-5.15.2-bin.tar.gz"
+        },
         "karaf" => {
+          "source" => "http://ftp.ps.pl/pub/apache/karaf/4.1.2/apache-karaf-4.1.2.tar.gz",
           "java_max_mem" => "3072M",
           "enable_debug" => true
         },
