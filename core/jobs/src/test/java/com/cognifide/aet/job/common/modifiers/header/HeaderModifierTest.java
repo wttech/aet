@@ -19,7 +19,7 @@ package com.cognifide.aet.job.common.modifiers.header;
 
 import com.google.common.collect.ImmutableMap;
 
-import com.cognifide.aet.job.api.collector.HttpRequestBuilder;
+import com.cognifide.aet.job.api.collector.HttpRequestExecutor;
 import com.cognifide.aet.job.api.collector.ProxyServerWrapper;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
@@ -45,7 +45,7 @@ public class HeaderModifierTest {
   private WebCommunicationWrapper webCommunicationWrapper;
 
   @Mock
-  private HttpRequestBuilder builder;
+  private HttpRequestExecutor requestExecutor;
 
   @InjectMocks
   private HeaderModifier headerModifier;
@@ -54,7 +54,7 @@ public class HeaderModifierTest {
   public void setUp() throws Exception {
     when(webCommunicationWrapper.getProxyServer()).thenReturn(proxyServer);
     when(webCommunicationWrapper.isUseProxy()).thenReturn(true);
-    when(webCommunicationWrapper.getHttpRequestBuilder()).thenReturn(builder);
+    when(webCommunicationWrapper.getHttpRequestExecutor()).thenReturn(requestExecutor);
   }
 
   @Test
@@ -63,7 +63,7 @@ public class HeaderModifierTest {
     headerModifier.collect();
 
     verify(proxyServer).addHeader("header", "value1");
-    verify(builder).addHeader("header", "value1");
+    verify(requestExecutor).addHeader("header", "value1");
   }
 
   @Test(expected = ProcessingException.class)

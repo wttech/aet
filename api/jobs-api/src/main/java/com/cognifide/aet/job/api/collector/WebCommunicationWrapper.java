@@ -21,9 +21,6 @@ import org.openqa.selenium.WebDriver;
 
 import java.util.Set;
 
-/**
- * @author lukasz.wieczorek
- */
 public interface WebCommunicationWrapper {
 
   WebDriver getWebDriver();
@@ -34,6 +31,6 @@ public interface WebCommunicationWrapper {
 
   Set<JsErrorLog> getJSErrorLogs();
 
-  HttpRequestBuilder getHttpRequestBuilder();
+  HttpRequestExecutor getHttpRequestExecutor();
 
 }

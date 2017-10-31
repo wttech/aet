@@ -17,7 +17,7 @@
  */
 package com.cognifide.aet.worker.drivers;
 
-import com.cognifide.aet.job.api.collector.HttpRequestBuilderFactory;
+import com.cognifide.aet.job.api.collector.HttpRequestExecutorFactory;
 import com.cognifide.aet.job.api.collector.ProxyServerWrapper;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.worker.api.WebDriverFactory;
@@ -59,7 +59,7 @@ public class FirefoxWebDriverFactory implements WebDriverFactory {
   private static final String DEFAULT_FF_NAME = "ff";
 
   @Reference
-  private HttpRequestBuilderFactory builderFactory;
+  private HttpRequestExecutorFactory requestExecutorFactory;
 
   @Property(name = NAME, label = NAME_LABEL, value = DEFAULT_FF_NAME)
   private String name;
@@ -91,7 +91,8 @@ public class FirefoxWebDriverFactory implements WebDriverFactory {
       fp.setAssumeUntrustedCertificateIssuer(false);
       capabilities.setCapability(AetFirefoxDriver.PROFILE, fp);
 
-      return new WebCommunicationWrapperImpl(getFirefoxDriver(fp, capabilities), proxyServer, builderFactory.createInstance());
+      return new WebCommunicationWrapperImpl(getFirefoxDriver(fp, capabilities), proxyServer, requestExecutorFactory
+          .createInstance());
     } catch (Exception e) {
       throw new WorkerException(e.getMessage(), e);
     }
@@ -105,7 +106,8 @@ public class FirefoxWebDriverFactory implements WebDriverFactory {
       FirefoxProfile fp = getFirefoxProfile();
       capabilities.setCapability(AetFirefoxDriver.PROFILE, fp);
 
-      return new WebCommunicationWrapperImpl(getFirefoxDriver(fp, capabilities), null, builderFactory.createInstance());
+      return new WebCommunicationWrapperImpl(getFirefoxDriver(fp, capabilities), null, requestExecutorFactory
+          .createInstance());
     } catch (Exception e) {
       throw new WorkerException(e.getMessage(), e);
     }

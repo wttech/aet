@@ -55,7 +55,7 @@ public class SourceCollectorFactory implements CollectorFactory {
   @Override
   public CollectorJob createInstance(CollectorProperties properties, Map<String, String> parameters, WebCommunicationWrapper webCommunicationWrapper)
           throws ParametersException {
-    return new SourceCollector(artifactsDAO, properties, webCommunicationWrapper.getHttpRequestBuilder(), timeoutValue);
+    return new SourceCollector(artifactsDAO, properties, webCommunicationWrapper.getHttpRequestExecutor(), timeoutValue);
   }
 
   @Activate

@@ -50,7 +50,7 @@ public class HeaderModifier implements CollectorJob {
       throw new ProcessingException("Cannot modify header without using proxy");
     }
     webCommunicationWrapper.getProxyServer().addHeader(key, value);
-    webCommunicationWrapper.getHttpRequestBuilder().addHeader(key, value);
+    webCommunicationWrapper.getHttpRequestExecutor().addHeader(key, value);
     return CollectorStepResult.newModifierResult();
   }
 

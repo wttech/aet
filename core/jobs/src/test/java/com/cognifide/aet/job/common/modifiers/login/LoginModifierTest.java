@@ -18,7 +18,7 @@
 package com.cognifide.aet.job.common.modifiers.login;
 
 import com.cognifide.aet.job.api.collector.CollectorProperties;
-import com.cognifide.aet.job.api.collector.HttpRequestBuilder;
+import com.cognifide.aet.job.api.collector.HttpRequestExecutor;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
@@ -82,7 +82,7 @@ public class LoginModifierTest {
   private Cookie cookie;
 
   @Mock
-  private HttpRequestBuilder httpRequestBuilder;
+  private HttpRequestExecutor requestExecutor;
 
   @Mock
   private WebElement loginInput;
@@ -107,7 +107,7 @@ public class LoginModifierTest {
   public void setUp() throws ParametersException {
     // this will init modifier with default configuration
     webDriver = mock(WebDriver.class, withSettings().extraInterfaces(JavascriptExecutor.class));
-    when(webCommunicationWrapper.getHttpRequestBuilder()).thenReturn(httpRequestBuilder);
+    when(webCommunicationWrapper.getHttpRequestExecutor()).thenReturn(requestExecutor);
     when(webCommunicationWrapper.getWebDriver()).thenReturn(webDriver);
     when(webDriver.manage()).thenReturn(options);
 
@@ -135,7 +135,7 @@ public class LoginModifierTest {
 
     verify(webDriver, times(1)).get(LOGIN_PAGE_URL);
     verify(submitButton, times(1)).click();
-    verify(httpRequestBuilder).addCookie(anyString(), anyString());
+    verify(requestExecutor).addCookie(anyString(), anyString());
   }
 
   @Test
@@ -148,7 +148,7 @@ public class LoginModifierTest {
 
     verify(webDriver, times(1)).get(LOGIN_PAGE_URL);
     verify(submitButton, times(1)).click();
-    verify(httpRequestBuilder).addCookie(anyString(), anyString());
+    verify(requestExecutor).addCookie(anyString(), anyString());
   }
 
   @Test(expected = ProcessingException.class)
@@ -169,7 +169,7 @@ public class LoginModifierTest {
 
     tested.collect();
 
-    verify(httpRequestBuilder).addCookie(anyString(), anyString());
+    verify(requestExecutor).addCookie(anyString(), anyString());
     verify(webDriver, never()).get(LOGIN_PAGE_URL);
   }
 
