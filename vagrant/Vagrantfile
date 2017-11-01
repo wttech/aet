@@ -19,7 +19,7 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-AET_VERSION = '2.1.3'
+AET_VERSION = '2.1.4-SNAPSHOT'
 
 VAGRANTFILE_API_VERSION = '2'
 
@@ -73,6 +73,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         "jdk_version" => "8"
       },
       "aet" => {
+        "base_link" => "https://some-link-for-aet-packages/aet",
         "activemq" => {
           "version" => "5.15.2",
           "source" => "https://archive.apache.org/dist/activemq/5.15.2/apache-activemq-5.15.2-bin.tar.gz"
