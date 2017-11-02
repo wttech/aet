@@ -71,7 +71,8 @@
         <td>{{$index+1}}</td>
         <td>{{filter.parameters.source}}</td>
         <td ng-if="filter.parameters.error">{{filter.parameters.error}}</td>
-        <td ng-if="!filter.parameters.error">-</td>
+        <td ng-if="!filter.parameters.error && filter.parameters.errorPattern">{{filter.parameters.errorPattern}}</td>
+        <td ng-if="!filter.parameters.error && !filter.parameters.errorPattern">-</td>
 
         <td ng-if="filter.parameters.line">{{filter.parameters.line}}</td>
         <td ng-if="!filter.parameters.line">-</td>
