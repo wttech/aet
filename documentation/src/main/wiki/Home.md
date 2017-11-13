@@ -1,9 +1,9 @@
-![Automated Exploratory Tests](/Cognifide/aet/wiki/assets/misc/aet-logo.png)
+![ET](/Cognifide/aet/wiki/assets/misc/aet-logo.png)
 # Getting Started
 
 ## What is AET
 
-AET (**A**utomated **E**xploratory **T**esting) is a testing tool which aids front end client side layout regression testing of websites and portfolios. It allows to ensure that a change in one part of the software did not introduce any defects in other parts of application. AET is a flexible application that can be adapted and tailored to the requirements of a given project.
+AET is a testing tool which aids front end client side layout regression testing of websites and portfolios. It allows to ensure that a change in one part of the software did not introduce any defects in other parts of application. AET is a flexible application that can be adapted and tailored to the requirements of a given project.
 
 ## Why AET
 

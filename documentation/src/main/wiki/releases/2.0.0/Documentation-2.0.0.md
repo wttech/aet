@@ -64,7 +64,7 @@
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
-![Automated Exploratory Tests](/Cognifide/aet/wiki/assets/misc/aet-logo.png)
+![AET](/Cognifide/aet/wiki/assets/misc/aet-logo.png)
 # Getting Started
 
 ## What is AET

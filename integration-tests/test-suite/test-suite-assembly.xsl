@@ -1,6 +1,6 @@
 <!--
 
-    Automated Exploratory Tests
+    AET
 
     Copyright (C) 2013 Cognifide Limited
 
