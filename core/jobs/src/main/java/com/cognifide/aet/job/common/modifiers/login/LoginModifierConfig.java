@@ -1,5 +1,5 @@
 /**
- * Automated Exploratory Tests
+ * AET
  * <p>
  * Copyright (C) 2013 Cognifide Limited
  * <p>

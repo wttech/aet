@@ -1,5 +1,5 @@
 /**
- * Automated Exploratory Tests
+ * AET
  * <p>
  * Author: pnad@github
  * used HideModifier code - Copyright (C) 2017 Cognifide Limited

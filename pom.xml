@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Automated Exploratory Tests
+    AET
 
     Copyright (C) 2013 Cognifide Limited
 
@@ -27,7 +27,7 @@
   <packaging>pom</packaging>
 
   <name>AET</name>
-  <description>Automated Exploratory Tests - system that detects changes on web sites</description>
+  <description>AET - system that detects changes on web sites</description>
   <url>https://github.com/Cognifide/aet</url>
   <inceptionYear>2013</inceptionYear>
 

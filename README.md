@@ -4,7 +4,7 @@
 [![Apache License, Version 2.0, January 2004](https://img.shields.io/github/license/cognifide/aet.svg?label=License)](http://www.apache.org/licenses/)
 [![][gitter img]][gitter]
 
-# Automated Exploratory Testing
+# AET
 <p align="center">
   <img src="https://github.com/Cognifide/aet/blob/master/misc/img/aet-logo-black.png?raw=true"
          alt="AET Logo"/>

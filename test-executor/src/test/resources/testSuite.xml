@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
 
-    Automated Exploratory Tests
+    AET
 
     Copyright (C) 2013 Cognifide Limited
 
@@ -44,7 +44,7 @@
 			<url href="http://www.onet.pl" description="Onet"/>
 			<url href="http://www.wp.pl" />
 			<url href="http://m.interia.pl/info#iwa_block=pasek-ding"/>
-			<url href="http://www.directlinegroup.com/" description="DLG"/>
+			<url href="http://www.google.com/" description="Google"/>
 		</urls>
 	</test>
 	<test name="test2" useProxy="false">
