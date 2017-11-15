@@ -4,6 +4,8 @@
 
 #include "wiki/Dictionary.md"
 
+#include "wiki/HowToExtendAET.md"
+
 # How To Use
 
 #include "wiki/EnvironmentSetup.md"
