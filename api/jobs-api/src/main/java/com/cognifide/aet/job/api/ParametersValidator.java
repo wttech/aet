@@ -42,6 +42,15 @@ public final class ParametersValidator {
     }
   }
 
+  public static boolean checkAllBlank(String errorMessage, String... values) throws ParametersException {
+    for (String value : values) {
+      if (StringUtils.isNotBlank(value)) {
+        return false;
+      }
+    }
+    throw new ParametersException(errorMessage);
+  }
+
   public static void checkParameter(boolean expression, String errorMessage) throws ParametersException {
     if (!expression) {
       throw new ParametersException(errorMessage);

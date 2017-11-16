@@ -41,7 +41,7 @@ public class ExecuteJavaScriptModifierFactory implements CollectorFactory {
   @Override
   public CollectorJob createInstance(CollectorProperties properties, Map<String, String> parameters,
                                      WebCommunicationWrapper webCommunicationWrapper) throws ParametersException {
-    ExecuteJavaScriptModifier modifier = new ExecuteJavaScriptModifier(webCommunicationWrapper.getWebDriver(), properties);
+    ExecuteJavaScriptModifier modifier = new ExecuteJavaScriptModifier(webCommunicationWrapper.getWebDriver());
     modifier.setParameters(parameters);
     return modifier;
   }
