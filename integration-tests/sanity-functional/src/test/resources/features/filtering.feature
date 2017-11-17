@@ -37,8 +37,8 @@ Feature: Tests Results Filtering
   Scenario: Filtering Tests Results: layout
     Given I have opened sample tests report page
     When I search for tests containing "layout"
-    Then There are 11 tiles visible
-    And Statistics text contains "11 ( 3 / 0 / 8 / 0 )"
+    Then There are 13 tiles visible
+    And Statistics text contains "13 ( 3 / 0 / 10 / 0 )"
 
    Scenario: Filtering Tests Results: jserrors
     Given I have opened sample tests report page
