@@ -12,6 +12,9 @@ Module name: **executejavascript**
 | `snippetUrl` | url | The url to external js snippet that will be executed | `cmd` or `snippetUrl` |
 | `basicAuth` | encoded Basic Auth header value | When value for this parameter is provided, it will be passed to the requested URL as an basic auth header | no |
 
+Please remember, that only one parameter `cmd` or `snippetUrl` should be defined in single `<executejavascript>` usage.
+In case, when both parameters are defined, `snippetUrl` parameter will be ignored.
+
 ##### Example Usage
 
 ```xml

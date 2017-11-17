@@ -36,9 +36,8 @@ import static org.mockito.Mockito.when;
 public class ExecuteJavaScriptModifierTest {
 
     private static final String PARAM_CMD = "cmd";
-
+    private static final String PARAM_URL = "snippetUrl";
     private static final String PARAM_CMD_VALUE = "document.getElementById('toRemove').style.display='none'";
-
     private static final String URL = "http://www.cognifide.com";
 
     @Mock
@@ -56,17 +55,38 @@ public class ExecuteJavaScriptModifierTest {
     }
 
     @Test
-    public void setParameters_CmdIsValid_ValidationPassedSuccessfuly() throws ParametersException {
-        when(params.containsKey(PARAM_CMD)).thenReturn(true);
-        when(params.get(PARAM_CMD)).thenReturn(PARAM_CMD_VALUE);
+    public void setParameters_CmdIsValid_ValidationPassedSuccessfully() throws ParametersException {
+        setupCmdParam();
+        tested.setParameters(params);
+    }
+
+    @Test
+    public void setParameters_SnippetUrlIsValid_ValidationPassedSuccessfully() throws ParametersException {
+        setupSnippetUrlParam();
+        tested.setParameters(params);
+    }
+
+    @Test
+    public void setParameters_BothCmdAndSnippetUrlAreProvided_ValidationPassedSuccessfully() throws ParametersException {
+        setupCmdParam();
+        setupSnippetUrlParam();
         tested.setParameters(params);
     }
 
     @Test(expected = ParametersException.class)
-    public void setParameters_CmdIsNotPassed_ValidationPassedUnsuccessfuly()
-            throws ParametersException {
+    public void setParameters_NoSourceIsPassed_ValidationPassedUnsuccessfuly()
+        throws ParametersException {
         tested.setParameters(params);
     }
 
+    private void setupSnippetUrlParam() {
+        when(params.containsKey(PARAM_URL)).thenReturn(true);
+        when(params.get(PARAM_URL)).thenReturn(URL);
+    }
+
+    private void setupCmdParam() {
+        when(params.containsKey(PARAM_CMD)).thenReturn(true);
+        when(params.get(PARAM_CMD)).thenReturn(PARAM_CMD_VALUE);
+    }
 
 }

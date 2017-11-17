@@ -32,68 +32,68 @@ import org.slf4j.LoggerFactory;
 
 public class ExecuteJavaScriptModifier implements CollectorJob {
 
-    public static final String NAME = "executejavascript";
-    private static final Logger LOG = LoggerFactory.getLogger(ExecuteJavaScriptModifier.class);
+  public static final String NAME = "executejavascript";
+  private static final Logger LOG = LoggerFactory.getLogger(ExecuteJavaScriptModifier.class);
 
-    private static final String CMD_PARAM = "cmd";
-    private static final String URL_PARAM = "snippetUrl";
-    private static final String BASIC_AUTH_PARAM = "basicAuth";
+  private static final String CMD_PARAM = "cmd";
+  private static final String URL_PARAM = "snippetUrl";
+  private static final String BASIC_AUTH_PARAM = "basicAuth";
 
-    private final WebDriver webDriver;
+  private final WebDriver webDriver;
+  private final ExternalSnippetHttpClient httpClient;
 
-    private String cmd;
-    private String snippetUrl;
-    private String basicAuth;
+  private String cmd;
+  private String snippetUrl;
+  private String basicAuth;
 
-    ExecuteJavaScriptModifier(WebDriver webDriver) {
-        this.webDriver = webDriver;
+  ExecuteJavaScriptModifier(WebDriver webDriver, ExternalSnippetHttpClient httpClient) {
+    this.webDriver = webDriver;
+    this.httpClient = httpClient;
+  }
+
+  @Override
+  public CollectorStepResult collect() throws ProcessingException {
+    final String jsSnippet = getJsSnippet();
+    if (LOG.isDebugEnabled()) {
+      LOG.debug("Executing JavaScript command: {} on page: {}", jsSnippet,
+          webDriver.getCurrentUrl());
     }
+    return javaScriptElement(webDriver, jsSnippet);
+  }
 
-    @Override
-    public CollectorStepResult collect() throws ProcessingException {
-        final String jsSnippet = getJsSnippet();
-        if (LOG.isDebugEnabled()) {
-            LOG.debug("Executing JavaScript command: {} on page: {}", jsSnippet, webDriver.getCurrentUrl());
-        }
-        return javaScriptElement(webDriver, jsSnippet);
+  private String getJsSnippet() throws ProcessingException {
+    final String jsSnippet;
+    if (StringUtils.isNotBlank(cmd)) {
+      jsSnippet = cmd;
+    } else {
+      jsSnippet = httpClient.get(snippetUrl, basicAuth);
     }
+    return jsSnippet;
+  }
 
-    private String getJsSnippet() {
-        final String jsSnippet;
-        if (StringUtils.isNotBlank(cmd)) {
-            jsSnippet = cmd;
-        } else {
-            jsSnippet= requestSnippet(snippetUrl, basicAuth);
-        }
-        return jsSnippet;
-    }
+  @Override
+  public void setParameters(Map<String, String> params) throws ParametersException {
+    cmd = params.get(CMD_PARAM);
+    snippetUrl = params.get(URL_PARAM);
+    ParametersValidator.checkAllBlank(
+        "Either 'cmd' or 'snippetUrl' parameter must be provided for executejavascript modifier.",
+        cmd, snippetUrl);
+    basicAuth = params.get(BASIC_AUTH_PARAM);
+  }
 
-    //TODO
-    private String requestSnippet(String snippetUrl, String basicAuth) {
-        return "document.body.style.background = 'blue';";
+  private CollectorStepResult javaScriptElement(WebDriver driver, String jsSnippet) {
+    CollectorStepResult result;
+    try {
+      ((JavascriptExecutor) driver).executeScript(jsSnippet);
+      result = CollectorStepResult.newModifierResult();
+    } catch (Exception e) {
+      final String message = String
+          .format("Can't execute JavaScript command. jsSnippet: \"%s\". Error: %s ",
+              jsSnippet, e.getMessage());
+      result = CollectorStepResult.newProcessingErrorResult(message);
+      LOG.warn(message, e);
     }
-
-    @Override
-    public void setParameters(Map<String, String> params) throws ParametersException {
-        cmd = params.get(CMD_PARAM);
-        snippetUrl = params.get(URL_PARAM);
-        ParametersValidator.checkAllBlank(cmd, snippetUrl, "Either 'cmd' or 'snippetUrl' parameter must be provided for executejavascript modifier.");
-        basicAuth = params.get(BASIC_AUTH_PARAM);
-    }
-
-    private CollectorStepResult javaScriptElement(WebDriver driver, String jsSnippet) {
-        CollectorStepResult result;
-        try {
-            ((JavascriptExecutor) driver).executeScript(jsSnippet);
-            result = CollectorStepResult.newModifierResult();
-        } catch (Exception e) {
-            final String message = String
-                    .format("Can't execute JavaScript command. jsSnippet: \"%s\". Error: %s ",
-                            jsSnippet, e.getMessage());
-            result = CollectorStepResult.newProcessingErrorResult(message);
-            LOG.warn(message, e);
-        }
-        return result;
-    }
+    return result;
+  }
 
 }

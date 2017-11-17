@@ -25,6 +25,7 @@ import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 
 import org.apache.felix.scr.annotations.Component;
+import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.Service;
 
 import java.util.Map;
@@ -32,6 +33,9 @@ import java.util.Map;
 @Component
 @Service
 public class ExecuteJavaScriptModifierFactory implements CollectorFactory {
+
+  @Reference
+  private ExternalSnippetHttpClient httpClient;
 
   @Override
   public String getName() {
@@ -41,7 +45,7 @@ public class ExecuteJavaScriptModifierFactory implements CollectorFactory {
   @Override
   public CollectorJob createInstance(CollectorProperties properties, Map<String, String> parameters,
                                      WebCommunicationWrapper webCommunicationWrapper) throws ParametersException {
-    ExecuteJavaScriptModifier modifier = new ExecuteJavaScriptModifier(webCommunicationWrapper.getWebDriver());
+    ExecuteJavaScriptModifier modifier = new ExecuteJavaScriptModifier(webCommunicationWrapper.getWebDriver(), httpClient);
     modifier.setParameters(parameters);
     return modifier;
   }
