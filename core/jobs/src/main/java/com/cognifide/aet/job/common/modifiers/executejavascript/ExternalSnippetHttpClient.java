@@ -50,7 +50,7 @@ public class ExternalSnippetHttpClient {
   private static final Logger LOGGER = LoggerFactory.getLogger(ExternalSnippetHttpClient.class);
 
   private static final long DEFAULT_CONNECTION_TTL = 60L;
-  private static final int DEFAULT_MAX_CONCURRENT_CONNECTIONS = 30;
+  private static final int DEFAULT_MAX_CONCURRENT_CONNECTIONS = 50;
 
   @Property(label = "Time in seconds that defines maximum life span of persistent connections regardless of their expiration setting",
       longValue = DEFAULT_CONNECTION_TTL)
@@ -115,7 +115,7 @@ public class ExternalSnippetHttpClient {
         }
       } else {
         throw new ProcessingException(String
-            .format("Couldn't obtains snippet from %s : status code: %d",
+            .format("Couldn't get snippet from %s : status code: %d",
                 requestBase.getURI().toString(), statusCode));
       }
     } catch (IOException e) {
