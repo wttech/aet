@@ -54,7 +54,7 @@
 		<collect>
 			<open />
 			<sleep duration="3000" />
-			<executejavascript snippetUrl="http://192.168.123.100:9090/sample-site/assets/snippets/change-bg-snippet.js" />
+			<executejavascript snippetUrl="${snippet.url.domain}snippets/change-bg-snippet.js" />
 			<screen />
 		</collect>
 		<compare>
@@ -68,7 +68,7 @@
 		<collect>
 			<open />
 			<sleep duration="3000" />
-			<executejavascript snippetUrl="http://192.168.123.100:9090/sample-site/assets/secured/change-bg-snippet.js" basicAuth="dXNlcjpwYXNzd29yZA==" />
+			<executejavascript snippetUrl="${snippet.url.domain}secured/change-bg-snippet.js" basicAuth="dXNlcjpwYXNzd29yZA==" />
 			<screen />
 		</collect>
 		<compare>
