@@ -171,10 +171,12 @@ This is common interface for both [[Collectors|Collectors]] and [[Modifiers|Modi
 You will have to implement two methods:
 - `collect` which is executed during the [[`collection phase`|TestProcessing#collection]], this method can throw 
  [`ProcessingException`](https://github.com/Cognifide/aet/blob/master/api/jobs-api/src/main/java/com/cognifide/aet/job/api/exceptions/ProcessingException.java)
- when modification fails and processing should be interrupted.
+ when modification fails. Throwing this exception from `collect` method won't break processing of all collectors/modifiers. The idea here is to continue processing other 
+ steps despite this error (and this is expected behavior). If you want to break processing you should throw an Exception that doesn't inherit 
+ from [`AETException`](https://github.com/Cognifide/aet/blob/master/api/communication-api/src/main/java/com/cognifide/aet/communication/api/exceptions/AETException.java).
 - `setParameters` that setups all parameters necessary to perform modification (in our case `color` parameter), 
 this method can throw [`ParametersException`](https://github.com/Cognifide/aet/blob/master/api/jobs-api/src/main/java/com/cognifide/aet/job/api/exceptions/ParametersException.java)
- when some mandatory parameter is missing.
+ when some mandatory parameter is missing. Throwing this exception will break processing of all collectors/modifiers steps.
 
 Implementation of `PageBackgroundModifier` can look like this:
 
