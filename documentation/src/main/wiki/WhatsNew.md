@@ -1,3 +1,9 @@
+### Version 2.1.2
+Besides technical improvements within this version we've updated the W3C validator to the most recent version.
+
+### Version 2.1.1
+This version provides mostly strictly technical changes that improve logging and release process automation.
+
 ### Version 2.1.0
 #### Comparing suites patterns
 Consider having more than one AET environment and one of them is returning errors on your page. Now it is possible to compare all patterns collected on different environment to check whether the page is really broken or maybe it is just a broken pattern. It is easier to maintain, because all environments may use the same suite, only patterns may be different.
