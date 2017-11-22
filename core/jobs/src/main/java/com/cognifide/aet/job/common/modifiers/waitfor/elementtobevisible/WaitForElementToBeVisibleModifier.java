@@ -1,18 +1,34 @@
+/**
+ * AET
+ * <p>
+ * Copyright (C) 2013 Cognifide Limited
+ * <p>
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.cognifide.aet.job.common.modifiers.waitfor.elementtobevisible;
+
 import com.cognifide.aet.communication.api.metadata.CollectorStepResult;
 import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
+import com.cognifide.aet.job.common.modifiers.waitfor.WaitForHelper;
 import org.openqa.selenium.By;
-import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
-import org.openqa.selenium.support.ui.FluentWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.util.Map;
-import java.util.NoSuchElementException;
-import java.util.concurrent.TimeUnit;
 
 public class WaitForElementToBeVisibleModifier implements CollectorJob {
 
@@ -37,18 +53,9 @@ public class WaitForElementToBeVisibleModifier implements CollectorJob {
     @Override
     public CollectorStepResult collect() throws ProcessingException {
         CollectorStepResult result;
-        By locator;
         try {
-            FluentWait<WebDriver> wait = new FluentWait<>(webDriver).withTimeout(timeoutInMilliseconds,
-                    TimeUnit.MILLISECONDS).pollingEvery(500, TimeUnit.MILLISECONDS)
-                    .ignoring(NoSuchElementException.class, StaleElementReferenceException.class);
-            if (webElementCssLocator != null) {
-                locator = By.cssSelector(webElementCssLocator);
-            } else {
-                locator = By.xpath(webElementXpathLocator);
-            }
-            wait.until(ExpectedConditions.visibilityOfElementLocated(locator));
-            result = CollectorStepResult.newModifierResult();
+            By locator = WaitForHelper.determineLocatorStrategy(webElementCssLocator, webElementXpathLocator);
+            result = WaitForHelper.waitForExpectedCondition(webDriver, timeoutInMilliseconds, ExpectedConditions.visibilityOfElementLocated(locator));
         } catch (Exception e) {
             final String message =
                     String.format("Failed to wait for element to be visible with provided locator. Error: %s",
