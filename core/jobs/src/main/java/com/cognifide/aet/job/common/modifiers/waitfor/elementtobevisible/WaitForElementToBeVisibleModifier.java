@@ -21,8 +21,8 @@ import com.cognifide.aet.communication.api.metadata.CollectorStepResult;
 import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
+import com.cognifide.aet.job.common.modifiers.WebElementsLocatorParams;
 import com.cognifide.aet.job.common.modifiers.waitfor.WaitForHelper;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
@@ -30,21 +30,13 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Map;
 
-public class WaitForElementToBeVisibleModifier implements CollectorJob {
+public class WaitForElementToBeVisibleModifier extends WebElementsLocatorParams implements CollectorJob {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WaitForElementToBeVisibleModifier.class);
 
     static final String NAME = "wait-for-element-to-be-visible";
 
     private final WebDriver webDriver;
-
-    private static final String CSS_PARAMETER = "css";
-    private static final String XPATH_PARAMETER = "xpath";
-    private static final String TIMEOUT_PARAMETER = "timeout";
-
-    private String webElementCssLocator;
-    private String webElementXpathLocator;
-    private int timeoutInMilliseconds;
 
     WaitForElementToBeVisibleModifier(WebDriver webDriver) {
         this.webDriver = webDriver;
@@ -54,8 +46,8 @@ public class WaitForElementToBeVisibleModifier implements CollectorJob {
     public CollectorStepResult collect() throws ProcessingException {
         CollectorStepResult result;
         try {
-            By locator = WaitForHelper.determineLocatorStrategy(webElementCssLocator, webElementXpathLocator);
-            result = WaitForHelper.waitForExpectedCondition(webDriver, timeoutInMilliseconds, ExpectedConditions.visibilityOfElementLocated(locator));
+            result = WaitForHelper.waitForExpectedCondition(webDriver, getTimeoutInSeconds(),
+                    ExpectedConditions.visibilityOfElementLocated(getLocator()));
         } catch (Exception e) {
             final String message =
                     String.format("Failed to wait for element to be visible with provided locator. Error: %s",
@@ -67,18 +59,6 @@ public class WaitForElementToBeVisibleModifier implements CollectorJob {
     }
 
     @Override
-    public void setParameters(Map<String, String> parameters) throws ParametersException {
-        if (parameters.containsKey(CSS_PARAMETER)) {
-            webElementCssLocator = parameters.get(CSS_PARAMETER);
-        } else if (parameters.containsKey(XPATH_PARAMETER)) {
-            webElementXpathLocator = parameters.get(XPATH_PARAMETER);
-        } else {
-            throw new ParametersException("Xpath or CSS locator has to be provided for wait-for-element-to-be-visible modifier.");
-        }
-
-        if (!parameters.containsKey(TIMEOUT_PARAMETER)) {
-            throw new ParametersException("Timeout has to be provided for wait-for-element-to-be-visible modifier.");
-        }
-        timeoutInMilliseconds = Integer.parseInt(parameters.get(TIMEOUT_PARAMETER));
+    public void setParameters(Map<String, String> params) throws ParametersException {
     }
 }
