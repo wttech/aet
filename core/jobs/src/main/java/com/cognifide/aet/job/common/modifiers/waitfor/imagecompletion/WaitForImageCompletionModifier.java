@@ -1,14 +1,14 @@
 /**
  * AET
- * <p>
+ *
  * Copyright (C) 2013 Cognifide Limited
- * <p>
+ *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- * <p>
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
+ *
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -26,6 +26,7 @@ import com.cognifide.aet.job.common.modifiers.waitfor.WaitForHelper;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
+import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,7 +49,7 @@ public class WaitForImageCompletionModifier extends WebElementsLocatorParams imp
         CollectorStepResult result;
         try {
             result = WaitForHelper.waitForExpectedCondition(webDriver, getTimeoutInSeconds(),
-                    new ExpectedCondition<Boolean>() {
+                    ExpectedConditions.presenceOfElementLocated(getLocator()), new ExpectedCondition<Boolean>() {
                         public Boolean apply(WebDriver webDriver) {
                             return (Boolean) ((JavascriptExecutor) webDriver).executeScript(
                                     "return arguments[0].complete",
