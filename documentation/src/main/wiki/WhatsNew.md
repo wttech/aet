@@ -1,5 +1,5 @@
 ### Version 2.1.2
-Besides technical improvements within this version we've updated the W3C validator to the most recent version.
+Besides technical improvements within this version we've updated the W3C validator to the most recent version (15.6.29).
 
 ### Version 2.1.1
 This version provides mostly strictly technical changes that improve logging and release process automation.
