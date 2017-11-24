@@ -38,8 +38,6 @@ public class ResolutionModifier implements CollectorJob {
 
   private static final Logger LOG = LoggerFactory.getLogger(ResolutionModifier.class);
 
-  private static final String PARAM_MAXIMIZE = "maximize";
-
   private static final String WIDTH_PARAM = "width";
 
   private static final String HEIGHT_PARAM = "height";
@@ -50,15 +48,11 @@ public class ResolutionModifier implements CollectorJob {
 
   private int width;
 
-  private int height;
+  private int height = 1;
 
-  @Deprecated
-  private boolean maximize;
-
-  public ResolutionModifier(WebDriver webDriver) {
+  ResolutionModifier(WebDriver webDriver) {
     this.webDriver = webDriver;
   }
-
 
   @Override
   public CollectorStepResult collect() throws ProcessingException {
@@ -68,32 +62,22 @@ public class ResolutionModifier implements CollectorJob {
 
   @Override
   public void setParameters(Map<String, String> params) throws ParametersException {
-    String paramValue = params.get(PARAM_MAXIMIZE);
-    maximize = Boolean.valueOf(paramValue);
-
-    if (params.containsKey(WIDTH_PARAM) && params.containsKey(HEIGHT_PARAM)) {
+    if (params.containsKey(WIDTH_PARAM)) {
       width = NumberUtils.toInt(params.get(WIDTH_PARAM));
       ParametersValidator.checkRange(width, 1, MAX_SIZE, "Width should be greater than 0");
-
-      height = NumberUtils.toInt(params.get(HEIGHT_PARAM));
-      ParametersValidator.checkRange(height, 1, MAX_SIZE, "Height should be greater than 0");
-
-      ParametersValidator.checkParameter(!maximize,
-              "You cannot maximize the window and specify the dimension");
-    } else if (params.containsKey(WIDTH_PARAM) || params.containsKey(HEIGHT_PARAM)) {
-      throw new ParametersException("You have to specify both width and height");
+      if (params.containsKey(HEIGHT_PARAM)) {
+        height = NumberUtils.toInt(params.get(HEIGHT_PARAM));
+        ParametersValidator.checkRange(height, 1, MAX_SIZE, "Height should be greater than 0");
+      }
+    } else {
+      throw new ParametersException("You have to specify width parameter!");
     }
   }
 
   private void setResolution(WebDriver webDriver) {
     Window window = webDriver.manage().window();
-    if (maximize) {
-      window.maximize();
-      LOG.error("Trying to maximise window to  {}x{}!", window.getSize().getWidth(), window.getSize().getHeight());
-    } else {
-      LOG.info("Setting resolution to  {}x{}  ", width, height);
-      window.setSize(new Dimension(width, height));
-    }
+    LOG.info("Setting resolution to  {}x{}  ", width, height);
+    window.setSize(new Dimension(width, height));
   }
 
 }
