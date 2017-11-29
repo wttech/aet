@@ -2,7 +2,7 @@
 
 #### How to read AET Reports and real time progress
 
-AET test reports are updated on real time basis and can be viewed in the console. This progress information is accessible in two different ways:
+AET execution progress is updated on real time basis and can be viewed in the console. This progress information is accessible in two different ways:
 
 as a command line and with the use of a Jenkins job. To see the progress:
 
