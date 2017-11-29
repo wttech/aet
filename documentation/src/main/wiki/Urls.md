@@ -10,7 +10,7 @@ A single url which will be processed by a particular test.
 | Attribute name | Description | Mandatory |
 | -------------- | ----------- | --------- |
 | `href` | A page address (also see note under the name attribute) | yes |
-| `name` | An identifier for the url. It is used to identify the data for the url. If provided it should be unique for each test in the test suite. If not provided it is set to the encoded `href` value. It should consists of letters, digits and/or characters: `-`, `-` only. Note that if `href=""` with the provided url `name` attribute and the suite `domain` attribute is also valid. | no |
+| `name` | An identifier for the url. It is used to identify the data for the url. If provided it should be unique for each test in the test suite. If not provided it is set to the encoded `href` value. It should consists of letters, digits and/or characters: `-`, `_` only. Note that if `href=""` with the provided url `name` attribute and the suite `domain` attribute is also valid. | no |
 | ~~`description`~~ | ~~An additional description for the url that will be shown in the html report~~ | no longer supported |
 
 ###### Example Usage
