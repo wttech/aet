@@ -10,7 +10,8 @@
          alt="AET Logo"/>
 </p>
 
-AET (acronym formed from **A**utomated **E**xploratory **T**esting) is a system that detects changes on web sites.
+AET is a system that detects changes on web sites and performs basic page health check (like w3c 
+compliance, accessibility check and other).
 AET is designed as a flexible system that can be adapted and tailored to the regression requirements of a given project.
 The tool has been developed to aid front end client side layout regression testing of websites or portfolios. 
 In essence assessing the impact or change of a website from one snapshot to the next.
