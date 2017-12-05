@@ -68,5 +68,6 @@ public class WaitForImageCompletionModifier extends WebElementsLocatorParams imp
 
     @Override
     public void setParameters(Map<String, String> parameters) throws ParametersException {
+        setElementParams(parameters);
     }
 }

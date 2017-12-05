@@ -18,12 +18,12 @@
 package com.cognifide.aet.job.common.modifiers.waitfor;
 
 import com.cognifide.aet.communication.api.metadata.CollectorStepResult;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.FluentWait;
 
-import java.util.NoSuchElementException;
 import java.util.concurrent.TimeUnit;
 
 
@@ -33,22 +33,23 @@ public final class WaitForHelper {
     }
 
     /**
-     *   This helper method allows a Selenium WebDriver to wait until one or more ExpectedConditions are met.
-     *   The WebDriver waits for each ExpectedCondition to be met in a sequence, probing the page every 500ms until
-     *   the ExpectedCondition is met or the timeout limit is reached.
-     *   @param webDriver                The instance of a WebDriver navigating the page under test
-     *   @param timeoutInSeconds         The time after which waiting ends unless the ExpectedCondition is met earlier.
-     *   @param expectedConditions       One or more of ExpectedConditions that have to be met.
-     * */
+     * This helper method allows a Selenium WebDriver to wait until one or more ExpectedConditions are met.
+     * The WebDriver waits for each ExpectedCondition to be met in a sequence, probing the page every 500ms until
+     * the ExpectedCondition is met or the timeout limit is reached.
+     *
+     * @param webDriver          The instance of a WebDriver navigating the page under test
+     * @param timeoutInSeconds   The time after which waiting ends unless the ExpectedCondition is met earlier.
+     * @param expectedConditions One or more of ExpectedConditions that have to be met.
+     */
     public static CollectorStepResult waitForExpectedCondition(
             WebDriver webDriver,
             long timeoutInSeconds,
-            ExpectedCondition... expectedConditions) {
+            ExpectedCondition<?>... expectedConditions) {
         FluentWait<WebDriver> wait = new FluentWait<>(webDriver).withTimeout(timeoutInSeconds,
                 TimeUnit.SECONDS).pollingEvery(500, TimeUnit.MILLISECONDS)
                 .ignoring(NoSuchElementException.class, StaleElementReferenceException.class);
 
-        for (ExpectedCondition expectedCondition : expectedConditions) {
+        for (ExpectedCondition<?> expectedCondition : expectedConditions) {
 
             wait.until(expectedCondition);
         }

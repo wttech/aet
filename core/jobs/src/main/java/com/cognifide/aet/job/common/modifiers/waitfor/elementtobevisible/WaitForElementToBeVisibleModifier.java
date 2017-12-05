@@ -60,5 +60,6 @@ public class WaitForElementToBeVisibleModifier extends WebElementsLocatorParams 
 
     @Override
     public void setParameters(Map<String, String> params) throws ParametersException {
+        setElementParams(params);
     }
 }
