@@ -33,6 +33,8 @@
             * [[Sleep|SleepModifier]]
             * [[Wait For Page Loaded|WaitForPageLoadedModifier]]
             * [[Execute Java Script|ExecuteJavaScriptModifier]]
+            * [[Wait For Element To Be Visible|WaitForElementToBeVisibleModifier]]
+            * [[Wait For Image Completion|WaitForImageCompletionModifier]]
         * [[Comparators|Comparators]]
             * [[Accessibility|AccessibilityComparator]]
             * [[Client Side Performance|ClientSidePerformanceComparator]]
