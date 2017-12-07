@@ -2,15 +2,15 @@
 
 #### How to read AET Reports and real time progress
 
-AET test reports are updated on real time basis and can be viewed on the console. This progress information is accessible in using two methods:
+AET execution progress is updated on real time basis and can be viewed in the console. This progress information is accessible in two different ways:
 
-as a command line and with use of Jenkins job. To see progress
+as a command line and with the use of a Jenkins job. To see the progress:
 
-* log on Jenkins
-* choose proper build execution from Build history panel and
-* click Console Output.
+* log in to Jenkins
+* choose proper build execution from the Build history panel and
+* click the Console Output.
 
-For every test suite started the execution information is provided in the progress log:
+For every test suite started the execution details are provided in the progress log:
 ```
 [INFO] ********************************************************************************
 [INFO] ********************** Job Setup finished at 10:14:43.249.**********************
@@ -18,7 +18,7 @@ For every test suite started the execution information is provided in the progre
 [INFO] ********************************************************************************
 ```
 
-During test processing detailed information about actual progress is displayed as in the following example:
+During test processing detailed information about the actual progress is displayed as in the following example:
 
 ```
 ...
@@ -35,14 +35,14 @@ where:
 
 **collected** - shows results of collectors' work - how many artifacts have been successfully collected and what is the total number of all artifacts to be collected,
 
-**compared** -  shows results of comparators' work - how many artifacts have been successfully compared and what is the total number of all artifacts to be compared. The total number of artifacts to be compared depends on collectors' work progress - increases when the number of successfully collected artifacts increase.
+**compared** -  shows results of comparators' work - how many artifacts have been successfully compared and what is the total number of all artifacts to be compared. The total number of artifacts to be compared depends on collectors' work progress - increases when the number of successfully collected artifacts increases.
 
 If there are problems during processing, warning information with some description of processing step and its parameters is displayed:
 ```
 [WARN] CollectionStep: source named source with parameters: {} thrown exception. TestName: comparator-Source-Long-Response-FAILED UrlName: comparators/source/failed_long_response.jsp Url: http://192.168.123.100:9090/sample-site/sanity/comparators/source/failed_long_response.jsp
 ```
 
-In this example source collector failed to collect necessary artifacts. This information is subsequently reflected in the progress log:
+In this example the source collector failed to collect necessary artifacts. This information is subsequently reflected in the progress log:
 ```
 ...
 [INFO] [06:36:44.832]: COLLECTED: [success: 46, failed: 1, total: 72] ::: COMPARED: [success: 46, total: 46]
@@ -51,11 +51,11 @@ In this example source collector failed to collect necessary artifacts. This inf
 ...
 ```
 
-In the example above one artifact has failed during collection phase.
+In the example above one artifact has failed during the collection phase.
 
 #### When tests successfully finish - command line
 
-When the AET test processing completes the information about received reports and processing status - BUILD SUCCESS or BUILD FAILURE is shown on the console - as shown below:
+When the AET test processing completes the information about received reports and processing status - BUILD SUCCESS or BUILD FAILURE is shown in the console - as shown below:
 
 ```
 [INFO] Received report message: ReportMessage{company=aet-demo-sanity, project=demo-sanity-test, testSuiteName=main, status=OK, environment=win7-ff16, domain=http://192.168.123.100:9090/sample-site/sanity/, correlationId=aet-demo-sanity-demo-sanity-test-main-1426570459612}
@@ -71,13 +71,13 @@ When the AET test processing completes the information about received reports an
 [INFO] ------------------------------------------------------------------------
 ```
 
-BUILD SUCCESS  - status means that test processing is successfully finished and reports are generated in target folder.
+BUILD SUCCESS  - the status means that test processing has been successfully finished and reports have been generated in the target folder.
 
-BUILD FAILURE  - status means that there were some technical problem during processing for example database is not responding and it is not possible to receive reports.
+BUILD FAILURE  - the status means that there was some technical problem during processing, for example the database did not respond and it was not possible to receive reports.
 
 #### When test is successfully finished - Jenkins job
 
-Jenkins console output presents the same information as described above, but if test suite is defined to generate xunit-report additional information such as Junit processing is logged on console:
+The Jenkins console output presents the same information as described above, but if the test suite is defined to generate xunit-report additional information such as Junit processing is logged in the console:
 
 ```
 [xUnit] [INFO] - Starting to record.
@@ -92,6 +92,6 @@ Build step 'Publish xUnit test result report' changed build result to UNSTABLE
 Finished: UNSTABLE
 ```
 
-The meaning of '*Successful*' and '*Failed*' build is quite different here, because final build status depends mainly on tests results and thresholds configuration. The build can result with BUILD SUCCESS status (which means that all workers - collectors, comparators, reporters finish their work and proper reports were generated), but final Jenkins build status can be for example UNSTABLE becase there were some new test failures.
+The meaning of the '*Successful*' and '*Failed*' build is quite different here, because the final build status depends mainly on the test results and thresholds configuration. The build can result in the BUILD SUCCESS status (which means that all workers - collectors, comparators, reporters finished their work and proper reports were generated), but the final Jenkins build status can be for example UNSTABLE because there were some new test failures.
 
-A Jenkins build is considered as UNSTABLE (yellow) or FAILURE (red) if the new (tests that failed now, but did not fail in previous run) or total number of failed tests exceeds the specified thresholds. For example:when "yellow total" threshold is set to 0 and one or more test cases failed, then build is mark as UNSTABLE.
+The Jenkins build is considered UNSTABLE (yellow) or FAILURE (red) if the current (tests that failed now, but did not fail in the previous run) or total number of failed tests exceeds the thresholds specified. For example: when the "yellow total" threshold is set to 0 and one or more test cases failed, the build is marked as UNSTABLE.
