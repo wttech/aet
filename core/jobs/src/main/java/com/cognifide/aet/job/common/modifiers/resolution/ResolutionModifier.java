@@ -23,7 +23,6 @@ import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 
-import org.apache.commons.lang3.math.NumberUtils;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriver.Window;
@@ -42,13 +41,15 @@ public class ResolutionModifier implements CollectorJob {
 
   private static final String HEIGHT_PARAM = "height";
 
+  private static final int HEIGHT_VALUE_IF_PARAMETER_MISSING = 1;
+
   private static final int MAX_SIZE = 100000;
 
   private final WebDriver webDriver;
 
   private int width;
 
-  private int height = 1;
+  private int height = HEIGHT_VALUE_IF_PARAMETER_MISSING;
 
   ResolutionModifier(WebDriver webDriver) {
     this.webDriver = webDriver;
@@ -63,10 +64,10 @@ public class ResolutionModifier implements CollectorJob {
   @Override
   public void setParameters(Map<String, String> params) throws ParametersException {
     if (params.containsKey(WIDTH_PARAM)) {
-      width = NumberUtils.toInt(params.get(WIDTH_PARAM));
+      width = Integer.parseInt(params.get(WIDTH_PARAM));
       ParametersValidator.checkRange(width, 1, MAX_SIZE, "Width should be greater than 0");
       if (params.containsKey(HEIGHT_PARAM)) {
-        height = NumberUtils.toInt(params.get(HEIGHT_PARAM));
+        height = Integer.parseInt(params.get(HEIGHT_PARAM));
         ParametersValidator.checkRange(height, 1, MAX_SIZE, "Height should be greater than 0");
       }
     } else {

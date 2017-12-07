@@ -24,6 +24,7 @@ import static org.mockito.Mockito.when;
 
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
+import java.lang.NumberFormatException;
 import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
@@ -75,7 +76,7 @@ public class ResolutionModifierTest {
     when(windowDimension.getWidth()).thenReturn(WINDOW_WIDTH);
   }
 
-  @Test(expected = ParametersException.class)
+  @Test(expected = NumberFormatException.class)
   public void setParametersTest_widthNotANumber() throws ParametersException {
     when(params.containsKey(WIDTH_PARAM)).thenReturn(true);
     when(params.get(WIDTH_PARAM)).thenReturn(NOT_A_NUMBER);
