@@ -32,7 +32,7 @@
 
   <name>AET :: Client</name>
   <description>Root module for AET clients</description>
-  
+
   <modules>
     <module>aet-maven-plugin</module>
     <module>client-core</module>

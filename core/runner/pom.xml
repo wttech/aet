@@ -32,7 +32,7 @@
 
   <name>AET :: Core :: Runner</name>
   <description>Module responsible for distribution and management of particular tests</description>
-  
+
   <dependencies>
     <dependency>
       <groupId>com.cognifide.aet</groupId>
