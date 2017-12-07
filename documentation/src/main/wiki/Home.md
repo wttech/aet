@@ -1,4 +1,4 @@
-![ET](/Cognifide/aet/wiki/assets/misc/aet-logo.png)
+![AET](/Cognifide/aet/wiki/assets/misc/aet-logo.png)
 # Getting Started
 
 ## What is AET
