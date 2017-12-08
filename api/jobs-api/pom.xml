@@ -32,7 +32,7 @@
 
   <name>AET :: API :: Jobs API</name>
   <description>API for AET jobs - collectors, comparators, filters</description>
- 
+
   <dependencies>
     <!-- project -->
     <dependency>
