@@ -35,13 +35,14 @@
 			<xsl:apply-templates select="document('partials/sleep-modifier.xml')/*/test"/>
 			<xsl:apply-templates select="document('partials/cookie.xml')/*/test"/>
 			<xsl:apply-templates select="document('partials/click.xml')/*/test"/>
-			<xsl:apply-templates select="document('partials/wait-for-page-modifier.xml')/*/test"/>
+			<xsl:apply-templates select="document('partials/wait-for-page-loaded-modifier.xml')/*/test"/>
 			<xsl:apply-templates select="document('partials/client-side-performance.xml')/*/test"/>
 			<xsl:apply-templates select="document('partials/accessibility.xml')/*/test"/>
 			<xsl:apply-templates select="document('partials/accessibility-filtered.xml')/*/test"/>
 			<xsl:apply-templates select="document('partials/header.xml')/*/test"/>
 			<xsl:apply-templates select="document('partials/loginmodifier.xml')/*/test"/>
 			<xsl:apply-templates select="document('partials/replacetext.xml')/*/test"/>
+			<xsl:apply-templates select="document('partials/wait-for-element-to-be-visible.xml')/*/test"/>
 			<xsl:copy-of select="reports"/>
 		</xsl:copy>
 	</xsl:template>

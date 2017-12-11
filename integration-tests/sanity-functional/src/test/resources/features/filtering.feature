@@ -84,6 +84,12 @@ Feature: Tests Results Filtering
     
   Scenario: Filtering Tests Results: wait-for-page-modifier
     Given I have opened sample tests report page
-    When I search for tests containing "wait"
+    When I search for tests containing "wait-for-page-loaded"
+    Then There are 2 tiles visible
+    And Statistics text contains "2 ( 1 / 0 / 1 / 0 )"
+
+  Scenario: Filtering Tests Results: wait-for-element-to-be-visible-modifier
+    Given I have opened sample tests report page
+    When I search for tests containing "wait-for-element-to-be-visible"
     Then There are 2 tiles visible
     And Statistics text contains "2 ( 1 / 0 / 1 / 0 )"

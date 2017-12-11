@@ -18,22 +18,13 @@
 
 --%>
 <%@ include file="/includes/header.jsp" %>
+<div class="panel panel-default" id="test-element" style="display: none;">
+	<div class="panel-body">
+		Are you waiting for me?
+	</div>
+</div>
 <script>
-function hideText() {
-    var hideText = document.getElementById("toHide");
-    var hideLink = document.getElementById("hide");
-    hideText.style.display = 'none';
-    hideLink.style.display = 'none';
-}
+	setTimeout(function(){ document.getElementById("test-element").style.display = ''; }, 7000);
 </script>
-
-<%
-java.text.SimpleDateFormat dt = new java.text.SimpleDateFormat("EEE, d MMM yyyy HH:mm:ss.SSSZ",java.util.Locale.ENGLISH);
-java.util.Date date = new java.util.Date();
-%>
-
-<p id="toHide">This text should disappear when you click "Hide" button below. The time is now <%= dt.format(date) %></p>
-<a href="#" onClick="hideText()" id="hide">Hide</a>
-
 <%@ include file="/includes/bodyContent.jsp" %>
 <%@ include file="/includes/footer.jsp" %>
