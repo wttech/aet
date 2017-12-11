@@ -49,7 +49,7 @@ public class WaitForImageCompletionModifier extends WebElementsLocatorParams imp
         CollectorStepResult result;
         try {
             result = WaitForHelper.waitForExpectedCondition(webDriver, getTimeoutInSeconds(),
-                    ExpectedConditions.presenceOfElementLocated(getLocator()), new ExpectedCondition<Boolean>() {
+                    ExpectedConditions.visibilityOfElementLocated(getLocator()), new ExpectedCondition<Boolean>() {
                         public Boolean apply(WebDriver webDriver) {
                             return (Boolean) ((JavascriptExecutor) webDriver).executeScript(
                                     "return arguments[0].complete",
