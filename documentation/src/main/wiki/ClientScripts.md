@@ -23,7 +23,7 @@ Shell script can be run with parameters which are described below:
 
 | Parameter | Description | Default Value | Mandatory |
 | --------- | ----------- | ------------- | --------- |
-| `endpointDomain` | AET domain which exposes [[Test Executor API|TestExecutor]] | - | yes |
+| `endpointDomain` | AET domain which exposes [[Test Executor API\|TestExecutor]] | - | yes |
 | `suite_file_name` | The full path to the suite definition file (at least a file name with an extension, e.g. `testSuite.xml`). | suite.xml | no |
 | `-i \| --interval <POLL_INTERVAL>` | Interval of polling the status of currently executed test. (Unit: seconds) | 1 | no |
 
