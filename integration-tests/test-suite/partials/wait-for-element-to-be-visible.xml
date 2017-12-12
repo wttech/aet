@@ -31,21 +31,21 @@
 			<screen comparator="layout" />
 		</compare>
 		<urls>
-			<url href="modifiers/wait-for-element-to-be-visible/success.jsp" />
+			<url href="modifiers/wait-for-element-to-be-visible/wait-for-element-to-be-visible.jsp" />
 		</urls>
 	</test>
 	<!-- Should fail because timeout is shorter than the time before the searched element appears -->
 	<test name="modifier-Wait-For-Element-To-Be-Visible-FAILED">
 		<collect>
 			<open />
-			<wait-for-element-to-be-visible css="#test-element" timeout="3000"/>
+			<wait-for-element-to-be-visible css="#test-element" timeout="1000"/>
 			<screen />
 		</collect>
 		<compare>
 			<screen comparator="layout" />
 		</compare>
 		<urls>
-			<url href="modifiers/wait-for-element-to-be-visible/failed.jsp" />
+			<url href="modifiers/wait-for-element-to-be-visible/wait-for-element-to-be-visible.jsp" />
 		</urls>
 	</test>
 	<!-- Wait-For-Element-To-Be-Visible-Modifier END -->
