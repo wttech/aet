@@ -24,7 +24,7 @@
 	<test name="comparator-JsErrors-FAILED-one-error-left-unfiltered">
 		<collect>
 			<open />
-			<sleep duration="1000" />
+			<sleep duration="2000" />
 			<js-errors />
 		</collect>
 		<compare>
