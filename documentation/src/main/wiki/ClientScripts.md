@@ -37,7 +37,7 @@ During test execution script creates two files:
 * `xUnit.xml` - this file is downloaded after test is processed, to extract information on any failures.
 * `redirect.html` - this file is created to help reach the test result by redirecting to test results URL after opening it.
 
-#### Dependencies
+#### Prerequisites
 
 In order to run properly, following commands need to be available on PATH of the environment the script is executed on:
 * `curl` - used to make actual request against [[Test Executor API|TestExecutor]] and also to download `xUnit.xml` file after test completion. Comes preinstalled on most Unix systems. [Download link](https://curl.haxx.se/download.html)
