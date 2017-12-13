@@ -45,8 +45,7 @@ If a user wants to refer to the older AET version documentation, there are dedic
 e.g. [AET 2.0.0 Documentation](https://github.com/Cognifide/aet/wiki/Documentation-2.0.0).
 
 By the design GitHub Wiki is a [separate git repository](https://help.github.com/articles/adding-and-editing-wiki-pages-locally/).
-To make it easier to update documentation together with new features or fixes, AET keep all the documentation is in the same repository 
-as the codebase in the [documentation](https://github.com/Cognifide/aet/tree/master/documentation) module.
+To make it easier to update documentation together with new features or fixes, AET keep all the documentation is in the same repository as the codebase, in the [documentation](https://github.com/Cognifide/aet/tree/master/documentation) module.
 
 After the feature branch (codebase and wiki pages) is merged to AET `master` branch - 
 wiki repository is synchronised with the content of [documentation](https://github.com/Cognifide/aet/tree/master/documentation) module
@@ -62,14 +61,13 @@ Have in mind few important rules:
 - When you add a new markdown page, add a reference to the [`_Sidebar.md`](https://github.com/Cognifide/aet/blob/master/documentation/src/main/wiki/_Sidebar.md)
 file which defines how the Wiki's right navigation menu looks like.
 - Please do not update wiki pages directly because your changes will be lost during the next wiki upgrade.
-- If you spot some misspell remember that you can propose an improvement [directly from the browser](https://help.github.com/articles/editing-files-in-your-repository/).
+- If you spot some misspell (typo) remember that you can propose an improvement [directly from the browser](https://help.github.com/articles/editing-files-in-your-repository/).
 Please do so, we believe that having good an up-to-date documentation is as important as having stable code.
-- AET has its [FAQ](https://github.com/Cognifide/aet/wiki/FAQ). If you believe that something is missing there, please create a pull request 
-or a [new GitHub issue](https://github.com/Cognifide/aet/issues/new).
+- AET has its [FAQ](https://github.com/Cognifide/aet/wiki/FAQ). If you believe that something is missing there, please create a pull request or a [new GitHub issue](https://github.com/Cognifide/aet/issues/new).
 
 ## Changelog
 When changing or fixing some important part of AET, please remember to update [Changelog](https://github.com/Cognifide/aet/blob/master/CHANGELOG.md).
-Your entry should be enlisted in `Unreleased` section. It will be moved to appropriate release notes when released.
+Your entry should be enlisted in `Unreleased` section. It will be moved to appropriate release notes during release process.
 Please use convention `- [PR-ABC](https://github.com/Cognifide/aet/pull/ABC) - short description of the PR.`.
 
 ## Tests naming convention
