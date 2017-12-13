@@ -23,9 +23,9 @@ Options:
 	-i --interval <POLL_INTERVAL>  - Set interval in seconds for polling suite status. Default interval : 1 sec
 ```
 
-### Dependencies
+### Prerequisites
 
-Script utilizes following tools:
-
-* `curl` - for making requests against AET REST API
-* `xmllint` - for parsing xUnit report to retrieve number of failed tests to set proper exit code
+In order to run properly, following commands need to be available on PATH of the environment the script is executed on:
+* `curl` - used to make actual request against [[Test Executor API|TestExecutor]] and also to download `xUnit.xml` file after test completion. Comes preinstalled on most Unix systems. [Download link](https://curl.haxx.se/download.html)
+* `jq` - used to parse JSON responses from [[Test Executor API|TestExecutor]]. [Download link](https://stedolan.github.io/jq/download/)
+* `xmllint` - used to retirieve failure information from downloaded `xUnit.xml`. Comes preinstalled on most Unix systems. For Windows installation instructions, refer to [Jo Jordan's post](http://flowingmotion.jojordan.org/2011/10/08/3-steps-to-download-xmllint/).
