@@ -77,7 +77,7 @@
 	<test name="comparator-JsErrors-FAILED-filter-by-source-and-line-number-20">
 		<collect>
 			<open />
-			<sleep duration="1000" />
+			<sleep duration="2000" />
 			<js-errors />
 		</collect>
 		<compare>
