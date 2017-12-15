@@ -24,6 +24,7 @@ import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Map;
 
 import org.apache.commons.codec.binary.Base64;
@@ -104,7 +105,14 @@ public class ExecuteJavaScriptModifier implements CollectorJob {
     String passwordOrEmpty = StringUtils.defaultString(password);
 
     String authString = usernameOrEmpty + ":" + passwordOrEmpty;
-    byte[] encoded = Base64.encodeBase64(authString.getBytes());
+    LOG.debug("authentication: '{}'", authString);
+    byte[] encoded = new byte[0];
+    try {
+      encoded = Base64.encodeBase64(authString.getBytes("UTF-8"));
+    } catch (UnsupportedEncodingException uee) {
+      LOG.error("Unsupported encoding: UTF-8", uee);
+    }
+    LOG.debug("encoded bytes: '{}'", encoded);
     return new String(encoded);
   }
 
