@@ -24,7 +24,9 @@ import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.job.common.modifiers.WebElementsLocatorParams;
 import com.cognifide.aet.job.common.modifiers.waitfor.WaitForHelper;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
@@ -51,17 +53,19 @@ public class WaitForImageCompletionModifier extends WebElementsLocatorParams imp
             result = WaitForHelper.waitForExpectedCondition(webDriver, getTimeoutInSeconds(),
                     ExpectedConditions.visibilityOfElementLocated(getLocator()), new ExpectedCondition<Boolean>() {
                         public Boolean apply(WebDriver webDriver) {
-                            return (Boolean) ((JavascriptExecutor) webDriver).executeScript(
-                                    "return arguments[0].complete",
-                                    webDriver.findElement(getLocator()));
+                            WebElement element = webDriver.findElement(getLocator());
+                            Boolean complete = (Boolean) ((JavascriptExecutor) webDriver)
+                                .executeScript("return arguments[0].complete", element);
+                            LOGGER.debug("Waiting for image completion. Complete: '{}'", complete);
+                            return complete;
                         }
                     });
-        } catch (Exception e) {
+        } catch (TimeoutException te) {
             final String message =
                     String.format("Failed to wait for image to be loaded with provided locator. Error: %s",
-                            e.getMessage());
+                            te.getMessage());
             result = CollectorStepResult.newProcessingErrorResult(message);
-            LOGGER.warn(message, e);
+            LOGGER.warn(message, te);
         }
         return result;
     }
