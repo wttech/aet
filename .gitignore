@@ -24,6 +24,7 @@ atlassian-ide-plugin.xml
 
 ### AET integration tests
 # this partial is generated from template
+/integration-tests/test-suite/partials/executejavascript.xml
 /integration-tests/test-suite/partials/loginmodifier.xml
 
 ### AET report web application

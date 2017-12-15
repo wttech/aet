@@ -108,6 +108,8 @@
                 <exclude>src/main/webapp/assets/demo_files/combined.js</exclude>
                 <exclude>src/main/webapp/assets/demo_files/ie10-viewport-bug-workaround.js</exclude>
                 <exclude>src/main/webapp/assets/demo_files/jquery.min.js</exclude>
+                <exclude>src/main/webapp/assets/snippets/change-bg-snippet.js</exclude>
+                <exclude>src/main/webapp/assets/secured/change-bg-snippet.js</exclude>
               </excludes>
             </configuration>
           </execution>

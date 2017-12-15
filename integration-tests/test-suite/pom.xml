@@ -37,6 +37,7 @@
   <properties>
     <!-- Provided as maven property because we want to configure it for different environments. -->
     <login.page.domain>http://192.168.123.100:9090/sample-site/sanity/</login.page.domain>
+    <snippet.url.domain>http://192.168.123.100:9090/sample-site/assets/</snippet.url.domain>
   </properties>
 
   <profiles>
@@ -66,6 +67,7 @@
                       <filtering>true</filtering>
                       <includes>
                         <include>loginmodifier.xml</include>
+                        <include>executejavascript.xml</include>
                       </includes>
                     </resource>
                   </resources>
