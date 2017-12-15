@@ -32,7 +32,7 @@
 
   <name>AET :: Core :: Data Storage</name>
   <description>Module responsible for datastorage integration</description>
-  
+
   <dependencies>
     <dependency>
       <groupId>com.cognifide.aet</groupId>

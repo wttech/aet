@@ -32,7 +32,7 @@
 
   <name>AET :: OSGi Dependencies</name>
   <description>Root module for osgi-dependent maven modules</description>
-  
+
   <modules>
     <module>configs</module>
     <module>proxy</module>

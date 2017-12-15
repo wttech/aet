@@ -134,6 +134,8 @@
 
 #include "wiki/ClientApplication.md"
 
+#include "wiki/ClientScripts.md"
+
 #include "wiki/TestExecutor.md"
 
 #include "wiki/Runner.md"

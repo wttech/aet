@@ -13,7 +13,7 @@ Base api path:
 `http://<Domain_or_IP_Address>:<PORT>/api`
 
 ##### Get artifact by artifact Id
-* **URL**: `/artifact`
+* **URL**: `/api/artifact`
 * **HTTP Method**: GET
 * **Parameters**: `company`, `project`, `id`
 * **Example**: http://aet.example.com/api/artifact?company=cognifide&project=example&id=56fa80c1ab21c61f14bfef45
@@ -21,7 +21,7 @@ Base api path:
 
 --------
 ##### Get metadata by correlationId
-* **URL**: `/metadata`
+* **URL**: `/api/metadata`
 * **HTTP Method**: GET
 * **Parameters**: `company`, `project`, `correlationId` 
 * **Example**: http://aet.example.com/api/metadata?company=cognifide&project=example&correlationId=cognifide-example-1459257500567 
@@ -29,7 +29,7 @@ Base api path:
 
 --------
 ##### Get metadata by suite name
-* **URL**: `/metadata`
+* **URL**: `/api/metadata`
 * **HTTP Method**: GET
 * **Parameters**: `company`, `project`, `suite` 
 * **Example**: http://aet.example.com/api/metadata?company=cognifide&project=example&suite=mysimplesuite 
@@ -37,7 +37,7 @@ Base api path:
 
 --------
 ##### Update suite metadata
-* **URL**: `/metadata`
+* **URL**: `/api/metadata`
 * **HTTP Method**: POST
 * **Parameters**: raw JSON in POST body
 * **Example**: http://aet.example.com/api/metadata `[raw json in post body]`
@@ -48,7 +48,7 @@ Base api path:
 * **URL**: `/lock`
 * **HTTP Method**: GET
 * **Parameters**: `company-project-name` as last part of path 
-* **Example**: http://aet.example.com/api/lock/cognifide-example-mysimplesuite 
+* **Example**: http://aet.example.com/lock/cognifide-example-mysimplesuite 
 * **Description**: Returns lock status for given suite (true if it's locked or false in json)
 
 --------
@@ -56,7 +56,7 @@ Base api path:
 * **URL**: `/lock`
 * **HTTP Method**: POST
 * **Parameters**: `value` - additional info for lock (currently it's correlationId only) "company-project-name" as last part of path 
-* **Example**: http://aet.example.com/api/lock/cognifide-example-mysimplesuite `[value=cognifide-example-mysimplesuite-12312454]`
+* **Example**: http://aet.example.com/lock/cognifide-example-mysimplesuite `[value=cognifide-example-mysimplesuite-12312454]`
 * **Description**: This methods sets lock only if there is no lock already set for given suite. Returns status 409 if given suite is already locked.
 
 --------
@@ -64,26 +64,26 @@ Base api path:
 * **URL**: `/lock`
 * **HTTP Method**: PUT
 * **Parameters**: `value` - additional info for lock (currently it's correlationId only) "company-project-name" as last part of path 
-* **Example**: http://aet.example.com/api/lock/cognifide-example-mysimplesuite `[value=cognifide-example-mysimplesuite-12312454]` 
+* **Example**: http://aet.example.com/lock/cognifide-example-mysimplesuite `[value=cognifide-example-mysimplesuite-12312454]` 
 * **Description**: This method extends the duration of a lock for given suite.
  
 --------
 ##### Gets list of all suites in system
 * **URL**: `/config/list`
 * **HTTP Method**: GET
-* **Example**: http://aet.example.com/api/config/list 
+* **Example**: http://aet.example.com/config/list 
 * **Description**: Returns all suites for all projects in all companies as html list of links to reports and metadata (this method will change or will be removed in near future- for now it stays only for devs and testing purposes).
  
 --------
 ##### Get all locked suites
 * **URL**: `/config/locks`
 * **HTTP Method**: GET
-* **Example**: http://aet.example.com/api/config/locks 
+* **Example**: http://aet.example.com/config/locks 
 * **Description**: Returns list of current locks.
  
 --------
 ##### Get communication settings
 * **URL**: `/config/communicationSettings`
 * **HTTP Method**: GET
-* **Example**: http://aet.example.com/api/config/communicationSettings 
+* **Example**: http://aet.example.com/config/communicationSettings 
 * **Description**: Returns current JMS broker settings and report app domain. This method is used by maven client. 

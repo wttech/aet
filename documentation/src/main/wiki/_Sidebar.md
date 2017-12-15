@@ -68,6 +68,7 @@
 * [[How It Works|HowItWorks]]
     * [[System Components|SystemComponents]]
         * [[Client Application|ClientApplication]]
+        * [[Client Scripts|ClientScripts]]
         * [[Test Executor|TestExecutor]]
         * [[Runner|Runner]]
         * [[Worker|Worker]]

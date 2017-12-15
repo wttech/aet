@@ -123,6 +123,7 @@
 		<collect>
 			<open />
 			<resolution width="200" height="300" />
+			<sleep duration="3000" />
 			<screen css="img" />
 		</collect>
 		<compare>
@@ -137,6 +138,7 @@
 		<collect>
 			<open />
 			<resolution width="200" height="300" />
+			<sleep duration="3000" />
 			<screen xpath="//*[@id='banner']/div/div[1]/h1" />
 		</collect>
 		<compare>

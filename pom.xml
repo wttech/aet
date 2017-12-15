@@ -42,7 +42,7 @@
       <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
     </license>
   </licenses>
-  
+
   <developers>
     <developer>
       <name>Maciej Laskowski</name>
@@ -89,7 +89,7 @@
     <tag>HEAD</tag>
     <url>https://github.com/Cognifide/aet</url>
   </scm>
-  
+
   <!-- please add sonatype credentials in your user settings.xml file -->
   <distributionManagement>
     <repository>
@@ -597,7 +597,7 @@
         <version>1.2</version>
       </dependency>
     </dependencies>
-        
+
   </dependencyManagement>
 
   <build>

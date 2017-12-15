@@ -24,7 +24,7 @@
 	<test name="comparator-JsErrors-FAILED-filter-by-error-name">
 		<collect>
 			<open />
-			<sleep duration="1000" />
+			<sleep duration="2000" />
 			<js-errors />
 		</collect>
 		<compare>
@@ -40,7 +40,7 @@
 	<test name="comparator-JsErrors-SUCCESS-filter-by-error-name">
 		<collect>
 			<open />
-			<sleep duration="1000" />
+			<sleep duration="2000" />
 			<js-errors />
 		</collect>
 		<compare>
@@ -58,7 +58,7 @@
 		name="comparator-JsErrors-SUCCESS-filter-by-error-name-external-resource">
 		<collect>
 			<open />
-			<sleep duration="1000" />
+			<sleep duration="2000" />
 			<js-errors />
 		</collect>
 		<compare>
