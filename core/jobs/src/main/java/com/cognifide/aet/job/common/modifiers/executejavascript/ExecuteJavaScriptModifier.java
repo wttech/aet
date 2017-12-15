@@ -23,7 +23,10 @@ import com.cognifide.aet.job.api.ParametersValidator;
 import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
+
 import java.util.Map;
+
+import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
@@ -37,7 +40,8 @@ public class ExecuteJavaScriptModifier implements CollectorJob {
 
   private static final String CMD_PARAM = "cmd";
   private static final String URL_PARAM = "snippetUrl";
-  private static final String BASIC_AUTH_PARAM = "basicAuth";
+  private static final String BASIC_AUTH_USERNAME = "basicAuthUsername";
+  private static final String BASIC_AUTH_PASSWORD = "basicAuthPassword";
 
   private final WebDriver webDriver;
   private final ExternalSnippetHttpClient httpClient;
@@ -78,7 +82,30 @@ public class ExecuteJavaScriptModifier implements CollectorJob {
     ParametersValidator.checkAtLeastOneNotBlank(
         "Either 'cmd' or 'snippetUrl' parameter must be provided for executejavascript modifier.",
         cmd, snippetUrl);
-    basicAuth = params.get(BASIC_AUTH_PARAM);
+
+    if (params.containsKey(BASIC_AUTH_USERNAME) && params.containsKey(BASIC_AUTH_PASSWORD)) {
+      String username = params.get(BASIC_AUTH_USERNAME);
+      String password = params.get(BASIC_AUTH_PASSWORD);
+      String encoded = encodeBasicAuth(username, password);
+      basicAuth = params.get(encoded);
+    } else {
+      // we dont't have both attributes here
+      boolean containOnlyOne
+          = params.containsKey(BASIC_AUTH_USERNAME) || params.containsKey(BASIC_AUTH_PASSWORD);
+      if(containOnlyOne){
+        throw new ParametersException(
+            "You have to specify both " + BASIC_AUTH_USERNAME + " and " + BASIC_AUTH_PASSWORD);
+      }
+    }
+  }
+
+  String encodeBasicAuth(String username, String password) {
+    String usernameOrEmpty = StringUtils.defaultString(username);
+    String passwordOrEmpty = StringUtils.defaultString(password);
+
+    String authString = usernameOrEmpty + ":" + passwordOrEmpty;
+    byte[] encoded = Base64.encodeBase64(authString.getBytes());
+    return new String(encoded);
   }
 
   private CollectorStepResult javaScriptElement(WebDriver driver, String jsSnippet) {

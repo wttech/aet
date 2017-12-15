@@ -68,7 +68,7 @@
 		<collect>
 			<open />
 			<sleep duration="3000" />
-			<executejavascript snippetUrl="${snippet.url.domain}secured/change-bg-snippet.js" basicAuth="dXNlcjpwYXNzd29yZA==" />
+			<executejavascript snippetUrl="${snippet.url.domain}secured/change-bg-snippet.js" basicAuthUsername="user" basicAuthPassword="password" />
 			<screen />
 		</collect>
 		<compare>

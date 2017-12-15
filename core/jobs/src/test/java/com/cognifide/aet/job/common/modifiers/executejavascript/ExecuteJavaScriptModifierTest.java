@@ -29,6 +29,8 @@ import org.openqa.selenium.WebDriver;
 
 import java.util.Map;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
 import static org.mockito.Mockito.when;
 
 
@@ -55,6 +57,35 @@ public class ExecuteJavaScriptModifierTest {
     }
 
     @Test
+    public void encodeBasicAuth_ComplexPassword_ShouldBeProperlyEncoded() {
+        String actual = tested.encodeBasicAuth("admin", "zażółć!@#$%^&*()_+-={}|[]\\:\";'<>?,./");
+        String base64Encoded = "YWRtaW46emHFvMOzxYLEhyFAIyQlXiYqKClfKy09e318W11cOiI7Jzw+PywuLw==";
+        assertThat(actual, equalTo(base64Encoded));
+    }
+
+    @Test
+    public void encodeBasicAuth_EmptyPassword_ShouldBeProperlyEncoded() {
+        String actual = tested.encodeBasicAuth("admin", "");
+        String base64Encoded = "YWRtaW46";
+        assertThat(actual, equalTo(base64Encoded));
+    }
+
+    @Test
+    public void encodeBasicAuth_NullPassword_ShouldBeTreatedAsEmptyString() {
+        String actual = tested.encodeBasicAuth("admin", null);
+        String base64Encoded = "YWRtaW46";
+        assertThat(actual, equalTo(base64Encoded));
+    }
+
+    @Test(expected = ParametersException.class)
+    public void setParameters_MissingParam_ValidationPassedUnsuccessfully() throws ParametersException {
+        when(params.get("basicAuthUsername")).thenReturn("admin");
+        when(params.get("basicAuthPassword")).thenReturn(null);
+
+        tested.setParameters(params);
+    }
+
+    @Test
     public void setParameters_CmdIsValid_ValidationPassedSuccessfully() throws ParametersException {
         setupCmdParam();
         tested.setParameters(params);
@@ -74,7 +105,7 @@ public class ExecuteJavaScriptModifierTest {
     }
 
     @Test(expected = ParametersException.class)
-    public void setParameters_NoSourceIsPassed_ValidationPassedUnsuccessfuly()
+    public void setParameters_NoSourceIsPassed_ValidationPassedUnsuccessfully()
         throws ParametersException {
         tested.setParameters(params);
     }
