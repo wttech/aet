@@ -66,7 +66,7 @@ public class ParametersValidatorTest {
   }
 
   @Test
-  public void testCheckAtLeastOneNotBlank_whenAtLeastOneInputNotEmpty_expectFalse() throws Exception {
+  public void testCheckAtLeastOneNotBlank_whenAtLeastOneInputNotEmpty_validationPassed() throws Exception {
     ParametersValidator.checkAtLeastOneNotBlank("Error", "param-a");
     ParametersValidator.checkAtLeastOneNotBlank("Error", "", "param-b");
     ParametersValidator.checkAtLeastOneNotBlank("Error", "", "", "param-c");
@@ -76,13 +76,13 @@ public class ParametersValidatorTest {
   }
 
   @Test(expected = ParametersException.class)
-  public void testCheckAtLeastOneNotBlank_whenEmptyParameterArePassed_expectVaidationException() throws Exception {
+  public void testCheckAtLeastOneNotBlank_whenEmptyParameterArePassed_expectException() throws Exception {
     ParametersValidator.checkAtLeastOneNotBlank("Error", "", "");
   }
 
 
   @Test(expected = ParametersException.class)
-  public void testCheckAtLeastOneNotBlank_whenNullParameterArePassed_expectVaidationException() throws Exception {
+  public void testCheckAtLeastOneNotBlank_whenNullParameterArePassed_expectException() throws Exception {
     ParametersValidator.checkAtLeastOneNotBlank("Error", null, "");
   }
 }
