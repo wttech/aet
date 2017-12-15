@@ -24,7 +24,7 @@
 	<test name="modifier-Wait-For-Element-To-Be-Visible-SUCCESS">
 		<collect>
 			<open />
-			<wait-for-element-to-be-visible css="#test-element" timeout = "15000"/>
+			<wait-for-element-to-be-visible css="#test-element" timeout = "6000"/>
 			<screen />
 		</collect>
 		<compare>
