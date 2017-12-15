@@ -22,7 +22,7 @@ import com.cognifide.aet.job.api.exceptions.ParametersException;
 import org.apache.commons.lang3.StringUtils;
 
 /**
- * @author lukasz.wieczorek
+ * Checks parameters and throws ParametersException if they are not valid.
  */
 public final class ParametersValidator {
 
@@ -42,10 +42,10 @@ public final class ParametersValidator {
     }
   }
 
-  public static boolean checkAllBlank(String errorMessage, String... values) throws ParametersException {
+  public static void checkAllBlank(String errorMessage, String... values) throws ParametersException {
     for (String value : values) {
       if (StringUtils.isNotBlank(value)) {
-        return false;
+        return;
       }
     }
     throw new ParametersException(errorMessage);
