@@ -31,7 +31,7 @@
 			<screen comparator="layout" />
 		</compare>
 		<urls>
-			<url href="modifiers/wait-for-image-completion/wait-for-image-completion.jsp" />
+			<url href="modifiers/wait-for-image-completion/image-will-cover-timestamp.jsp" />
 		</urls>
 	</test>
 	<!-- Should fail because the test doesn't wait for the image to load before timeout -->
@@ -45,7 +45,7 @@
 			<screen comparator="layout" />
 		</compare>
 		<urls>
-			<url href="modifiers/wait-for-image-completion/wait-for-image-completion.jsp" />
+			<url href="modifiers/wait-for-image-completion/image-will-cover-timestamp.jsp" />
 		</urls>
 	</test>
 	<!-- Wait-For-Image-Completion-Modifier END -->
