@@ -4,6 +4,8 @@
 
 #include "wiki/Dictionary.md"
 
+#include "wiki/HowToExtendAET.md"
+
 # How To Use
 
 #include "wiki/EnvironmentSetup.md"
@@ -135,6 +137,8 @@
 #include "wiki/SystemComponents.md"
 
 #include "wiki/ClientApplication.md"
+
+#include "wiki/ClientScripts.md"
 
 #include "wiki/TestExecutor.md"
 

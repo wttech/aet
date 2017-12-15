@@ -33,7 +33,7 @@
 
   <name>AET :: Integration Tests :: Sample Site</name>
   <description>Web application with content necessary for AET integration (sanity) tests</description>
-  
+
   <properties>
     <jetty.port>8083</jetty.port>
     <cargo.version>1.4.10</cargo.version>
@@ -51,7 +51,7 @@
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>
-      <artifactId>jstl</artifactId>    
+      <artifactId>jstl</artifactId>
     </dependency>
   </dependencies>
 

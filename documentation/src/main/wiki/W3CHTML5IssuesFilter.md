@@ -1,6 +1,6 @@
 #### W3C HTML5 Issues Filter
 
-W3C HTML5 Issues Filter allows to exclude some W3C HTML5 issues from result. Excluded issues will appear at the bottom of issues table and won't be taken into account when calculating status.
+W3C HTML5 Issues Filter allows to exclude some W3C HTML5 issues from the result. The issues excluded will appear at the bottom of a table with issues and won't be taken into account when calculating the status.
 
 Name: **w3c-filter**
 
@@ -12,16 +12,16 @@ Comparators: **w3c-html5**
 
 | Parameter | Value | Description | Mandatory |
 | --------- | ----- | ----------- | --------- |
-| `message` | string | Exact message text of issue to be filter out. *see notes below | At least one of params should be used and all of used params should be not empty. |
-| `messagePattern` | regexp | Regular expression that matches message text of issue to be filter out. *see notes below | At least one of params should be used and all of used params should be not empty. |
-| `line` | integer | Line in source file where issue appear | |
-| `column` | integer | Column in source file where issue appear | |
+| `message` | string | Exact message text of the issue to be filtered out. *see notes below | At least one of params should be used and all the params used should be not empty. |
+| `messagePattern` | regexp | A regular expression that matches message text of the issue to be filtered out. *see notes below | At least one of params should be used and all of the params used should be not empty. |
+| `line` | integer | A line in the source file where the issue appears. | |
+| `column` | integer | A column in the source file where the issue appears. | |
 
 *Note:*
 - `message` will be overridden by `messagePattern` if set.
-- If there are some XML-specific charactes (e.g. `&`) in parameter's value, then they have to be escaped. Suite should be valid XML document.
+- If there are some XML-specific characters (e.g. `&`) in the parameter value, they have to be escaped. The suite should be a valid XML document.
 
-##### Example Usage for w3c-html5 comparator
+##### Sample usage of w3c-html5 comparator
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>

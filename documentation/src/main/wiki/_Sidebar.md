@@ -1,6 +1,7 @@
 * [[Getting Started|Home]]
     * [[AET In 10 Minutes|AETIn10Minutes]]
     * [[Dictionary|Dictionary]]
+    * [[How To Extend AET|HowToExtendAET]]
 
 * How To Use
     * [[Environment Setup|EnvironmentSetup]]
@@ -69,6 +70,7 @@
 * [[How It Works|HowItWorks]]
     * [[System Components|SystemComponents]]
         * [[Client Application|ClientApplication]]
+        * [[Client Scripts|ClientScripts]]
         * [[Test Executor|TestExecutor]]
         * [[Runner|Runner]]
         * [[Worker|Worker]]

@@ -1,12 +1,24 @@
-### What's new
+### Version 2.1.2
+Besides technical improvements within this version we've updated the W3C validator to the most recent version (15.6.29).
+
+### Version 2.1.1
+This version provides mostly technical changes that improve logging and release process automation.
+
+### Version 2.1.0
+#### Comparing suites patterns
+Consider having more than one AET environment. What if one of them is returning errors on your page? Now it is possible to compare all patterns collected in different environments to check whether the page is really broken or maybe it is just a broken pattern. It is easier to maintain, because all environments may use the same suite, only patterns may be different.
+
+#### Regular expressions in filters
+We've added the possibility to use regular expressions in filters. Thanks to that AET users are now able to filter all the messages using the same message pattern. It is useful i.e. in filtering W3C errors which may be parametrized and thanks to this they may differ in small details. Regular expressions help to handle such cases.
+
+### Version 2.0.0
 AET 2.0 brings new reporting capabilities and improved performance. We have decided to label the new features as BETA and 
 improve them based your feedback as it means a lot to us. Stay tuned!
 
 #### Architecture performance improvements
 We keep evolving the AET architecture and optimizing reporting performance. We have introduced new web application reports, 
 which are now generated on the client-side. Also, we have optimized database model queries and decreased number of calls by a factor of 10. 
-If you’ve ever been working on a release and discovered that the AET database has become overloaded, we have removed data storage duplications so you 
-don’t need to worry any longer!
+If you’ve ever been working on a release and discovered that the AET database has become overloaded, we have removed data storage duplications so you don’t need to worry any longer!
 
 #### New reporting interface BETA
 The reporting interface has been turned into a modern and responsive client-side application. 
