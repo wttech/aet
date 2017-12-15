@@ -21,7 +21,7 @@
 
 <div class="panel panel-default" style="position: relative;">
     <div class="panel-body" id="test-element" style="display: none; position: absolute; left: 20px; top: 150px; z-index: 1;">
-        <img src="/sample-site/assets/demo_files/bigTestImage.jpg" alt="test-image" width="800"/>
+        <img src="/sample-site/assets/demo_files/conference.jpg" id="image-to-wait-for" alt="test-image" width="800"/>
     </div>
 </div>
 <script>
