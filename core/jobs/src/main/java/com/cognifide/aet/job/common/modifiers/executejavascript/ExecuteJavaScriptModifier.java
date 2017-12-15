@@ -88,7 +88,8 @@ public class ExecuteJavaScriptModifier implements CollectorJob {
       String username = params.get(BASIC_AUTH_USERNAME);
       String password = params.get(BASIC_AUTH_PASSWORD);
       String encoded = encodeBasicAuth(username, password);
-      basicAuth = params.get(encoded);
+      LOG.info("Setting basic auth '{}:{}' encoded to: '{}'", username, password, encoded);
+      basicAuth = encoded;
     } else {
       // we dont't have both attributes here
       boolean containOnlyOne
