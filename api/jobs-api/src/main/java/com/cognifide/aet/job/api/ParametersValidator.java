@@ -42,7 +42,7 @@ public final class ParametersValidator {
     }
   }
 
-  public static void checkAllBlank(String errorMessage, String... values) throws ParametersException {
+  public static void checkAtLeastOneNotBlank(String errorMessage, String... values) throws ParametersException {
     for (String value : values) {
       if (StringUtils.isNotBlank(value)) {
         return;

@@ -75,7 +75,7 @@ public class ExecuteJavaScriptModifier implements CollectorJob {
   public void setParameters(Map<String, String> params) throws ParametersException {
     cmd = params.get(CMD_PARAM);
     snippetUrl = params.get(URL_PARAM);
-    ParametersValidator.checkAllBlank(
+    ParametersValidator.checkAtLeastOneNotBlank(
         "Either 'cmd' or 'snippetUrl' parameter must be provided for executejavascript modifier.",
         cmd, snippetUrl);
     basicAuth = params.get(BASIC_AUTH_PARAM);

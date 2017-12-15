@@ -66,23 +66,23 @@ public class ParametersValidatorTest {
   }
 
   @Test
-  public void testCheckAllBlank_whenAtLeastOneInputNotEmpty_expectFalse() throws Exception {
-    ParametersValidator.checkAllBlank("Error", "param-a");
-    ParametersValidator.checkAllBlank("Error", "", "param-b");
-    ParametersValidator.checkAllBlank("Error", "", "", "param-c");
-    ParametersValidator.checkAllBlank("Error", "", "param-b", "");
-    ParametersValidator.checkAllBlank("Error", "param-a", "", "");
-    ParametersValidator.checkAllBlank("Error", "param-a", "param-b", "param-c");
+  public void testCheckAtLeastOneNotBlank_whenAtLeastOneInputNotEmpty_expectFalse() throws Exception {
+    ParametersValidator.checkAtLeastOneNotBlank("Error", "param-a");
+    ParametersValidator.checkAtLeastOneNotBlank("Error", "", "param-b");
+    ParametersValidator.checkAtLeastOneNotBlank("Error", "", "", "param-c");
+    ParametersValidator.checkAtLeastOneNotBlank("Error", "", "param-b", "");
+    ParametersValidator.checkAtLeastOneNotBlank("Error", "param-a", "", "");
+    ParametersValidator.checkAtLeastOneNotBlank("Error", "param-a", "param-b", "param-c");
   }
 
   @Test(expected = ParametersException.class)
-  public void testCheckAllBlank_whenEmptyParameterArePassed_expectVaidationException() throws Exception {
-    ParametersValidator.checkAllBlank("Error", "", "");
+  public void testCheckAtLeastOneNotBlank_whenEmptyParameterArePassed_expectVaidationException() throws Exception {
+    ParametersValidator.checkAtLeastOneNotBlank("Error", "", "");
   }
 
 
   @Test(expected = ParametersException.class)
-  public void testCheckAllBlank_whenNullParameterArePassed_expectVaidationException() throws Exception {
-    ParametersValidator.checkAllBlank("Error", null, "");
+  public void testCheckAtLeastOneNotBlank_whenNullParameterArePassed_expectVaidationException() throws Exception {
+    ParametersValidator.checkAtLeastOneNotBlank("Error", null, "");
   }
 }
