@@ -29,7 +29,7 @@ public interface HttpRequestExecutor {
   HttpRequestExecutor removeCookie(String key);
 
   /**
-   * Executes a GET request to the given <bb>url</bb> and returns {@link ResponseObject}
+   * Executes a GET request to the given <b>url</b> and returns {@link ResponseObject}
    *
    * @param url - an url the request should be done to
    * @param timeoutInMs - number of milliseconds after which connection will be timed out
