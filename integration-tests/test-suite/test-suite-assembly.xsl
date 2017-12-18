@@ -42,6 +42,7 @@
 			<xsl:apply-templates select="document('partials/header.xml')/*/test"/>
 			<xsl:apply-templates select="document('partials/loginmodifier.xml')/*/test"/>
 			<xsl:apply-templates select="document('partials/replacetext.xml')/*/test"/>
+			<xsl:apply-templates select="document('partials/executejavascript.xml')/*/test"/>
 			<xsl:apply-templates select="document('partials/wait-for-element-to-be-visible.xml')/*/test"/>
 			<xsl:apply-templates select="document('partials/wait-for-image-completion.xml')/*/test"/>
 			<xsl:copy-of select="reports"/>
