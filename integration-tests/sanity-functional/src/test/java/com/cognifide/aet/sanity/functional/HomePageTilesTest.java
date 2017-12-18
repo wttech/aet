@@ -33,11 +33,11 @@ public class HomePageTilesTest {
 
   private static final int TESTS = 108;
 
-  private static final int EXPECTED_TESTS_SUCCESS = 63;
+  private static final int EXPECTED_TESTS_SUCCESS = 62;
 
   private static final int EXPECTED_TESTS_WARN = 5;
 
-  private static final int EXPECTED_TESTS_FAIL = 40;
+  private static final int EXPECTED_TESTS_FAIL = 41;
 
   @Inject
   private ReportHomePage page;

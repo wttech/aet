@@ -23,6 +23,8 @@ import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.job.common.modifiers.WebElementsLocatorParams;
 import com.cognifide.aet.job.common.modifiers.waitfor.WaitForHelper;
+
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
@@ -48,12 +50,12 @@ public class WaitForElementToBeVisibleModifier extends WebElementsLocatorParams 
         try {
             result = WaitForHelper.waitForExpectedCondition(webDriver, getTimeoutInSeconds(),
                     ExpectedConditions.visibilityOfElementLocated(getLocator()));
-        } catch (Exception e) {
+        } catch (TimeoutException te) {
             final String message =
                     String.format("Failed to wait for element to be visible with provided locator. Error: %s",
-                            e.getMessage());
+                            te.getMessage());
             result = CollectorStepResult.newProcessingErrorResult(message);
-            LOGGER.warn(message, e);
+            LOGGER.warn(message, te);
         }
         return result;
     }

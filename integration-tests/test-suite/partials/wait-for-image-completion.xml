@@ -24,28 +24,58 @@
 	<test name="modifier-Wait-For-Image-Completion-SUCCESS">
 		<collect>
 			<open />
-			<wait-for-image-completion css="#test-image" timeout = "15000"/>
+			<wait-for-image-completion xpath="//img[@id = 'image-to-wait-for']" timeout = "15000"/>
 			<screen />
 		</collect>
 		<compare>
 			<screen comparator="layout" />
 		</compare>
 		<urls>
-			<url href="modifiers/wait-for-image-completion/wait-for-image-completion.jsp" />
+			<url href="modifiers/wait-for-image-completion/image-will-cover-timestamp.jsp" />
 		</urls>
 	</test>
 	<!-- Should fail because the test doesn't wait for the image to load before timeout -->
-	<test name="modifier-Wait-For-Image-Completion-FAILED">
+	<test name="modifier-Wait-For-Image-Completion-not-visible-FAILED">
 		<collect>
 			<open />
-			<wait-for-image-completion css="#test-image" timeout = "1000"/>
+			<wait-for-image-completion css="#image-to-wait-for" timeout = "1000"/>
 			<screen />
 		</collect>
 		<compare>
 			<screen comparator="layout" />
 		</compare>
 		<urls>
-			<url href="modifiers/wait-for-image-completion/wait-for-image-completion.jsp" />
+			<url href="modifiers/wait-for-image-completion/image-will-cover-timestamp.jsp" />
+		</urls>
+	</test>
+
+	<test name="modifier-Wait-For-Image-Completion-slow-image-SUCCESS">
+		<collect>
+			<open />
+			<!-- image is served with additional latency -->
+			<wait-for-image-completion css="#image-to-wait-for" timeout = "7000"/>
+			<screen />
+		</collect>
+		<compare>
+			<screen comparator="layout" />
+		</compare>
+		<urls>
+			<url href="modifiers/wait-for-image-completion/image-with-latency.jsp" />
+		</urls>
+	</test>
+
+	<test name="modifier-Wait-For-Image-Completion-slow-image-FAILED">
+		<collect>
+			<open />
+			<!-- image is served with additional latency -->
+			<wait-for-image-completion xpath="//img[@id = 'image-to-wait-for']" timeout = "3000"/>
+			<screen />
+		</collect>
+		<compare>
+			<screen comparator="layout" />
+		</compare>
+		<urls>
+			<url href="modifiers/wait-for-image-completion/image-with-latency.jsp" />
 		</urls>
 	</test>
 	<!-- Wait-For-Image-Completion-Modifier END -->

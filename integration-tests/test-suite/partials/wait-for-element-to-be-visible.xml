@@ -24,14 +24,14 @@
 	<test name="modifier-Wait-For-Element-To-Be-Visible-SUCCESS">
 		<collect>
 			<open />
-			<wait-for-element-to-be-visible css="#test-element" timeout = "15000"/>
+			<wait-for-element-to-be-visible css="#test-element" timeout = "6000"/>
 			<screen />
 		</collect>
 		<compare>
 			<screen comparator="layout" />
 		</compare>
 		<urls>
-			<url href="modifiers/wait-for-element-to-be-visible/wait-for-element-to-be-visible.jsp" />
+			<url href="modifiers/wait-for-element-to-be-visible/element-will-cover-timestamp.jsp" />
 		</urls>
 	</test>
 	<!-- Should fail because timeout is shorter than the time before the searched element appears -->
@@ -45,7 +45,7 @@
 			<screen comparator="layout" />
 		</compare>
 		<urls>
-			<url href="modifiers/wait-for-element-to-be-visible/wait-for-element-to-be-visible.jsp" />
+			<url href="modifiers/wait-for-element-to-be-visible/element-will-cover-timestamp.jsp" />
 		</urls>
 	</test>
 	<!-- Wait-For-Element-To-Be-Visible-Modifier END -->

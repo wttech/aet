@@ -53,6 +53,16 @@
         <role-name>SAMPLE_ROLE</role-name>
     </security-role>
 
+    <filter>
+        <filter-name>4 Seconds Latency</filter-name>
+        <filter-class>com.cognifide.aet.integrationtests.samplesite.filters.SlowResponseFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>4 Seconds Latency</filter-name>
+        <url-pattern>/sanity/modifiers/slow/*</url-pattern>
+    </filter-mapping>
+
     <!-- Enable directory listings by overriding the server default web.xml -->
     <!-- definition for the default servlet -->
     <servlet>
