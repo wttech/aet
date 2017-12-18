@@ -31,13 +31,13 @@ import org.junit.runner.RunWith;
 @Modules(GuiceModule.class)
 public class HomePageTilesTest {
 
-  private static final int TESTS = 106;
+  private static final int TESTS = 112;
 
-  private static final int EXPECTED_TESTS_SUCCESS = 63;
+  private static final int EXPECTED_TESTS_SUCCESS = 66;
 
   private static final int EXPECTED_TESTS_WARN = 5;
 
-  private static final int EXPECTED_TESTS_FAIL = 38;
+  private static final int EXPECTED_TESTS_FAIL = 41;
 
   @Inject
   private ReportHomePage page;
