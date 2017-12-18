@@ -33,12 +33,24 @@
 
   <name>AET :: Integration Tests :: Sample Site</name>
   <description>Web application with content necessary for AET integration (sanity) tests</description>
-  
+
   <properties>
     <jetty.port>8083</jetty.port>
     <cargo.version>1.4.10</cargo.version>
     <finalName.extension>war</finalName.extension>
   </properties>
+
+  <dependencyManagement>
+    <dependencies>
+      <dependency>
+        <groupId>javax.servlet</groupId>
+        <artifactId>javax.servlet-api</artifactId>
+        <version>3.0.1</version>
+        <!-- provided by servlet container -->
+        <scope>provided</scope>
+      </dependency>
+    </dependencies>
+  </dependencyManagement>
 
   <dependencies>
     <dependency>
@@ -51,7 +63,11 @@
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>
-      <artifactId>jstl</artifactId>    
+      <artifactId>jstl</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>javax.servlet-api</artifactId>
     </dependency>
   </dependencies>
 
@@ -108,6 +124,8 @@
                 <exclude>src/main/webapp/assets/demo_files/combined.js</exclude>
                 <exclude>src/main/webapp/assets/demo_files/ie10-viewport-bug-workaround.js</exclude>
                 <exclude>src/main/webapp/assets/demo_files/jquery.min.js</exclude>
+                <exclude>src/main/webapp/assets/snippets/change-bg-snippet.js</exclude>
+                <exclude>src/main/webapp/assets/secured/change-bg-snippet.js</exclude>
               </excludes>
             </configuration>
           </execution>

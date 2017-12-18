@@ -42,7 +42,7 @@
       <url>http://www.apache.org/licenses/LICENSE-2.0.txt</url>
     </license>
   </licenses>
-  
+
   <developers>
     <developer>
       <name>Maciej Laskowski</name>
@@ -89,7 +89,7 @@
     <tag>HEAD</tag>
     <url>https://github.com/Cognifide/aet</url>
   </scm>
-  
+
   <!-- please add sonatype credentials in your user settings.xml file -->
   <distributionManagement>
     <repository>
@@ -541,6 +541,13 @@
         </exclusions>
       </dependency>
       <dependency>
+        <groupId>org.slf4j</groupId>
+        <artifactId>slf4j-simple</artifactId>
+        <!-- let's just use the same version as api -->
+        <version>1.7.7</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
         <groupId>com.googlecode.catch-exception</groupId>
         <artifactId>catch-exception</artifactId>
         <version>1.2.0</version>
@@ -590,7 +597,7 @@
         <version>1.2</version>
       </dependency>
     </dependencies>
-        
+
   </dependencyManagement>
 
   <build>

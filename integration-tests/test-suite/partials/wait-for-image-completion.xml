@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    AET
+
+    Copyright (C) 2013 Cognifide Limited
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<suite name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
+
+	<!-- Wait-For-Image-Completion-Modifier BEGIN -->
+	<test name="modifier-Wait-For-Image-Completion-SUCCESS">
+		<collect>
+			<open />
+			<wait-for-image-completion xpath="//img[@id = 'image-to-wait-for']" timeout = "15000"/>
+			<screen />
+		</collect>
+		<compare>
+			<screen comparator="layout" />
+		</compare>
+		<urls>
+			<url href="modifiers/wait-for-image-completion/image-will-cover-timestamp.jsp" />
+		</urls>
+	</test>
+	<!-- Should fail because the test doesn't wait for the image to load before timeout -->
+	<test name="modifier-Wait-For-Image-Completion-not-visible-FAILED">
+		<collect>
+			<open />
+			<wait-for-image-completion css="#image-to-wait-for" timeout = "1000"/>
+			<screen />
+		</collect>
+		<compare>
+			<screen comparator="layout" />
+		</compare>
+		<urls>
+			<url href="modifiers/wait-for-image-completion/image-will-cover-timestamp.jsp" />
+		</urls>
+	</test>
+
+	<test name="modifier-Wait-For-Image-Completion-slow-image-SUCCESS">
+		<collect>
+			<open />
+			<!-- image is served with additional latency -->
+			<wait-for-image-completion css="#image-to-wait-for" timeout = "7000"/>
+			<screen />
+		</collect>
+		<compare>
+			<screen comparator="layout" />
+		</compare>
+		<urls>
+			<url href="modifiers/wait-for-image-completion/image-with-latency.jsp" />
+		</urls>
+	</test>
+
+	<test name="modifier-Wait-For-Image-Completion-slow-image-FAILED">
+		<collect>
+			<open />
+			<!-- image is served with additional latency -->
+			<wait-for-image-completion xpath="//img[@id = 'image-to-wait-for']" timeout = "3000"/>
+			<screen />
+		</collect>
+		<compare>
+			<screen comparator="layout" />
+		</compare>
+		<urls>
+			<url href="modifiers/wait-for-image-completion/image-with-latency.jsp" />
+		</urls>
+	</test>
+	<!-- Wait-For-Image-Completion-Modifier END -->
+</suite>

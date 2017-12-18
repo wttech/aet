@@ -33,7 +33,7 @@
   <name>AET :: Core :: Validation</name>
   <description>Module responsible for AET data validation</description>
 
-  
+
   <dependencies>
     <dependency>
       <groupId>com.cognifide.aet</groupId>

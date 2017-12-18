@@ -9,6 +9,8 @@ All notable changes to AET will be documented in this file.
 
 ## Unreleased
 **List of changes that are finished but not yet released in any final version.**
+- [PR-172](https://github.com/Cognifide/aet/pull/172) Added [example AET Shell script](https://github.com/Cognifide/aet/wiki/ClientScripts) to run suite.
+- [PR-164](https://github.com/Cognifide/aet/pull/164) [ExecuteJavaScriptModifier](https://github.com/Cognifide/aet/wiki/ExecuteJavaScriptModifier) enhancement: support for external snippets source and basic auth
 - [PR-153](https://github.com/Cognifide/aet/pull/153) Fixed SSL error in Source Collector
 - [PR-145](https://github.com/Cognifide/aet/pull/145) Update for schema location in `web.xml` file (in sample site for AET integration tests)
 - [PR-144](https://github.com/Cognifide/aet/pull/144) Logging and error messages for suite run exceptions, status progress formatting

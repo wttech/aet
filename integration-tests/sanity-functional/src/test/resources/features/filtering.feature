@@ -37,8 +37,8 @@ Feature: Tests Results Filtering
   Scenario: Filtering Tests Results: layout
     Given I have opened sample tests report page
     When I search for tests containing "layout"
-    Then There are 11 tiles visible
-    And Statistics text contains "13 ( 4 / 0 / 9 / 0 )"
+    Then There are 15 tiles visible
+    And Statistics text contains "15 ( 4 / 0 / 11 / 0 )"
 
    Scenario: Filtering Tests Results: jserrors
     Given I have opened sample tests report page
@@ -84,6 +84,18 @@ Feature: Tests Results Filtering
     
   Scenario: Filtering Tests Results: wait-for-page-modifier
     Given I have opened sample tests report page
-    When I search for tests containing "wait"
+    When I search for tests containing "wait-for-page-loaded"
     Then There are 2 tiles visible
     And Statistics text contains "2 ( 1 / 0 / 1 / 0 )"
+
+  Scenario: Filtering Tests Results: wait-for-element-to-be-visible-modifier
+    Given I have opened sample tests report page
+    When I search for tests containing "wait-for-element-to-be-visible"
+    Then There are 2 tiles visible
+    And Statistics text contains "2 ( 1 / 0 / 1 / 0 )"
+
+  Scenario: Filtering Tests Results: wait-for-image-completion-modifier
+    Given I have opened sample tests report page
+    When I search for tests containing "wait-for-image-completion"
+    Then There are 4 tiles visible
+    And Statistics text contains "4 ( 2 / 0 / 2 / 0 )"

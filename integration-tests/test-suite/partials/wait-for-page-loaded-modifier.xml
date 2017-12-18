@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    AET
+
+    Copyright (C) 2013 Cognifide Limited
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<suite name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
+	
+	<!-- Wait-For-Page-Loaded Modifer-BEGIN -->
+	<test name="modifier-Wait-For-Page-Loaded-SUCCESS">
+		<collect>
+			<open />
+			<wait-for-page-loaded />
+			<screen />
+		</collect>
+		<compare>
+			<screen comparator="layout" />
+		</compare>
+		<urls>
+			<url href="modifiers/wait-for-page-loaded/success.jsp" />
+		</urls>
+	</test>
+	<!-- should fail as shows timestamp until end of AJAX calls -->
+	<test name="modifier-Wait-For-Page-Loaded-FAILED">
+		<collect>
+			<open />
+			<!-- needed for initial timestamp rendering on Vagrant -->
+			<sleep duration="1000" />
+			<screen />
+		</collect>
+		<compare>
+			<screen comparator="layout" />
+		</compare>
+		<urls>
+			<url href="modifiers/wait-for-page-loaded/failed.jsp" />
+		</urls>
+	</test>
+	<!-- Wait-For-Page-Loaded Modifer-END -->
+</suite>

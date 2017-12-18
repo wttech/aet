@@ -66,6 +66,10 @@
 
 #include "wiki/WaitForPageLoadedModifier.md"
 
+#include "wiki/WaitForElementToBeVisibleModifier.md"
+
+#include "wiki/WaitForImageCompletionModifier.md"
+
 #include "wiki/ExecuteJavaScriptModifier.md"
 
 #include "wiki/Comparators.md"
@@ -133,6 +137,8 @@
 #include "wiki/SystemComponents.md"
 
 #include "wiki/ClientApplication.md"
+
+#include "wiki/ClientScripts.md"
 
 #include "wiki/TestExecutor.md"
 
