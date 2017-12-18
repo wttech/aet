@@ -142,7 +142,7 @@
     <!--
         which version of Maven AET plugin should be used for integration tests
     -->
-    <aet.version>${project.version}</aet.version>
+    <aet.plugin.version>${project.version}</aet.plugin.version>
     <!--
       this property should be overwritten from commandline
       (see "Release Procedure" section of documentation)
@@ -612,7 +612,7 @@
         <plugin>
           <groupId>com.cognifide.aet</groupId>
           <artifactId>aet-maven-plugin</artifactId>
-          <version>${aet.version}</version>
+          <version>${aet.plugin.version}</version>
         </plugin>
 
         <!-- plugin that keep our poms in good shape -->
