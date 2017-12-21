@@ -11,7 +11,6 @@ All notable changes to AET will be documented in this file.
 **List of changes that are finished but not yet released in any final version.**
 
 ## Version 2.1.3
-
 - [PR-166](https://github.com/Cognifide/aet/pull/166) Added two modifiers: [wait for element being visible](https://github.com/Cognifide/aet/wiki/WaitForElementToBeVisibleModifier) and [wait for image being loaded](https://github.com/Cognifide/aet/wiki/WaitForImageCompletionModifier)
 - [PR-172](https://github.com/Cognifide/aet/pull/172) Added [example AET Shell script](https://github.com/Cognifide/aet/wiki/ClientScripts) to run suite.
 - [PR-164](https://github.com/Cognifide/aet/pull/164) [ExecuteJavaScriptModifier](https://github.com/Cognifide/aet/wiki/ExecuteJavaScriptModifier) enhancement: support for external snippets source and basic auth
