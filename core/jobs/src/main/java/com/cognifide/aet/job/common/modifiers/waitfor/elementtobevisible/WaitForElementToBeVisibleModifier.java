@@ -52,8 +52,8 @@ public class WaitForElementToBeVisibleModifier extends WebElementsLocatorParams 
                     ExpectedConditions.visibilityOfElementLocated(getLocator()));
         } catch (TimeoutException te) {
             final String message =
-                    String.format("Failed to wait for element to be visible with provided locator. Error: %s",
-                            te.getMessage());
+                    String.format("Failed to wait for element to be visible with provided locator. "
+                            + "Page: %s. Error: %s", webDriver.getCurrentUrl(), te.getMessage());
             result = CollectorStepResult.newProcessingErrorResult(message);
             LOGGER.warn(message, te);
         }
