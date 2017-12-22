@@ -1,3 +1,14 @@
+### Version 2.1.3
+#### Two new modifiers
+- [wait for element being visible](https://github.com/Cognifide/aet/wiki/WaitForElementToBeVisibleModifier) 
+- [wait for image being loaded](https://github.com/Cognifide/aet/wiki/WaitForImageCompletionModifier).
+
+#### New (recommended!) way to run AET suite
+There is a new (recommended!) way to run AET suite with bash script, read more [here](https://github.com/Cognifide/aet/wiki/ClientScripts).
+
+#### Improved ExecuteJavaScriptModifier
+Since this version [ExecuteJavaScriptModifier](https://github.com/Cognifide/aet/wiki/ExecuteJavaScriptModifier) supports external snippets source with basic auth.
+
 ### Version 2.1.2
 Besides technical improvements within this version we've updated the W3C validator to the most recent version (15.6.29).
 
