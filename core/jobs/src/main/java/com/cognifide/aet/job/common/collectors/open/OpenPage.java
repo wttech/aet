@@ -24,7 +24,12 @@ import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class OpenPage implements CollectorJob {
+
+  private static final Logger LOG = LoggerFactory.getLogger(OpenPage.class);
 
   public static final String NAME = "open";
 
@@ -33,6 +38,10 @@ public class OpenPage implements CollectorJob {
   private final String url;
 
   public OpenPage(WebCommunicationWrapper webCommunicationWrapper, CollectorProperties collectorProperties) {
+    if (LOG.isDebugEnabled()) {
+      String pageUrl = webCommunicationWrapper.getWebDriver().getCurrentUrl();
+      LOG.debug("Collector: '{}' is opening a page: '{}'", this.hashCode(), pageUrl);
+    }
     this.webCommunicationWrapper = webCommunicationWrapper;
     this.url = collectorProperties.getUrl();
   }
