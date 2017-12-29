@@ -231,8 +231,7 @@ public class SuiteExecutor {
   }
 
   private String getReportUrl(String format, String domain, Suite suite) {
-    return String
-        .format(format, domain, suite.getCompany(), suite.getProject(), suite.getCorrelationId());
+    return String.format(format, domain, suite.getCompany(), suite.getProject(), suite.getCorrelationId());
   }
 
   private String getStatusUrl(Suite suite) {

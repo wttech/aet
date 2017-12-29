@@ -87,14 +87,12 @@ public class TestSuiteRunner {
       SuiteExecutionResult suiteExecutionResult = startSuiteExecution(testSuite);
 
       if (hasErrors(suiteExecutionResult)) {
-        String msg = String
-            .format("Failed to schedule test suite: '%s'", suiteExecutionResult.getErrorMessage());
+        String msg = String.format("Failed to schedule test suite: '%s'", suiteExecutionResult.getErrorMessage());
         Logger.error(this, msg);
       } else {
         String now = DATE_FORMATTER.get().format(new Date());
         Logger.info(this, "CorrelationID: %s", suiteExecutionResult.getCorrelationId());
-        Logger.info(this,
-            "********************************************************************************");
+        Logger.info(this, "********************************************************************************");
         Logger.info(this,
             "********************** Job Setup finished at " + now + ".**********************");
         Logger.info(this,
@@ -151,9 +149,7 @@ public class TestSuiteRunner {
           .execute();
       result = response.handleResponse(suiteExecutionResponseHandler);
     } catch (HttpResponseException re) {
-      String msg = String.format("[Status: %d] %s",
-          re.getStatusCode(),
-          re.getMessage()
+      String msg = String.format("[Status: %d] %s", re.getStatusCode(), re.getMessage()
       );
       result = SuiteExecutionResult.createErrorResult(msg);
     } catch (IOException ioe) {
@@ -181,8 +177,7 @@ public class TestSuiteRunner {
       Logger.debug(this, "XUnit report URL: '%s'", xUnitFullUrl);
       new ReportWriter().write(buildDirectory, xUnitFullUrl, "xunit-report.xml");
     } catch (IOException ioe) {
-      Logger.error(this, "Failed to obtain xUnit report from: %s. Error: %s", xUnitUrl,
-          ioe.getMessage());
+      Logger.error(this, "Failed to obtain xUnit report from: %s. Error: %s", xUnitUrl, ioe.getMessage());
     }
   }
 
