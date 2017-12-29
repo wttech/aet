@@ -17,19 +17,13 @@
  */
 package com.cognifide.aet.executor;
 
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.RemovalListener;
-import com.google.common.cache.RemovalNotification;
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
-
 import com.cognifide.aet.communication.api.execution.ProcessingStatus;
 import com.cognifide.aet.communication.api.execution.SuiteExecutionResult;
 import com.cognifide.aet.communication.api.execution.SuiteStatusResult;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
+import com.cognifide.aet.executor.http.HttpSuiteExecutionResultWrapper;
 import com.cognifide.aet.executor.model.TestRun;
 import com.cognifide.aet.executor.model.TestSuiteRun;
 import com.cognifide.aet.executor.xmlparser.api.ParseException;
@@ -37,25 +31,29 @@ import com.cognifide.aet.executor.xmlparser.api.TestSuiteParser;
 import com.cognifide.aet.executor.xmlparser.xml.XmlTestSuiteParser;
 import com.cognifide.aet.rest.LockService;
 import com.cognifide.aet.rest.helpers.ReportConfigurationManager;
-
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.RemovalListener;
+import com.google.common.cache.RemovalNotification;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
+import java.util.List;
+import java.util.Map;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.TimeUnit;
+import javax.jms.JMSException;
+import javax.jms.Session;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Property;
 import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.Service;
+import org.apache.http.HttpStatus;
 import org.apache.sling.commons.osgi.PropertiesUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
-import java.util.Map;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.TimeUnit;
-
-import javax.jms.JMSException;
-import javax.jms.Session;
 
 /**
  * This service is responsible for executing the test suite and maintaining the processing statuses.
@@ -133,9 +131,9 @@ public class SuiteExecutor {
    * @param pattern - optional pattern to set, this is a name of a suite that will be used as patterns source
    * @return status of the suite execution
    */
-  public SuiteExecutionResult execute(String suiteString, String domain, String pattern) {
+  HttpSuiteExecutionResultWrapper execute(String suiteString, String domain, String pattern) {
     SuiteRunner suiteRunner = null;
-    SuiteExecutionResult result;
+    HttpSuiteExecutionResultWrapper result;
 
     TestSuiteParser xmlFileParser = new XmlTestSuiteParser();
     try {
@@ -156,17 +154,29 @@ public class SuiteExecutor {
           String htmlReportUrl = getReportUrl(HTML_REPORT_URL_FORMAT,
               reportConfigurationManager.getReportDomain(), suite);
           String xunitReportUrl = getReportUrl(XUNIT_REPORT_URL_FORMAT, StringUtils.EMPTY, suite);
-          result = SuiteExecutionResult.createSuccessResult(suite.getCorrelationId(), statusUrl,
-              htmlReportUrl, xunitReportUrl);
+          result = HttpSuiteExecutionResultWrapper.wrap(
+              SuiteExecutionResult.createSuccessResult(suite.getCorrelationId(), statusUrl,
+                  htmlReportUrl, xunitReportUrl));
         } else {
-          result = SuiteExecutionResult.createErrorResult(LOCKED_SUITE_MESSAGE);
+          result = HttpSuiteExecutionResultWrapper.wrapError(
+              SuiteExecutionResult.createErrorResult(LOCKED_SUITE_MESSAGE), HttpStatus.SC_LOCKED);
         }
       } else {
-        result = SuiteExecutionResult.createErrorResult(validationError);
+        result = HttpSuiteExecutionResultWrapper
+            .wrapError(SuiteExecutionResult.createErrorResult(validationError),
+                HttpStatus.SC_BAD_REQUEST);
       }
-    } catch (ParseException | JMSException | ValidatorException e) {
+    } catch (ParseException | ValidatorException e) {
       LOGGER.error("Failed to run test suite", e);
-      result = SuiteExecutionResult.createErrorResult(e.getMessage());
+      result = HttpSuiteExecutionResultWrapper
+          .wrapError(SuiteExecutionResult.createErrorResult(e.getMessage()),
+              HttpStatus.SC_BAD_REQUEST);
+
+    } catch (JMSException e) {
+      LOGGER.error("Fatal error", e);
+      result = HttpSuiteExecutionResultWrapper
+          .wrapError(SuiteExecutionResult.createErrorResult(e.getMessage()),
+              HttpStatus.SC_INTERNAL_SERVER_ERROR);
       if (suiteRunner != null) {
         suiteRunner.close();
       }
@@ -221,7 +231,8 @@ public class SuiteExecutor {
   }
 
   private String getReportUrl(String format, String domain, Suite suite) {
-    return String.format(format, domain, suite.getCompany(), suite.getProject(), suite.getCorrelationId());
+    return String
+        .format(format, domain, suite.getCompany(), suite.getProject(), suite.getCorrelationId());
   }
 
   private String getStatusUrl(Suite suite) {

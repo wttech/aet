@@ -22,6 +22,7 @@ import com.cognifide.aet.communication.api.execution.SuiteExecutionResult;
 import com.cognifide.aet.communication.api.execution.SuiteStatusResult;
 import com.jcabi.log.Logger;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpEntity;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.ResponseHandler;
@@ -85,26 +86,32 @@ public class TestSuiteRunner {
     try {
       SuiteExecutionResult suiteExecutionResult = startSuiteExecution(testSuite);
 
-      String now = DATE_FORMATTER.get().format(new Date());
-      Logger.info(this, "CorrelationID: %s", suiteExecutionResult.getCorrelationId());
-      Logger.info(this,
-              "********************************************************************************");
-      Logger.info(this,
-              "********************** Job Setup finished at " + now + ".**********************");
-      Logger.info(this,
-              "*** Suite is now processed by the system, progress will be available below. ****");
-      Logger.info(this,
-              "********************************************************************************");
-      String statusFullUrl = endpointDomain + suiteExecutionResult.getStatusUrl();
-      Logger.debug(this, "Suite status URL: '%s'", statusFullUrl);
-      while (runnerTerminator.isActive()) {
-        Thread.sleep(STATUS_CHECK_INTERVAL_MILLIS);
-        SuiteStatusResult suiteStatus = getSuiteStatus(statusFullUrl);
-        processStatus(runnerTerminator, suiteExecutionResult.getHtmlReportUrl(), suiteStatus);
-      }
-      if (xUnit) {
-        String xUnitReportPath = suiteExecutionResult.getXunitReportUrl();
-        downloadXUnitTest(xUnitReportPath);
+      if (hasErrors(suiteExecutionResult)) {
+        String msg = String
+            .format("Failed to schedule test suite: '%s'", suiteExecutionResult.getErrorMessage());
+        Logger.error(this, msg);
+      } else {
+        String now = DATE_FORMATTER.get().format(new Date());
+        Logger.info(this, "CorrelationID: %s", suiteExecutionResult.getCorrelationId());
+        Logger.info(this,
+            "********************************************************************************");
+        Logger.info(this,
+            "********************** Job Setup finished at " + now + ".**********************");
+        Logger.info(this,
+            "*** Suite is now processed by the system, progress will be available below. ****");
+        Logger.info(this,
+            "********************************************************************************");
+        String statusFullUrl = endpointDomain + suiteExecutionResult.getStatusUrl();
+        Logger.debug(this, "Suite status URL: '%s'", statusFullUrl);
+        while (runnerTerminator.isActive()) {
+          Thread.sleep(STATUS_CHECK_INTERVAL_MILLIS);
+          SuiteStatusResult suiteStatus = getSuiteStatus(statusFullUrl);
+          processStatus(runnerTerminator, suiteExecutionResult.getHtmlReportUrl(), suiteStatus);
+        }
+        if (xUnit) {
+          String xUnitReportPath = suiteExecutionResult.getXunitReportUrl();
+          downloadXUnitTest(xUnitReportPath);
+        }
       }
     } catch (IOException | InterruptedException e) {
       String msg = String.format("Failed to process test suite: '%s'", e.getMessage());
@@ -113,6 +120,11 @@ public class TestSuiteRunner {
     } finally {
       Logger.info(this, "Suite processing finished.");
     }
+
+  }
+
+  private boolean hasErrors(SuiteExecutionResult suiteExecutionResult) {
+    return StringUtils.isNotBlank(suiteExecutionResult.getErrorMessage());
   }
 
   private SuiteExecutionResult startSuiteExecution(File testSuite) {
@@ -139,7 +151,7 @@ public class TestSuiteRunner {
           .execute();
       result = response.handleResponse(suiteExecutionResponseHandler);
     } catch (HttpResponseException re) {
-      String msg = String.format("Unexpected response for suite status. Status: %s, message: %s.",
+      String msg = String.format("[Status: %d] %s",
           re.getStatusCode(),
           re.getMessage()
       );
@@ -166,10 +178,11 @@ public class TestSuiteRunner {
   private void downloadXUnitTest(String xUnitUrl) {
     try {
       String xUnitFullUrl = endpointDomain + xUnitUrl;
-      Logger.debug(this,"XUnit report URL: '%s'", xUnitFullUrl);
+      Logger.debug(this, "XUnit report URL: '%s'", xUnitFullUrl);
       new ReportWriter().write(buildDirectory, xUnitFullUrl, "xunit-report.xml");
     } catch (IOException ioe) {
-      Logger.error(this, "Failed to obtain xUnit report from: %s. Error: %s", xUnitUrl, ioe.getMessage());
+      Logger.error(this, "Failed to obtain xUnit report from: %s. Error: %s", xUnitUrl,
+          ioe.getMessage());
     }
   }
 
