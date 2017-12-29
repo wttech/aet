@@ -145,7 +145,7 @@ public final class ValidationUtils {
 
     if (!Pattern.matches(pattern, result)) {
       throw new ParseException(String.format(
-              "Value '%s' of attribute %s in %s does not match pattern %s!", value, name,
+              "Value '%s' of attribute %s in %s does not match pattern `%s`!", value, name,
               parentElement, pattern));
     }
     return result;
