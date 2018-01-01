@@ -20,6 +20,9 @@ package com.cognifide.aet.executor.http;
 import com.cognifide.aet.communication.api.execution.SuiteExecutionResult;
 import org.apache.http.HttpStatus;
 
+/**
+ * Wraps HTTP response for Suite execution result.
+ */
 public class HttpSuiteExecutionResultWrapper {
 
   private final int statusCode;
