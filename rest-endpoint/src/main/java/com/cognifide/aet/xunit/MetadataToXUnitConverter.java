@@ -18,6 +18,7 @@
 package com.cognifide.aet.xunit;
 
 import com.cognifide.aet.communication.api.metadata.CollectorStepResult;
+import com.cognifide.aet.communication.api.metadata.CollectorStepResult.Status;
 import com.cognifide.aet.communication.api.metadata.Comparator;
 import com.cognifide.aet.communication.api.metadata.ComparatorStepResult;
 import com.cognifide.aet.communication.api.metadata.Step;
@@ -29,6 +30,7 @@ import com.cognifide.aet.xunit.model.Testcase;
 import com.cognifide.aet.xunit.model.Testsuite;
 import com.cognifide.aet.xunit.model.Testsuites;
 
+import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
@@ -94,7 +96,13 @@ public class MetadataToXUnitConverter {
   }
 
   private void traverseSteps(Step step, String urlName, List<Testcase> xUnitCases) {
-    final CollectorStepResult.Status stepStatus = step.getStepResult().getStatus();
+    final CollectorStepResult stepResult = step.getStepResult();
+    final CollectorStepResult.Status stepStatus;
+    if (stepResult == null) {
+      stepStatus = Status.PROCESSING_ERROR;
+    } else {
+      stepStatus = stepResult.getStatus();
+    }
     final Set<Comparator> comparators = step.getComparators();
     if (comparators != null && COLLECTORS_STEPS.contains(stepStatus)) {
       for (Comparator comparator : comparators) {
@@ -109,15 +117,25 @@ public class MetadataToXUnitConverter {
         xUnitCases.add(xUnitCase);
       }
     }
+
   }
 
   private void addFailures(Step step, CollectorStepResult.Status stepStatus, Comparator comparator, Testcase xUnitCase) {
     final List<Failure> xUnitCaseFailure = xUnitCase.getFailure();
 
     if (stepStatus == CollectorStepResult.Status.PROCESSING_ERROR) {
-      final Failure failure = buildFailure(step.getStepResult().getErrors(), stepStatus.name());
+      final CollectorStepResult stepResult = step.getStepResult();
+      final List<String> errors;
+      if (stepResult == null) {
+        errors = Collections.singletonList("Fatal error");
+      } else {
+        errors = stepResult.getErrors();
+      }
+
+      final Failure failure = buildFailure(errors, stepStatus.name());
       xUnitCaseFailure.add(failure);
       xUnitFailedTotal++;
+
     } else {
       final ComparatorStepResult.Status comparatorStatus = comparator.getStepResult().getStatus();
       if (COMPARATOR_FAILURE_STATUSES.contains(comparatorStatus)) {
