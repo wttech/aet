@@ -1,3 +1,9 @@
+### `master` branch version (not released yet)
+#### Proxy configuration in suite
+`useProxy` configuration has been updated. Only named proxy (e.g. `rest`) types will be respected from now 
+(removed `true` and `false` options). If you don't want to use proxy, simply skip `useProxy` property in the `test` definition.
+See more in [[Suite Structure|SuiteStructure]] documentation.
+
 ### Version 2.1.3
 #### Two new modifiers
 - [wait for element being visible](https://github.com/Cognifide/aet/wiki/WaitForElementToBeVisibleModifier) 
