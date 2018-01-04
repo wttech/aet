@@ -18,7 +18,6 @@
 package com.cognifide.aet.runner.distribution;
 
 import com.cognifide.aet.runner.conversion.SuiteIndexWrapper;
-
 import javax.jms.Destination;
 
 public interface TestSuiteTaskFactory {

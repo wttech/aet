@@ -17,10 +17,9 @@
  */
 package com.cognifide.aet.sanity.functional;
 
-import com.google.inject.AbstractModule;
-
 import com.cognifide.qa.bb.logging.ReporterModule;
 import com.cognifide.qa.bb.modules.CoreModule;
+import com.google.inject.AbstractModule;
 
 public class GuiceModule extends AbstractModule {
   @Override

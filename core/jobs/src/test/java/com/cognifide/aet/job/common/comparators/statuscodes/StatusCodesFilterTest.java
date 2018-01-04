@@ -17,24 +17,21 @@
  */
 package com.cognifide.aet.job.common.comparators.statuscodes;
 
-import com.google.common.collect.Lists;
-
-import com.cognifide.aet.job.common.collectors.statuscodes.StatusCode;
-import com.googlecode.zohhak.api.TestWith;
-import com.googlecode.zohhak.api.runners.ZohhakRunner;
-
-import org.apache.commons.lang3.StringUtils;
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.empty;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
+
+import com.cognifide.aet.job.common.collectors.statuscodes.StatusCode;
+import com.google.common.collect.Lists;
+import com.googlecode.zohhak.api.TestWith;
+import com.googlecode.zohhak.api.runners.ZohhakRunner;
+import java.util.ArrayList;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import org.junit.Before;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 @RunWith(ZohhakRunner.class)
 public class StatusCodesFilterTest {

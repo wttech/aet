@@ -19,10 +19,8 @@ package com.cognifide.aet.communication.api.metadata;
 
 import com.google.common.reflect.TypeToken;
 import com.google.gson.Gson;
-
-import org.apache.commons.io.IOUtils;
-
 import java.io.IOException;
+import org.apache.commons.io.IOUtils;
 
 final class SuiteReaderHelper {
 

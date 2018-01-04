@@ -18,15 +18,12 @@
 package com.cognifide.aet.communication.api.metadata;
 
 import com.google.common.base.Objects;
-
-import org.hibernate.validator.constraints.NotBlank;
-
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import org.hibernate.validator.constraints.NotBlank;
 
 public class Step extends Operation implements Commentable, Named {
 

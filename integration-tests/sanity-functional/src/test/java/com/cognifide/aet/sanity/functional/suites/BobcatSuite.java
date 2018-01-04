@@ -18,7 +18,6 @@
 package com.cognifide.aet.sanity.functional.suites;
 
 import com.cognifide.aet.sanity.functional.HomePageTilesTest;
-
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 

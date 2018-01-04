@@ -17,14 +17,13 @@
  */
 package com.cognifide.aet.worker.drivers;
 
-import com.google.common.collect.Maps;
-
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ProxyException;
 import com.cognifide.aet.proxy.ProxyServerProvider;
 import com.cognifide.aet.worker.api.WebDriverFactory;
 import com.cognifide.aet.worker.exceptions.WorkerException;
-
+import com.google.common.collect.Maps;
+import java.util.Map;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Properties;
 import org.apache.felix.scr.annotations.Property;
@@ -33,8 +32,6 @@ import org.apache.felix.scr.annotations.ReferenceCardinality;
 import org.apache.felix.scr.annotations.ReferencePolicy;
 import org.apache.felix.scr.annotations.Service;
 import org.osgi.framework.Constants;
-
-import java.util.Map;
 
 /**
  * @author lukasz.wieczorek

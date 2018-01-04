@@ -18,7 +18,6 @@
 package com.cognifide.aet.cleaner.processors.exchange;
 
 import com.cognifide.aet.vs.DBKey;
-
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;

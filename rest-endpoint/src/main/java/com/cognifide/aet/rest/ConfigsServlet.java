@@ -18,35 +18,30 @@
 package com.cognifide.aet.rest;
 
 
-import com.google.gson.Gson;
-
 import com.cognifide.aet.communication.api.CommunicationSettings;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.communication.api.queues.JmsEndpointConfig;
 import com.cognifide.aet.rest.helpers.ReportConfigurationManager;
 import com.cognifide.aet.rest.helpers.SuitesListProvider;
 import com.cognifide.aet.vs.MetadataDAO;
-
+import com.google.gson.Gson;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.net.HttpURLConnection;
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.ConfigurationPolicy;
 import org.apache.felix.scr.annotations.Deactivate;
 import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.Service;
 import org.osgi.service.http.HttpService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.io.PrintWriter;
-import java.net.HttpURLConnection;
-
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @Service
 @Component(label = "ConfigsServlet", description = "Provides config for clients a", immediate = true)

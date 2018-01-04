@@ -18,7 +18,6 @@
 package com.cognifide.aet.job.common.comparators.statuscodes;
 
 import com.cognifide.aet.job.common.collectors.statuscodes.StatusCode;
-
 import java.io.Serializable;
 import java.util.List;
 

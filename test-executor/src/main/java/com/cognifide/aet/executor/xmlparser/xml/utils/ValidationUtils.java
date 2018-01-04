@@ -19,13 +19,11 @@ package com.cognifide.aet.executor.xmlparser.xml.utils;
 
 import com.cognifide.aet.executor.model.CollectorStep;
 import com.cognifide.aet.executor.xmlparser.api.ParseException;
-
+import java.util.List;
+import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
-import java.util.regex.Pattern;
 
 public final class ValidationUtils {
 

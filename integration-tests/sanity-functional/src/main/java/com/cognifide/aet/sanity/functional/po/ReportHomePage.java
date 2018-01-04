@@ -17,22 +17,19 @@
  */
 package com.cognifide.aet.sanity.functional.po;
 
-import com.google.inject.Inject;
-import com.google.inject.name.Named;
-
 import com.cognifide.aet.sanity.functional.po.aside.Aside;
 import com.cognifide.qa.bb.constants.Timeouts;
 import com.cognifide.qa.bb.provider.selenium.BobcatWait;
 import com.cognifide.qa.bb.qualifier.PageObject;
-
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
+import java.util.List;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
 
 @PageObject
 public class ReportHomePage {

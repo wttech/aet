@@ -18,7 +18,6 @@
 package com.cognifide.aet.sanity.functional.po.aside;
 
 import com.cognifide.qa.bb.qualifier.PageObject;
-
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 

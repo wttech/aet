@@ -17,13 +17,11 @@
  */
 package com.cognifide.aet.job.common.comparators.accessibility.report;
 
+import com.cognifide.aet.job.common.collectors.accessibility.AccessibilityIssue;
+import com.cognifide.aet.job.common.collectors.accessibility.AccessibilityIssue.IssueType;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.collect.Lists;
-
-import com.cognifide.aet.job.common.collectors.accessibility.AccessibilityIssue;
-import com.cognifide.aet.job.common.collectors.accessibility.AccessibilityIssue.IssueType;
-
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;

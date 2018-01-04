@@ -17,9 +17,6 @@
  */
 package com.cognifide.aet.rest;
 
-import com.google.common.base.Charsets;
-import com.google.common.net.MediaType;
-
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.exceptions.RestServiceException;
 import com.cognifide.aet.vs.DBKey;
@@ -27,28 +24,26 @@ import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.StorageException;
 import com.cognifide.aet.xunit.MetadataToXUnitConverter;
 import com.cognifide.aet.xunit.model.Testsuites;
-
-import org.apache.commons.io.IOUtils;
-import org.apache.felix.scr.annotations.Activate;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.ConfigurationPolicy;
-import org.apache.felix.scr.annotations.Deactivate;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.Service;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.google.common.base.Charsets;
+import com.google.common.net.MediaType;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.net.HttpURLConnection;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
+import org.apache.commons.io.IOUtils;
+import org.apache.felix.scr.annotations.Activate;
+import org.apache.felix.scr.annotations.Component;
+import org.apache.felix.scr.annotations.Deactivate;
+import org.apache.felix.scr.annotations.Reference;
+import org.apache.felix.scr.annotations.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Service
 @Component(label = "XUnitServlet", description = "Provides xunit test result", immediate = true)

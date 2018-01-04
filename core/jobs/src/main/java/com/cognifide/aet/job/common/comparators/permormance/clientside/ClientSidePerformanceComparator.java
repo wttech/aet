@@ -25,7 +25,6 @@ import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.job.common.comparators.permormance.clientside.parser.ClientSidePerformanceComparatorResultData;
 import com.cognifide.aet.job.common.comparators.permormance.clientside.parser.ClientSidePerformanceParser;
 import com.cognifide.aet.vs.ArtifactsDAO;
-
 import java.util.Map;
 
 public class ClientSidePerformanceComparator implements ComparatorJob {

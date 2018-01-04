@@ -17,10 +17,9 @@
  */
 package com.cognifide.aet.communication.api.metadata;
 
+import com.google.gson.Gson;
 import org.junit.Assert;
 import org.junit.Test;
-
-import com.google.gson.Gson;
 
 public class SerializingOperationTest {
 

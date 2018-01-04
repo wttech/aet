@@ -19,7 +19,6 @@ package com.cognifide.aet.executor;
 
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.executor.common.RunnerTerminator;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

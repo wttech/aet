@@ -17,17 +17,14 @@
  */
 package com.cognifide.aet.job.common.collectors.accessibility;
 
+import com.cognifide.aet.job.common.collectors.accessibility.AccessibilityIssue.IssueType;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-
-import com.cognifide.aet.job.common.collectors.accessibility.AccessibilityIssue.IssueType;
-
+import java.lang.reflect.Type;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
-
-import java.lang.reflect.Type;
 
 public class AccessibilityIssueDeserializer implements JsonDeserializer<AccessibilityIssue> {
 

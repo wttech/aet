@@ -17,13 +17,12 @@
  */
 package com.cognifide.aet.rest.helpers;
 
+import java.util.Map;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Property;
 import org.apache.felix.scr.annotations.Service;
 import org.apache.sling.commons.osgi.PropertiesUtil;
-
-import java.util.Map;
 
 @Service(ReportConfigurationManager.class)
 @Component(metatype = true, description = "AET Report Application Configuration",

@@ -17,20 +17,17 @@
  */
 package com.cognifide.aet.worker.drivers;
 
-import com.google.common.base.Function;
-import com.google.common.collect.FluentIterable;
-import com.google.common.collect.Ordering;
-
 import com.cognifide.aet.job.api.collector.HttpRequestExecutor;
 import com.cognifide.aet.job.api.collector.JsErrorLog;
 import com.cognifide.aet.job.api.collector.ProxyServerWrapper;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.worker.helpers.JavaScriptError;
-
-import org.openqa.selenium.WebDriver;
-
+import com.google.common.base.Function;
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.Ordering;
 import java.util.List;
 import java.util.Set;
+import org.openqa.selenium.WebDriver;
 
 public class WebCommunicationWrapperImpl implements WebCommunicationWrapper {
 

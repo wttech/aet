@@ -20,14 +20,12 @@ package com.cognifide.aet.executor.xmlparser.xml.models;
 import com.cognifide.aet.executor.model.TestRun;
 import com.cognifide.aet.executor.xmlparser.api.ParseException;
 import com.cognifide.aet.executor.xmlparser.xml.utils.ValidationUtils;
-
+import java.io.UnsupportedEncodingException;
+import java.util.List;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.core.Validate;
-
-import java.io.UnsupportedEncodingException;
-import java.util.List;
 
 public class Test {
 

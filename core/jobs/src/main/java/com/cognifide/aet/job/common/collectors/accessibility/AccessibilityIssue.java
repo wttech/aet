@@ -18,7 +18,6 @@
 package com.cognifide.aet.job.common.collectors.accessibility;
 
 import com.cognifide.aet.job.common.Excludable;
-
 import java.io.Serializable;
 
 public class AccessibilityIssue implements Serializable, Excludable {

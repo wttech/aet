@@ -17,19 +17,16 @@
  */
 package com.cognifide.aet.runner.distribution;
 
+import com.cognifide.aet.runner.conversion.SuiteIndexWrapper;
+import com.cognifide.aet.runner.testsuitescope.TestSuiteScope;
 import com.google.inject.Inject;
 import com.google.inject.Key;
 import com.google.inject.assistedinject.Assisted;
 import com.google.inject.name.Named;
-
-import com.cognifide.aet.runner.conversion.SuiteIndexWrapper;
-import com.cognifide.aet.runner.testsuitescope.TestSuiteScope;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import javax.inject.Provider;
 import javax.jms.Destination;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class TestSuiteTask implements Runnable {
   private static final Logger LOGGER = LoggerFactory.getLogger(TestSuiteTask.class);

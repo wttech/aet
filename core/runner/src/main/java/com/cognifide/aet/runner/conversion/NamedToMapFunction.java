@@ -17,9 +17,8 @@
  */
 package com.cognifide.aet.runner.conversion;
 
-import com.google.common.base.Function;
-
 import com.cognifide.aet.communication.api.metadata.Named;
+import com.google.common.base.Function;
 
 public class NamedToMapFunction<T extends Named> implements Function<T, String> {
   @Override

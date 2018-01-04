@@ -18,13 +18,11 @@
 package com.cognifide.aet.job.common.utils;
 
 import com.cognifide.aet.job.api.exceptions.ParametersException;
-
-import org.apache.commons.lang3.ObjectUtils;
-import org.apache.commons.lang3.StringUtils;
-
 import java.util.Map;
 import java.util.regex.Pattern;
 import java.util.regex.PatternSyntaxException;
+import org.apache.commons.lang3.ObjectUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public final class ParamsHelper {
 
