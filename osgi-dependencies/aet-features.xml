@@ -18,18 +18,13 @@
 
 -->
 <features
-        name="AET Features Dependencies"
+        name="AET Features"
         xmlns="http://karaf.apache.org/xmlns/features/v1.3.0"
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://karaf.apache.org/xmlns/features/v1.3.0 http://karaf.apache.org/xmlns/features/v1.3.0">
 
     <repository>mvn:org.apache.activemq/activemq-karaf/5.15.2/xml/features</repository>
     <repository>mvn:org.apache.cxf.karaf/apache-cxf/3.2.0/xml/features</repository>
-
-    <feature name="aet-webconsole" version="0.6.0" description="Felix Web Console" install="auto">
-        <feature>webconsole</feature>
-        <bundle>mvn:org.apache.karaf.webconsole/org.apache.karaf.webconsole.features/4.1.2</bundle>
-    </feature>
 
     <feature name="aet-features" version="0.6.0" description="Karaf features for AET" install="auto">
         <feature>scr</feature>
@@ -142,7 +137,7 @@
         <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.xmlbeans/2.6.0_2</bundle>
     </feature>
 
-    <feature name="aet" version="0.6.0" install="auto" start-level="85">
+    <feature name="aet" version="0.6.0" description="AET Bundles" install="auto">
 
         <feature dependency="true" prerequisite="true">aet-features</feature>
         <feature dependency="true" prerequisite="true">aet-cxf</feature>
