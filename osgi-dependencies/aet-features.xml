@@ -148,23 +148,23 @@
         <feature dependency="true" prerequisite="true">aet-jackson</feature>
         <feature dependency="true" prerequisite="true">aet-dependencies</feature>
 
-        <bundle>file:../aet-bundles/com.cognifide.aet.communication-api-2.1.4-SNAPSHOT.jar</bundle>
-        <bundle>file:../aet-bundles/com.cognifide.aet.datastorage-api-2.1.4-SNAPSHOT.jar</bundle>
-        <bundle>file:../aet-bundles/com.cognifide.aet.jobs-api-2.1.4-SNAPSHOT.jar</bundle>
-        <bundle>file:../aet-bundles/com.cognifide.aet.validation-api-2.1.4-SNAPSHOT.jar</bundle>
+        <bundle>file:../aet-bundles/current/com.cognifide.aet.communication-api-2.1.4-SNAPSHOT.jar</bundle>
+        <bundle>file:../aet-bundles/current/com.cognifide.aet.datastorage-api-2.1.4-SNAPSHOT.jar</bundle>
+        <bundle>file:../aet-bundles/current/com.cognifide.aet.jobs-api-2.1.4-SNAPSHOT.jar</bundle>
+        <bundle>file:../aet-bundles/current/com.cognifide.aet.validation-api-2.1.4-SNAPSHOT.jar</bundle>
 
-        <bundle>file:../aet-bundles/com.cognifide.aet.cleaner-2.1.4-SNAPSHOT.jar</bundle>
-        <bundle>file:../aet-bundles/com.cognifide.aet.communication-2.1.4-SNAPSHOT.jar</bundle>
-        <bundle>file:../aet-bundles/com.cognifide.aet.datastorage-2.1.4-SNAPSHOT.jar</bundle>
-        <bundle>file:../aet-bundles/com.cognifide.aet.jobs-2.1.4-SNAPSHOT.jar</bundle>
-        <bundle>file:../aet-bundles/com.cognifide.aet.proxy-2.1.4-SNAPSHOT.jar</bundle>
-        <bundle>file:../aet-bundles/com.cognifide.aet.rest-endpoint-2.1.4-SNAPSHOT.jar</bundle>
-        <bundle>file:../aet-bundles/com.cognifide.aet.runner-2.1.4-SNAPSHOT.jar</bundle>
-        <bundle>file:../aet-bundles/com.cognifide.aet.selenium-2.1.4-SNAPSHOT.jar</bundle>
-        <bundle>file:../aet-bundles/com.cognifide.aet.test-executor-2.1.4-SNAPSHOT.jar</bundle>
-        <bundle>file:../aet-bundles/com.cognifide.aet.validation-2.1.4-SNAPSHOT.jar</bundle>
-        <bundle>file:../aet-bundles/com.cognifide.aet.w3chtml5validator-2.1.4-SNAPSHOT.jar</bundle>
-        <bundle>file:../aet-bundles/com.cognifide.aet.worker-2.1.4-SNAPSHOT.jar</bundle>
+        <bundle>file:../aet-bundles/current/com.cognifide.aet.cleaner-2.1.4-SNAPSHOT.jar</bundle>
+        <bundle>file:../aet-bundles/current/com.cognifide.aet.communication-2.1.4-SNAPSHOT.jar</bundle>
+        <bundle>file:../aet-bundles/current/com.cognifide.aet.datastorage-2.1.4-SNAPSHOT.jar</bundle>
+        <bundle>file:../aet-bundles/current/com.cognifide.aet.jobs-2.1.4-SNAPSHOT.jar</bundle>
+        <bundle>file:../aet-bundles/current/com.cognifide.aet.proxy-2.1.4-SNAPSHOT.jar</bundle>
+        <bundle>file:../aet-bundles/current/com.cognifide.aet.rest-endpoint-2.1.4-SNAPSHOT.jar</bundle>
+        <bundle>file:../aet-bundles/current/com.cognifide.aet.runner-2.1.4-SNAPSHOT.jar</bundle>
+        <bundle>file:../aet-bundles/current/com.cognifide.aet.selenium-2.1.4-SNAPSHOT.jar</bundle>
+        <bundle>file:../aet-bundles/current/com.cognifide.aet.test-executor-2.1.4-SNAPSHOT.jar</bundle>
+        <bundle>file:../aet-bundles/current/com.cognifide.aet.validation-2.1.4-SNAPSHOT.jar</bundle>
+        <bundle>file:../aet-bundles/current/com.cognifide.aet.w3chtml5validator-2.1.4-SNAPSHOT.jar</bundle>
+        <bundle>file:../aet-bundles/current/com.cognifide.aet.worker-2.1.4-SNAPSHOT.jar</bundle>
     </feature>
 
 
