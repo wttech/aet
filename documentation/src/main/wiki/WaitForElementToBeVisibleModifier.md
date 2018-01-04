@@ -1,6 +1,6 @@
 #### Wait For Element To Be Visible Modifier
 
-Wait For Element To Be Visible Modifier allows to wait for an element to appear on the page. When the element has not been found (e.g. because of an improper xpath value or timeout) a warning message will be logged but the test will be passed to next steps.
+Wait For Element To Be Visible Modifier allows to wait for an element to appear on the page. When the element has not been found (e.g. because of the improper xpath value or timeout) a warning message will be logged but the test will be passed to the next step.
 
 Module name: **wait-for-element-to-be-visible**
 
@@ -11,9 +11,9 @@ Module name: **wait-for-element-to-be-visible**
 ##### Parameters
 | Parameter | Default value | Description | Mandatory |
 | --------- | ------------- | ----------- | --------- |
-| `xpath` | | xpath of the element to be found        | xpath or css |
-| `css`   | | css selector of the element to be found | xpath or css |
-| `timeout` | 1000ms | The timeout for the element to appear, in milliseconds. The max value of this parameter is 15000 milliseconds (15 seconds). | no (default will be used) |
+| `xpath` | | an xpath locator which identifies the web element to be found within a web page | xpath or css |
+| `css`   | | a css selector which identifies the web element to be found within a web page | xpath or css |
+| `timeout` | 1000ms | a value of timeout for the web element to appear, in milliseconds. The max value of this parameter is 15000 milliseconds (15 seconds). | no (the default value will be used) |
 
 ##### Example Usage
 

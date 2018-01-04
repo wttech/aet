@@ -5,21 +5,21 @@
 See more in [[Suite Structure|SuiteStructure]] documentation.
 
 ### Version 2.1.3
-#### Two new modifiers
-- [wait for element being visible](https://github.com/Cognifide/aet/wiki/WaitForElementToBeVisibleModifier) 
+#### Two new modifiers have been added:
+- [wait for element being visible](https://github.com/Cognifide/aet/wiki/WaitForElementToBeVisibleModifier),
 - [wait for image being loaded](https://github.com/Cognifide/aet/wiki/WaitForImageCompletionModifier).
 
-#### New (recommended!) way to run AET suite
-There is a new (recommended!) way to run AET suite with bash script, read more [here](https://github.com/Cognifide/aet/wiki/ClientScripts).
+#### A new (recommended!) way to run the AET suite
+There is a new (recommended!) way to run the AET suite with a bash script, read more [here](https://github.com/Cognifide/aet/wiki/ClientScripts).
 
 #### Improved ExecuteJavaScriptModifier
-Since this version [ExecuteJavaScriptModifier](https://github.com/Cognifide/aet/wiki/ExecuteJavaScriptModifier) supports external snippets source with basic auth.
+Since this version [ExecuteJavaScriptModifier](https://github.com/Cognifide/aet/wiki/ExecuteJavaScriptModifier) has supported the external snippets source with basic auth.
 
 ### Version 2.1.2
 Besides technical improvements within this version we've updated the W3C validator to the most recent version (15.6.29).
 
 ### Version 2.1.1
-This version provides mostly technical changes that improve logging and release process automation.
+This version provides mostly technical changes that improve logging and the automation of the release process.
 
 ### Version 2.1.0
 #### Comparing suites patterns
