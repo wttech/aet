@@ -10,6 +10,7 @@ All notable changes to AET will be documented in this file.
 ## Unreleased
 **List of changes that are finished but not yet released in any final version.**
 - [PR-184](https://github.com/Cognifide/aet/pull/184) Fixed xUnit generation NPE when stepResult is missing
+- [PR-183](https://github.com/Cognifide/aet/pull/183) Fixed ambiguous messages from AET API ([#161](https://github.com/Cognifide/aet/issues/161) and [#165](https://github.com/Cognifide/aet/issues/161))
 
 ## Version 2.1.3
 - [PR-166](https://github.com/Cognifide/aet/pull/166) Added two modifiers: [wait for element being visible](https://github.com/Cognifide/aet/wiki/WaitForElementToBeVisibleModifier) and [wait for image being loaded](https://github.com/Cognifide/aet/wiki/WaitForImageCompletionModifier)

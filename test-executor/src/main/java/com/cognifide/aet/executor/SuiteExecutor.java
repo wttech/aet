@@ -23,6 +23,7 @@ import com.cognifide.aet.communication.api.execution.SuiteStatusResult;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
+import com.cognifide.aet.executor.http.HttpSuiteExecutionResultWrapper;
 import com.cognifide.aet.executor.model.TestRun;
 import com.cognifide.aet.executor.model.TestSuiteRun;
 import com.cognifide.aet.executor.xmlparser.api.ParseException;
@@ -49,6 +50,7 @@ import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Property;
 import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.Service;
+import org.apache.http.HttpStatus;
 import org.apache.sling.commons.osgi.PropertiesUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -129,9 +131,9 @@ public class SuiteExecutor {
    * @param pattern - optional pattern to set, this is a name of a suite that will be used as patterns source
    * @return status of the suite execution
    */
-  public SuiteExecutionResult execute(String suiteString, String domain, String pattern) {
+  HttpSuiteExecutionResultWrapper execute(String suiteString, String domain, String pattern) {
     SuiteRunner suiteRunner = null;
-    SuiteExecutionResult result;
+    HttpSuiteExecutionResultWrapper result;
 
     TestSuiteParser xmlFileParser = new XmlTestSuiteParser();
     try {
@@ -152,17 +154,29 @@ public class SuiteExecutor {
           String htmlReportUrl = getReportUrl(HTML_REPORT_URL_FORMAT,
               reportConfigurationManager.getReportDomain(), suite);
           String xunitReportUrl = getReportUrl(XUNIT_REPORT_URL_FORMAT, StringUtils.EMPTY, suite);
-          result = SuiteExecutionResult.createSuccessResult(suite.getCorrelationId(), statusUrl,
-              htmlReportUrl, xunitReportUrl);
+          result = HttpSuiteExecutionResultWrapper.wrap(
+              SuiteExecutionResult.createSuccessResult(suite.getCorrelationId(), statusUrl,
+                  htmlReportUrl, xunitReportUrl));
         } else {
-          result = SuiteExecutionResult.createErrorResult(LOCKED_SUITE_MESSAGE);
+          result = HttpSuiteExecutionResultWrapper.wrapError(
+              SuiteExecutionResult.createErrorResult(LOCKED_SUITE_MESSAGE), HttpStatus.SC_LOCKED);
         }
       } else {
-        result = SuiteExecutionResult.createErrorResult(validationError);
+        result = HttpSuiteExecutionResultWrapper
+            .wrapError(SuiteExecutionResult.createErrorResult(validationError),
+                HttpStatus.SC_BAD_REQUEST);
       }
-    } catch (ParseException | JMSException | ValidatorException e) {
+    } catch (ParseException | ValidatorException e) {
       LOGGER.error("Failed to run test suite", e);
-      result = SuiteExecutionResult.createErrorResult(e.getMessage());
+      result = HttpSuiteExecutionResultWrapper
+          .wrapError(SuiteExecutionResult.createErrorResult(e.getMessage()),
+              HttpStatus.SC_BAD_REQUEST);
+
+    } catch (JMSException e) {
+      LOGGER.error("Fatal error", e);
+      result = HttpSuiteExecutionResultWrapper
+          .wrapError(SuiteExecutionResult.createErrorResult(e.getMessage()),
+              HttpStatus.SC_INTERNAL_SERVER_ERROR);
       if (suiteRunner != null) {
         suiteRunner.close();
       }
