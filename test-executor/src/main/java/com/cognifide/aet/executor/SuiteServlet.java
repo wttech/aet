@@ -17,11 +17,17 @@
  */
 package com.cognifide.aet.executor;
 
-import com.google.common.base.Optional;
-import com.google.gson.Gson;
-
 import com.cognifide.aet.communication.api.execution.SuiteExecutionResult;
-
+import com.cognifide.aet.executor.http.HttpSuiteExecutionResultWrapper;
+import com.google.gson.Gson;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.HashMap;
+import java.util.Map;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.fileupload.FileItemIterator;
 import org.apache.commons.fileupload.FileItemStream;
 import org.apache.commons.fileupload.FileUploadException;
@@ -34,20 +40,11 @@ import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Deactivate;
 import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.Service;
+import org.apache.http.HttpStatus;
 import org.osgi.service.http.HttpService;
 import org.osgi.service.http.NamespaceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @Service
 @Component(label = "SuiteServlet", description = "Executes received test suite", immediate = true)
@@ -83,23 +80,26 @@ public class SuiteServlet extends HttpServlet {
       final String pattern = requestData.get(PATTERN_PARAM);
 
       if (StringUtils.isNotBlank(suite)) {
-        SuiteExecutionResult suiteExecutionResult = suiteExecutor.execute(suite, domain, pattern);
+        HttpSuiteExecutionResultWrapper resultWrapper = suiteExecutor.execute(suite, domain, pattern);
+        final SuiteExecutionResult suiteExecutionResult = resultWrapper.getExecutionResult();
         Gson gson = new Gson();
+
         String responseBody = gson.toJson(suiteExecutionResult);
 
-        if (suiteExecutionResult.getErrorMessage() == null) {
-          response.setStatus(200);
+        if (resultWrapper.hasError()) {
+          response.sendError(resultWrapper.getStatusCode(),
+              suiteExecutionResult.getErrorMessage());
+        } else {
+          response.setStatus(HttpStatus.SC_OK);
           response.setContentType("application/json");
           response.setCharacterEncoding(CharEncoding.UTF_8);
           response.getWriter().write(responseBody);
-        } else {
-          response.sendError(500, suiteExecutionResult.getErrorMessage());
         }
       } else {
-        response.sendError(400, "Request does not contain the test suite");
+        response.sendError(HttpStatus.SC_BAD_REQUEST, "Request does not contain the test suite");
       }
     } else {
-      response.sendError(400, "Request content is incorrect");
+      response.sendError(HttpStatus.SC_BAD_REQUEST, "Request content is incorrect");
     }
   }
 
