@@ -17,10 +17,6 @@
  */
 package com.cognifide.aet.job.common.comparators.accessibility;
 
-import com.google.common.collect.Collections2;
-import com.google.common.collect.Lists;
-import com.google.gson.reflect.TypeToken;
-
 import com.cognifide.aet.communication.api.metadata.ComparatorStepResult;
 import com.cognifide.aet.job.api.comparator.ComparatorJob;
 import com.cognifide.aet.job.api.comparator.ComparatorProperties;
@@ -33,7 +29,9 @@ import com.cognifide.aet.job.common.comparators.accessibility.report.Accessibili
 import com.cognifide.aet.job.common.comparators.accessibility.report.AccessibilityReportConfiguration;
 import com.cognifide.aet.job.common.comparators.accessibility.report.AccessibilityReportGenerator;
 import com.cognifide.aet.vs.ArtifactsDAO;
-
+import com.google.common.collect.Collections2;
+import com.google.common.collect.Lists;
+import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;

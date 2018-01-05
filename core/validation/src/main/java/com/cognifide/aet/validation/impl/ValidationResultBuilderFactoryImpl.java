@@ -19,7 +19,6 @@ package com.cognifide.aet.validation.impl;
 
 import com.cognifide.aet.validation.ValidationResultBuilder;
 import com.cognifide.aet.validation.ValidationResultBuilderFactory;
-
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Service;
 

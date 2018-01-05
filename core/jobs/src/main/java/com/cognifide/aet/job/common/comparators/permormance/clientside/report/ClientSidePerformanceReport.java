@@ -18,7 +18,6 @@
 package com.cognifide.aet.job.common.comparators.permormance.clientside.report;
 
 import com.google.gson.annotations.SerializedName;
-
 import java.io.Serializable;
 import java.util.HashMap;
 

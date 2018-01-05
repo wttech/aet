@@ -30,13 +30,12 @@ package com.cognifide.aet.worker.drivers;
  * See the License for the specific language governing permissions and limitations under the License.
  */
 
-import org.openqa.selenium.WebDriverException;
-import org.openqa.selenium.internal.SocketLock;
-
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 import java.net.SocketException;
+import org.openqa.selenium.WebDriverException;
+import org.openqa.selenium.internal.SocketLock;
 
 /**
  * Custom implementation of org.openqa.selenium.internal.Lock that has configurable delay between socket

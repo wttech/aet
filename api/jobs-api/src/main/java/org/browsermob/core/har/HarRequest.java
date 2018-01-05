@@ -30,10 +30,9 @@
 
 package org.browsermob.core.har;
 
-import org.codehaus.jackson.map.annotate.JsonSerialize;
-
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
+import org.codehaus.jackson.map.annotate.JsonSerialize;
 
 @JsonSerialize(include = JsonSerialize.Inclusion.NON_NULL)
 public class HarRequest {

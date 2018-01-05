@@ -18,7 +18,6 @@
 package com.cognifide.aet.communication.api;
 
 import com.google.common.base.Objects;
-
 import java.io.Serializable;
 
 /**

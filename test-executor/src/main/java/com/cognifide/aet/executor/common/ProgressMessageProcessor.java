@@ -17,15 +17,13 @@
  */
 package com.cognifide.aet.executor.common;
 
-import com.cognifide.aet.communication.api.messages.ProgressMessage;
 import com.cognifide.aet.communication.api.execution.ProcessingStatus;
 import com.cognifide.aet.communication.api.execution.SuiteStatusResult;
-
-import org.apache.commons.lang3.StringUtils;
-
+import com.cognifide.aet.communication.api.messages.ProgressMessage;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import org.apache.commons.lang3.StringUtils;
 
 class ProgressMessageProcessor implements MessageProcessor {
 

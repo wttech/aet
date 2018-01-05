@@ -18,7 +18,6 @@
 package com.cognifide.aet.job.common.modifiers.login;
 
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
-
 import org.openqa.selenium.By;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;

@@ -18,7 +18,6 @@
 package com.cognifide.aet.executor.model;
 
 import com.google.common.base.Objects;
-
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;

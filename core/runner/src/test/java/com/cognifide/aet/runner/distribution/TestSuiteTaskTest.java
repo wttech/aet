@@ -17,24 +17,21 @@
  */
 package com.cognifide.aet.runner.distribution;
 
-import com.google.inject.Key;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 
 import com.cognifide.aet.runner.conversion.SuiteIndexWrapper;
 import com.cognifide.aet.runner.testsuitescope.TestSuiteScope;
-
+import com.google.inject.Key;
+import javax.inject.Provider;
+import javax.jms.Destination;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import javax.inject.Provider;
-import javax.jms.Destination;
-
-import static org.mockito.Matchers.eq;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class TestSuiteTaskTest {

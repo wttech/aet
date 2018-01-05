@@ -17,10 +17,6 @@
  */
 package com.cognifide.aet.cleaner.processors;
 
-import com.google.common.base.Function;
-import com.google.common.collect.FluentIterable;
-import com.google.common.collect.ImmutableList;
-
 import com.cognifide.aet.cleaner.context.CleanerContext;
 import com.cognifide.aet.cleaner.context.SuiteAggregationCounter;
 import com.cognifide.aet.cleaner.processors.exchange.AllSuiteVersionsMessageBody;
@@ -28,15 +24,16 @@ import com.cognifide.aet.cleaner.processors.exchange.SuiteMessageBody;
 import com.cognifide.aet.cleaner.processors.filters.SuiteRemoveCondition;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.vs.DBKey;
-
+import com.google.common.base.Function;
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.ImmutableList;
+import java.util.Collection;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Collection;
 
 @Service(SuitesRemovePredicateProcessor.class)
 @Component

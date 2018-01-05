@@ -17,17 +17,15 @@
  */
 package com.cognifide.aet.job.common.comparators.w3chtml5.parser;
 
+import com.cognifide.aet.job.common.comparators.w3chtml5.W3cHtml5Issue;
+import com.cognifide.aet.job.common.comparators.w3chtml5.W3cHtml5IssueType;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.cognifide.aet.job.common.comparators.w3chtml5.W3cHtml5Issue;
-import com.cognifide.aet.job.common.comparators.w3chtml5.W3cHtml5IssueType;
-
+import java.lang.reflect.Type;
 import org.apache.commons.lang3.StringEscapeUtils;
 import org.apache.commons.lang3.StringUtils;
-
-import java.lang.reflect.Type;
 
 public class W3cHtml5IssueDeserializer implements JsonDeserializer<W3cHtml5Issue> {
 

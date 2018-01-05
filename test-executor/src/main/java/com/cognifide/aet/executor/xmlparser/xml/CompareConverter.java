@@ -17,19 +17,16 @@
  */
 package com.cognifide.aet.executor.xmlparser.xml;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
-
-import com.cognifide.aet.executor.xmlparser.xml.models.Compare;
 import com.cognifide.aet.executor.model.ComparatorStep;
 import com.cognifide.aet.executor.model.DataModifierStep;
-
-import org.simpleframework.xml.stream.InputNode;
-import org.simpleframework.xml.stream.OutputNode;
-
+import com.cognifide.aet.executor.xmlparser.xml.models.Compare;
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import org.simpleframework.xml.stream.InputNode;
+import org.simpleframework.xml.stream.OutputNode;
 
 public class CompareConverter extends BasicPhaseConverter<Compare> {
 

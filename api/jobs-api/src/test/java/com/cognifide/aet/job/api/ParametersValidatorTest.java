@@ -18,7 +18,6 @@
 package com.cognifide.aet.job.api;
 
 import com.cognifide.aet.job.api.exceptions.ParametersException;
-
 import org.junit.Test;
 
 public class ParametersValidatorTest {

@@ -20,7 +20,6 @@ package com.cognifide.aet.job.api.comparator;
 import com.cognifide.aet.communication.api.metadata.Comparator;
 import com.cognifide.aet.job.api.datafilter.DataFilterJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
-
 import java.util.List;
 
 /**

@@ -20,14 +20,12 @@ package com.cognifide.aet.executor.xmlparser.xml.models;
 import com.cognifide.aet.executor.model.TestRun;
 import com.cognifide.aet.executor.xmlparser.api.ParseException;
 import com.cognifide.aet.executor.xmlparser.xml.utils.ValidationUtils;
-
+import java.io.UnsupportedEncodingException;
+import java.util.List;
 import org.simpleframework.xml.Attribute;
 import org.simpleframework.xml.Element;
 import org.simpleframework.xml.ElementList;
 import org.simpleframework.xml.core.Validate;
-
-import java.io.UnsupportedEncodingException;
-import java.util.List;
 
 public class Test {
 
@@ -35,9 +33,6 @@ public class Test {
 
   @Attribute
   private String name;
-
-  @Attribute(required = false)
-  private int zIndex;
 
   @Attribute(required = false)
   private String useProxy;
@@ -54,7 +49,7 @@ public class Test {
   public TestRun adaptToTestRun() throws ParseException {
     try {
       return new TestRun(collect.adaptToCollectorSteps(), compare.adaptToComparatorsSteps(),
-              ModelConverterUtils.extendUrlsList(urls), name, useProxy, zIndex);
+              ModelConverterUtils.extendUrlsList(urls), name, useProxy);
     } catch (ParseException | UnsupportedEncodingException e) {
       throw new ParseException(
               String.format("Exception occurs during adapting %s test:%n%s", name, e.getMessage()), e);

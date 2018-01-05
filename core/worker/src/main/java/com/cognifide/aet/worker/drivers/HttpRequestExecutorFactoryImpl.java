@@ -19,7 +19,6 @@ package com.cognifide.aet.worker.drivers;
 
 import com.cognifide.aet.job.api.collector.HttpRequestExecutor;
 import com.cognifide.aet.job.api.collector.HttpRequestExecutorFactory;
-
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Service;
 

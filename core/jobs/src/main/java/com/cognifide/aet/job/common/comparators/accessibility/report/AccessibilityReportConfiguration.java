@@ -18,11 +18,9 @@
 package com.cognifide.aet.job.common.comparators.accessibility.report;
 
 import com.cognifide.aet.job.common.collectors.accessibility.AccessibilityIssue.IssueType;
-
+import java.util.Map;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
-
-import java.util.Map;
 
 public class AccessibilityReportConfiguration {
 

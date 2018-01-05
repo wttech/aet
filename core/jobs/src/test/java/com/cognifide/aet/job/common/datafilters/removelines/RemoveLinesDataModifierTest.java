@@ -17,20 +17,18 @@
  */
 package com.cognifide.aet.job.common.datafilters.removelines;
 
+import static com.googlecode.catchexception.CatchException.verifyException;
+import static org.junit.Assert.assertEquals;
+
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.googlecode.zohhak.api.Configure;
 import com.googlecode.zohhak.api.TestWith;
 import com.googlecode.zohhak.api.runners.ZohhakRunner;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-
 import java.util.HashMap;
 import java.util.Map;
-
-import static com.googlecode.catchexception.CatchException.verifyException;
-import static org.junit.Assert.assertEquals;
+import org.junit.Test;
+import org.junit.runner.RunWith;
 
 @RunWith(ZohhakRunner.class)
 @Configure(separator = "-")

@@ -17,11 +17,9 @@
  */
 package com.cognifide.aet.executor;
 
-import com.google.common.cache.Cache;
-
 import com.cognifide.aet.communication.api.execution.SuiteStatusResult;
 import com.cognifide.aet.rest.LockService;
-
+import com.google.common.cache.Cache;
 import java.util.Queue;
 
 class CacheUpdater {

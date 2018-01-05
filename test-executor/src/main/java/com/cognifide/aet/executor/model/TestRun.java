@@ -30,7 +30,7 @@ import java.util.Set;
  */
 public class TestRun implements Serializable {
 
-  private static final long serialVersionUID = 7276830417015175985L;
+  private static final long serialVersionUID = 1453942700093647296L;
 
   private final List<CollectorStep> collectorSteps;
 
@@ -42,8 +42,6 @@ public class TestRun implements Serializable {
 
   private final String useProxy;
 
-  private final int zIndex;
-
   /**
    * @param collectorSteps - list of collector steps.
    * @param comparatorSteps - set of comparison steps.
@@ -51,16 +49,14 @@ public class TestRun implements Serializable {
    * @param name - unique name of test.
    * @param useProxy - says what kind of proxy should be used, backward compatibility: set 'true' to use
    * 'rest' proxy, set 'false' to use none.
-   * @param zIndex - specifies order of tests. A test with greater value is always before test with lower zIndex.
    */
   public TestRun(List<CollectorStep> collectorSteps, Set<ComparatorStep> comparatorSteps,
-                 List<ExtendedUrl> urls, String name, String useProxy, int zIndex) {
+                 List<ExtendedUrl> urls, String name, String useProxy) {
     this.collectorSteps = collectorSteps;
     this.comparatorSteps = getMap(comparatorSteps);
     this.urls = urls;
     this.name = name;
     this.useProxy = useProxy;
-    this.zIndex = zIndex;
   }
 
   private Map<String, List<ComparatorStep>> getMap(Set<ComparatorStep> comparatorSteps) {
@@ -111,11 +107,4 @@ public class TestRun implements Serializable {
     return useProxy;
   }
 
-
-  /**
-   * @return zIndex of test.
-   */
-  public int getzIndex() {
-    return zIndex;
-  }
 }

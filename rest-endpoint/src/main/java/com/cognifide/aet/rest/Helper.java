@@ -20,7 +20,6 @@ package com.cognifide.aet.rest;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.SimpleDBKey;
-
 import javax.servlet.http.HttpServletRequest;
 
 public final class Helper {

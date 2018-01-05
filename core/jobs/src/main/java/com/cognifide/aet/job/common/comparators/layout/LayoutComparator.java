@@ -25,18 +25,15 @@ import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.job.common.comparators.layout.utils.ImageComparison;
 import com.cognifide.aet.job.common.comparators.layout.utils.ImageComparisonResult;
 import com.cognifide.aet.vs.ArtifactsDAO;
-
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
-
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
-
 import javax.imageio.ImageIO;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class LayoutComparator implements ComparatorJob {
 

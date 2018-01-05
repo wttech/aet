@@ -17,24 +17,20 @@
  */
 package com.cognifide.aet.job.common.comparators.source.diff;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Lists;
+import static com.cognifide.aet.job.common.comparators.source.diff.DiffMatchPatch.Diff;
 
 import com.cognifide.aet.job.common.comparators.source.diff.ResultDelta.TYPE;
-
-import org.apache.commons.lang3.StringEscapeUtils;
-import org.apache.commons.lang3.StringUtils;
-
+import com.google.common.base.Function;
+import com.google.common.collect.Lists;
+import difflib.Delta;
+import difflib.DiffUtils;
+import difflib.Patch;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
-
-import difflib.Delta;
-import difflib.DiffUtils;
-import difflib.Patch;
-
-import static com.cognifide.aet.job.common.comparators.source.diff.DiffMatchPatch.Diff;
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class DiffParser {
 

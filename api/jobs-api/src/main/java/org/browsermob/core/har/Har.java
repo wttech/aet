@@ -30,12 +30,11 @@
 
 package org.browsermob.core.har;
 
-import org.codehaus.jackson.map.ObjectMapper;
-
 import java.io.File;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.Writer;
+import org.codehaus.jackson.map.ObjectMapper;
 
 public class Har {
   private HarLog log;

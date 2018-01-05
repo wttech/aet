@@ -19,7 +19,6 @@ package com.cognifide.aet.validation.impl;
 
 import com.cognifide.aet.validation.ErrorMessage;
 import com.cognifide.aet.validation.ValidationResultBuilder;
-
 import org.apache.commons.lang3.StringUtils;
 
 public final class ValidationUtils {

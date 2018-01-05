@@ -17,11 +17,10 @@
  */
 package com.cognifide.aet.proxy;
 
-import com.google.common.collect.Maps;
-
 import com.cognifide.aet.job.api.collector.ProxyServerWrapper;
 import com.cognifide.aet.job.api.exceptions.ProxyException;
-
+import com.google.common.collect.Maps;
+import java.util.Map;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Properties;
 import org.apache.felix.scr.annotations.Property;
@@ -30,8 +29,6 @@ import org.apache.felix.scr.annotations.ReferenceCardinality;
 import org.apache.felix.scr.annotations.ReferencePolicy;
 import org.apache.felix.scr.annotations.Service;
 import org.osgi.framework.Constants;
-
-import java.util.Map;
 
 @Service(ProxyServerProvider.class)
 @Component(immediate = true, label = "AET Proxy Server Provider", description = "AET Proxy Server Provider")
