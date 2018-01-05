@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.job.common.comparators.layout.utils;
 
@@ -53,7 +51,8 @@ public class ImageComparisonTest {
       assertThat(imageComparisonResult.getPixelDifferenceCount(), is(0));
 
       maskStream = imageToStream(imageComparisonResult.getResultImage());
-      expectedMaskStream = getClass().getResourceAsStream("/mock/LayoutComparator/mask-identical.png");
+      expectedMaskStream = getClass()
+          .getResourceAsStream("/mock/LayoutComparator/mask-identical.png");
 
       assertThat(IOUtils.contentEquals(expectedMaskStream, maskStream), is(true));
     } finally {
@@ -83,7 +82,8 @@ public class ImageComparisonTest {
       assertThat(imageComparisonResult.getPixelDifferenceCount(), is(15600));
 
       maskStream = imageToStream(imageComparisonResult.getResultImage());
-      expectedMaskStream = getClass().getResourceAsStream("/mock/LayoutComparator/mask-different.png");
+      expectedMaskStream = getClass()
+          .getResourceAsStream("/mock/LayoutComparator/mask-different.png");
 
       assertThat(IOUtils.contentEquals(maskStream, expectedMaskStream), is(true));
     } finally {
@@ -92,15 +92,18 @@ public class ImageComparisonTest {
   }
 
   @Test
-  public void compare_differentSizeScreenshots_expectSizeDifferenceMarkedWithYellow() throws Exception {
+  public void compare_differentSizeScreenshots_expectSizeDifferenceMarkedWithYellow()
+      throws Exception {
     InputStream sampleStream = null;
     InputStream patternStream = null;
     InputStream maskStream = null;
     InputStream expectedMaskStream = null;
     try {
       // given
-      sampleStream = getClass().getResourceAsStream("/mock/LayoutComparator/canvasSizeDiff/collected.png");
-      patternStream = getClass().getResourceAsStream("/mock/LayoutComparator/canvasSizeDiff/pattern.png");
+      sampleStream = getClass()
+          .getResourceAsStream("/mock/LayoutComparator/canvasSizeDiff/collected.png");
+      patternStream = getClass()
+          .getResourceAsStream("/mock/LayoutComparator/canvasSizeDiff/pattern.png");
 
       BufferedImage sample = ImageIO.read(sampleStream);
       BufferedImage pattern = ImageIO.read(patternStream);
@@ -113,7 +116,8 @@ public class ImageComparisonTest {
       assertThat(imageComparisonResult.getPixelDifferenceCount(), is(14399));
 
       maskStream = imageToStream(imageComparisonResult.getResultImage());
-      expectedMaskStream = getClass().getResourceAsStream("/mock/LayoutComparator/canvasSizeDiff/mask.png");
+      expectedMaskStream = getClass()
+          .getResourceAsStream("/mock/LayoutComparator/canvasSizeDiff/mask.png");
       assertThat(IOUtils.contentEquals(maskStream, expectedMaskStream), is(true));
     } finally {
       closeInputStreams(sampleStream, patternStream, maskStream, expectedMaskStream);

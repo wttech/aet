@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.job.common.modifiers.login;
 
@@ -66,39 +64,27 @@ public class LoginModifierTest {
   private static final String WRONG_PASSWORD = "wrong";
 
   private static final String LOGIN_PAGE_URL = "http://localhost/login.html";
-
+  private final Map<String, String> params = Collections.singletonMap("login-page", LOGIN_PAGE_URL);
   @Mock
   private WebCommunicationWrapper webCommunicationWrapper;
-
   @Mock
   private WebDriver webDriver;
-
   @Mock
   private WebDriver.Options options;
-
   @Mock
   private Cookie cookie;
-
   @Mock
   private HttpRequestExecutor requestExecutor;
-
   @Mock
   private WebElement loginInput;
-
   @Mock
   private WebElement passwordInput;
-
   @Mock
   private WebElement submitButton;
-
   @Mock
   private CollectorProperties properties;
-
   @Mock
   private ValidationResultBuilder validationResultBuilder;
-
-  private final Map<String, String> params = Collections.singletonMap("login-page", LOGIN_PAGE_URL);
-
   private LoginModifier tested;
 
   @Before
@@ -109,9 +95,12 @@ public class LoginModifierTest {
     when(webCommunicationWrapper.getWebDriver()).thenReturn(webDriver);
     when(webDriver.manage()).thenReturn(options);
 
-    when(webDriver.findElement(By.xpath(DEFAULT_LOGIN_INPUT_ELEMENT_SELECTOR))).thenReturn(loginInput);
-    when(webDriver.findElement(By.xpath(DEFAULT_PASSWORD_INPUT_ELEMENT_SELECTOR))).thenReturn(passwordInput);
-    when(webDriver.findElement(By.xpath(DEFAULT_SUBMIT_BUTTON_ELEMENT_SELECTOR))).thenReturn(submitButton);
+    when(webDriver.findElement(By.xpath(DEFAULT_LOGIN_INPUT_ELEMENT_SELECTOR)))
+        .thenReturn(loginInput);
+    when(webDriver.findElement(By.xpath(DEFAULT_PASSWORD_INPUT_ELEMENT_SELECTOR)))
+        .thenReturn(passwordInput);
+    when(webDriver.findElement(By.xpath(DEFAULT_SUBMIT_BUTTON_ELEMENT_SELECTOR)))
+        .thenReturn(submitButton);
 
     when(loginInput.isDisplayed()).thenReturn(true);
     when(passwordInput.isDisplayed()).thenReturn(true);
@@ -139,7 +128,8 @@ public class LoginModifierTest {
   @Test
   public void collectTest_noTokenLoginSecondAttempt() throws ProcessingException {
     when(options.getCookieNamed(DEFAULT_LOGIN_TOKEN)).thenReturn(null).thenReturn(cookie);
-    when(loginInput.getAttribute(VALUE_ATTRIBUTE)).thenReturn(WRONG_LOGIN).thenReturn(DEFAULT_LOGIN);
+    when(loginInput.getAttribute(VALUE_ATTRIBUTE)).thenReturn(WRONG_LOGIN)
+        .thenReturn(DEFAULT_LOGIN);
     when(passwordInput.getAttribute(VALUE_ATTRIBUTE)).thenReturn(DEFAULT_PASSWORD);
 
     tested.collect();

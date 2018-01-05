@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.vs.mongodb;
 
@@ -42,28 +40,39 @@ import org.slf4j.LoggerFactory;
 @Component(immediate = true, metatype = true, label = "AET MongoDB Client", description = "AET MongoDB Client")
 public class MongoDBClient {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(MongoDBClient.class);
-
-  private static final String MONGO_URI = "MongoURI";
-
-  private static final String DEFAULT_MONGODB_URI = "mongodb://localhost";
-
-  private static final int MAX_DB_NAME_LENGTH = 64;
-
-  private static final boolean DEFAULT_AUTOCREATE_VALUE = false;
-
   public static final String DB_NAME_SEPARATOR = "_";
-
-  @Property(name = MONGO_URI, label = "MongoURI", description = "mongodb://[username:password@]host1[:port1][,host2[:port2],"
+  private static final Logger LOGGER = LoggerFactory.getLogger(MongoDBClient.class);
+  private static final String MONGO_URI = "MongoURI";
+  private static final String DEFAULT_MONGODB_URI = "mongodb://localhost";
+  private static final int MAX_DB_NAME_LENGTH = 64;
+  private static final boolean DEFAULT_AUTOCREATE_VALUE = false;
+  private static final String ALLOW_AUTO_CREATE = "AllowAutoCreate";
+  @Property(name = MONGO_URI, label = "MongoURI", description =
+      "mongodb://[username:password@]host1[:port1][,host2[:port2],"
           + "...[,hostN[:portN]]][/[database][?options]]", value = DEFAULT_MONGODB_URI)
   private String mongoUri;
-
-  private static final String ALLOW_AUTO_CREATE = "AllowAutoCreate";
-
   @Property(name = ALLOW_AUTO_CREATE, label = "Allow automatic creation of DB", description = "Allows automatic creation of DB if set to true", boolValue = DEFAULT_AUTOCREATE_VALUE)
   private Boolean allowAutoCreate;
 
   private MongoClient mongoClient;
+
+  /**
+   * @param companyName company name
+   * @param projectName project name
+   * @return dataBase name with applied db naming rules, based on project and company names
+   */
+  public static String getDbName(String companyName, String projectName) {
+    String result = companyName + DB_NAME_SEPARATOR + projectName;
+    return StringUtils.substring(result, 0, MAX_DB_NAME_LENGTH);
+  }
+
+  public static String getCompanyNameFromDbName(String dbName) {
+    return StringUtils.substringBefore(dbName, DB_NAME_SEPARATOR);
+  }
+
+  public static String getProjectNameFromDbName(String dbName) {
+    return StringUtils.substringAfter(dbName, DB_NAME_SEPARATOR);
+  }
 
   public MongoClient getMongoClient() {
     return mongoClient;
@@ -98,12 +107,13 @@ public class MongoDBClient {
 
     for (String dbName : getAetsDBNames()) {
       if (!StringUtils.containsAny(dbName, DB_NAME_SEPARATOR)) {
-        LOGGER.error("Database name format is incorrect. It must contain at least one underscore character. Couldn't fetch company name from database name. Skip.");
+        LOGGER.error(
+            "Database name format is incorrect. It must contain at least one underscore character. Couldn't fetch company name from database name. Skip.");
       }
       String companyName = StringUtils.substringBefore(dbName, DB_NAME_SEPARATOR);
       if (StringUtils.isBlank(companyName)) {
         LOGGER.error("Comapny name is blank. It couldn't've been fetched from database name [{}] ",
-                dbName);
+            dbName);
       } else if (StringUtils.isNotBlank(companyName)) {
         companies.add(companyName);
       }
@@ -116,7 +126,7 @@ public class MongoDBClient {
   private void setupProperties(Map properties) {
     this.mongoUri = PropertiesUtil.toString(properties.get(MONGO_URI), DEFAULT_MONGODB_URI);
     this.allowAutoCreate = PropertiesUtil.toBoolean(properties.get(ALLOW_AUTO_CREATE),
-            DEFAULT_AUTOCREATE_VALUE);
+        DEFAULT_AUTOCREATE_VALUE);
   }
 
   private void setupMongoDBConnection() throws UnknownHostException {
@@ -238,23 +248,5 @@ public class MongoDBClient {
     }
 
     return result;
-  }
-
-  /**
-   * @param companyName company name
-   * @param projectName project name
-   * @return dataBase name with applied db naming rules, based on project and company names
-   */
-  public static String getDbName(String companyName, String projectName) {
-    String result = companyName + DB_NAME_SEPARATOR + projectName;
-    return StringUtils.substring(result, 0, MAX_DB_NAME_LENGTH);
-  }
-
-  public static String getCompanyNameFromDbName(String dbName) {
-    return StringUtils.substringBefore(dbName, DB_NAME_SEPARATOR);
-  }
-
-  public static String getProjectNameFromDbName(String dbName) {
-    return StringUtils.substringAfter(dbName, DB_NAME_SEPARATOR);
   }
 }

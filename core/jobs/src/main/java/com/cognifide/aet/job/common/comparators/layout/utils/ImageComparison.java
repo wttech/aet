@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.job.common.comparators.layout.utils;
 
@@ -57,7 +55,8 @@ public final class ImageComparison {
    * @param sample - actual screen collected during test
    * @return ImageComparisonResult
    */
-  public static ImageComparisonResult compare(final BufferedImage pattern, final BufferedImage sample) {
+  public static ImageComparisonResult compare(final BufferedImage pattern,
+      final BufferedImage sample) {
     LOG.debug("Starting comparison of images.");
     int minWidth = Math.min(pattern.getWidth(), sample.getWidth());
     int minHeight = Math.min(pattern.getHeight(), sample.getHeight());
@@ -66,23 +65,26 @@ public final class ImageComparison {
     int resultWidth = minWidth + widthDifference;
     int resultHeight = minHeight + heightDifference;
 
-    BufferedImage resultImage = new BufferedImage(resultWidth, resultHeight, BufferedImage.TYPE_INT_ARGB);
+    BufferedImage resultImage = new BufferedImage(resultWidth, resultHeight,
+        BufferedImage.TYPE_INT_ARGB);
 
     int[][] img1Pixels = convertImageTo2DArray(pattern);
     int[][] img2Pixels = convertImageTo2DArray(sample);
 
     int differenceCounter = fastCompareMatchingArea(minWidth, minHeight, resultImage.getRaster(),
-            img1Pixels, img2Pixels);
+        img1Pixels, img2Pixels);
 
-    differenceCounter += fastMarkOuterAreaAsError(minWidth, minHeight, widthDifference, heightDifference,
-            resultHeight, resultImage.getRaster());
+    differenceCounter += fastMarkOuterAreaAsError(minWidth, minHeight, widthDifference,
+        heightDifference,
+        resultHeight, resultImage.getRaster());
 
     LOG.debug("Returning comparison result of images.");
-    return new ImageComparisonResult(differenceCounter, widthDifference, heightDifference, resultImage);
+    return new ImageComparisonResult(differenceCounter, widthDifference, heightDifference,
+        resultImage);
   }
 
   private static int fastMarkOuterAreaAsError(int minWidth, int minHeight, int widthDifference,
-                                               int heightDifference, int resultHeight, WritableRaster writableRaster) {
+      int heightDifference, int resultHeight, WritableRaster writableRaster) {
     // fill right area
     int[] emptyAreaA = new int[widthDifference * resultHeight];
     Arrays.fill(emptyAreaA, CANVAS_DIFF_COLOR);
@@ -96,8 +98,9 @@ public final class ImageComparison {
     return emptyAreaA.length + emptyAreaB.length;
   }
 
-  private static int fastCompareMatchingArea(int minWidth, int minHeight, WritableRaster writableRaster,
-                                             int[][] img1Pixels, int[][] img2Pixels) {
+  private static int fastCompareMatchingArea(int minWidth, int minHeight,
+      WritableRaster writableRaster,
+      int[][] img1Pixels, int[][] img2Pixels) {
     int differenceCounter = 0;
     int[] pixels = new int[minWidth * minHeight];
     int i = 0;

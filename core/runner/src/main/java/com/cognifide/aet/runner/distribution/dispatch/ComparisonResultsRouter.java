@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.runner.distribution.dispatch;
 
@@ -39,7 +37,8 @@ import javax.jms.ObjectMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ComparisonResultsRouter extends StepManager implements ChangeObserver, TaskFinishPoint {
+public class ComparisonResultsRouter extends StepManager implements ChangeObserver,
+    TaskFinishPoint {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(ComparisonResultsRouter.class);
 
@@ -57,8 +56,8 @@ public class ComparisonResultsRouter extends StepManager implements ChangeObserv
 
   @Inject
   public ComparisonResultsRouter(TimeoutWatch timeoutWatch, JmsConnection jmsConnection,
-                                 @Named("messageTimeToLive") Long messageTimeToLive,
-                                 SuiteIndexWrapper suite) throws JMSException {
+      @Named("messageTimeToLive") Long messageTimeToLive,
+      SuiteIndexWrapper suite) throws JMSException {
     super(timeoutWatch, jmsConnection, suite.get().getCorrelationId(), messageTimeToLive);
     this.suite = suite;
     timer = ExecutionTimer.createAndRun("comparison");
@@ -81,13 +80,13 @@ public class ComparisonResultsRouter extends StepManager implements ChangeObserv
       timeoutWatch.update();
       try {
         ComparatorResultData comparatorResultData = (ComparatorResultData) ((ObjectMessage) message)
-                .getObject();
+            .getObject();
 
         updateCounters(comparatorResultData.getStatus());
         LOGGER.info("Compare result message (ID: {}) {}! Results received successful {}, " +
-                        "failed {} of {} total. CorrelationId: {}",
-                message.getJMSMessageID(), comparatorResultData, messagesReceivedSuccess.get(),
-                messagesReceivedFailed.get(), getTotalTasksCount(), correlationId);
+                "failed {} of {} total. CorrelationId: {}",
+            message.getJMSMessageID(), comparatorResultData, messagesReceivedSuccess.get(),
+            messagesReceivedFailed.get(), getTotalTasksCount(), correlationId);
 
         addComparatorToSuite(comparatorResultData);
         if (comparatorResultData.getStatus() != JobStatus.SUCCESS) {
@@ -95,7 +94,7 @@ public class ComparisonResultsRouter extends StepManager implements ChangeObserv
         }
       } catch (JMSException e) {
         LOGGER.error("Error while collecting results in CollectionResultsRouter. CorrelationId: {}",
-                correlationId, e);
+            correlationId, e);
         onError(ProcessingError.comparingError(e.getMessage()));
       } finally {
         persistMetadataIfFinished();
@@ -106,7 +105,7 @@ public class ComparisonResultsRouter extends StepManager implements ChangeObserv
   private void persistMetadataIfFinished() {
     if (allResultsReceived()) {
       LOGGER.info("All results received ({})! Persisting metadata. CorrelationId: {}",
-              messagesToReceive.get(), correlationId);
+          messagesToReceive.get(), correlationId);
       final Suite suite = this.suite.get();
       timer.finishAndLog(suite.getName());
       suite.setFinishedTimestamp(new Timestamp(System.currentTimeMillis()));
@@ -118,7 +117,7 @@ public class ComparisonResultsRouter extends StepManager implements ChangeObserv
 
   private void addComparatorToSuite(ComparatorResultData comparisonResult) {
     final Optional<Url> urlOptional = suite
-            .getTestUrl(comparisonResult.getTestName(), comparisonResult.getUrlName());
+        .getTestUrl(comparisonResult.getTestName(), comparisonResult.getUrlName());
     final Url url = urlOptional.get();
     final Step step = url.getSteps().get(comparisonResult.getStepIndex());
     if (step != null) {
@@ -130,7 +129,7 @@ public class ComparisonResultsRouter extends StepManager implements ChangeObserv
 
   private boolean allResultsReceived() {
     return collectingFinished
-            && messagesToReceive.get() == messagesReceivedSuccess.get() + messagesReceivedFailed.get();
+        && messagesToReceive.get() == messagesReceivedSuccess.get() + messagesReceivedFailed.get();
   }
 
   /**
@@ -144,8 +143,8 @@ public class ComparisonResultsRouter extends StepManager implements ChangeObserv
   public void abort() {
     if (!isFinished()) {
       LOGGER.warn("Suite aborted!. Still waiting for {} of {} comparisons!",
-              messagesToReceive.get() - messagesReceivedSuccess.get() - messagesReceivedFailed.get(),
-              messagesToReceive.get());
+          messagesToReceive.get() - messagesReceivedSuccess.get() - messagesReceivedFailed.get(),
+          messagesToReceive.get());
     }
     aborted = true;
   }

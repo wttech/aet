@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.vs.metadata;
 
@@ -49,12 +47,9 @@ import org.slf4j.LoggerFactory;
 @Component(label = "AET Metadata DAO implementation for MongoDB", immediate = true)
 public class MetadataDAOMongoDBImpl implements MetadataDAO {
 
-  private static final long serialVersionUID = 3031952772776598636L;
-
-  private static final Logger LOGGER = LoggerFactory.getLogger(MetadataDAOMongoDBImpl.class);
-
   public static final String METADATA_COLLECTION_NAME = "metadata";
-
+  private static final long serialVersionUID = 3031952772776598636L;
+  private static final Logger LOGGER = LoggerFactory.getLogger(MetadataDAOMongoDBImpl.class);
   private static final String SUITE_VERSION_PARAM_NAME = "version";
 
   private static final String CORRELATION_ID_PARAM_NAME = "correlationId";
@@ -106,9 +101,9 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
     LOGGER.debug("Fetching suite with correlationId: {} ", correlationId);
 
     final FindIterable<Document> found = metadata
-            .find(Filters.eq(CORRELATION_ID_PARAM_NAME, correlationId))
-            .sort(Sorts.descending(SUITE_VERSION_PARAM_NAME))
-            .limit(1);
+        .find(Filters.eq(CORRELATION_ID_PARAM_NAME, correlationId))
+        .sort(Sorts.descending(SUITE_VERSION_PARAM_NAME))
+        .limit(1);
     final Document result = found.first();
     return new DocumentConverter(result).toSuite();
   }
@@ -117,12 +112,12 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
   public Suite getLatestRun(DBKey dbKey, String name) throws StorageException {
     MongoCollection<Document> metadata = getMetadataCollection(dbKey);
     LOGGER.debug("Fetching latest suite run for company: `{}`, project: `{}`, name `{}`.",
-            dbKey.getCompany(), dbKey.getProject(), name);
+        dbKey.getCompany(), dbKey.getProject(), name);
 
     final FindIterable<Document> found = metadata
-            .find(Filters.eq("name", name))
-            .sort(Sorts.descending(SUITE_VERSION_PARAM_NAME))
-            .limit(1);
+        .find(Filters.eq("name", name))
+        .sort(Sorts.descending(SUITE_VERSION_PARAM_NAME))
+        .limit(1);
     final Document result = found.first();
     return new DocumentConverter(result).toSuite();
   }
@@ -130,11 +125,12 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
   @Override
   public List<Suite> listSuites(DBKey dbKey) throws StorageException {
     MongoCollection<Document> metadata = getMetadataCollection(dbKey);
-    LOGGER.debug("Fetching all suites for company: `{}`, project: `{}`.", dbKey.getCompany(), dbKey.getProject());
+    LOGGER.debug("Fetching all suites for company: `{}`, project: `{}`.", dbKey.getCompany(),
+        dbKey.getProject());
 
     final FindIterable<Document> found = metadata
-            .find()
-            .sort(Sorts.descending(SUITE_VERSION_PARAM_NAME));
+        .find()
+        .sort(Sorts.descending(SUITE_VERSION_PARAM_NAME));
 
     return FluentIterable.from(found).transform(new Function<Document, Suite>() {
       @Override
@@ -145,15 +141,18 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
   }
 
   @Override
-  public boolean removeSuite(DBKey dbKey, String correlationId, Long version) throws StorageException {
-    LOGGER.debug("Removing suite with correlationId {}, version {} from {}.", correlationId, version, dbKey);
+  public boolean removeSuite(DBKey dbKey, String correlationId, Long version)
+      throws StorageException {
+    LOGGER
+        .debug("Removing suite with correlationId {}, version {} from {}.", correlationId, version,
+            dbKey);
     MongoCollection<Document> metadata = getMetadataCollection(dbKey);
 
     final DeleteResult deleteResult = metadata.deleteOne(
-            Filters.and(
-                    Filters.eq(CORRELATION_ID_PARAM_NAME, correlationId),
-                    Filters.eq(SUITE_VERSION_PARAM_NAME, version)
-            ));
+        Filters.and(
+            Filters.eq(CORRELATION_ID_PARAM_NAME, correlationId),
+            Filters.eq(SUITE_VERSION_PARAM_NAME, version)
+        ));
 
     return deleteResult.getDeletedCount() == 1;
   }
@@ -165,7 +164,8 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
 
     final Collection<String> databaseNames;
     if (!StringUtils.isBlank(company)) {
-      databaseNames = Collections2.filter(client.getAetsDBNames(), Predicates.containsPattern("^" + company));
+      databaseNames = Collections2
+          .filter(client.getAetsDBNames(), Predicates.containsPattern("^" + company));
     } else {
       databaseNames = client.getAetsDBNames();
     }
@@ -181,7 +181,8 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
     final String dbName = MongoDBClient.getDbName(dbKey.getCompany(), dbKey.getProject());
     final MongoDatabase database = client.getDatabase(dbName, true);
     if (database == null) {
-      throw new StorageException(String.format("Database %s does not exist! Contact AET administrators.", dbName));
+      throw new StorageException(
+          String.format("Database %s does not exist! Contact AET administrators.", dbName));
     }
     return database.getCollection(METADATA_COLLECTION_NAME);
   }

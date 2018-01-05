@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.runner.distribution.dispatch;
 
@@ -56,13 +54,15 @@ public class ComparisonResultsRouterTest extends StepManagerTest {
 
   @Override
   protected StepManager createTested() throws JMSException {
-    ComparisonResultsRouter tested = new ComparisonResultsRouter(timeoutWatch, connection, 100L, suiteIndexWrapper);
+    ComparisonResultsRouter tested = new ComparisonResultsRouter(timeoutWatch, connection, 100L,
+        suiteIndexWrapper);
     tested.setMetadataPersister(metadataPersister);
     return tested;
   }
 
   @Test
-  public void informChangesCompleted_whenCollectingFinished_expectMetadataPersisted() throws Exception {
+  public void informChangesCompleted_whenCollectingFinished_expectMetadataPersisted()
+      throws Exception {
     Timestamp mockedTimestamp = Mockito.mock(Timestamp.class);
     when(suiteIndexWrapper.get()).thenReturn(suite);
     when(suite.getRunTimestamp()).thenReturn(mockedTimestamp);
@@ -72,7 +72,8 @@ public class ComparisonResultsRouterTest extends StepManagerTest {
   }
 
   @Test
-  public void onMessage_whenSuccess_expectResultAddedToMetadataAndCountersUpdated() throws Exception {
+  public void onMessage_whenSuccess_expectResultAddedToMetadataAndCountersUpdated()
+      throws Exception {
     ComparatorResultData comparatorResultData = Mockito.mock(ComparatorResultData.class);
     when(mockedMessage.getObject()).thenReturn(comparatorResultData);
     when(comparatorResultData.getStatus()).thenReturn(JobStatus.SUCCESS);

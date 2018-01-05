@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.communication.api.metadata;
 
@@ -33,12 +31,10 @@ public class Test implements Serializable, Commentable, Named {
   private final String name;
 
   private final String proxy;
-
-  private String comment;
-
   @Valid
   @NotNull(message = "Test must have at least one url")
   private final Set<Url> urls = new HashSet<>();
+  private String comment;
 
   public Test(String name, String proxy) {
     this.name = name;
@@ -60,13 +56,13 @@ public class Test implements Serializable, Commentable, Named {
   }
 
   @Override
-  public void setComment(String comment) {
-    this.comment = comment;
+  public String getComment() {
+    return comment;
   }
 
   @Override
-  public String getComment() {
-    return comment;
+  public void setComment(String comment) {
+    this.comment = comment;
   }
 
   public String getProxy() {
@@ -102,7 +98,7 @@ public class Test implements Serializable, Commentable, Named {
   @Override
   public String toString() {
     return Objects.toStringHelper(this)
-            .add("name", name)
-            .toString();
+        .add("name", name)
+        .toString();
   }
 }

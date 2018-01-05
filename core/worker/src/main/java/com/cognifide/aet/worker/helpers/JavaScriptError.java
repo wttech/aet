@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.worker.helpers;
 
@@ -54,6 +52,7 @@ import org.openqa.selenium.firefox.FirefoxProfile;
  * @author Marc Guillemot
  */
 public class JavaScriptError {
+
   private final String errorMessage;
   private final String sourceName;
   private final int lineNumber;
@@ -66,7 +65,8 @@ public class JavaScriptError {
     console = (String) map.get("console");
   }
 
-  JavaScriptError(final String errorMessage, final String sourceName, final int lineNumber, String console) {
+  JavaScriptError(final String errorMessage, final String sourceName, final int lineNumber,
+      String console) {
     this.errorMessage = errorMessage;
     this.sourceName = sourceName;
     this.lineNumber = lineNumber;
@@ -103,10 +103,10 @@ public class JavaScriptError {
     int result = 1;
     result = prime * result + ((console == null) ? 0 : console.hashCode());
     result = prime * result
-            + ((errorMessage == null) ? 0 : errorMessage.hashCode());
+        + ((errorMessage == null) ? 0 : errorMessage.hashCode());
     result = prime * result + lineNumber;
     result = prime * result
-            + ((sourceName == null) ? 0 : sourceName.hashCode());
+        + ((sourceName == null) ? 0 : sourceName.hashCode());
     return result;
   }
 

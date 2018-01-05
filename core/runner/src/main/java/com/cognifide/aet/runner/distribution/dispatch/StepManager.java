@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.runner.distribution.dispatch;
 
@@ -41,32 +39,24 @@ abstract class StepManager extends Observable implements MessageListener {
   private static final String JMS_CORRELATION_ID_PATTERN = "JMSCorrelationID = '%s'";
 
   protected final Session session;
-
+  protected final AtomicInteger messagesReceivedSuccess;
+  protected final AtomicInteger messagesReceivedFailed;
+  protected final AtomicInteger messagesToReceive;
   private final Queue queueOut;
-
   protected MessageConsumer consumer;
-
   protected MessageProducer sender;
-
   protected String correlationId;
-
   protected TimeoutWatch timeoutWatch;
 
-  protected final AtomicInteger messagesReceivedSuccess;
-
-  protected final AtomicInteger messagesReceivedFailed;
-
-  protected final AtomicInteger messagesToReceive;
-
   public StepManager(TimeoutWatch timeoutWatch, JmsConnection jmsConnection, String correlationId,
-                     long messageTimeToLive) throws JMSException {
+      long messageTimeToLive) throws JMSException {
     this.timeoutWatch = timeoutWatch;
     this.session = jmsConnection.getJmsSession();
     this.correlationId = correlationId;
     if (getQueueInName() != null) {
       Queue queueIn = session.createQueue(getQueueInName());
       consumer = session.createConsumer(queueIn,
-              String.format(JMS_CORRELATION_ID_PATTERN, correlationId));
+          String.format(JMS_CORRELATION_ID_PATTERN, correlationId));
       consumer.setMessageListener(this);
     }
     if (getQueueOutName() != null) {
@@ -105,8 +95,9 @@ abstract class StepManager extends Observable implements MessageListener {
   }
 
   public ProgressLog getProgress() {
-    return new ProgressLog(getStepName(), messagesReceivedSuccess.get(), messagesReceivedFailed.get(),
-            messagesToReceive.get());
+    return new ProgressLog(getStepName(), messagesReceivedSuccess.get(),
+        messagesReceivedFailed.get(),
+        messagesToReceive.get());
   }
 
   protected Queue getQueueOut() {

@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.runner.distribution.dispatch;
 
@@ -59,7 +57,8 @@ public class CollectorJobScheduler implements Runnable {
    * -> Queue). Each package contains fixed (configurable) amount of urls that should be send to collect
    * queue. After all packages results are returned, entry is removed from this map.
    */
-  private final ConcurrentMap<String, Queue<MessageWithDestination>> messagesMap = Maps.newConcurrentMap();
+  private final ConcurrentMap<String, Queue<MessageWithDestination>> messagesMap = Maps
+      .newConcurrentMap();
 
   /**
    * BinarySemaphore which is used to passive waiting for work in task run loop.
@@ -87,8 +86,8 @@ public class CollectorJobScheduler implements Runnable {
 
   @Inject
   public CollectorJobScheduler(JmsConnection jmsConnection,
-                               @Named("maxMessagesInCollectorQueue") Integer maxMessagesInCollectorQueue,
-                               MessagesManager messagesManager) throws JMSException {
+      @Named("maxMessagesInCollectorQueue") Integer maxMessagesInCollectorQueue,
+      MessagesManager messagesManager) throws JMSException {
     this.maxMessagesInCollectorQueue = maxMessagesInCollectorQueue;
     this.availableQueue = new Semaphore(maxMessagesInCollectorQueue);
     this.session = jmsConnection.getJmsSession();
@@ -103,11 +102,11 @@ public class CollectorJobScheduler implements Runnable {
     } finally {
       if (running) {
         LOGGER.error("Fatal error while running thread {}! Closing CollectorJobScheduler.", Thread
-                .currentThread().getId());
+            .currentThread().getId());
       }
       if (!receivedMessagesCounter.isEmpty()) {
         LOGGER.warn("Quit CollectorJobScheduler while some tasks still in progress: {}.",
-                receivedMessagesCounter.keySet());
+            receivedMessagesCounter.keySet());
       }
       JmsUtils.closeQuietly(producer);
       JmsUtils.closeQuietly(session);
@@ -118,8 +117,9 @@ public class CollectorJobScheduler implements Runnable {
     while (running) {
       waitUntilMessagesInQueueAvailable();
       // Processes messages map entries.
-      for (Iterator<Map.Entry<String, Queue<MessageWithDestination>>> iterator = messagesMap.entrySet()
-              .iterator(); iterator.hasNext(); ) {
+      for (Iterator<Map.Entry<String, Queue<MessageWithDestination>>> iterator = messagesMap
+          .entrySet()
+          .iterator(); iterator.hasNext(); ) {
         Map.Entry<String, Queue<MessageWithDestination>> entry = iterator.next();
         Queue<MessageWithDestination> messagesQueue = entry.getValue();
         MessageWithDestination messageWithDestination = messagesQueue.poll();
@@ -139,8 +139,8 @@ public class CollectorJobScheduler implements Runnable {
     if (messagesMap.putIfAbsent(correlationID, messagesQueue) == null) {
       availableMessages.release();
       LOGGER.debug(
-              "New collection message with correlationID: {} (Semaphore availableMessages released). Currently waiting for {} packages ({} slots available).",
-              correlationID, receivedMessagesCounter.size(), getAvailableSlots());
+          "New collection message with correlationID: {} (Semaphore availableMessages released). Currently waiting for {} packages ({} slots available).",
+          correlationID, receivedMessagesCounter.size(), getAvailableSlots());
     } else {
       LOGGER.error("Message {} already in messages map!", correlationID);
       throw new IllegalStateException();
@@ -156,14 +156,14 @@ public class CollectorJobScheduler implements Runnable {
         receivedMessagesCounter.remove(requestJMSMessageID);
         availableQueue.release();
         LOGGER.debug(
-                "All results for package {} received (correlationID: {}) - releasing availableQueue semaphore. Currently {} slots available.",
-                requestJMSMessageID, correlationID, getAvailableSlots());
+            "All results for package {} received (correlationID: {}) - releasing availableQueue semaphore. Currently {} slots available.",
+            requestJMSMessageID, correlationID, getAvailableSlots());
       } else {
         receivedMessagesCounter.put(requestJMSMessageID, new ReceivedMessagesInfo(amount,
-                correlationID));
+            correlationID));
         LOGGER.debug(
-                "Result for package {} received (correlationID: {}) - still waiting for {} results in this package.",
-                requestJMSMessageID, correlationID, amount);
+            "Result for package {} received (correlationID: {}) - still waiting for {} results in this package.",
+            requestJMSMessageID, correlationID, amount);
       }
     }
   }
@@ -194,7 +194,7 @@ public class CollectorJobScheduler implements Runnable {
   private void fixMessageCounter(String correlationID) {
     Set<Map.Entry<String, ReceivedMessagesInfo>> entrySet = receivedMessagesCounter.entrySet();
     LOGGER.debug("Fixing message counter with correlationID: {} start with size: {}", correlationID,
-            receivedMessagesCounter.size());
+        receivedMessagesCounter.size());
     for (Map.Entry<String, ReceivedMessagesInfo> entry : entrySet) {
       if (entry.getValue().getCorrelationID().equals(correlationID)) {
         receivedMessagesCounter.remove(entry.getKey());
@@ -207,10 +207,11 @@ public class CollectorJobScheduler implements Runnable {
 
   private void removeFromQueueMap(String correlationID) {
     LOGGER.debug("Start removing queues with correlationID: {}. Total number of queues: {}",
-            correlationID, messagesMap.size());
+        correlationID, messagesMap.size());
     messagesMap.remove(correlationID);
-    LOGGER.debug("End removing queues with correlationID: {} Total number of queues: {}", correlationID,
-            messagesMap.size());
+    LOGGER.debug("End removing queues with correlationID: {} Total number of queues: {}",
+        correlationID,
+        messagesMap.size());
   }
 
   private void sendMessage(MessageWithDestination messageWithDestination) {
@@ -220,15 +221,15 @@ public class CollectorJobScheduler implements Runnable {
       if (messagesMap.containsKey(message.getJMSCorrelationID())) {
         producer.send(messageWithDestination.getDestination(), message);
         receivedMessagesCounter.put(message.getJMSMessageID(),
-                messageWithDestination.getMessagesToReceived());
+            messageWithDestination.getMessagesToReceived());
         LOGGER.debug(
-                "Sending new package {} (correlationId: {}). Currently waiting for {} collection results packages ({} slots available).",
-                message.getJMSMessageID(), message.getJMSCorrelationID(),
-                receivedMessagesCounter.size(), getAvailableSlots());
+            "Sending new package {} (correlationId: {}). Currently waiting for {} collection results packages ({} slots available).",
+            message.getJMSMessageID(), message.getJMSCorrelationID(),
+            receivedMessagesCounter.size(), getAvailableSlots());
       } else {
         LOGGER.warn(
-                "Message for correlationId {} was already canceled - releasing availableQueue semaphore. Currently waiting for {} collection results packages ({} slots available).",
-                message.getJMSCorrelationID(), receivedMessagesCounter.size(), getAvailableSlots());
+            "Message for correlationId {} was already canceled - releasing availableQueue semaphore. Currently waiting for {} collection results packages ({} slots available).",
+            message.getJMSCorrelationID(), receivedMessagesCounter.size(), getAvailableSlots());
         availableQueue.release();
       }
     } catch (JMSException e) {
@@ -240,7 +241,7 @@ public class CollectorJobScheduler implements Runnable {
 
   private String getAvailableSlots() {
     return maxMessagesInCollectorQueue - receivedMessagesCounter.size() + " of "
-            + maxMessagesInCollectorQueue;
+        + maxMessagesInCollectorQueue;
   }
 
   private void updateIfMoreMessagesLeft() {
