@@ -30,7 +30,9 @@ import com.cognifide.aet.queues.JmsUtils;
 import com.cognifide.aet.worker.api.CollectorDispatcher;
 import com.cognifide.aet.worker.drivers.WebDriverProvider;
 import com.cognifide.aet.worker.exceptions.WorkerException;
-
+import java.util.Map;
+import javax.jms.JMSException;
+import javax.jms.Message;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
@@ -41,11 +43,6 @@ import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Map;
-
-import javax.jms.JMSException;
-import javax.jms.Message;
 
 @Service
 @Component(immediate = true, metatype = true, label = "AET Collector Message Listener", policy = ConfigurationPolicy.REQUIRE, configurationFactory = true)

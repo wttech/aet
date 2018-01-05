@@ -27,7 +27,6 @@ import com.cognifide.aet.cleaner.processors.RemoveMetadataProcessor;
 import com.cognifide.aet.cleaner.processors.StartMetadataCleanupProcessor;
 import com.cognifide.aet.cleaner.processors.SuitesRemovePredicateProcessor;
 import com.cognifide.aet.communication.api.exceptions.AETException;
-
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Reference;

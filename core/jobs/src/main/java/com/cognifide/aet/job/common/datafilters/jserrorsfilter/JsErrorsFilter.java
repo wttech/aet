@@ -17,21 +17,17 @@
  */
 package com.cognifide.aet.job.common.datafilters.jserrorsfilter;
 
-import com.cognifide.aet.job.common.utils.ParamsHelper;
-import com.google.common.base.Predicate;
-import com.google.common.collect.FluentIterable;
-
 import com.cognifide.aet.job.api.collector.JsErrorLog;
 import com.cognifide.aet.job.api.datafilter.AbstractDataModifierJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
-
+import com.cognifide.aet.job.common.utils.ParamsHelper;
+import com.google.common.base.Predicate;
+import com.google.common.collect.FluentIterable;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
-
 import javax.annotation.Nullable;
-
 import org.apache.commons.lang3.StringUtils;
 
 public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {

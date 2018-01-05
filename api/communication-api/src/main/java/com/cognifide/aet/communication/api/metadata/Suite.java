@@ -20,33 +20,28 @@ package com.cognifide.aet.communication.api.metadata;
 import com.cognifide.aet.communication.api.metadata.gson.CollectionSerializer;
 import com.cognifide.aet.communication.api.metadata.gson.MapSerializer;
 import com.cognifide.aet.communication.api.metadata.gson.TimestampSerializer;
+import com.cognifide.aet.communication.api.util.ValidatorProvider;
 import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
-
-import com.cognifide.aet.communication.api.util.ValidatorProvider;
-
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
-
 import java.io.Reader;
-import java.lang.reflect.Type;
-import java.util.Collection;
-import java.util.Map;
-import org.hibernate.validator.constraints.NotBlank;
-
 import java.io.Serializable;
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
-
 import javax.validation.ConstraintViolation;
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.NotBlank;
 
 public class Suite implements Serializable, Commentable, Named, Validatable {
 

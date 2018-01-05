@@ -17,7 +17,8 @@
  */
 package com.cognifide.aet.job.common.datafilters.w3chtml5filter;
 
-import com.google.common.collect.Lists;
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
@@ -25,20 +26,16 @@ import com.cognifide.aet.job.common.comparators.w3chtml5.W3cHtml5ComparatorResul
 import com.cognifide.aet.job.common.comparators.w3chtml5.W3cHtml5Issue;
 import com.cognifide.aet.job.common.comparators.w3chtml5.W3cHtml5IssueType;
 import com.cognifide.aet.job.common.datafilters.w3chtmlfilter.W3cHtml5IssuesFilter;
-
+import com.google.common.collect.Lists;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 @RunWith(MockitoJUnitRunner.class)
 public class W3cHtml5IssuesFilterTest {

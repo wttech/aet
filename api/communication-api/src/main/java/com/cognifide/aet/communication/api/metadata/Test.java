@@ -18,15 +18,12 @@
 package com.cognifide.aet.communication.api.metadata;
 
 import com.google.common.base.Objects;
-
-import org.hibernate.validator.constraints.NotBlank;
-
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.NotBlank;
 
 public class Test implements Serializable, Commentable, Named {
 

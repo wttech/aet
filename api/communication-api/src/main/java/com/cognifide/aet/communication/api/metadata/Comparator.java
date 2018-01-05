@@ -20,7 +20,6 @@ package com.cognifide.aet.communication.api.metadata;
 import com.google.common.base.Joiner;
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
-
 import java.util.ArrayList;
 import java.util.List;
 

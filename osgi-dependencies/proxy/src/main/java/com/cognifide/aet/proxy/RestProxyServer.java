@@ -17,13 +17,14 @@
  */
 package com.cognifide.aet.proxy;
 
-import com.google.gson.GsonBuilder;
-
 import com.cognifide.aet.job.api.collector.ProxyServerWrapper;
 import com.cognifide.aet.proxy.exceptions.UnableToAddHeaderException;
 import com.github.detro.browsermobproxyclient.BMPCProxy;
 import com.github.detro.browsermobproxyclient.exceptions.BMPCUnableToConnectException;
-
+import com.google.gson.GsonBuilder;
+import java.io.IOException;
+import java.net.UnknownHostException;
+import java.util.Date;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
@@ -35,10 +36,6 @@ import org.json.JSONObject;
 import org.openqa.selenium.Proxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.net.UnknownHostException;
-import java.util.Date;
 
 public class RestProxyServer implements ProxyServerWrapper {
 

@@ -17,22 +17,19 @@
  */
 package com.cognifide.aet.executor.xmlparser.xml.models;
 
-import com.google.common.collect.Lists;
-
-import com.cognifide.aet.executor.model.ExtendedUrl;
-import com.cognifide.aet.executor.xmlparser.api.ParseException;
-
-import org.apache.commons.lang3.StringUtils;
-import org.junit.Test;
-
-import java.util.Collections;
-import java.util.LinkedList;
-import java.util.List;
-
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
+
+import com.cognifide.aet.executor.model.ExtendedUrl;
+import com.cognifide.aet.executor.xmlparser.api.ParseException;
+import com.google.common.collect.Lists;
+import java.util.Collections;
+import java.util.LinkedList;
+import java.util.List;
+import org.apache.commons.lang3.StringUtils;
+import org.junit.Test;
 
 public class ModelConverterUtilsTest {
 

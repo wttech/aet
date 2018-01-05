@@ -17,15 +17,13 @@
  */
 package com.cognifide.aet.communication.api.util;
 
-import org.hibernate.validator.HibernateValidator;
-
 import java.util.Collections;
 import java.util.List;
-
 import javax.validation.Validation;
 import javax.validation.ValidationProviderResolver;
 import javax.validation.Validator;
 import javax.validation.spi.ValidationProvider;
+import org.hibernate.validator.HibernateValidator;
 
 public final class ValidatorProvider {
 

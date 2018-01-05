@@ -17,24 +17,6 @@
  */
 package com.cognifide.aet.runner.distribution.dispatch;
 
-import com.google.common.collect.ImmutableList;
-
-import com.cognifide.aet.communication.api.metadata.Test;
-import com.cognifide.aet.communication.api.metadata.Url;
-
-import org.junit.runner.RunWith;
-import org.mockito.Matchers;
-import org.mockito.Mockito;
-import org.mockito.internal.verification.VerificationModeFactory;
-import org.mockito.runners.MockitoJUnitRunner;
-
-import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Queue;
-import java.util.Set;
-
-import javax.jms.JMSException;
-
 import static junit.framework.TestCase.assertNull;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -42,6 +24,20 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import com.cognifide.aet.communication.api.metadata.Test;
+import com.cognifide.aet.communication.api.metadata.Url;
+import com.google.common.collect.ImmutableList;
+import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Queue;
+import java.util.Set;
+import javax.jms.JMSException;
+import org.junit.runner.RunWith;
+import org.mockito.Matchers;
+import org.mockito.Mockito;
+import org.mockito.internal.verification.VerificationModeFactory;
+import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * @author maciej.laskowski

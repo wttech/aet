@@ -22,15 +22,13 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.not;
 
-import org.apache.commons.io.IOUtils;
-import org.junit.Test;
-
 import java.awt.image.BufferedImage;
 import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
-
 import javax.imageio.ImageIO;
+import org.apache.commons.io.IOUtils;
+import org.junit.Test;
 
 public class ImageComparisonConvertImageTest {
 

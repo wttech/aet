@@ -17,14 +17,6 @@
  */
 package com.cognifide.aet.worker.impl;
 
-import com.cognifide.aet.job.api.collector.CollectorFactory;
-import com.cognifide.aet.job.api.comparator.ComparatorFactory;
-import com.cognifide.aet.job.api.datafilter.DataFilterFactory;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.mockito.Mockito;
-
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.TestCase.assertNotNull;
 import static junit.framework.TestCase.assertNull;
@@ -32,6 +24,13 @@ import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
+
+import com.cognifide.aet.job.api.collector.CollectorFactory;
+import com.cognifide.aet.job.api.comparator.ComparatorFactory;
+import com.cognifide.aet.job.api.datafilter.DataFilterFactory;
+import org.junit.Before;
+import org.junit.Test;
+import org.mockito.Mockito;
 
 /**
  * JobRegistryImplTest

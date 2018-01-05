@@ -17,17 +17,14 @@
  */
 package com.cognifide.aet.runner.distribution.dispatch;
 
-import com.google.inject.Inject;
-
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.runner.conversion.SuiteIndexWrapper;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.StorageException;
-
+import com.google.inject.Inject;
+import java.util.Observable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Observable;
 
 public class MetadataPersister extends Observable {
 

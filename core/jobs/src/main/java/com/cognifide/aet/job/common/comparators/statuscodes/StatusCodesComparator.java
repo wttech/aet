@@ -17,10 +17,6 @@
  */
 package com.cognifide.aet.job.common.comparators.statuscodes;
 
-import com.google.common.collect.Collections2;
-import com.google.common.collect.Lists;
-import com.google.gson.reflect.TypeToken;
-
 import com.cognifide.aet.communication.api.metadata.ComparatorStepResult;
 import com.cognifide.aet.job.api.comparator.ComparatorJob;
 import com.cognifide.aet.job.api.comparator.ComparatorProperties;
@@ -31,15 +27,16 @@ import com.cognifide.aet.job.common.Excludable;
 import com.cognifide.aet.job.common.collectors.statuscodes.StatusCode;
 import com.cognifide.aet.job.common.collectors.statuscodes.StatusCodesCollectorResult;
 import com.cognifide.aet.vs.ArtifactsDAO;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.google.common.collect.Collections2;
+import com.google.common.collect.Lists;
+import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class StatusCodesComparator implements ComparatorJob {
 

@@ -18,13 +18,12 @@
 package com.cognifide.aet.job.common.modifiers.waitfor;
 
 import com.cognifide.aet.communication.api.metadata.CollectorStepResult;
+import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.FluentWait;
-
-import java.util.concurrent.TimeUnit;
 
 
 public final class WaitForHelper {

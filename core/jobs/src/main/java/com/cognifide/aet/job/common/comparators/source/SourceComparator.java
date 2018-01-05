@@ -29,16 +29,14 @@ import com.cognifide.aet.job.common.comparators.source.visitors.ContentVisitor;
 import com.cognifide.aet.job.common.comparators.source.visitors.MarkupVisitor;
 import com.cognifide.aet.job.common.comparators.source.visitors.NodeTraversor;
 import com.cognifide.aet.vs.ArtifactsDAO;
-
+import java.util.Collections;
+import java.util.List;
+import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
 
 public class SourceComparator implements ComparatorJob {
 

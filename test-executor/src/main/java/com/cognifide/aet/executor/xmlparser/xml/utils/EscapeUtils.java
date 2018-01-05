@@ -17,11 +17,10 @@
  */
 package com.cognifide.aet.executor.xmlparser.xml.utils;
 
-import org.apache.commons.lang3.StringEscapeUtils;
-import org.apache.commons.lang3.StringUtils;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.apache.commons.lang3.StringEscapeUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public final class EscapeUtils {
 

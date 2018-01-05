@@ -17,16 +17,15 @@
  */
 package com.cognifide.aet.validation.impl;
 
-import com.cognifide.aet.validation.ErrorMessage;
-
-import org.apache.commons.lang3.StringUtils;
-import org.junit.Before;
-import org.junit.Test;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+
+import com.cognifide.aet.validation.ErrorMessage;
+import org.apache.commons.lang3.StringUtils;
+import org.junit.Before;
+import org.junit.Test;
 
 public class ValidationResultBuilderImplTest {
 

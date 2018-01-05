@@ -17,10 +17,8 @@
  */
 package com.cognifide.aet.communication.api.job;
 
-import com.google.common.collect.ImmutableList;
-
 import com.cognifide.aet.communication.api.metadata.Url;
-
+import com.google.common.collect.ImmutableList;
 import java.util.List;
 
 /**

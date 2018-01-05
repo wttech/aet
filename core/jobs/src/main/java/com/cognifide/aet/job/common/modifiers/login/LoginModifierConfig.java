@@ -19,11 +19,10 @@ package com.cognifide.aet.job.common.modifiers.login;
 
 import com.cognifide.aet.job.api.ParametersValidator;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
+import java.util.Map;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
-
-import java.util.Map;
 
 class LoginModifierConfig {
 

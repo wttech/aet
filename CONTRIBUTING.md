@@ -83,7 +83,9 @@ In integration tests method name is omitted, and test class name should suggest 
 
 ## Coding Conventions
 Below is a short list of things that will help us keep AET quality and accept pull requests:
-- Follow [Google Style Guide](https://github.com/google/styleguide) code formatting,
+- Follow Google Style Guide code formatting from AET Github (originally adapted from [Google Style Guide](https://github.com/google/styleguide))
+  - [Google Style Guide for Eclipse](https://github.com/Cognifide/aet/tree/master/eclipse-java-google-style.xml) 
+  - [Google Style Guide for IntelliJ](https://github.com/Cognifide/aet/tree/master/intellij-java-google-style.xml)
 - write tests (integration/functional and Unit Tests) following defined convention,
 - write javadoc, especially for interfaces and abstract methods,
 - update [documentation](https://github.com/Cognifide/aet/tree/master/documentation) and include changes in the same pull request which modifies the code,

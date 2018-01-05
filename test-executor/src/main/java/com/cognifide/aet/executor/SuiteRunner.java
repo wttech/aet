@@ -25,10 +25,6 @@ import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.executor.common.MessageProcessor;
 import com.cognifide.aet.executor.common.ProcessorFactory;
 import com.cognifide.aet.executor.common.RunnerTerminator;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -36,6 +32,8 @@ import javax.jms.MessageConsumer;
 import javax.jms.MessageProducer;
 import javax.jms.ObjectMessage;
 import javax.jms.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class is responsible for running a single test suite and checking the processing status.
