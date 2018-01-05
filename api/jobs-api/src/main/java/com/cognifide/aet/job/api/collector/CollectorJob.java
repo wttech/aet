@@ -20,7 +20,6 @@ package com.cognifide.aet.job.api.collector;
 import com.cognifide.aet.communication.api.metadata.CollectorStepResult;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
-
 import java.util.Map;
 
 public interface CollectorJob {

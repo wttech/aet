@@ -17,19 +17,18 @@
  */
 package com.cognifide.aet.job.common.modifiers.cookie;
 
-import com.cognifide.aet.validation.ValidationResultBuilder;
-import com.cognifide.aet.validation.Validator;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Matchers.contains;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.internal.verification.VerificationModeFactory.noMoreInteractions;
+
+import com.cognifide.aet.validation.ValidationResultBuilder;
+import com.cognifide.aet.validation.Validator;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CookieModifierValidatorTest {

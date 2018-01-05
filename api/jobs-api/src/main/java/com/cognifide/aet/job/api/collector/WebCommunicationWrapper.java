@@ -17,9 +17,8 @@
  */
 package com.cognifide.aet.job.api.collector;
 
-import org.openqa.selenium.WebDriver;
-
 import java.util.Set;
+import org.openqa.selenium.WebDriver;
 
 public interface WebCommunicationWrapper {
 

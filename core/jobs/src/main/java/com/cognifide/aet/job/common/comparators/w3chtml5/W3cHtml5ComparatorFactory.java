@@ -26,12 +26,10 @@ import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.common.comparators.w3chtml5.parser.W3cHtml5ValidationResultParser;
 import com.cognifide.aet.job.common.comparators.w3chtml5.wrapper.NuValidatorWrapper;
 import com.cognifide.aet.vs.ArtifactsDAO;
-
+import java.util.List;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.Service;
-
-import java.util.List;
 
 @Component
 @Service

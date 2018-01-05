@@ -30,7 +30,9 @@ import com.cognifide.aet.queues.JmsUtils;
 import com.cognifide.aet.worker.api.CollectorDispatcher;
 import com.cognifide.aet.worker.drivers.WebDriverProvider;
 import com.cognifide.aet.worker.exceptions.WorkerException;
-
+import java.util.Map;
+import javax.jms.JMSException;
+import javax.jms.Message;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
@@ -41,11 +43,6 @@ import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Map;
-
-import javax.jms.JMSException;
-import javax.jms.Message;
 
 @Service
 @Component(immediate = true, metatype = true, label = "AET Collector Message Listener", policy = ConfigurationPolicy.REQUIRE, configurationFactory = true)
@@ -104,10 +101,8 @@ public class CollectorMessageListenerImpl extends AbstractTaskMessageListener {
       WebCommunicationWrapper webCommunicationWrapper = null;
       int collected = 0;
       try {
-        //FIXME - proxy is now set per url
-        final String usedProxy = collectorJobData.getUrls().get(0).getProxy();
-        if (isProxyUsed(usedProxy)) {
-          webCommunicationWrapper = this.webDriverProvider.createWebDriverWithProxy(webDriverName, usedProxy);
+        if (isProxyUsed(collectorJobData.getProxy())) {
+          webCommunicationWrapper = this.webDriverProvider.createWebDriverWithProxy(webDriverName, collectorJobData.getProxy());
         } else {
           webCommunicationWrapper = this.webDriverProvider.createWebDriver(webDriverName);
         }
@@ -165,7 +160,7 @@ public class CollectorMessageListenerImpl extends AbstractTaskMessageListener {
   }
 
   private boolean isProxyUsed(String useProxy) {
-    return StringUtils.isNotBlank(useProxy) && !("false").equals(useProxy);
+    return StringUtils.isNotBlank(useProxy);
   }
 
   private void quitWebDriver(WebCommunicationWrapper webCommunicationWrapper) {

@@ -30,17 +30,16 @@
 
 package org.browsermob.core.json;
 
+import java.io.IOException;
+import java.lang.reflect.Type;
+import java.text.DateFormat;
+import java.util.Date;
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonGenerator;
 import org.codehaus.jackson.JsonNode;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.codehaus.jackson.map.SerializerProvider;
 import org.codehaus.jackson.map.ser.ScalarSerializerBase;
-
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.text.DateFormat;
-import java.util.Date;
 
 public class ISO8601DateFormatter extends ScalarSerializerBase<Date> {
   public final static ISO8601DateFormatter instance = new ISO8601DateFormatter();

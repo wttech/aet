@@ -17,12 +17,11 @@
  */
 package com.cognifide.aet.job.common.modifiers.cookie;
 
-import com.cognifide.aet.job.api.exceptions.ParametersException;
-
-import org.junit.Test;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
+
+import com.cognifide.aet.job.api.exceptions.ParametersException;
+import org.junit.Test;
 
 public class ModifyActionTest {
 

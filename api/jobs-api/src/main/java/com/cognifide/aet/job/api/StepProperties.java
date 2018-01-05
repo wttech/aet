@@ -18,9 +18,8 @@
 package com.cognifide.aet.job.api;
 
 
-import com.google.common.base.Objects;
-
 import com.cognifide.aet.vs.DBKey;
+import com.google.common.base.Objects;
 
 /**
  * POJO used to pass properties to Collectors/Comparators on worker.

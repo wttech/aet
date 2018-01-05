@@ -19,7 +19,6 @@ package com.cognifide.aet.cleaner.route;
 
 import com.cognifide.aet.cleaner.context.CleanerContext;
 import com.cognifide.aet.cleaner.processors.exchange.ReferencedArtifactsMessageBody;
-
 import org.apache.camel.Exchange;
 import org.apache.camel.processor.aggregate.CompletionAwareAggregationStrategy;
 import org.slf4j.Logger;

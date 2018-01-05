@@ -17,24 +17,22 @@
  */
 package com.cognifide.aet.executor.common;
 
-import com.cognifide.aet.communication.api.messages.FinishedSuiteProcessingMessage;
-import com.cognifide.aet.communication.api.messages.ProcessingErrorMessage;
-import com.cognifide.aet.communication.api.messages.ProgressMessage;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
-
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.ObjectMessage;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.instanceOf;
 import static org.hamcrest.Matchers.nullValue;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.when;
+
+import com.cognifide.aet.communication.api.messages.FinishedSuiteProcessingMessage;
+import com.cognifide.aet.communication.api.messages.ProcessingErrorMessage;
+import com.cognifide.aet.communication.api.messages.ProgressMessage;
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.ObjectMessage;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.runners.MockitoJUnitRunner;
 
 
 @RunWith(MockitoJUnitRunner.class)

@@ -21,7 +21,6 @@ import com.cognifide.aet.cleaner.context.CleanerContext;
 import com.cognifide.aet.cleaner.processors.exchange.SuiteMessageBody;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.vs.MetadataDAO;
-
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.felix.scr.annotations.Component;

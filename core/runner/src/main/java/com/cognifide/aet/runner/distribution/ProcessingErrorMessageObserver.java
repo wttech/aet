@@ -17,22 +17,18 @@
  */
 package com.cognifide.aet.runner.distribution;
 
-import com.google.inject.Inject;
-import com.google.inject.name.Named;
-
 import com.cognifide.aet.communication.api.messages.ProcessingErrorMessage;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
 import java.util.Observable;
 import java.util.Observer;
-
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ProcessingErrorMessageObserver implements Observer {
 

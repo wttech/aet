@@ -21,14 +21,11 @@ import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.Validatable;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.communication.api.util.ValidatorProvider;
-
-import org.hibernate.validator.constraints.NotBlank;
-
 import java.util.Set;
-
 import javax.validation.ConstraintViolation;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import org.hibernate.validator.constraints.NotBlank;
 
 public class SimpleDBKey implements DBKey, Validatable {
 

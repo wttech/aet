@@ -18,22 +18,21 @@
 package com.cognifide.aet.communication.api.metadata;
 
 import com.google.common.base.Objects;
-
-import org.hibernate.validator.constraints.NotBlank;
-
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
+import org.hibernate.validator.constraints.NotBlank;
 
 public class Test implements Serializable, Commentable, Named {
 
-  private static final long serialVersionUID = 229365983400541885L;
+  private static final long serialVersionUID = -220660503633061512L;
 
   @NotBlank
   private final String name;
+
+  private final String proxy;
 
   private String comment;
 
@@ -41,8 +40,9 @@ public class Test implements Serializable, Commentable, Named {
   @NotNull(message = "Test must have at least one url")
   private final Set<Url> urls = new HashSet<>();
 
-  public Test(String name) {
+  public Test(String name, String proxy) {
     this.name = name;
+    this.proxy = proxy;
   }
 
   /**
@@ -67,6 +67,10 @@ public class Test implements Serializable, Commentable, Named {
   @Override
   public String getComment() {
     return comment;
+  }
+
+  public String getProxy() {
+    return proxy;
   }
 
   @Override

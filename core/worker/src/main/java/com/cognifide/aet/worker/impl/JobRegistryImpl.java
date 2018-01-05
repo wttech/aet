@@ -21,7 +21,8 @@ import com.cognifide.aet.job.api.collector.CollectorFactory;
 import com.cognifide.aet.job.api.comparator.ComparatorFactory;
 import com.cognifide.aet.job.api.datafilter.DataFilterFactory;
 import com.cognifide.aet.worker.api.JobRegistry;
-
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Properties;
 import org.apache.felix.scr.annotations.Property;
@@ -32,9 +33,6 @@ import org.apache.felix.scr.annotations.Service;
 import org.osgi.framework.Constants;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
 @Service
 @Component(immediate = true, description = "AET JMS Registry", label = "AET Job Registry Implementation")

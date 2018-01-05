@@ -17,11 +17,6 @@
  */
 package com.cognifide.aet.runner.distribution.dispatch;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Queues;
-import com.google.inject.Inject;
-import com.google.inject.name.Named;
-
 import com.cognifide.aet.communication.api.job.CollectorJobData;
 import com.cognifide.aet.communication.api.metadata.Test;
 import com.cognifide.aet.communication.api.metadata.Url;
@@ -29,16 +24,17 @@ import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.runner.conversion.SuiteIndexWrapper;
 import com.cognifide.aet.runner.distribution.progress.ProgressLog;
 import com.cognifide.aet.runner.distribution.watch.TimeoutWatch;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.google.common.collect.Lists;
+import com.google.common.collect.Queues;
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
 import java.util.Deque;
 import java.util.List;
-
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.ObjectMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * CollectDispatcher - divide and schedule collect work among workers
@@ -100,7 +96,7 @@ public class CollectDispatcher extends StepManager {
       urlsToSend.add(testUrl);
       if (msgIndex % urlPackageSize == 0 || msgIndex == totalUrls) {
         final CollectorJobData data = new CollectorJobData(suite.get().getCompany(),
-                suite.get().getProject(), suite.get().getName(), test.getName(), urlsToSend);
+                suite.get().getProject(), suite.get().getName(), test.getName(), urlsToSend, test.getProxy());
         ObjectMessage message = session.createObjectMessage(data);
         message.setJMSCorrelationID(correlationId);
         messagesQueue.add(new MessageWithDestination(getQueueOut(), message, urlsToSend.size()));

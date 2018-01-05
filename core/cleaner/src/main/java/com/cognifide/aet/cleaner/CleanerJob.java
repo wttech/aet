@@ -20,7 +20,6 @@ package com.cognifide.aet.cleaner;
 
 import com.cognifide.aet.cleaner.context.CleanerContext;
 import com.cognifide.aet.cleaner.route.MetadataCleanerRouteBuilder;
-
 import org.apache.camel.CamelContext;
 import org.apache.camel.ProducerTemplate;
 import org.apache.camel.impl.DefaultCamelContext;

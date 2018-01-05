@@ -17,16 +17,15 @@
  */
 package com.cognifide.aet.cleaner.validation;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.MatcherAssert.assertThat;
+
 import com.cognifide.aet.validation.ValidationResultBuilder;
 import com.cognifide.aet.validation.Validator;
 import com.cognifide.aet.validation.impl.ValidationResultBuilderImpl;
-
 import org.hamcrest.Matchers;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 
 public class CleanerSchedulerValidatorTest {
 

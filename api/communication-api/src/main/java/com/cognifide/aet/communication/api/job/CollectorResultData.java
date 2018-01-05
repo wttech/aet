@@ -17,12 +17,10 @@
  */
 package com.cognifide.aet.communication.api.job;
 
-import com.google.common.base.Objects;
-
 import com.cognifide.aet.communication.api.JobStatus;
 import com.cognifide.aet.communication.api.ProcessingError;
 import com.cognifide.aet.communication.api.metadata.Url;
-
+import com.google.common.base.Objects;
 import java.io.Serializable;
 
 /**

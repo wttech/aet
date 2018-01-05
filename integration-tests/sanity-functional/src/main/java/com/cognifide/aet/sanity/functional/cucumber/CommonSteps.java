@@ -17,18 +17,15 @@
  */
 package com.cognifide.aet.sanity.functional.cucumber;
 
-import com.google.inject.Inject;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import com.cognifide.aet.sanity.functional.po.ReportHomePage;
-
-import org.openqa.selenium.WebElement;
-
+import com.google.inject.Inject;
 import cucumber.api.java.en.And;
 import cucumber.api.java.en.Given;
 import cucumber.api.java.en.Then;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
+import org.openqa.selenium.WebElement;
 
 public class CommonSteps {
 

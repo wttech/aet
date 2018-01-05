@@ -17,26 +17,23 @@
  */
 package com.cognifide.aet.runner.conversion;
 
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertNull;
 
 import com.cognifide.aet.communication.api.metadata.Step;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.Test;
 import com.cognifide.aet.communication.api.metadata.Url;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 import com.googlecode.zohhak.api.Configure;
 import com.googlecode.zohhak.api.TestWith;
 import com.googlecode.zohhak.api.runners.ZohhakRunner;
-
-import org.apache.commons.io.IOUtils;
-import org.junit.runner.RunWith;
-
 import java.io.IOException;
 import java.util.List;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertNull;
+import org.apache.commons.io.IOUtils;
+import org.junit.runner.RunWith;
 
 @RunWith(ZohhakRunner.class)
 @Configure(separator = ";")

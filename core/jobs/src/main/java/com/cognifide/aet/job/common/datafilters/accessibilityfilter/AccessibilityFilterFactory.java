@@ -21,12 +21,10 @@ import com.cognifide.aet.job.api.datafilter.DataFilterFactory;
 import com.cognifide.aet.job.api.datafilter.DataFilterJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.common.collectors.accessibility.AccessibilityIssue;
-
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Service;
-
 import java.util.List;
 import java.util.Map;
+import org.apache.felix.scr.annotations.Component;
+import org.apache.felix.scr.annotations.Service;
 
 @Component
 @Service

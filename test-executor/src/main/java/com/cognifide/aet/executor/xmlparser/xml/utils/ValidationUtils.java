@@ -19,13 +19,11 @@ package com.cognifide.aet.executor.xmlparser.xml.utils;
 
 import com.cognifide.aet.executor.model.CollectorStep;
 import com.cognifide.aet.executor.xmlparser.api.ParseException;
-
+import java.util.List;
+import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
-import java.util.regex.Pattern;
 
 public final class ValidationUtils {
 
@@ -145,7 +143,7 @@ public final class ValidationUtils {
 
     if (!Pattern.matches(pattern, result)) {
       throw new ParseException(String.format(
-              "Value '%s' of attribute %s in %s does not match pattern %s!", value, name,
+              "Value '%s' of attribute %s in %s does not match pattern `%s`!", value, name,
               parentElement, pattern));
     }
     return result;

@@ -17,10 +17,6 @@
  */
 package com.cognifide.aet.worker.impl;
 
-import com.google.common.base.Function;
-import com.google.common.base.Predicates;
-import com.google.common.collect.FluentIterable;
-
 import com.cognifide.aet.communication.api.exceptions.AETException;
 import com.cognifide.aet.communication.api.metadata.Comparator;
 import com.cognifide.aet.communication.api.metadata.ComparatorStepResult;
@@ -34,7 +30,11 @@ import com.cognifide.aet.job.api.datafilter.DataFilterJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.worker.api.ComparatorDispatcher;
 import com.cognifide.aet.worker.api.JobRegistry;
-
+import com.google.common.base.Function;
+import com.google.common.base.Predicates;
+import com.google.common.collect.FluentIterable;
+import java.util.List;
+import javax.annotation.Nullable;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.apache.felix.scr.annotations.Component;
@@ -42,10 +42,6 @@ import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.List;
-
-import javax.annotation.Nullable;
 
 @Service
 @Component(label = "AET Comparator Dispatcher", description = "Comparator Dispatcher", immediate = true)

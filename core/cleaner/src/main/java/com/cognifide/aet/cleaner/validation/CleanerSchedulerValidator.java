@@ -19,7 +19,6 @@ package com.cognifide.aet.cleaner.validation;
 
 import com.cognifide.aet.validation.ValidationResultBuilder;
 import com.cognifide.aet.validation.Validator;
-
 import org.apache.commons.lang3.StringUtils;
 
 public class CleanerSchedulerValidator implements Validator {

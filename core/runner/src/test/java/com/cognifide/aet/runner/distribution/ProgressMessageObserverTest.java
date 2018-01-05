@@ -18,7 +18,6 @@
 package com.cognifide.aet.runner.distribution;
 
 import com.cognifide.aet.communication.api.messages.ProgressMessage;
-
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;

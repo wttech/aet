@@ -17,30 +17,6 @@
  */
 package com.cognifide.aet.runner.distribution.dispatch;
 
-import com.cognifide.aet.communication.api.ProcessingError;
-import com.cognifide.aet.communication.api.job.CollectorResultData;
-import com.cognifide.aet.communication.api.metadata.CollectorStepResult;
-import com.cognifide.aet.communication.api.metadata.Comparator;
-import com.cognifide.aet.communication.api.metadata.Step;
-import com.cognifide.aet.communication.api.metadata.Url;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Matchers;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.runners.MockitoJUnitRunner;
-
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.List;
-import java.util.Observable;
-import java.util.Set;
-
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.ObjectMessage;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.mockito.Matchers.any;
@@ -48,6 +24,27 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import com.cognifide.aet.communication.api.ProcessingError;
+import com.cognifide.aet.communication.api.job.CollectorResultData;
+import com.cognifide.aet.communication.api.metadata.CollectorStepResult;
+import com.cognifide.aet.communication.api.metadata.Comparator;
+import com.cognifide.aet.communication.api.metadata.Step;
+import com.cognifide.aet.communication.api.metadata.Url;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
+import java.util.Observable;
+import java.util.Set;
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.ObjectMessage;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Matchers;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * @author maciej.laskowski

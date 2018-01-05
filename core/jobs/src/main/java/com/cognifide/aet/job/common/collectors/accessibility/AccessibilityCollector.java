@@ -17,28 +17,25 @@
  */
 package com.cognifide.aet.job.common.collectors.accessibility;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-
 import com.cognifide.aet.communication.api.metadata.CollectorStepResult;
 import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.vs.ArtifactsDAO;
-
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
+import java.net.URL;
+import java.util.List;
+import java.util.Map;
 import org.apache.commons.io.Charsets;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.osgi.framework.BundleContext;
-
-import java.lang.reflect.Type;
-import java.net.URL;
-import java.util.List;
-import java.util.Map;
 
 public class AccessibilityCollector implements CollectorJob {
 

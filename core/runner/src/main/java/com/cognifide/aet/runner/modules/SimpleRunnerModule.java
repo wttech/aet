@@ -17,10 +17,6 @@
  */
 package com.cognifide.aet.runner.modules;
 
-import com.google.inject.AbstractModule;
-import com.google.inject.assistedinject.FactoryModuleBuilder;
-import com.google.inject.name.Names;
-
 import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.runner.conversion.SuiteIndexWrapper;
 import com.cognifide.aet.runner.distribution.RunnerMode;
@@ -31,7 +27,9 @@ import com.cognifide.aet.runner.testsuitescope.TestSuiteScope;
 import com.cognifide.aet.runner.testsuitescope.TestSuiteScoped;
 import com.cognifide.aet.runner.util.MessagesManager;
 import com.cognifide.aet.vs.MetadataDAO;
-
+import com.google.inject.AbstractModule;
+import com.google.inject.assistedinject.FactoryModuleBuilder;
+import com.google.inject.name.Names;
 import javax.jms.Destination;
 
 public class SimpleRunnerModule extends AbstractModule {

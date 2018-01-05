@@ -17,15 +17,10 @@
  */
 package com.cognifide.aet.job.common;
 
-import com.google.gson.Gson;
-
 import com.cognifide.aet.vs.Artifact;
 import com.cognifide.aet.vs.ArtifactsDAO;
 import com.cognifide.aet.vs.DBKey;
-
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
-
+import com.google.gson.Gson;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -37,6 +32,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang3.StringUtils;
 
 public class ArtifactDAOMock implements ArtifactsDAO {
 

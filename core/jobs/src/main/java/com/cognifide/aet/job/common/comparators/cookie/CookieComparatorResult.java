@@ -17,11 +17,10 @@
  */
 package com.cognifide.aet.job.common.comparators.cookie;
 
-import org.openqa.selenium.Cookie;
-
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import org.openqa.selenium.Cookie;
 
 public class CookieComparatorResult implements Serializable {
 

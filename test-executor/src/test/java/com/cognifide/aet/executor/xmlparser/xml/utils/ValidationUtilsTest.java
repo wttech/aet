@@ -17,21 +17,18 @@
  */
 package com.cognifide.aet.executor.xmlparser.xml.utils;
 
-import com.google.common.collect.ImmutableMap;
+import static org.junit.Assert.assertEquals;
 
 import com.cognifide.aet.executor.model.CollectorStep;
 import com.cognifide.aet.executor.xmlparser.api.ParseException;
-
+import com.google.common.collect.ImmutableMap;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
-import static org.junit.Assert.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ValidationUtilsTest {

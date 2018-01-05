@@ -18,7 +18,6 @@
 package com.cognifide.aet.job.common.comparators.w3chtml5;
 
 import com.google.common.base.Function;
-
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;

@@ -17,14 +17,12 @@
  */
 package com.cognifide.aet.vs.metadata;
 
-import java.lang.reflect.Type;
-
-import org.bson.Document;
-
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
+import org.bson.Document;
 
 class DocumentConverter {
 

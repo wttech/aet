@@ -17,25 +17,22 @@
  */
 package com.cognifide.aet.job.common.comparators.cookie;
 
-import com.google.common.base.Function;
-import com.google.common.collect.FluentIterable;
-import com.google.common.collect.Sets;
-import com.google.gson.reflect.TypeToken;
-
 import com.cognifide.aet.communication.api.metadata.ComparatorStepResult;
 import com.cognifide.aet.job.api.comparator.ComparatorJob;
 import com.cognifide.aet.job.api.comparator.ComparatorProperties;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.vs.ArtifactsDAO;
-
-import org.openqa.selenium.Cookie;
-
+import com.google.common.base.Function;
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.Sets;
+import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
+import org.openqa.selenium.Cookie;
 
 public class CookieComparator implements ComparatorJob {
 

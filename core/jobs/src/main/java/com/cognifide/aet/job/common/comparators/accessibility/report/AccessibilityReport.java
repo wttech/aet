@@ -18,7 +18,6 @@
 package com.cognifide.aet.job.common.comparators.accessibility.report;
 
 import com.cognifide.aet.job.common.collectors.accessibility.AccessibilityIssue;
-
 import java.io.Serializable;
 import java.util.List;
 

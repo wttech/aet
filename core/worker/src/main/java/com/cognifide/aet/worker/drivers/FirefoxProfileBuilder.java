@@ -19,13 +19,11 @@ package com.cognifide.aet.worker.drivers;
 
 
 import com.cognifide.aet.worker.helpers.JavaScriptError;
-
+import java.io.IOException;
+import java.util.Random;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.util.Random;
 
 public class FirefoxProfileBuilder {
 

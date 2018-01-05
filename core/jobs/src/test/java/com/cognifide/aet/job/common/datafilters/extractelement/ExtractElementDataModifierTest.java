@@ -17,17 +17,15 @@
  */
 package com.cognifide.aet.job.common.datafilters.extractelement;
 
-import com.cognifide.aet.job.api.exceptions.ParametersException;
-import com.cognifide.aet.job.api.exceptions.ProcessingException;
-
-import org.junit.Before;
-import org.junit.Test;
-
-import java.util.HashMap;
-import java.util.Map;
-
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+
+import com.cognifide.aet.job.api.exceptions.ParametersException;
+import com.cognifide.aet.job.api.exceptions.ProcessingException;
+import java.util.HashMap;
+import java.util.Map;
+import org.junit.Before;
+import org.junit.Test;
 
 public class ExtractElementDataModifierTest {
 

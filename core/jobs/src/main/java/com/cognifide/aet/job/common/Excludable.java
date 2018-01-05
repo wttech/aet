@@ -18,7 +18,6 @@
 package com.cognifide.aet.job.common;
 
 import com.google.common.base.Predicate;
-
 import javax.annotation.Nullable;
 
 public interface Excludable {

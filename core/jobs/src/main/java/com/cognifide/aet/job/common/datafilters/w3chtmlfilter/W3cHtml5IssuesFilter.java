@@ -31,7 +31,6 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
-
 import org.apache.commons.lang3.StringEscapeUtils;
 
 public class W3cHtml5IssuesFilter extends AbstractDataModifierJob<W3cHtml5ComparatorResult> {
