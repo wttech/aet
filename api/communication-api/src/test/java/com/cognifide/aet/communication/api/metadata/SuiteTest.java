@@ -17,14 +17,13 @@
  */
 package com.cognifide.aet.communication.api.metadata;
 
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
+
 import com.googlecode.zohhak.api.Configure;
 import com.googlecode.zohhak.api.TestWith;
 import com.googlecode.zohhak.api.runners.ZohhakRunner;
-
 import org.junit.runner.RunWith;
-
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
 
 
 @RunWith(ZohhakRunner.class)

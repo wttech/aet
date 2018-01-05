@@ -18,7 +18,6 @@
 package com.cognifide.aet.executor.xmlparser.xml.models;
 
 import com.cognifide.aet.executor.model.ComparatorStep;
-
 import java.util.Set;
 
 public class Compare {

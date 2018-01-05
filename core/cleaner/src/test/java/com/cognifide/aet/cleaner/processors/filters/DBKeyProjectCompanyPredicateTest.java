@@ -17,16 +17,15 @@
  */
 package com.cognifide.aet.cleaner.processors.filters;
 
-import com.cognifide.aet.vs.DBKey;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.powermock.api.mockito.PowerMockito.when;
 
+import com.cognifide.aet.vs.DBKey;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.powermock.api.mockito.PowerMockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DBKeyProjectCompanyPredicateTest {

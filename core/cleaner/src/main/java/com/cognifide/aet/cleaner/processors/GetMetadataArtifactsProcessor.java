@@ -17,10 +17,6 @@
  */
 package com.cognifide.aet.cleaner.processors;
 
-import com.google.common.base.Function;
-import com.google.common.base.Predicate;
-import com.google.common.collect.FluentIterable;
-
 import com.cognifide.aet.cleaner.context.CleanerContext;
 import com.cognifide.aet.cleaner.context.SuiteAggregationCounter;
 import com.cognifide.aet.cleaner.processors.exchange.ReferencedArtifactsMessageBody;
@@ -30,7 +26,13 @@ import com.cognifide.aet.communication.api.metadata.Comparator;
 import com.cognifide.aet.communication.api.metadata.Step;
 import com.cognifide.aet.communication.api.metadata.Test;
 import com.cognifide.aet.communication.api.metadata.Url;
-
+import com.google.common.base.Function;
+import com.google.common.base.Predicate;
+import com.google.common.collect.FluentIterable;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+import javax.annotation.Nullable;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.commons.lang3.StringUtils;
@@ -38,12 +40,6 @@ import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.annotation.Nullable;
 
 @Service(GetMetadataArtifactsProcessor.class)
 @Component

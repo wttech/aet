@@ -18,7 +18,6 @@
 package com.cognifide.aet.job.common.collectors.statuscodes;
 
 import com.google.common.collect.Lists;
-
 import java.io.Serializable;
 import java.util.List;
 

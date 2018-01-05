@@ -20,17 +20,14 @@ package com.cognifide.aet.communication.api.metadata;
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-
-import org.apache.commons.lang3.StringUtils;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.validation.constraints.Pattern;
+import org.apache.commons.lang3.StringUtils;
 
 public abstract class StepResult implements Serializable {
 

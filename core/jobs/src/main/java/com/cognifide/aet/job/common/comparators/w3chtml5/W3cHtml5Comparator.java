@@ -25,14 +25,12 @@ import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.job.common.comparators.w3chtml5.parser.W3cHtml5ValidationResultParser;
 import com.cognifide.aet.job.common.comparators.w3chtml5.wrapper.NuValidatorWrapper;
 import com.cognifide.aet.vs.ArtifactsDAO;
-
-import org.apache.commons.io.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 class W3cHtml5Comparator extends W3cHtml5ComparatorJob {
 

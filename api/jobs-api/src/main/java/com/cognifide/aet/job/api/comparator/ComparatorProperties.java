@@ -17,9 +17,8 @@
  */
 package com.cognifide.aet.job.api.comparator;
 
-import com.google.common.base.Objects;
-
 import com.cognifide.aet.job.api.StepProperties;
+import com.google.common.base.Objects;
 
 public class ComparatorProperties extends StepProperties {
 

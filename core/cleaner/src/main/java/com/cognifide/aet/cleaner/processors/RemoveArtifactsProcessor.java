@@ -17,12 +17,10 @@
  */
 package com.cognifide.aet.cleaner.processors;
 
-import com.google.common.collect.Sets;
-
 import com.cognifide.aet.cleaner.context.CleanerContext;
 import com.cognifide.aet.cleaner.processors.exchange.ReferencedArtifactsMessageBody;
 import com.cognifide.aet.vs.ArtifactsDAO;
-
+import com.google.common.collect.Sets;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.felix.scr.annotations.Component;

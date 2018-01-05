@@ -18,7 +18,6 @@
 package com.cognifide.aet.sanity.functional.suites;
 
 import com.cognifide.aet.sanity.functional.cucumber.Filtering;
-
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 

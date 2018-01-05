@@ -17,12 +17,19 @@
  */
 package com.cognifide.aet.worker.drivers;
 
+import static com.cognifide.aet.worker.drivers.WebDriverConstants.NAME;
+import static com.cognifide.aet.worker.drivers.WebDriverConstants.NAME_LABEL;
+import static com.cognifide.aet.worker.drivers.WebDriverConstants.PATH;
+
 import com.cognifide.aet.job.api.collector.HttpRequestExecutorFactory;
 import com.cognifide.aet.job.api.collector.ProxyServerWrapper;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.worker.api.WebDriverFactory;
 import com.cognifide.aet.worker.exceptions.WorkerException;
-
+import java.io.File;
+import java.io.IOException;
+import java.util.Map;
+import java.util.concurrent.TimeUnit;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
@@ -37,15 +44,6 @@ import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.osgi.framework.Constants;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
-
-import static com.cognifide.aet.worker.drivers.WebDriverConstants.NAME;
-import static com.cognifide.aet.worker.drivers.WebDriverConstants.NAME_LABEL;
-import static com.cognifide.aet.worker.drivers.WebDriverConstants.PATH;
 
 @Service
 @Component(immediate = false, description = "AET Firefox WebDriver Factory", label = "AET Firefox WebDriver Factory", metatype = true)

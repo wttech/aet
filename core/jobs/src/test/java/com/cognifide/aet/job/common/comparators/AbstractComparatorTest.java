@@ -20,12 +20,10 @@ package com.cognifide.aet.job.common.comparators;
 import com.cognifide.aet.communication.api.metadata.ComparatorStepResult;
 import com.cognifide.aet.job.api.comparator.ComparatorProperties;
 import com.cognifide.aet.job.common.ArtifactDAOMock;
-
+import java.io.IOException;
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
-
-import java.io.IOException;
 
 public abstract class AbstractComparatorTest {
 

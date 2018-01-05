@@ -17,12 +17,16 @@
  */
 package com.cognifide.aet.runner.distribution;
 
-import com.google.inject.Inject;
-
 import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.queues.JmsUtils;
 import com.cognifide.aet.runner.conversion.SuiteIndexWrapper;
-
+import com.google.inject.Inject;
+import javax.jms.Destination;
+import javax.jms.JMSException;
+import javax.jms.Message;
+import javax.jms.MessageConsumer;
+import javax.jms.MessageListener;
+import javax.jms.Session;
 import org.apache.activemq.advisory.AdvisorySupport;
 import org.apache.activemq.command.ActiveMQDestination;
 import org.apache.activemq.command.ActiveMQMessage;
@@ -30,13 +34,6 @@ import org.apache.activemq.command.ActiveMQTopic;
 import org.apache.activemq.command.RemoveInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import javax.jms.Destination;
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.MessageConsumer;
-import javax.jms.MessageListener;
-import javax.jms.Session;
 
 /**
  * TestLifeCycle - this runnable represents complete lifecycle of a single Suite Run

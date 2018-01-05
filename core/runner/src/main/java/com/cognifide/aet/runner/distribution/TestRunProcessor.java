@@ -17,9 +17,6 @@
  */
 package com.cognifide.aet.runner.distribution;
 
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
-
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.runner.conversion.SuiteIndexWrapper;
 import com.cognifide.aet.runner.conversion.SuiteMergeStrategy;
@@ -27,13 +24,13 @@ import com.cognifide.aet.runner.distribution.dispatch.CollectorJobScheduler;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.SimpleDBKey;
 import com.cognifide.aet.vs.StorageException;
-
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-
 import javax.jms.Destination;
 
 /**

@@ -22,12 +22,10 @@ import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.vs.ArtifactsDAO;
-
-import org.openqa.selenium.Cookie;
-import org.openqa.selenium.WebDriver;
-
 import java.util.Map;
 import java.util.Set;
+import org.openqa.selenium.Cookie;
+import org.openqa.selenium.WebDriver;
 
 public class CookieCollector implements CollectorJob {
 

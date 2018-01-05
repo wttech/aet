@@ -19,7 +19,6 @@ package com.cognifide.aet.communication.api.metadata;
 
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableMap;
-
 import java.io.Serializable;
 import java.util.Collections;
 import java.util.Map;

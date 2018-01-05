@@ -17,16 +17,14 @@
  */
 package com.cognifide.aet.executor.xmlparser.xml;
 
-import com.cognifide.aet.executor.model.TestSuiteRun;
-import com.cognifide.aet.executor.xmlparser.api.TestSuiteParser;
-
-import org.junit.Test;
-
-import java.io.File;
-import java.net.URL;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+
+import com.cognifide.aet.executor.model.TestSuiteRun;
+import com.cognifide.aet.executor.xmlparser.api.TestSuiteParser;
+import java.io.File;
+import java.net.URL;
+import org.junit.Test;
 
 public class XmlTestSuiteParserTest {
 

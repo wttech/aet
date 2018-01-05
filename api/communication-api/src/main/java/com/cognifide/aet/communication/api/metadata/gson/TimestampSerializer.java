@@ -17,15 +17,13 @@
  */
 package com.cognifide.aet.communication.api.metadata.gson;
 
+import com.cognifide.aet.communication.api.metadata.Suite;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonPrimitive;
 import com.google.gson.JsonSerializationContext;
 import com.google.gson.JsonSerializer;
-
-import com.cognifide.aet.communication.api.metadata.Suite;
-
 import java.lang.reflect.Type;
 
 public class TimestampSerializer implements JsonSerializer<Suite.Timestamp>, JsonDeserializer<Suite.Timestamp> {

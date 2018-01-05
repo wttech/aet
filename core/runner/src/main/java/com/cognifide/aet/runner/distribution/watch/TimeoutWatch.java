@@ -18,7 +18,6 @@
 package com.cognifide.aet.runner.distribution.watch;
 
 import com.cognifide.aet.runner.testsuitescope.TestSuiteScoped;
-
 import java.util.concurrent.TimeUnit;
 
 /**

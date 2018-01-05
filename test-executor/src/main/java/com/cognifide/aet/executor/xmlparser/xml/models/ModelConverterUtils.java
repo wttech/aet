@@ -17,19 +17,16 @@
  */
 package com.cognifide.aet.executor.xmlparser.xml.models;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Sets;
-
 import com.cognifide.aet.executor.model.ExtendedUrl;
 import com.cognifide.aet.executor.xmlparser.api.ParseException;
-
-import org.apache.commons.lang3.StringUtils;
-
+import com.google.common.collect.Lists;
+import com.google.common.collect.Sets;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Set;
+import org.apache.commons.lang3.StringUtils;
 
 public final class ModelConverterUtils {
 

@@ -17,15 +17,14 @@
  */
 package com.cognifide.aet.runner.distribution;
 
+import static org.mockito.Mockito.when;
+
 import com.cognifide.aet.communication.api.ProcessingError;
 import com.cognifide.aet.communication.api.messages.ProcessingErrorMessage;
-
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import static org.mockito.Mockito.when;
 
 /**
  * ProcessingErrorMessageObserverTest

@@ -17,14 +17,11 @@
  */
 package com.cognifide.aet.executor.xmlparser.xml;
 
-import com.google.common.collect.Maps;
-
 import com.cognifide.aet.executor.xmlparser.api.ParseException;
-
+import com.google.common.collect.Maps;
+import java.util.Map;
 import org.simpleframework.xml.convert.Converter;
 import org.simpleframework.xml.stream.InputNode;
-
-import java.util.Map;
 
 abstract class BasicPhaseConverter<T> implements Converter<T> {
 

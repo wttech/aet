@@ -20,7 +20,6 @@ package com.cognifide.aet.vs;
 
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
-
 import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;

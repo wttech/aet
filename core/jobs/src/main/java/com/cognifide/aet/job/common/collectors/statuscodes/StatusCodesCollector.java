@@ -24,11 +24,9 @@ import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.vs.ArtifactsDAO;
-
+import java.util.Map;
 import org.browsermob.core.har.HarEntry;
 import org.browsermob.core.har.HarLog;
-
-import java.util.Map;
 
 public class StatusCodesCollector implements CollectorJob {
 

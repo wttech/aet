@@ -23,14 +23,12 @@ import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.job.common.modifiers.WebElementsLocatorParams;
 import com.cognifide.aet.job.common.modifiers.waitfor.WaitForHelper;
-
+import java.util.Map;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Map;
 
 public class WaitForElementToBeVisibleModifier extends WebElementsLocatorParams implements CollectorJob {
 

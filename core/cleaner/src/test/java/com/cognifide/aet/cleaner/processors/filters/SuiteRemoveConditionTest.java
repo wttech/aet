@@ -17,25 +17,22 @@
  */
 package com.cognifide.aet.cleaner.processors.filters;
 
-import com.google.common.base.Function;
-import com.google.common.collect.FluentIterable;
-
-import com.cognifide.aet.cleaner.context.CleanerContext;
-import com.cognifide.aet.communication.api.metadata.Suite;
-import com.googlecode.zohhak.api.Configure;
-import com.googlecode.zohhak.api.TestWith;
-import com.googlecode.zohhak.api.runners.ZohhakRunner;
-
-import org.joda.time.DateTime;
-import org.junit.runner.RunWith;
-import org.mockito.Mockito;
-
-import java.util.Arrays;
-import java.util.List;
-
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.powermock.api.mockito.PowerMockito.when;
+
+import com.cognifide.aet.cleaner.context.CleanerContext;
+import com.cognifide.aet.communication.api.metadata.Suite;
+import com.google.common.base.Function;
+import com.google.common.collect.FluentIterable;
+import com.googlecode.zohhak.api.Configure;
+import com.googlecode.zohhak.api.TestWith;
+import com.googlecode.zohhak.api.runners.ZohhakRunner;
+import java.util.Arrays;
+import java.util.List;
+import org.joda.time.DateTime;
+import org.junit.runner.RunWith;
+import org.mockito.Mockito;
 
 @RunWith(ZohhakRunner.class)
 @Configure(separator = ";")

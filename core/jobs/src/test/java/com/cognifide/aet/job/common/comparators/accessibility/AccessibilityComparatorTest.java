@@ -18,22 +18,19 @@
 package com.cognifide.aet.job.common.comparators.accessibility;
 
 
-import com.google.common.collect.ImmutableMap;
+import static org.junit.Assert.assertEquals;
 
 import com.cognifide.aet.communication.api.metadata.ComparatorStepResult;
 import com.cognifide.aet.job.api.comparator.ComparatorProperties;
 import com.cognifide.aet.job.api.datafilter.DataFilterJob;
 import com.cognifide.aet.job.common.ArtifactDAOMock;
 import com.cognifide.aet.job.common.comparators.AbstractComparatorTest;
-
+import com.google.common.collect.ImmutableMap;
+import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import java.util.ArrayList;
-
-import static org.junit.Assert.assertEquals;
 
 @RunWith(MockitoJUnitRunner.class)
 public class AccessibilityComparatorTest extends AbstractComparatorTest {

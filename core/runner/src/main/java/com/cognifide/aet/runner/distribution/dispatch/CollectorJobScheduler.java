@@ -17,29 +17,25 @@
  */
 package com.cognifide.aet.runner.distribution.dispatch;
 
+import com.cognifide.aet.communication.api.queues.JmsConnection;
+import com.cognifide.aet.queues.JmsUtils;
+import com.cognifide.aet.runner.util.MessagesManager;
 import com.google.common.collect.Maps;
 import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.inject.name.Named;
-
-import com.cognifide.aet.communication.api.queues.JmsConnection;
-import com.cognifide.aet.queues.JmsUtils;
-import com.cognifide.aet.runner.util.MessagesManager;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Queue;
 import java.util.Set;
 import java.util.concurrent.ConcurrentMap;
 import java.util.concurrent.Semaphore;
-
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * This class is singleton which manages collector queues. The main task of CollectorJobScheduler is to limit

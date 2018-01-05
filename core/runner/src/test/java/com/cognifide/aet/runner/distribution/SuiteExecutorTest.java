@@ -17,6 +17,14 @@
  */
 package com.cognifide.aet.runner.distribution;
 
+import static org.mockito.Matchers.any;
+import static org.mockito.Matchers.anyList;
+import static org.mockito.Matchers.anyLong;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mockito.internal.verification.VerificationModeFactory.times;
+
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.runner.conversion.SuiteIndexWrapper;
@@ -25,27 +33,16 @@ import com.cognifide.aet.runner.distribution.dispatch.CollectionResultsRouter;
 import com.cognifide.aet.runner.distribution.dispatch.ComparisonResultsRouter;
 import com.cognifide.aet.runner.distribution.dispatch.MetadataPersister;
 import com.cognifide.aet.runner.distribution.watch.TimeoutWatch;
-
+import java.util.Observable;
+import javax.jms.Destination;
+import javax.jms.MessageProducer;
+import javax.jms.ObjectMessage;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import java.util.Observable;
-
-import javax.jms.Destination;
-import javax.jms.MessageProducer;
-import javax.jms.ObjectMessage;
-
-import static org.mockito.Matchers.any;
-import static org.mockito.Matchers.anyList;
-import static org.mockito.Matchers.anyLong;
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 @RunWith(MockitoJUnitRunner.class)
 public class SuiteExecutorTest {

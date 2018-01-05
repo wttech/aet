@@ -17,9 +17,9 @@
  */
 package com.cognifide.aet.executor.common;
 
-import com.cognifide.aet.communication.api.messages.FatalErrorMessage;
 import com.cognifide.aet.communication.api.execution.ProcessingStatus;
 import com.cognifide.aet.communication.api.execution.SuiteStatusResult;
+import com.cognifide.aet.communication.api.messages.FatalErrorMessage;
 
 class FatalErrorMessageProcessor implements MessageProcessor {
 

@@ -17,11 +17,9 @@
  */
 package com.cognifide.aet.job.common.comparators.statuscodes;
 
+import com.cognifide.aet.job.common.collectors.statuscodes.StatusCode;
 import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
-
-import com.cognifide.aet.job.common.collectors.statuscodes.StatusCode;
-
 import java.util.List;
 
 class StatusCodesFilter {

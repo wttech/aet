@@ -17,11 +17,11 @@
  */
 package com.cognifide.aet.job.api.collector;
 
-import org.junit.Before;
-import org.junit.Test;
-
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
+
+import org.junit.Before;
+import org.junit.Test;
 
 public class JsErrorLogTest {
   private JsErrorLog jsErrorLog;

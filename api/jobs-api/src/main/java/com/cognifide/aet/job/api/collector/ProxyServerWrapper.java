@@ -18,11 +18,9 @@
 package com.cognifide.aet.job.api.collector;
 
 import com.cognifide.aet.job.api.exceptions.ProxyException;
-
+import java.net.UnknownHostException;
 import org.browsermob.core.har.Har;
 import org.openqa.selenium.Proxy;
-
-import java.net.UnknownHostException;
 
 public interface ProxyServerWrapper {
 

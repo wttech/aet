@@ -18,7 +18,6 @@
 package com.cognifide.aet.executor.xmlparser.api;
 
 import com.cognifide.aet.executor.model.TestSuiteRun;
-
 import java.io.File;
 
 public interface TestSuiteParser {

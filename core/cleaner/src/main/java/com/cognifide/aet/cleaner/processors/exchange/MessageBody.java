@@ -17,10 +17,8 @@
  */
 package com.cognifide.aet.cleaner.processors.exchange;
 
-import com.google.common.base.Objects;
-
 import com.cognifide.aet.vs.DBKey;
-
+import com.google.common.base.Objects;
 import java.io.Serializable;
 
 public class MessageBody<T extends Serializable> implements Serializable {
