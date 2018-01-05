@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.runner.conversion;
 
@@ -85,7 +83,8 @@ public final class SuiteMergeStrategy {
 
   private static void setPatterns(Suite current, Suite pattern) {
     if (pattern != null) {
-      final ImmutableMap<String, Test> tests = FluentIterable.from(current.getTests()).uniqueIndex(TEST_TO_MAP);
+      final ImmutableMap<String, Test> tests = FluentIterable.from(current.getTests())
+          .uniqueIndex(TEST_TO_MAP);
       updateComment(current, pattern);
       for (Test patternTest : pattern.getTests()) {
         if (tests.containsKey(patternTest.getName())) {
@@ -98,7 +97,8 @@ public final class SuiteMergeStrategy {
   private static void mergeTest(Test currentTest, Test patternTest) {
     updateComment(currentTest, patternTest);
     currentTest.setComment(patternTest.getComment());
-    final ImmutableMap<String, Url> urlsMap = FluentIterable.from(currentTest.getUrls()).uniqueIndex(URL_TO_MAP);
+    final ImmutableMap<String, Url> urlsMap = FluentIterable.from(currentTest.getUrls())
+        .uniqueIndex(URL_TO_MAP);
 
     for (Url patternUrl : patternTest.getUrls()) {
       if (urlsMap.containsKey(patternUrl.getName())) {
@@ -110,7 +110,8 @@ public final class SuiteMergeStrategy {
   private static void mergeUrl(Url currentUrl, Url patternUrl) {
     updateComment(currentUrl, patternUrl);
     final ImmutableMap<String, Step> collectors =
-            FluentIterable.from(currentUrl.getSteps()).filter(COMPARATORS_FILTER).uniqueIndex(STEP_TO_MAP);
+        FluentIterable.from(currentUrl.getSteps()).filter(COMPARATORS_FILTER)
+            .uniqueIndex(STEP_TO_MAP);
 
     for (Step patternStep : patternUrl.getSteps()) {
       if (isCollector(patternStep) && collectors.containsKey(patternStep.getName())) {
@@ -123,8 +124,9 @@ public final class SuiteMergeStrategy {
     updateComment(currentStep, patternStep);
     currentStep.updatePattern(patternStep.getPattern());
 
-    final ImmutableMap<String, Comparator> comparators = FluentIterable.from(currentStep.getComparators())
-            .uniqueIndex(COMPARATOR_TO_MAP);
+    final ImmutableMap<String, Comparator> comparators = FluentIterable
+        .from(currentStep.getComparators())
+        .uniqueIndex(COMPARATOR_TO_MAP);
 
     for (Comparator patternComparator : patternStep.getComparators()) {
       if (comparators.containsKey(patternComparator.getName())) {

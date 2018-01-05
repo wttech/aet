@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.runner.distribution.dispatch;
 
@@ -61,8 +59,8 @@ public class CollectionResultsRouter extends StepManager implements TaskFinishPo
 
   @Inject
   public CollectionResultsRouter(TimeoutWatch timeoutWatch, JmsConnection jmsConnection,
-                                 @Named("messageTimeToLive") Long messageTimeToLive,
-                                 CollectorJobScheduler collectorJobScheduler, SuiteIndexWrapper suite) throws JMSException {
+      @Named("messageTimeToLive") Long messageTimeToLive,
+      CollectorJobScheduler collectorJobScheduler, SuiteIndexWrapper suite) throws JMSException {
     super(timeoutWatch, jmsConnection, suite.get().getCorrelationId(), messageTimeToLive);
     this.collectorJobScheduler = collectorJobScheduler;
     this.suite = suite;
@@ -85,19 +83,22 @@ public class CollectionResultsRouter extends StepManager implements TaskFinishPo
       timeoutWatch.update();
       try {
         CollectorResultData collectorResultData = (CollectorResultData) ((ObjectMessage) message)
-                .getObject();
+            .getObject();
 
         collectorJobScheduler.messageReceived(collectorResultData.getRequestMessageId(),
-                message.getJMSCorrelationID());
+            message.getJMSCorrelationID());
         String testName = collectorResultData.getTestName();
 
         updateCounters(collectorResultData.getStatus());
 
-        LOGGER.info("Reseived message {} - url {} in test `{}` collected with status {}. Results received " +
-                        "successful {} / failed {} of {} total. CorrelationId: {}.",
-                message.getJMSMessageID(), collectorResultData.getUrl(), testName,
-                collectorResultData.getStatus(), messagesReceivedSuccess.get(), messagesReceivedFailed.get(),
-                getTotalTasksCount(), correlationId);
+        LOGGER.info(
+            "Reseived message {} - url {} in test `{}` collected with status {}. Results received "
+                +
+                "successful {} / failed {} of {} total. CorrelationId: {}.",
+            message.getJMSMessageID(), collectorResultData.getUrl(), testName,
+            collectorResultData.getStatus(), messagesReceivedSuccess.get(),
+            messagesReceivedFailed.get(),
+            getTotalTasksCount(), correlationId);
 
         if (collectorResultData.getStatus() == JobStatus.SUCCESS) {
           onSuccess(collectorResultData, testName);
@@ -128,7 +129,8 @@ public class CollectionResultsRouter extends StepManager implements TaskFinishPo
     consumer.close();
   }
 
-  private void onSuccess(CollectorResultData collectorResultData, String testName) throws JMSException {
+  private void onSuccess(CollectorResultData collectorResultData, String testName)
+      throws JMSException {
     final Url processedUrl = collectorResultData.getUrl();
     updateSuiteUrl(collectorResultData.getTestName(), processedUrl);
     for (Step step : processedUrl.getSteps()) {
@@ -140,7 +142,8 @@ public class CollectionResultsRouter extends StepManager implements TaskFinishPo
           step.updatePattern(step.getStepResult().getArtifactId());
         }
         int scheduledMessagesNo = dispatch(step, testName, processedUrl.getName());
-        LOGGER.info("{} ComparatorJobData messages send to queue {}. CorrelationId: {} TestName: {}",
+        LOGGER
+            .info("{} ComparatorJobData messages send to queue {}. CorrelationId: {} TestName: {}",
                 scheduledMessagesNo, getQueueOutName(), correlationId, testName);
         for (ChangeObserver changeListener : changeListeners) {
           changeListener.updateAmountToReceive(scheduledMessagesNo);
@@ -152,17 +155,18 @@ public class CollectionResultsRouter extends StepManager implements TaskFinishPo
   private int dispatch(Step step, String testName, String urlName) throws JMSException {
     final int comparisonsNo = step.getComparators().size();
     LOGGER.debug(
-            "Sending comparatorStep message. CorrelationID: {} TestName: {} UrlName: {} with {} comparators defined.",
-            correlationId, testName, urlName, comparisonsNo);
+        "Sending comparatorStep message. CorrelationID: {} TestName: {} UrlName: {} with {} comparators defined.",
+        correlationId, testName, urlName, comparisonsNo);
     createAndSendComparatorJobData(step, testName, urlName);
 
     return comparisonsNo;
   }
 
-  private void createAndSendComparatorJobData(Step step, String testName, String urlName) throws JMSException {
+  private void createAndSendComparatorJobData(Step step, String testName, String urlName)
+      throws JMSException {
     ObjectMessage message = session.createObjectMessage(
-            new ComparatorJobData(suite.get().getCompany(), suite.get().getProject(),
-                    suite.get().getName(), testName, urlName, step));
+        new ComparatorJobData(suite.get().getCompany(), suite.get().getProject(),
+            suite.get().getName(), testName, urlName, step));
     message.setJMSCorrelationID(correlationId);
     sender.send(message);
   }

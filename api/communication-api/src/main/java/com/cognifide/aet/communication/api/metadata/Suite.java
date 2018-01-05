@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.communication.api.metadata;
 
@@ -69,33 +67,31 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
 
   @NotBlank
   private final String name;
-
-  @NotNull
-  @Min(1)
-  private Long version;
-
-  @NotNull
-  private Timestamp runTimestamp;
-
-  private Timestamp finishedTimestamp;
-
-  private String comment;
-
-  private Statistics statistics;
-
   @NotNull
   @Valid
   private final List<Test> tests = new ArrayList<>();
-
   private final String patternCorrelationId;
+  @NotNull
+  @Min(1)
+  private Long version;
+  @NotNull
+  private Timestamp runTimestamp;
+  private Timestamp finishedTimestamp;
+  private String comment;
+  private Statistics statistics;
 
-  public Suite(String correlationId, String company, String project, String name, String patternCorrelationId) {
+  public Suite(String correlationId, String company, String project, String name,
+      String patternCorrelationId) {
     this.correlationId = correlationId;
     this.company = company;
     this.project = project;
     this.name = name;
     this.runTimestamp = new Timestamp(System.currentTimeMillis());
     this.patternCorrelationId = patternCorrelationId;
+  }
+
+  public static Suite fromJson(Reader jsonReader) {
+    return GSON_FOR_JSON.fromJson(jsonReader, SUITE_TYPE);
   }
 
   public String getCorrelationId() {
@@ -121,6 +117,10 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
 
   public Long getVersion() {
     return version;
+  }
+
+  public void setVersion(long version) {
+    this.version = version;
   }
 
   public Long incrementVersion() {
@@ -170,10 +170,10 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
     }
     Suite suite = (Suite) o;
     return java.util.Objects.equals(correlationId, suite.correlationId) &&
-            java.util.Objects.equals(company, suite.company) &&
-            java.util.Objects.equals(project, suite.project) &&
-            java.util.Objects.equals(name, suite.name) &&
-            java.util.Objects.equals(version, suite.version);
+        java.util.Objects.equals(company, suite.company) &&
+        java.util.Objects.equals(project, suite.project) &&
+        java.util.Objects.equals(name, suite.name) &&
+        java.util.Objects.equals(version, suite.version);
   }
 
   @Override
@@ -184,35 +184,29 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
   @Override
   public String toString() {
     return Objects.toStringHelper(this)
-            .add("correlationId", correlationId)
-            .add("company", company)
-            .add("project", project)
-            .add("name", name)
-            .add("version", version)
-            .toString();
-  }
-
-  public void setVersion(long version) {
-    this.version = version;
+        .add("correlationId", correlationId)
+        .add("company", company)
+        .add("project", project)
+        .add("name", name)
+        .add("version", version)
+        .toString();
   }
 
   @Override
   public void validate(final Set<String> ignoreFields) throws ValidatorException {
-    Set<ConstraintViolation<Suite>> errors = FluentIterable.from(ValidatorProvider.getValidator().validate(this))
-            .filter(new Predicate<ConstraintViolation<Suite>>() {
-              @Override
-              public boolean apply(ConstraintViolation<Suite> error) {
-                return ignoreFields == null || !ignoreFields.contains(error.getPropertyPath().toString());
-              }
-            }).toSet();
+    Set<ConstraintViolation<Suite>> errors = FluentIterable
+        .from(ValidatorProvider.getValidator().validate(this))
+        .filter(new Predicate<ConstraintViolation<Suite>>() {
+          @Override
+          public boolean apply(ConstraintViolation<Suite> error) {
+            return ignoreFields == null || !ignoreFields
+                .contains(error.getPropertyPath().toString());
+          }
+        }).toSet();
 
     if (!errors.isEmpty()) {
       throw new ValidatorException("Invalid Suite object.", errors);
     }
-  }
-
-  public static Suite fromJson(Reader jsonReader) {
-    return GSON_FOR_JSON.fromJson(jsonReader, SUITE_TYPE);
   }
 
   public String toJson() {
@@ -220,13 +214,13 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
   }
 
   @Override
-  public void setComment(String comment) {
-    this.comment = comment;
+  public String getComment() {
+    return comment;
   }
 
   @Override
-  public String getComment() {
-    return comment;
+  public void setComment(String comment) {
+    this.comment = comment;
   }
 
   public static class Timestamp implements Serializable {

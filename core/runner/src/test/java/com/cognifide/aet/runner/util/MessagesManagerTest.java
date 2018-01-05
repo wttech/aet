@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.runner.util;
 
@@ -65,7 +63,8 @@ public class MessagesManagerTest {
   public void activate_whenUrlNotSet_expectDefaultJmxUrlSetup() throws Exception {
     MessagesManager messagesManager = new MessagesManager();
     messagesManager.activate(Collections.emptyMap());
-    assertThat(messagesManager.getJmxUrl(), is("service:jmx:rmi:///jndi/rmi://localhost:11199/jmxrmi"));
+    assertThat(messagesManager.getJmxUrl(),
+        is("service:jmx:rmi:///jndi/rmi://localhost:11199/jmxrmi"));
   }
 
   @Test
@@ -81,26 +80,28 @@ public class MessagesManagerTest {
     messagesManager = Mockito.spy(messagesManager);
 
     MBeanServerConnection mockedConnection = Mockito.mock(MBeanServerConnection.class);
-    JMXConnector mockedJmxConnector = Mockito.mock(JMXConnector .class);
+    JMXConnector mockedJmxConnector = Mockito.mock(JMXConnector.class);
     when(mockedJmxConnector.getMBeanServerConnection()).thenReturn(mockedConnection);
 
     doReturn(mockedJmxConnector).when(messagesManager).getJmxConnection(Mockito.anyString());
 
     ObjectName objectName = Mockito.mock(ObjectName.class);
-    when(objectName.getKeyProperty(MessagesManager.DESTINATION_NAME_PROPERTY)).thenReturn("AET.queueName");
+    when(objectName.getKeyProperty(MessagesManager.DESTINATION_NAME_PROPERTY))
+        .thenReturn("AET.queueName");
 
-    when(mockedConnection.getAttribute(Matchers.<ObjectName>any(), Matchers.anyString())).thenReturn(new ObjectName[] {objectName});
+    when(mockedConnection.getAttribute(Matchers.<ObjectName>any(), Matchers.anyString()))
+        .thenReturn(new ObjectName[]{objectName});
 
     when(mockedConnection.invoke(org.mockito.Matchers.<ObjectName>any(), anyString(),
-                    org.mockito.Matchers.<Object[]>any(), org.mockito.Matchers.<String[]>any()))
-            .thenReturn(10);
+        org.mockito.Matchers.<Object[]>any(), org.mockito.Matchers.<String[]>any()))
+        .thenReturn(10);
 
     messagesManager.activate(Collections.emptyMap());
     messagesManager.remove("correlation-company-correlation-12345");
 
     verify(mockedConnection, times(1)).invoke(objectName, "removeMatchingMessages",
-            new Object[]{"JMSCorrelationID='correlation-company-correlation-12345'"},
-            new String[]{"java.lang.String"});
+        new Object[]{"JMSCorrelationID='correlation-company-correlation-12345'"},
+        new String[]{"java.lang.String"});
   }
 
   @Test

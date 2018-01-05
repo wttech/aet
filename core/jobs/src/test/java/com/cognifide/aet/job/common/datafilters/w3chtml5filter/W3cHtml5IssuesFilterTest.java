@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.job.common.datafilters.w3chtml5filter;
 
@@ -47,10 +45,8 @@ public class W3cHtml5IssuesFilterTest {
   public static final String PARAM_MESSAGE = "message";
 
   public static final String PARAM_MESSAGE_PATTERN = "messagePattern";
-
-  private W3cHtml5IssuesFilter tested;
-
   Map<String, String> params;
+  private W3cHtml5IssuesFilter tested;
 
   @Before
   public void setUp() {
@@ -80,10 +76,12 @@ public class W3cHtml5IssuesFilterTest {
   }
 
   @Test
-  public void modifyData_whenLineMatch_issueIsRemoved() throws ParametersException, ProcessingException {
+  public void modifyData_whenLineMatch_issueIsRemoved()
+      throws ParametersException, ProcessingException {
     params = createParams("1", null, null, null);
     tested.setParameters(params);
-    W3cHtml5ComparatorResult data = prepareComparatorResult(1, 0, "Message...", W3cHtml5IssueType.ERR);
+    W3cHtml5ComparatorResult data = prepareComparatorResult(1, 0, "Message...",
+        W3cHtml5IssueType.ERR);
 
     W3cHtml5ComparatorResult processedData = tested.modifyData(data);
 
@@ -93,10 +91,12 @@ public class W3cHtml5IssuesFilterTest {
   }
 
   @Test
-  public void modifyData_whenColumnMatch_issueIsRemoved() throws ParametersException, ProcessingException {
+  public void modifyData_whenColumnMatch_issueIsRemoved()
+      throws ParametersException, ProcessingException {
     params = createParams(null, "3", null, null);
     tested.setParameters(params);
-    W3cHtml5ComparatorResult data = prepareComparatorResult(0, 3, "Message...", W3cHtml5IssueType.WARN);
+    W3cHtml5ComparatorResult data = prepareComparatorResult(0, 3, "Message...",
+        W3cHtml5IssueType.WARN);
 
     W3cHtml5ComparatorResult processedData = tested.modifyData(data);
 
@@ -110,7 +110,8 @@ public class W3cHtml5IssuesFilterTest {
       throws ParametersException, ProcessingException {
     params = createParams(null, null, "^Message.*", null);
     tested.setParameters(params);
-    W3cHtml5ComparatorResult data = prepareComparatorResult(0, 0, "Message...", W3cHtml5IssueType.WARN);
+    W3cHtml5ComparatorResult data = prepareComparatorResult(0, 0, "Message...",
+        W3cHtml5IssueType.WARN);
 
     W3cHtml5ComparatorResult processedData = tested.modifyData(data);
 
@@ -125,9 +126,11 @@ public class W3cHtml5IssuesFilterTest {
     params = createParams("1", null, null, null);
     tested.setParameters(params);
     List<W3cHtml5Issue> issues = Lists.newArrayList(
-            new W3cHtml5Issue(1, 2, "Message", null, null, null, null, W3cHtml5IssueType.WARN),
-            new W3cHtml5Issue(1, 3, "Different message", null, null, null, null, W3cHtml5IssueType.ERR));
-    W3cHtml5ComparatorResult data = prepareComparatorResult(issues, Lists.<W3cHtml5Issue>newArrayList());
+        new W3cHtml5Issue(1, 2, "Message", null, null, null, null, W3cHtml5IssueType.WARN),
+        new W3cHtml5Issue(1, 3, "Different message", null, null, null, null,
+            W3cHtml5IssueType.ERR));
+    W3cHtml5ComparatorResult data = prepareComparatorResult(issues,
+        Lists.<W3cHtml5Issue>newArrayList());
 
     final W3cHtml5ComparatorResult processedData = tested.modifyData(data);
     assertThat(processedData.getExcludedIssues().size(), is(2));
@@ -138,7 +141,8 @@ public class W3cHtml5IssuesFilterTest {
       throws ParametersException, ProcessingException {
     params = createParams("1", "3", "Message", null);
     tested.setParameters(params);
-    W3cHtml5ComparatorResult data = prepareComparatorResult(2, 3, "Message...", W3cHtml5IssueType.WARN);
+    W3cHtml5ComparatorResult data = prepareComparatorResult(2, 3, "Message...",
+        W3cHtml5IssueType.WARN);
 
     W3cHtml5ComparatorResult processedData = tested.modifyData(data);
 
@@ -153,10 +157,10 @@ public class W3cHtml5IssuesFilterTest {
     params = createParams("1", "3", "Message", null);
     tested.setParameters(params);
     List<W3cHtml5Issue> issues = Lists.newArrayList(
-            new W3cHtml5Issue(2, 3, "Message...", null, null, null, null, W3cHtml5IssueType.ERR),
-            new W3cHtml5Issue(4, 3, "Warning...", null, null, null, null, W3cHtml5IssueType.WARN));
+        new W3cHtml5Issue(2, 3, "Message...", null, null, null, null, W3cHtml5IssueType.ERR),
+        new W3cHtml5Issue(4, 3, "Warning...", null, null, null, null, W3cHtml5IssueType.WARN));
     List<W3cHtml5Issue> excludedIssues = Lists.newArrayList(
-            new W3cHtml5Issue(2, 3, "Message...", null, null, null, null, W3cHtml5IssueType.WARN));
+        new W3cHtml5Issue(2, 3, "Message...", null, null, null, null, W3cHtml5IssueType.WARN));
     W3cHtml5ComparatorResult data = prepareComparatorResult(issues, excludedIssues);
 
     // first call
@@ -179,7 +183,8 @@ public class W3cHtml5IssuesFilterTest {
     assertThat(data.getExcludedIssues().size(), is(2));
   }
 
-  private Map<String, String> createParams(String line, String column, String messagePattern, String plainMassage) {
+  private Map<String, String> createParams(String line, String column, String messagePattern,
+      String plainMassage) {
     Map<String, String> params = new HashMap<>();
     if (StringUtils.isNotBlank(line)) {
       params.put(PARAM_LINE, line);
