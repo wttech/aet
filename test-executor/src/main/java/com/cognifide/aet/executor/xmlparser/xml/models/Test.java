@@ -37,9 +37,6 @@ public class Test {
   private String name;
 
   @Attribute(required = false)
-  private int zIndex;
-
-  @Attribute(required = false)
   private String useProxy;
 
   @Element
@@ -54,7 +51,7 @@ public class Test {
   public TestRun adaptToTestRun() throws ParseException {
     try {
       return new TestRun(collect.adaptToCollectorSteps(), compare.adaptToComparatorsSteps(),
-              ModelConverterUtils.extendUrlsList(urls), name, useProxy, zIndex);
+              ModelConverterUtils.extendUrlsList(urls), name, useProxy);
     } catch (ParseException | UnsupportedEncodingException e) {
       throw new ParseException(
               String.format("Exception occurs during adapting %s test:%n%s", name, e.getMessage()), e);

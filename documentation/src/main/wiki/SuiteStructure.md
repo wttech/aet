@@ -8,7 +8,6 @@ This tag is definition of the single test in test suite. Test suite can contain 
 | -------------- | ----------- | --------- |
 | `name` | Name of the test. Should consists only of letters, digits and/or characters: `-`, `_`. This value is also presented on report (more details in [[Suite Report|SuiteReport]] section). | yes |
 | `useProxy` | Defines which (if any) *Proxy* should be used during collection phase. If not provided or empty, proxy won't be used. If set to `"rest"` *Rest Manager* will be used. Otherwise *Proxy Manager* with provided name will be used (see [Proxy](#proxy)). Proxy is needed by Status Codes Collector and Header Modifier. | no |
-| `zIndex` | Specifies order of tests on *HTML Report*. A test with greater `zIndex` is always before test with lower value. Default value is `0`. This attribute accepts integers in range `<-2147483648; 2147483647>`. | no |
 
 Each **test** element contains:
 
