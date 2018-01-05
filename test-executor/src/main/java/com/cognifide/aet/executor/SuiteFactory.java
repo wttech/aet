@@ -48,7 +48,7 @@ class SuiteFactory {
   }
 
   private Test testFromTestRun(TestSuiteRun testSuiteRun, TestRun testRun) {
-    Test test = new Test(testRun.getName());
+    Test test = new Test(testRun.getName(), testRun.getUseProxy());
     final Map<String, List<ComparatorStep>> comparatorSteps = testRun.getComparatorSteps();
 
     for (ExtendedUrl extendedUrl : testRun.getUrls()) {
@@ -59,7 +59,6 @@ class SuiteFactory {
 
   private Url urlFromExtendedUrl(TestSuiteRun testSuiteRun, TestRun testRun, Map<String, List<ComparatorStep>> comparatorSteps, ExtendedUrl extendedUrl) {
     final Url url = new Url(extendedUrl.getName(), extendedUrl.getUrl(), testSuiteRun.getDomain());
-    url.setProxy(testRun.getUseProxy());
 
     int stepIndex = 0;
     for (CollectorStep collectorStep : testRun.getCollectorSteps()) {

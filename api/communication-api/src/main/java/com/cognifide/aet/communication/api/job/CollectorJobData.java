@@ -26,9 +26,11 @@ import java.util.List;
  */
 public class CollectorJobData extends JobData {
 
-  private static final long serialVersionUID = 2269480300369205617L;
+  private static final long serialVersionUID = -1868453529026678407L;
 
   private final List<Url> urls;
+
+  private final String proxy;
 
   /**
    * @param company   - company name.
@@ -36,10 +38,13 @@ public class CollectorJobData extends JobData {
    * @param suiteName - suite name.
    * @param testName  - test name.
    * @param urls      - list of urls for collector job.
+   * @param proxy     - used proxy name or null if none proxy is used
    */
-  public CollectorJobData(String company, String project, String suiteName, String testName, List<Url> urls) {
+  public CollectorJobData(String company, String project, String suiteName, String testName, List<Url> urls,
+      String proxy) {
     super(company, project, suiteName, testName);
     this.urls = urls;
+    this.proxy = proxy;
   }
 
   /**
@@ -47,5 +52,9 @@ public class CollectorJobData extends JobData {
    */
   public List<Url> getUrls() {
     return ImmutableList.copyOf(urls);
+  }
+
+  public String getProxy() {
+    return proxy;
   }
 }
