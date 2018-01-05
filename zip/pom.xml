@@ -209,6 +209,7 @@
                       <directory>${project.parent.basedir}/osgi-dependencies</directory>
                       <includes>
                         <include>aet-features.xml</include>
+                        <include>aet-webconsole.xml</include>
                         <include>org.apache.karaf.webconsole.branding-2.3.9.jar</include>
                       </includes>
                     </resource>
@@ -343,6 +344,7 @@
                     <directory>${project.build.directory}</directory>
                     <includes>
                       <include>aet-features.xml</include>
+                      <include>aet-webconsole.xml</include>
                     </includes>
                     <outputDirectory>${release.artifacts.dir}/${release.features}</outputDirectory>
                   </fileset>
