@@ -12,21 +12,6 @@
  * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
- *
- * We have copied this code here some time ago. Now we would like to remove it from here: <ol>
- * <li>proxy module should NOT depends on jobs-api module</li> <li>browsermob required libraries
- * should be properly embedded (and probably NOT exported)</li> <li>NOTICE files should be updated
- * to NOT contain information about included browsermob code</li> </ol>
- *
- * We have copied this code here some time ago. Now we would like to remove it from here: <ol>
- * <li>proxy module should NOT depends on jobs-api module</li> <li>browsermob required libraries
- * should be properly embedded (and probably NOT exported)</li> <li>NOTICE files should be updated
- * to NOT contain information about included browsermob code</li> </ol>
- *
- * We have copied this code here some time ago. Now we would like to remove it from here: <ol>
- * <li>proxy module should NOT depends on jobs-api module</li> <li>browsermob required libraries
- * should be properly embedded (and probably NOT exported)</li> <li>NOTICE files should be updated
- * to NOT contain information about included browsermob code</li> </ol>
  */
 
 /**

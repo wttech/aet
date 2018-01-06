@@ -26,10 +26,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This modifier waits until page is loaded or fixed amount of time is up. The idea of waiting for page is
- * counting amount of elements [by findElements(By.xpath("//*"))] on current page state in loop. If number of
- * elements has increased since last checkout, continue loop (or break if timeout). Else if number of elements
- * is still, assume the page is loaded and finish waiting.
+ * This modifier waits until page is loaded or fixed amount of time is up. The idea of waiting for
+ * page is counting amount of elements [by findElements(By.xpath("//*"))] on current page state in
+ * loop. If number of elements has increased since last checkout, continue loop (or break if
+ * timeout). Else if number of elements is still, assume the page is loaded and finish waiting.
  */
 public class WaitForPageLoadedModifier implements CollectorJob {
 
