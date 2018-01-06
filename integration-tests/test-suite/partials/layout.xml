@@ -104,10 +104,38 @@
 			<url href="comparators/layout/success_resolution.jsp" />
 		</urls>
 	</test>
+	<test name="comparator-Layout-Resolution-no-height-SUCCESS">
+		<collect>
+			<open />
+			<resolution width="200"/>
+			<sleep duration="3000" />
+			<screen />
+		</collect>
+		<compare>
+			<screen comparator="layout" />
+		</compare>
+		<urls>
+			<url href="comparators/layout/success_resolution.jsp" />
+		</urls>
+	</test>
 	<test name="comparator-Layout-Resolution-FAILED">
 		<collect>
 			<open />
 			<resolution width="200" height="300" />
+			<sleep duration="3000" />
+			<screen />
+		</collect>
+		<compare>
+			<screen comparator="layout" />
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp" />
+		</urls>
+	</test>
+	<test name="comparator-Layout-Resolution-no-height-FAILED">
+		<collect>
+			<open />
+			<resolution width="200"/>
 			<sleep duration="3000" />
 			<screen />
 		</collect>

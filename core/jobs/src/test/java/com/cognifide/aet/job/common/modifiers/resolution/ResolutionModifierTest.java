@@ -24,6 +24,7 @@ import static org.mockito.Mockito.when;
 
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
+import java.lang.NumberFormatException;
 import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
@@ -37,8 +38,6 @@ import org.openqa.selenium.WebDriver;
 @RunWith(MockitoJUnitRunner.class)
 public class ResolutionModifierTest {
 
-  private static final String PARAM_MAXIMIZE = "maximize";
-
   private static final String WIDTH_PARAM = "width";
 
   private static final String HEIGHT_PARAM = "height";
@@ -46,8 +45,6 @@ public class ResolutionModifierTest {
   private static final String NOT_A_NUMBER = "NaN";
 
   private static final int WINDOW_WIDTH = 1024;
-
-  private static final int WINDOW_HEIGHT = 768;
 
   private static final int CUSTOM_WIDTH = 800;
 
@@ -77,10 +74,9 @@ public class ResolutionModifierTest {
     when(options.window()).thenReturn(window);
     when(window.getSize()).thenReturn(windowDimension);
     when(windowDimension.getWidth()).thenReturn(WINDOW_WIDTH);
-    when(windowDimension.getHeight()).thenReturn(WINDOW_HEIGHT);
   }
 
-  @Test(expected = ParametersException.class)
+  @Test(expected = NumberFormatException.class)
   public void setParametersTest_widthNotANumber() throws ParametersException {
     when(params.containsKey(WIDTH_PARAM)).thenReturn(true);
     when(params.get(WIDTH_PARAM)).thenReturn(NOT_A_NUMBER);
@@ -105,64 +101,36 @@ public class ResolutionModifierTest {
   }
 
   @Test(expected = ParametersException.class)
-  public void setParametersTest_height0() throws ParametersException {
-    when(params.containsKey(HEIGHT_PARAM)).thenReturn(true);
-    when(params.get(HEIGHT_PARAM)).thenReturn("0");
+  public void collectTest_widthNotSet() throws ParametersException, ProcessingException {
+    when(params.containsKey(WIDTH_PARAM)).thenReturn(false);
 
     tested.setParameters(params);
-  }
-
-  @Test(expected = ParametersException.class)
-  public void setParametersTest_maximizeWithWindowSize() throws ParametersException {
-    when(params.get(PARAM_MAXIMIZE)).thenReturn("true");
-    when(params.containsKey(HEIGHT_PARAM)).thenReturn(true);
-    when(params.get(HEIGHT_PARAM)).thenReturn("100");
-
-    tested.setParameters(params);
-  }
-
-  @Test
-  public void collectTest_maximize() throws ParametersException, ProcessingException {
-    when(params.get(PARAM_MAXIMIZE)).thenReturn("true");
-
-    tested.setParameters(params);
-    tested.collect();
-
-    verify(window, times(1)).maximize();
-    verify(windowDimension, times(1)).getWidth();
-    verify(windowDimension, times(1)).getHeight();
-    verify(window, never()).setSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
   }
 
   @Test
   public void collectTest_setWidthHeight() throws ParametersException, ProcessingException {
-    when(params.containsKey(HEIGHT_PARAM)).thenReturn(true);
     when(params.containsKey(WIDTH_PARAM)).thenReturn(true);
+    when(params.containsKey(HEIGHT_PARAM)).thenReturn(true);
+    when(params.get(WIDTH_PARAM)).thenReturn("" + CUSTOM_WIDTH);
     when(params.get(HEIGHT_PARAM)).thenReturn("" + CUSTOM_HEIGHT);
+
+
+    tested.setParameters(params);
+    tested.collect();
+
+    verify(window, never()).maximize();
+    verify(window, times(1)).setSize(new Dimension(CUSTOM_WIDTH, CUSTOM_HEIGHT));
+  }
+
+  @Test
+  public void collectTest_setOnlyWidth() throws ParametersException, ProcessingException {
+    when(params.containsKey(WIDTH_PARAM)).thenReturn(true);
     when(params.get(WIDTH_PARAM)).thenReturn("" + CUSTOM_WIDTH);
 
     tested.setParameters(params);
     tested.collect();
 
     verify(window, never()).maximize();
-    verify(windowDimension, never()).getWidth();
-    verify(windowDimension, never()).getHeight();
-    verify(window, times(1)).setSize(new Dimension(CUSTOM_WIDTH, CUSTOM_HEIGHT));
-  }
-
-  @Test(expected = ParametersException.class)
-  public void collectTest_setOnlyHeight() throws ParametersException, ProcessingException {
-    when(params.containsKey(HEIGHT_PARAM)).thenReturn(true);
-    when(params.get(HEIGHT_PARAM)).thenReturn("" + CUSTOM_HEIGHT);
-
-    tested.setParameters(params);
-  }
-
-  @Test(expected = ParametersException.class)
-  public void collectTest_setOnlyWidth() throws ParametersException, ProcessingException {
-    when(params.containsKey(WIDTH_PARAM)).thenReturn(true);
-    when(params.get(WIDTH_PARAM)).thenReturn("" + CUSTOM_WIDTH);
-
-    tested.setParameters(params);
+    verify(window, times(1)).setSize(new Dimension(CUSTOM_WIDTH, 1));
   }
 }
