@@ -31,10 +31,8 @@
         <feature>war</feature>
     </feature>
 
-    <feature name="aet-cxf" version="0.6.0" description="Apache CXF for AET">
-        <!-- TODO: maybe some different xerces? required by quartz :? -->
-        <feature>cxf</feature>
-        <feature>cxf-http</feature>
+    <feature name="aet-cxf" version="0.6.0" description="Apache CXF for AET W3C validation" install="auto">
+        <feature>cxf-core</feature>
     </feature>
 
     <feature name="aet-activemq" version="0.6.0" description="Active MQ for AET" install="auto">
@@ -140,6 +138,7 @@
     <feature name="aet-bundles" version="0.6.0" description="AET Bundles" install="auto">
 
         <feature dependency="true" prerequisite="true">aet-scr-and-war</feature>
+        <feature dependency="true" prerequisite="true">aet-cxf</feature>
         <feature dependency="true" prerequisite="true">aet-activemq</feature>
         <feature dependency="true" prerequisite="true">aet-crypto</feature>
         <feature dependency="true" prerequisite="true">aet-apache-commons</feature>
