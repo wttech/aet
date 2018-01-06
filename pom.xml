@@ -653,6 +653,8 @@
               <exclude>**/LICENSE</exclude>
               <exclude>**/NOTICE</exclude>
               <exclude>.travis.yml</exclude>
+              <exclude>eclipse-java-google-style.xml</exclude>
+              <exclude>intellij-java-google-style.xml</exclude>
 
               <exclude>**/target/**</exclude>
 

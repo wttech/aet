@@ -17,8 +17,6 @@
  */
 package com.cognifide.aet.job.common.comparators.jserrors;
 
-import com.google.gson.reflect.TypeToken;
-
 import com.cognifide.aet.communication.api.metadata.ComparatorStepResult;
 import com.cognifide.aet.job.api.collector.JsErrorLog;
 import com.cognifide.aet.job.api.comparator.ComparatorJob;
@@ -27,15 +25,14 @@ import com.cognifide.aet.job.api.datafilter.DataFilterJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.vs.ArtifactsDAO;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class JsErrorsComparator implements ComparatorJob {
 

@@ -17,9 +17,6 @@
  */
 package com.cognifide.aet.runner.distribution;
 
-import com.google.inject.Inject;
-import com.google.inject.name.Named;
-
 import com.cognifide.aet.communication.api.ProcessingError;
 import com.cognifide.aet.communication.api.exceptions.AETException;
 import com.cognifide.aet.communication.api.messages.ProgressMessage;
@@ -31,16 +28,15 @@ import com.cognifide.aet.runner.distribution.dispatch.ComparisonResultsRouter;
 import com.cognifide.aet.runner.distribution.dispatch.MetadataPersister;
 import com.cognifide.aet.runner.distribution.progress.ProgressLog;
 import com.cognifide.aet.runner.distribution.watch.TimeoutWatch;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.google.inject.Inject;
+import com.google.inject.name.Named;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.concurrent.TimeUnit;
-
 import javax.jms.JMSException;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * SuiteExecutor - executes suite, execution consists of three steps: preparation, validation and

@@ -20,11 +20,9 @@ package com.cognifide.aet.job.common.datafilters.removelines;
 import com.cognifide.aet.job.api.datafilter.DataFilterFactory;
 import com.cognifide.aet.job.api.datafilter.DataFilterJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
-
+import java.util.Map;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Service;
-
-import java.util.Map;
 
 @Component
 @Service

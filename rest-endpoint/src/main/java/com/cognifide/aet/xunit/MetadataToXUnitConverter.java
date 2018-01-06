@@ -29,7 +29,6 @@ import com.cognifide.aet.xunit.model.Failure;
 import com.cognifide.aet.xunit.model.Testcase;
 import com.cognifide.aet.xunit.model.Testsuite;
 import com.cognifide.aet.xunit.model.Testsuites;
-
 import java.util.Collections;
 import java.util.EnumSet;
 import java.util.List;

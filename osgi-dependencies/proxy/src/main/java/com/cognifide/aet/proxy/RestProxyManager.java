@@ -17,13 +17,13 @@
  */
 package com.cognifide.aet.proxy;
 
-import com.google.common.collect.Sets;
-
 import com.cognifide.aet.job.api.exceptions.ProxyException;
 import com.github.detro.browsermobproxyclient.BMPCProxy;
 import com.github.detro.browsermobproxyclient.exceptions.BMPCUnableToConnectException;
 import com.github.detro.browsermobproxyclient.manager.BMPCDefaultManager;
-
+import com.google.common.collect.Sets;
+import java.util.Map;
+import java.util.Set;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Deactivate;
@@ -32,9 +32,6 @@ import org.apache.felix.scr.annotations.Service;
 import org.apache.sling.commons.osgi.PropertiesUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Map;
-import java.util.Set;
 
 @Service
 @Component(immediate = true, metatype = true, description = "AET REST Proxy Manager", label = "AET REST Proxy Manager")

@@ -17,28 +17,6 @@
  */
 package com.cognifide.aet.runner.distribution.dispatch;
 
-import com.google.common.base.Optional;
-
-import com.cognifide.aet.communication.api.JobStatus;
-import com.cognifide.aet.communication.api.job.ComparatorResultData;
-import com.cognifide.aet.communication.api.metadata.Step;
-import com.cognifide.aet.communication.api.metadata.Suite.Timestamp;
-import com.cognifide.aet.communication.api.metadata.Url;
-import com.cognifide.aet.runner.distribution.progress.ProgressLog;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.Matchers;
-import org.mockito.Mock;
-import org.mockito.Mockito;
-import org.mockito.internal.verification.VerificationModeFactory;
-import org.mockito.runners.MockitoJUnitRunner;
-
-import java.util.Collections;
-import java.util.Observable;
-
-import javax.jms.JMSException;
-
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertNull;
@@ -47,6 +25,24 @@ import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+
+import com.cognifide.aet.communication.api.JobStatus;
+import com.cognifide.aet.communication.api.job.ComparatorResultData;
+import com.cognifide.aet.communication.api.metadata.Step;
+import com.cognifide.aet.communication.api.metadata.Suite.Timestamp;
+import com.cognifide.aet.communication.api.metadata.Url;
+import com.cognifide.aet.runner.distribution.progress.ProgressLog;
+import com.google.common.base.Optional;
+import java.util.Collections;
+import java.util.Observable;
+import javax.jms.JMSException;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.Matchers;
+import org.mockito.Mock;
+import org.mockito.Mockito;
+import org.mockito.internal.verification.VerificationModeFactory;
+import org.mockito.runners.MockitoJUnitRunner;
 
 /**
  * @author maciej.laskowski

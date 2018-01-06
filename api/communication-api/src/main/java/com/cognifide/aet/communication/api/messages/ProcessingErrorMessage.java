@@ -17,9 +17,8 @@
  */
 package com.cognifide.aet.communication.api.messages;
 
-import com.google.common.base.Objects;
-
 import com.cognifide.aet.communication.api.ProcessingError;
+import com.google.common.base.Objects;
 
 public class ProcessingErrorMessage implements BasicMessage {
 

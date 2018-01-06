@@ -18,11 +18,10 @@
 package com.cognifide.aet.communication.api.util;
 
 import com.cognifide.aet.communication.api.metadata.Statistics;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.text.DecimalFormat;
 import java.util.concurrent.TimeUnit;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * ExecutionTimer which measures execution time.

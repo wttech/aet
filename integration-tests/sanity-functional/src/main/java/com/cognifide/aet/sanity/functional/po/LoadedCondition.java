@@ -17,14 +17,12 @@
  */
 package com.cognifide.aet.sanity.functional.po;
 
+import java.util.List;
+import javax.annotation.Nullable;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-
-import java.util.List;
-
-import javax.annotation.Nullable;
 
 class LoadedCondition implements ExpectedCondition<Integer> {
 

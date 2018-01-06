@@ -17,10 +17,13 @@
  */
 package com.cognifide.aet.job.common.utils;
 
-import com.google.common.base.Charsets;
-
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
-
+import com.google.common.base.Charsets;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import net.sourceforge.htmlunit.corejs.javascript.Callable;
 import net.sourceforge.htmlunit.corejs.javascript.Context;
 import net.sourceforge.htmlunit.corejs.javascript.ContextFactory;
@@ -29,15 +32,8 @@ import net.sourceforge.htmlunit.corejs.javascript.Scriptable;
 import net.sourceforge.htmlunit.corejs.javascript.ScriptableObject;
 import net.sourceforge.htmlunit.corejs.javascript.tools.shell.Global;
 import net.sourceforge.htmlunit.corejs.javascript.tools.shell.Main;
-
 import org.osgi.framework.BundleContext;
 import org.slf4j.LoggerFactory;
-
-import java.io.ByteArrayOutputStream;
-import java.io.PrintStream;
-import java.io.UnsupportedEncodingException;
-import java.net.URL;
-import java.nio.charset.StandardCharsets;
 
 public class JsRuntimeWrapper {
 

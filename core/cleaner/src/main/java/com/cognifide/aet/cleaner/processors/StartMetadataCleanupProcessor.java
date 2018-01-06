@@ -17,16 +17,15 @@
  */
 package com.cognifide.aet.cleaner.processors;
 
-import com.google.common.base.Function;
-import com.google.common.collect.FluentIterable;
-import com.google.common.collect.ImmutableList;
-
 import com.cognifide.aet.cleaner.context.CleanerContext;
 import com.cognifide.aet.cleaner.processors.filters.DBKeyProjectCompanyPredicate;
 import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.SimpleDBKey;
 import com.cognifide.aet.vs.mongodb.MongoDBClient;
-
+import com.google.common.base.Function;
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.ImmutableList;
+import java.util.Collection;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.felix.scr.annotations.Component;
@@ -34,8 +33,6 @@ import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Collection;
 
 /**
  * Query for all databases and passes them to split.

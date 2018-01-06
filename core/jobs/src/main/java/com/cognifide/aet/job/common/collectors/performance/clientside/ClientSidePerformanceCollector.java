@@ -26,14 +26,12 @@ import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.job.common.utils.JsRuntimeWrapper;
 import com.cognifide.aet.vs.ArtifactsDAO;
-
-import org.apache.commons.lang3.StringUtils;
-import org.browsermob.core.har.Har;
-import org.osgi.framework.BundleContext;
-
 import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Map;
+import org.apache.commons.lang3.StringUtils;
+import org.browsermob.core.har.Har;
+import org.osgi.framework.BundleContext;
 
 public class ClientSidePerformanceCollector implements CollectorJob {
 

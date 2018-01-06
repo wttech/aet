@@ -18,7 +18,6 @@
 package com.cognifide.aet.executor.common;
 
 import com.cognifide.aet.communication.api.execution.SuiteStatusResult;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 

@@ -17,13 +17,11 @@
  */
 package com.cognifide.aet.vs.metadata;
 
+import com.cognifide.aet.communication.api.metadata.Suite;
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-
-import com.cognifide.aet.communication.api.metadata.Suite;
-
 import java.lang.reflect.Type;
 import java.util.Iterator;
 import java.util.Map;

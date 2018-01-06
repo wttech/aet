@@ -17,16 +17,13 @@
  */
 package com.cognifide.aet.cleaner.processors.filters;
 
-import com.google.common.collect.Ordering;
-
 import com.cognifide.aet.cleaner.context.CleanerContext;
 import com.cognifide.aet.communication.api.metadata.Suite;
-
-import org.joda.time.DateTime;
-
+import com.google.common.collect.Ordering;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
+import org.joda.time.DateTime;
 
 public class SuiteRemoveCondition {
 

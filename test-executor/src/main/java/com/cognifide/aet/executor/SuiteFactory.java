@@ -17,9 +17,6 @@
  */
 package com.cognifide.aet.executor;
 
-import com.google.common.base.Function;
-import com.google.common.collect.FluentIterable;
-
 import com.cognifide.aet.communication.api.metadata.Comparator;
 import com.cognifide.aet.communication.api.metadata.Operation;
 import com.cognifide.aet.communication.api.metadata.Step;
@@ -32,11 +29,11 @@ import com.cognifide.aet.executor.model.ExtendedUrl;
 import com.cognifide.aet.executor.model.ParametrizedStep;
 import com.cognifide.aet.executor.model.TestRun;
 import com.cognifide.aet.executor.model.TestSuiteRun;
-
-import org.apache.commons.lang3.StringUtils;
-
+import com.google.common.base.Function;
+import com.google.common.collect.FluentIterable;
 import java.util.List;
 import java.util.Map;
+import org.apache.commons.lang3.StringUtils;
 
 class SuiteFactory {
 
@@ -51,7 +48,7 @@ class SuiteFactory {
   }
 
   private Test testFromTestRun(TestSuiteRun testSuiteRun, TestRun testRun) {
-    Test test = new Test(testRun.getName());
+    Test test = new Test(testRun.getName(), testRun.getUseProxy());
     final Map<String, List<ComparatorStep>> comparatorSteps = testRun.getComparatorSteps();
 
     for (ExtendedUrl extendedUrl : testRun.getUrls()) {
@@ -62,7 +59,6 @@ class SuiteFactory {
 
   private Url urlFromExtendedUrl(TestSuiteRun testSuiteRun, TestRun testRun, Map<String, List<ComparatorStep>> comparatorSteps, ExtendedUrl extendedUrl) {
     final Url url = new Url(extendedUrl.getName(), extendedUrl.getUrl(), testSuiteRun.getDomain());
-    url.setProxy(testRun.getUseProxy());
 
     int stepIndex = 0;
     for (CollectorStep collectorStep : testRun.getCollectorSteps()) {

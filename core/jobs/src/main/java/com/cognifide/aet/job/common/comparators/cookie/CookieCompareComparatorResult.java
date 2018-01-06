@@ -17,9 +17,8 @@
  */
 package com.cognifide.aet.job.common.comparators.cookie;
 
-import org.openqa.selenium.Cookie;
-
 import java.util.Set;
+import org.openqa.selenium.Cookie;
 
 public class CookieCompareComparatorResult extends CookieComparatorResult {
 

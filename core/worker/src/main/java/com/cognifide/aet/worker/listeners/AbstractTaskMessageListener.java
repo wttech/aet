@@ -20,17 +20,14 @@ package com.cognifide.aet.worker.listeners;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.queues.JmsUtils;
 import com.cognifide.aet.worker.results.FeedbackQueue;
-
-import org.apache.commons.lang3.StringUtils;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Property;
-
 import java.util.Map;
-
 import javax.jms.JMSException;
 import javax.jms.MessageConsumer;
 import javax.jms.MessageListener;
 import javax.jms.Session;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.felix.scr.annotations.Component;
+import org.apache.felix.scr.annotations.Property;
 
 @Component
 public abstract class AbstractTaskMessageListener implements MessageListener {

@@ -18,15 +18,13 @@
 package com.cognifide.aet.common;
 
 import com.google.gson.Gson;
-
+import java.io.IOException;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
 import org.apache.http.client.HttpResponseException;
 import org.apache.http.client.ResponseHandler;
 import org.apache.http.entity.mime.MIME;
 import org.apache.http.util.EntityUtils;
-
-import java.io.IOException;
 
 class JsonResponseHandler<T> implements ResponseHandler<T> {
 

@@ -17,6 +17,9 @@
  */
 package com.cognifide.aet.job.common.comparators.w3chtml5.parser;
 
+import com.cognifide.aet.job.common.comparators.w3chtml5.W3cHtml5ComparatorResult;
+import com.cognifide.aet.job.common.comparators.w3chtml5.W3cHtml5Issue;
+import com.cognifide.aet.job.common.comparators.w3chtml5.W3cHtml5IssueType;
 import com.google.common.base.Predicate;
 import com.google.common.collect.Iterables;
 import com.google.common.reflect.TypeToken;
@@ -24,10 +27,6 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonParser;
-import com.cognifide.aet.job.common.comparators.w3chtml5.W3cHtml5ComparatorResult;
-import com.cognifide.aet.job.common.comparators.w3chtml5.W3cHtml5Issue;
-import com.cognifide.aet.job.common.comparators.w3chtml5.W3cHtml5IssueType;
-
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collections;

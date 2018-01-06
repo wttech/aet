@@ -17,26 +17,22 @@
  */
 package com.cognifide.aet.rest;
 
-import com.google.gson.Gson;
-
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.communication.api.util.ValidatorProvider;
 import com.cognifide.aet.vs.DBKey;
-
+import com.google.gson.Gson;
+import java.io.IOException;
+import java.net.HttpURLConnection;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Reference;
 import org.osgi.service.http.HttpService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.net.HttpURLConnection;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 @Component
 abstract class BasicDataServlet extends HttpServlet {

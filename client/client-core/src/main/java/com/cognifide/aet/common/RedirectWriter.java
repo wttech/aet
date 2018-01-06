@@ -17,12 +17,10 @@
  */
 package com.cognifide.aet.common;
 
+import com.cognifide.aet.communication.api.exceptions.AETException;
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 import com.google.common.io.Resources;
-
-import com.cognifide.aet.communication.api.exceptions.AETException;
-
 import java.io.File;
 import java.io.IOException;
 

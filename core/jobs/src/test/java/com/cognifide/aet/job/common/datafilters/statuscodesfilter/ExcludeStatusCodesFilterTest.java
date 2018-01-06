@@ -17,19 +17,18 @@
  */
 package com.cognifide.aet.job.common.datafilters.statuscodesfilter;
 
-import com.cognifide.aet.job.api.exceptions.ParametersException;
-import com.cognifide.aet.job.api.exceptions.ProcessingException;
-import com.cognifide.aet.job.common.collectors.statuscodes.StatusCodesCollectorResult;
-
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.runners.MockitoJUnitRunner;
-
 import static com.google.common.testing.GuavaAsserts.assertTrue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertFalse;
 import static org.mockito.Mockito.when;
+
+import com.cognifide.aet.job.api.exceptions.ParametersException;
+import com.cognifide.aet.job.api.exceptions.ProcessingException;
+import com.cognifide.aet.job.common.collectors.statuscodes.StatusCodesCollectorResult;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ExcludeStatusCodesFilterTest extends StatusCodesFilterTestBase {

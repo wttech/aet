@@ -17,17 +17,18 @@
  */
 package com.cognifide.aet.cleaner.processors;
 
-import com.google.common.base.Function;
-import com.google.common.collect.FluentIterable;
-import com.google.common.collect.ImmutableList;
-import com.google.common.collect.ImmutableListMultimap;
-
 import com.cognifide.aet.cleaner.context.CleanerContext;
 import com.cognifide.aet.cleaner.processors.exchange.AllSuiteVersionsMessageBody;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.MetadataDAO;
-
+import com.google.common.base.Function;
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableListMultimap;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.felix.scr.annotations.Component;
@@ -35,10 +36,6 @@ import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Collection;
-import java.util.List;
-import java.util.Map;
 
 @Service(FetchAllProjectSuitesProcessor.class)
 @Component

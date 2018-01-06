@@ -17,20 +17,16 @@
  */
 package com.cognifide.aet.sanity.functional.cucumber;
 
-import com.google.inject.Inject;
-
 import com.cognifide.aet.sanity.functional.po.ReportHomePage;
 import com.cognifide.aet.sanity.functional.po.aside.Aside;
 import com.cognifide.qa.bb.constants.Timeouts;
 import com.cognifide.qa.bb.provider.selenium.BobcatWait;
-
+import com.google.inject.Inject;
+import cucumber.api.java.en.When;
+import javax.annotation.Nullable;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedCondition;
-
-import javax.annotation.Nullable;
-
-import cucumber.api.java.en.When;
 
 public class FilteringSteps {
 

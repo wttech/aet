@@ -17,14 +17,14 @@
  */
 package com.cognifide.aet.cleaner;
 
-import com.google.common.base.Objects;
-import com.google.common.collect.ImmutableMap;
-
 import com.cognifide.aet.cleaner.route.MetadataCleanerRouteBuilder;
 import com.cognifide.aet.cleaner.validation.CleanerSchedulerValidator;
 import com.cognifide.aet.validation.ValidationResultBuilder;
 import com.cognifide.aet.validation.ValidationResultBuilderFactory;
-
+import com.google.common.base.Objects;
+import com.google.common.collect.ImmutableMap;
+import java.util.Map;
+import java.util.UUID;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.ConfigurationPolicy;
@@ -45,9 +45,6 @@ import org.quartz.TriggerBuilder;
 import org.quartz.impl.StdSchedulerFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Map;
-import java.util.UUID;
 
 @Service(CleanerScheduler.class)
 @Component(immediate = true, metatype = true, label = "AET Cleaning Scheduler Service", policy = ConfigurationPolicy.REQUIRE, configurationFactory = true)

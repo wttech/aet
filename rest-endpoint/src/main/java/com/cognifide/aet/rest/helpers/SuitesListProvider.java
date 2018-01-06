@@ -17,23 +17,20 @@
  */
 package com.cognifide.aet.rest.helpers;
 
-import com.google.common.base.Function;
-import com.google.common.collect.FluentIterable;
-import com.google.common.collect.ImmutableListMultimap;
-
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.StorageException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
+import com.google.common.base.Function;
+import com.google.common.collect.FluentIterable;
+import com.google.common.collect.ImmutableListMultimap;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SuitesListProvider {
 

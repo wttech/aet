@@ -17,18 +17,15 @@
  */
 package com.cognifide.aet.executor.xmlparser.xml;
 
-import com.google.common.collect.Lists;
-
-import com.cognifide.aet.executor.xmlparser.xml.utils.ValidationUtils;
 import com.cognifide.aet.executor.model.CollectorStep;
 import com.cognifide.aet.executor.xmlparser.xml.models.Collect;
-
+import com.cognifide.aet.executor.xmlparser.xml.utils.ValidationUtils;
+import com.google.common.collect.Lists;
+import java.util.List;
+import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.simpleframework.xml.stream.InputNode;
 import org.simpleframework.xml.stream.OutputNode;
-
-import java.util.List;
-import java.util.Map;
 
 public class CollectConverter extends BasicPhaseConverter<Collect> {
 

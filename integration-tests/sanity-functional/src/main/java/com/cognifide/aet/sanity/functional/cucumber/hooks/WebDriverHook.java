@@ -18,10 +18,8 @@
 package com.cognifide.aet.sanity.functional.cucumber.hooks;
 
 import com.google.inject.Inject;
-
-import org.openqa.selenium.WebDriver;
-
 import cucumber.api.java.After;
+import org.openqa.selenium.WebDriver;
 
 /**
  * Needed for quiting web driver after cucumber tests.

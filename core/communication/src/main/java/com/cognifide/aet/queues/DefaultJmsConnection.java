@@ -19,7 +19,10 @@ package com.cognifide.aet.queues;
 
 import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.communication.api.queues.JmsEndpointConfig;
-
+import java.util.Map;
+import javax.jms.Connection;
+import javax.jms.JMSException;
+import javax.jms.Session;
 import org.apache.activemq.ActiveMQConnectionFactory;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
@@ -30,12 +33,6 @@ import org.apache.felix.scr.annotations.Service;
 import org.osgi.service.cm.ConfigurationAdmin;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.util.Map;
-
-import javax.jms.Connection;
-import javax.jms.JMSException;
-import javax.jms.Session;
 
 @Service
 @Component(immediate = true, metatype = true, description = "AET JMS Connection", label = "AET Default JMS Connection")

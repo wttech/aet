@@ -25,11 +25,9 @@ import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.validation.ValidationResultBuilder;
 import com.cognifide.aet.validation.Validator;
-
+import java.util.Map;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
-
-import java.util.Map;
 
 public class CookieModifier implements CollectorJob {
 

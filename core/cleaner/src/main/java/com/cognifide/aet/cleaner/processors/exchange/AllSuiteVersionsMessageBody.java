@@ -19,7 +19,6 @@ package com.cognifide.aet.cleaner.processors.exchange;
 
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.vs.DBKey;
-
 import java.util.Collection;
 
 public class AllSuiteVersionsMessageBody extends MessageBody<String> {

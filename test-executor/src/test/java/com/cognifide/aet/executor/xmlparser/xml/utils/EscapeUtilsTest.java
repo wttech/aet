@@ -17,15 +17,14 @@
  */
 package com.cognifide.aet.executor.xmlparser.xml.utils;
 
-import org.apache.commons.io.IOUtils;
-import org.junit.Test;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.net.URL;
-
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
+import org.apache.commons.io.IOUtils;
+import org.junit.Test;
 
 public class EscapeUtilsTest {
 

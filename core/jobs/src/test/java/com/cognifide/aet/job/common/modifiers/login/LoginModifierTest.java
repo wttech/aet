@@ -17,13 +17,22 @@
  */
 package com.cognifide.aet.job.common.modifiers.login;
 
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.withSettings;
+
 import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.collector.HttpRequestExecutor;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.validation.ValidationResultBuilder;
-
+import java.util.Collections;
+import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -34,17 +43,6 @@ import org.openqa.selenium.Cookie;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-
-import java.util.Collections;
-import java.util.Map;
-
-import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.never;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.withSettings;
 
 @RunWith(MockitoJUnitRunner.class)
 public class LoginModifierTest {

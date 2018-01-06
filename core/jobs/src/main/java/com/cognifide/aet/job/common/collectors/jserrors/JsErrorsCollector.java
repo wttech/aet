@@ -24,7 +24,6 @@ import com.cognifide.aet.job.api.collector.JsErrorLog;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.vs.ArtifactsDAO;
-
 import java.util.Map;
 import java.util.Set;
 

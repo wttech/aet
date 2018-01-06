@@ -17,11 +17,9 @@
  */
 package com.cognifide.aet.cleaner.processors.filters;
 
+import com.cognifide.aet.vs.DBKey;
 import com.google.common.base.Objects;
 import com.google.common.base.Predicate;
-
-import com.cognifide.aet.vs.DBKey;
-
 import org.apache.commons.lang3.StringUtils;
 
 public class DBKeyProjectCompanyPredicate implements Predicate<DBKey> {

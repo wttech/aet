@@ -19,7 +19,7 @@ package com.cognifide.aet.plugins.maven;
 
 import com.cognifide.aet.common.TestSuiteRunner;
 import com.cognifide.aet.communication.api.exceptions.AETException;
-
+import java.io.File;
 import org.apache.maven.plugin.AbstractMojo;
 import org.apache.maven.plugin.MojoExecutionException;
 import org.apache.maven.plugins.annotations.Component;
@@ -27,8 +27,6 @@ import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
 import org.apache.maven.project.MavenProject;
-
-import java.io.File;
 
 
 @Mojo(name = "run", defaultPhase = LifecyclePhase.PROCESS_SOURCES)

@@ -17,19 +17,16 @@
  */
 package com.cognifide.aet.common;
 
-import com.google.common.io.Files;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.is;
 
 import com.cognifide.aet.communication.api.exceptions.AETException;
-
+import com.google.common.io.Files;
+import java.io.File;
+import java.io.IOException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-
-import java.io.File;
-import java.io.IOException;
-
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.is;
 
 public class RedirectWriterTest {
 

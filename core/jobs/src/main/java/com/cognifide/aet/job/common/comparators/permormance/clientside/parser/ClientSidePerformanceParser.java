@@ -17,17 +17,14 @@
  */
 package com.cognifide.aet.job.common.comparators.permormance.clientside.parser;
 
-import com.google.common.reflect.TypeToken;
-import com.google.gson.GsonBuilder;
-import com.google.gson.JsonSyntaxException;
-
 import com.cognifide.aet.communication.api.metadata.ComparatorStepResult;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.job.common.comparators.permormance.clientside.report.ClientSidePerformanceReport;
-
-import org.apache.commons.lang3.StringUtils;
-
+import com.google.common.reflect.TypeToken;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonSyntaxException;
 import java.lang.reflect.Type;
+import org.apache.commons.lang3.StringUtils;
 
 public class ClientSidePerformanceParser {
 

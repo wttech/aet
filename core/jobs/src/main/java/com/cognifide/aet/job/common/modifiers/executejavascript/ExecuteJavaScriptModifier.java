@@ -23,10 +23,8 @@ import com.cognifide.aet.job.api.ParametersValidator;
 import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
-
 import java.io.UnsupportedEncodingException;
 import java.util.Map;
-
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.JavascriptExecutor;

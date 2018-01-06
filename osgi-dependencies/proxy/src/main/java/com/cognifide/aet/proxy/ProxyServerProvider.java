@@ -17,11 +17,10 @@
  */
 package com.cognifide.aet.proxy;
 
-import com.google.common.collect.Maps;
-
 import com.cognifide.aet.job.api.collector.ProxyServerWrapper;
 import com.cognifide.aet.job.api.exceptions.ProxyException;
-
+import com.google.common.collect.Maps;
+import java.util.Map;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Properties;
 import org.apache.felix.scr.annotations.Property;
@@ -31,27 +30,20 @@ import org.apache.felix.scr.annotations.ReferencePolicy;
 import org.apache.felix.scr.annotations.Service;
 import org.osgi.framework.Constants;
 
-import java.util.Map;
-
 @Service(ProxyServerProvider.class)
 @Component(immediate = true, label = "AET Proxy Server Provider", description = "AET Proxy Server Provider")
 @Properties({@Property(name = Constants.SERVICE_VENDOR, value = "Cognifide Ltd")})
 public class ProxyServerProvider {
-  private static final String DEFAULT_PROXY_MANAGER = "rest";
 
   @Reference(referenceInterface = ProxyManager.class, policy = ReferencePolicy.DYNAMIC,
           cardinality = ReferenceCardinality.OPTIONAL_MULTIPLE, bind = "bindProxyManager",
           unbind = "unbindProxyManager")
   private final Map<String, ProxyManager> collectorManagers = Maps.newConcurrentMap();
 
-  public ProxyServerWrapper createProxy(String useProxy) throws ProxyException {
-    String proxyType = useProxy;
-    if ("true".equals(useProxy)) {
-      proxyType = DEFAULT_PROXY_MANAGER;
-    }
-    ProxyManager proxyManager = collectorManagers.get(proxyType);
+  public ProxyServerWrapper createProxy(String proxyName) throws ProxyException {
+    ProxyManager proxyManager = collectorManagers.get(proxyName);
     if (proxyManager == null) {
-      throw new ProxyException("Undefined ProxyManager with proxyType: " + proxyType);
+      throw new ProxyException("Undefined ProxyManager with proxy name: " + proxyName);
     }
     try {
       return proxyManager.createProxy();

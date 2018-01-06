@@ -26,9 +26,7 @@ import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.SimpleDBKey;
 import com.cognifide.aet.vs.StorageException;
 import com.google.common.base.Joiner;
-
 import java.util.List;
-
 import org.apache.commons.lang3.StringUtils;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Reference;

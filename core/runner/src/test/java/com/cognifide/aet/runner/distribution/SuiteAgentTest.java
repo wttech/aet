@@ -17,9 +17,14 @@
  */
 package com.cognifide.aet.runner.distribution;
 
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mockito.internal.verification.VerificationModeFactory.times;
+
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.runner.conversion.SuiteIndexWrapper;
-
+import java.util.Collections;
+import java.util.Observable;
 import org.apache.activemq.Message;
 import org.junit.Before;
 import org.junit.Test;
@@ -28,13 +33,6 @@ import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import java.util.Collections;
-import java.util.Observable;
-
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
-import static org.mockito.internal.verification.VerificationModeFactory.times;
 
 
 @RunWith(MockitoJUnitRunner.class)

@@ -17,12 +17,12 @@
  */
 package com.cognifide.aet.runner.distribution;
 
+import static junit.framework.Assert.assertFalse;
+import static junit.framework.Assert.assertTrue;
+
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
 
 /**
  * @author maciej.laskowski

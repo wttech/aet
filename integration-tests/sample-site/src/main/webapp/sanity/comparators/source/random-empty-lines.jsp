@@ -17,7 +17,6 @@
     limitations under the License.
 
 --%>
-<%@ page import="java.nio.ByteBuffer" %>
 <%@ include file="/includes/header.jsp" %>
 
 <!--[if IE]>

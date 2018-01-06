@@ -17,19 +17,13 @@
  */
 package com.cognifide.aet.job.common.datafilters.removelines;
 
+import com.cognifide.aet.job.api.datafilter.DataFilterJob;
+import com.cognifide.aet.job.api.exceptions.ParametersException;
+import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.google.common.collect.ContiguousSet;
 import com.google.common.collect.DiscreteDomain;
 import com.google.common.collect.Range;
 import com.google.common.collect.Sets;
-
-import com.cognifide.aet.job.api.datafilter.DataFilterJob;
-import com.cognifide.aet.job.api.exceptions.ParametersException;
-import com.cognifide.aet.job.api.exceptions.ProcessingException;
-
-import org.apache.commons.lang3.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -37,6 +31,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
+import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class RemoveLinesDataModifier implements DataFilterJob<String> {
 

@@ -17,8 +17,18 @@
  */
 package com.cognifide.aet.runner.distribution;
 
-import com.cognifide.aet.communication.api.queues.JmsConnection;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
+import com.cognifide.aet.communication.api.queues.JmsConnection;
+import java.io.Serializable;
+import java.util.Observer;
+import javax.jms.Destination;
+import javax.jms.Message;
+import javax.jms.MessageProducer;
+import javax.jms.ObjectMessage;
+import javax.jms.Session;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -26,19 +36,6 @@ import org.mockito.Matchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.runners.MockitoJUnitRunner;
-
-import java.io.Serializable;
-import java.util.Observer;
-
-import javax.jms.Destination;
-import javax.jms.Message;
-import javax.jms.MessageProducer;
-import javax.jms.ObjectMessage;
-import javax.jms.Session;
-
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public abstract class MessageObserverTest<T extends Observer> {
