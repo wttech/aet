@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.worker.impl;
 
@@ -55,11 +53,13 @@ public class ComparatorDispatcherImpl implements ComparatorDispatcher {
   private JobRegistry jobRegistry;
 
   @Override
-  public Comparator run(Comparator comparator, ComparatorProperties comparatorProperties) throws AETException {
+  public Comparator run(Comparator comparator, ComparatorProperties comparatorProperties)
+      throws AETException {
     ComparatorFactory comparatorFactory = getComparatorFactory(comparator);
 
     final List<DataFilterJob> dataFilterJobs = getComparatorDataFilters(comparator);
-    final ComparatorJob comparatorJob = comparatorFactory.createInstance(comparator, comparatorProperties, dataFilterJobs);
+    final ComparatorJob comparatorJob = comparatorFactory
+        .createInstance(comparator, comparatorProperties, dataFilterJobs);
     LOGGER.info("Starting comparison of {}", comparator);
 
     ExecutionTimer timer = ExecutionTimer.createAndRun(COMPARATOR_PARAMETER);
@@ -68,7 +68,8 @@ public class ComparatorDispatcherImpl implements ComparatorDispatcher {
       comparisonResult = comparatorJob.compare();
     } catch (AETException e) {
       LOGGER.error(comparator + " throw error:", comparator, e);
-      comparisonResult = new ComparatorStepResult(null, ComparatorStepResult.Status.PROCESSING_ERROR);
+      comparisonResult = new ComparatorStepResult(null,
+          ComparatorStepResult.Status.PROCESSING_ERROR);
       comparisonResult.addError(getCause(e));
     } finally {
       timer.finishAndLog(comparator.getType());
@@ -79,22 +80,24 @@ public class ComparatorDispatcherImpl implements ComparatorDispatcher {
   }
 
   private List<DataFilterJob> getComparatorDataFilters(Comparator comparator) {
-    return FluentIterable.from(comparator.getFilters()).transform(new Function<Operation, DataFilterJob>() {
-      @Nullable
-      @Override
-      public DataFilterJob apply(Operation dataFilter) {
-        DataFilterJob dataFilterJob = null;
-        DataFilterFactory dataFilterFactory = jobRegistry.getDataModifierFactory(dataFilter.getType());
-        if (dataFilterFactory != null) {
-          try {
-            dataFilterJob = dataFilterFactory.createInstance(dataFilter.getParameters());
-          } catch (ParametersException e) {
-            LOGGER.error("Unexpected parameter in {}", dataFilter, e);
+    return FluentIterable.from(comparator.getFilters())
+        .transform(new Function<Operation, DataFilterJob>() {
+          @Nullable
+          @Override
+          public DataFilterJob apply(Operation dataFilter) {
+            DataFilterJob dataFilterJob = null;
+            DataFilterFactory dataFilterFactory = jobRegistry
+                .getDataModifierFactory(dataFilter.getType());
+            if (dataFilterFactory != null) {
+              try {
+                dataFilterJob = dataFilterFactory.createInstance(dataFilter.getParameters());
+              } catch (ParametersException e) {
+                LOGGER.error("Unexpected parameter in {}", dataFilter, e);
+              }
+            }
+            return dataFilterJob;
           }
-        }
-        return dataFilterJob;
-      }
-    }).filter(Predicates.notNull()).toList();
+        }).filter(Predicates.notNull()).toList();
   }
 
   private ComparatorFactory getComparatorFactory(Comparator comparator) throws ParametersException {
@@ -107,8 +110,8 @@ public class ComparatorDispatcherImpl implements ComparatorDispatcher {
     }
     if (comparatorFactory == null) {
       throw new ParametersException(String.format(
-              "Can not find comparator for name '%s' and type '%s' while processing: '%s'.",
-              comparatorName, comparator.getType(), comparator));
+          "Can not find comparator for name '%s' and type '%s' while processing: '%s'.",
+          comparatorName, comparator.getType(), comparator));
     }
     return comparatorFactory;
   }

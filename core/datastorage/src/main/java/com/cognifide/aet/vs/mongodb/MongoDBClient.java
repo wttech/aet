@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.vs.mongodb;
 
@@ -54,7 +52,8 @@ public class MongoDBClient {
 
   public static final String DB_NAME_SEPARATOR = "_";
 
-  @Property(name = MONGO_URI, label = "MongoURI", description = "mongodb://[username:password@]host1[:port1][,host2[:port2],"
+  @Property(name = MONGO_URI, label = "MongoURI", description =
+      "mongodb://[username:password@]host1[:port1][,host2[:port2],"
           + "...[,hostN[:portN]]][/[database][?options]]", value = DEFAULT_MONGODB_URI)
   private String mongoUri;
 
@@ -98,12 +97,13 @@ public class MongoDBClient {
 
     for (String dbName : getAetsDBNames()) {
       if (!StringUtils.containsAny(dbName, DB_NAME_SEPARATOR)) {
-        LOGGER.error("Database name format is incorrect. It must contain at least one underscore character. Couldn't fetch company name from database name. Skip.");
+        LOGGER.error(
+            "Database name format is incorrect. It must contain at least one underscore character. Couldn't fetch company name from database name. Skip.");
       }
       String companyName = StringUtils.substringBefore(dbName, DB_NAME_SEPARATOR);
       if (StringUtils.isBlank(companyName)) {
         LOGGER.error("Comapny name is blank. It couldn't've been fetched from database name [{}] ",
-                dbName);
+            dbName);
       } else if (StringUtils.isNotBlank(companyName)) {
         companies.add(companyName);
       }
@@ -116,7 +116,7 @@ public class MongoDBClient {
   private void setupProperties(Map properties) {
     this.mongoUri = PropertiesUtil.toString(properties.get(MONGO_URI), DEFAULT_MONGODB_URI);
     this.allowAutoCreate = PropertiesUtil.toBoolean(properties.get(ALLOW_AUTO_CREATE),
-            DEFAULT_AUTOCREATE_VALUE);
+        DEFAULT_AUTOCREATE_VALUE);
   }
 
   private void setupMongoDBConnection() throws UnknownHostException {

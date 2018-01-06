@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.proxy;
 
@@ -61,22 +59,24 @@ public class RestProxyServer implements ProxyServerWrapper {
   @Override
   public Proxy seleniumProxy() throws UnknownHostException {
     return server.asSeleniumProxy()
-            .setHttpProxy(String.format("%s:%d", proxyManager.getServer(), getPort()))
-            .setSslProxy(String.format("%s:%d", proxyManager.getServer(), getPort()));
+        .setHttpProxy(String.format("%s:%d", proxyManager.getServer(), getPort()))
+        .setSslProxy(String.format("%s:%d", proxyManager.getServer(), getPort()));
   }
 
   @Override
   public Har getHar() {
-    return new GsonBuilder().serializeNulls().registerTypeAdapter(Date.class, new DateDeserializer())
-            .create()
-            .fromJson(server.har(), Har.class);
+    return new GsonBuilder().serializeNulls()
+        .registerTypeAdapter(Date.class, new DateDeserializer())
+        .create()
+        .fromJson(server.har(), Har.class);
   }
 
   @Override
   public Har newHar(String initialPageRef) {
-    return new GsonBuilder().serializeNulls().registerTypeAdapter(Date.class, new DateDeserializer())
-            .create()
-            .fromJson(server.newHar(initialPageRef, captureHeaders, captureContent, false), Har.class);
+    return new GsonBuilder().serializeNulls()
+        .registerTypeAdapter(Date.class, new DateDeserializer())
+        .create()
+        .fromJson(server.newHar(initialPageRef, captureHeaders, captureContent, false), Har.class);
   }
 
   @Override
@@ -99,10 +99,10 @@ public class RestProxyServer implements ProxyServerWrapper {
     CloseableHttpClient httpClient = HttpClients.createSystem();
     try {
       URIBuilder uriBuilder = new URIBuilder().setScheme(HTTP).setHost(server.getAPIHost())
-              .setPort(server.getAPIPort());
+          .setPort(server.getAPIPort());
       // Request BMP to add header
       HttpPost request = new HttpPost(uriBuilder.setPath(
-              String.format("/proxy/%d/headers", server.getProxyPort())).build());
+          String.format("/proxy/%d/headers", server.getProxyPort())).build());
       request.setHeader("Content-Type", "application/json");
       JSONObject json = new JSONObject();
       json.put(name, value);
@@ -112,11 +112,12 @@ public class RestProxyServer implements ProxyServerWrapper {
       int statusCode = response.getStatusLine().getStatusCode();
       if (statusCode != STATUS_CODE_OK) {
         throw new UnableToAddHeaderException("Invalid HTTP Response when attempting to add header"
-                + statusCode);
+            + statusCode);
       }
       response.close();
     } catch (Exception e) {
-      throw new BMPCUnableToConnectException(String.format("Unable to connect to BMP Proxy at '%s:%s'",
+      throw new BMPCUnableToConnectException(
+          String.format("Unable to connect to BMP Proxy at '%s:%s'",
               server.getAPIHost(), server.getAPIPort()), e);
     } finally {
       try {

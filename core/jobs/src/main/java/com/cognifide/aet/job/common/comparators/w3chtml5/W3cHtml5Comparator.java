@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.job.common.comparators.w3chtml5;
 
@@ -50,8 +48,8 @@ class W3cHtml5Comparator extends W3cHtml5ComparatorJob {
   private final W3cHtml5ValidationResultParser validationResultParser;
 
   W3cHtml5Comparator(ArtifactsDAO artifactsDAO, ComparatorProperties comparatorProperties,
-                     NuValidatorWrapper wrapper, W3cHtml5ValidationResultParser validationResultParser,
-                     List<DataFilterJob> dataFilterJobs) {
+      NuValidatorWrapper wrapper, W3cHtml5ValidationResultParser validationResultParser,
+      List<DataFilterJob> dataFilterJobs) {
     super(artifactsDAO, comparatorProperties, dataFilterJobs);
     this.wrapper = wrapper;
     this.validationResultParser = validationResultParser;
@@ -62,9 +60,11 @@ class W3cHtml5Comparator extends W3cHtml5ComparatorJob {
     ComparatorStepResult comparatorStepResult;
     InputStream sourceStream = null;
     try {
-      LOGGER.info("Checking w3c for artifact {} in {} {} using validator: {}.", properties.getCompany(),
-              properties.getProject(), properties.getPatternId(), properties);
-      sourceStream = artifactsDAO.getArtifact(properties, properties.getCollectedId()).getArtifactStream();
+      LOGGER.info("Checking w3c for artifact {} in {} {} using validator: {}.",
+          properties.getCompany(),
+          properties.getProject(), properties.getPatternId(), properties);
+      sourceStream = artifactsDAO.getArtifact(properties, properties.getCollectedId())
+          .getArtifactStream();
 
       String json = wrapper.validate(sourceStream);
       W3cHtml5ComparatorResult w3cComparatorResult = validationResultParser.parse(json);

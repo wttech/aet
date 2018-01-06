@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.runner.distribution;
 
@@ -57,9 +55,10 @@ public class RunnerMessageListener implements MessageListener {
   private final Session session;
 
   @Inject
-  public RunnerMessageListener(JmsConnection jmsConnection, @Named("API in") String inDestinationName,
-                               @Named("MAINTENANCE in") String maintenanceDestinationName, TestRunProcessor testRunProcessor,
-                               RunnerMode runnerMode) throws JMSException {
+  public RunnerMessageListener(JmsConnection jmsConnection,
+      @Named("API in") String inDestinationName,
+      @Named("MAINTENANCE in") String maintenanceDestinationName, TestRunProcessor testRunProcessor,
+      RunnerMode runnerMode) throws JMSException {
     this.maintenanceDestinationName = maintenanceDestinationName;
     this.testRunProcessor = testRunProcessor;
     session = jmsConnection.getJmsSession();
@@ -87,7 +86,8 @@ public class RunnerMessageListener implements MessageListener {
     try {
       message = JmsUtils.getFromMessage(wrapperMessage, BasicMessage.class);
     } catch (Exception e) {
-      sendFatalMessage(wrapperMessage, "There was problem understanding a message. Please check if newest " +
+      sendFatalMessage(wrapperMessage,
+          "There was problem understanding a message. Please check if newest " +
               "version of AET client is used.");
       LOGGER.error("Fatal error on Runner Message Listener onMessage", e);
     }
@@ -111,7 +111,7 @@ public class RunnerMessageListener implements MessageListener {
     Suite suite = (Suite) message.getData();
     try {
       boolean isMaintenanceMessage = StringUtils.endsWith(
-              wrapperMessage.getJMSDestination().toString(), maintenanceDestinationName);
+          wrapperMessage.getJMSDestination().toString(), maintenanceDestinationName);
       testRunProcessor.process(suite, wrapperMessage.getJMSReplyTo(), isMaintenanceMessage);
     } catch (JMSException e) {
       LOGGER.error("Error wile processing RUN {}: ", suite.getCorrelationId(), e);
@@ -128,8 +128,8 @@ public class RunnerMessageListener implements MessageListener {
       if (jmsReplyTo != null) {
         final MessageProducer producer = session.createProducer(jmsReplyTo);
         final FatalErrorMessage errorMessage =
-                new FatalErrorMessage("Failed to process test suite: " + message,
-                        wrapperMessage.getJMSCorrelationID());
+            new FatalErrorMessage("Failed to process test suite: " + message,
+                wrapperMessage.getJMSCorrelationID());
         producer.send(session.createObjectMessage(errorMessage));
         producer.close();
       }

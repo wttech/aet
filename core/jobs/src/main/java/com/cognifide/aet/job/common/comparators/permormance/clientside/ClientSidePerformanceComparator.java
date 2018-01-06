@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.job.common.comparators.permormance.clientside;
 
@@ -40,8 +38,8 @@ public class ClientSidePerformanceComparator implements ComparatorJob {
   private final ClientSidePerformanceParser clientSidePerformanceParser;
 
   public ClientSidePerformanceComparator(ArtifactsDAO artifactsDAO,
-                                         ClientSidePerformanceParser clientSidePerformanceParser,
-                                         ComparatorProperties comparatorProperties) {
+      ClientSidePerformanceParser clientSidePerformanceParser,
+      ComparatorProperties comparatorProperties) {
     this.artifactsDAO = artifactsDAO;
     this.clientSidePerformanceParser = clientSidePerformanceParser;
     this.comparatorProperties = comparatorProperties;
@@ -51,11 +49,13 @@ public class ClientSidePerformanceComparator implements ComparatorJob {
   public ComparatorStepResult compare() throws ProcessingException {
     final ComparatorStepResult result;
     try {
-      String collectedData = artifactsDAO.getArtifactAsString(comparatorProperties, comparatorProperties.getCollectedId());
+      String collectedData = artifactsDAO
+          .getArtifactAsString(comparatorProperties, comparatorProperties.getCollectedId());
       ClientSidePerformanceComparatorResultData comparatorResultData = clientSidePerformanceParser
-              .parse(collectedData);
+          .parse(collectedData);
 
-      String artifactId = artifactsDAO.saveArtifactInJsonFormat(comparatorProperties, comparatorResultData.getResult());
+      String artifactId = artifactsDAO
+          .saveArtifactInJsonFormat(comparatorProperties, comparatorResultData.getResult());
       result = new ComparatorStepResult(artifactId, comparatorResultData.getResult());
 
     } catch (Exception e) {

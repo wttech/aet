@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.job.common.comparators.source;
 
@@ -54,10 +52,13 @@ public class SourceComparatorTest extends AbstractComparatorTest {
    * @return result of comparison
    * @throws Exception for incorrect parameters
    */
-  protected ComparatorStepResult compare(String patternFilename, String dataFilename, Map<String, String> comparatorParams)
-          throws Exception {
-    ComparatorProperties properties = new ComparatorProperties(TEST_COMPANY, TEST_PROJECT, patternFilename, dataFilename);
-    tested = new SourceComparator(artifactDaoMock, properties, new DiffParser(), new ArrayList<DataFilterJob>());
+  protected ComparatorStepResult compare(String patternFilename, String dataFilename,
+      Map<String, String> comparatorParams)
+      throws Exception {
+    ComparatorProperties properties = new ComparatorProperties(TEST_COMPANY, TEST_PROJECT,
+        patternFilename, dataFilename);
+    tested = new SourceComparator(artifactDaoMock, properties, new DiffParser(),
+        new ArrayList<DataFilterJob>());
     tested.setParameters(comparatorParams);
     return tested.compare();
   }
@@ -72,7 +73,8 @@ public class SourceComparatorTest extends AbstractComparatorTest {
 
   @Test
   public void testCompareOfInvalidInput() throws Exception {
-    result = compare("pattern-source.html", "data-invalid-source.html", new HashMap<String, String>());
+    result = compare("pattern-source.html", "data-invalid-source.html",
+        new HashMap<String, String>());
 
     assertEquals(ComparatorStepResult.Status.FAILED, result.getStatus());
     assertEqualsToSavedArtifact("expected-invalid-result.json");
@@ -80,14 +82,16 @@ public class SourceComparatorTest extends AbstractComparatorTest {
 
   @Test
   public void testCompareMarkupWithDifferentText() throws Exception {
-    result = compare("markup/pattern-source.html", "markup/data-source.html", ImmutableMap.of("compareType", "markup"));
+    result = compare("markup/pattern-source.html", "markup/data-source.html",
+        ImmutableMap.of("compareType", "markup"));
     assertEquals(ComparatorStepResult.Status.PASSED, result.getStatus());
   }
 
   @Test
   public void testCompareMarkupWithDifferentAttributeName() throws Exception {
-    result = compare("markup/pattern-source.html", "markup/data-source-with-different-attribute-value.html",
-            ImmutableMap.of("compareType", "markup"));
+    result = compare("markup/pattern-source.html",
+        "markup/data-source-with-different-attribute-value.html",
+        ImmutableMap.of("compareType", "markup"));
     assertEquals(ComparatorStepResult.Status.FAILED, result.getStatus());
 
   }

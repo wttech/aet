@@ -3,30 +3,28 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 /*
-* Copyright [2016] [http://bmp.lightbody.net/]
-*
-* Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance
-* with the License. You may obtain a copy of the License at
-*
-* http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software distributed under the License is distributed
-* on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for
-* the specific language governing permissions and limitations under the License.
-*/
+ * Copyright [2016] [http://bmp.lightbody.net/]
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance
+ * with the License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed
+ * on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for
+ * the specific language governing permissions and limitations under the License.
+ */
 
 package org.browsermob.core.util;
 
@@ -35,6 +33,7 @@ import java.lang.management.ThreadInfo;
 import java.util.concurrent.TimeUnit;
 
 public class ThreadUtils {
+
   public static String dumpAllThreads() {
     ThreadInfo[] dumps = ManagementFactory.getThreadMXBean().dumpAllThreads(true, true);
     StringBuilder out = new StringBuilder("Thread Dump\n");
@@ -46,6 +45,7 @@ public class ThreadUtils {
   }
 
   public static interface WaitCondition {
+
     public boolean checkCondition(long elapsedTimeInMs);
   }
 
@@ -82,7 +82,8 @@ public class ThreadUtils {
       long startTime = System.currentTimeMillis();
       long curTime = startTime;
 
-      while (!(result = condition.checkCondition(curTime - startTime)) && (curTime - startTime < timeout)) {
+      while (!(result = condition.checkCondition(curTime - startTime)) && (curTime - startTime
+          < timeout)) {
         try {
           Thread.sleep(100);
         } catch (InterruptedException ex) {
@@ -95,7 +96,8 @@ public class ThreadUtils {
     return result;
   }
 
-  public static boolean waitFor(WaitCondition condition, TimeUnit timeUnitTimeout, long timeoutDuration, TimeUnit timeUnitSleep, long sleepDuration) {
+  public static boolean waitFor(WaitCondition condition, TimeUnit timeUnitTimeout,
+      long timeoutDuration, TimeUnit timeUnitSleep, long sleepDuration) {
     long timeout = timeUnitTimeout.toMillis(timeoutDuration);
     long sleepBetween = timeUnitSleep.toMillis(sleepDuration);
 
@@ -104,7 +106,8 @@ public class ThreadUtils {
       long startTime = System.currentTimeMillis();
       long curTime = startTime;
 
-      while (!(result = condition.checkCondition(curTime - startTime)) && (curTime - startTime < timeout)) {
+      while (!(result = condition.checkCondition(curTime - startTime)) && (curTime - startTime
+          < timeout)) {
         try {
           Thread.sleep(sleepBetween);
         } catch (InterruptedException ex) {

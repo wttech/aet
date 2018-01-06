@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.rest;
 
@@ -58,7 +56,7 @@ public class LockServlet extends HttpServlet {
 
   @Override
   protected void doGet(HttpServletRequest req, HttpServletResponse resp)
-          throws ServletException, IOException {
+      throws ServletException, IOException {
     if (LOGGER.isDebugEnabled()) {
       LOGGER.debug("GET: " + req.toString());
     }
@@ -75,7 +73,7 @@ public class LockServlet extends HttpServlet {
 
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-          throws ServletException, IOException {
+      throws ServletException, IOException {
     if (LOGGER.isDebugEnabled()) {
       LOGGER.debug("POST: " + req.toString());
     }
@@ -94,7 +92,7 @@ public class LockServlet extends HttpServlet {
 
   @Override
   protected void doPut(HttpServletRequest req, HttpServletResponse resp)
-          throws ServletException, IOException {
+      throws ServletException, IOException {
     if (LOGGER.isDebugEnabled()) {
       LOGGER.debug("PUT: " + req.toString());
     }
@@ -120,7 +118,8 @@ public class LockServlet extends HttpServlet {
 
 
   private String getKey(HttpServletRequest req) {
-    return StringUtils.substringAfter(req.getRequestURI(), Helper.getLocksPath()).replace(Helper.PATH_SEPARATOR, "");
+    return StringUtils.substringAfter(req.getRequestURI(), Helper.getLocksPath())
+        .replace(Helper.PATH_SEPARATOR, "");
   }
 
   @Activate
@@ -128,7 +127,7 @@ public class LockServlet extends HttpServlet {
     LOGGER.debug("Registering servlet at " + Helper.getLocksPath());
     try {
       httpService.registerServlet(Helper.getLocksPath(), this, null,
-              null);
+          null);
     } catch (Exception e) {
       LOGGER.error("Failed to register servlet at " + Helper.getLocksPath(), e);
     }
