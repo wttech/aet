@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.worker.drivers;
 
@@ -38,7 +36,7 @@ public class WebCommunicationWrapperImpl implements WebCommunicationWrapper {
       JsErrorLog jsErrorLog = null;
       if (input != null) {
         jsErrorLog = new JsErrorLog(input.getErrorMessage(), input.getSourceName(),
-                input.getLineNumber());
+            input.getLineNumber());
       }
       return jsErrorLog;
     }
@@ -50,7 +48,8 @@ public class WebCommunicationWrapperImpl implements WebCommunicationWrapper {
 
   private final HttpRequestExecutor requestExecutor;
 
-  public WebCommunicationWrapperImpl(WebDriver webDriver, ProxyServerWrapper server, HttpRequestExecutor requestExecutor) {
+  public WebCommunicationWrapperImpl(WebDriver webDriver, ProxyServerWrapper server,
+      HttpRequestExecutor requestExecutor) {
     this.webDriver = webDriver;
     this.proxyServer = server;
     this.requestExecutor = requestExecutor;
@@ -75,7 +74,7 @@ public class WebCommunicationWrapperImpl implements WebCommunicationWrapper {
   public Set<JsErrorLog> getJSErrorLogs() {
     List<JavaScriptError> javaScriptErrors = JavaScriptError.readErrors(webDriver);
     return FluentIterable.from(javaScriptErrors).transform(ERROR_LOG_FUNCTION).toSortedSet(
-            Ordering.natural());
+        Ordering.natural());
   }
 
   @Override

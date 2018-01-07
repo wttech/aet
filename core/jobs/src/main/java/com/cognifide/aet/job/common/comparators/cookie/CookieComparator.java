@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.job.common.comparators.cookie;
 
@@ -82,11 +80,14 @@ public class CookieComparator implements ComparatorJob {
 
   @SuppressWarnings("unchecked")
   private ComparatorStepResult compareCookies(Set<Cookie> cookies) throws IOException {
-    final Set<Cookie> cookiesPattern = artifactsDAO.getJsonFormatArtifact(properties, properties.getPatternId(),
+    final Set<Cookie> cookiesPattern = artifactsDAO
+        .getJsonFormatArtifact(properties, properties.getPatternId(),
             COOKIES_SET_TYPE);
 
-    final Set<String> collectedCookiesNames = FluentIterable.from(cookies).transform(COOKIE_STRING_FUNCTION).toSet();
-    final Set<String> patternCookiesNames = FluentIterable.from(cookiesPattern).transform(COOKIE_STRING_FUNCTION).toSet();
+    final Set<String> collectedCookiesNames = FluentIterable.from(cookies)
+        .transform(COOKIE_STRING_FUNCTION).toSet();
+    final Set<String> patternCookiesNames = FluentIterable.from(cookiesPattern)
+        .transform(COOKIE_STRING_FUNCTION).toSet();
 
     Set<String> additionalCookies = Sets.difference(collectedCookiesNames, patternCookiesNames);
     Set<String> notFoundCookies = Sets.difference(patternCookiesNames, collectedCookiesNames);
@@ -95,12 +96,14 @@ public class CookieComparator implements ComparatorJob {
       foundCookies = Sets.intersection(patternCookiesNames, collectedCookiesNames);
     }
     boolean compareResult = additionalCookies.isEmpty() && notFoundCookies.isEmpty();
-    CookieCompareComparatorResult result = new CookieCompareComparatorResult(compareAction, cookies, notFoundCookies,
-            additionalCookies, foundCookies);
+    CookieCompareComparatorResult result = new CookieCompareComparatorResult(compareAction, cookies,
+        notFoundCookies,
+        additionalCookies, foundCookies);
 
     final String artifactId = artifactsDAO.saveArtifactInJsonFormat(properties, result);
     return new ComparatorStepResult(artifactId,
-            compareResult ? ComparatorStepResult.Status.PASSED : ComparatorStepResult.Status.FAILED, !compareResult);
+        compareResult ? ComparatorStepResult.Status.PASSED : ComparatorStepResult.Status.FAILED,
+        !compareResult);
   }
 
   private ComparatorStepResult testCookie(Set<Cookie> cookies) {
@@ -112,10 +115,11 @@ public class CookieComparator implements ComparatorJob {
       }
     }
 
-    CookieTestComparatorResult result = new CookieTestComparatorResult(compareAction, cookies, name, value);
+    CookieTestComparatorResult result = new CookieTestComparatorResult(compareAction, cookies, name,
+        value);
     final String artifactId = artifactsDAO.saveArtifactInJsonFormat(properties, result);
     return new ComparatorStepResult(artifactId,
-            testResult ? ComparatorStepResult.Status.PASSED : ComparatorStepResult.Status.FAILED);
+        testResult ? ComparatorStepResult.Status.PASSED : ComparatorStepResult.Status.FAILED);
   }
 
   private ComparatorStepResult listCookies(Set<Cookie> cookies) {
@@ -129,7 +133,8 @@ public class CookieComparator implements ComparatorJob {
   public ComparatorStepResult compare() throws ProcessingException {
     ComparatorStepResult result;
     try {
-      final Set<Cookie> cookies = artifactsDAO.getJsonFormatArtifact(properties, properties.getCollectedId(),
+      final Set<Cookie> cookies = artifactsDAO
+          .getJsonFormatArtifact(properties, properties.getCollectedId(),
               COOKIES_SET_TYPE);
       switch (compareAction) {
         case TEST:

@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.cleaner.processors;
 
@@ -50,7 +48,8 @@ public class GetMetadataArtifactsProcessor implements Processor {
   private static final Predicate<Comparator> STEP_RESULTS_WITH_ARTIFACT_ID = new Predicate<Comparator>() {
     @Override
     public boolean apply(Comparator comparator) {
-      return comparator.getStepResult() != null && StringUtils.isNotBlank(comparator.getStepResult().getArtifactId());
+      return comparator.getStepResult() != null && StringUtils
+          .isNotBlank(comparator.getStepResult().getArtifactId());
     }
   };
 
@@ -66,7 +65,8 @@ public class GetMetadataArtifactsProcessor implements Processor {
   @SuppressWarnings("unchecked")
   public void process(Exchange exchange) throws Exception {
     final SuiteMessageBody messageBody = exchange.getIn().getBody(SuiteMessageBody.class);
-    final CleanerContext cleanerContext = exchange.getIn().getHeader(CleanerContext.KEY_NAME, CleanerContext.class);
+    final CleanerContext cleanerContext = exchange.getIn()
+        .getHeader(CleanerContext.KEY_NAME, CleanerContext.class);
 
     final Set<String> metatadaArtifacts = new HashSet<>();
 
@@ -76,8 +76,9 @@ public class GetMetadataArtifactsProcessor implements Processor {
       metatadaArtifacts.addAll(traverseTest(test));
     }
 
-    ReferencedArtifactsMessageBody body = new ReferencedArtifactsMessageBody(messageBody.getData().getName(),
-            messageBody.getDbKey());
+    ReferencedArtifactsMessageBody body = new ReferencedArtifactsMessageBody(
+        messageBody.getData().getName(),
+        messageBody.getDbKey());
     if (messageBody.shouldBeRemoved()) {
       body.setArtifactsToRemove(metatadaArtifacts);
     } else {
@@ -86,7 +87,8 @@ public class GetMetadataArtifactsProcessor implements Processor {
 
     exchange.getOut().setBody(body);
     exchange.getOut().setHeader(CleanerContext.KEY_NAME, cleanerContext);
-    exchange.getOut().setHeader(SuiteAggregationCounter.NAME_KEY, exchange.getIn().getHeader(SuiteAggregationCounter.NAME_KEY, SuiteAggregationCounter.class));
+    exchange.getOut().setHeader(SuiteAggregationCounter.NAME_KEY, exchange.getIn()
+        .getHeader(SuiteAggregationCounter.NAME_KEY, SuiteAggregationCounter.class));
   }
 
   private Set<String> traverseTest(Test test) {
@@ -116,9 +118,9 @@ public class GetMetadataArtifactsProcessor implements Processor {
     Set<String> stepArtifacts = Collections.emptySet();
     if (step.getComparators() != null) {
       stepArtifacts = FluentIterable.from(step.getComparators())
-              .filter(STEP_RESULTS_WITH_ARTIFACT_ID)
-              .transform(COMPARATOR_TO_ARTIFACT_ID)
-              .toSet();
+          .filter(STEP_RESULTS_WITH_ARTIFACT_ID)
+          .transform(COMPARATOR_TO_ARTIFACT_ID)
+          .toSet();
     }
     return stepArtifacts;
   }

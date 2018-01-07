@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.executor.xmlparser.xml.utils;
 
@@ -116,7 +114,8 @@ public class ValidationUtilsTest {
   }
 
   @Test(expected = ParseException.class)
-  public void testValidateNameAttributeWithOnlyWhitespacesThenExpectException() throws ParseException {
+  public void testValidateNameAttributeWithOnlyWhitespacesThenExpectException()
+      throws ParseException {
     ValidationUtils.validateCaseSensitiveNameAttribute(SUITE, NAME, "\t 	\n ");
   }
 
@@ -132,29 +131,40 @@ public class ValidationUtilsTest {
 
   @Test
   public void testValidateCaseSensitiveNameAttribute() throws ParseException {
-    assertEquals("cognifide", ValidationUtils.validateCaseSensitiveNameAttribute(SUITE, NAME, "cognifide"));
-    assertEquals("cognifide", ValidationUtils.validateCaseSensitiveNameAttribute(SUITE, NAME, "Cognifide"));
-    assertEquals("cognifide", ValidationUtils.validateCaseSensitiveNameAttribute(SUITE, NAME, "COGNIFIDE"));
     assertEquals("cognifide",
-            ValidationUtils.validateCaseSensitiveNameAttribute(SUITE, NAME, "  COGNIFIDE   "));
+        ValidationUtils.validateCaseSensitiveNameAttribute(SUITE, NAME, "cognifide"));
     assertEquals("cognifide",
-            ValidationUtils.validateCaseSensitiveNameAttribute(SUITE, NAME, "Cog    nifide"));
+        ValidationUtils.validateCaseSensitiveNameAttribute(SUITE, NAME, "Cognifide"));
+    assertEquals("cognifide",
+        ValidationUtils.validateCaseSensitiveNameAttribute(SUITE, NAME, "COGNIFIDE"));
+    assertEquals("cognifide",
+        ValidationUtils.validateCaseSensitiveNameAttribute(SUITE, NAME, "  COGNIFIDE   "));
+    assertEquals("cognifide",
+        ValidationUtils.validateCaseSensitiveNameAttribute(SUITE, NAME, "Cog    nifide"));
   }
 
   @Test
   public void testValidateCaseInsensitiveNameAttribute() throws ParseException {
-    assertEquals("cognifide", ValidationUtils.validateCaseInsensitiveNameAttribute(SUITE, NAME, "cognifide"));
-    assertEquals("Cognifide", ValidationUtils.validateCaseInsensitiveNameAttribute(SUITE, NAME, "Cognifide"));
-    assertEquals("COGNIFIDE", ValidationUtils.validateCaseInsensitiveNameAttribute(SUITE, NAME, "COGNIFIDE"));
-    assertEquals("COGNIFIDE", ValidationUtils.validateCaseInsensitiveNameAttribute(SUITE, NAME, "  COGNIFIDE   "));
-    assertEquals("Cognifide", ValidationUtils.validateCaseInsensitiveNameAttribute(SUITE, NAME, "Cog    nifide"));
+    assertEquals("cognifide",
+        ValidationUtils.validateCaseInsensitiveNameAttribute(SUITE, NAME, "cognifide"));
+    assertEquals("Cognifide",
+        ValidationUtils.validateCaseInsensitiveNameAttribute(SUITE, NAME, "Cognifide"));
+    assertEquals("COGNIFIDE",
+        ValidationUtils.validateCaseInsensitiveNameAttribute(SUITE, NAME, "COGNIFIDE"));
+    assertEquals("COGNIFIDE",
+        ValidationUtils.validateCaseInsensitiveNameAttribute(SUITE, NAME, "  COGNIFIDE   "));
+    assertEquals("Cognifide",
+        ValidationUtils.validateCaseInsensitiveNameAttribute(SUITE, NAME, "Cog    nifide"));
   }
 
   @Test
   public void testValidateNotHavingUnderscore() throws ParseException {
-    assertEquals("cognifide", ValidationUtils.validateNotHavingUnderscore("cogni_fide", StringUtils.EMPTY));
-    assertEquals("cognifide", ValidationUtils.validateNotHavingUnderscore("c_ogni_fide", StringUtils.EMPTY));
-    assertEquals("strange-company-name", ValidationUtils.validateNotHavingUnderscore("strange-company-name", StringUtils.EMPTY));
+    assertEquals("cognifide",
+        ValidationUtils.validateNotHavingUnderscore("cogni_fide", StringUtils.EMPTY));
+    assertEquals("cognifide",
+        ValidationUtils.validateNotHavingUnderscore("c_ogni_fide", StringUtils.EMPTY));
+    assertEquals("strange-company-name",
+        ValidationUtils.validateNotHavingUnderscore("strange-company-name", StringUtils.EMPTY));
   }
 
 }

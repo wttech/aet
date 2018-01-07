@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.runner.distribution;
 
@@ -76,10 +74,11 @@ class SuiteExecutor {
 
   @Inject
   SuiteExecutor(SuiteExecutionSettings suiteExecutionSettings, TimeoutWatch timeoutWatch,
-                SuiteIndexWrapper suite, CollectDispatcher collectDispatcher,
-                CollectionResultsRouter collectionResultsRouter, ComparisonResultsRouter comparisonResultsRouter,
-                SuiteAgent suiteAgent, ProgressMessageObserver progressMessageObserver,
-                MetadataPersister metadataPersister, @Named("failureTimeout") long runTimeoutInSeconds) {
+      SuiteIndexWrapper suite, CollectDispatcher collectDispatcher,
+      CollectionResultsRouter collectionResultsRouter,
+      ComparisonResultsRouter comparisonResultsRouter,
+      SuiteAgent suiteAgent, ProgressMessageObserver progressMessageObserver,
+      MetadataPersister metadataPersister, @Named("failureTimeout") long runTimeoutInSeconds) {
     this.suiteExecutionSettings = suiteExecutionSettings;
     this.timeoutWatch = timeoutWatch;
     this.suite = suite;
@@ -120,14 +119,14 @@ class SuiteExecutor {
     if (processed) {
       if (!comparisonResultsRouter.isFinished()) {
         LOGGER.warn("Consumer removed - aborting TestLifeCycle for task: {}",
-                suite.get().getCorrelationId());
+            suite.get().getCorrelationId());
       }
       comparisonResultsRouter.abort();
       collectDispatcher.cancel(suite.get().getCorrelationId());
     } else {
       processed = true;
       LOGGER.warn("Consumer removed - aborting TestLifeCycle for task: {} before processing",
-              suite.get().getCorrelationId());
+          suite.get().getCorrelationId());
     }
   }
 
@@ -159,24 +158,24 @@ class SuiteExecutor {
   }
 
   private void process(ExecutionTimer timer)
-          throws JMSException, AETException {
+      throws JMSException, AETException {
     if (tryProcess()) {
       checkStatusUntilFinishedOrTimedOut();
       if (comparisonResultsRouter.isFinished()) {
         timer.finish();
         LOGGER.info("Finished lifecycle of test run: {}. Task finished in {} ms ({}).",
-                suite.get().getCorrelationId(), timer.getExecutionTimeInMillis(),
-                timer.getExecutionTimeInMMSS());
+            suite.get().getCorrelationId(), timer.getExecutionTimeInMillis(),
+            timer.getExecutionTimeInMMSS());
         LOGGER.info("Total tasks finished in steps: collect: {}; compare: {}.",
-                collectionResultsRouter.getTotalTasksCount(),
-                comparisonResultsRouter.getTotalTasksCount());
+            collectionResultsRouter.getTotalTasksCount(),
+            comparisonResultsRouter.getTotalTasksCount());
       } else if (suiteIsTimedOut()) {
         timer.finish();
         LOGGER.warn(
-                "Lifecycle of run {} interrupted after {} ms ({}). Last message received: {} seconds ago... Trying to force report generation.",
-                suite.get().getCorrelationId(), timer.getExecutionTimeInMillis(),
-                timer.getExecutionTimeInMMSS(),
-                TimeUnit.NANOSECONDS.toSeconds(timeoutWatch.getLastUpdateDifference()));
+            "Lifecycle of run {} interrupted after {} ms ({}). Last message received: {} seconds ago... Trying to force report generation.",
+            suite.get().getCorrelationId(), timer.getExecutionTimeInMillis(),
+            timer.getExecutionTimeInMMSS(),
+            TimeUnit.NANOSECONDS.toSeconds(timeoutWatch.getLastUpdateDifference()));
         forceFinishSuite();
         collectDispatcher.cancel(suite.get().getCorrelationId());
       }
@@ -222,14 +221,14 @@ class SuiteExecutor {
 
   private void forceFinishSuite() {
     suiteAgent.onError(ProcessingError
-            .reportingError("Report will be generated after timeout - some results might be missing!"));
+        .reportingError("Report will be generated after timeout - some results might be missing!"));
     suiteAgent.enforceSuiteFinish();
     timeoutWatch.update();
     metadataPersister.persistMetadata();
     checkStatusUntilFinishedOrTimedOut();
     if (!comparisonResultsRouter.isFinished()) {
       suiteAgent.sendFailMessage(Collections
-              .singletonList("Failed to generate reports because it took too much time!"));
+          .singletonList("Failed to generate reports because it took too much time!"));
     }
   }
 
