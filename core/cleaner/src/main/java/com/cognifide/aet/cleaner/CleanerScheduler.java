@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.cleaner;
 
@@ -104,22 +102,27 @@ public class CleanerScheduler {
     LOGGER.info("Activating CleanerScheduler.");
     try {
       schedule = PropertiesUtil.toString(properties.get(SCHEDULE_CRON), null);
-      removeOlderThan = PropertiesUtil.toLong(properties.get(REMOVE_OLDER_THAN), DEFAULT_REMOVE_OLDER_THAN_PARAM);
-      keepNVersions = PropertiesUtil.toLong(properties.get(KEEP_N_VERSIONS), DEFAULT_KEEP_N_VERSIONS_PARAM);
+      removeOlderThan = PropertiesUtil
+          .toLong(properties.get(REMOVE_OLDER_THAN), DEFAULT_REMOVE_OLDER_THAN_PARAM);
+      keepNVersions = PropertiesUtil
+          .toLong(properties.get(KEEP_N_VERSIONS), DEFAULT_KEEP_N_VERSIONS_PARAM);
       companyName = PropertiesUtil.toString(properties.get(COMPANY_NAME), "");
       projectName = PropertiesUtil.toString(properties.get(PROJECT_NAME), "");
       dryRun = PropertiesUtil.toBoolean(properties.get(DRY_RUN), true);
 
-      ValidationResultBuilder validationResultBuilder = validationResultBuilderFactory.createInstance();
+      ValidationResultBuilder validationResultBuilder = validationResultBuilderFactory
+          .createInstance();
       new CleanerSchedulerValidator(schedule, keepNVersions, removeOlderThan)
-              .validate(validationResultBuilder);
+          .validate(validationResultBuilder);
       if (!validationResultBuilder.hasErrors()) {
         scheduler = StdSchedulerFactory.getDefaultScheduler();
         scheduler.start();
         scheduledJob = registerCleaningJob();
-        LOGGER.info("CleanerScheduler has been activated successfully with parameters: {}", this.toString());
+        LOGGER.info("CleanerScheduler has been activated successfully with parameters: {}",
+            this.toString());
       } else {
-        LOGGER.error("Cleaner has been not scheduled because of errors: {}", validationResultBuilder);
+        LOGGER
+            .error("Cleaner has been not scheduled because of errors: {}", validationResultBuilder);
       }
     } catch (SchedulerException e) {
       LOGGER.error("Failed to activate scheduler", e);
@@ -152,23 +155,23 @@ public class CleanerScheduler {
     final String cleanerTriggerName = "cleanMongoDbTrigger-" + uuid;
 
     final ImmutableMap<String, Object> jobData = ImmutableMap.<String, Object>builder()
-            .put(CleanerJob.KEY_ROUTE_BUILDER, metadataCleanerRouteBuilder)
-            .put(CleanerJob.KEY_KEEP_N_VERSIONS, keepNVersions)
-            .put(CleanerJob.KEY_REMOVE_OLDER_THAN, removeOlderThan)
-            .put(CleanerJob.KEY_COMPANY_FILTER, companyName)
-            .put(CleanerJob.KEY_PROJECT_FILTER, projectName)
-            .put(CleanerJob.KEY_DRY_RUN, dryRun)
-            .build();
+        .put(CleanerJob.KEY_ROUTE_BUILDER, metadataCleanerRouteBuilder)
+        .put(CleanerJob.KEY_KEEP_N_VERSIONS, keepNVersions)
+        .put(CleanerJob.KEY_REMOVE_OLDER_THAN, removeOlderThan)
+        .put(CleanerJob.KEY_COMPANY_FILTER, companyName)
+        .put(CleanerJob.KEY_PROJECT_FILTER, projectName)
+        .put(CleanerJob.KEY_DRY_RUN, dryRun)
+        .build();
 
     JobDetail jobDetail = JobBuilder.newJob(CleanerJob.class)
-            .withIdentity(cleanerJobName)
-            .usingJobData(new JobDataMap(jobData))
-            .build();
+        .withIdentity(cleanerJobName)
+        .usingJobData(new JobDataMap(jobData))
+        .build();
 
     Trigger trigger = TriggerBuilder.newTrigger()
-            .withIdentity(cleanerTriggerName)
-            .withSchedule(CronScheduleBuilder.cronSchedule(schedule))
-            .build();
+        .withIdentity(cleanerTriggerName)
+        .withSchedule(CronScheduleBuilder.cronSchedule(schedule))
+        .build();
 
     scheduler.scheduleJob(jobDetail, trigger);
     return cleanerJobName;
@@ -177,12 +180,12 @@ public class CleanerScheduler {
   @Override
   public String toString() {
     return Objects.toStringHelper(this)
-            .add("schedule", schedule)
-            .add("keepNVersions", keepNVersions)
-            .add("removeOlderThan", removeOlderThan)
-            .add("companyName", companyName)
-            .add("projectName", projectName)
-            .add("dryRun", dryRun)
-            .toString();
+        .add("schedule", schedule)
+        .add("keepNVersions", keepNVersions)
+        .add("removeOlderThan", removeOlderThan)
+        .add("companyName", companyName)
+        .add("projectName", projectName)
+        .add("dryRun", dryRun)
+        .toString();
   }
 }

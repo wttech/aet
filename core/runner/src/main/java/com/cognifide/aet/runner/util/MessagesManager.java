@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.runner.util;
 
@@ -72,7 +70,8 @@ public class MessagesManager {
   }
 
   /**
-   * Removes all messages with given correlationID. AETException is thrown when failed to remove messages.
+   * Removes all messages with given correlationID. AETException is thrown when failed to remove
+   * messages.
    *
    * @param correlationID - correlationId of messages that will be removed.
    */
@@ -85,12 +84,12 @@ public class MessagesManager {
       for (ObjectName queue : getAetQueuesObjects(connection)) {
         String queueName = queue.getKeyProperty(DESTINATION_NAME_PROPERTY);
         int deletedMessagesNumber = (Integer) connection.invoke(queue, REMOVE_OPERATION_NAME,
-                removeSelector, signature);
+            removeSelector, signature);
         LOGGER.debug("Deleted: {} jmsMessages from: {} queue", deletedMessagesNumber, queueName);
       }
     } catch (Exception e) {
       throw new AETException(String.format("Error while removing messages with correlationID: %s",
-              correlationID), e);
+          correlationID), e);
     }
   }
 
@@ -105,7 +104,8 @@ public class MessagesManager {
     return jmxUrl;
   }
 
-  protected Set<ObjectName> getAetQueuesObjects(MBeanServerConnection connection) throws AETException {
+  protected Set<ObjectName> getAetQueuesObjects(MBeanServerConnection connection)
+      throws AETException {
     ObjectName[] queues;
     try {
       ObjectName broker = new ObjectName(BROKER_OBJECT_NAME);

@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.executor.xmlparser.xml.utils;
 
@@ -45,7 +43,8 @@ public final class ValidationUtils {
     // empty utils constructor
   }
 
-  public static String validateNotHavingUnderscore(String value, String warnMessage) throws ParseException {
+  public static String validateNotHavingUnderscore(String value, String warnMessage)
+      throws ParseException {
     String fixedValue = StringUtils.remove(value, "_");
 
     if (!StringUtils.equals(value, fixedValue)) {
@@ -63,8 +62,8 @@ public final class ValidationUtils {
     // check total sleep duration
     if (sleepTotal > MAX_TOTAL_SLEEP_DURATION) {
       throw new IllegalArgumentException(String.format(
-              "Total sleep duration cannot be longer than %d seconds per test!",
-              MAX_TOTAL_SLEEP_DURATION / 1000));
+          "Total sleep duration cannot be longer than %d seconds per test!",
+          MAX_TOTAL_SLEEP_DURATION / 1000));
     }
   }
 
@@ -76,7 +75,7 @@ public final class ValidationUtils {
         int sleepDuration = Integer.valueOf(collectorStep.getParameters().get(PARAM_DURATION));
         if (sleepDuration > MAX_SLEEP_DURATION) {
           throw new IllegalArgumentException(String.format(
-                  "Sleep duration cannot be longer than %d seconds!", MAX_SLEEP_DURATION / 1000));
+              "Sleep duration cannot be longer than %d seconds!", MAX_SLEEP_DURATION / 1000));
         }
         sleepTotal += sleepDuration;
       }
@@ -88,7 +87,7 @@ public final class ValidationUtils {
     // check consecutive sleeps
     for (int i = 0; i < collectorSteps.size() - 1; i++) {
       if (collectorSteps.get(i).getName().equals(SLEEP_MODIFIER_NAME)
-              && collectorSteps.get(i + 1).getName().equals(SLEEP_MODIFIER_NAME)) {
+          && collectorSteps.get(i + 1).getName().equals(SLEEP_MODIFIER_NAME)) {
         throw new IllegalArgumentException("You cannot use more than one sleep modifier in a row!");
       }
     }
@@ -112,39 +111,43 @@ public final class ValidationUtils {
     return fixedString;
   }
 
-  public static String validateCaseSensitiveNameAttribute(String parentElement, String name, String value)
-          throws ParseException {
+  public static String validateCaseSensitiveNameAttribute(String parentElement, String name,
+      String value)
+      throws ParseException {
     String result = validateLowerCase(
-            value,
-            String.format(
-                    "Attribute: %s in %s definition shouldn't have uppercase letters (current: '%s'). Please fix it.",
-                    name, parentElement, value));
+        value,
+        String.format(
+            "Attribute: %s in %s definition shouldn't have uppercase letters (current: '%s'). Please fix it.",
+            name, parentElement, value));
     return validateNameAttribute(parentElement, name, result, LOWERCASE_NAME_ATTRIBUTE_PATTERN);
   }
 
-  public static String validateCaseInsensitiveNameAttribute(String parentElement, String name, String value)
-          throws ParseException {
-    return validateNameAttribute(parentElement, name, value, CASE_INSENSITIVE_NAME_ATTRIBUTE_PATTERN);
+  public static String validateCaseInsensitiveNameAttribute(String parentElement, String name,
+      String value)
+      throws ParseException {
+    return validateNameAttribute(parentElement, name, value,
+        CASE_INSENSITIVE_NAME_ATTRIBUTE_PATTERN);
   }
 
   private static String validateNameAttribute(String parentElement, String name, String value,
-                                              String pattern) throws ParseException {
+      String pattern) throws ParseException {
     String result;
     try {
       result = validateWhitespace(
-              value,
-              String.format(
-                      "Attribute: %s in %s definition shouldn't have whitespace (current: '%s'). Please fix it.",
-                      name, parentElement, value));
+          value,
+          String.format(
+              "Attribute: %s in %s definition shouldn't have whitespace (current: '%s'). Please fix it.",
+              name, parentElement, value));
     } catch (ParseException e) {
-      throw new ParseException(String.format("Problem with attribute %s: '%s' in %s definition.", name,
+      throw new ParseException(
+          String.format("Problem with attribute %s: '%s' in %s definition.", name,
               value, parentElement), e);
     }
 
     if (!Pattern.matches(pattern, result)) {
       throw new ParseException(String.format(
-              "Value '%s' of attribute %s in %s does not match pattern `%s`!", value, name,
-              parentElement, pattern));
+          "Value '%s' of attribute %s in %s does not match pattern `%s`!", value, name,
+          parentElement, pattern));
     }
     return result;
   }

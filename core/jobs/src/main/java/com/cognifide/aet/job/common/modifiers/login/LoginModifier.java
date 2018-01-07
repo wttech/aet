@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.job.common.modifiers.login;
 
@@ -43,7 +41,8 @@ public class LoginModifier implements CollectorJob {
 
   private LoginModifierConfig config;
 
-  LoginModifier(WebCommunicationWrapper webCommunicationWrapper, ValidationResultBuilder validationResultBuilder) {
+  LoginModifier(WebCommunicationWrapper webCommunicationWrapper,
+      ValidationResultBuilder validationResultBuilder) {
     this.webCommunicationWrapper = webCommunicationWrapper;
     this.webDriver = webCommunicationWrapper.getWebDriver();
     this.validationResultBuilder = validationResultBuilder;
@@ -62,17 +61,20 @@ public class LoginModifier implements CollectorJob {
           login();
           successfullyLogged = true;
         } catch (ProcessingException e) {
-          LOGGER.warn("Attempt {}/{} to log in to {} failed.", trialNumber + 1, config.getRetrialNumber(), config.getLoginPage(), e);
+          LOGGER.warn("Attempt {}/{} to log in to {} failed.", trialNumber + 1,
+              config.getRetrialNumber(), config.getLoginPage(), e);
         }
         trialNumber++;
       }
       if (!successfullyLogged) {
-        throw new ProcessingException("All attempts to log in to " + config.getLoginPage() + " failed.");
+        throw new ProcessingException(
+            "All attempts to log in to " + config.getLoginPage() + " failed.");
       }
     } else {
       LOGGER.info("User is authenticated.");
       Cookie cookie = getLoginToken();
-      webCommunicationWrapper.getHttpRequestExecutor().addCookie(cookie.getName(), cookie.getValue());
+      webCommunicationWrapper.getHttpRequestExecutor()
+          .addCookie(cookie.getName(), cookie.getValue());
     }
     return CollectorStepResult.newModifierResult();
   }
@@ -86,15 +88,17 @@ public class LoginModifier implements CollectorJob {
       throw new ProcessingException("Unable to acquire Cookie; check credentials.");
     }
 
-    webCommunicationWrapper.getHttpRequestExecutor().addCookie(authCookie.getName(), authCookie.getValue());
+    webCommunicationWrapper.getHttpRequestExecutor()
+        .addCookie(authCookie.getName(), authCookie.getValue());
     LOGGER.info("User has been authenticated");
   }
 
   private void loginToForm() throws ProcessingException {
-    LOGGER.info("Attempting to login user: {} on site {}", config.getLogin(), config.getLoginPage());
+    LOGGER
+        .info("Attempting to login user: {} on site {}", config.getLogin(), config.getLoginPage());
     webDriver.get(config.getLoginPage());
     LoginFormComponent form = new LoginFormComponent(webDriver, config.getLoginInputSelector(),
-            config.getPasswordInputSelector(), config.getSubmitButtonSelector());
+        config.getPasswordInputSelector(), config.getSubmitButtonSelector());
     form.login(config.getLogin(), config.getPassword());
   }
 
