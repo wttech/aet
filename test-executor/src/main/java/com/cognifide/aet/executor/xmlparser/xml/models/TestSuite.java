@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.executor.xmlparser.xml.models;
 
@@ -65,7 +63,7 @@ public class TestSuite {
       } else {
         ParseException e = errors.remove(0);
         StringBuilder builder = new StringBuilder(String.format(
-                "More then one error occurs during Test Suite parsing:%n%s%n", e.getMessage()));
+            "More then one error occurs during Test Suite parsing:%n%s%n", e.getMessage()));
 
         for (ParseException error : errors) {
           builder.append(String.format("%n%s%n", error.getMessage()));
@@ -81,11 +79,13 @@ public class TestSuite {
   @Validate
   public void validate() throws ParseException {
     this.company = ValidationUtils
-            .validateNotHavingUnderscore(ValidationUtils.validateCaseSensitiveNameAttribute(
-                    ATTRIBUTE_PARENT_NAME, "company", company),
-                    "The company parameter can't contain underscores. It is connected with the way the Version API reads companies. Underscores have been stripped.");
-    this.name = ValidationUtils.validateCaseSensitiveNameAttribute(ATTRIBUTE_PARENT_NAME, "name", name);
-    this.project = ValidationUtils.validateCaseSensitiveNameAttribute(ATTRIBUTE_PARENT_NAME, "project",
+        .validateNotHavingUnderscore(ValidationUtils.validateCaseSensitiveNameAttribute(
+            ATTRIBUTE_PARENT_NAME, "company", company),
+            "The company parameter can't contain underscores. It is connected with the way the Version API reads companies. Underscores have been stripped.");
+    this.name = ValidationUtils
+        .validateCaseSensitiveNameAttribute(ATTRIBUTE_PARENT_NAME, "name", name);
+    this.project = ValidationUtils
+        .validateCaseSensitiveNameAttribute(ATTRIBUTE_PARENT_NAME, "project",
             project);
   }
 

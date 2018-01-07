@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.worker.listeners;
 
@@ -94,47 +92,53 @@ public class CollectorMessageListenerImpl extends AbstractTaskMessageListener {
     }
     String correlationId = JmsUtils.getJMSCorrelationID(message);
     String requestMessageId = JmsUtils.getJMSMessageID(message);
-    if (collectorJobData != null && StringUtils.isNotBlank(correlationId) && requestMessageId != null) {
+    if (collectorJobData != null && StringUtils.isNotBlank(correlationId)
+        && requestMessageId != null) {
       LOGGER.info(
-              "CollectorJobData [{}] message arrived with {} urls. CorrelationId: {} RequestMessageId: {}",
-              name, collectorJobData.getUrls().size(), correlationId, requestMessageId);
+          "CollectorJobData [{}] message arrived with {} urls. CorrelationId: {} RequestMessageId: {}",
+          name, collectorJobData.getUrls().size(), correlationId, requestMessageId);
       WebCommunicationWrapper webCommunicationWrapper = null;
       int collected = 0;
       try {
         if (isProxyUsed(collectorJobData.getProxy())) {
-          webCommunicationWrapper = this.webDriverProvider.createWebDriverWithProxy(webDriverName, collectorJobData.getProxy());
+          webCommunicationWrapper = this.webDriverProvider
+              .createWebDriverWithProxy(webDriverName, collectorJobData.getProxy());
         } else {
           webCommunicationWrapper = this.webDriverProvider.createWebDriver(webDriverName);
         }
-        collected = runUrls(collectorJobData, requestMessageId, webCommunicationWrapper, correlationId);
+        collected = runUrls(collectorJobData, requestMessageId, webCommunicationWrapper,
+            correlationId);
 
       } catch (WorkerException e) {
         for (Url url : collectorJobData.getUrls()) {
           String errorMessage = String.format(
-                  "Couldn't process following url `%s` because of error: %s", url.getUrl(), e.getMessage());
+              "Couldn't process following url `%s` because of error: %s", url.getUrl(),
+              e.getMessage());
           LOGGER.error(errorMessage, e);
           CollectorResultData collectorResultData = CollectorResultData.createErrorResult(
-                  url, ProcessingError.collectingError(errorMessage), requestMessageId,
-                  collectorJobData.getTestName());
+              url, ProcessingError.collectingError(errorMessage), requestMessageId,
+              collectorJobData.getTestName());
           feedbackQueue.sendObjectMessageWithCorrelationID(collectorResultData, correlationId);
         }
       } finally {
         quitWebDriver(webCommunicationWrapper);
       }
-      LOGGER.info("Successfully collected from {}/{} urls.", collected, collectorJobData.getUrls().size());
+      LOGGER.info("Successfully collected from {}/{} urls.", collected,
+          collectorJobData.getUrls().size());
     }
 
   }
 
   private int runUrls(CollectorJobData collectorJobData, String requestMessageId,
-                      WebCommunicationWrapper webCommunicationWrapper, String correlationId) {
+      WebCommunicationWrapper webCommunicationWrapper, String correlationId) {
     int result = 0;
     for (Url url : collectorJobData.getUrls()) {
       try {
         ExecutionTimer timer = ExecutionTimer.createAndRun("url");
         final Url processedUrl = dispatcher.run(url, collectorJobData, webCommunicationWrapper);
 
-        final CollectorResultData collectorResultData = CollectorResultData.createSuccessResult(processedUrl, requestMessageId,
+        final CollectorResultData collectorResultData = CollectorResultData
+            .createSuccessResult(processedUrl, requestMessageId,
                 collectorJobData.getTestName());
         result++;
         timer.finishAndLog(processedUrl.getUrl());
@@ -145,14 +149,14 @@ public class CollectorMessageListenerImpl extends AbstractTaskMessageListener {
         final String message = "Unrecognized collector error: " + e.getMessage();
 
         CollectorStepResult collectorStepProcessingError =
-                CollectorStepResult.newProcessingErrorResult(message);
+            CollectorStepResult.newProcessingErrorResult(message);
         for (Step step : url.getSteps()) {
           step.setStepResult(collectorStepProcessingError);
         }
 
         CollectorResultData collectorResultData = CollectorResultData.createErrorResult(
-                url, ProcessingError.collectingError(message), requestMessageId,
-                collectorJobData.getTestName());
+            url, ProcessingError.collectingError(message), requestMessageId,
+            collectorJobData.getTestName());
         feedbackQueue.sendObjectMessageWithCorrelationID(collectorResultData, correlationId);
       }
     }

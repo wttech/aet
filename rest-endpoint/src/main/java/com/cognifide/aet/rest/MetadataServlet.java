@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.rest;
 
@@ -64,7 +62,8 @@ public class MetadataServlet extends BasicDataServlet {
   private LockService lockService;
 
   @Override
-  protected void process(DBKey dbKey, HttpServletRequest req, HttpServletResponse resp) throws IOException {
+  protected void process(DBKey dbKey, HttpServletRequest req, HttpServletResponse resp)
+      throws IOException {
     String correlationId = req.getParameter(Helper.CORRELATION_ID_PARAM);
     String suiteName = req.getParameter(Helper.SUITE_PARAM);
     String formatted = req.getParameter(FORMATTED_PARAM);
@@ -79,7 +78,8 @@ public class MetadataServlet extends BasicDataServlet {
         suite = metadataDAO.getLatestRun(dbKey, suiteName);
       } else {
         resp.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
-        resp.getWriter().write(responseAsJson("Neither valid correlationId or suite param was specified."));
+        resp.getWriter()
+            .write(responseAsJson("Neither valid correlationId or suite param was specified."));
         return;
       }
     } catch (StorageException e) {
@@ -98,7 +98,8 @@ public class MetadataServlet extends BasicDataServlet {
       resp.getWriter().write(result);
     } else {
       resp.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
-      resp.getWriter().write(responseAsJson("Unable to get Suite Metadata for %s", dbKey.toString()));
+      resp.getWriter()
+          .write(responseAsJson("Unable to get Suite Metadata for %s", dbKey.toString()));
     }
   }
 
@@ -113,7 +114,7 @@ public class MetadataServlet extends BasicDataServlet {
    */
   @Override
   protected void doPost(HttpServletRequest req, HttpServletResponse resp)
-          throws ServletException, IOException {
+      throws ServletException, IOException {
     if (LOGGER.isDebugEnabled()) {
       LOGGER.debug("POST: " + req.toString());
     }
@@ -128,22 +129,28 @@ public class MetadataServlet extends BasicDataServlet {
     } catch (JsonSyntaxException | JsonIOException jsonSyntaxException) {
       LOGGER.error("Invalid json provided by client", jsonSyntaxException);
       resp.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
-      resp.getWriter().write(responseAsJson("Error: Invalid format of provided Json %s", jsonSyntaxException.getMessage()));
+      resp.getWriter().write(responseAsJson("Error: Invalid format of provided Json %s",
+          jsonSyntaxException.getMessage()));
     } catch (ValidatorException validatorException) {
-      LOGGER.error("Invalid json provided by client: {}", validatorException.getIssues(), validatorException);
+      LOGGER.error("Invalid json provided by client: {}", validatorException.getIssues(),
+          validatorException);
       resp.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
-      resp.getWriter().write(responseAsJson("Invalid Suite representation : %s", validatorException.getIssues()));
+      resp.getWriter().write(
+          responseAsJson("Invalid Suite representation : %s", validatorException.getIssues()));
     } catch (StorageException e) {
       LOGGER.error("Failed to save suite", e);
       resp.setStatus(HttpURLConnection.HTTP_INTERNAL_ERROR);
-      resp.getWriter().write(responseAsJson("ERROR: Unable to save provided Suite. %s", e.getMessage()));
+      resp.getWriter()
+          .write(responseAsJson("ERROR: Unable to save provided Suite. %s", e.getMessage()));
     } finally {
       resp.flushBuffer();
     }
   }
 
-  private void updateSuite(HttpServletRequest req) throws StorageException, ValidatorException, AETException, IOException {
-    BufferedReader reader = new BufferedReader(new InputStreamReader(req.getInputStream(), StandardCharsets.UTF_8));
+  private void updateSuite(HttpServletRequest req)
+      throws StorageException, ValidatorException, AETException, IOException {
+    BufferedReader reader = new BufferedReader(
+        new InputStreamReader(req.getInputStream(), StandardCharsets.UTF_8));
     Suite suite = Suite.fromJson(reader);
     checkLock(suite.getSuiteIdentifier());
     checkAnotherSuitePattern(suite.getPatternCorrelationId());

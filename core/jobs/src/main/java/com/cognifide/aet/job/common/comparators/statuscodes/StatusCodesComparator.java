@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.job.common.comparators.statuscodes;
 
@@ -73,7 +71,7 @@ public class StatusCodesComparator implements ComparatorJob {
   private final List<DataFilterJob> dataFilterJobs;
 
   public StatusCodesComparator(ArtifactsDAO artifactsDAO, ComparatorProperties comparatorProperties,
-                               List<DataFilterJob> dataFilterJobs) {
+      List<DataFilterJob> dataFilterJobs) {
     this.artifactsDAO = artifactsDAO;
     this.properties = comparatorProperties;
     this.dataFilterJobs = dataFilterJobs;
@@ -84,11 +82,11 @@ public class StatusCodesComparator implements ComparatorJob {
   public ComparatorStepResult compare() throws ProcessingException {
     final ComparatorStepResult result;
     LOGGER.info("Starting comparison phase for  status codes for Company: {} Project: {}",
-            properties.getCompany(), properties.getProject());
+        properties.getCompany(), properties.getProject());
     try {
 
       StatusCodesCollectorResult dataResult = artifactsDAO.getJsonFormatArtifact(properties,
-              properties.getCollectedId(), RESULT_TYPE);
+          properties.getCollectedId(), RESULT_TYPE);
 
       for (DataFilterJob<StatusCodesCollectorResult> dataFilterJob : dataFilterJobs) {
         dataResult = dataFilterJob.modifyData(dataResult);
@@ -96,7 +94,7 @@ public class StatusCodesComparator implements ComparatorJob {
 
       List<StatusCode> statusCodes = dataResult.getStatusCodes();
       StatusCodesFilter statusCodesFilter = new StatusCodesFilter(filterRangeLowerBound,
-              filterRangeUpperBound, filterCodes);
+          filterRangeUpperBound, filterCodes);
 
       Map<String, StatusCode> deduplicatedStatusCodes = new LinkedHashMap<>();
       for (StatusCode code : statusCodes) {
@@ -104,23 +102,25 @@ public class StatusCodesComparator implements ComparatorJob {
       }
 
       List<StatusCode> filteredStatusCodes = statusCodesFilter.filter(Lists
-              .newArrayList(deduplicatedStatusCodes.values()));
+          .newArrayList(deduplicatedStatusCodes.values()));
 
       List<StatusCode> notExcludedStatusCodes = Lists.newLinkedList();
       notExcludedStatusCodes.addAll(Collections2.filter(filteredStatusCodes,
-              new Excludable.NonExcludedPredicate()));
+          new Excludable.NonExcludedPredicate()));
 
       List<StatusCode> excludedStatusCodes = Lists.newLinkedList();
       if (showExcluded) {
         excludedStatusCodes.addAll(Collections2.filter(filteredStatusCodes,
-                new Excludable.ExcludedPredicate()));
+            new Excludable.ExcludedPredicate()));
       }
       Boolean isSuccess = notExcludedStatusCodes.isEmpty();
 
-      StatusCodesComparatorResult comparatorResult = new StatusCodesComparatorResult(statusCodes, notExcludedStatusCodes, excludedStatusCodes);
+      StatusCodesComparatorResult comparatorResult = new StatusCodesComparatorResult(statusCodes,
+          notExcludedStatusCodes, excludedStatusCodes);
       String resultId = artifactsDAO.saveArtifactInJsonFormat(properties, comparatorResult);
 
-      result = new ComparatorStepResult(resultId, isSuccess ? ComparatorStepResult.Status.PASSED : ComparatorStepResult.Status.FAILED);
+      result = new ComparatorStepResult(resultId,
+          isSuccess ? ComparatorStepResult.Status.PASSED : ComparatorStepResult.Status.FAILED);
 
     } catch (Exception e) {
       throw new ProcessingException(e.getMessage(), e);
@@ -145,7 +145,7 @@ public class StatusCodesComparator implements ComparatorJob {
     String[] split = StringUtils.split(param, PARAM_DELIMITER);
     if (split.length != 2) {
       throw new ParametersException(
-              "Filter Range Param is not configured correctly. Correct example: filterRange=\"200,400\"");
+          "Filter Range Param is not configured correctly. Correct example: filterRange=\"200,400\"");
     }
     try {
       filterRangeLowerBound = Integer.parseInt(split[0]);
@@ -155,7 +155,7 @@ public class StatusCodesComparator implements ComparatorJob {
       }
     } catch (NumberFormatException e) {
       throw new ParametersException(
-              "Failed to parse parameter to integer value. Please provide correct values", e);
+          "Failed to parse parameter to integer value. Please provide correct values", e);
     }
   }
 
@@ -166,7 +166,7 @@ public class StatusCodesComparator implements ComparatorJob {
         filterCodes.add(Integer.parseInt(code));
       } catch (NumberFormatException e) {
         throw new ParametersException(
-                "Failed to parse parameter to integer value. Please provide correct values", e);
+            "Failed to parse parameter to integer value. Please provide correct values", e);
       }
     }
   }

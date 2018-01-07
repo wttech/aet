@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.rest;
 
@@ -70,7 +68,8 @@ public class XUnitServlet extends BasicDataServlet {
 
 
   @Override
-  protected void process(DBKey dbKey, HttpServletRequest request, HttpServletResponse response) throws IOException {
+  protected void process(DBKey dbKey, HttpServletRequest request, HttpServletResponse response)
+      throws IOException {
     final String correlationId = request.getParameter(Helper.CORRELATION_ID_PARAM);
     final String suiteName = request.getParameter(Helper.SUITE_PARAM);
     response.setCharacterEncoding(Charsets.UTF_8.toString());
@@ -85,7 +84,8 @@ public class XUnitServlet extends BasicDataServlet {
     }
   }
 
-  private Suite getSuite(DBKey dbKey, String correlationId, String suiteName) throws RestServiceException {
+  private Suite getSuite(DBKey dbKey, String correlationId, String suiteName)
+      throws RestServiceException {
     final Suite suite;
     try {
       if (isValidCorrelationId(correlationId)) {
@@ -101,7 +101,8 @@ public class XUnitServlet extends BasicDataServlet {
     return suite;
   }
 
-  private void generateXUnitAndRespondWithIt(DBKey dbKey, HttpServletResponse response, Suite suite) throws IOException {
+  private void generateXUnitAndRespondWithIt(DBKey dbKey, HttpServletResponse response, Suite suite)
+      throws IOException {
     final MetadataToXUnitConverter converter = new MetadataToXUnitConverter(suite);
 
     try (InputStream result = generateXML(converter.convert())) {

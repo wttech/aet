@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.job.common.comparators.layout;
 
@@ -61,9 +59,9 @@ public class LayoutComparator implements ComparatorJob {
       stepResult = getPassedStepResult();
     } else {
       try (InputStream collectedArtifact = artifactsDAO
-              .getArtifact(properties, properties.getCollectedId()).getArtifactStream();
-           InputStream patternArtifact = artifactsDAO
-                   .getArtifact(properties, properties.getPatternId()).getArtifactStream()) {
+          .getArtifact(properties, properties.getCollectedId()).getArtifactStream();
+          InputStream patternArtifact = artifactsDAO
+              .getArtifact(properties, properties.getPatternId()).getArtifactStream()) {
 
         BufferedImage patternImg = ImageIO.read(patternArtifact);
         BufferedImage collectedImg = ImageIO.read(collectedArtifact);
@@ -84,7 +82,7 @@ public class LayoutComparator implements ComparatorJob {
   }
 
   private ComparatorStepResult saveArtifacts(ImageComparisonResult imageComparisonResult)
-          throws ProcessingException {
+      throws ProcessingException {
     final ComparatorStepResult result;
     if (imageComparisonResult.isMatch()) {
       result = getPassedStepResult();
@@ -98,16 +96,16 @@ public class LayoutComparator implements ComparatorJob {
         result = new ComparatorStepResult(maskArtifactId, ComparatorStepResult.Status.FAILED, true);
 
         result.addData("heightDifference",
-                Integer.toString(imageComparisonResult.getHeightDifference()));
+            Integer.toString(imageComparisonResult.getHeightDifference()));
         result.addData("widthDifference",
-                Integer.toString(imageComparisonResult.getWidthDifference()));
+            Integer.toString(imageComparisonResult.getWidthDifference()));
         result.addData("pixelDifference",
-                Integer.toString(imageComparisonResult.getPixelDifferenceCount()));
+            Integer.toString(imageComparisonResult.getPixelDifferenceCount()));
         result.addData("patternTimestamp", Long.toString(
-                artifactsDAO.getArtifactUploadDate(properties, properties.getPatternId()).getTime()));
+            artifactsDAO.getArtifactUploadDate(properties, properties.getPatternId()).getTime()));
         result.addData("collectTimestamp", Long.toString(
-                artifactsDAO.getArtifactUploadDate(properties, properties.getCollectedId())
-                        .getTime()));
+            artifactsDAO.getArtifactUploadDate(properties, properties.getCollectedId())
+                .getTime()));
       } catch (Exception e) {
         throw new ProcessingException(e.getMessage(), e);
       } finally {
@@ -119,9 +117,10 @@ public class LayoutComparator implements ComparatorJob {
   }
 
   private ComparatorStepResult getPassedStepResult() {
-    ComparatorStepResult result = new ComparatorStepResult(null, ComparatorStepResult.Status.PASSED, false);
+    ComparatorStepResult result = new ComparatorStepResult(null, ComparatorStepResult.Status.PASSED,
+        false);
     result.addData("patternTimestamp", Long.toString(
-            artifactsDAO.getArtifactUploadDate(properties, properties.getPatternId()).getTime()));
+        artifactsDAO.getArtifactUploadDate(properties, properties.getPatternId()).getTime()));
     result.addData("collectTimestamp", Long.toString(System.currentTimeMillis()));
     return result;
   }

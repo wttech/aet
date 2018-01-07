@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.job.common.comparators.accessibility;
 
@@ -53,8 +51,9 @@ public class AccessibilityComparator implements ComparatorJob {
 
   private AccessibilityReportConfiguration configuration;
 
-  public AccessibilityComparator(ArtifactsDAO artifactsDAO, ComparatorProperties comparatorProperties,
-                                 List<DataFilterJob> dataFilterJobs) {
+  public AccessibilityComparator(ArtifactsDAO artifactsDAO,
+      ComparatorProperties comparatorProperties,
+      List<DataFilterJob> dataFilterJobs) {
     this.artifactsDAO = artifactsDAO;
     this.properties = comparatorProperties;
     this.dataFilterJobs = dataFilterJobs;
@@ -71,23 +70,24 @@ public class AccessibilityComparator implements ComparatorJob {
     final ComparatorStepResult result;
     try {
       List<AccessibilityIssue> issues = artifactsDAO.getJsonFormatArtifact(properties,
-              properties.getCollectedId(), ACCESSIBILITY_ISSUE_LIST);
+          properties.getCollectedId(), ACCESSIBILITY_ISSUE_LIST);
 
       for (DataFilterJob<List<AccessibilityIssue>> dataFilterJob : dataFilterJobs) {
         issues = dataFilterJob.modifyData(issues);
       }
       List<AccessibilityIssue> notExcludedIssues = Lists.newLinkedList();
       notExcludedIssues.addAll(Collections2.filter(issues,
-              new Excludable.NonExcludedPredicate()));
+          new Excludable.NonExcludedPredicate()));
 
       List<AccessibilityIssue> excludedIssues = Lists.newLinkedList();
       if (configuration.isShowExcluded()) {
         excludedIssues.addAll(Collections2.filter(issues,
-                new Excludable.ExcludedPredicate()));
+            new Excludable.ExcludedPredicate()));
       }
 
       AccessibilityReportGenerator resultParser = new AccessibilityReportGenerator(configuration);
-      AccessibilityReport comparatorReport = resultParser.generate(notExcludedIssues, excludedIssues);
+      AccessibilityReport comparatorReport = resultParser
+          .generate(notExcludedIssues, excludedIssues);
       ComparatorStepResult.Status resultStatus = getStatus(comparatorReport);
       String resultId = artifactsDAO.saveArtifactInJsonFormat(properties, comparatorReport);
       result = new ComparatorStepResult(resultId, resultStatus);
@@ -102,7 +102,8 @@ public class AccessibilityComparator implements ComparatorJob {
     ComparatorStepResult.Status result;
     if (report.getErrorCount() > 0) {
       result = ComparatorStepResult.Status.FAILED;
-    } else if (report.getWarningCount() > 0 || (!configuration.isIgnoreNotice() && report.getNoticeCount() > 0)) {
+    } else if (report.getWarningCount() > 0 || (!configuration.isIgnoreNotice()
+        && report.getNoticeCount() > 0)) {
       result = ComparatorStepResult.Status.WARNING;
     } else {
       result = ComparatorStepResult.Status.PASSED;

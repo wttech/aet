@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.job.common.datafilters.w3chtmlfilter;
 
@@ -68,7 +66,7 @@ public class W3cHtml5IssuesFilter extends AbstractDataModifierJob<W3cHtml5Compar
           errorsCount--;
         }
         if (W3cHtml5IssueType.WARN.equals(issue.getIssueType())
-                || W3cHtml5IssueType.INFO.equals(issue.getIssueType())) {
+            || W3cHtml5IssueType.INFO.equals(issue.getIssueType())) {
           warningsCount--;
         }
       } else {
@@ -81,7 +79,8 @@ public class W3cHtml5IssuesFilter extends AbstractDataModifierJob<W3cHtml5Compar
 
   private boolean shouldExclude(W3cHtml5Issue issue) {
     final String decodedMessage = StringEscapeUtils.unescapeHtml4(issue.getMessage());
-    final boolean messageMatchesOrPatternNotSet = ParamsHelper.matches(messagePattern, decodedMessage);
+    final boolean messageMatchesOrPatternNotSet = ParamsHelper
+        .matches(messagePattern, decodedMessage);
     final boolean lineMatchesOrNotSet = line == null || line == issue.getLine();
     final boolean columnMatchesOrNotSet = column == null || column == issue.getColumn();
 
@@ -99,7 +98,8 @@ public class W3cHtml5IssuesFilter extends AbstractDataModifierJob<W3cHtml5Compar
 
   @Override
   public String getInfo() {
-    return NAME + " DataModifier with parameters: " + PARAM_MESSAGE_PATTERN + ": '" + messagePattern + "' "
+    return NAME + " DataModifier with parameters: " + PARAM_MESSAGE_PATTERN + ": '" + messagePattern
+        + "' "
         + PARAM_LINE + ": " + line + " " + PARAM_COLUMN + ": " + column;
   }
 

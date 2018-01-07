@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.job.common.comparators.source;
 
@@ -58,8 +56,9 @@ public class SourceComparator implements ComparatorJob {
 
   private final List<DataFilterJob> dataFilterJobs;
 
-  public SourceComparator(ArtifactsDAO artifactsDAO, ComparatorProperties properties, DiffParser diffParser,
-                          List<DataFilterJob> dataFilterJobs) {
+  public SourceComparator(ArtifactsDAO artifactsDAO, ComparatorProperties properties,
+      DiffParser diffParser,
+      List<DataFilterJob> dataFilterJobs) {
     this.artifactsDAO = artifactsDAO;
     this.properties = properties;
     this.diffParser = diffParser;
@@ -72,33 +71,36 @@ public class SourceComparator implements ComparatorJob {
   public final ComparatorStepResult compare() throws ProcessingException {
     final ComparatorStepResult result;
     try {
-      String patternSource = formatCode(artifactsDAO.getArtifactAsString(properties, properties.getPatternId()));
-      String dataSource = formatCode(artifactsDAO.getArtifactAsString(properties, properties.getCollectedId()));
+      String patternSource = formatCode(
+          artifactsDAO.getArtifactAsString(properties, properties.getPatternId()));
+      String dataSource = formatCode(
+          artifactsDAO.getArtifactAsString(properties, properties.getCollectedId()));
 
       for (DataFilterJob<String> dataFilterJob : dataFilterJobs) {
         LOGGER.info("Starting {}. Company: {} Project: {}",
-                dataFilterJob.getInfo(), properties.getCompany(), properties.getProject());
+            dataFilterJob.getInfo(), properties.getCompany(), properties.getProject());
 
         dataSource = dataFilterJob.modifyData(dataSource);
 
         LOGGER.info("Successfully ended data modifications using  {}. Company: {} Project: {}",
-                dataFilterJob.getInfo(), properties.getCompany(), properties.getProject());
+            dataFilterJob.getInfo(), properties.getCompany(), properties.getProject());
 
         patternSource = dataFilterJob.modifyPattern(patternSource);
 
         LOGGER.info("Successfully ended pattern modifications using {}. Company: {} Project: {}",
-                dataFilterJob.getInfo(), properties.getCompany(), properties.getProject());
+            dataFilterJob.getInfo(), properties.getCompany(), properties.getProject());
       }
 
       if (StringUtils.isNotBlank(patternSource)) {
         boolean compareTrimmedLines = shouldCompareTrimmedLines(sourceCompareType);
-        final List<ResultDelta> deltas = diffParser.generateDiffs(patternSource, dataSource, compareTrimmedLines);
+        final List<ResultDelta> deltas = diffParser
+            .generateDiffs(patternSource, dataSource, compareTrimmedLines);
         if (deltas.isEmpty()) {
           result = new ComparatorStepResult(null, ComparatorStepResult.Status.PASSED, false);
         } else {
           result = new ComparatorStepResult(artifactsDAO.saveArtifactInJsonFormat(properties,
-                  Collections.singletonMap("differences", deltas)),
-                  ComparatorStepResult.Status.FAILED, true);
+              Collections.singletonMap("differences", deltas)),
+              ComparatorStepResult.Status.FAILED, true);
           result.addData("formattedPattern", artifactsDAO.saveArtifact(properties, patternSource));
           result.addData("formattedSource", artifactsDAO.saveArtifact(properties, dataSource));
           result.addData("sourceCompareType", sourceCompareType.name());
@@ -116,13 +118,14 @@ public class SourceComparator implements ComparatorJob {
 
   private boolean shouldCompareTrimmedLines(SourceCompareType sourceCompareType) {
     return SourceCompareType.ALLFORMATTED.equals(sourceCompareType)
-            || SourceCompareType.MARKUP.equals(sourceCompareType);
+        || SourceCompareType.MARKUP.equals(sourceCompareType);
   }
 
   @Override
   public void setParameters(final Map<String, String> params) throws ParametersException {
     if (params.containsKey(SOURCE_COMPARE_TYPE)) {
-      this.sourceCompareType = SourceCompareType.valueOf(params.get(SOURCE_COMPARE_TYPE).toUpperCase());
+      this.sourceCompareType = SourceCompareType
+          .valueOf(params.get(SOURCE_COMPARE_TYPE).toUpperCase());
     }
   }
 

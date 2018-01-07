@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.xunit;
 
@@ -38,15 +36,16 @@ import java.util.Set;
 public class MetadataToXUnitConverter {
 
   private static final EnumSet<CollectorStepResult.Status> COLLECTORS_STEPS = EnumSet.of(
-          CollectorStepResult.Status.COLLECTED,
-          CollectorStepResult.Status.DUPLICATES_PATTERN,
-          CollectorStepResult.Status.PROCESSING_ERROR
+      CollectorStepResult.Status.COLLECTED,
+      CollectorStepResult.Status.DUPLICATES_PATTERN,
+      CollectorStepResult.Status.PROCESSING_ERROR
   );
 
-  private static final EnumSet<ComparatorStepResult.Status> COMPARATOR_FAILURE_STATUSES = EnumSet.of(
+  private static final EnumSet<ComparatorStepResult.Status> COMPARATOR_FAILURE_STATUSES = EnumSet
+      .of(
           ComparatorStepResult.Status.FAILED,
           ComparatorStepResult.Status.PROCESSING_ERROR
-  );
+      );
 
   private static final String NAME_KEY = "name";
 
@@ -107,9 +106,9 @@ public class MetadataToXUnitConverter {
       for (Comparator comparator : comparators) {
         final Testcase xUnitCase = new Testcase();
         CaseNameBuilder caseNameBuilder = new CaseNameBuilder(comparator.getType())
-                .withStepParameters(step.getParameters())
-                .withComparatorParameters(comparator.getParameters())
-                .withUrlName(urlName);
+            .withStepParameters(step.getParameters())
+            .withComparatorParameters(comparator.getParameters())
+            .withUrlName(urlName);
         xUnitCase.setName(caseNameBuilder.build());
         addFailures(step, stepStatus, comparator, xUnitCase);
         xUnitTestsTotal++;
@@ -119,7 +118,8 @@ public class MetadataToXUnitConverter {
 
   }
 
-  private void addFailures(Step step, CollectorStepResult.Status stepStatus, Comparator comparator, Testcase xUnitCase) {
+  private void addFailures(Step step, CollectorStepResult.Status stepStatus, Comparator comparator,
+      Testcase xUnitCase) {
     final List<Failure> xUnitCaseFailure = xUnitCase.getFailure();
 
     if (stepStatus == CollectorStepResult.Status.PROCESSING_ERROR) {
@@ -138,7 +138,8 @@ public class MetadataToXUnitConverter {
     } else {
       final ComparatorStepResult.Status comparatorStatus = comparator.getStepResult().getStatus();
       if (COMPARATOR_FAILURE_STATUSES.contains(comparatorStatus)) {
-        final Failure failure = buildFailure(comparator.getStepResult().getErrors(), comparatorStatus.name());
+        final Failure failure = buildFailure(comparator.getStepResult().getErrors(),
+            comparatorStatus.name());
         xUnitCaseFailure.add(failure);
         xUnitFailedTotal++;
       }
@@ -164,15 +165,15 @@ public class MetadataToXUnitConverter {
 
     CaseNameBuilder withUrlName(String urlName) {
       name.append(" on: ")
-              .append(urlName);
+          .append(urlName);
       return this;
     }
 
     CaseNameBuilder withStepParameters(Map<String, String> stepParameters) {
       if (stepParameters != null && stepParameters.containsKey(NAME_KEY)) {
         name.append(" named '")
-                .append(stepParameters.get(NAME_KEY))
-                .append("'");
+            .append(stepParameters.get(NAME_KEY))
+            .append("'");
       }
       return this;
     }
@@ -181,13 +182,13 @@ public class MetadataToXUnitConverter {
       if (comparatorParameters != null) {
         if (comparatorParameters.containsKey(NAME_KEY)) {
           name.append(" for '")
-                  .append(comparatorParameters.get(NAME_KEY))
-                  .append("'");
+              .append(comparatorParameters.get(NAME_KEY))
+              .append("'");
         }
         if (comparatorParameters.containsKey(Comparator.COMPARATOR_PARAMETER)) {
           name.append(" (")
-                  .append(comparatorParameters.get(Comparator.COMPARATOR_PARAMETER))
-                  .append(")");
+              .append(comparatorParameters.get(Comparator.COMPARATOR_PARAMETER))
+              .append(")");
         }
       }
       return this;

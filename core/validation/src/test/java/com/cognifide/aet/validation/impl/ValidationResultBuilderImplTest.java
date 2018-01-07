@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.validation.impl;
 
@@ -74,25 +72,36 @@ public class ValidationResultBuilderImplTest {
   public void testToString() throws Exception {
     //empty builder
     ValidationResultBuilderImpl validationResultBuilder = new ValidationResultBuilderImpl();
-    assertThat(ValidationUtils.validationResultToString(validationResultBuilder), is(StringUtils.EMPTY));
+    assertThat(ValidationUtils.validationResultToString(validationResultBuilder),
+        is(StringUtils.EMPTY));
 
     //single error message
     validationResultBuilder.addErrorMessage("MSG_1");
-    assertThat(ValidationUtils.validationResultToString(validationResultBuilder), containsString("1 errors were found"));
-    assertThat(ValidationUtils.validationResultToString(validationResultBuilder), containsString("Message: MSG_1"));
+    assertThat(ValidationUtils.validationResultToString(validationResultBuilder),
+        containsString("1 errors were found"));
+    assertThat(ValidationUtils.validationResultToString(validationResultBuilder),
+        containsString("Message: MSG_1"));
 
     //two error messages
     validationResultBuilder.addErrorMessage("MSG_2");
-    assertThat(ValidationUtils.validationResultToString(validationResultBuilder), containsString("2 errors were found"));
-    assertThat(ValidationUtils.validationResultToString(validationResultBuilder), containsString("Message: MSG_1"));
-    assertThat(ValidationUtils.validationResultToString(validationResultBuilder), containsString("Message: MSG_2"));
+    assertThat(ValidationUtils.validationResultToString(validationResultBuilder),
+        containsString("2 errors were found"));
+    assertThat(ValidationUtils.validationResultToString(validationResultBuilder),
+        containsString("Message: MSG_1"));
+    assertThat(ValidationUtils.validationResultToString(validationResultBuilder),
+        containsString("Message: MSG_2"));
 
     //two error messages
     validationResultBuilder.addErrorMessage("MSG_3", new NoSuchFieldException());
-    assertThat(ValidationUtils.validationResultToString(validationResultBuilder), containsString("3 errors were found"));
-    assertThat(ValidationUtils.validationResultToString(validationResultBuilder), containsString("Message: MSG_1"));
-    assertThat(ValidationUtils.validationResultToString(validationResultBuilder), containsString("Message: MSG_2"));
-    assertThat(ValidationUtils.validationResultToString(validationResultBuilder), containsString("Message: MSG_3"));
-    assertThat(ValidationUtils.validationResultToString(validationResultBuilder), containsString("Caused by: java.lang.NoSuchFieldException"));
+    assertThat(ValidationUtils.validationResultToString(validationResultBuilder),
+        containsString("3 errors were found"));
+    assertThat(ValidationUtils.validationResultToString(validationResultBuilder),
+        containsString("Message: MSG_1"));
+    assertThat(ValidationUtils.validationResultToString(validationResultBuilder),
+        containsString("Message: MSG_2"));
+    assertThat(ValidationUtils.validationResultToString(validationResultBuilder),
+        containsString("Message: MSG_3"));
+    assertThat(ValidationUtils.validationResultToString(validationResultBuilder),
+        containsString("Caused by: java.lang.NoSuchFieldException"));
   }
 }
