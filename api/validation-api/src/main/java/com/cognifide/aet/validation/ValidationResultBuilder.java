@@ -36,7 +36,7 @@ public interface ValidationResultBuilder {
    * Adds errors message to validation outcome
    *
    * @param message error message
-   * @param t       Throwable
+   * @param t Throwable
    * @return validationBuilder (enables chaining)
    */
   ValidationResultBuilder addErrorMessage(String message, Throwable t);

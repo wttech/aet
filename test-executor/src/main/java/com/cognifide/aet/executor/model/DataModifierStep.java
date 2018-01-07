@@ -18,7 +18,8 @@ package com.cognifide.aet.executor.model;
 import java.util.Map;
 
 /**
- * Represents single comparison result modification step. Contains basic information about modification.
+ * Represents single comparison result modification step. Contains basic information about
+ * modification.
  */
 public class DataModifierStep implements ParametrizedStep {
 
@@ -30,8 +31,8 @@ public class DataModifierStep implements ParametrizedStep {
 
   /**
    * @param name - unique name of modifier which will be used to modify comparison result.
-   * @param parameters - all parameters needed by modifier, e.g. 'error' for js errors filter to filter out
-   * specific js errors before js console comparator.
+   * @param parameters - all parameters needed by modifier, e.g. 'error' for js errors filter to
+   * filter out specific js errors before js console comparator.
    */
   public DataModifierStep(String name, Map<String, String> parameters) {
     this.name = name;

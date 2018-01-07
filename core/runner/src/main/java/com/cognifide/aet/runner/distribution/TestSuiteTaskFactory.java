@@ -22,6 +22,7 @@ public interface TestSuiteTaskFactory {
 
   /**
    * Create test suite task. All results will be sent to the given destination.
+   *
    * @param indexedSuite - test suite with index.
    * @param resultsDestination - processing results destination.
    * @param maintenanceMessage - flag that says if this message is sent in maintenance mode

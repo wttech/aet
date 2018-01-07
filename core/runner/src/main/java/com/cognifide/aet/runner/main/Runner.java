@@ -35,8 +35,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Runner is an entry point for whole application, it main goal is to coordinate JMS communication between
- * workers.
+ * Runner is an entry point for whole application, it main goal is to coordinate JMS communication
+ * between workers.
  */
 @Component(immediate = true, metatype = true, description = "AET Runner", label = "AET Runner")
 public class Runner {

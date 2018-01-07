@@ -52,8 +52,6 @@ import javax.xml.bind.annotation.XmlType;
  * </complexType>
  * }
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -71,24 +69,17 @@ public class Testcase {
   /**
    * Gets the value of the failure property.
    *
-   * <p>
-   * This accessor method returns a reference to the live list,
-   * not a snapshot. Therefore any modification you make to the
-   * returned list will be present inside the JAXB object.
-   * This is why there is not a <CODE>set</CODE> method for the failure property.
+   * <p> This accessor method returns a reference to the live list, not a snapshot. Therefore any
+   * modification you make to the returned list will be present inside the JAXB object. This is why
+   * there is not a <CODE>set</CODE> method for the failure property.
    *
-   * <p>
-   * For example, to add a new item, do as follows:
+   * <p> For example, to add a new item, do as follows:
    * <pre>
    *    getFailure().add(newItem);
    * </pre>
    *
    *
-   * <p>
-   * Objects of the following type(s) are allowed in the list
-   * {@link Failure }
-   *
-   *
+   * <p> Objects of the following type(s) are allowed in the list {@link Failure }
    */
   public List<Failure> getFailure() {
     if (failure == null) {
@@ -100,10 +91,7 @@ public class Testcase {
   /**
    * Gets the value of the name property.
    *
-   * @return
-   *     possible object is
-   *     {@link String }
-   *
+   * @return possible object is {@link String }
    */
   public String getName() {
     return name;
@@ -112,10 +100,7 @@ public class Testcase {
   /**
    * Sets the value of the name property.
    *
-   * @param value
-   *     allowed object is
-   *     {@link String }
-   *
+   * @param value allowed object is {@link String }
    */
   public void setName(String value) {
     this.name = value;
@@ -124,10 +109,7 @@ public class Testcase {
   /**
    * Gets the value of the status property.
    *
-   * @return
-   *     possible object is
-   *     {@link String }
-   *
+   * @return possible object is {@link String }
    */
   public String getStatus() {
     return status;
@@ -136,10 +118,7 @@ public class Testcase {
   /**
    * Sets the value of the status property.
    *
-   * @param value
-   *     allowed object is
-   *     {@link String }
-   *
+   * @param value allowed object is {@link String }
    */
   public void setStatus(String value) {
     this.status = value;

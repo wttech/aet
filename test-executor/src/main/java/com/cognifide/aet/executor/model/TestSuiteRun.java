@@ -22,8 +22,8 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Represents whole test suite. Consists of tests and list of reports that will be generated after tests
- * execution.
+ * Represents whole test suite. Consists of tests and list of reports that will be generated after
+ * tests execution.
  */
 public class TestSuiteRun implements Serializable {
 
@@ -53,7 +53,6 @@ public class TestSuiteRun implements Serializable {
    * @param project - project name.
    * @param domain - common urls domain.
    * @param testRunList - list of tests that will be executed during this test suite.
-   *
    */
   public TestSuiteRun(String name, String company, String project, String domain,
       List<TestRun> testRunList) {
@@ -111,7 +110,8 @@ public class TestSuiteRun implements Serializable {
   }
 
   /**
-   * @return map of tests that will be executed during this test suite (test name -&gt; test definition).
+   * @return map of tests that will be executed during this test suite (test name -&gt; test
+   * definition).
    */
   public Map<String, TestRun> getTestRunMap() {
     return testRunMap;

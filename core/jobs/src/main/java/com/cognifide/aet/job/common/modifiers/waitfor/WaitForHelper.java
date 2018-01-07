@@ -30,12 +30,13 @@ public final class WaitForHelper {
   }
 
   /**
-   * This helper method allows a Selenium WebDriver to wait until one or more ExpectedConditions are met.
-   * The WebDriver waits for each ExpectedCondition to be met in a sequence, probing the page every 500ms until
-   * the ExpectedCondition is met or the timeout limit is reached.
+   * This helper method allows a Selenium WebDriver to wait until one or more ExpectedConditions are
+   * met. The WebDriver waits for each ExpectedCondition to be met in a sequence, probing the page
+   * every 500ms until the ExpectedCondition is met or the timeout limit is reached.
    *
-   * @param webDriver          The instance of a WebDriver navigating the page under test
-   * @param timeoutInSeconds   The time after which waiting ends unless the ExpectedCondition is met earlier.
+   * @param webDriver The instance of a WebDriver navigating the page under test
+   * @param timeoutInSeconds The time after which waiting ends unless the ExpectedCondition is met
+   * earlier.
    * @param expectedConditions One or more of ExpectedConditions that have to be met.
    */
   public static CollectorStepResult waitForExpectedCondition(

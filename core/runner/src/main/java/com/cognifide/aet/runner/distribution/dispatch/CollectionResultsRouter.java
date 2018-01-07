@@ -40,8 +40,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * CollectionResultsRouter - collects work from collector-workers, divides and schedules compare work among
- * compare-workers
+ * CollectionResultsRouter - collects work from collector-workers, divides and schedules compare
+ * work among compare-workers
  */
 public class CollectionResultsRouter extends StepManager implements TaskFinishPoint {
 

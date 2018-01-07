@@ -32,8 +32,8 @@ import java.util.concurrent.TimeUnit;
 import javax.jms.Destination;
 
 /**
- * The main dispatcher, gets messages from Web application and distributes it among slave-dispatcher depending
- * on available test steps
+ * The main dispatcher, gets messages from Web application and distributes it among slave-dispatcher
+ * depending on available test steps
  */
 @Singleton
 public class TestRunProcessor {
@@ -63,7 +63,8 @@ public class TestRunProcessor {
   }
 
   /**
-   * Start processing given test suite. All processing results will be sent to the given destination.
+   * Start processing given test suite. All processing results will be sent to the given
+   * destination.
    *
    * @param currentRun - test suite to process.
    * @param resultsDestination - processing results destination.
@@ -87,10 +88,8 @@ public class TestRunProcessor {
   }
 
   /**
-   *
-   * @param force if set to true all executed tasks will be forced to quit, otherwise they will continue
-   * until they end or timeout comes, whichever happens first.
-   *
+   * @param force if set to true all executed tasks will be forced to quit, otherwise they will
+   * continue until they end or timeout comes, whichever happens first.
    * @throws InterruptedException if interrupted while waiting for tasks to end
    */
   public void quit(boolean force) throws InterruptedException {

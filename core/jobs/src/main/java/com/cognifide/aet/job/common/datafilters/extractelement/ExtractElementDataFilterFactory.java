@@ -24,7 +24,6 @@ import org.apache.felix.scr.annotations.Service;
 
 /**
  * @author magdalena.biala
- *
  */
 @Component
 @Service

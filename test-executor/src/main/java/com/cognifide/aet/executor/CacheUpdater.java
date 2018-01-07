@@ -40,8 +40,10 @@ class CacheUpdater {
    * Accesses the SuiteRunner, SuiteStatusResult and Lock cache entries for given correlation ID and
    * suiteIdentifier to prevent their expiration.
    *
-   * @param correlationId correlation ID of the test suite for which the cache entries will be updated
-   * @param suiteIdentifier identifier of the test suite for which the cache entries will be updated
+   * @param correlationId correlation ID of the test suite for which the cache entries will be
+   * updated
+   * @param suiteIdentifier identifier of the test suite for which the cache entries will be
+   * updated
    */
   void update(String correlationId, String suiteIdentifier) {
     runnerCache.getIfPresent(correlationId);

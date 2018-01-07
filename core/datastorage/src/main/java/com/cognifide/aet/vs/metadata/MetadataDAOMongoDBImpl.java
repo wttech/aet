@@ -70,8 +70,8 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
   }
 
   /**
-   * Updates suite in .metadata collection only if older version exist,
-   * Also updates version and timestamp of a suite.
+   * Updates suite in .metadata collection only if older version exist. Also updates version and
+   * timestamp of a suite.
    *
    * @param suite new suite version to save
    * @return updated suite.

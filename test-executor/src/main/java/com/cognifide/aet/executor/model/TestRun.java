@@ -23,8 +23,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Represents single test in test suite. Consists of sequence of steps: 1) Collection 2) Comparison And set of
- * urls on which tests will be performed.
+ * Represents single test in test suite. Consists of sequence of steps: 1) Collection 2) Comparison
+ * And set of urls on which tests will be performed.
  */
 public class TestRun implements Serializable {
 
@@ -45,8 +45,8 @@ public class TestRun implements Serializable {
    * @param comparatorSteps - set of comparison steps.
    * @param urls - list of urls.
    * @param name - unique name of test.
-   * @param useProxy - says what kind of proxy should be used, backward compatibility: set 'true' to use
-   * 'rest' proxy, set 'false' to use none.
+   * @param useProxy - says what kind of proxy should be used, backward compatibility: set 'true' to
+   * use 'rest' proxy, set 'false' to use none.
    */
   public TestRun(List<CollectorStep> collectorSteps, Set<ComparatorStep> comparatorSteps,
       List<ExtendedUrl> urls, String name, String useProxy) {

@@ -72,8 +72,6 @@ public class SuiteRunner implements Runnable {
 
   /**
    * Runs the test suite processing and starts a thread which checks the processing status.
-   *
-   * @throws JMSException
    */
   public void runSuite() throws JMSException {
     messageProducer = session.createProducer(session.createQueue(inQueueName));

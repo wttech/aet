@@ -36,9 +36,9 @@ public interface CollectorFactory {
    * Creates collector job. Each call should return new instance of a collector object unless it is
    * not stateful - it has no parameters and variable fields.
    *
-   * @param properties              - properties with url to perform operation on.
-   * @param parameters              -  a map that contains all parameters defined in test suite xml
-   *                                file for collector.
+   * @param properties - properties with url to perform operation on.
+   * @param parameters -  a map that contains all parameters defined in test suite xml file for
+   * collector.
    * @param webCommunicationWrapper - object that provides tested page data.
    * @return collector job instance.
    */

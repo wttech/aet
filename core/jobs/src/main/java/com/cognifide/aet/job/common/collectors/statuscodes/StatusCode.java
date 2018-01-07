@@ -27,8 +27,8 @@ public class StatusCode implements Serializable, Excludable {
   private final String url;
 
   /**
-   * If status code is excluded from results, i.e. is listed but not taken into account when computed
-   * results.
+   * If status code is excluded from results, i.e. is listed but not taken into account when
+   * computed results.
    */
   private boolean excluded;
 

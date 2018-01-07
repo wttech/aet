@@ -26,7 +26,7 @@ import org.junit.runner.RunWith;
     tags = {"@filtering", "~@disabled"})
 public class Filtering {
     /*
-	This class is empty on  purpose - it's only a runner for cucumber tests.
+  This class is empty on  purpose - it's only a runner for cucumber tests.
 	All properties for cucumber runner are in @CucumberOptions:
 	*/
 }

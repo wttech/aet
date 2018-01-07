@@ -49,12 +49,8 @@ public class SuiteStatusServlet extends HttpServlet {
   private SuiteExecutor suiteExecutor;
 
   /**
-   * Returns JSON with suite status defined by {@link SuiteStatusResult} for a given correlation ID.
-   *
-   * @param request
-   * @param response
-   * @throws ServletException
-   * @throws IOException
+   * Returns JSON with suite status defined by {@link SuiteStatusResult} for a given correlation
+   * ID.
    */
   @Override
   protected void doGet(HttpServletRequest request, HttpServletResponse response)

@@ -21,7 +21,7 @@ public interface Validator {
    * Validate this object. Use ValidationResultBuilder to set up any error messages.
    *
    * @param validationResultBuilder validation result builder that knows what is the outcome of
-   *                                validation
+   * validation
    * @see ValidationResultBuilder
    */
   void validate(ValidationResultBuilder validationResultBuilder);

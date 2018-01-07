@@ -36,8 +36,8 @@ import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.internal.SocketLock;
 
 /**
- * Custom implementation of org.openqa.selenium.internal.Lock that has configurable delay between socket
- * checks.
+ * Custom implementation of org.openqa.selenium.internal.Lock that has configurable delay between
+ * socket checks.
  */
 class AetSocketLock extends SocketLock {
 

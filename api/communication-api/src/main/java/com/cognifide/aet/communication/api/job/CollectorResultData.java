@@ -48,10 +48,10 @@ public final class CollectorResultData implements Serializable {
   }
 
   /**
-   * @param urlAfterCollect     - url with data after collect phase.
-   * @param processingError     - error that caused collector failure.
+   * @param urlAfterCollect - url with data after collect phase.
+   * @param processingError - error that caused collector failure.
    * @param requestJMSMessageID - id of jms message that invoked collection execution.
-   * @param testName            - name of the test that collection is part of.
+   * @param testName - name of the test that collection is part of.
    * @return new instance of CollectorResultData with {@link JobStatus#ERROR error} status.
    */
   public static CollectorResultData createErrorResult(Url urlAfterCollect,
@@ -62,9 +62,9 @@ public final class CollectorResultData implements Serializable {
   }
 
   /**
-   * @param urlAfterCollect     - url with data after collect phase.
+   * @param urlAfterCollect - url with data after collect phase.
    * @param requestJMSMessageID - id of jms message that invoked collection execution.
-   * @param testName            - name of the test that collection is part of.
+   * @param testName - name of the test that collection is part of.
    * @return new instance of CollectorResultData with {@link JobStatus#SUCCESS success} status.
    */
   public static CollectorResultData createSuccessResult(Url urlAfterCollect,

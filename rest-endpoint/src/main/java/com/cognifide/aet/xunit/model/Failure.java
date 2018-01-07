@@ -30,11 +30,9 @@ import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.XmlValue;
 
 /**
- * <p>
- * Java class for anonymous complex type.
+ * <p> Java class for anonymous complex type.
  *
- * <p>
- * The following schema fragment specifies the expected content contained within this class.
+ * <p> The following schema fragment specifies the expected content contained within this class.
  *
  * <pre>
  * {@code
@@ -48,7 +46,6 @@ import javax.xml.bind.annotation.XmlValue;
  * </complexType>
  * }
  * </pre>
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {"content"})
@@ -68,7 +65,6 @@ public class Failure {
    * Gets the value of the content property.
    *
    * @return possible object is {@link String }
-   *
    */
   public String getContent() {
     return content;
@@ -78,7 +74,6 @@ public class Failure {
    * Sets the value of the content property.
    *
    * @param value allowed object is {@link String }
-   *
    */
   public void setContent(String value) {
     this.content = value;
@@ -88,7 +83,6 @@ public class Failure {
    * Gets the value of the type property.
    *
    * @return possible object is {@link String }
-   *
    */
   public String getType() {
     return type;
@@ -98,7 +92,6 @@ public class Failure {
    * Sets the value of the type property.
    *
    * @param value allowed object is {@link String }
-   *
    */
   public void setType(String value) {
     this.type = value;
@@ -108,7 +101,6 @@ public class Failure {
    * Gets the value of the message property.
    *
    * @return possible object is {@link String }
-   *
    */
   public String getMessage() {
     return message;
@@ -118,7 +110,6 @@ public class Failure {
    * Sets the value of the message property.
    *
    * @param value allowed object is {@link String }
-   *
    */
   public void setMessage(String value) {
     this.message = value;

@@ -94,7 +94,8 @@ public class FirefoxProfileBuilder {
   }
 
   /**
-   * The possible settings are: 0 = default, 1 = aliased, 2 = GDI Classic, 3 = GDI Natural, 4 = Natural, 5 = Natural Symmetric
+   * The possible settings are: 0 = default, 1 = aliased, 2 = GDI Classic, 3 = GDI Natural, 4 =
+   * Natural, 5 = Natural Symmetric
    */
   FirefoxProfileBuilder withForcedAliasing() {
     firefoxProfile.setPreference("gfx.font_rendering.cleartype_params.rendering_mode", 0);

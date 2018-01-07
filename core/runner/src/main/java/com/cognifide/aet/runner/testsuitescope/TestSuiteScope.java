@@ -36,12 +36,11 @@ import java.util.Map;
  *     scope.exit();
  *   }
  * </code></pre>
- * The scope can be initialized with one or more seed values by calling
- * <code>seed(key, value)</code> before the injector will be called upon to
- * provide for this key. A typical use is for a servlet filter to enter/exit the
- * scope, representing a Request Scope, and seed HttpServletRequest and
- * HttpServletResponse.  For each key inserted with seed(), you must include a
- * corresponding binding:
+ * The scope can be initialized with one or more seed values by calling <code>seed(key,
+ * value)</code> before the injector will be called upon to provide for this key. A typical use is
+ * for a servlet filter to enter/exit the scope, representing a Request Scope, and seed
+ * HttpServletRequest and HttpServletResponse.  For each key inserted with seed(), you must include
+ * a corresponding binding:
  * <pre><code>
  *   bind(key)
  *       .toProvider(SimpleScope.&lt;KeyClass&gt;seededKeyProvider())
@@ -115,8 +114,8 @@ public class TestSuiteScope implements Scope {
   }
 
   /**
-   * Returns a provider that always throws exception complaining that the object
-   * in question must be seeded before it can be injected.
+   * Returns a provider that always throws exception complaining that the object in question must be
+   * seeded before it can be injected.
    *
    * @return typed provider
    */

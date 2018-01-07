@@ -18,8 +18,7 @@ package com.cognifide.aet.communication.api.metadata;
 public interface Commentable {
 
   /**
-   * @param comment comment for given metadata
-   * Sets comment for given metadata.
+   * @param comment comment for given metadata Sets comment for given metadata.
    */
   void setComment(String comment);
 

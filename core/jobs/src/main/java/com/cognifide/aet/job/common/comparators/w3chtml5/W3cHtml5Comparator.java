@@ -38,6 +38,7 @@ class W3cHtml5Comparator extends W3cHtml5ComparatorJob {
 
   /**
    * Will be removed in 1.5.0 version
+   *
    * @deprecated use parameter "ignore-warnings" instead
    */
   @Deprecated

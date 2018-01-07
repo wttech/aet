@@ -126,7 +126,8 @@ public class SuiteExecutor {
    *
    * @param suiteString - content of the test suite XML file
    * @param domain - overrides domain defined in the suite file
-   * @param pattern - optional pattern to set, this is a name of a suite that will be used as patterns source
+   * @param pattern - optional pattern to set, this is a name of a suite that will be used as
+   * patterns source
    * @return status of the suite execution
    */
   HttpSuiteExecutionResultWrapper execute(String suiteString, String domain, String pattern) {
@@ -186,7 +187,7 @@ public class SuiteExecutor {
   /**
    * Returns the status of test suite processing.
    *
-   * @param correlationId
+   * @param correlationId - identifier of a suite run.
    * @return status of the test suite run identified by provided correlation ID
    */
   public SuiteStatusResult getExecutionStatus(String correlationId) {

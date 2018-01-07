@@ -48,7 +48,8 @@ public final class SuiteMergeStrategy {
   }
 
   /**
-   * Merges current and pattern suite. All comments, version and patterns in current suite are overwritten from pattern suite.
+   * Merges current and pattern suite. All comments, version and patterns in current suite are
+   * overwritten from pattern suite.
    *
    * @param current - current run suite.
    * @param lastVersion - latest version of this suite execution, treated also as a pattern suite.
@@ -59,8 +60,9 @@ public final class SuiteMergeStrategy {
   }
 
   /**
-   * Merges current and pattern suite. All comments, version and patterns in current suite are overwritten from pattern suite.
-   * Last version suite is used only to update current version number.
+   * Merges current and pattern suite. All comments, version and patterns in current suite are
+   * overwritten from pattern suite. Last version suite is used only to update current version
+   * number.
    *
    * @param current - current run suite.
    * @param lastVersion - latest suite run version.
