@@ -89,8 +89,8 @@ public class MongoDBClient {
   /**
    * Get collection of companies in AET system
    *
-   * @return collection of companies names unless database names matches convention: $company_$project and
-   * $company dosen't contain any underscrore characters
+   * @return collection of companies names unless database names matches convention:
+   * $company_$project and $company dosen't contain any underscrore characters
    */
   public Collection<String> getCompanies() {
     final Collection<String> companies = new ArrayList<>();
@@ -130,15 +130,16 @@ public class MongoDBClient {
   }
 
   /**
-   * Gets MonogoDB database object. It does not auto-creates database if given db name does not corresponds
-   * to any db's.
+   * Gets MonogoDB database object. It does not auto-creates database if given db name does not
+   * corresponds to any db's.
    *
    * @param dbName name of database
    * @return MongoDB databaase object or null if base does not exists.
    *
    * This method is depricated. Use getDatabase(String dbName) instead.
-   * TODO remove this method
    * @deprecated this method should be used only to get databases for GridFs
+   *
+   * TODO remove this method
    */
   @Deprecated
   public DB getDB(String dbName) {
@@ -146,16 +147,17 @@ public class MongoDBClient {
   }
 
   /**
-   * Gets MonogoDB database object. Given that autoCreate param is set to true it will auto-create database
-   * with provided name (if one does not exists yet).
+   * Gets MonogoDB database object. Given that autoCreate param is set to true it will auto-create
+   * database with provided name (if one does not exists yet).
    *
    * @param dbName name of database
    * @param autoCreate defines if database creation auto-creation should occur
    * @return MongoDB databaase object or null if base does not exists.
    *
    * This method is depricated. Use getDatabase(String dbName, Boolean autoCreate) instead.
-   * TODO remove this method
    * @deprecated this method should be used only to get databases for GridFs
+   *
+   * TODO remove this method
    */
   @Deprecated
   public DB getDB(String dbName, Boolean autoCreate) {
@@ -170,8 +172,8 @@ public class MongoDBClient {
   }
 
   /**
-   * Gets MonogoDB database object. It does not auto-creates database if given db name does not corresponds
-   * to any db's.
+   * Gets MonogoDB database object. It does not auto-creates database if given db name does not
+   * corresponds to any db's.
    *
    * @param dbName name of database
    * @return MongoDB databaase object or null if base does not exists.
@@ -181,8 +183,8 @@ public class MongoDBClient {
   }
 
   /**
-   * Gets MonogoDB database object. Given that autoCreate param is set to true it will auto-create database
-   * with provided name (if one does not exists yet).
+   * Gets MonogoDB database object. Given that autoCreate param is set to true it will auto-create
+   * database with provided name (if one does not exists yet).
    *
    * @param dbName name of database
    * @param autoCreate defines if database creation auto-creation should occur
@@ -223,7 +225,6 @@ public class MongoDBClient {
    *
    * @param dbName name of database
    * @param collectionName name of collection
-   *
    * @return true if database contains specified collection.
    */
   public boolean hasCollection(String dbName, String collectionName) {

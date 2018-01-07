@@ -30,10 +30,10 @@ public abstract class JobData implements Serializable {
   private final String testName;
 
   /**
-   * @param company   - company name.
-   * @param project   - project name.
+   * @param company - company name.
+   * @param project - project name.
    * @param suiteName - suite name.
-   * @param testName  - test name.
+   * @param testName - test name.
    */
   public JobData(String company, String project, String suiteName, String testName) {
     this.company = company;

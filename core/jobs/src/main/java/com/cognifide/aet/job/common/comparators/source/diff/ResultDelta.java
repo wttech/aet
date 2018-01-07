@@ -21,22 +21,34 @@ public class ResultDelta implements Serializable {
 
   private static final long serialVersionUID = 5507408432566479491L;
 
-  /** The original chunk. */
+  /**
+   * The original chunk.
+   */
   private ResultChunk original;
 
-  /** The revised chunk. */
+  /**
+   * The revised chunk.
+   */
   private ResultChunk revised;
 
   private TYPE type;
 
   public enum TYPE {
-    /** No change detected. */
+    /**
+     * No change detected.
+     */
     NO_CHANGE,
-    /** A change in the original. */
+    /**
+     * A change in the original.
+     */
     CHANGE,
-    /** A delete from the original. */
+    /**
+     * A delete from the original.
+     */
     DELETE,
-    /** An insert into the original. */
+    /**
+     * An insert into the original.
+     */
     INSERT
   }
 

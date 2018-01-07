@@ -23,8 +23,7 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
 /**
- * @author maciej.laskowski
- *         Created: 2015-04-28
+ * @author maciej.laskowski Created: 2015-04-28
  */
 @RunWith(MockitoJUnitRunner.class)
 public class SuiteExecutionSettingsTest {

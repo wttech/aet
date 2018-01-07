@@ -54,10 +54,10 @@ public interface ComparatorFactory {
   int getRanking();
 
   /**
-   * @param comparator           - comparator model.
+   * @param comparator - comparator model.
    * @param comparatorProperties - properties required to perform comparison, e.g. project and
-   *                             company name, pattern and collected id etc.
-   * @param dataFilterJobs       - list of filters to perform during comparison.
+   * company name, pattern and collected id etc.
+   * @param dataFilterJobs - list of filters to perform during comparison.
    * @return updated Comparator.
    */
   ComparatorJob createInstance(Comparator comparator, ComparatorProperties comparatorProperties,

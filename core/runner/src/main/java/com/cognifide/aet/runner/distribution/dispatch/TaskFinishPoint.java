@@ -23,8 +23,7 @@ package com.cognifide.aet.runner.distribution.dispatch;
 public interface TaskFinishPoint {
 
   /**
-   * Tells if this this task is ready
-   * @return
+   * @return - <bb>true</bb> if this task is ready
    */
   boolean isFinished();
 

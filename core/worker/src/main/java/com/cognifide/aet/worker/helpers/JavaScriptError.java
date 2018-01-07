@@ -52,6 +52,7 @@ import org.openqa.selenium.firefox.FirefoxProfile;
  * @author Marc Guillemot
  */
 public class JavaScriptError {
+
   private final String errorMessage;
   private final String sourceName;
   private final int lineNumber;
@@ -64,7 +65,8 @@ public class JavaScriptError {
     console = (String) map.get("console");
   }
 
-  JavaScriptError(final String errorMessage, final String sourceName, final int lineNumber, String console) {
+  JavaScriptError(final String errorMessage, final String sourceName, final int lineNumber,
+      String console) {
     this.errorMessage = errorMessage;
     this.sourceName = sourceName;
     this.lineNumber = lineNumber;
@@ -101,10 +103,10 @@ public class JavaScriptError {
     int result = 1;
     result = prime * result + ((console == null) ? 0 : console.hashCode());
     result = prime * result
-            + ((errorMessage == null) ? 0 : errorMessage.hashCode());
+        + ((errorMessage == null) ? 0 : errorMessage.hashCode());
     result = prime * result + lineNumber;
     result = prime * result
-            + ((sourceName == null) ? 0 : sourceName.hashCode());
+        + ((sourceName == null) ? 0 : sourceName.hashCode());
     return result;
   }
 

@@ -21,12 +21,9 @@ import cucumber.api.guice.CucumberModules;
 import cucumber.runtime.java.guice.InjectorSource;
 
 /**
- * Needed for Guice to work in cucumber (see <code>cucumber-guice.properties</code> file).
- * The other way:
- * <a href=
- * "https://github.com/rapaul/cucumber-jvm-guice-examples/blob/master/src/test/resources/cucumber-guice.properties"
- * >
- * with simply <code>guiceModule</code> key</a> could be investigated.
+ * Needed for Guice to work in cucumber (see <code>cucumber-guice.properties</code> file). The other
+ * way: <a href= "https://github.com/rapaul/cucumber-jvm-guice-examples/blob/master/src/test/resources/cucumber-guice.properties"
+ * > with simply <code>guiceModule</code> key</a> could be investigated.
  */
 public class CucumberInjectorSource implements InjectorSource {
 

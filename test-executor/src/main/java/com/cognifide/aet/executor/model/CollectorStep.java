@@ -31,13 +31,13 @@ public class CollectorStep implements ParametrizedStep {
   private final Map<String, String> parameters;
 
   /**
-   * @param module - name (identifier) of module, with this parameter system decides which collector will
-   * handle this step.
-   * @param name - unique name (within collectors with the same module) for collection step. Comparator can
-   * distinguish collection results made by the same collector but with different names to treat them as
-   * separate results.
-   * @param parameters - all additional parameters passed to Collector, e.g. width and height of screenshot,
-   * duration of sleep. Each parameter is stored as separate map entry (key-&gt;value).
+   * @param module - name (identifier) of module, with this parameter system decides which collector
+   * will handle this step.
+   * @param name - unique name (within collectors with the same module) for collection step.
+   * Comparator can distinguish collection results made by the same collector but with different
+   * names to treat them as separate results.
+   * @param parameters - all additional parameters passed to Collector, e.g. width and height of
+   * screenshot, duration of sleep. Each parameter is stored as separate map entry (key-&gt;value).
    */
   public CollectorStep(String module, String name, Map<String, String> parameters) {
     this.module = module;

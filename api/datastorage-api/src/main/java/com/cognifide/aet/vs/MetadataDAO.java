@@ -41,7 +41,7 @@ public interface MetadataDAO extends Serializable {
   Suite updateSuite(Suite suite) throws StorageException, ValidatorException;
 
   /**
-   * @param dbKey         - key with project and company name
+   * @param dbKey - key with project and company name
    * @param correlationId - suite run identificator
    * @return Suite object found by given criteria or null.
    */
@@ -49,7 +49,7 @@ public interface MetadataDAO extends Serializable {
 
   /**
    * @param dbKey - key with project and company name
-   * @param name  - name of suite
+   * @param name - name of suite
    * @return Suite object from the latest run (with currently maxVersion) or null if no run were
    * performed before for this suite.
    */
@@ -64,9 +64,9 @@ public interface MetadataDAO extends Serializable {
   /**
    * Removes suite from .metadata collection.
    *
-   * @param dbKey         - key with project and company name
+   * @param dbKey - key with project and company name
    * @param correlationId - suite run identificator
-   * @param version       - suite run version
+   * @param version - suite run version
    * @return true when suite removed successfully, false otherwise.
    */
   boolean removeSuite(DBKey dbKey, String correlationId, Long version) throws StorageException;

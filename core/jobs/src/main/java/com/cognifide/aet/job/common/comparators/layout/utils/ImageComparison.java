@@ -24,8 +24,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * ImageComparison - util class for fast images comparison.
- * This class expects compared images to contain four channels: red, green, blue and alpha.
+ * ImageComparison - util class for fast images comparison. This class expects compared images to
+ * contain four channels: red, green, blue and alpha.
  *
  * @author Maciej Laskowski and Tomasz Misiewicz
  */
@@ -48,8 +48,8 @@ public final class ImageComparison {
   }
 
   /**
-   * Compares two images, if images are with different dimensions, the output image's dimension is maxWidth
-   * x maxHeight
+   * Compares two images, if images are with different dimensions, the output image's dimension is
+   * maxWidth x maxHeight
    *
    * @param pattern - saved image of how screen should look like
    * @param sample - actual screen collected during test

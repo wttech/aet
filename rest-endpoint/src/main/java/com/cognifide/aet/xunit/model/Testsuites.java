@@ -53,8 +53,6 @@ import javax.xml.bind.annotation.XmlType;
  * </complexType>
  * }
  * </pre>
- *
- *
  */
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "", propOrder = {
@@ -74,24 +72,17 @@ public class Testsuites {
   /**
    * Gets the value of the testsuite property.
    *
-   * <p>
-   * This accessor method returns a reference to the live list,
-   * not a snapshot. Therefore any modification you make to the
-   * returned list will be present inside the JAXB object.
-   * This is why there is not a <CODE>set</CODE> method for the testsuite property.
+   * <p> This accessor method returns a reference to the live list, not a snapshot. Therefore any
+   * modification you make to the returned list will be present inside the JAXB object. This is why
+   * there is not a <CODE>set</CODE> method for the testsuite property.
    *
-   * <p>
-   * For example, to add a new item, do as follows:
+   * <p> For example, to add a new item, do as follows:
    * <pre>
    *    getTestsuite().add(newItem);
    * </pre>
    *
    *
-   * <p>
-   * Objects of the following type(s) are allowed in the list
-   * {@link Testsuite }
-   *
-   *
+   * <p> Objects of the following type(s) are allowed in the list {@link Testsuite }
    */
   public List<Testsuite> getTestsuite() {
     if (testsuite == null) {
@@ -103,10 +94,7 @@ public class Testsuites {
   /**
    * Gets the value of the name property.
    *
-   * @return
-   *     possible object is
-   *     {@link String }
-   *
+   * @return possible object is {@link String }
    */
   public String getName() {
     return name;
@@ -115,10 +103,7 @@ public class Testsuites {
   /**
    * Sets the value of the name property.
    *
-   * @param value
-   *     allowed object is
-   *     {@link String }
-   *
+   * @param value allowed object is {@link String }
    */
   public void setName(String value) {
     this.name = value;
@@ -127,10 +112,7 @@ public class Testsuites {
   /**
    * Gets the value of the tests property.
    *
-   * @return
-   *     possible object is
-   *     {@link String }
-   *
+   * @return possible object is {@link String }
    */
   public String getTests() {
     return tests;
@@ -139,10 +121,7 @@ public class Testsuites {
   /**
    * Sets the value of the tests property.
    *
-   * @param value
-   *     allowed object is
-   *     {@link String }
-   *
+   * @param value allowed object is {@link String }
    */
   public void setTests(String value) {
     this.tests = value;
@@ -151,10 +130,7 @@ public class Testsuites {
   /**
    * Gets the value of the failures property.
    *
-   * @return
-   *     possible object is
-   *     {@link String }
-   *
+   * @return possible object is {@link String }
    */
   public String getFailures() {
     return failures;
@@ -163,10 +139,7 @@ public class Testsuites {
   /**
    * Sets the value of the failures property.
    *
-   * @param value
-   *     allowed object is
-   *     {@link String }
-   *
+   * @param value allowed object is {@link String }
    */
   public void setFailures(String value) {
     this.failures = value;

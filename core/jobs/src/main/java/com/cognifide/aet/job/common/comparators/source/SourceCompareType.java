@@ -18,8 +18,8 @@ package com.cognifide.aet.job.common.comparators.source;
 import com.cognifide.aet.job.common.comparators.source.visitors.ContentVisitor;
 
 /**
- * Specify the way in which source will be formatted before comparing it with pattern.
- * The formatting transformation will be applied to both: pattern and collected data.
+ * Specify the way in which source will be formatted before comparing it with pattern. The
+ * formatting transformation will be applied to both: pattern and collected data.
  */
 public enum SourceCompareType {
   /**
@@ -27,11 +27,13 @@ public enum SourceCompareType {
    */
   CONTENT,
   /**
-   * Will compare markup only (tags and their attributes). The text content of tags will be removed and lines will be trimmed.
+   * Will compare markup only (tags and their attributes). The text content of tags will be removed
+   * and lines will be trimmed.
    */
   MARKUP,
   /**
-   * Will compare formatted HTML with empty lines removed and lines trimmed (Ignores white-space differences).
+   * Will compare formatted HTML with empty lines removed and lines trimmed (Ignores white-space
+   * differences).
    */
   ALLFORMATTED,
   /**

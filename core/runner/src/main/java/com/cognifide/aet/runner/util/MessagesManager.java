@@ -70,7 +70,8 @@ public class MessagesManager {
   }
 
   /**
-   * Removes all messages with given correlationID. AETException is thrown when failed to remove messages.
+   * Removes all messages with given correlationID. AETException is thrown when failed to remove
+   * messages.
    *
    * @param correlationID - correlationId of messages that will be removed.
    */

@@ -37,7 +37,7 @@ public interface DataFilterFactory {
    * is not stateful - it has no parameters and variable fields.
    *
    * @param params- a map that contains all parameters defined in test suite xml file for data
-   *                filter.
+   * filter.
    * @return data filter job instance.
    */
   DataFilterJob createInstance(Map<String, String> params) throws ParametersException;

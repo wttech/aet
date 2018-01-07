@@ -36,8 +36,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This class is singleton which manages collector queues. The main task of CollectorJobScheduler is to limit
- * number of messages in collector queues in one time (to prevent messages timeout).
+ * This class is singleton which manages collector queues. The main task of CollectorJobScheduler is
+ * to limit number of messages in collector queues in one time (to prevent messages timeout).
  *
  * @author lukasz.wieczorek
  */
@@ -47,30 +47,32 @@ public class CollectorJobScheduler implements Runnable {
   private static final Logger LOGGER = LoggerFactory.getLogger(CollectorJobScheduler.class);
 
   /**
-   * Semaphore that checks if number of collection messages in queue is below fixed limit. When limit is
-   * reached, no more messages can go to the collection queue until any collection task is finished.
+   * Semaphore that checks if number of collection messages in queue is below fixed limit. When
+   * limit is reached, no more messages can go to the collection queue until any collection task is
+   * finished.
    */
   private final Semaphore availableQueue;
 
   /**
-   * Holds Queues with url packages to collect (from single test) identified by CorrelationID (CorrelationId
-   * -> Queue). Each package contains fixed (configurable) amount of urls that should be send to collect
-   * queue. After all packages results are returned, entry is removed from this map.
+   * Holds Queues with url packages to collect (from single test) identified by CorrelationID
+   * (CorrelationId -> Queue). Each package contains fixed (configurable) amount of urls that should
+   * be send to collect queue. After all packages results are returned, entry is removed from this
+   * map.
    */
   private final ConcurrentMap<String, Queue<MessageWithDestination>> messagesMap = Maps
       .newConcurrentMap();
 
   /**
-   * BinarySemaphore which is used to passive waiting for work in task run loop.
-   * When message queue is added then semaphore is released for safeRun method to acquire it.
+   * BinarySemaphore which is used to passive waiting for work in task run loop. When message queue
+   * is added then semaphore is released for safeRun method to acquire it.
    */
   private final BinarySemaphore availableMessages = new BinarySemaphore(false);
 
   /**
    * Hold map with number of received collection results for the given message ID (not the same as
-   * Correlation ID!). When collection result message is received, number of messages in map is decreased.
-   * When it reaches 0, this mean that all messages for given correlation id returned and there is space for
-   * new message in collection queue (availableQueue semaphore can be released).
+   * Correlation ID!). When collection result message is received, number of messages in map is
+   * decreased. When it reaches 0, this mean that all messages for given correlation id returned and
+   * there is space for new message in collection queue (availableQueue semaphore can be released).
    */
   private final Map<String, ReceivedMessagesInfo> receivedMessagesCounter = Maps.newConcurrentMap();
 
@@ -174,8 +176,8 @@ public class CollectorJobScheduler implements Runnable {
   }
 
   /**
-   * Cleans all structures of CollectorJobScheduler connected with given correlationID. Also clears all
-   * messages (with given correlationID) existing at this moment from all queues.
+   * Cleans all structures of CollectorJobScheduler connected with given correlationID. Also clears
+   * all messages (with given correlationID) existing at this moment from all queues.
    *
    * @param correlationID - correlationID of task that cleanup should be done for.
    */

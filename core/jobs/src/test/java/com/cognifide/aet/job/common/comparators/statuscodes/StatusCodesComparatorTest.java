@@ -39,8 +39,8 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 /**
- * This Unit test is responsible for validating more of component logic then actual filtering. Tests for
- * filter are written separately and can be found in StatusCodesFilterTest
+ * This Unit test is responsible for validating more of component logic then actual filtering. Tests
+ * for filter are written separately and can be found in StatusCodesFilterTest
  */
 @RunWith(MockitoJUnitRunner.class)
 public class StatusCodesComparatorTest extends AbstractComparatorTest {

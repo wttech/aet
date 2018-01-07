@@ -43,8 +43,7 @@ import org.mockito.internal.verification.VerificationModeFactory;
 import org.mockito.runners.MockitoJUnitRunner;
 
 /**
- * @author maciej.laskowski
- *         Created: 2015-04-29
+ * @author maciej.laskowski Created: 2015-04-29
  */
 @RunWith(MockitoJUnitRunner.class)
 public class ComparisonResultsRouterTest extends StepManagerTest {

@@ -38,13 +38,13 @@ public class ComparatorStep implements ParametrizedStep {
   private final List<DataModifierStep> dataModifierSteps;
 
   /**
-   * @param module - name (identifier) of module, with this parameter system decides which comparator will
-   * handle this step.
+   * @param module - name (identifier) of module, with this parameter system decides which
+   * comparator will handle this step.
    * @param type - identifies type of resource which should be compared (e.g. source, screen).
    * @param name - unique (within comparators with the same module) name for comparator.
    * @param collectorName - name of collector which results will be handled by this comparator.
-   * @param parameters - all additional parameters passed to Comparator, e.g. elementId of source. Each
-   *                     parameter is stored as separate map entry (key-&gt;value).
+   * @param parameters - all additional parameters passed to Comparator, e.g. elementId of source.
+   * Each parameter is stored as separate map entry (key-&gt;value).
    * @param dataModifierSteps - list of modifiers which will have impact on comparison results.
    */
   public ComparatorStep(String module, String type, String name, String collectorName,

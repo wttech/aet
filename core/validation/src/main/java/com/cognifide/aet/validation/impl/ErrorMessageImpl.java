@@ -28,13 +28,17 @@ public class ErrorMessageImpl implements ErrorMessage {
     this.throwable = throwable;
   }
 
-  /** @return the message */
+  /**
+   * @return the message
+   */
   @Override
   public String getMessage() {
     return message;
   }
 
-  /** @return the throwable */
+  /**
+   * @return the throwable
+   */
   @Override
   public Throwable getThrowable() {
     return throwable;

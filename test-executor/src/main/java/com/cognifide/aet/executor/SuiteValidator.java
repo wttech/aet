@@ -74,8 +74,8 @@ public class SuiteValidator {
   }
 
   /**
-   * Validates if the pattern is from the same project and company.
-   * This is because currently AET is not supporting cross-projects patterns.
+   * Validates if the pattern is from the same project and company. This is because currently AET is
+   * not supporting cross-projects patterns.
    *
    * @param testSuiteRun suite to be tested
    * @return true if suite is OK

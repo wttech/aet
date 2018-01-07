@@ -31,12 +31,12 @@ public class CollectorJobData extends JobData {
   private final String proxy;
 
   /**
-   * @param company   - company name.
-   * @param project   - project name.
+   * @param company - company name.
+   * @param project - project name.
    * @param suiteName - suite name.
-   * @param testName  - test name.
-   * @param urls      - list of urls for collector job.
-   * @param proxy     - used proxy name or null if none proxy is used
+   * @param testName - test name.
+   * @param urls - list of urls for collector job.
+   * @param proxy - used proxy name or null if none proxy is used
    */
   public CollectorJobData(String company, String project, String suiteName, String testName,
       List<Url> urls,

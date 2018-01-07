@@ -82,7 +82,8 @@ public final class ParamsHelper {
   /**
    * @param key property name that should store plain text
    * @param params map of parameters
-   * @return returns Pattern from quoted plain text under key property or null if there is no value with given key
+   * @return returns Pattern from quoted plain text under key property or null if there is no value
+   * with given key
    */
   public static Pattern getPatternFromPlainText(String key, Map<String, String> params) {
     String plainMessage = ParamsHelper.getParamAsString(key, params);

@@ -43,11 +43,10 @@ public class SourceComparatorTest extends AbstractComparatorTest {
   }
 
   /**
-   * Compares two files.
-   * Filenames paths should be relative to <code>.../src/test/resources/mock/SourceComparator</code>.
+   * Compares two files. Filenames paths should be relative to <code>.../src/test/resources/mock/SourceComparator</code>.
    *
-   * @param patternFilename  pattern Html file
-   * @param dataFilename     data Html file that will be compared to pattern
+   * @param patternFilename pattern Html file
+   * @param dataFilename data Html file that will be compared to pattern
    * @param comparatorParams additional parameters for source comparator
    * @return result of comparison
    * @throws Exception for incorrect parameters
