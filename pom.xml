@@ -672,6 +672,8 @@
               <!-- IntelliJ files -->
               <exclude>**/.idea/**</exclude>
               <exclude>**/*.iml</exclude>
+
+              <exclude>vagrant/cookbooks/**</exclude>
             </excludes>
           </configuration>
         </plugin>
