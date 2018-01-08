@@ -16,33 +16,38 @@
  * limitations under the License.
  */
 define(['angularAMD'], function (angularAMD) {
-	'use strict';
-	angularAMD.controller('unsavedChangesModalController', UnsavedChangesModalController);
+  'use strict';
+  angularAMD.controller('unsavedChangesModalController',
+      UnsavedChangesModalController);
 
-	function UnsavedChangesModalController($scope, $uibModalInstance, oldSuite, metadataService, metadataCacheService) {
-		var vm = this;
-		init();
+  function UnsavedChangesModalController($scope, $uibModalInstance, oldSuite,
+      metadataService, metadataCacheService) {
+    var vm = this;
+    init();
 
-		/***************************************
-		 ***********  Private methods  *********
-		 ***************************************/
+    /***************************************
+     ***********  Private methods  *********
+     ***************************************/
 
-		function init() {
-			vm.leave = leave;
-			vm.discard = discard;
-			vm.oldSuite = oldSuite;
-			var suite = metadataService.getSuite();
-			vm.previousReportUrl = 'report.html?company=' + suite.company + '&project=' + suite.project + '&correlationId=' + oldSuite.correlationId;
-		}
+    function init() {
+      vm.leave = leave;
+      vm.discard = discard;
+      vm.oldSuite = oldSuite;
+      var suite = metadataService.getSuite();
+      vm.previousReportUrl = 'report.html?company=' + suite.company
+          + '&project=' + suite.project + '&correlationId='
+          + oldSuite.correlationId;
+    }
 
-		function discard() {
-			var suite = metadataService.getSuite();
-			metadataCacheService.clearAllVersions(suite.company, suite.project, suite.name);
-			$uibModalInstance.close();
-		}
+    function discard() {
+      var suite = metadataService.getSuite();
+      metadataCacheService.clearAllVersions(suite.company, suite.project,
+          suite.name);
+      $uibModalInstance.close();
+    }
 
-		function leave() {
-			$uibModalInstance.close();
-		}
-	}
+    function leave() {
+      $uibModalInstance.close();
+    }
+  }
 });

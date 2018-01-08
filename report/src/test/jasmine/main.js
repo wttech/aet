@@ -18,39 +18,39 @@
 
 // Requirejs Configuration Options
 require.config({
-	// to set the default folder
-	baseUrl: '../../main/webapp/app',
+  // to set the default folder
+  baseUrl: '../../main/webapp/app',
 
-	// paths: maps ids with paths (no extension)
-	paths: {
-		'jasmine': ['../../../test/jasmine/lib/jasmine-2.4.1/jasmine'],
-		'jasmine-html': ['../../../test/jasmine/lib/jasmine-2.4.1/jasmine-html'],
-		'jasmine-boot': ['../../../test/jasmine/lib/jasmine-2.4.1/boot'],
+  // paths: maps ids with paths (no extension)
+  paths: {
+    'jasmine': ['../../../test/jasmine/lib/jasmine-2.4.1/jasmine'],
+    'jasmine-html': ['../../../test/jasmine/lib/jasmine-2.4.1/jasmine-html'],
+    'jasmine-boot': ['../../../test/jasmine/lib/jasmine-2.4.1/boot'],
 
-		'angular': '../assets/libs/angular/angular',
-		'angularAMD': '../assets/libs/angularAMD/angularAMD',
+    'angular': '../assets/libs/angular/angular',
+    'angularAMD': '../assets/libs/angularAMD/angularAMD',
 
-		'testService': '../../../test/sample/test.service',
-		'testServiceSpecs': '../../../test/sample/test.service.specs'
+    'testService': '../../../test/sample/test.service',
+    'testServiceSpecs': '../../../test/sample/test.service.specs'
 
-	},
-	// shim: makes external libraries compatible with requirejs (AMD)
-	shim: {
-		'angularAMD': {
-			deps : ['angular']
-		},
-		'jasmine-html': {
-			deps : ['jasmine']
-		},
-		'jasmine-boot': {
-			deps : ['jasmine', 'jasmine-html']
-		}
-	}
+  },
+  // shim: makes external libraries compatible with requirejs (AMD)
+  shim: {
+    'angularAMD': {
+      deps: ['angular']
+    },
+    'jasmine-html': {
+      deps: ['jasmine']
+    },
+    'jasmine-boot': {
+      deps: ['jasmine', 'jasmine-html']
+    }
+  }
 });
 
 require(['jasmine-boot'], function () {
-	require(['angularAMD', 'my-library.specs', 'testServiceSpecs'], function(){
-		//trigger Jasmine
-		window.onload();
-	})
+  require(['angularAMD', 'my-library.specs', 'testServiceSpecs'], function () {
+    //trigger Jasmine
+    window.onload();
+  })
 });

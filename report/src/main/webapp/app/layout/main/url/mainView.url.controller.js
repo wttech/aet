@@ -17,18 +17,21 @@
  */
 define([], function () {
   'use strict';
-  return ['$rootScope', '$stateParams', '$uibModal', 'metadataAccessService', 'viewModeService',
-          'notesService', 'patternsService', 'userSettingsService', 'caseFactory',
-          MainViewUrlController];
+  return ['$rootScope', '$stateParams', '$uibModal', 'metadataAccessService',
+    'viewModeService',
+    'notesService', 'patternsService', 'userSettingsService', 'caseFactory',
+    MainViewUrlController];
 
-  function MainViewUrlController($rootScope, $stateParams, $uibModal, metadataAccessService,
-                                 viewModeService, notesService, patternsService, userSettingsService, caseFactory) {
+  function MainViewUrlController($rootScope, $stateParams, $uibModal,
+      metadataAccessService,
+      viewModeService, notesService, patternsService, userSettingsService,
+      caseFactory) {
     var vm = this;
 
     $rootScope.$on('metadata:changed', updateUrlView);
     $('[data-toggle="popover"]').popover({
-       placement: 'bottom'
-     });
+      placement: 'bottom'
+    });
 
     setupUrlView();
 
@@ -65,33 +68,35 @@ define([], function () {
     }
 
     function acceptCase(currentCase) {
-      patternsService.updateCase($stateParams.test, $stateParams.url, currentCase.step.index,
-                                 currentCase.index);
+      patternsService.updateCase($stateParams.test, $stateParams.url,
+          currentCase.step.index,
+          currentCase.index);
     }
 
     function revertCase(currentCase) {
-      patternsService.revertCase($stateParams.test, $stateParams.url, currentCase.step.index,
-                                 currentCase.index);
+      patternsService.revertCase($stateParams.test, $stateParams.url,
+          currentCase.step.index,
+          currentCase.index);
     }
 
     function displayCommentModal(currentCase) {
       $uibModal.open({
-         animation: true,
-         templateUrl: 'app/layout/modal/note/noteModal.view.html',
-         controller: 'noteModalController',
-         controllerAs: 'noteModal',
-         resolve: {
-           model: function () {
-             return currentCase;
-           },
-           viewMode: function () {
-             return viewModeService.COMPARATOR;
-           },
-           notesService: function () {
-             return notesService;
-           }
-         }
-       });
+        animation: true,
+        templateUrl: 'app/layout/modal/note/noteModal.view.html',
+        controller: 'noteModalController',
+        controllerAs: 'noteModal',
+        resolve: {
+          model: function () {
+            return currentCase;
+          },
+          viewMode: function () {
+            return viewModeService.COMPARATOR;
+          },
+          notesService: function () {
+            return notesService;
+          }
+        }
+      });
     }
 
     function toggleMask() {

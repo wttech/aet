@@ -15,83 +15,88 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-define(['angularAMD', 'endpointConfiguration', 'requestParametersService'], function (angularAMD) {
-	'use strict';
-	angularAMD.factory('metadataEndpointService', MetadataEndpointService);
+define(['angularAMD', 'endpointConfiguration', 'requestParametersService'],
+    function (angularAMD) {
+      'use strict';
+      angularAMD.factory('metadataEndpointService', MetadataEndpointService);
 
-	/**
-	 * Service responsible for communication with AET metadata REST API endpoint.
-	 */
-	function MetadataEndpointService($q, $http, endpointConfiguration, requestParametersService) {
-		var service = {
-				getMetadata: getMetadata,
-				saveMetadata: saveMetadata
-			},
-			requestParams = requestParametersService.get(),
-			endpoint = endpointConfiguration.getEndpoint();
+      /**
+       * Service responsible for communication with AET metadata REST API endpoint.
+       */
+      function MetadataEndpointService($q, $http, endpointConfiguration,
+          requestParametersService) {
+        var service = {
+              getMetadata: getMetadata,
+              saveMetadata: saveMetadata
+            },
+            requestParams = requestParametersService.get(),
+            endpoint = endpointConfiguration.getEndpoint();
 
-		return service;
+        return service;
 
-		function getMetadata() {
-			var deferred = $q.defer(),
-				url;
+        function getMetadata() {
+          var deferred = $q.defer(),
+              url;
 
-			if (requestParams.correlationId) {
-				url = endpoint.getUrl + 'metadata?company=' + requestParams.company + '&project=' + requestParams.project + '&correlationId=' + requestParams.correlationId;
-			}
-			else {
-				url = endpoint.getUrl + 'metadata?company=' + requestParams.company + '&project=' + requestParams.project + '&suite=' + requestParams.suite;
-			}
+          if (requestParams.correlationId) {
+            url = endpoint.getUrl + 'metadata?company=' + requestParams.company
+                + '&project=' + requestParams.project + '&correlationId='
+                + requestParams.correlationId;
+          }
+          else {
+            url = endpoint.getUrl + 'metadata?company=' + requestParams.company
+                + '&project=' + requestParams.project + '&suite='
+                + requestParams.suite;
+          }
 
-			return $http({
-				method: 'GET',
-				url: url,
-				headers: {
-					'Content-Type': 'text/plain'
-				}
-			}).then(function (data) {
-				deferred.resolve(data.data);
-				return deferred.promise;
-			}).catch(function (exception) {
-				handleFailed('Failed to load report data!', exception);
-			});
-		}
+          return $http({
+            method: 'GET',
+            url: url,
+            headers: {
+              'Content-Type': 'text/plain'
+            }
+          }).then(function (data) {
+            deferred.resolve(data.data);
+            return deferred.promise;
+          }).catch(function (exception) {
+            handleFailed('Failed to load report data!', exception);
+          });
+        }
 
-		function saveMetadata(suite) {
-			var deferred = $q.defer();
-			
-			$http({
-				method: 'POST',
-				url: endpoint.getUrl + 'metadata',
-				data: suite,
-				headers: {
-					/*
-					 * for cross-origin request (when working on localhost:9000 with Grunt)
-					 * special content type is required according to jQuery documentation at
-					 *     http://api.jquery.com/jquery.ajax/
-					 * see also:
-					 *     http://stackoverflow.com/a/30554385
-					 */
-					'Content-Type': 'multipart/form-data; charset=UTF-8'
-				}
-			}).then(function (data) {
-				deferred.resolve(data.data);
-			}).catch(function (e) {
-				deferred.reject(e.data.message);
-			});
+        function saveMetadata(suite) {
+          var deferred = $q.defer();
 
-			return deferred.promise;
-		}
+          $http({
+            method: 'POST',
+            url: endpoint.getUrl + 'metadata',
+            data: suite,
+            headers: {
+              /*
+               * for cross-origin request (when working on localhost:9000 with Grunt)
+               * special content type is required according to jQuery documentation at
+               *     http://api.jquery.com/jquery.ajax/
+               * see also:
+               *     http://stackoverflow.com/a/30554385
+               */
+              'Content-Type': 'multipart/form-data; charset=UTF-8'
+            }
+          }).then(function (data) {
+            deferred.resolve(data.data);
+          }).catch(function (e) {
+            deferred.reject(e.data.message);
+          });
 
-		/***************************************
-		 ***********  Private methods  *********
-		 ***************************************/
+          return deferred.promise;
+        }
 
-		function handleFailed(text, exception) {
-			console.error(text, requestParams, exception);
-			alert(text);
-		}
+        /***************************************
+         ***********  Private methods  *********
+         ***************************************/
 
+        function handleFailed(text, exception) {
+          console.error(text, requestParams, exception);
+          alert(text);
+        }
 
-	}
-});
+      }
+    });

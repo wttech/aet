@@ -16,43 +16,44 @@
  * limitations under the License.
  */
 define(['angularAMD'], function (angularAMD) {
-	'use strict';
-	angularAMD.factory('requestParametersService', RequestParametersService);
+  'use strict';
+  angularAMD.factory('requestParametersService', RequestParametersService);
 
-	function RequestParametersService() {
+  function RequestParametersService() {
 
-		var service,
-			parameters;
+    var service,
+        parameters;
 
-		service = {
-			get: get
-		};
+    service = {
+      get: get
+    };
 
-		return service;
+    return service;
 
-		function get() {
-			if (!parameters) {
-				parameters = extract();
-			}
-			return parameters;
-		}
+    function get() {
+      if (!parameters) {
+        parameters = extract();
+      }
+      return parameters;
+    }
 
-		function extract() {
-			var result = {},
-				location = window.location.search,
-				allParametersList = location.replace('?', '').split('&'),
-				allParameters = {};
+    function extract() {
+      var result = {},
+          location = window.location.search,
+          allParametersList = location.replace('?', '').split('&'),
+          allParameters = {};
 
-			_.forEach(allParametersList, function (entry) {
-				var pair = entry.split('=');
-				allParameters[pair[0]] = pair[1];
-			});
+      _.forEach(allParametersList, function (entry) {
+        var pair = entry.split('=');
+        allParameters[pair[0]] = pair[1];
+      });
 
-			result.company = allParameters.company ? allParameters.company : null;
-			result.project = allParameters.project ? allParameters.project : null;
-			result.suite = allParameters.suite ? allParameters.suite : null;
-			result.correlationId = allParameters.correlationId ? allParameters.correlationId : null;
-			return result;
-		}
-	}
+      result.company = allParameters.company ? allParameters.company : null;
+      result.project = allParameters.project ? allParameters.project : null;
+      result.suite = allParameters.suite ? allParameters.suite : null;
+      result.correlationId = allParameters.correlationId
+          ? allParameters.correlationId : null;
+      return result;
+    }
+  }
 });

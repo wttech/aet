@@ -16,65 +16,69 @@
  * limitations under the License.
  */
 define([], function () {
-	'use strict';
-	return ['$rootScope', '$scope', '$timeout', 'metadataAccessService', 'metadataService', 'notesService', SidepanelController];
+  'use strict';
+  return ['$rootScope', '$scope', '$timeout', 'metadataAccessService',
+    'metadataService', 'notesService', SidepanelController];
 
-	function SidepanelController($rootScope, $scope, $timeout, metadataAccessService, metadataService, notesService) {
-		var vm = this;
-		vm.thereAreChangesToSave = thereAreChangesToSave;
-		vm.saveAllChanges = saveAllChanges;
-		vm.discardAllChanges = discardAllChanges;
+  function SidepanelController($rootScope, $scope, $timeout,
+      metadataAccessService, metadataService, notesService) {
+    var vm = this;
+    vm.thereAreChangesToSave = thereAreChangesToSave;
+    vm.saveAllChanges = saveAllChanges;
+    vm.discardAllChanges = discardAllChanges;
 
-		$rootScope.$on('metadata:changed', updateNavigationTree);
-		$rootScope.$on('filter:applied', updateTestsStats);
+    $rootScope.$on('metadata:changed', updateNavigationTree);
+    $rootScope.$on('filter:applied', updateTestsStats);
 
-		$('[data-toggle="popover"]').popover({
-			placement: 'bottom'
-		});
-		updateNavigationTree();
+    $('[data-toggle="popover"]').popover({
+      placement: 'bottom'
+    });
+    updateNavigationTree();
 
-		function thereAreChangesToSave() {
-			return metadataAccessService.getSuite().acceptedPatterns > 0 || notesService.unsavedNotesExist();
-		}
+    function thereAreChangesToSave() {
+      return metadataAccessService.getSuite().acceptedPatterns > 0
+          || notesService.unsavedNotesExist();
+    }
 
-		function saveAllChanges() {
-			console.log('All changes will be saved!');
-			metadataService.commitLocalChanges();
-		}
+    function saveAllChanges() {
+      console.log('All changes will be saved!');
+      metadataService.commitLocalChanges();
+    }
 
-		function discardAllChanges() {
-			console.log('All changes will be discarded!');
-			metadataService.discardLocalChanges();
-			window.location.reload();
-		}
+    function discardAllChanges() {
+      console.log('All changes will be discarded!');
+      metadataService.discardLocalChanges();
+      window.location.reload();
+    }
 
-		/***************************************
-		 ***********  Private methods  *********
-		 ***************************************/
+    /***************************************
+     ***********  Private methods  *********
+     ***************************************/
 
-		function updateNavigationTree() {
-			vm.testsStats = {
-				total: 0,
-				failed: 0,
-				warning: 0,
-				passed: 0,
-				rebased: 0
-			};
-			vm.tests = metadataAccessService.getTests();
-			$timeout(updateTestsStats);
-		}
+    function updateNavigationTree() {
+      vm.testsStats = {
+        total: 0,
+        failed: 0,
+        warning: 0,
+        passed: 0,
+        rebased: 0
+      };
+      vm.tests = metadataAccessService.getTests();
+      $timeout(updateTestsStats);
+    }
 
-		function updateTestsStats() {
-			vm.testsStats.total = $('.test-name.is-visible').length;
-			refreshTestsStatsValue('failed');
-			refreshTestsStatsValue('warning');
-			refreshTestsStatsValue('passed');
-			refreshTestsStatsValue('rebased');
-			$scope.$apply();
-		}
+    function updateTestsStats() {
+      vm.testsStats.total = $('.test-name.is-visible').length;
+      refreshTestsStatsValue('failed');
+      refreshTestsStatsValue('warning');
+      refreshTestsStatsValue('passed');
+      refreshTestsStatsValue('rebased');
+      $scope.$apply();
+    }
 
-		function refreshTestsStatsValue(statusName) {
-			vm.testsStats[statusName] = $('.test-name.' + statusName + '.is-visible').length;
-		}
-	}
+    function refreshTestsStatsValue(statusName) {
+      vm.testsStats[statusName] = $('.test-name.' + statusName
+          + '.is-visible').length;
+    }
+  }
 });

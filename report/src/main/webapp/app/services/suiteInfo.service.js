@@ -16,46 +16,47 @@
  * limitations under the License.
  */
 define(['angularAMD', 'metadataService'], function (angularAMD) {
-	'use strict';
-	angularAMD.factory('suiteInfoService', SuiteInfoService);
+  'use strict';
+  angularAMD.factory('suiteInfoService', SuiteInfoService);
 
-	/**
-	 * Service responsible for serving base suite information.
-	 */
-	function SuiteInfoService(metadataService) {
-		var service = {
-				getInfo: getInfo
-			},
-			suiteInfo;
+  /**
+   * Service responsible for serving base suite information.
+   */
+  function SuiteInfoService(metadataService) {
+    var service = {
+          getInfo: getInfo
+        },
+        suiteInfo;
 
-		return service;
+    return service;
 
-		/**
-		 * return object with following information:
-		 * - name - name of the suite,
-		 * - correlationId - id of suite run,
-		 * - company - name of the company,
-		 * - project - name of the project,
-		 * - version - version of suite run,
-		 * - lastUpdate - timestamp of last suite update
-		 */
-		function getInfo() {
-			var suite;
-			if (!suiteInfo) {
-				suite = metadataService.getSuite();
-				suiteInfo = {
-					correlationId: suite.correlationId,
-					patternCorrelationId: suite.patternCorrelationId,
-					company: suite.company,
-					project: suite.project,
-					name: suite.name,
-					version: suite.version,
-					lastUpdate: suite.runTimestamp,
-					duration: suite.statistics ? suite.statistics.duration : 'Not available'
-				};
-			}
-			return suiteInfo;
-		}
+    /**
+     * return object with following information:
+     * - name - name of the suite,
+     * - correlationId - id of suite run,
+     * - company - name of the company,
+     * - project - name of the project,
+     * - version - version of suite run,
+     * - lastUpdate - timestamp of last suite update
+     */
+    function getInfo() {
+      var suite;
+      if (!suiteInfo) {
+        suite = metadataService.getSuite();
+        suiteInfo = {
+          correlationId: suite.correlationId,
+          patternCorrelationId: suite.patternCorrelationId,
+          company: suite.company,
+          project: suite.project,
+          name: suite.name,
+          version: suite.version,
+          lastUpdate: suite.runTimestamp,
+          duration: suite.statistics ? suite.statistics.duration
+              : 'Not available'
+        };
+      }
+      return suiteInfo;
+    }
 
-	}
+  }
 });

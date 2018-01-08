@@ -16,12 +16,12 @@
  * limitations under the License.
  */
 define(['testService'], function (testService) {
-	'use strict';
+  'use strict';
 
-	describe("testService", function(){
-			it("should be available", function(){
-				console.log('test service should be available: [' + testService + ']');
-				expect(testService).not.toBeUndefined();
-			})
-	})
+  describe("testService", function () {
+    it("should be available", function () {
+      console.log('test service should be available: [' + testService + ']');
+      expect(testService).not.toBeUndefined();
+    })
+  })
 });

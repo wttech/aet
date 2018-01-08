@@ -16,52 +16,52 @@
  * limitations under the License.
  */
 define(['angularAMD', 'metadataService'], function (angularAMD) {
-	'use strict';
-	angularAMD.factory('notesService', NotesService);
+  'use strict';
+  angularAMD.factory('notesService', NotesService);
 
-	/**
-	 * Service responsible adding and removing notes from metadata.
-	 */
-	function NotesService(metadataService) {
-		var service = {
-			updateNote: updateNote,
-			deleteNote: deleteNote,
-			unsavedNotesExist: unsavedNotesExist
-		};
+  /**
+   * Service responsible adding and removing notes from metadata.
+   */
+  function NotesService(metadataService) {
+    var service = {
+      updateNote: updateNote,
+      deleteNote: deleteNote,
+      unsavedNotesExist: unsavedNotesExist
+    };
 
-		return service;
+    return service;
 
-		function updateNote(object, text) {
-			object.comment = text;
-			updateUnsavedNotesFlag();
-			metadataService.saveChangesLocally();
-			metadataService.notifyMetadataChanged();
-		}
+    function updateNote(object, text) {
+      object.comment = text;
+      updateUnsavedNotesFlag();
+      metadataService.saveChangesLocally();
+      metadataService.notifyMetadataChanged();
+    }
 
-		function deleteNote(object) {
-			var text = object.comment;
-			delete object.comment;
-			updateUnsavedNotesFlag();
-			metadataService.saveChangesLocally();
-			metadataService.notifyMetadataChanged();
-			return text;
-		}
+    function deleteNote(object) {
+      var text = object.comment;
+      delete object.comment;
+      updateUnsavedNotesFlag();
+      metadataService.saveChangesLocally();
+      metadataService.notifyMetadataChanged();
+      return text;
+    }
 
-		function unsavedNotesExist() {
-			var suite = metadataService.getSuite();
-			return suite.unsavedNotes === true;
-		}
+    function unsavedNotesExist() {
+      var suite = metadataService.getSuite();
+      return suite.unsavedNotes === true;
+    }
 
-		/***************************************
-		 ***********  Private methods  *********
-		 ***************************************/
+    /***************************************
+     ***********  Private methods  *********
+     ***************************************/
 
-		function updateUnsavedNotesFlag() {
-			var suite = metadataService.getSuite();
-			if (!suite.unsavedNotes) {
-				suite.unsavedNotes = true;
-			}
-		}
+    function updateUnsavedNotesFlag() {
+      var suite = metadataService.getSuite();
+      if (!suite.unsavedNotes) {
+        suite.unsavedNotes = true;
+      }
+    }
 
-	}
+  }
 });

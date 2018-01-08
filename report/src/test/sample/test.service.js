@@ -16,16 +16,16 @@
  * limitations under the License.
  */
 define(['angularAMD'], function (angularAMD) {
-	'use strict';
-	angularAMD.factory('testService', TestService);
+  'use strict';
+  angularAMD.factory('testService', TestService);
 
-	function TestService() {
-		var service = {
-			getPi: function () {
-				return 3.14
-			}
-		}
+  function TestService() {
+    var service = {
+      getPi: function () {
+        return 3.14
+      }
+    }
 
-		return service;
-	}
+    return service;
+  }
 });

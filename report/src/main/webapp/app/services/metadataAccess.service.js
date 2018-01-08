@@ -16,53 +16,53 @@
  * limitations under the License.
  */
 define(['angularAMD', 'metadataService'], function (angularAMD) {
-	'use strict';
-	angularAMD.factory('metadataAccessService', MetadataAccessService);
+  'use strict';
+  angularAMD.factory('metadataAccessService', MetadataAccessService);
 
-	/**
-	 * Service responsible for access to suite nodes.
-	 */
-	function MetadataAccessService(metadataService) {
-		var service = {
-			getSuite: getSuite,
-			getTest: getTest,
-			getTests: getTests,
-			getUrl: getUrl,
-			getTestUrls: getTestUrls,
-			getStep: getStep,
-			getUrlSteps: getUrlSteps
-		};
+  /**
+   * Service responsible for access to suite nodes.
+   */
+  function MetadataAccessService(metadataService) {
+    var service = {
+      getSuite: getSuite,
+      getTest: getTest,
+      getTests: getTests,
+      getUrl: getUrl,
+      getTestUrls: getTestUrls,
+      getStep: getStep,
+      getUrlSteps: getUrlSteps
+    };
 
-		return service;
+    return service;
 
-		function getSuite() {
-			return metadataService.getSuite();
-		}
+    function getSuite() {
+      return metadataService.getSuite();
+    }
 
-		function getTests() {
-			return getSuite().tests;
-		}
+    function getTests() {
+      return getSuite().tests;
+    }
 
-		function getTest(testName) {
-			return metadataService.getTest(testName);
-		}
+    function getTest(testName) {
+      return metadataService.getTest(testName);
+    }
 
-		function getTestUrls(testName) {
-			var test = getTest(testName);
-			return test !== null ? test.urls : [];
-		}
+    function getTestUrls(testName) {
+      var test = getTest(testName);
+      return test !== null ? test.urls : [];
+    }
 
-		function getUrl(testName, urlName) {
-			return metadataService.getUrl(testName, urlName);
-		}
+    function getUrl(testName, urlName) {
+      return metadataService.getUrl(testName, urlName);
+    }
 
-		function getUrlSteps(testName, urlName) {
-			var url = getUrl(testName, urlName);
-			return url !== null ? url.steps : [];
-		}
+    function getUrlSteps(testName, urlName) {
+      var url = getUrl(testName, urlName);
+      return url !== null ? url.steps : [];
+    }
 
-		function getStep(testName, urlName, stepIndex) {
-			return metadataService.getStep(testName, urlName, stepIndex);
-		}
-	}
+    function getStep(testName, urlName, stepIndex) {
+      return metadataService.getStep(testName, urlName, stepIndex);
+    }
+  }
 });

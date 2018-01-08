@@ -16,30 +16,31 @@
  * limitations under the License.
  */
 define(['angularAMD'], function (angularAMD) {
-	'use strict';
+  'use strict';
 
-	angularAMD.factory('localStorageService', function ($window) {
-		return {
-			put: function (key, value) {
-				$window.localStorage[key] = JSON.stringify(value);
-			},
-			get: function (key) {
-				return JSON.parse($window.localStorage[key] || null);
-			},
-			remove: function (key) {
-				delete $window.localStorage[key];
-			},
-			getAllKeysWithPrefix: function (keyPrefix) {
-				var keys = [];
-				for(var storageKey in $window.localStorage){
-					var keyStartsWithKeyBeginning = storageKey.lastIndexOf(keyPrefix, 0) === 0;
-					if (keyStartsWithKeyBeginning) {
-						keys.push(storageKey);
-					}
-				}
-				return keys;
-			}
-		};
-	});
+  angularAMD.factory('localStorageService', function ($window) {
+    return {
+      put: function (key, value) {
+        $window.localStorage[key] = JSON.stringify(value);
+      },
+      get: function (key) {
+        return JSON.parse($window.localStorage[key] || null);
+      },
+      remove: function (key) {
+        delete $window.localStorage[key];
+      },
+      getAllKeysWithPrefix: function (keyPrefix) {
+        var keys = [];
+        for (var storageKey in $window.localStorage) {
+          var keyStartsWithKeyBeginning = storageKey.lastIndexOf(keyPrefix, 0)
+              === 0;
+          if (keyStartsWithKeyBeginning) {
+            keys.push(storageKey);
+          }
+        }
+        return keys;
+      }
+    };
+  });
 
 });
