@@ -156,8 +156,9 @@ define(['angularAMD', 'metadataService', 'metadataAccessService'],
         }
 
         function isStepComparatorRebaseable(comparator) {
-          return comparator && comparator.stepResult
-              && comparator.stepResult.rebaseable;
+          return comparator &&
+              comparator.stepResult &&
+              comparator.stepResult.rebaseable;
         }
 
         function notifyMetadataUpdated(shouldNotify) {

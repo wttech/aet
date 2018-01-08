@@ -34,9 +34,10 @@ define(['angularAMD'], function (angularAMD) {
       vm.discard = discard;
       vm.oldSuite = oldSuite;
       var suite = metadataService.getSuite();
-      vm.previousReportUrl = 'report.html?company=' + suite.company
-          + '&project=' + suite.project + '&correlationId='
-          + oldSuite.correlationId;
+      vm.previousReportUrl = 'report.html?' +
+          'company=' + suite.company +
+          '&project=' + suite.project +
+          '&correlationId=' + oldSuite.correlationId;
     }
 
     function discard() {

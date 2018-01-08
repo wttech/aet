@@ -39,14 +39,16 @@ define(['angularAMD', 'endpointConfiguration', 'requestParametersService'],
               url;
 
           if (requestParams.correlationId) {
-            url = endpoint.getUrl + 'metadata?company=' + requestParams.company
-                + '&project=' + requestParams.project + '&correlationId='
-                + requestParams.correlationId;
+            url = endpoint.getUrl + 'metadata' +
+                '?company=' + requestParams.company +
+                '&project=' + requestParams.project +
+                '&correlationId=' + requestParams.correlationId;
           }
           else {
-            url = endpoint.getUrl + 'metadata?company=' + requestParams.company
-                + '&project=' + requestParams.project + '&suite='
-                + requestParams.suite;
+            url = endpoint.getUrl + 'metadata' +
+                '?company=' + requestParams.company +
+                '&project=' + requestParams.project +
+                '&suite=' + requestParams.suite;
           }
 
           return $http({

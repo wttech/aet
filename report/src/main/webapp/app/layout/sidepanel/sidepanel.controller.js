@@ -36,8 +36,8 @@ define([], function () {
     updateNavigationTree();
 
     function thereAreChangesToSave() {
-      return metadataAccessService.getSuite().acceptedPatterns > 0
-          || notesService.unsavedNotesExist();
+      return metadataAccessService.getSuite().acceptedPatterns > 0 ||
+          notesService.unsavedNotesExist();
     }
 
     function saveAllChanges() {
@@ -77,8 +77,8 @@ define([], function () {
     }
 
     function refreshTestsStatsValue(statusName) {
-      vm.testsStats[statusName] = $('.test-name.' + statusName
-          + '.is-visible').length;
+      vm.testsStats[statusName] =
+          $('.test-name.' + statusName + '.is-visible').length;
     }
   }
 });

@@ -26,8 +26,8 @@ define(['angularAMD'], function (angularAMD) {
       link: function (scope, $element) {
         var parent = $element.parent();
         $element.on('click', function (event) {
-          if ($(event.target).attr('class')
-              == 'glyphicon glyphicon-chevron-down') {
+          var targetClass = $(event.target).attr('class');
+          if (targetClass == 'glyphicon glyphicon-chevron-down') {
             event.preventDefault();
           }
           if (scope.type == 'test-name') {

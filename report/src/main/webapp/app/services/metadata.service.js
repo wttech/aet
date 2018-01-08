@@ -202,8 +202,8 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
         function updatePatternStatistics() {
           decoratedObject.failed--;
           decoratedObject.rebased++;
-          if (decoratedParentReference
-              && decoratedParentReference.updatePatternStatistics) {
+          if (decoratedParentReference &&
+              decoratedParentReference.updatePatternStatistics) {
             decoratedParentReference.updatePatternStatistics();
           }
           if (decoratedObject.comparators) {
@@ -222,8 +222,8 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
         function revertPatternStatistics() {
           decoratedObject.failed++;
           decoratedObject.rebased--;
-          if (decoratedParentReference
-              && decoratedParentReference.revertPatternStatistics) {
+          if (decoratedParentReference &&
+              decoratedParentReference.revertPatternStatistics) {
             decoratedParentReference.revertPatternStatistics();
           }
           if (decoratedObject.comparators) {
@@ -240,15 +240,15 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
         }
 
         function hasStepComparatorChangesToAccept(comparator) {
-          return comparator && comparator.stepResult
-              && comparator.stepResult.rebaseable
-              && comparator.stepResult.status === 'FAILED';
+          return comparator && comparator.stepResult &&
+              comparator.stepResult.rebaseable &&
+              comparator.stepResult.status === 'FAILED';
         }
 
         function hasStepComparatorAcceptedChanges(comparator) {
-          return comparator && comparator.stepResult
-              && comparator.stepResult.rebaseable
-              && comparator.stepResult.status === 'REBASED';
+          return comparator && comparator.stepResult &&
+              comparator.stepResult.rebaseable  &&
+              comparator.stepResult.status === 'REBASED';
         }
 
         function getDecoratedObject() {
@@ -289,8 +289,8 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
 
         function updatePatternsToAccept(numberOfPatternsToAccept) {
           decoratedObject.patternsToAccept += numberOfPatternsToAccept;
-          if (decoratedParentReference
-              && decoratedParentReference.updatePatternsToAccept) {
+          if (decoratedParentReference &&
+              decoratedParentReference.updatePatternsToAccept) {
             decoratedParentReference.updatePatternsToAccept(
                 numberOfPatternsToAccept);
           }
@@ -298,8 +298,8 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
 
         function updateAcceptedPatterns(numberOfAcceptedPatterns) {
           decoratedObject.acceptedPatterns += numberOfAcceptedPatterns;
-          if (decoratedParentReference
-              && decoratedParentReference.updateAcceptedPatterns) {
+          if (decoratedParentReference &&
+              decoratedParentReference.updateAcceptedPatterns) {
             decoratedParentReference.updateAcceptedPatterns(
                 numberOfAcceptedPatterns);
           }

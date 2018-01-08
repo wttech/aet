@@ -54,8 +54,8 @@ module.exports = function (grunt) {
 
     'open': {
       'production': {
-        path: 'http://localhost:' + config.server.port + '/'
-        + config.server.root
+        path: 'http://localhost:' + config.server.port + '/' +
+        config.server.root
       }
     },
 

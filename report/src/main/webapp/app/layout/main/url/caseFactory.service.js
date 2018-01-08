@@ -70,8 +70,8 @@ define(['angularAMD', 'artifactsService', 'suiteInfoService'],
         }
 
         function hasData() {
-          return caseModel.step.stepResult
-              && caseModel.step.stepResult.artifactId;
+          return caseModel.step.stepResult &&
+              caseModel.step.stepResult.artifactId;
         }
 
         function getDataUrl() {
@@ -80,8 +80,8 @@ define(['angularAMD', 'artifactsService', 'suiteInfoService'],
         }
 
         function hasResult() {
-          return caseModel.comparator.stepResult
-              && caseModel.comparator.stepResult.artifactId;
+          return caseModel.comparator.stepResult &&
+              caseModel.comparator.stepResult.artifactId;
         }
 
         function getResultUrl() {
@@ -107,8 +107,9 @@ define(['angularAMD', 'artifactsService', 'suiteInfoService'],
           caseModel.displayName = getCaseDisplayName(step, comparator);
           var stepResult = comparator.stepResult;
           caseModel.showAcceptButton =
-              stepResult && stepResult.rebaseable && stepResult.status
-              === 'FAILED';
+              stepResult &&
+              stepResult.rebaseable &&
+              stepResult.status === 'FAILED';
           if (suiteInfoService.getInfo().patternCorrelationId) {
             caseModel.usesCrossSuitePattern = true;
           }
@@ -145,8 +146,8 @@ define(['angularAMD', 'artifactsService', 'suiteInfoService'],
           var displayName = comparator.type;
           if (step.parameters && step.parameters.name) {
             displayName += ' ' + step.parameters.name;
-          } else if (comparator.parameters
-              && comparator.parameters.comparator) {
+          } else if (comparator.parameters &&
+              comparator.parameters.comparator) {
             displayName += ' ' + comparator.parameters.comparator;
           }
           return displayName;
@@ -178,8 +179,8 @@ define(['angularAMD', 'artifactsService', 'suiteInfoService'],
         }
 
         function initializeCollectorResultArtifact() {
-          var collectorHasResult = caseModel.step.stepResult
-              && caseModel.step.stepResult.artifactId,
+          var collectorHasResult =
+              caseModel.step.stepResult && caseModel.step.stepResult.artifactId,
               sourceCollector = caseModel.step.type === 'source',
               artifactId;
 
@@ -215,13 +216,15 @@ define(['angularAMD', 'artifactsService', 'suiteInfoService'],
 
         function getTemplateUrl(step, comparator) {
           var type = step.type,
-              comparatorAlgorithm = comparator.parameters
-                  ? comparator.parameters.comparator : null,
+              comparatorAlgorithm =
+                  comparator.parameters ? comparator.parameters.comparator
+                      : null,
               templateName;
 
           if (comparatorAlgorithm && comparatorAlgorithm !== type) {
-            templateName = comparatorAlgorithm ? type + '_'
-                + comparatorAlgorithm : type;
+            templateName =
+                comparatorAlgorithm ? type + '_' + comparatorAlgorithm
+                    : type;
           } else {
             templateName = type;
           }

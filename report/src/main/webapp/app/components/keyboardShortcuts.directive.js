@@ -217,18 +217,18 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
       }
 
       function scrollPageUp($element, $sidePanel) {
-        $sidePanel.scrollTop($sidePanel.scrollTop() + $element.position().top
-            + $element.height() - $sidePanel.outerHeight());
+        $sidePanel.scrollTop($sidePanel.scrollTop() + $element.position().top +
+            $element.height() - $sidePanel.outerHeight());
       }
 
       function scrollPageDown($element, $sidePanel, $logoHolder) {
-        $sidePanel.scrollTop($sidePanel.scrollTop() + $element.position().top
-            - $logoHolder.height());
+        $sidePanel.scrollTop($sidePanel.scrollTop() + $element.position().top -
+            $logoHolder.height());
       }
 
       function isElementBelowViewport($element, $sidePanel) {
-        return $sidePanel.outerHeight() < $element.offset().top
-            + $element.height();
+        var elementBottomOffset = $element.offset().top + $element.height();
+        return $sidePanel.outerHeight() <elementBottomOffset;
       }
 
       function isElementAboveViewport($element, $logoHolder) {

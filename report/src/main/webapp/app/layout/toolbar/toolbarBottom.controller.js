@@ -66,8 +66,8 @@ define([], function () {
     function patternsMayBeUpdated() {
       var result = false;
       if (vm.model) {
-        var patternsToAcceptLeft = vm.model.patternsToAccept
-            - vm.model.acceptedPatterns;
+        var patternsToAcceptLeft =
+            vm.model.patternsToAccept - vm.model.acceptedPatterns;
         result = patternsToAcceptLeft > 0;
       }
       if (vm.usesCrossSuitePattern) {
@@ -80,8 +80,9 @@ define([], function () {
     function patternsMarkedForUpdateMayBeReverted() {
       var result = false;
       if (vm.model) {
-        result = vm.model.acceptedPatterns > 0 && vm.model.acceptedPatterns
-            <= vm.model.patternsToAccept;
+        result =
+            vm.model.acceptedPatterns > 0 &&
+            vm.model.acceptedPatterns <= vm.model.patternsToAccept;
       }
       if (vm.usesCrossSuitePattern) {
         result = false;

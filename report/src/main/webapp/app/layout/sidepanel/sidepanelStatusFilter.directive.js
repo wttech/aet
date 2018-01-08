@@ -49,8 +49,10 @@ define(['angularAMD'], function (angularAMD) {
         var $popoverContent = $('.popover-content');
 
         $rootScope.activeFilters.forEach(function (filter) {
-          $popoverContent.find('p[data-attribute="' + filter
-              + '"]').siblings().prop('checked', ' ');
+          $popoverContent
+          .find('p[data-attribute="' + filter + '"]')
+          .siblings()
+          .prop('checked', ' ');
         });
       }
     }

@@ -32,8 +32,8 @@ define(['angularAMD'], function (angularAMD) {
       getAllKeysWithPrefix: function (keyPrefix) {
         var keys = [];
         for (var storageKey in $window.localStorage) {
-          var keyStartsWithKeyBeginning = storageKey.lastIndexOf(keyPrefix, 0)
-              === 0;
+          var keyStartsWithKeyBeginning =
+              storageKey.lastIndexOf(keyPrefix, 0) === 0;
           if (keyStartsWithKeyBeginning) {
             keys.push(storageKey);
           }
