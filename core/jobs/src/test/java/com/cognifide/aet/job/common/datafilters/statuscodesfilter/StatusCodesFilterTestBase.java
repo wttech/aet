@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.job.common.datafilters.statuscodesfilter;
 
@@ -62,28 +60,34 @@ public abstract class StatusCodesFilterTestBase<T extends StatusCodesFilter> {
   @Before
   public void setUp() {
     tested = getStatusCodeFilterInstance();
-    infoPattern = getName() + " DataModifier with parameters: " + PARAM_URL + ": %s " + PARAM_PATTERN + ": %s";
+    infoPattern =
+        getName() + " DataModifier with parameters: " + PARAM_URL + ": %s " + PARAM_PATTERN
+            + ": %s";
     initStatusCodesList();
     when(data.getStatusCodes()).thenReturn(statusCodesList);
   }
 
   @Test
-  public void setParameters_UrlAndPatternpAreProvided_ExpectValidModifierInfo() throws ParametersException {
+  public void setParameters_UrlAndPatternpAreProvided_ExpectValidModifierInfo()
+      throws ParametersException {
     when(params.get(PARAM_URL)).thenReturn(PARAM_URL_VALUE);
     when(params.get(PARAM_PATTERN)).thenReturn(PARAM_PATTERN_VALUE);
     tested.setParameters(params);
-    assertThat(tested.getInfo(), is(String.format(infoPattern, PARAM_URL_VALUE, PARAM_PATTERN_VALUE)));
+    assertThat(tested.getInfo(),
+        is(String.format(infoPattern, PARAM_URL_VALUE, PARAM_PATTERN_VALUE)));
   }
 
   @Test
-  public void setParameters_OnlyUrlIsProvided_ExpectModifierInfoWithNullPatternValue() throws ParametersException {
+  public void setParameters_OnlyUrlIsProvided_ExpectModifierInfoWithNullPatternValue()
+      throws ParametersException {
     when(params.get(PARAM_URL)).thenReturn(PARAM_URL_VALUE);
     tested.setParameters(params);
     assertThat(tested.getInfo(), is(String.format(infoPattern, PARAM_URL_VALUE, "null")));
   }
 
   @Test
-  public void setParameters_OnlyPatternIsProvided_ExpectModifierInfoWithNullUrlValue() throws ParametersException {
+  public void setParameters_OnlyPatternIsProvided_ExpectModifierInfoWithNullUrlValue()
+      throws ParametersException {
     when(params.get(PARAM_PATTERN)).thenReturn(PARAM_PATTERN_VALUE);
     tested.setParameters(params);
     assertThat(tested.getInfo(), is(String.format(infoPattern, "null", PARAM_PATTERN_VALUE)));

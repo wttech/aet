@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.job.common.comparators.source.diff;
 
@@ -48,12 +46,12 @@ public class DiffParser {
   private static DiffMatchPatch diffMatchPatch = new DiffMatchPatch();
 
   /**
-   * Generates deltas of changes using DiffUtils library. If {trimmed} all source lines are trimmed before
-   * comparison in order to remove white spaces differences between html tags.
+   * Generates deltas of changes using DiffUtils library. If {trimmed} all source lines are trimmed
+   * before comparison in order to remove white spaces differences between html tags.
    *
-   * @param pattern        - pattern to compare
-   * @param source         - source to compare
-   * @param trimmedLines   - flag if lines should be trimmed
+   * @param pattern - pattern to compare
+   * @param source - source to compare
+   * @param trimmedLines - flag if lines should be trimmed
    * @return List of Delta changes
    */
   public List<ResultDelta> generateDiffs(String pattern, String source, boolean trimmedLines) {
@@ -140,7 +138,7 @@ public class DiffParser {
   }
 
   private List<ResultDelta> addFullSource(List<Delta> deltaList, List<String> originalList,
-                                          List<String> revisedList) {
+      List<String> revisedList) {
     List<ResultDelta> deltaListWithSource = new ArrayList<>();
     int lastPositionOriginal = 0;
     int lastPositionRevised = 0;
@@ -162,14 +160,17 @@ public class DiffParser {
       deltaListWithSource.add(resultDelta);
       deltaListWithSource.add(processDelta(delta));
     }
-    if ((originalList.size() > lastPositionOriginal || revisedList.size() > lastPositionRevised) && !deltaList.isEmpty()) {
-      ResultDelta resultDelta = prepareNoChangeResultDelta(originalList, revisedList, lastPositionOriginal, lastPositionRevised);
+    if ((originalList.size() > lastPositionOriginal || revisedList.size() > lastPositionRevised)
+        && !deltaList.isEmpty()) {
+      ResultDelta resultDelta = prepareNoChangeResultDelta(originalList, revisedList,
+          lastPositionOriginal, lastPositionRevised);
       deltaListWithSource.add(resultDelta);
     }
     return deltaListWithSource;
   }
 
-  private ResultDelta prepareNoChangeResultDelta(List<String> originalList, List<String> revisedList, int lastPositionOriginal, int lastPositionRevised) {
+  private ResultDelta prepareNoChangeResultDelta(List<String> originalList,
+      List<String> revisedList, int lastPositionOriginal, int lastPositionRevised) {
     int originalListSize = originalList.size();
     int revisedListSize = revisedList.size();
     List<String> originalSubList = originalList.subList(lastPositionOriginal, originalListSize);

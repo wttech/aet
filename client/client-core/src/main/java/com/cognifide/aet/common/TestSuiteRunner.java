@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.common;
 
@@ -85,12 +83,14 @@ public class TestSuiteRunner {
       SuiteExecutionResult suiteExecutionResult = startSuiteExecution(testSuite);
 
       if (hasErrors(suiteExecutionResult)) {
-        String msg = String.format("Failed to schedule test suite: '%s'", suiteExecutionResult.getErrorMessage());
+        String msg = String
+            .format("Failed to schedule test suite: '%s'", suiteExecutionResult.getErrorMessage());
         Logger.error(this, msg);
       } else {
         String now = DATE_FORMATTER.get().format(new Date());
         Logger.info(this, "CorrelationID: %s", suiteExecutionResult.getCorrelationId());
-        Logger.info(this, "********************************************************************************");
+        Logger.info(this,
+            "********************************************************************************");
         Logger.info(this,
             "********************** Job Setup finished at " + now + ".**********************");
         Logger.info(this,
@@ -175,7 +175,8 @@ public class TestSuiteRunner {
       Logger.debug(this, "XUnit report URL: '%s'", xUnitFullUrl);
       new ReportWriter().write(buildDirectory, xUnitFullUrl, "xunit-report.xml");
     } catch (IOException ioe) {
-      Logger.error(this, "Failed to obtain xUnit report from: %s. Error: %s", xUnitUrl, ioe.getMessage());
+      Logger.error(this, "Failed to obtain xUnit report from: %s. Error: %s", xUnitUrl,
+          ioe.getMessage());
     }
   }
 

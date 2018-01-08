@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.queues;
 
@@ -42,9 +40,9 @@ public final class JmsUtils {
   }
 
   /**
-   * Close a {@link MessageProducer} ignoring nulls and exceptions
+   * Closes a {@link MessageProducer} ignoring nulls and exceptions
    *
-   * @param messageProducer
+   * @param messageProducer - a {@link MessageProducer} to close.
    */
   public static void closeQuietly(MessageProducer messageProducer) {
     if (messageProducer == null) {
@@ -58,9 +56,9 @@ public final class JmsUtils {
   }
 
   /**
-   * Close a {@link MessageConsumer} ignoring nulls and exceptions
+   * Closes a {@link MessageConsumer} ignoring nulls and exceptions
    *
-   * @param messageConsumer
+   * @param messageConsumer - a {@link MessageConsumer} to close.
    */
   public static void closeQuietly(MessageConsumer messageConsumer) {
     if (messageConsumer == null) {
@@ -74,9 +72,9 @@ public final class JmsUtils {
   }
 
   /**
-   * Close a {@link Session} ignoring nulls and exceptions
+   * Closes a {@link Session} ignoring nulls and exceptions
    *
-   * @param session
+   * @param session - a {@link Session} to close.
    */
   public static void closeQuietly(Session session) {
     if (session == null) {
@@ -90,9 +88,9 @@ public final class JmsUtils {
   }
 
   /**
-   * Close a {@link Connection} ignoring nulls and exceptions
+   * Closes a {@link Connection} ignoring nulls and exceptions
    *
-   * @param connection
+   * @param connection - a {@link Connection} to close.
    */
   public static void closeQuietly(Connection connection) {
     if (connection == null) {

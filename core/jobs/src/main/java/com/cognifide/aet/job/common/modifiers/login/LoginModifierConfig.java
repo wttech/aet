@@ -1,19 +1,17 @@
 /**
  * AET
- * <p>
+ *
  * Copyright (C) 2013 Cognifide Limited
- * <p>
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- * <p>
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * <p>
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.job.common.modifiers.login;
 
@@ -86,18 +84,25 @@ class LoginModifierConfig {
     this.loginPage = params.get(LOGIN_PAGE_PARAM);
     this.login = getParameter(params, LOGIN_PARAM, DEFAULT_LOGIN);
     this.password = getParameter(params, PASSWORD_PARAM, DEFAULT_PASSWORD);
-    this.loginInputSelector = getParameter(params, LOGIN_INPUT_SELECTOR_PARAM, DEFAULT_LOGIN_INPUT_SELECTOR);
-    this.passwordInputSelector = getParameter(params, PASSWORD_INPUT_SELECTOR_PARAM, DEFAULT_PASSWORD_INPUT_SELECTOR);
-    this.submitButtonSelector = getParameter(params, SUBMIT_BUTTON_SELECTOR_PARAM, DEFAULT_SUBMIT_BUTTON_SELECTOR);
+    this.loginInputSelector = getParameter(params, LOGIN_INPUT_SELECTOR_PARAM,
+        DEFAULT_LOGIN_INPUT_SELECTOR);
+    this.passwordInputSelector = getParameter(params, PASSWORD_INPUT_SELECTOR_PARAM,
+        DEFAULT_PASSWORD_INPUT_SELECTOR);
+    this.submitButtonSelector = getParameter(params, SUBMIT_BUTTON_SELECTOR_PARAM,
+        DEFAULT_SUBMIT_BUTTON_SELECTOR);
     this.loginTokenKey = getParameter(params, LOGIN_TOKEN_KEY_PARAM, DEFAULT_LOGIN_TOKEN);
     this.forceLogin = BooleanUtils.toBoolean(params.get(FORCE_LOGIN));
-    this.delayBeforeLoginCheckOrReattempt = NumberUtils.toInt(getParameter(params, LOGIN_CHECK_TIMEOUT_PARAM, DEFAULT_CHECK_TIMEOUT_PARAM));
-    this.retrialNumber = NumberUtils.toInt(getParameter(params, RETRIAL_NUMBER_PARAM, DEFAULT_RETRIAL_NUMBER));
+    this.delayBeforeLoginCheckOrReattempt = NumberUtils
+        .toInt(getParameter(params, LOGIN_CHECK_TIMEOUT_PARAM, DEFAULT_CHECK_TIMEOUT_PARAM));
+    this.retrialNumber = NumberUtils
+        .toInt(getParameter(params, RETRIAL_NUMBER_PARAM, DEFAULT_RETRIAL_NUMBER));
 
     ParametersValidator.checkNotBlank(loginPage, "`login-page` parameter is mandatory");
-    ParametersValidator.checkRange(delayBeforeLoginCheckOrReattempt, 0, 10000, "Timeout duration should be greater than 0 and " +
+    ParametersValidator.checkRange(delayBeforeLoginCheckOrReattempt, 0, 10000,
+        "Timeout duration should be greater than 0 and " +
             "less than 10 seconds");
-    ParametersValidator.checkRange(retrialNumber, 1, Integer.MAX_VALUE, "Retrial number has to be at least 1");
+    ParametersValidator
+        .checkRange(retrialNumber, 1, Integer.MAX_VALUE, "Retrial number has to be at least 1");
   }
 
   private String getParameter(Map<String, String> params, String key, String defaultValue) {

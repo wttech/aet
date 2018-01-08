@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.executor.model;
 
@@ -25,8 +23,8 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * Represents single test in test suite. Consists of sequence of steps: 1) Collection 2) Comparison And set of
- * urls on which tests will be performed.
+ * Represents single test in test suite. Consists of sequence of steps: 1) Collection 2) Comparison
+ * And set of urls on which tests will be performed.
  */
 public class TestRun implements Serializable {
 
@@ -47,11 +45,11 @@ public class TestRun implements Serializable {
    * @param comparatorSteps - set of comparison steps.
    * @param urls - list of urls.
    * @param name - unique name of test.
-   * @param useProxy - says what kind of proxy should be used, backward compatibility: set 'true' to use
-   * 'rest' proxy, set 'false' to use none.
+   * @param useProxy - says what kind of proxy should be used, backward compatibility: set 'true' to
+   * use 'rest' proxy, set 'false' to use none.
    */
   public TestRun(List<CollectorStep> collectorSteps, Set<ComparatorStep> comparatorSteps,
-                 List<ExtendedUrl> urls, String name, String useProxy) {
+      List<ExtendedUrl> urls, String name, String useProxy) {
     this.collectorSteps = collectorSteps;
     this.comparatorSteps = getMap(comparatorSteps);
     this.urls = urls;

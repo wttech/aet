@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.job.common.modifiers.hide;
 
@@ -78,7 +76,8 @@ public class HideModifier extends WebElementsLocatorParams implements CollectorJ
         LEAVE_BLANK_SPACE_DEFAULT);
   }
 
-  private CollectorStepResult hideElement(By locator, boolean leaveBlankSpace) throws ProcessingException {
+  private CollectorStepResult hideElement(By locator, boolean leaveBlankSpace)
+      throws ProcessingException {
     CollectorStepResult result;
     try {
       String script = retrieveHidingScript(leaveBlankSpace);
@@ -93,14 +92,14 @@ public class HideModifier extends WebElementsLocatorParams implements CollectorJ
       result = CollectorStepResult.newModifierResult();
     } catch (TimeoutException e) {
       final String message =
-              String.format("Element not found before timeout (%s seconds): '%s'",
-                      getTimeoutInSeconds(), locator.toString());
+          String.format("Element not found before timeout (%s seconds): '%s'",
+              getTimeoutInSeconds(), locator.toString());
       result = CollectorStepResult.newProcessingErrorResult(message);
       LOG.info(message);
     } catch (WebDriverException e) {
       final String message = String
           .format("Error while hiding element %s. Error: %s",
-                  locator.toString(), e.getMessage());
+              locator.toString(), e.getMessage());
       result = CollectorStepResult.newProcessingErrorResult(message);
       LOG.warn(message, e);
     } catch (Exception e) {
@@ -109,7 +108,7 @@ public class HideModifier extends WebElementsLocatorParams implements CollectorJ
     return result;
   }
 
-  private String retrieveHidingScript(boolean leaveBlankSpace){
+  private String retrieveHidingScript(boolean leaveBlankSpace) {
     String script;
     if (leaveBlankSpace) {
       script = VISIBILITY_FALSE_SCRIPT;

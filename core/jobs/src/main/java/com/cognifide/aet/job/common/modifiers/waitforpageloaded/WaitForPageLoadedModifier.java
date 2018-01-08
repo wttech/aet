@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.job.common.modifiers.waitforpageloaded;
 
@@ -28,10 +26,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This modifier waits until page is loaded or fixed amount of time is up. The idea of waiting for page is
- * counting amount of elements [by findElements(By.xpath("//*"))] on current page state in loop. If number of
- * elements has increased since last checkout, continue loop (or break if timeout). Else if number of elements
- * is still, assume the page is loaded and finish waiting.
+ * This modifier waits until page is loaded or fixed amount of time is up. The idea of waiting for
+ * page is counting amount of elements [by findElements(By.xpath("//*"))] on current page state in
+ * loop. If number of elements has increased since last checkout, continue loop (or break if
+ * timeout). Else if number of elements is still, assume the page is loaded and finish waiting.
  */
 public class WaitForPageLoadedModifier implements CollectorJob {
 
@@ -65,7 +63,8 @@ public class WaitForPageLoadedModifier implements CollectorJob {
         Thread.sleep(PAGE_LOAD_CHECK_TIME_MS);
         waitTimeoutMs -= PAGE_LOAD_CHECK_TIME_MS;
         currentLoadedElementsCount = webDriver.findElements(By.xpath("//*")).size();
-        LOG.debug("Currently found {} elements. Left {} ms to timeout.", currentLoadedElementsCount, waitTimeoutMs);
+        LOG.debug("Currently found {} elements. Left {} ms to timeout.", currentLoadedElementsCount,
+            waitTimeoutMs);
       } while (currentLoadedElementsCount > previousLoadedElementsCount && waitTimeoutMs > 0);
       result = CollectorStepResult.newModifierResult();
     } catch (InterruptedException e) {

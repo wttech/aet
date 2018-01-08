@@ -3,17 +3,15 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.cognifide.aet.validation.impl;
 
@@ -61,31 +59,35 @@ public class ValidationUtilsTest {
   }
 
   @Test
-  public void validationResultToString_whenResultBuilderIsNull_expectEmptyString() throws Exception {
+  public void validationResultToString_whenResultBuilderIsNull_expectEmptyString()
+      throws Exception {
     String result = ValidationUtils.validationResultToString(null);
     assertTrue(StringUtils.isBlank(result));
   }
 
   @Test
-  public void validationResultToString_whenResultBuilderHasNoErrors_expectEmptyString() throws Exception {
+  public void validationResultToString_whenResultBuilderHasNoErrors_expectEmptyString()
+      throws Exception {
     String result = ValidationUtils.validationResultToString(builderWithoutErrors);
     assertTrue(StringUtils.isBlank(result));
   }
 
   @Test
   public void validationResultToString_whenResultBuilderHasErrorsWithoutThrowable_expectMessageWithoutCause()
-          throws Exception {
+      throws Exception {
     String result = ValidationUtils.validationResultToString(builderWithErrors);
-    assertThat(result, is("Validation failed. 1 errors were found:\nError 1\n\tMessage: message\n"));
+    assertThat(result,
+        is("Validation failed. 1 errors were found:\nError 1\n\tMessage: message\n"));
   }
 
   @Test
   public void validationResultToString_whenResultBuilderHasErrorsAndThrowable_expectMessageWithCause()
-          throws Exception {
+      throws Exception {
     Throwable throwable = Mockito.mock(Throwable.class);
     when(throwable.toString()).thenReturn("EXCEPTION");
     when(errorMessage.getThrowable()).thenReturn(throwable);
     String result = ValidationUtils.validationResultToString(builderWithErrors);
-    assertThat(result, is("Validation failed. 1 errors were found:\nError 1\n\tMessage: message\n\tCaused by: EXCEPTION\n"));
+    assertThat(result,
+        is("Validation failed. 1 errors were found:\nError 1\n\tMessage: message\n\tCaused by: EXCEPTION\n"));
   }
 }
