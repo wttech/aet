@@ -70,10 +70,17 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :chef_solo do |chef|
     chef.json = {
       "java" => {
-        "jdk_version" => "8",
         "install_flavor" => "oracle",
         "oracle" => {
           "accept_oracle_download_terms" => true
+        },
+        "jdk" => {
+          "8" => {
+            "x86_64" => {
+              "url" => "http://download.oracle.com/otn-pub/java/jdk/8u152-b16/aa0333dd3019491ca4f6ddbe78cdb6d0/jdk-8u152-linux-x64.tar.gz",
+              "checksum" => "218b3b340c3f6d05d940b817d0270dfe0cfd657a636bad074dcabe0c111961bf"
+            }
+          }
         }
       },
       "aet" => {
