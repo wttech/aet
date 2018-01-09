@@ -20,6 +20,7 @@
 # vi: set ft=ruby :
 
 AET_VERSION = '2.1.4-RC1'
+#AET_VERSION = '2.1.4-RC2'
 
 VAGRANTFILE_API_VERSION = '2'
 
@@ -85,12 +86,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       },
       "aet" => {
         "base_link" => "https://www.kubiczak.pl/aet",
-        "activemq" => {
-          "version" => "5.15.2",
-          "source" => "https://archive.apache.org/dist/activemq/5.15.2/apache-activemq-5.15.2-bin.tar.gz"
-        },
         "karaf" => {
-          "source" => "http://archive.apache.org/dist/karaf/4.1.2/apache-karaf-4.1.2.tar.gz",
           "java_max_mem" => "3072M",
           "enable_debug" => true
         },
