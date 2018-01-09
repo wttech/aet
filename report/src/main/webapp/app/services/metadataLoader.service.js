@@ -15,41 +15,43 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-define(['angularAMD', 'metadataService', 'metadataEndpointService'], function (angularAMD) {
-	'use strict';
-	angularAMD.factory('metadataLoaderService', MetadataLoaderService);
+define(['angularAMD', 'metadataService', 'metadataEndpointService'],
+    function (angularAMD) {
+      'use strict';
+      angularAMD.factory('metadataLoaderService', MetadataLoaderService);
 
-	/**
-	 * Service fetches metadata and inits metadata service.
-	 */
-	function MetadataLoaderService($rootScope, $q, metadataService, metadataEndpointService) {
-		var deferred = null;
+      /**
+       * Service fetches metadata and inits metadata service.
+       */
+      function MetadataLoaderService($rootScope, $q, metadataService,
+          metadataEndpointService) {
+        var deferred = null;
 
-		return {
-			setup: function () {
-				if (deferred === null) {
-					$rootScope.metadataLoadingStatus = 'IN_PROGRESS';
-					deferred = $q.defer();
-					metadataEndpointService.getMetadata()
-						.then(function (aetMetadataResponse) {
-							metadataService.ingestData(aetMetadataResponse);
-							$rootScope.metadataLoadingStatus = 'SUCCESS';
-							deferred.resolve();
-						})
-						.catch(handleFailed);
-				}
-				return deferred.promise;
-			}
-		};
+        return {
+          setup: function () {
+            if (deferred === null) {
+              $rootScope.metadataLoadingStatus = 'IN_PROGRESS';
+              deferred = $q.defer();
+              metadataEndpointService.getMetadata()
+              .then(function (aetMetadataResponse) {
+                metadataService.ingestData(aetMetadataResponse);
+                $rootScope.metadataLoadingStatus = 'SUCCESS';
+                deferred.resolve();
+              })
+              .catch(handleFailed);
+            }
+            return deferred.promise;
+          }
+        };
 
-		/***************************************
-		 ***********  Private methods  *********
-		 ***************************************/
+        /***************************************
+         ***********  Private methods  *********
+         ***************************************/
 
-		function handleFailed(exception) {
-			console.error('Can\'t setup suite metadata!', exception);
-			$rootScope.metadataLoadingStatus = 'FAILED';
-			alert('Failed to load report data!');
-		}
-	}
-});
+        function handleFailed(exception) {
+          console.error('Can\'t setup suite metadata!', exception);
+          $rootScope.metadataLoadingStatus = 'FAILED';
+          alert('Failed to load report data!');
+        }
+      }
+    });

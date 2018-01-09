@@ -16,74 +16,77 @@
  * limitations under the License.
  */
 define(['angularAMD', 'localStorageService'], function (angularAMD) {
-	'use strict';
-	angularAMD.factory('userSettingsService', UserSettingsService);
+  'use strict';
+  angularAMD.factory('userSettingsService', UserSettingsService);
 
-	/**
-	 * Service responsible for keeping user settings.
-	 * @param localStorageService - local session storage service
-	 */
-	function UserSettingsService(localStorageService) {
-		var service = {
-				isScreenshotMaskVisible: isScreenshotMaskVisible,
-				toggleScreenshotMask: toggleScreenshotMask,
-				isFullSourceVisible: isFullSourceVisible,
-				toggleFullSource: toggleFullSource
-			},
-			SCREENSHOT_MASK_STORAGE_KEY = 'aet:settings.visibility.screenshotMask',
-			FULL_SOURCE_MASK_STORAGE_KEY = 'aet:settings.visibility.fullSource',
-			settings = {
-				screenshotMaskVisible: true,
-				fullSourceMaskVisible: false
-			};
+  /**
+   * Service responsible for keeping user settings.
+   * @param localStorageService - local session storage service
+   */
+  function UserSettingsService(localStorageService) {
+    var service = {
+          isScreenshotMaskVisible: isScreenshotMaskVisible,
+          toggleScreenshotMask: toggleScreenshotMask,
+          isFullSourceVisible: isFullSourceVisible,
+          toggleFullSource: toggleFullSource
+        },
+        SCREENSHOT_MASK_STORAGE_KEY = 'aet:settings.visibility.screenshotMask',
+        FULL_SOURCE_MASK_STORAGE_KEY = 'aet:settings.visibility.fullSource',
+        settings = {
+          screenshotMaskVisible: true,
+          fullSourceMaskVisible: false
+        };
 
-		setupService();
-		return service;
+    setupService();
+    return service;
 
-		function setupService() {
-			settings.screenshotMaskVisible = getSetting(SCREENSHOT_MASK_STORAGE_KEY, true);
-			settings.fullSourceMaskVisible = getSetting(FULL_SOURCE_MASK_STORAGE_KEY, false);
-		}
+    function setupService() {
+      settings.screenshotMaskVisible = getSetting(SCREENSHOT_MASK_STORAGE_KEY,
+          true);
+      settings.fullSourceMaskVisible = getSetting(FULL_SOURCE_MASK_STORAGE_KEY,
+          false);
+    }
 
-		function isScreenshotMaskVisible() {
-			return settings.screenshotMaskVisible;
-		}
+    function isScreenshotMaskVisible() {
+      return settings.screenshotMaskVisible;
+    }
 
-		function toggleScreenshotMask() {
-			settings.screenshotMaskVisible = toggleSetting(SCREENSHOT_MASK_STORAGE_KEY);
-			return settings.screenshotMaskVisible;
-		}
+    function toggleScreenshotMask() {
+      settings.screenshotMaskVisible = toggleSetting(
+          SCREENSHOT_MASK_STORAGE_KEY);
+      return settings.screenshotMaskVisible;
+    }
 
-		function isFullSourceVisible() {
-			return settings.fullSourceMaskVisible;
-		}
+    function isFullSourceVisible() {
+      return settings.fullSourceMaskVisible;
+    }
 
-		function toggleFullSource() {
-			settings.fullSourceMaskVisible = toggleSetting(FULL_SOURCE_MASK_STORAGE_KEY);
-			return settings.fullSourceMaskVisible;
-		}
+    function toggleFullSource() {
+      settings.fullSourceMaskVisible = toggleSetting(
+          FULL_SOURCE_MASK_STORAGE_KEY);
+      return settings.fullSourceMaskVisible;
+    }
 
+    /***************************************
+     ***********  Private methods  *********
+     ***************************************/
 
-		/***************************************
-		 ***********  Private methods  *********
-		 ***************************************/
+    function getSetting(settingKey, defaultValue) {
+      var settingValue = localStorageService.get(settingKey);
+      if (settingValue === null) {
+        settingValue = defaultValue;
+        localStorageService.put(settingKey, defaultValue);
+      }
 
-		function getSetting(settingKey, defaultValue) {
-			var settingValue = localStorageService.get(settingKey);
-			if (settingValue === null) {
-				settingValue = defaultValue;
-				localStorageService.put(settingKey, defaultValue);
-			}
+      return settingValue;
+    }
 
-			return settingValue;
-		}
+    function toggleSetting(settingKey) {
+      var toggledValue = localStorageService.get(settingKey) !== true;
+      localStorageService.put(settingKey, toggledValue);
 
-		function toggleSetting(settingKey) {
-			var toggledValue = localStorageService.get(settingKey) !== true;
-			localStorageService.put(settingKey, toggledValue);
+      return toggledValue;
+    }
 
-			return toggledValue;
-		}
-
-	}
+  }
 });

@@ -18,230 +18,234 @@
 /* jshint node: true */
 'use strict';
 define(['angularAMD',
-	// **** LIBRARIES ****
-	'lodash',
-	'angular-bootstrap',
-	'angular-ui-router',
-	'jquery',
-	'bootstrap',
-	'scroller',
-	// components
-	'hidePopoversDirective',
-	'keyboardShortcutsDirective',
-	'testSearchFilter',
-	'testStatusFilter',
-	'urlSearchFilter',
-	'urlStatusFilter',
-	// services
-	'endpointConfiguration',
-	'artifactsService',
-	'metadataEndpointService',
-	'metadataLoaderService',
-	'localStorageService',
-	'requestParametersService',
-	'metadataCacheService',
-	'metadataService',
-	'metadataAccessService',
-	'notesService',
-	'suiteInfoService',
-	'patternsService',
-	'caseFactory',
-	'userSettingsService',
-	'viewModeService',
+  // **** LIBRARIES ****
+  'lodash',
+  'angular-bootstrap',
+  'angular-ui-router',
+  'jquery',
+  'bootstrap',
+  'scroller',
+  // components
+  'hidePopoversDirective',
+  'keyboardShortcutsDirective',
+  'testSearchFilter',
+  'testStatusFilter',
+  'urlSearchFilter',
+  'urlStatusFilter',
+  // services
+  'endpointConfiguration',
+  'artifactsService',
+  'metadataEndpointService',
+  'metadataLoaderService',
+  'localStorageService',
+  'requestParametersService',
+  'metadataCacheService',
+  'metadataService',
+  'metadataAccessService',
+  'notesService',
+  'suiteInfoService',
+  'patternsService',
+  'caseFactory',
+  'userSettingsService',
+  'viewModeService',
 
-	// sidepanel
-	'sidepanelToggleDirective',
-	'sidepanelStatusFilterDirective',
-	'sidepanelSearchDirective',
-	'sidepanelToggleLinkDirective',
-	'sidepanelSaveChangesDirective',
-	'sidepanelTruncateUrlsDirective',
-	// main
-	'includedCommentPopoverDirective',
-	'expandablePanelDirective',
-	// modals
-	'noteModalController',
-	'unsavedChangesModalController'], function (angularAMD, _) {
+  // sidepanel
+  'sidepanelToggleDirective',
+  'sidepanelStatusFilterDirective',
+  'sidepanelSearchDirective',
+  'sidepanelToggleLinkDirective',
+  'sidepanelSaveChangesDirective',
+  'sidepanelTruncateUrlsDirective',
+  // main
+  'includedCommentPopoverDirective',
+  'expandablePanelDirective',
+  // modals
+  'noteModalController',
+  'unsavedChangesModalController'], function (angularAMD, _) {
 
-	var app = angular.module('app', ['ui.router', 'ui.bootstrap']);
+  var app = angular.module('app', ['ui.router', 'ui.bootstrap']);
 
-	app.run([
-		'$rootScope',
-		'$state',
-		'$uibModal',
-		'metadataService',
-		'userSettingsService',
-		'metadataLoaderService',
-		function ($rootScope,
-		          $state,
-		          $uibModal,
-		          metadataService,
-		          userSettingsService,
-		          metadataLoaderService) {
+  app.run([
+    '$rootScope',
+    '$state',
+    '$uibModal',
+    'metadataService',
+    'userSettingsService',
+    'metadataLoaderService',
+    function ($rootScope,
+        $state,
+        $uibModal,
+        metadataService,
+        userSettingsService,
+        metadataLoaderService) {
 
-			$rootScope.metadataSaveInProgress = false;
-			metadataLoaderService.setup();
-			
-			$rootScope.$state = $state;
+      $rootScope.metadataSaveInProgress = false;
+      metadataLoaderService.setup();
 
-			$rootScope.$on('metadata:unsavedChangesDetected', function (event, oldSuite) {
-				displayNotificationModal($uibModal, oldSuite);
-			});
+      $rootScope.$state = $state;
 
-			//apply user settings
-			$rootScope.maskVisible = userSettingsService.isScreenshotMaskVisible();
-			$rootScope.fullSourceVisible = userSettingsService.isFullSourceVisible();
-		}]);
+      $rootScope.$on('metadata:unsavedChangesDetected',
+          function (event, oldSuite) {
+            displayNotificationModal($uibModal, oldSuite);
+          });
 
-	app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider', '$compileProvider', function ($stateProvider, $urlRouterProvider, $locationProvider, $compileProvider) {
-		$compileProvider.debugInfoEnabled(false);
+      //apply user settings
+      $rootScope.maskVisible = userSettingsService.isScreenshotMaskVisible();
+      $rootScope.fullSourceVisible = userSettingsService.isFullSourceVisible();
+    }]);
 
-		$stateProvider
-			.state('root', angularAMD.route({
-				views: {
-					'sidepanel@': angularAMD.route({
-						templateUrl: 'app/layout/sidepanel/sidepanel.view.html',
-						controllerUrl: 'layout/sidepanel/sidepanel.controller',
-						controllerAs: 'sidepanel',
-						resolve: {
-							metadataReady: function (metadataLoaderService) {
-								return metadataLoaderService.setup();
-							}
-						}
-					})
-				}
-			}))
-			.state('suite', angularAMD.route({
-				url: '/suite',
-				parent: 'root',
-				views: {
-					'content@': angularAMD.route({
-						templateUrl: 'app/layout/main/suite/mainView.suite.view.html',
-						controllerUrl: 'layout/main/suite/mainView.suite.controller',
-						controllerAs: 'suiteView',
-						resolve: {
-							metadataReady: function (metadataLoaderService) {
-								return metadataLoaderService.setup();
-							}
-						}
-					}),
-					'toolbarTop@': angularAMD.route({
-						templateUrl: 'app/layout/toolbar/toolbarTop.view.html',
-						controllerUrl: 'layout/toolbar/toolbarTop.controller',
-						controllerAs: 'toolbarTop',
-						resolve: {
-							metadataReady: function (metadataLoaderService) {
-								return metadataLoaderService.setup();
-							}
-						}
-					}),
-					'toolbarBottom@': angularAMD.route({
-						templateUrl: 'app/layout/toolbar/toolbarBottom.view.html',
-						controllerUrl: 'layout/toolbar/toolbarBottom.controller',
-						controllerAs: 'toolbarBottom',
-						resolve: {
-							metadataReady: function (metadataLoaderService) {
-								return metadataLoaderService.setup();
-							}
-						}
-					})
-				}
-			}))
-			.state('test', angularAMD.route({
-				url: '/test/:test',
-				parent: 'root',
-				views: {
-					'content@': angularAMD.route({
-						templateUrl: 'app/layout/main/test/mainView.test.view.html',
-						controllerUrl: 'layout/main/test/mainView.test.controller',
-						controllerAs: 'testView',
-						resolve: {
-							metadataReady: function (metadataLoaderService) {
-								return metadataLoaderService.setup();
-							}
-						}
-					}),
-					'toolbarTop@': angularAMD.route({
-						templateUrl: 'app/layout/toolbar/toolbarTop.view.html',
-						controllerUrl: 'layout/toolbar/toolbarTop.controller',
-						controllerAs: 'toolbarTop',
-						resolve: {
-							metadataReady: function (metadataLoaderService) {
-								return metadataLoaderService.setup();
-							}
-						}
-					}),
-					'toolbarBottom@': angularAMD.route({
-						templateUrl: 'app/layout/toolbar/toolbarBottom.view.html',
-						controllerUrl: 'layout/toolbar/toolbarBottom.controller',
-						controllerAs: 'toolbarBottom',
-						resolve: {
-							metadataReady: function (metadataLoaderService) {
-								return metadataLoaderService.setup();
-							}
-						}
-					})
-				}
-			}))
-			.state('url', angularAMD.route({
-				url: '/url/:test/:url',
-				parent: 'root',
-				cache: true,
-				views: {
-					'content@': angularAMD.route({
-						templateUrl: 'app/layout/main/url/mainView.url.view.html',
-						controllerUrl: 'layout/main/url/mainView.url.controller',
-						controllerAs: 'urlView',
-						resolve: {
-							metadataReady: function (metadataLoaderService) {
-								return metadataLoaderService.setup();
-							}
-						}
-					}),
-					'toolbarTop@': angularAMD.route({
-						templateUrl: 'app/layout/toolbar/toolbarTop.view.html',
-						controllerUrl: 'layout/toolbar/toolbarTop.controller',
-						controllerAs: 'toolbarTop',
-						resolve: {
-							metadataReady: function (metadataLoaderService) {
-								return metadataLoaderService.setup();
-							}
-						}
-					}),
-					'toolbarBottom@': angularAMD.route({
-						templateUrl: 'app/layout/toolbar/toolbarBottom.view.html',
-						controllerUrl: 'layout/toolbar/toolbarBottom.controller',
-						controllerAs: 'toolbarBottom',
-						resolve: {
-							metadataReady: function (metadataLoaderService) {
-								return metadataLoaderService.setup();
-							}
-						}
-					})
-				}
-			}));
-		$urlRouterProvider.otherwise('/suite');
-	}]);
+  app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
+    '$compileProvider',
+    function ($stateProvider, $urlRouterProvider, $locationProvider,
+        $compileProvider) {
+      $compileProvider.debugInfoEnabled(false);
 
-	app.filter('to_trusted', ['$sce', function ($sce) { // safely include html code
-		return function (text) {
-			return $sce.trustAsHtml(text);
-		};
-	}]);
+      $stateProvider
+      .state('root', angularAMD.route({
+        views: {
+          'sidepanel@': angularAMD.route({
+            templateUrl: 'app/layout/sidepanel/sidepanel.view.html',
+            controllerUrl: 'layout/sidepanel/sidepanel.controller',
+            controllerAs: 'sidepanel',
+            resolve: {
+              metadataReady: function (metadataLoaderService) {
+                return metadataLoaderService.setup();
+              }
+            }
+          })
+        }
+      }))
+      .state('suite', angularAMD.route({
+        url: '/suite',
+        parent: 'root',
+        views: {
+          'content@': angularAMD.route({
+            templateUrl: 'app/layout/main/suite/mainView.suite.view.html',
+            controllerUrl: 'layout/main/suite/mainView.suite.controller',
+            controllerAs: 'suiteView',
+            resolve: {
+              metadataReady: function (metadataLoaderService) {
+                return metadataLoaderService.setup();
+              }
+            }
+          }),
+          'toolbarTop@': angularAMD.route({
+            templateUrl: 'app/layout/toolbar/toolbarTop.view.html',
+            controllerUrl: 'layout/toolbar/toolbarTop.controller',
+            controllerAs: 'toolbarTop',
+            resolve: {
+              metadataReady: function (metadataLoaderService) {
+                return metadataLoaderService.setup();
+              }
+            }
+          }),
+          'toolbarBottom@': angularAMD.route({
+            templateUrl: 'app/layout/toolbar/toolbarBottom.view.html',
+            controllerUrl: 'layout/toolbar/toolbarBottom.controller',
+            controllerAs: 'toolbarBottom',
+            resolve: {
+              metadataReady: function (metadataLoaderService) {
+                return metadataLoaderService.setup();
+              }
+            }
+          })
+        }
+      }))
+      .state('test', angularAMD.route({
+        url: '/test/:test',
+        parent: 'root',
+        views: {
+          'content@': angularAMD.route({
+            templateUrl: 'app/layout/main/test/mainView.test.view.html',
+            controllerUrl: 'layout/main/test/mainView.test.controller',
+            controllerAs: 'testView',
+            resolve: {
+              metadataReady: function (metadataLoaderService) {
+                return metadataLoaderService.setup();
+              }
+            }
+          }),
+          'toolbarTop@': angularAMD.route({
+            templateUrl: 'app/layout/toolbar/toolbarTop.view.html',
+            controllerUrl: 'layout/toolbar/toolbarTop.controller',
+            controllerAs: 'toolbarTop',
+            resolve: {
+              metadataReady: function (metadataLoaderService) {
+                return metadataLoaderService.setup();
+              }
+            }
+          }),
+          'toolbarBottom@': angularAMD.route({
+            templateUrl: 'app/layout/toolbar/toolbarBottom.view.html',
+            controllerUrl: 'layout/toolbar/toolbarBottom.controller',
+            controllerAs: 'toolbarBottom',
+            resolve: {
+              metadataReady: function (metadataLoaderService) {
+                return metadataLoaderService.setup();
+              }
+            }
+          })
+        }
+      }))
+      .state('url', angularAMD.route({
+        url: '/url/:test/:url',
+        parent: 'root',
+        cache: true,
+        views: {
+          'content@': angularAMD.route({
+            templateUrl: 'app/layout/main/url/mainView.url.view.html',
+            controllerUrl: 'layout/main/url/mainView.url.controller',
+            controllerAs: 'urlView',
+            resolve: {
+              metadataReady: function (metadataLoaderService) {
+                return metadataLoaderService.setup();
+              }
+            }
+          }),
+          'toolbarTop@': angularAMD.route({
+            templateUrl: 'app/layout/toolbar/toolbarTop.view.html',
+            controllerUrl: 'layout/toolbar/toolbarTop.controller',
+            controllerAs: 'toolbarTop',
+            resolve: {
+              metadataReady: function (metadataLoaderService) {
+                return metadataLoaderService.setup();
+              }
+            }
+          }),
+          'toolbarBottom@': angularAMD.route({
+            templateUrl: 'app/layout/toolbar/toolbarBottom.view.html',
+            controllerUrl: 'layout/toolbar/toolbarBottom.controller',
+            controllerAs: 'toolbarBottom',
+            resolve: {
+              metadataReady: function (metadataLoaderService) {
+                return metadataLoaderService.setup();
+              }
+            }
+          })
+        }
+      }));
+      $urlRouterProvider.otherwise('/suite');
+    }]);
 
-	function displayNotificationModal($uibModal, oldSuite) {
-		$uibModal.open({
-			animation: true,
-			templateUrl: 'app/layout/modal/unsavedChanges/unsavedChangesModal.view.html',
-			controller: 'unsavedChangesModalController',
-			controllerAs: 'unsavedChangesModal',
-			resolve: {
-				oldSuite: function() {
-					return oldSuite;
-				}
-			}
-		});
-	}
+  app.filter('to_trusted', ['$sce', function ($sce) { // safely include html code
+    return function (text) {
+      return $sce.trustAsHtml(text);
+    };
+  }]);
 
-	return angularAMD.bootstrap(app);
+  function displayNotificationModal($uibModal, oldSuite) {
+    $uibModal.open({
+      animation: true,
+      templateUrl: 'app/layout/modal/unsavedChanges/unsavedChangesModal.view.html',
+      controller: 'unsavedChangesModalController',
+      controllerAs: 'unsavedChangesModal',
+      resolve: {
+        oldSuite: function () {
+          return oldSuite;
+        }
+      }
+    });
+  }
+
+  return angularAMD.bootstrap(app);
 });

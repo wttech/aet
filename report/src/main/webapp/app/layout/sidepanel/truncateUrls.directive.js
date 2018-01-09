@@ -16,29 +16,29 @@
  * limitations under the License.
  */
 define(['angularAMD'], function (angularAMD) {
-	'use strict';
-	angularAMD.directive('aetTruncateUrls', ['$timeout', function ($timeout) {
-		return {
-			restrict: 'AE',
-			scope: {
-				type: '@'
-			},
-			link: function (scope, $element) {
-				var checkElementsHeights = function () {
-					if ($element.children().width() > $element.parent().width()) {
-						$element.addClass('ellipsis');
-					}  else {
-						$element.removeClass('ellipsis');
-					} 
-				};
+  'use strict';
+  angularAMD.directive('aetTruncateUrls', ['$timeout', function ($timeout) {
+    return {
+      restrict: 'AE',
+      scope: {
+        type: '@'
+      },
+      link: function (scope, $element) {
+        var checkElementsHeights = function () {
+          if ($element.children().width() > $element.parent().width()) {
+            $element.addClass('ellipsis');
+          } else {
+            $element.removeClass('ellipsis');
+          }
+        };
 
-				$(window).on('resize', checkElementsHeights);
+        $(window).on('resize', checkElementsHeights);
 
-				$timeout(function () {
-					checkElementsHeights();
-				});
-			}
-		};
-	}]);
+        $timeout(function () {
+          checkElementsHeights();
+        });
+      }
+    };
+  }]);
 
 });

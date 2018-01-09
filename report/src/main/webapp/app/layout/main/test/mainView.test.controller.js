@@ -16,26 +16,28 @@
  * limitations under the License.
  */
 define([], function () {
-	'use strict';
-	return ['$rootScope', '$stateParams', 'metadataAccessService', MainViewTestController];
+  'use strict';
+  return ['$rootScope', '$stateParams', 'metadataAccessService',
+    MainViewTestController];
 
-	function MainViewTestController($rootScope, $stateParams, metadataAccessService) {
-		var vm = this;
+  function MainViewTestController($rootScope, $stateParams,
+      metadataAccessService) {
+    var vm = this;
 
-		$rootScope.$on('metadata:changed', updateTestView);
-		$('[data-toggle="popover"]').popover({
-			placement: 'bottom'
-		});
+    $rootScope.$on('metadata:changed', updateTestView);
+    $('[data-toggle="popover"]').popover({
+      placement: 'bottom'
+    });
 
-		updateTestView();
+    updateTestView();
 
-		/***************************************
-		 ***********  Private methods  *********
-		 ***************************************/
+    /***************************************
+     ***********  Private methods  *********
+     ***************************************/
 
-		function updateTestView() {
-			vm.urls = metadataAccessService.getTestUrls($stateParams.test);
-			vm.testName = $stateParams.test;
-		}
-	}
+    function updateTestView() {
+      vm.urls = metadataAccessService.getTestUrls($stateParams.test);
+      vm.testName = $stateParams.test;
+    }
+  }
 });

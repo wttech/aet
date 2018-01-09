@@ -18,20 +18,20 @@
 
 -->
 <div class="page-main">
-    <div class="row reports-list">
-        <div class="reports-list-item {{test.getStatus()}}"
-             ng-repeat="test in suiteView.tests | aetTestStatusFilter:$root.activeFilters | aetTestSearchFilter:$root.searchText | orderBy:'name'"
-             ng-class="test.getStatus()">
-            <a ui-sref="test({'suite':data.project,'test':test.name})">
-                <div class="inner">
-                    <div ng-class="test.getStatus()">
-                        <div class="test-count test-count-dashboard">
-                            <i ng-class="test.getStatus()" class="glyphicon"></i>
-                            <span>{{test.name}}</span>
-                        </div>
-                    </div>
-                </div>
-            </a>
+  <div class="row reports-list">
+    <div class="reports-list-item {{test.getStatus()}}"
+         ng-repeat="test in suiteView.tests | aetTestStatusFilter:$root.activeFilters | aetTestSearchFilter:$root.searchText | orderBy:'name'"
+         ng-class="test.getStatus()">
+      <a ui-sref="test({'suite':data.project,'test':test.name})">
+        <div class="inner">
+          <div ng-class="test.getStatus()">
+            <div class="test-count test-count-dashboard">
+              <i ng-class="test.getStatus()" class="glyphicon"></i>
+              <span>{{test.name}}</span>
+            </div>
+          </div>
         </div>
+      </a>
     </div>
+  </div>
 </div>

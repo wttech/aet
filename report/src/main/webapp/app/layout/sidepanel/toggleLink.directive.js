@@ -16,25 +16,26 @@
  * limitations under the License.
  */
 define(['angularAMD'], function (angularAMD) {
-	'use strict';
-	angularAMD.directive('aetToggleLink', [function () {
-		return {
-			restrict: 'AE',
-			scope: {
-				'type': '@'
-			},
-			link: function (scope, $element) {
-				var parent = $element.parent();
-				$element.on('click', function (event) {
-					if ($(event.target).attr('class') == 'glyphicon glyphicon-chevron-down') {
-						event.preventDefault();
-					}
-					if (scope.type == 'test-name') {
-						parent.toggleClass('is-expanded');
-					}
-				});
-			}
-		};
-	}]);
+  'use strict';
+  angularAMD.directive('aetToggleLink', [function () {
+    return {
+      restrict: 'AE',
+      scope: {
+        'type': '@'
+      },
+      link: function (scope, $element) {
+        var parent = $element.parent();
+        $element.on('click', function (event) {
+          var targetClass = $(event.target).attr('class');
+          if (targetClass == 'glyphicon glyphicon-chevron-down') {
+            event.preventDefault();
+          }
+          if (scope.type == 'test-name') {
+            parent.toggleClass('is-expanded');
+          }
+        });
+      }
+    };
+  }]);
 
 });

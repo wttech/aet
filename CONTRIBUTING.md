@@ -82,6 +82,11 @@ In integration tests method name is omitted, and test class name should suggest 
 `whenPageReturned404_expectNoScreenshotCollected`
 
 ## Coding Conventions
+
+We follow Google code style guide for [JAVA](https://google.github.io/styleguide/javaguide.html), [JavaScript](https://google.github.io/styleguide/jsguide.html) and [HTML](https://google.github.io/styleguide/htmlcssguide.html) files.
+
+We also follow [John Papa Angular style guide](https://github.com/johnpapa/angular-styleguide/tree/master/a1).
+
 Below is a short list of things that will help us keep AET quality and accept pull requests:
 - Follow Google Style Guide code formatting from AET Github (originally adapted from [Google Style Guide](https://github.com/google/styleguide))
   - [Google Style Guide for Eclipse](https://github.com/Cognifide/aet/tree/master/eclipse-java-google-style.xml) 

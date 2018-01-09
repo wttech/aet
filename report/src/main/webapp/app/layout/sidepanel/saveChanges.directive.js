@@ -16,47 +16,48 @@
  * limitations under the License.
  */
 define(['angularAMD'], function (angularAMD) {
-	'use strict';
-	angularAMD.directive('aetSaveChanges', ['$rootScope', 'metadataService', function ($rootScope, metadataService) {
-		return {
-			restrict: 'A',
-			scope: {
-				change: '@',
-				type: '@',
-				text: '@'
-			},
-			link: function (scope, $element) {
-				$element.on('click', function () {
-					if (scope.type === 'comment') {
-						if (scope.change === 'report' || scope.change === 'url') {
-							$rootScope.$broadcast('saveReportComment', {
-								text: scope.text,
-								level: scope.change
-							});
-						} else if (scope.change === 'test') {
-							$rootScope.$broadcast('saveTestComment', {
-								text: scope.text,
-								level: scope.change
-							});
-						}
+  'use strict';
+  angularAMD.directive('aetSaveChanges',
+      ['$rootScope', 'metadataService', function ($rootScope, metadataService) {
+        return {
+          restrict: 'A',
+          scope: {
+            change: '@',
+            type: '@',
+            text: '@'
+          },
+          link: function (scope, $element) {
+            $element.on('click', function () {
+              if (scope.type === 'comment') {
+                if (scope.change === 'report' || scope.change === 'url') {
+                  $rootScope.$broadcast('saveReportComment', {
+                    text: scope.text,
+                    level: scope.change
+                  });
+                } else if (scope.change === 'test') {
+                  $rootScope.$broadcast('saveTestComment', {
+                    text: scope.text,
+                    level: scope.change
+                  });
+                }
 
-						setTimeout(function () {
-							scope.$apply();
-							$('#commentModal').modal('hide');
-							$rootScope.$apply();
-						});
+                setTimeout(function () {
+                  scope.$apply();
+                  $('#commentModal').modal('hide');
+                  $rootScope.$apply();
+                });
 
-					} else {
-						if ($element.hasClass('js-cancel-all')) {
-							metadataService.discardLocalChanges();
-							window.location.reload();
-						} else {
-							metadataService.discardLocalChanges();
-						}
-					}
-				});
-			}
-		};
-	}]);
+              } else {
+                if ($element.hasClass('js-cancel-all')) {
+                  metadataService.discardLocalChanges();
+                  window.location.reload();
+                } else {
+                  metadataService.discardLocalChanges();
+                }
+              }
+            });
+          }
+        };
+      }]);
 
 });

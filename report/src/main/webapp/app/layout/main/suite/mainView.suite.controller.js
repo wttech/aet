@@ -16,22 +16,22 @@
  * limitations under the License.
  */
 define([], function () {
-	'use strict';
-	return ['$rootScope', 'metadataAccessService', MainViewSuiteController];
+  'use strict';
+  return ['$rootScope', 'metadataAccessService', MainViewSuiteController];
 
-	function MainViewSuiteController($rootScope, metadataAccessService) {
-		var vm = this;
+  function MainViewSuiteController($rootScope, metadataAccessService) {
+    var vm = this;
 
-		$rootScope.$on('metadata:changed', updateSuiteView);
+    $rootScope.$on('metadata:changed', updateSuiteView);
 
-		updateSuiteView();
+    updateSuiteView();
 
-		/***************************************
-		 ***********  Private methods  *********
-		 ***************************************/
+    /***************************************
+     ***********  Private methods  *********
+     ***************************************/
 
-		function updateSuiteView() {
-			vm.tests = metadataAccessService.getTests();
-		}
-	}
+    function updateSuiteView() {
+      vm.tests = metadataAccessService.getTests();
+    }
+  }
 });

@@ -18,17 +18,20 @@
 
 -->
 <div class="modal-header">
-    <h3 class="modal-title">{{noteModal.viewMode}} note editor</h3>
+  <h3 class="modal-title">{{noteModal.viewMode}} note editor</h3>
 </div>
 <div class="modal-body">
-    <div>You are editing note for {{noteModal.viewMode}}:
-        <span class="name">{{noteModal.model.name}}</span>
-    </div>
-    <div>You can use html markup on your own responsibility :)</div>
-    <div><textarea data-ng-model="noteModal.noteText"></textarea></div>
+  <div>You are editing note for {{noteModal.viewMode}}:
+    <span class="name">{{noteModal.model.name}}</span>
+  </div>
+  <div>You can use html markup on your own responsibility :)</div>
+  <div><textarea data-ng-model="noteModal.noteText"></textarea></div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" data-ng-click="noteModal.updateNote()">Update</button>
-    <button class="btn btn-warning" type="button" data-ng-click="noteModal.cancelNote()">Cancel</button>
-    <button class="btn btn-danger" type="button" data-ng-click="noteModal.deleteNote()">Delete</button>
+  <button class="btn btn-primary" type="button" data-ng-click="noteModal.updateNote()">Update
+  </button>
+  <button class="btn btn-warning" type="button" data-ng-click="noteModal.cancelNote()">Cancel
+  </button>
+  <button class="btn btn-danger" type="button" data-ng-click="noteModal.deleteNote()">Delete
+  </button>
 </div>
