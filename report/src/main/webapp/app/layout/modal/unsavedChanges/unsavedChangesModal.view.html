@@ -18,16 +18,21 @@
 
 -->
 <div class="modal-header">
-    <h3 class="modal-title">Uncommitted changes detected!</h3>
+  <h3 class="modal-title">Uncommitted changes detected!</h3>
 </div>
 <div class="modal-body">
-    <div>Uncommitted changes applied to <a href="{{unsavedChangesModal.previousReportUrl}}" target="_blank">previous
-        [{{unsavedChangesModal.oldSuite.version}}] version of this report</a> were detected in your cache.
-        Changes cannot be imported to this report because they are outdated.
-        We advise to discard those changes in order to keep application cache small.</div>
-    <div><span class="modal-question">What should happen with unsaved changes?</span></div>
+  <div>Uncommitted changes applied to <a href="{{unsavedChangesModal.previousReportUrl}}"
+                                         target="_blank">previous
+    [{{unsavedChangesModal.oldSuite.version}}] version of this report</a> were detected in your
+    cache.
+    Changes cannot be imported to this report because they are outdated.
+    We advise to discard those changes in order to keep application cache small.
+  </div>
+  <div><span class="modal-question">What should happen with unsaved changes?</span></div>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="unsavedChangesModal.leave()">Leave</button>
-    <button class="btn btn-warning" type="button" ng-click="unsavedChangesModal.discard()">Discard</button>
+  <button class="btn btn-primary" type="button" ng-click="unsavedChangesModal.leave()">Leave
+  </button>
+  <button class="btn btn-warning" type="button" ng-click="unsavedChangesModal.discard()">Discard
+  </button>
 </div>

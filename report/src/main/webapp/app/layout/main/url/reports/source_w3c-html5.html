@@ -36,7 +36,8 @@
       </tr>
       </thead>
       <tbody>
-      <tr ng-class="code.issueType.toLowerCase()" ng-repeat="code in case.result.issues track by $index">
+      <tr ng-class="code.issueType.toLowerCase()"
+          ng-repeat="code in case.result.issues track by $index">
         <td class="num">
           {{ $index+1 }}
         </td>
@@ -47,7 +48,7 @@
           <span ng-bind-html="code.message | to_trusted"></span>
           <small ng-if="code.line == 0 && code.column == 0"
                  ng-bind-html="code.additionalInfo | to_trusted"></small>
-                    <pre class="w3c-error" ng-if="code.code1 || code.code2">
+          <pre class="w3c-error" ng-if="code.code1 || code.code2">
                         {{code.code1 | to_trusted}}<mark>{{code.errorPosition}}</mark><br>
                     {{code.code2 | to_trusted}}</pre>
         </td>
