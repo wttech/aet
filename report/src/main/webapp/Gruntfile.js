@@ -23,210 +23,210 @@
  * @return {void}
  */
 module.exports = function (grunt) {
-	'use strict';
+  'use strict';
 
-	require('time-grunt')(grunt);
+  require('time-grunt')(grunt);
 
-	var config = grunt.file.readJSON('settings.json');
+  var config = grunt.file.readJSON('settings.json');
 
-	grunt.initConfig({
+  grunt.initConfig({
 
-		/**
-		 * Responsible establishing connection with server
-		 */
-		'connect': {
-			'production': {
-				options: {
-					port: config.server.port,
-					base: config.server.base,
-					hostname: '0.0.0.0',
-					livereload: true
-				}
-			},
-			'build': {
-				options: {
-					port: config.server.port,
-					base: config.server.base,
-					hostname: '0.0.0.0'
-				}
-			}
-		},
+    /**
+     * Responsible establishing connection with server
+     */
+    'connect': {
+      'production': {
+        options: {
+          port: config.server.port,
+          base: config.server.base,
+          hostname: '0.0.0.0',
+          livereload: true
+        }
+      },
+      'build': {
+        options: {
+          port: config.server.port,
+          base: config.server.base,
+          hostname: '0.0.0.0'
+        }
+      }
+    },
 
-		'open': {
-			'production': {
-				path: 'http://localhost:' + config.server.port + '/' + config.server.root
-			}
-		},
+    'open': {
+      'production': {
+        path: 'http://localhost:' + config.server.port + '/' +
+        config.server.root
+      }
+    },
 
-		'jshint': {
-			'production': {
-				options: {
-					/**
-					 * Project specific rules are always put into external file
-					 * @type {String}
-					 */
-					jshintrc: '.jshintrc'
-				},
-				files: {
-					src: [
-						// You need to include the files manually
-						'Gruntfile.js',
-						config.app.base + '/components/**/*.js',
-						config.app.base + '/layout/**/**/*.js',
-						config.app.base + '/services/**/*.js',
-						config.app.base + '/app.config.js',
-						config.app.base + '/app.module.js',
-						config.app.base + '/app.route.js'
-					]
-				}
-			}
-		},
+    'jshint': {
+      'production': {
+        options: {
+          /**
+           * Project specific rules are always put into external file
+           * @type {String}
+           */
+          jshintrc: '.jshintrc'
+        },
+        files: {
+          src: [
+            // You need to include the files manually
+            'Gruntfile.js',
+            config.app.base + '/components/**/*.js',
+            config.app.base + '/layout/**/**/*.js',
+            config.app.base + '/services/**/*.js',
+            config.app.base + '/app.config.js',
+            config.app.base + '/app.module.js',
+            config.app.base + '/app.route.js'
+          ]
+        }
+      }
+    },
 
-		'csslint': {
-			options: {
-				csslintrc: '.csslintrc'
-			},
-			strict: {
-				options: {
-					import: true
-				},
-				src: [config.assets.css + '/**/*.css']
-			},
-			lax: {
-				options: {
-					import: false
-				},
-				src: [config.assets.css + '/**/*.css']
-			}
-		},
+    'csslint': {
+      options: {
+        csslintrc: '.csslintrc'
+      },
+      strict: {
+        options: {
+          import: true
+        },
+        src: [config.assets.css + '/**/*.css']
+      },
+      lax: {
+        options: {
+          import: false
+        },
+        src: [config.assets.css + '/**/*.css']
+      }
+    },
 
-		'concurrent': {
-			'production': {
-				tasks: ['compass', 'jshint', 'csslint']
-			},
-			'dist': ['compass']
-		},
+    'concurrent': {
+      'production': {
+        tasks: ['compass', 'jshint', 'csslint']
+      },
+      'dist': ['compass']
+    },
 
-		'compass': {
-			build: {
-				options: {
-					config: 'compass-config.rb',
-					//sassDir: config.assets.base + config.assets.sass,
-					sassDir: 'assets/sass',
-					//cssDir: config.assets.base + config.assets.css,
-					cssDir: 'assets/css',
-					imagesDir: config.assets.base + config.assets.images,
-					fontsDir: config.assets.base + config.assets.fonts,
-					javascriptsDir: config.app.base + config.app.js,
-					outputStyle: 'compact'
-				}
-			}
-		},
+    'compass': {
+      build: {
+        options: {
+          config: 'compass-config.rb',
+          //sassDir: config.assets.base + config.assets.sass,
+          sassDir: 'assets/sass',
+          //cssDir: config.assets.base + config.assets.css,
+          cssDir: 'assets/css',
+          imagesDir: config.assets.base + config.assets.images,
+          fontsDir: config.assets.base + config.assets.fonts,
+          javascriptsDir: config.app.base + config.app.js,
+          outputStyle: 'compact'
+        }
+      }
+    },
 
-		'watch': {
+    'watch': {
 
-			'jshint': {
-				files: ['Gruntfile.js', config.app.base + '/**/*.js'],
-				tasks: ['jshint']
-			},
+      'jshint': {
+        files: ['Gruntfile.js', config.app.base + '/**/*.js'],
+        tasks: ['jshint']
+      },
 
-			'jsmin': {
-				options: {
-					livereload: true
-				},
-				files: [config.app.base + '/**/*.js']
-			},
+      'jsmin': {
+        options: {
+          livereload: true
+        },
+        files: [config.app.base + '/**/*.js']
+      },
 
-			'css': {
-				options: {
-					livereload: true
-				},
-				files: [config.assets.base + config.assets.css + '/**/*.css'],
-				tasks: ['csslint']
-			},
+      'css': {
+        options: {
+          livereload: true
+        },
+        files: [config.assets.base + config.assets.css + '/**/*.css'],
+        tasks: ['csslint']
+      },
 
-			'sass': {
-				options: {
-					spawn: false,
-					livereload: true
-				},
-				files: [config.assets.base + config.assets.sass + '/**/*.scss'],
-				tasks: ['compass']
-			},
+      'sass': {
+        options: {
+          spawn: false,
+          livereload: true
+        },
+        files: [config.assets.base + config.assets.sass + '/**/*.scss'],
+        tasks: ['compass']
+      },
 
-			'htmlbuild': {
-				files: config.app.base + '/scaffold/**/*.{htm,html}'
-			},
+      'htmlbuild': {
+        files: config.app.base + '/scaffold/**/*.{htm,html}'
+      },
 
-			'html': {
-				options: {
-					livereload: true
-				},
-				files: ['*.html', config.app.base + '/**/*.html']
-			}
-		},
-		'requirejs': {
-			options: {
-				'appDir': 'app',
-				'dir': 'build',
-				'mainConfigFile': 'app/app.config.js',
-				'uglify2': {
-					mangle: false
-				},
-				'optimize': 'uglify2',
-				'normalizeDirDefines': 'skip',
-				'skipDirOptimize': true,
-				'removeCombined': true,
-				'optimizeCss': 'skip'
-			},
-			centralizedAlmond: {
-				options: {
-					almond: true,
-					replaceRequireScript: [{
-						files: ['build/*.html'],
-						module: 'common',
-						modulePath: 'common'
-					}],
-					'modules': [{
-						'name': 'common',
-						'include': ['jquery',
-							'lodash',
-							'bootstrap'
-						]
-					}]
-				}
-			}
-		},
-		'bower': {
-			install: {
-				options: {
-					targetDir: 'assets/libs/'
-				}
-			}
-		}
-	});
+      'html': {
+        options: {
+          livereload: true
+        },
+        files: ['*.html', config.app.base + '/**/*.html']
+      }
+    },
+    'requirejs': {
+      options: {
+        'appDir': 'app',
+        'dir': 'build',
+        'mainConfigFile': 'app/app.config.js',
+        'uglify2': {
+          mangle: false
+        },
+        'optimize': 'uglify2',
+        'normalizeDirDefines': 'skip',
+        'skipDirOptimize': true,
+        'removeCombined': true,
+        'optimizeCss': 'skip'
+      },
+      centralizedAlmond: {
+        options: {
+          almond: true,
+          replaceRequireScript: [{
+            files: ['build/*.html'],
+            module: 'common',
+            modulePath: 'common'
+          }],
+          'modules': [{
+            'name': 'common',
+            'include': ['jquery',
+              'lodash',
+              'bootstrap'
+            ]
+          }]
+        }
+      }
+    },
+    'bower': {
+      install: {
+        options: {
+          targetDir: 'assets/libs/'
+        }
+      }
+    }
+  });
 
-	/**
-	 * Load all dependencies from package.json that starts with "grunt-*"
-	 */
-	require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
+  /**
+   * Load all dependencies from package.json that starts with "grunt-*"
+   */
+  require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
 
+  grunt.registerTask('server', [
+    'connect:production',
+    'open:production',
+    'watch'
+  ]);
 
-	grunt.registerTask('server', [
-		'connect:production',
-		'open:production',
-		'watch'
-	]);
+  grunt.registerTask('build', [
+    'jshint',
+    'csslint',
+    'bower'
+  ]);
 
-	grunt.registerTask('build', [
-		'jshint',
-		'csslint',
-		'bower'
-	]);
-
-	grunt.registerTask('default', [
-		'build',
-		'compass:build',
-		'server'
-	]);
+  grunt.registerTask('default', [
+    'build',
+    'compass:build',
+    'server'
+  ]);
 };

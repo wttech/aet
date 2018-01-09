@@ -25,7 +25,7 @@ define(['angularAMD'], function (angularAMD) {
    * (or all when no filter applied).
    */
   function UrlStatusFilter() {
-    return filter;  
+    return filter;
 
     function filter(urls, statuses) {
       var filteredUrls = urls;

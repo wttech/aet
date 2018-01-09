@@ -17,7 +17,8 @@
  */
 define(['angularAMD'], function (angularAMD) {
   'use strict';
-  angularAMD.directive('aetIncludedCommentPopover', includedCommentPopoverDirective);
+  angularAMD.directive('aetIncludedCommentPopover',
+      includedCommentPopoverDirective);
 
   /*
    * re-initializes bootstrap popovers as they are populated before angular includes

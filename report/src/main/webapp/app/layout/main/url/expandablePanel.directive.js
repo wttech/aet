@@ -33,10 +33,12 @@ define(['angularAMD'], function (angularAMD) {
 
         icon = $(element).find('i');
         onShown = function () {
-          icon.removeClass('glyphicon-chevron-down').addClass('glyphicon-chevron-up');
+          icon.removeClass('glyphicon-chevron-down').addClass(
+              'glyphicon-chevron-up');
         };
         onHidden = function () {
-          icon.removeClass('glyphicon-chevron-up').addClass('glyphicon-chevron-down');
+          icon.removeClass('glyphicon-chevron-up').addClass(
+              'glyphicon-chevron-down');
         };
 
         // see also http://getbootstrap.com/javascript/#collapse-events

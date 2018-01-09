@@ -16,48 +16,48 @@
  * limitations under the License.
  */
 define(['angularAMD'], function (angularAMD) {
-	'use strict';
-	angularAMD.directive('aetSidepanelSearch', SidepanelSearch);
+  'use strict';
+  angularAMD.directive('aetSidepanelSearch', SidepanelSearch);
 
-	function SidepanelSearch($rootScope, $timeout) {
-		return {
-			restrict: 'AE',
-			link: function (scope, $element) {
-				$element.on('input', onInput);
-			},
-			controller: function ($scope) {
-				$scope.clearSearch = clearSearchPhrase;
-			}
-		};
+  function SidepanelSearch($rootScope, $timeout) {
+    return {
+      restrict: 'AE',
+      link: function (scope, $element) {
+        $element.on('input', onInput);
+      },
+      controller: function ($scope) {
+        $scope.clearSearch = clearSearchPhrase;
+      }
+    };
 
-		function onInput() {
-			$timeout(refreshSearchScope);
-		}
+    function onInput() {
+      $timeout(refreshSearchScope);
+    }
 
-		function clearSearchPhrase() {
-			$timeout(function () {
-				$rootScope.searchText = '';
-				refreshSearchScope();
-			});
-		}
+    function clearSearchPhrase() {
+      $timeout(function () {
+        $rootScope.searchText = '';
+        refreshSearchScope();
+      });
+    }
 
-		function refreshSearchScope() {
-			updateSearchIcon($rootScope.searchText);
-			$rootScope.$apply();
-			$rootScope.$broadcast('filter:applied');
-		}
+    function refreshSearchScope() {
+      updateSearchIcon($rootScope.searchText);
+      $rootScope.$apply();
+      $rootScope.$broadcast('filter:applied');
+    }
 
-		function updateSearchIcon(searchPhrase) {
-			var iconSearch = $('.sidepanel-search-section .glyphicon-search'),
-				iconCancel = $('.sidepanel-search-section .glyphicon-remove');
+    function updateSearchIcon(searchPhrase) {
+      var iconSearch = $('.sidepanel-search-section .glyphicon-search'),
+          iconCancel = $('.sidepanel-search-section .glyphicon-remove');
 
-			if (searchPhrase && searchPhrase.length > 0) {
-				iconSearch.hide();
-				iconCancel.show();
-			} else {
-				iconSearch.show();
-				iconCancel.hide();
-			}
-		}
-	}
+      if (searchPhrase && searchPhrase.length > 0) {
+        iconSearch.hide();
+        iconCancel.show();
+      } else {
+        iconSearch.show();
+        iconCancel.hide();
+      }
+    }
+  }
 });

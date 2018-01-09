@@ -16,34 +16,34 @@
  * limitations under the License.
  */
 define(['angularAMD'], function (angularAMD) {
-	'use strict';
-	angularAMD.factory('viewModeService', ViewModeService);
+  'use strict';
+  angularAMD.factory('viewModeService', ViewModeService);
 
-	function ViewModeService($stateParams) {
-		var keys = {
-			SUITE: 'suite',
-			TEST: 'test',
-			URL: 'url',
-			COMPARATOR: 'comparator'
-		};
-		return {
-			get: get,
-			SUITE: keys.SUITE,
-			TEST: keys.TEST,
-			URL: keys.URL,
-			COMPARATOR: keys.COMPARATOR
-		};
+  function ViewModeService($stateParams) {
+    var keys = {
+      SUITE: 'suite',
+      TEST: 'test',
+      URL: 'url',
+      COMPARATOR: 'comparator'
+    };
+    return {
+      get: get,
+      SUITE: keys.SUITE,
+      TEST: keys.TEST,
+      URL: keys.URL,
+      COMPARATOR: keys.COMPARATOR
+    };
 
-		function get() {
-			var mode;
-			if ($stateParams.url) {
-				mode = keys.URL;
-			} else if ($stateParams.test) {
-				mode = keys.TEST;
-			} else {
-				mode = keys.SUITE;
-			}
-			return mode;
-		}
-	}
+    function get() {
+      var mode;
+      if ($stateParams.url) {
+        mode = keys.URL;
+      } else if ($stateParams.test) {
+        mode = keys.TEST;
+      } else {
+        mode = keys.SUITE;
+      }
+      return mode;
+    }
+  }
 });

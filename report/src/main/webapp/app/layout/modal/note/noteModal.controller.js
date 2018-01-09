@@ -16,38 +16,39 @@
  * limitations under the License.
  */
 define(['angularAMD'], function (angularAMD) {
-	'use strict';
-	angularAMD.controller('noteModalController', NoteModalController);
+  'use strict';
+  angularAMD.controller('noteModalController', NoteModalController);
 
-	function NoteModalController($scope, $uibModalInstance, model, viewMode, notesService) {
-		var vm = this;
-		init();
+  function NoteModalController($scope, $uibModalInstance, model, viewMode,
+      notesService) {
+    var vm = this;
+    init();
 
-		/***************************************
-		 ***********  Private methods  *********
-		 ***************************************/
+    /***************************************
+     ***********  Private methods  *********
+     ***************************************/
 
-		function init() {
-			vm.updateNote = updateNote;
-			vm.cancelNote = cancelNote;
-			vm.deleteNote = deleteNote;
-			vm.viewMode = viewMode;
-			vm.noteText = model.comment ? model.comment : '';
-			vm.model = model;
-		}
+    function init() {
+      vm.updateNote = updateNote;
+      vm.cancelNote = cancelNote;
+      vm.deleteNote = deleteNote;
+      vm.viewMode = viewMode;
+      vm.noteText = model.comment ? model.comment : '';
+      vm.model = model;
+    }
 
-		function updateNote() {
-			notesService.updateNote(vm.model, vm.noteText);
-			$uibModalInstance.close();
-		}
+    function updateNote() {
+      notesService.updateNote(vm.model, vm.noteText);
+      $uibModalInstance.close();
+    }
 
-		function cancelNote() {
-			$uibModalInstance.close();
-		}
+    function cancelNote() {
+      $uibModalInstance.close();
+    }
 
-		function deleteNote() {
-			notesService.deleteNote(vm.model);
-			$uibModalInstance.close();
-		}
-	}
+    function deleteNote() {
+      notesService.deleteNote(vm.model);
+      $uibModalInstance.close();
+    }
+  }
 });

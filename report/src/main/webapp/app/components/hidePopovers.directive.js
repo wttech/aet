@@ -16,18 +16,19 @@
  * limitations under the License.
  */
 define(['angularAMD'], function (angularAMD) {
-	'use strict';
-	angularAMD.directive('aetHidePopovers', function () {
-		return {
-			restrict: 'A',
-			link: function (scope, $element) {
-				$element.on('click', function (e) {
-					if (!$(e.target).parents().hasClass('pop') && !$(e.target).parents().hasClass('popover')) {
-						$('[data-toggle="popover"], .pop').popover('hide');
-					}
-				});
-			}
-		};
-	});
+  'use strict';
+  angularAMD.directive('aetHidePopovers', function () {
+    return {
+      restrict: 'A',
+      link: function (scope, $element) {
+        $element.on('click', function (e) {
+          if (!$(e.target).parents().hasClass('pop') && !$(
+                  e.target).parents().hasClass('popover')) {
+            $('[data-toggle="popover"], .pop').popover('hide');
+          }
+        });
+      }
+    };
+  });
 
 });
