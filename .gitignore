@@ -52,3 +52,4 @@ atlassian-ide-plugin.xml
 # aet-vagrant
 /vagrant/.vagrant
 /vagrant/Berksfile.lock
+/vagrant/cookbooks/
