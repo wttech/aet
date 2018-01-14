@@ -16,7 +16,7 @@ Module name: **login**
 | --------- | ----- | --------- | ------------- |
 | `login` | User's login | no | admin |
 | `password` | Password | no | admin |
-| `login-page` | Url to login page | yes | [http://localhost:4502/libs/granite/core/content/login.html](http://localhost:4502/libs/granite/core/content/login.html) |
+| `login-page` | Url to login page | yes | |
 | `login-input-selector` | Xpath expression for login input | no | //input[@name='j_username'] |
 | `password-input-selector` | Xpath expression for password input | no | //input[@name='j_password'] |
 | `submit-button-selector` | Xpath expression for submit button | no | //*[@type='submit'] |
