@@ -1,4 +1,9 @@
 ### `master` branch version (not released yet)
+
+#### Virtualbox version
+We have observed some issues with VirtualBox (used for [AET in 10 minutes|AETIn10Minutes] setup).
+Required version is now [VirtualBox 5.1.30](https://www.virtualbox.org/wiki/Download_Old_Builds_5_1), especially for Windows 10.
+
 #### Proxy configuration in suite
 `useProxy` configuration has been updated. Only named proxy (e.g. `rest`) types will be respected from now 
 (removed `true` and `false` options). If you don't want to use proxy, simply skip `useProxy` property in the `test` definition.
