@@ -96,9 +96,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     chef.run_list = [
       "recipe[aet::_develop]",
       "recipe[aet::karaf]",
-      "recipe[aet::deploy_configs]",
-      "recipe[aet::deploy_features]",
-      "recipe[aet::deploy_bundles]",
+      "recipe[aet::deploy_aet_for_karaf]",
       "recipe[aet::postdeploy_restart]",
       "recipe[aet::apache]",
       "recipe[aet::deploy_reports]",
