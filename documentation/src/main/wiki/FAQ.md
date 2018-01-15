@@ -27,7 +27,7 @@ please use the [Issues Tool](https://github.com/Cognifide/aet/issues) to raise a
 ### 1.1. What do I need to start using AET?
 You need Maven and Java installed to run AET and Chrome browser to see reports if you have AET environment
 already set up. See more information in [[Running Suite|RunningSuite#requirements]] section.
-To setup AET you need [VirtualBox 5.1.14](https://www.virtualbox.org/wiki/Downloads) to run AET VM.
+To setup AET you need [VirtualBox 5.1.30](https://www.virtualbox.org/wiki/Download_Old_Builds_5_1) to run AET VM.
 See more details in [[Basic Setup|BasicSetup]] section.
 
 
