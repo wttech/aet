@@ -99,8 +99,7 @@ class LoginModifierConfig {
 
     ParametersValidator.checkNotBlank(loginPage, "`login-page` parameter is mandatory");
     ParametersValidator.checkRange(delayBeforeLoginCheckOrReattempt, 0, 10000,
-        "Timeout duration should be greater than 0 and " +
-            "less than 10 seconds");
+        "Timeout duration should be greater than 0 and less than 10 seconds");
     ParametersValidator
         .checkRange(retrialNumber, 1, Integer.MAX_VALUE, "Retrial number has to be at least 1");
   }
