@@ -4,6 +4,9 @@
 (removed `true` and `false` options). If you don't want to use proxy, simply skip `useProxy` property in the `test` definition.
 See more in [[Suite Structure|SuiteStructure]] documentation.
 
+#### VirtualBox 
+VirtualBox has been updated to 5.1.30.
+
 ### Version 2.1.3
 #### Two new modifiers have been added:
 - [wait for element being visible](https://github.com/Cognifide/aet/wiki/WaitForElementToBeVisibleModifier),
