@@ -19,6 +19,11 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
+# fix for some Chef issues with Berks:
+# https://github.com/berkshelf/vagrant-berkshelf/issues/318#issuecomment-346456755
+ENV["GEM_PATH"] = nil
+ENV["GEM_HOME"] = nil
+
 AET_VERSION = '2.1.4-RC1'
 #AET_VERSION = '2.1.4-RC2'
 
