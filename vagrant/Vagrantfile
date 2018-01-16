@@ -52,10 +52,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Mongo DB
   config.vm.network 'forwarded_port', guest: 27017, host: 27017
 
-  # config.vm.synced_folder 'd:\sample\folder',
-  #   '/opt/aet',
-  #   owner: 'developer', group: 'developer'
-
   config.vm.provider 'virtualbox' do |v|
     v.memory = 6144
     v.cpus = 4
