@@ -75,7 +75,7 @@ Please see our [AET in 10 minutes](https://github.com/Cognifide/aet/wiki/AETIn10
 To run **AET** tests the following tools are required:
 
 * [Maven](https://maven.apache.org/download.cgi) (at least version 3.0.4)
-* [JDK 7 or 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk7-downloads-1880260.html)
+* [JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
 * [Chrome browser](https://www.google.com/chrome/browser/desktop/) to preview reports
 
 ## Setup

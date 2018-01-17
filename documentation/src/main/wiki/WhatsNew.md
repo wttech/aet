@@ -1,5 +1,9 @@
 ### `master` branch version (not released yet)
 
+#### Instructions updated for new cookbook version
+New Cookbook version 2.0.0 introduces changes in AET setup.
+[Linux and Windows Setup][LinuxAndWindowsSetup] instructions were updated to reflect those changes.
+
 #### Virtualbox version
 We have observed some issues with VirtualBox (used for [AET in 10 minutes|AETIn10Minutes] setup).
 Required version is now [VirtualBox 5.1.30](https://www.virtualbox.org/wiki/Download_Old_Builds_5_1), especially for Windows 10.
