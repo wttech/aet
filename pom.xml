@@ -672,9 +672,6 @@
               <!-- IntelliJ files -->
               <exclude>**/.idea/**</exclude>
               <exclude>**/*.iml</exclude>
-
-              <!-- for AET cookbook development process -->
-              <exclude>vagrant/cookbooks</exclude>
             </excludes>
           </configuration>
         </plugin>
@@ -967,6 +964,7 @@
                 <exclude>/vagrant/.vagrant/**</exclude>
                 <exclude>/vagrant/Berksfile.lock</exclude>
 
+                <!-- for AET cookbook development process -->
                 <exclude>/vagrant/cookbooks/**</exclude>
 
                 <!-- TODO: update license headers in those files, see AET-1301 -->
