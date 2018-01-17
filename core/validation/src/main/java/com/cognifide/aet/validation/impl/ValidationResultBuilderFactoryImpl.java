@@ -22,7 +22,6 @@ import org.apache.felix.scr.annotations.Service;
 
 @Service
 @Component(
-    metatype = true,
     label = "AET Validation Result Builder Factory",
     description = "AET Validation Result Builder Factory")
 public class ValidationResultBuilderFactoryImpl implements ValidationResultBuilderFactory {

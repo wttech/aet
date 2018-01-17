@@ -123,9 +123,9 @@
     <target.tomcat.url>scp://192.168.123.100/opt/aet/tomcat/aet_sample_site/current</target.tomcat.url>
 
     <target.karaf.serverId>aet-vagrant-instance</target.karaf.serverId>
-    <target.karaf.bundles.url>scp://192.168.123.100/opt/aet/karaf/current/deploy/bundles</target.karaf.bundles.url>
-    <target.karaf.configs.url>scp://192.168.123.100/opt/aet/karaf/current/etc/aet</target.karaf.configs.url>
-    <target.karaf.features.url>scp://192.168.123.100/opt/aet/karaf/current/deploy/features</target.karaf.features.url>
+    <target.karaf.bundles.url>scp://192.168.123.100/opt/aet/karaf/aet_bundles/current</target.karaf.bundles.url>
+    <target.karaf.configs.url>scp://192.168.123.100/opt/aet/karaf/aet_configs/current</target.karaf.configs.url>
+    <target.karaf.features.url>scp://192.168.123.100/opt/aet/karaf/aet_features/current</target.karaf.features.url>
 
     <target.httpd.serverId>aet-vagrant-instance</target.httpd.serverId>
     <target.httpd.report.url>scp://192.168.123.100/opt/aet/apache/aet_reports/current</target.httpd.report.url>
@@ -366,7 +366,7 @@
       <dependency>
         <groupId>org.apache.felix</groupId>
         <artifactId>org.apache.felix.scr.annotations</artifactId>
-        <version>1.9.6</version>
+        <version>1.12.0</version>
         <scope>provided</scope>
       </dependency>
 
@@ -686,7 +686,7 @@
         <plugin>
           <groupId>org.apache.felix</groupId>
           <artifactId>maven-scr-plugin</artifactId>
-          <version>1.15.0</version>
+          <version>1.25.0</version>
         </plugin>
 
         <plugin>
@@ -963,6 +963,10 @@
                 <exclude>/misc/dependencies-report.txt</exclude>
                 <exclude>/vagrant/.vagrant/**</exclude>
                 <exclude>/vagrant/Berksfile.lock</exclude>
+
+                <!-- for AET cookbook development process -->
+                <exclude>/vagrant/cookbooks/**</exclude>
+
                 <!-- TODO: update license headers in those files, see AET-1301 -->
                 <exclude>integration-tests/**/*.css</exclude>
                 <exclude>integration-tests/**/*.js</exclude>

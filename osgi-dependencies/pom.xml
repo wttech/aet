@@ -40,6 +40,35 @@
     <module>w3chtml5validator</module>
   </modules>
 
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <executions>
+          <execution>
+            <phase>generate-sources</phase>
+            <goals>
+              <goal>copy-resources</goal>
+            </goals>
+            <configuration>
+              <outputDirectory>${project.basedir}</outputDirectory>
+              <resources>
+                <resource>
+                  <directory>${project.basedir}/templates</directory>
+                  <filtering>true</filtering>
+                  <includes>
+                    <include>aet-features.xml</include>
+                  </includes>
+                </resource>
+              </resources>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+  </build>
+
   <profiles>
     <profile>
       <id>upload</id>
@@ -79,6 +108,7 @@
                 </goals>
                 <configuration>
                   <includes>aet-features.xml</includes>
+                  <includes>aet-webconsole.xml</includes>
                   <!--
                       please configure credentials for ${target.karaf.serverId}
                       in your settings.xml file

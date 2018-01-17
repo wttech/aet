@@ -19,7 +19,12 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-AET_VERSION = '2.1.3'
+# fix for some Chef issues with Berks:
+# https://github.com/berkshelf/vagrant-berkshelf/issues/318#issuecomment-346456755
+ENV["GEM_PATH"] = nil
+ENV["GEM_HOME"] = nil
+
+AET_VERSION = '2.1.4-RC1'
 
 VAGRANTFILE_API_VERSION = '2'
 
@@ -46,10 +51,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   # Mongo DB
   config.vm.network 'forwarded_port', guest: 27017, host: 27017
 
-  # config.vm.synced_folder 'd:\sample\folder',
-  #   '/opt/aet',
-  #   owner: 'developer', group: 'developer'
-
   config.vm.provider 'virtualbox' do |v|
     v.memory = 6144
     v.cpus = 4
@@ -69,7 +70,22 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.vm.provision :chef_solo do |chef|
     chef.json = {
+      "java" => {
+        "install_flavor" => "oracle",
+        "oracle" => {
+          "accept_oracle_download_terms" => true
+        },
+        "jdk" => {
+          "8" => {
+            "x86_64" => {
+              "url" => "http://download.oracle.com/otn-pub/java/jdk/8u162-b12/0da788060d494f5095bf8624735fa2f1/jdk-8u162-linux-x64.tar.gz",
+              "checksum" => "80212f7748c2671b89b6085000717c747851db004409dce3bb97f3a2aeb91cdd"
+            }
+          }
+        }
+      },
       "aet" => {
+        "base_link" => "https://www.kubiczak.pl/aet",
         "karaf" => {
           "java_max_mem" => "3072M",
           "enable_debug" => true
@@ -80,9 +96,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     chef.run_list = [
       "recipe[aet::_develop]",
       "recipe[aet::karaf]",
-      "recipe[aet::deploy_configs]",
-      "recipe[aet::deploy_features]",
-      "recipe[aet::deploy_bundles]",
+      "recipe[aet::deploy_aet_for_karaf]",
       "recipe[aet::postdeploy_restart]",
       "recipe[aet::apache]",
       "recipe[aet::deploy_reports]",

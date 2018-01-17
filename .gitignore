@@ -26,6 +26,7 @@ atlassian-ide-plugin.xml
 # this partial is generated from template
 /integration-tests/test-suite/partials/executejavascript.xml
 /integration-tests/test-suite/partials/loginmodifier.xml
+/osgi-dependencies/aet-features.xml
 
 ### AET report web application
 # node instance for frontend-maven-plugin
@@ -52,3 +53,5 @@ atlassian-ide-plugin.xml
 # aet-vagrant
 /vagrant/.vagrant
 /vagrant/Berksfile.lock
+# for AET cookbook development process
+/vagrant/cookbooks/
