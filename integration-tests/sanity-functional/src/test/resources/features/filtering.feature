@@ -52,11 +52,11 @@ Feature: Tests Results Filtering
     Then There are 17 tiles visible
     And Statistics text contains "17 ( 7 / 0 / 10 / 0 )"
 
-#  Scenario: Filtering Tests Results: status-codes
-#    Given I have opened sample tests report page
-#    When I search for tests containing "status"
-#    Then There are 20 tiles visible
-#    And Statistics text contains "20 ( 8 / 0 / 12 / 0 )"
+  Scenario: Filtering Tests Results: status-codes
+    Given I have opened sample tests report page
+    When I search for tests containing "status"
+    Then There are 20 tiles visible
+    And Statistics text contains "20 ( 8 / 0 / 12 / 0 )"
 
   Scenario: Filtering Tests Results: w3c-html5
     Given I have opened sample tests report page
