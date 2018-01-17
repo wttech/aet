@@ -49,6 +49,6 @@ where:
 
 ### Logs configuration
 
-AET logging can be configured in *org.ops4j.pax.logging.cfg* file in *C:\content\karaf\data\etc* folder.
+AET logging can be configured in *org.ops4j.pax.logging.cfg* file.
 
 This configuration file specifies among others log files destination folder, log level and  pattern, log file maximum size.
