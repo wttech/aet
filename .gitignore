@@ -26,6 +26,7 @@ atlassian-ide-plugin.xml
 # this partial is generated from template
 /integration-tests/test-suite/partials/executejavascript.xml
 /integration-tests/test-suite/partials/loginmodifier.xml
+/osgi-dependencies/templates/aet-features.xml
 
 ### AET report web application
 # node instance for frontend-maven-plugin
