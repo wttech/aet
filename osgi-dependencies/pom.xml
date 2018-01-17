@@ -107,8 +107,10 @@
                   <goal>upload</goal>
                 </goals>
                 <configuration>
-                  <includes>aet-features.xml</includes>
-                  <includes>aet-webconsole.xml</includes>
+                  <includes>
+                    aet-features.xml,
+                    aet-webconsole.xml
+                  </includes>
                   <!--
                       please configure credentials for ${target.karaf.serverId}
                       in your settings.xml file
