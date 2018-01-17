@@ -46,7 +46,6 @@
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-resources-plugin</artifactId>
         <executions>
-          <!-- process login modifier template to insert correct domain -->
           <execution>
             <phase>generate-sources</phase>
             <goals>
