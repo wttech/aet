@@ -25,7 +25,6 @@ ENV["GEM_PATH"] = nil
 ENV["GEM_HOME"] = nil
 
 AET_VERSION = '2.1.4-RC1'
-#AET_VERSION = '2.1.4-RC2'
 
 VAGRANTFILE_API_VERSION = '2'
 
@@ -79,8 +78,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         "jdk" => {
           "8" => {
             "x86_64" => {
-              "url" => "http://download.oracle.com/otn-pub/java/jdk/8u152-b16/aa0333dd3019491ca4f6ddbe78cdb6d0/jdk-8u152-linux-x64.tar.gz",
-              "checksum" => "218b3b340c3f6d05d940b817d0270dfe0cfd657a636bad074dcabe0c111961bf"
+              "url" => "http://download.oracle.com/otn-pub/java/jdk/8u162-b12/0da788060d494f5095bf8624735fa2f1/jre-8u162-linux-x64.tar.gz",
+              "checksum" => "eecf88dbcf7c78d236251d44350126f1297a522f2eab974b4027ef20f7a6fb24"
             }
           }
         }

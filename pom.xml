@@ -673,7 +673,7 @@
               <exclude>**/.idea/**</exclude>
               <exclude>**/*.iml</exclude>
 
-              <!-- for cookbook development process -->
+              <!-- for AET cookbook development process -->
               <exclude>vagrant/cookbooks</exclude>
             </excludes>
           </configuration>
