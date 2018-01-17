@@ -24,4 +24,4 @@ description      'Installs/Configures aet-vagrant'
 long_description 'Installs/Configures aet-vagrant'
 version          '1.4.9'
 
-depends 'aet', '~> 2.0.0-SNAPSHOT'
+depends 'aet', '~> 2.0.0'

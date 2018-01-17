@@ -18,6 +18,4 @@
 
 source "https://supermarket.chef.io"
 
-cookbook 'aet', git: 'https://github.com/Cognifide/aet-cookbook.git', branch: 'new-karaf'
-
 metadata
