@@ -51,6 +51,10 @@ public class GetMetadataArtifactsProcessor implements Processor {
       return comparator.getStepResult() != null && StringUtils
           .isNotBlank(comparator.getStepResult().getArtifactId());
     }
+    @Override
+    public boolean test(Comparator comparator) {
+      return apply(comparator);
+    }
   };
 
   private static final Function<Comparator, String> COMPARATOR_TO_ARTIFACT_ID = new Function<Comparator, String>() {

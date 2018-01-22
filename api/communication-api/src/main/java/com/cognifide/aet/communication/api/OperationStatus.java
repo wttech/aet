@@ -15,7 +15,7 @@
  */
 package com.cognifide.aet.communication.api;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 
 /**
  * @author lukasz.wieczorek
@@ -49,7 +49,7 @@ public class OperationStatus {
 
   @Override
   public String toString() {
-    return Objects.toStringHelper(this)
+    return MoreObjects.toStringHelper(this)
         .add("message", message)
         .add("success", success)
         .toString();

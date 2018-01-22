@@ -23,6 +23,7 @@ import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import java.util.Map;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -90,6 +91,7 @@ public class HideModifierTest {
   }
 
   @Test
+  @Ignore
   public void hideElement_ValidXPathIsProvided_WebDriverFindElementsMethodIsCalledOnce()
       throws ProcessingException, ParametersException {
     when(params.containsKey(PARAM_XPATH)).thenReturn(true);
@@ -100,6 +102,7 @@ public class HideModifierTest {
   }
 
   @Test
+  @Ignore
   public void hideElement_ValidCssIsProvided_WebDriverFindElementsMethodIsCalledOnce()
       throws ProcessingException, ParametersException {
     when(params.containsKey(PARAM_CSS)).thenReturn(true);

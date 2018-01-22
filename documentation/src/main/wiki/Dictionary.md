@@ -196,7 +196,7 @@ a data structure storing metadata for a set of files that is managed by a source
 a collector responsible for collecting a screenshot of the page under a given URL.
 
 *Selenium*  
-a portable software testing framework for web applications. At the moment AET makes use of Selenium 2.50.1.
+a portable software testing framework for web applications. At the moment AET makes use of Selenium 3.8.1.
 
 *Selenium Driver*  
 a test tool that allows to perform specific actions in a browser environment (e.g. take a screenshot of a page).

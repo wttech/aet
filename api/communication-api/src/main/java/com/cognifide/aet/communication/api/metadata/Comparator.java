@@ -16,6 +16,7 @@
 package com.cognifide.aet.communication.api.metadata;
 
 import com.google.common.base.Joiner;
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
@@ -88,7 +89,7 @@ public class Comparator extends Operation implements Commentable, Named {
 
   @Override
   public String toString() {
-    return Objects.toStringHelper(this)
+    return MoreObjects.toStringHelper(this)
         .add("type", type)
         .add("filters", filters)
         .add("parameters", parameters)

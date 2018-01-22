@@ -43,6 +43,11 @@ public class SuiteIndexWrapper {
 
     return FluentIterable.from(test.getUrls()).firstMatch(new Predicate<Url>() {
       @Override
+      public boolean test(Url url) {
+        return apply(url);
+      }
+
+      @Override
       public boolean apply(Url url) {
         return url.getName().equals(urlName);
       }

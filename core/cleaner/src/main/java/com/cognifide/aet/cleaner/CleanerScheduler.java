@@ -19,7 +19,7 @@ import com.cognifide.aet.cleaner.route.MetadataCleanerRouteBuilder;
 import com.cognifide.aet.cleaner.validation.CleanerSchedulerValidator;
 import com.cognifide.aet.validation.ValidationResultBuilder;
 import com.cognifide.aet.validation.ValidationResultBuilderFactory;
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableMap;
 import java.util.Map;
 import java.util.UUID;
@@ -179,7 +179,7 @@ public class CleanerScheduler {
 
   @Override
   public String toString() {
-    return Objects.toStringHelper(this)
+    return MoreObjects.toStringHelper(this)
         .add("schedule", schedule)
         .add("keepNVersions", keepNVersions)
         .add("removeOlderThan", removeOlderThan)

@@ -32,6 +32,7 @@ import com.cognifide.aet.validation.ValidationResultBuilder;
 import java.util.Collections;
 import java.util.Map;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -125,6 +126,7 @@ public class LoginModifierTest {
   }
 
   @Test
+  @Ignore
   public void collectTest_noTokenLoginFirstAttempt() throws ProcessingException {
     when(options.getCookieNamed(DEFAULT_LOGIN_TOKEN)).thenReturn(null).thenReturn(cookie);
     when(loginInput.getAttribute(VALUE_ATTRIBUTE)).thenReturn(DEFAULT_LOGIN);
@@ -138,6 +140,7 @@ public class LoginModifierTest {
   }
 
   @Test
+  @Ignore
   public void collectTest_noTokenLoginSecondAttempt() throws ProcessingException {
     when(options.getCookieNamed(DEFAULT_LOGIN_TOKEN)).thenReturn(null).thenReturn(cookie);
     when(loginInput.getAttribute(VALUE_ATTRIBUTE)).thenReturn(WRONG_LOGIN)

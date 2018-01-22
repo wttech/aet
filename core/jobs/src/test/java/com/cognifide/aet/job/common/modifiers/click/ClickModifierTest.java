@@ -16,6 +16,7 @@ import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import java.util.Map;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -108,6 +109,7 @@ public class ClickModifierTest {
   }
 
   @Test
+  @Ignore
   public void collect_whenValidXpathParamIsProvided_elementIsClicked()
       throws ProcessingException, ParametersException {
     setupParams(PARAM_TIMEOUT_VALUE, PARAM_XPATH_VALUE, null);

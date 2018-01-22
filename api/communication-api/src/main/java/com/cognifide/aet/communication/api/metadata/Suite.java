@@ -19,7 +19,7 @@ import com.cognifide.aet.communication.api.metadata.gson.CollectionSerializer;
 import com.cognifide.aet.communication.api.metadata.gson.MapSerializer;
 import com.cognifide.aet.communication.api.metadata.gson.TimestampSerializer;
 import com.cognifide.aet.communication.api.util.ValidatorProvider;
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 import com.google.gson.Gson;
@@ -182,7 +182,7 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
 
   @Override
   public String toString() {
-    return Objects.toStringHelper(this)
+    return MoreObjects.toStringHelper(this)
         .add("correlationId", correlationId)
         .add("company", company)
         .add("project", project)
@@ -204,6 +204,10 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
           public boolean apply(ConstraintViolation<Suite> error) {
             return ignoreFields == null || !ignoreFields
                 .contains(error.getPropertyPath().toString());
+          }
+          @Override
+          public boolean test(ConstraintViolation<Suite> error) {
+            return apply(error);
           }
         }).toSet();
 

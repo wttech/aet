@@ -16,7 +16,7 @@
 package com.cognifide.aet.cleaner.processors.filters;
 
 import com.cognifide.aet.vs.DBKey;
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Predicate;
 import org.apache.commons.lang3.StringUtils;
 
@@ -35,6 +35,11 @@ public class DBKeyProjectCompanyPredicate implements Predicate<DBKey> {
     return companyMatches(dbKey) && projectMatches(dbKey);
   }
 
+  @Override
+  public boolean test(DBKey dbKey) {
+    return apply(dbKey);
+  }
+
   private boolean projectMatches(DBKey dbKey) {
     return StringUtils.isBlank(projectFilter) || dbKey.getProject().equals(projectFilter);
   }
@@ -46,7 +51,7 @@ public class DBKeyProjectCompanyPredicate implements Predicate<DBKey> {
 
   @Override
   public String toString() {
-    return Objects.toStringHelper(this)
+    return MoreObjects.toStringHelper(this)
         .add("companyFilter", companyFilter)
         .add("projectFilter", projectFilter)
         .toString();

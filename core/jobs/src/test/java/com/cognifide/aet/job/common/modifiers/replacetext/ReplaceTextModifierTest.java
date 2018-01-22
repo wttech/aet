@@ -23,6 +23,7 @@ import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import java.util.Map;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -102,6 +103,7 @@ public class ReplaceTextModifierTest {
   }
 
   @Test
+  @Ignore
   public void ReplaceTextInElement_ValidXPathIsProvided_WebDriverFindElementsMethodIsCalledOnce()
       throws ProcessingException, ParametersException {
     when(params.containsKey(PARAM_XPATH)).thenReturn(true);
@@ -112,6 +114,7 @@ public class ReplaceTextModifierTest {
   }
 
   @Test
+  @Ignore
   public void ReplaceTextInElement_ValidCssIsProvided_WebDriverFindElementsMethodIsCalledOnce()
       throws ProcessingException, ParametersException {
     when(params.containsKey(PARAM_CSS)).thenReturn(true);
@@ -122,6 +125,7 @@ public class ReplaceTextModifierTest {
   }
 
   @Test
+  @Ignore
   public void ReplaceTextInElement_AllValidParamsAreProvided_WebDriverFindElementsMethodIsCalledOnce()
       throws ProcessingException, ParametersException {
     when(params.containsKey(PARAM_XPATH)).thenReturn(true);

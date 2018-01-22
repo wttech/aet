@@ -18,7 +18,7 @@ package com.cognifide.aet.communication.api.job;
 import com.cognifide.aet.communication.api.JobStatus;
 import com.cognifide.aet.communication.api.ProcessingError;
 import com.cognifide.aet.communication.api.metadata.Url;
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import java.io.Serializable;
 
 /**
@@ -111,7 +111,7 @@ public final class CollectorResultData implements Serializable {
 
   @Override
   public String toString() {
-    return Objects.toStringHelper(this)
+    return MoreObjects.toStringHelper(this)
         .add("testName", testName)
         .add("urlAfterCollect", urlAfterCollect)
         .add("status", status)

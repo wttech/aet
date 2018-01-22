@@ -28,7 +28,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Properties;
@@ -37,16 +36,19 @@ import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.Service;
 import org.apache.sling.commons.osgi.PropertiesUtil;
 import org.openqa.selenium.Proxy;
-import org.openqa.selenium.firefox.FirefoxBinary;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.osgi.framework.Constants;
 
 @Service
 @Component(immediate = false, description = "AET Firefox WebDriver Factory", label = "AET Firefox WebDriver Factory", metatype = true)
 @Properties({@Property(name = Constants.SERVICE_VENDOR, value = "Cognifide Ltd")})
 public class FirefoxWebDriverFactory implements WebDriverFactory {
+
+  private static final String DEFAULT_FIREFOX_BINARY_PATH = "/usr/bin/firefox";
 
   private static final String DEFAULT_FIREFOX_ERROR_LOG_FILE_PATH = "/content/logs/firefox/stderr.log";
 
@@ -60,10 +62,10 @@ public class FirefoxWebDriverFactory implements WebDriverFactory {
   @Property(name = NAME, label = NAME_LABEL, value = DEFAULT_FF_NAME)
   private String name;
 
-  @Property(name = PATH, label = "Custom path to Firefox binary")
+  @Property(name = PATH, label = "Custom path to Firefox binary", value = DEFAULT_FIREFOX_BINARY_PATH)
   private String path;
 
-  @Property(name = LOG_FILE_PATH, label = "Path to firefox error log", value = "/content/logs/firefox/stderr.log")
+  @Property(name = LOG_FILE_PATH, label = "Path to firefox error log", value = DEFAULT_FIREFOX_ERROR_LOG_FILE_PATH)
   private String logFilePath;
 
   @Override
@@ -82,13 +84,12 @@ public class FirefoxWebDriverFactory implements WebDriverFactory {
       DesiredCapabilities capabilities = new DesiredCapabilities();
       capabilities.setCapability(CapabilityType.PROXY, proxy);
       capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
-
       FirefoxProfile fp = getFirefoxProfile();
       fp.setAcceptUntrustedCertificates(true);
       fp.setAssumeUntrustedCertificateIssuer(false);
-      capabilities.setCapability(AetFirefoxDriver.PROFILE, fp);
+      setCommonCapabilities(capabilities, fp);
 
-      return new WebCommunicationWrapperImpl(getFirefoxDriver(fp, capabilities), proxyServer,
+      return new WebCommunicationWrapperImpl(getFirefoxDriver(capabilities), proxyServer,
           requestExecutorFactory
               .createInstance());
     } catch (Exception e) {
@@ -96,15 +97,20 @@ public class FirefoxWebDriverFactory implements WebDriverFactory {
     }
   }
 
+  private void setCommonCapabilities(DesiredCapabilities capabilities, FirefoxProfile fp) {
+    capabilities.setCapability(FirefoxDriver.PROFILE, fp);
+    capabilities.setCapability("marionette", false);
+    capabilities.setCapability("firefox_binary", new File(path).getAbsolutePath());
+  }
+
   @Override
   public WebCommunicationWrapper createWebDriver() throws WorkerException {
     try {
       DesiredCapabilities capabilities = new DesiredCapabilities();
-
       FirefoxProfile fp = getFirefoxProfile();
-      capabilities.setCapability(AetFirefoxDriver.PROFILE, fp);
+      setCommonCapabilities(capabilities, fp);
 
-      return new WebCommunicationWrapperImpl(getFirefoxDriver(fp, capabilities), null,
+      return new WebCommunicationWrapperImpl(getFirefoxDriver(capabilities), null,
           requestExecutorFactory
               .createInstance());
     } catch (Exception e) {
@@ -129,15 +135,9 @@ public class FirefoxWebDriverFactory implements WebDriverFactory {
     return firefoxProfile;
   }
 
-  private AetFirefoxDriver getFirefoxDriver(FirefoxProfile fp, DesiredCapabilities capabilities)
+  private RemoteWebDriver getFirefoxDriver(DesiredCapabilities capabilities)
       throws IOException {
-    AetFirefoxDriver driver;
-    if (StringUtils.isBlank(path)) {
-      driver = new AetFirefoxDriver(capabilities);
-    } else {
-      FirefoxBinary binary = new FirefoxBinary(new File(path));
-      driver = new AetFirefoxDriver(binary, fp, capabilities);
-    }
+    RemoteWebDriver driver = new FirefoxDriver(capabilities);
     driver.manage().timeouts().pageLoadTimeout(5L, TimeUnit.MINUTES);
     return driver;
   }
@@ -145,7 +145,7 @@ public class FirefoxWebDriverFactory implements WebDriverFactory {
   @Activate
   public void activate(Map<String, String> properties) {
     this.name = PropertiesUtil.toString(properties.get(NAME), DEFAULT_FF_NAME);
-    this.path = PropertiesUtil.toString(properties.get(PATH), null);
+    this.path = PropertiesUtil.toString(properties.get(PATH), DEFAULT_FIREFOX_BINARY_PATH);
     this.logFilePath = PropertiesUtil
         .toString(properties.get(LOG_FILE_PATH), DEFAULT_FIREFOX_ERROR_LOG_FILE_PATH);
 

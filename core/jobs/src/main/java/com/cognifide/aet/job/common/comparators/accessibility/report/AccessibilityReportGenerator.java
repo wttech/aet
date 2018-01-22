@@ -99,6 +99,11 @@ public class AccessibilityReportGenerator {
     }
 
     @Override
+    public boolean test(AccessibilityIssue issue) {
+      return apply(issue);
+    }
+
+    @Override
     public boolean apply(AccessibilityIssue issue) {
       return type == issue.getType();
     }

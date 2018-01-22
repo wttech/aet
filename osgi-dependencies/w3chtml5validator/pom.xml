@@ -166,6 +166,8 @@
                   junit.framework;resolution:=optional,
                   org.gjt.xpp;resolution:=optional,
                   org.xmlpull.v1;resolution:=optional,
+                  org.apache.xmlbeans;resolution:=optional,
+                  org.apache.xerces.*;resolution:=optional,
                   *
                 </Import-Package>
               </instructions>

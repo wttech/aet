@@ -16,7 +16,7 @@
 package com.cognifide.aet.job.api.comparator;
 
 import com.cognifide.aet.job.api.StepProperties;
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 
 public class ComparatorProperties extends StepProperties {
 
@@ -37,7 +37,7 @@ public class ComparatorProperties extends StepProperties {
 
   @Override
   public String toString() {
-    return Objects.toStringHelper(this)
+    return MoreObjects.toStringHelper(this)
         .add("collectedId", collectedId)
         .add("company", getCompany())
         .add("project", getProject())

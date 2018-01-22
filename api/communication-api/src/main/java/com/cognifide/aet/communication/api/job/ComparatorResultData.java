@@ -18,7 +18,7 @@ package com.cognifide.aet.communication.api.job;
 import com.cognifide.aet.communication.api.JobStatus;
 import com.cognifide.aet.communication.api.ProcessingError;
 import com.cognifide.aet.communication.api.metadata.Comparator;
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import java.io.Serializable;
 
 /**
@@ -97,7 +97,7 @@ public class ComparatorResultData implements Serializable {
 
   @Override
   public String toString() {
-    return Objects.toStringHelper(this)
+    return MoreObjects.toStringHelper(this)
         .add("urlName", urlName)
         .add("testName", testName)
         .add("stepIndex", stepIndex)

@@ -34,7 +34,7 @@
   <description>Wraps Selenium library into OSGi bundle</description>
 
   <properties>
-    <selenium.version>2.50.1</selenium.version>
+    <selenium.version>3.8.1</selenium.version>
   </properties>
 
   <dependencies>
@@ -67,7 +67,7 @@
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
       <artifactId>selenium-htmlunit-driver</artifactId>
-      <version>${selenium.version}</version>
+      <version>2.52.0</version>
     </dependency>
     <dependency>
       <groupId>org.seleniumhq.selenium</groupId>
@@ -143,6 +143,10 @@
                   org.openqa.jetty.*;resolution:=optional,
                   org.seleniumhq.*;resolution:=optional,
                   com.sun.jna.platform.*;resolution:=optional,
+                  net.bytebuddy.*;resolution:=optional,
+                  org.objectweb.asm.*;resolution:=optional,
+                  org.openqa.selenium.safari.*;resolution:=optional,
+                  org.openqa.selenium.security.*;resolution:=optional,
                   *
                 </Import-Package>
                 <Embed-Directory>OSGI-INF/lib</Embed-Directory>

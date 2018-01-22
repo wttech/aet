@@ -15,7 +15,7 @@
  */
 package com.cognifide.aet.communication.api.metadata;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableMap;
 import java.io.Serializable;
 import java.util.Collections;
@@ -56,7 +56,7 @@ public class Operation implements Serializable {
 
   @Override
   public String toString() {
-    return Objects.toStringHelper(this)
+    return MoreObjects.toStringHelper(this)
         .add("type", type)
         .add("parameters", parameters)
         .toString();

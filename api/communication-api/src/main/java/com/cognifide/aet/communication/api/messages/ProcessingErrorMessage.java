@@ -16,7 +16,7 @@
 package com.cognifide.aet.communication.api.messages;
 
 import com.cognifide.aet.communication.api.ProcessingError;
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 
 public class ProcessingErrorMessage implements BasicMessage {
 
@@ -46,7 +46,7 @@ public class ProcessingErrorMessage implements BasicMessage {
 
   @Override
   public String toString() {
-    return Objects.toStringHelper(this).add("correlationId", correlationId)
+    return MoreObjects.toStringHelper(this).add("correlationId", correlationId)
         .add("processingError", processingError).toString();
 
   }
