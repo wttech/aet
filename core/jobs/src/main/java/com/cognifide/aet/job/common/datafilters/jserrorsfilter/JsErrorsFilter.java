@@ -60,7 +60,6 @@ public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
   @Override
   public Set<JsErrorLog> modifyData(Set<JsErrorLog> data) throws ProcessingException {
     return FluentIterable.from(data).filter(new Predicate<JsErrorLog>() {
-
       @Override
       public boolean apply(@Nullable JsErrorLog input) {
         return !shouldFilterOut(input);
