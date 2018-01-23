@@ -41,11 +41,6 @@ class StatusCodesFilter {
   private class StatusCodeFilterPredicate implements Predicate<StatusCode> {
 
     @Override
-    public boolean test(StatusCode statusCode) {
-      return apply(statusCode);
-    }
-
-    @Override
     public boolean apply(StatusCode statusCode) {
       if (statusCode.getCode() < lowerBound) {
         return false;

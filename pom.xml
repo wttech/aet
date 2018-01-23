@@ -18,7 +18,9 @@
     limitations under the License.
 
 -->
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>com.cognifide.aet</groupId>
@@ -113,22 +115,27 @@
     <finalName.extension>jar</finalName.extension>
 
     <!-- Versions -->
-    <source.java.version>1.7</source.java.version>
+    <source.java.version>1.8</source.java.version>
     <jetty.plugin.version>9.2.10.v20150310</jetty.plugin.version>
     <mongo.driver.version>3.2.2</mongo.driver.version>
     <junit.version>4.11</junit.version>
 
     <!-- properties for maven uploads -->
     <target.tomcat.serverId>aet-vagrant-instance</target.tomcat.serverId>
-    <target.tomcat.url>scp://192.168.123.100/opt/aet/tomcat/aet_sample_site/current</target.tomcat.url>
+    <target.tomcat.url>scp://192.168.123.100/opt/aet/tomcat/aet_sample_site/current
+    </target.tomcat.url>
 
     <target.karaf.serverId>aet-vagrant-instance</target.karaf.serverId>
-    <target.karaf.bundles.url>scp://192.168.123.100/opt/aet/karaf/aet_bundles/current</target.karaf.bundles.url>
-    <target.karaf.configs.url>scp://192.168.123.100/opt/aet/karaf/aet_configs/current</target.karaf.configs.url>
-    <target.karaf.features.url>scp://192.168.123.100/opt/aet/karaf/aet_features/current</target.karaf.features.url>
+    <target.karaf.bundles.url>scp://192.168.123.100/opt/aet/karaf/aet_bundles/current
+    </target.karaf.bundles.url>
+    <target.karaf.configs.url>scp://192.168.123.100/opt/aet/karaf/aet_configs/current
+    </target.karaf.configs.url>
+    <target.karaf.features.url>scp://192.168.123.100/opt/aet/karaf/aet_features/current
+    </target.karaf.features.url>
 
     <target.httpd.serverId>aet-vagrant-instance</target.httpd.serverId>
-    <target.httpd.report.url>scp://192.168.123.100/opt/aet/apache/aet_reports/current</target.httpd.report.url>
+    <target.httpd.report.url>scp://192.168.123.100/opt/aet/apache/aet_reports/current
+    </target.httpd.report.url>
 
     <!--
         required for building by sortpom-maven-plugin:2.5.0 and bobcat
@@ -937,11 +944,14 @@
                   <version>${min.java.version}</version>
                 </requireJavaVersion>
                 <!-- Mojo extra-enforcer-rules -->
-                <banCircularDependencies />
+                <banCircularDependencies/>
                 <!-- pedantic-pom-enforcers rules -->
-                <moduleOrder implementation="com.github.ferstl.maven.pomenforcers.PedanticModuleOrderEnforcer" />
-                <dependencConfiguration implementation="com.github.ferstl.maven.pomenforcers.PedanticDependencyConfigurationEnforcer" />
-                <pluginConfiguration implementation="com.github.ferstl.maven.pomenforcers.PedanticPluginConfigurationEnforcer" />
+                <moduleOrder
+                  implementation="com.github.ferstl.maven.pomenforcers.PedanticModuleOrderEnforcer"/>
+                <dependencConfiguration
+                  implementation="com.github.ferstl.maven.pomenforcers.PedanticDependencyConfigurationEnforcer"/>
+                <pluginConfiguration
+                  implementation="com.github.ferstl.maven.pomenforcers.PedanticPluginConfigurationEnforcer"/>
               </rules>
             </configuration>
           </execution>

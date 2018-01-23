@@ -27,11 +27,6 @@ public interface Excludable {
   class ExcludedPredicate implements Predicate<Excludable> {
 
     @Override
-    public boolean test(Excludable input) {
-      return apply(input);
-    }
-
-    @Override
     public boolean apply(@Nullable Excludable input) {
       boolean result = false;
       if (input != null) {
@@ -42,11 +37,6 @@ public interface Excludable {
   }
 
   class NonExcludedPredicate implements Predicate<Excludable> {
-
-    @Override
-    public boolean test(Excludable input) {
-      return apply(input);
-    }
 
     @Override
     public boolean apply(@Nullable Excludable input) {

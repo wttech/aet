@@ -205,10 +205,6 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
             return ignoreFields == null || !ignoreFields
                 .contains(error.getPropertyPath().toString());
           }
-          @Override
-          public boolean test(ConstraintViolation<Suite> error) {
-            return apply(error);
-          }
         }).toSet();
 
     if (!errors.isEmpty()) {

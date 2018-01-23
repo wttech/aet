@@ -96,11 +96,6 @@ public class W3cHtml5ValidationResultParser {
     }
 
     @Override
-    public boolean test(W3cHtml5Issue issue) {
-      return apply(issue);
-    }
-
-    @Override
     public boolean apply(W3cHtml5Issue issue) {
       return issueType == issue.getIssueType();
     }

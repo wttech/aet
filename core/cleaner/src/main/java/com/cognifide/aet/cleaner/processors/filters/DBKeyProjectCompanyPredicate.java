@@ -35,11 +35,6 @@ public class DBKeyProjectCompanyPredicate implements Predicate<DBKey> {
     return companyMatches(dbKey) && projectMatches(dbKey);
   }
 
-  @Override
-  public boolean test(DBKey dbKey) {
-    return apply(dbKey);
-  }
-
   private boolean projectMatches(DBKey dbKey) {
     return StringUtils.isBlank(projectFilter) || dbKey.getProject().equals(projectFilter);
   }

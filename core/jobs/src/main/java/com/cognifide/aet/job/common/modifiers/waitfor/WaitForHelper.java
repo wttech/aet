@@ -17,7 +17,6 @@ package com.cognifide.aet.job.common.modifiers.waitfor;
 
 import com.cognifide.aet.communication.api.metadata.CollectorStepResult;
 import java.util.concurrent.TimeUnit;
-import java.util.function.Function;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebDriver;
@@ -50,7 +49,7 @@ public final class WaitForHelper {
 
     for (ExpectedCondition<?> expectedCondition : expectedConditions) {
 
-      wait.until((Function<? super WebDriver, Object>) expectedCondition);
+      wait.until(expectedCondition);
     }
     return CollectorStepResult.newModifierResult();
   }

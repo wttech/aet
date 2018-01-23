@@ -38,11 +38,6 @@ public final class SuiteMergeStrategy {
 
   private static final Predicate<Step> COMPARATORS_FILTER = new Predicate<Step>() {
     @Override
-    public boolean test(Step input) {
-      return apply(input);
-    }
-
-    @Override
     public boolean apply(Step input) {
       return input != null && isCollector(input);
     }

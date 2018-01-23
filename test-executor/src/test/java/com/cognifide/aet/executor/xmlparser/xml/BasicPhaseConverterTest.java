@@ -41,7 +41,7 @@ public class BasicPhaseConverterTest {
   @SuppressWarnings("unchecked")
   public void getParameters_withNoAttributes_expectEmptyMap() throws Exception {
     NodeMap<InputNode> emptyNodeMap = Mockito.mock(NodeMap.class);
-    when(emptyNodeMap.iterator()).thenReturn(Collections.<String>emptyIterator());
+    when(emptyNodeMap.iterator()).thenReturn(Collections.emptyIterator());
     when(inputNode.getAttributes()).thenReturn(emptyNodeMap);
     Map<String, String> parameters = BasicPhaseConverter.getParameters(inputNode);
     assertTrue(parameters.isEmpty());

@@ -36,6 +36,7 @@ import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.Service;
 import org.apache.sling.commons.osgi.PropertiesUtil;
 import org.openqa.selenium.Proxy;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.CapabilityType;
@@ -97,12 +98,6 @@ public class FirefoxWebDriverFactory implements WebDriverFactory {
     }
   }
 
-  private void setCommonCapabilities(DesiredCapabilities capabilities, FirefoxProfile fp) {
-    capabilities.setCapability(FirefoxDriver.PROFILE, fp);
-    capabilities.setCapability("marionette", false);
-    capabilities.setCapability("firefox_binary", new File(path).getAbsolutePath());
-  }
-
   @Override
   public WebCommunicationWrapper createWebDriver() throws WorkerException {
     try {
@@ -135,7 +130,13 @@ public class FirefoxWebDriverFactory implements WebDriverFactory {
     return firefoxProfile;
   }
 
-  private RemoteWebDriver getFirefoxDriver(DesiredCapabilities capabilities)
+  private void setCommonCapabilities(DesiredCapabilities capabilities, FirefoxProfile fp) {
+    capabilities.setCapability(FirefoxDriver.PROFILE, fp);
+    capabilities.setCapability("marionette", false);
+    capabilities.setCapability("firefox_binary", new File(path).getAbsolutePath());
+  }
+
+  private WebDriver getFirefoxDriver(DesiredCapabilities capabilities)
       throws IOException {
     RemoteWebDriver driver = new FirefoxDriver(capabilities);
     driver.manage().timeouts().pageLoadTimeout(5L, TimeUnit.MINUTES);
