@@ -138,7 +138,7 @@ public class FirefoxWebDriverFactory implements WebDriverFactory {
 
   private WebDriver getFirefoxDriver(DesiredCapabilities capabilities)
       throws IOException {
-    RemoteWebDriver driver = new FirefoxDriver(capabilities);
+    WebDriver driver = new FirefoxDriver(capabilities);
     driver.manage().timeouts().pageLoadTimeout(5L, TimeUnit.MINUTES);
     return driver;
   }
