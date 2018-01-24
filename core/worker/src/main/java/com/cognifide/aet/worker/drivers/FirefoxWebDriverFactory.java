@@ -48,7 +48,7 @@ import org.osgi.framework.Constants;
 @Properties({@Property(name = Constants.SERVICE_VENDOR, value = "Cognifide Ltd")})
 public class FirefoxWebDriverFactory implements WebDriverFactory {
 
-  private static final String DEFAULT_FIREFOX_ERROR_LOG_FILE_PATH = "/content/logs/firefox/stderr.log";
+  private static final String DEFAULT_FIREFOX_ERROR_LOG_FILE_PATH = "/opt/aet/firefox/log/stderr.log";
 
   private static final String LOG_FILE_PATH = "logFilePath";
 
@@ -63,7 +63,7 @@ public class FirefoxWebDriverFactory implements WebDriverFactory {
   @Property(name = PATH, label = "Custom path to Firefox binary")
   private String path;
 
-  @Property(name = LOG_FILE_PATH, label = "Path to firefox error log", value = "/content/logs/firefox/stderr.log")
+  @Property(name = LOG_FILE_PATH, label = "Path to firefox error log", value = "/opt/aet/firefox/log/stderr.log")
   private String logFilePath;
 
   @Override
