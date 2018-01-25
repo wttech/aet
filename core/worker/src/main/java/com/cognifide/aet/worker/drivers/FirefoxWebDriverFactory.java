@@ -63,7 +63,7 @@ public class FirefoxWebDriverFactory implements WebDriverFactory {
   @Property(name = PATH, label = "Custom path to Firefox binary")
   private String path;
 
-  @Property(name = LOG_FILE_PATH, label = "Path to firefox error log", value = "/opt/aet/firefox/log/stderr.log")
+  @Property(name = LOG_FILE_PATH, label = "Path to firefox error log", value = DEFAULT_FIREFOX_ERROR_LOG_FILE_PATH)
   private String logFilePath;
 
   @Override
