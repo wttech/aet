@@ -50,7 +50,7 @@ public class FirefoxWebDriverFactory implements WebDriverFactory {
 
   private static final String DEFAULT_FIREFOX_BINARY_PATH = "/usr/bin/firefox";
 
-  private static final String DEFAULT_FIREFOX_ERROR_LOG_FILE_PATH = "/content/logs/firefox/stderr.log";
+  private static final String DEFAULT_FIREFOX_ERROR_LOG_FILE_PATH = "/opt/aet/firefox/log/stderr.log";
 
   private static final String LOG_FILE_PATH = "logFilePath";
 
@@ -84,6 +84,7 @@ public class FirefoxWebDriverFactory implements WebDriverFactory {
       DesiredCapabilities capabilities = new DesiredCapabilities();
       capabilities.setCapability(CapabilityType.PROXY, proxy);
       capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+
       FirefoxProfile fp = getFirefoxProfile();
       fp.setAcceptUntrustedCertificates(true);
       fp.setAssumeUntrustedCertificateIssuer(false);
@@ -101,6 +102,7 @@ public class FirefoxWebDriverFactory implements WebDriverFactory {
   public WebCommunicationWrapper createWebDriver() throws WorkerException {
     try {
       DesiredCapabilities capabilities = new DesiredCapabilities();
+
       FirefoxProfile fp = getFirefoxProfile();
       setCommonCapabilities(capabilities, fp);
 
@@ -135,8 +137,7 @@ public class FirefoxWebDriverFactory implements WebDriverFactory {
     capabilities.setCapability("firefox_binary", new File(path).getAbsolutePath());
   }
 
-  private WebDriver getFirefoxDriver(DesiredCapabilities capabilities)
-      throws IOException {
+  private WebDriver getFirefoxDriver(DesiredCapabilities capabilities) {
     WebDriver driver = new FirefoxDriver(capabilities);
     driver.manage().timeouts().pageLoadTimeout(5L, TimeUnit.MINUTES);
     return driver;
