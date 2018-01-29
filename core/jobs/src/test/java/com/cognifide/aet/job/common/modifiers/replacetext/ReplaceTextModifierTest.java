@@ -38,10 +38,6 @@ public class ReplaceTextModifierTest {
 
   private static final String PARAM_CSS = "css";
 
-  private static final String ATTRIBUTE_PARAM = "attributeName";
-
-  private static final String VALUE_PARAM = "value";
-
   private static final String PARAM_XPATH_VALUE = "//*[@id='toRemove']";
 
   private static final String PARAM_CSS_VALUE = "@logo > a";
@@ -101,38 +97,4 @@ public class ReplaceTextModifierTest {
     tested.setParameters(params);
   }
 
-  @Test
-  public void ReplaceTextInElement_ValidXPathIsProvided_WebDriverFindElementsMethodIsCalledOnce()
-      throws ProcessingException, ParametersException {
-    when(params.containsKey(PARAM_XPATH)).thenReturn(true);
-    when(params.get(PARAM_XPATH)).thenReturn(PARAM_XPATH_VALUE);
-    tested.setParameters(params);
-    tested.collect();
-    verify(webDriver, atLeast(1)).findElements(By.xpath(PARAM_XPATH_VALUE));
-  }
-
-  @Test
-  public void ReplaceTextInElement_ValidCssIsProvided_WebDriverFindElementsMethodIsCalledOnce()
-      throws ProcessingException, ParametersException {
-    when(params.containsKey(PARAM_CSS)).thenReturn(true);
-    when(params.get(PARAM_CSS)).thenReturn(PARAM_CSS_VALUE);
-    tested.setParameters(params);
-    tested.collect();
-    verify(webDriver, atLeast(1)).findElements(By.cssSelector(PARAM_CSS_VALUE));
-  }
-
-  @Test
-  public void ReplaceTextInElement_AllValidParamsAreProvided_WebDriverFindElementsMethodIsCalledAtLeastOnce()
-      throws ProcessingException, ParametersException {
-    when(params.containsKey(PARAM_XPATH)).thenReturn(true);
-    when(params.get(PARAM_XPATH)).thenReturn(PARAM_XPATH_VALUE);
-    when(params.containsKey(ATTRIBUTE_PARAM)).thenReturn(true);
-    when(params.get(ATTRIBUTE_PARAM)).thenReturn(PARAM_ATTRIBUTE_VALUE);
-    when(params.containsKey(VALUE_PARAM)).thenReturn(true);
-    when(params.get(VALUE_PARAM)).thenReturn(PARAM_VALUE_VALUE);
-
-    tested.setParameters(params);
-    tested.collect();
-    verify(webDriver, atLeast(1)).findElements(By.xpath(PARAM_XPATH_VALUE));
-  }
 }

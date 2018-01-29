@@ -107,13 +107,4 @@ public class ClickModifierTest {
     tested.setParameters(params);
   }
 
-  @Test
-  public void collect_whenValidXpathParamIsProvided_elementIsClicked()
-      throws ProcessingException, ParametersException {
-    setupParams(PARAM_TIMEOUT_VALUE, PARAM_XPATH_VALUE, null);
-    when(elementToClick.isDisplayed()).thenReturn(true);
-    tested.setParameters(params);
-    tested.collect();
-    verify(webDriver, atLeast(1)).findElements(By.xpath(PARAM_XPATH_VALUE));
-  }
 }
