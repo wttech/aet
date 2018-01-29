@@ -125,8 +125,7 @@ public class LoginModifierTest {
     tested.setParameters(params);
   }
 
-  @Test
-  @Ignore
+  @Test(expected = ProcessingException.class)
   public void collectTest_noTokenLoginFirstAttempt() throws ProcessingException {
     when(options.getCookieNamed(DEFAULT_LOGIN_TOKEN)).thenReturn(null).thenReturn(cookie);
     when(loginInput.getAttribute(VALUE_ATTRIBUTE)).thenReturn(DEFAULT_LOGIN);
@@ -139,8 +138,7 @@ public class LoginModifierTest {
     verify(requestExecutor).addCookie(anyString(), anyString());
   }
 
-  @Test
-  @Ignore
+  @Test(expected = ProcessingException.class)
   public void collectTest_noTokenLoginSecondAttempt() throws ProcessingException {
     when(options.getCookieNamed(DEFAULT_LOGIN_TOKEN)).thenReturn(null).thenReturn(cookie);
     when(loginInput.getAttribute(VALUE_ATTRIBUTE)).thenReturn(WRONG_LOGIN)

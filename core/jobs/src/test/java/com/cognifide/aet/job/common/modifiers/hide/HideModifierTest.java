@@ -23,7 +23,6 @@ import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import java.util.Map;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
@@ -91,24 +90,22 @@ public class HideModifierTest {
   }
 
   @Test
-  @Ignore
-  public void hideElement_ValidXPathIsProvided_WebDriverFindElementsMethodIsCalledOnce()
+  public void hideElement_ValidXPathIsProvided_WebDriverFindElementsMethodIsCalledAtLeastOnce()
       throws ProcessingException, ParametersException {
     when(params.containsKey(PARAM_XPATH)).thenReturn(true);
     when(params.get(PARAM_XPATH)).thenReturn(PARAM_XPATH_VALUE);
     tested.setParameters(params);
     tested.collect();
-    verify(webDriver, atLeast(1)).findElement(By.xpath(PARAM_XPATH_VALUE));
+    verify(webDriver, atLeast(1)).findElements(By.xpath(PARAM_XPATH_VALUE));
   }
 
   @Test
-  @Ignore
-  public void hideElement_ValidCssIsProvided_WebDriverFindElementsMethodIsCalledOnce()
+  public void hideElement_ValidCssIsProvided_WebDriverFindElementsMethodIsCalledAtLeastOnce()
       throws ProcessingException, ParametersException {
     when(params.containsKey(PARAM_CSS)).thenReturn(true);
     when(params.get(PARAM_CSS)).thenReturn(PARAM_CSS_VALUE);
     tested.setParameters(params);
     tested.collect();
-    verify(webDriver, atLeast(1)).findElement(By.cssSelector(PARAM_CSS_VALUE));
+    verify(webDriver, atLeast(1)).findElements(By.cssSelector(PARAM_CSS_VALUE));
   }
 }
