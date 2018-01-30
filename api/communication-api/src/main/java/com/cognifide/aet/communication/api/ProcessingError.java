@@ -15,7 +15,7 @@
  */
 package com.cognifide.aet.communication.api;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import java.io.Serializable;
 
 /**
@@ -71,7 +71,7 @@ public final class ProcessingError implements Serializable {
 
   @Override
   public String toString() {
-    return Objects.toStringHelper(this).add("phase", phase).add("description", description)
+    return MoreObjects.toStringHelper(this).add("phase", phase).add("description", description)
         .toString();
   }
 }

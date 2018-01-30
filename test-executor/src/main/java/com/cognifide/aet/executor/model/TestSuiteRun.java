@@ -15,7 +15,7 @@
  */
 package com.cognifide.aet.executor.model;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
@@ -142,7 +142,7 @@ public class TestSuiteRun implements Serializable {
 
   @Override
   public String toString() {
-    return Objects.toStringHelper(this).add("name", name).add("company", company)
+    return MoreObjects.toStringHelper(this).add("name", name).add("company", company)
         .add("project", project)
         .add("domain", domain).add("correlationId", correlationId)
         .add("version", version).toString();

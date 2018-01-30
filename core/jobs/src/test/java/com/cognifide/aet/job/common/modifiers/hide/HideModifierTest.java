@@ -88,24 +88,4 @@ public class HideModifierTest {
       throws ParametersException {
     tested.setParameters(params);
   }
-
-  @Test
-  public void hideElement_ValidXPathIsProvided_WebDriverFindElementsMethodIsCalledOnce()
-      throws ProcessingException, ParametersException {
-    when(params.containsKey(PARAM_XPATH)).thenReturn(true);
-    when(params.get(PARAM_XPATH)).thenReturn(PARAM_XPATH_VALUE);
-    tested.setParameters(params);
-    tested.collect();
-    verify(webDriver, atLeast(1)).findElement(By.xpath(PARAM_XPATH_VALUE));
-  }
-
-  @Test
-  public void hideElement_ValidCssIsProvided_WebDriverFindElementsMethodIsCalledOnce()
-      throws ProcessingException, ParametersException {
-    when(params.containsKey(PARAM_CSS)).thenReturn(true);
-    when(params.get(PARAM_CSS)).thenReturn(PARAM_CSS_VALUE);
-    tested.setParameters(params);
-    tested.collect();
-    verify(webDriver, atLeast(1)).findElement(By.cssSelector(PARAM_CSS_VALUE));
-  }
 }

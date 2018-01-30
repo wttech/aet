@@ -15,7 +15,7 @@
  */
 package com.cognifide.aet.communication.api.metadata;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
 import java.io.Serializable;
@@ -68,7 +68,7 @@ public abstract class StepResult implements Serializable {
 
   @Override
   public String toString() {
-    return Objects.toStringHelper(this)
+    return MoreObjects.toStringHelper(this)
         .add("status", getStatusName())
         .add("artifactId", getArtifactId())
         .add("errors", getErrors())

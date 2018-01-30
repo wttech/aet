@@ -15,7 +15,7 @@
  */
 package com.cognifide.aet.communication.api.messages;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 
 public class FatalErrorMessage implements BasicMessage {
 
@@ -45,7 +45,7 @@ public class FatalErrorMessage implements BasicMessage {
 
   @Override
   public String toString() {
-    return Objects.toStringHelper(this)
+    return MoreObjects.toStringHelper(this)
         .add("message", message)
         .add("correlationId", correlationId)
         .toString();

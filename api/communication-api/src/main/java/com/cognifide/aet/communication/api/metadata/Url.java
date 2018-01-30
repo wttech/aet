@@ -15,7 +15,7 @@
  */
 package com.cognifide.aet.communication.api.metadata;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -100,7 +100,7 @@ public class Url implements Serializable, Commentable, Named {
 
   @Override
   public String toString() {
-    return Objects.toStringHelper(this)
+    return MoreObjects.toStringHelper(this)
         .add("name", name)
         .add("url", url)
         .add("domain", domain)

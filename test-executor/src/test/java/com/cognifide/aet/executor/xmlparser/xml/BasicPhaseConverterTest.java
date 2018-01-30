@@ -20,8 +20,8 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
-import com.google.common.collect.Iterators;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Map;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -41,7 +41,7 @@ public class BasicPhaseConverterTest {
   @SuppressWarnings("unchecked")
   public void getParameters_withNoAttributes_expectEmptyMap() throws Exception {
     NodeMap<InputNode> emptyNodeMap = Mockito.mock(NodeMap.class);
-    when(emptyNodeMap.iterator()).thenReturn(Iterators.<String>emptyIterator());
+    when(emptyNodeMap.iterator()).thenReturn(Collections.emptyIterator());
     when(inputNode.getAttributes()).thenReturn(emptyNodeMap);
     Map<String, String> parameters = BasicPhaseConverter.getParameters(inputNode);
     assertTrue(parameters.isEmpty());

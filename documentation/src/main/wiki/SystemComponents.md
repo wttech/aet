@@ -56,4 +56,4 @@ AET uses the following third party software as parts of the system:
 |[Apache ActiveMQ](http://activemq.apache.org/)|5.15.2|JMS Sever used for communication between system components.|
 |[MongoDB](https://www.mongodb.org/)|3.2.3|System database.|
 |[Browsermob](http://bmp.lightbody.net/)|2.1.4|Proxy server.|
-|[Firefox](https://ftp.mozilla.org/pub/firefox/releases/38.6.0esr/win32/en-US/)|38.6.0 ESR (en-US)|Browser with Selenium (2.50.1).|
+|[Firefox](https://ftp.mozilla.org/pub/firefox/releases/38.6.0esr/win32/en-US/)|38.6.0 ESR (en-US)|Browser with Selenium (3.8.1).|

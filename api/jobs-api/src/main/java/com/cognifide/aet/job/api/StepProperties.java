@@ -17,7 +17,7 @@ package com.cognifide.aet.job.api;
 
 
 import com.cognifide.aet.vs.DBKey;
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 
 /**
  * POJO used to pass properties to Collectors/Comparators on worker.
@@ -54,7 +54,7 @@ public abstract class StepProperties implements DBKey {
 
   @Override
   public String toString() {
-    return Objects.toStringHelper(this)
+    return MoreObjects.toStringHelper(this)
         .add("company", company)
         .add("project", project)
         .add("patternId", patternId)

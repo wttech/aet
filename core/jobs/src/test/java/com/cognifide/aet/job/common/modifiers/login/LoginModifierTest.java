@@ -32,6 +32,7 @@ import com.cognifide.aet.validation.ValidationResultBuilder;
 import java.util.Collections;
 import java.util.Map;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -52,10 +53,6 @@ public class LoginModifierTest {
   private static final String DEFAULT_PASSWORD_INPUT_ELEMENT_SELECTOR = "//input[@name='j_password']";
 
   private static final String DEFAULT_SUBMIT_BUTTON_ELEMENT_SELECTOR = "//*[@type='submit']";
-
-  private static final String DEFAULT_LOGIN = "admin";
-
-  private static final String DEFAULT_PASSWORD = "admin";
 
   private static final String VALUE_ATTRIBUTE = "value";
 
@@ -122,33 +119,6 @@ public class LoginModifierTest {
     tested = new LoginModifier(webCommunicationWrapper, validationResultBuilder);
 
     tested.setParameters(params);
-  }
-
-  @Test
-  public void collectTest_noTokenLoginFirstAttempt() throws ProcessingException {
-    when(options.getCookieNamed(DEFAULT_LOGIN_TOKEN)).thenReturn(null).thenReturn(cookie);
-    when(loginInput.getAttribute(VALUE_ATTRIBUTE)).thenReturn(DEFAULT_LOGIN);
-    when(passwordInput.getAttribute(VALUE_ATTRIBUTE)).thenReturn(DEFAULT_PASSWORD);
-
-    tested.collect();
-
-    verify(webDriver, times(1)).get(LOGIN_PAGE_URL);
-    verify(submitButton, times(1)).click();
-    verify(requestExecutor).addCookie(anyString(), anyString());
-  }
-
-  @Test
-  public void collectTest_noTokenLoginSecondAttempt() throws ProcessingException {
-    when(options.getCookieNamed(DEFAULT_LOGIN_TOKEN)).thenReturn(null).thenReturn(cookie);
-    when(loginInput.getAttribute(VALUE_ATTRIBUTE)).thenReturn(WRONG_LOGIN)
-        .thenReturn(DEFAULT_LOGIN);
-    when(passwordInput.getAttribute(VALUE_ATTRIBUTE)).thenReturn(DEFAULT_PASSWORD);
-
-    tested.collect();
-
-    verify(webDriver, times(1)).get(LOGIN_PAGE_URL);
-    verify(submitButton, times(1)).click();
-    verify(requestExecutor).addCookie(anyString(), anyString());
   }
 
   @Test(expected = ProcessingException.class)

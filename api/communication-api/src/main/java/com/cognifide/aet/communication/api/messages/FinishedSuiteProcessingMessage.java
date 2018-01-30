@@ -15,7 +15,7 @@
  */
 package com.cognifide.aet.communication.api.messages;
 
-import com.google.common.base.Objects;
+import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
 import java.util.List;
@@ -65,7 +65,7 @@ public class FinishedSuiteProcessingMessage implements BasicMessage {
 
   @Override
   public String toString() {
-    return Objects.toStringHelper(this)
+    return MoreObjects.toStringHelper(this)
         .add("correlationId", correlationId)
         .add("status", status)
         .add("errors", errors)

@@ -15,6 +15,7 @@
  */
 package com.cognifide.aet.communication.api.metadata;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import java.util.HashSet;
 import java.util.Set;
@@ -122,7 +123,7 @@ public class Step extends Operation implements Commentable, Named {
 
   @Override
   public String toString() {
-    return Objects.toStringHelper(this)
+    return MoreObjects.toStringHelper(this)
         .add("index", index)
         .add("type", type)
         .add("name", name)

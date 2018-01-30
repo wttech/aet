@@ -10,6 +10,8 @@ All notable changes to AET will be documented in this file.
 ## Unreleased
 **List of changes that are finished but not yet released in any final version.**
 
+- [PR-209](https://github.com/Cognifide/aet/pull/209) Selenium upgraded to 3.8.1. Guava upgraded to 23.6-jre
+
 ## Version 2.1.4
 - [PR-184](https://github.com/Cognifide/aet/pull/184) Fixed xUnit generation NPE when stepResult is missing
 - [PR-183](https://github.com/Cognifide/aet/pull/183) Fixed ambiguous messages from AET API ([#161](https://github.com/Cognifide/aet/issues/161) and [#165](https://github.com/Cognifide/aet/issues/161))
