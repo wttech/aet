@@ -3860,13 +3860,13 @@ table { border-collapse: collapse; border-spacing: 0; }
 /* line 155, ../sass/_typography.scss */
 .name { font-style: italic; }
 
-/* line 61, ../../../../../../../../../../soft/programming/compilers-interpreters/Ruby231/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+/* line 61, ../../../../../../../../../Library/Ruby/Gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]:-moz-placeholder { color: #85898e; }
-/* line 64, ../../../../../../../../../../soft/programming/compilers-interpreters/Ruby231/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+/* line 64, ../../../../../../../../../Library/Ruby/Gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]::-moz-placeholder { color: #85898e; }
-/* line 67, ../../../../../../../../../../soft/programming/compilers-interpreters/Ruby231/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+/* line 67, ../../../../../../../../../Library/Ruby/Gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]:-ms-input-placeholder { color: #85898e; }
-/* line 56, ../../../../../../../../../../soft/programming/compilers-interpreters/Ruby231/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+/* line 56, ../../../../../../../../../Library/Ruby/Gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]::-webkit-input-placeholder { color: #85898e; }
 
 /* AET  Copyright (C) 2013 Cognifide Limited  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */
@@ -3983,8 +3983,6 @@ input[type=text]::-webkit-input-placeholder { color: #85898e; }
 .aside-report ul { padding: 0; margin: 0 0 0 30px; background: #2c333b; display: none; }
 /* line 137, ../sass/_sidebar.scss */
 .aside-report ul li { width: 80%; display: block; font-size: 15px; font-family: "montserratlight", sans-serif; background: #2c333b; position: relative; line-height: normal; margin-bottom: 20px; margin-left: 15px; color: #77777c; }
-/* line 149, ../sass/_sidebar.scss */
-.aside-report ul li:last-of-type { border-bottom: solid 1px #313942; }
 /* line 153, ../sass/_sidebar.scss */
 .aside-report ul li a { display: block; color: inherit; text-align: left; padding-left: 10px; }
 /* line 161, ../sass/_sidebar.scss */
