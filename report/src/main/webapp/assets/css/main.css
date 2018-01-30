@@ -3860,13 +3860,13 @@ table { border-collapse: collapse; border-spacing: 0; }
 /* line 155, ../sass/_typography.scss */
 .name { font-style: italic; }
 
-/* line 61, ../../../../../../../../../../soft/programming/compilers-interpreters/Ruby231/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+/* line 61, ../../../../../../../../../Library/Ruby/Gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]:-moz-placeholder { color: #85898e; }
-/* line 64, ../../../../../../../../../../soft/programming/compilers-interpreters/Ruby231/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+/* line 64, ../../../../../../../../../Library/Ruby/Gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]::-moz-placeholder { color: #85898e; }
-/* line 67, ../../../../../../../../../../soft/programming/compilers-interpreters/Ruby231/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+/* line 67, ../../../../../../../../../Library/Ruby/Gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]:-ms-input-placeholder { color: #85898e; }
-/* line 56, ../../../../../../../../../../soft/programming/compilers-interpreters/Ruby231/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+/* line 56, ../../../../../../../../../Library/Ruby/Gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]::-webkit-input-placeholder { color: #85898e; }
 
 /* AET  Copyright (C) 2013 Cognifide Limited  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */
@@ -3984,63 +3984,61 @@ input[type=text]::-webkit-input-placeholder { color: #85898e; }
 /* line 137, ../sass/_sidebar.scss */
 .aside-report ul li { width: 80%; display: block; font-size: 15px; font-family: "montserratlight", sans-serif; background: #2c333b; position: relative; line-height: normal; margin-bottom: 20px; margin-left: 15px; color: #77777c; }
 /* line 149, ../sass/_sidebar.scss */
-.aside-report ul li:last-of-type { border-bottom: solid 1px #313942; }
-/* line 153, ../sass/_sidebar.scss */
 .aside-report ul li a { display: block; color: inherit; text-align: left; padding-left: 10px; }
-/* line 161, ../sass/_sidebar.scss */
+/* line 157, ../sass/_sidebar.scss */
 .aside-report ul li:before { position: absolute; left: -10px; font-size: 15px; left: -16px; }
-/* line 168, ../sass/_sidebar.scss */
+/* line 164, ../sass/_sidebar.scss */
 .aside-report ul li.failed, .aside-report ul li.failedcommented, .aside-report ul li.processing_error { color: #bb5a5a; }
-/* line 175, ../sass/_sidebar.scss */
+/* line 171, ../sass/_sidebar.scss */
 .aside-report ul li.passed { color: #6f9f00; }
-/* line 180, ../sass/_sidebar.scss */
+/* line 176, ../sass/_sidebar.scss */
 .aside-report ul li.warning { color: #f0ad4e; }
-/* line 185, ../sass/_sidebar.scss */
+/* line 181, ../sass/_sidebar.scss */
 .aside-report ul li.rebased { color: #0097fe; }
-/* line 195, ../sass/_sidebar.scss */
+/* line 191, ../sass/_sidebar.scss */
 .aside.has-filters-applied .aside-report:not(.is-hidden) { max-height: none; }
-/* line 197, ../sass/_sidebar.scss */
+/* line 193, ../sass/_sidebar.scss */
 .aside.has-filters-applied .aside-report:not(.is-hidden) ul { display: block; }
-/* line 205, ../sass/_sidebar.scss */
+/* line 201, ../sass/_sidebar.scss */
 .aside.show-failed .url-name, .aside.show-failed .test-name { display: none; }
-/* line 209, ../sass/_sidebar.scss */
+/* line 205, ../sass/_sidebar.scss */
 .aside.show-failed .url-name.failed, .aside.show-failed .test-name.failed { display: block; }
-/* line 217, ../sass/_sidebar.scss */
+/* line 213, ../sass/_sidebar.scss */
 .aside.show-commented .url-name, .aside.show-commented .test-name { display: none; }
-/* line 220, ../sass/_sidebar.scss */
+/* line 216, ../sass/_sidebar.scss */
 .aside.show-commented .url-name.commented, .aside.show-commented .test-name.commented { display: block; }
-/* line 228, ../sass/_sidebar.scss */
+/* line 224, ../sass/_sidebar.scss */
 .aside.show-passed .url-name, .aside.show-passed .test-name { display: none; }
-/* line 230, ../sass/_sidebar.scss */
+/* line 226, ../sass/_sidebar.scss */
 .aside.show-passed .url-name.passed, .aside.show-passed .test-name.passed { display: block; }
-/* line 238, ../sass/_sidebar.scss */
+/* line 234, ../sass/_sidebar.scss */
 .aside.show-warning .url-name, .aside.show-warning .test-name { display: none; }
-/* line 241, ../sass/_sidebar.scss */
+/* line 237, ../sass/_sidebar.scss */
 .aside.show-warning .url-name.warning, .aside.show-warning .test-name.warning { display: block; }
 
-/* line 248, ../sass/_sidebar.scss */
+/* line 244, ../sass/_sidebar.scss */
 .aside-report-summary { display: table; width: 100%; border-bottom: solid 1px #313942; text-transform: uppercase; padding: 0 15px; line-height: 40px; }
-/* line 256, ../sass/_sidebar.scss */
+/* line 252, ../sass/_sidebar.scss */
 .aside-report-summary header { float: left; color: #ffffff; font-size: 16px; text-transform: uppercase; }
-/* line 263, ../sass/_sidebar.scss */
+/* line 259, ../sass/_sidebar.scss */
 .aside-report-summary .stats { font-size: 14px; color: #ffffff; }
-/* line 267, ../sass/_sidebar.scss */
+/* line 263, ../sass/_sidebar.scss */
 .aside-report-summary .stats.has-errors { color: #f0ad4e; }
-/* line 271, ../sass/_sidebar.scss */
+/* line 267, ../sass/_sidebar.scss */
 .aside-report-summary .stats.is-filtered { color: #ffffff; }
 
-/* line 277, ../sass/_sidebar.scss */
+/* line 273, ../sass/_sidebar.scss */
 .report-item-stats { color: #85898e; position: absolute; right: 21px; top: 6px; background: #3c4550; font-family: "montserratbold", sans-serif; font-size: 14px; line-height: 32px; padding: 0 7px; }
 
-/* line 289, ../sass/_sidebar.scss */
+/* line 285, ../sass/_sidebar.scss */
 .js-rebase-all, .js-cancel-all { position: fixed; bottom: 0; width: 350px; border-top: solid 1px #313942; padding: 16px; background: #2c333b; z-index: 1; }
 
-/* line 299, ../sass/_sidebar.scss */
+/* line 295, ../sass/_sidebar.scss */
 .js-rebase-all { bottom: 60px; }
 
-/* line 303, ../sass/_sidebar.scss */
+/* line 299, ../sass/_sidebar.scss */
 .is-active { color: #ffffff !important; }
-/* line 306, ../sass/_sidebar.scss */
+/* line 302, ../sass/_sidebar.scss */
 .is-active a, .is-active:before { color: #ffffff !important; }
 
 /* AET  Copyright (C) 2013 Cognifide Limited  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */
