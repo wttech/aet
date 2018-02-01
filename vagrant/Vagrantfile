@@ -101,6 +101,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       "recipe[aet::deploy_reports]",
       "recipe[aet::tomcat]",
       "recipe[aet::deploy_sample_site]",
+      "recipe[aet::seleniumgrid_hub]",
+      "recipe[aet::seleniumgrid_node_ff]"
       "recipe[aet::display]",
       "recipe[aet::mongo]",
       "recipe[aet::activemq]",
