@@ -14,7 +14,7 @@ Please note that full list of required tools and its versions can be found in [S
     * Switch Persistence for ActiveMQ
     * Enable cleaning unused topic for ActiveMQ
 5. Install Apache Server
-    * Configure site for the following path: `/opt/aet/apache/aet_reports/current` 
+    * Configure site for the following path: `/opt/aet/apache/aet_reports/current`
     
 ##### Windows Setup
 Windows Setup.
