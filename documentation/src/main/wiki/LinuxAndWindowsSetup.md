@@ -8,13 +8,13 @@ Please note that full list of required tools and its versions can be found in [S
 ##### Linux Setup
 1. Turn off Firewall. This may be achieved differently on various linux distribution, for example on CentOS `selinux` and `iptables` should be disabled.
 2. Install MongoDB in version 3.2.3
-3. Install JDK (1.7) from Oracle or OpenJDK
+3. Install JDK (1.8) from Oracle or OpenJDK
 4. Install ActiveMQ in version 5.13.1
     * Enable JMX for ActiveMQ with connector under port `11199`
     * Switch Persistence for ActiveMQ
     * Enable cleaning unused topic for ActiveMQ
 5. Install Apache Server
-    * Configure site for the following path: `/opt/aet/apache/aet_reports/current`
+    * Configure site for the following path: `/opt/aet/apache/aet_reports/current` 
     
 ##### Windows Setup
 Windows Setup.
