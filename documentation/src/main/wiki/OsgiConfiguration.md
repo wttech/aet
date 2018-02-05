@@ -51,4 +51,4 @@ The service is **Firefox Web Driver Factory**. Below are listed it's properties 
 | Name | Fixed value `ff` |
 | Path | Path to Firefox binary |
 | Log file path | Path to Firefox log file |
-| Selenium Grid URL | Url to Selenium Grid Hub. If blank, tests are handled in a legacy way - without Selenium Grid proxy |
+| Selenium Grid URL | Url to Selenium Grid Hub. If blank, tests are handled in a legacy way - without Selenium Grid hub. |
