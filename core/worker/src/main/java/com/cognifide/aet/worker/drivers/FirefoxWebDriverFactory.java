@@ -24,7 +24,6 @@ import com.cognifide.aet.job.api.collector.ProxyServerWrapper;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.worker.api.WebDriverFactory;
 import com.cognifide.aet.worker.exceptions.WorkerException;
-import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -146,7 +145,7 @@ public class FirefoxWebDriverFactory implements WebDriverFactory {
   private void setCommonCapabilities(DesiredCapabilities capabilities, FirefoxProfile fp) {
     capabilities.setCapability(FirefoxDriver.PROFILE, fp);
     capabilities.setCapability("marionette", false);
-    capabilities.setCapability("firefox_binary", new File(path).getAbsolutePath());
+    capabilities.setCapability("firefox_binary", path);
   }
 
   private WebDriver getFirefoxDriver(DesiredCapabilities capabilities)
