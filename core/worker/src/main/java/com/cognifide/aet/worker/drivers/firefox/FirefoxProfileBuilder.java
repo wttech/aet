@@ -13,15 +13,17 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.worker.drivers;
+package com.cognifide.aet.worker.drivers.firefox;
 
 
-import com.cognifide.aet.worker.helpers.JavaScriptError;
 import java.io.IOException;
 import java.util.Random;
+
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.cognifide.aet.worker.helpers.JavaScriptError;
 
 public class FirefoxProfileBuilder {
 

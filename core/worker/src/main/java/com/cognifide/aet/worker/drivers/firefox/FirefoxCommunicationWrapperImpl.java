@@ -13,7 +13,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.worker.drivers;
+package com.cognifide.aet.worker.drivers.firefox;
 
 import com.cognifide.aet.job.api.collector.HttpRequestExecutor;
 import com.cognifide.aet.job.api.collector.JsErrorLog;
@@ -21,13 +21,14 @@ import com.cognifide.aet.job.api.collector.ProxyServerWrapper;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.worker.helpers.JavaScriptError;
 import com.google.common.base.Function;
-import com.google.common.collect.FluentIterable;
 import com.google.common.collect.Ordering;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
+import java.util.stream.Collectors;
 import org.openqa.selenium.WebDriver;
 
-public class WebCommunicationWrapperImpl implements WebCommunicationWrapper {
+public class FirefoxCommunicationWrapperImpl implements WebCommunicationWrapper {
 
   private static final Function<JavaScriptError, JsErrorLog> ERROR_LOG_FUNCTION = new Function<JavaScriptError, JsErrorLog>() {
 
@@ -48,7 +49,7 @@ public class WebCommunicationWrapperImpl implements WebCommunicationWrapper {
 
   private final HttpRequestExecutor requestExecutor;
 
-  public WebCommunicationWrapperImpl(WebDriver webDriver, ProxyServerWrapper server,
+  public FirefoxCommunicationWrapperImpl(WebDriver webDriver, ProxyServerWrapper server,
       HttpRequestExecutor requestExecutor) {
     this.webDriver = webDriver;
     this.proxyServer = server;
@@ -73,8 +74,9 @@ public class WebCommunicationWrapperImpl implements WebCommunicationWrapper {
   @Override
   public Set<JsErrorLog> getJSErrorLogs() {
     List<JavaScriptError> javaScriptErrors = JavaScriptError.readErrors(webDriver);
-    return FluentIterable.from(javaScriptErrors).transform(ERROR_LOG_FUNCTION).toSortedSet(
-        Ordering.natural());
+    return javaScriptErrors.stream()
+        .map(ERROR_LOG_FUNCTION)
+        .collect(Collectors.toCollection(() -> new TreeSet<>(Ordering.natural())));
   }
 
   @Override
