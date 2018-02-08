@@ -56,6 +56,7 @@ require.config({
     'toolbarBottomController': 'layout/toolbar/toolbarBottom.controller',
     //sidepanel
     'sidepanelToggleDirective': 'layout/sidepanel/sidepanelToggle.directive',
+    'sidepanelResizerDirective': 'layout/sidepanel/sidepanelResizer.directive',
     'sidepanelStatusFilterDirective': 'layout/sidepanel/sidepanelStatusFilter.directive',
     'sidepanelSearchDirective': 'layout/sidepanel/sidepanelSearch.directive',
     'sidepanelToggleLinkDirective': 'layout/sidepanel/toggleLink.directive',

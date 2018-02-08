@@ -51,6 +51,7 @@ define(['angularAMD',
 
   // sidepanel
   'sidepanelToggleDirective',
+  'sidepanelResizerDirective',
   'sidepanelStatusFilterDirective',
   'sidepanelSearchDirective',
   'sidepanelToggleLinkDirective',
