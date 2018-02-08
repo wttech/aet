@@ -13,6 +13,8 @@ Currently a virtual machine with the following services is created:
 * MongoDb
 * Brosermob
 * Firefox
+* Selenium Grid hub
+* Selenium Grid node for Firefox
 * X environment
 
 #### AET Services

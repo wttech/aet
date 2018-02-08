@@ -24,10 +24,12 @@ import com.cognifide.aet.job.api.collector.ProxyServerWrapper;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.worker.api.WebDriverFactory;
 import com.cognifide.aet.worker.exceptions.WorkerException;
-import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Properties;
@@ -41,6 +43,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.osgi.framework.Constants;
 
 @Service
@@ -56,6 +59,10 @@ public class FirefoxWebDriverFactory implements WebDriverFactory {
 
   private static final String DEFAULT_FF_NAME = "ff";
 
+  private static final String SELENIUM_GRID_URL = "seleniumGridUrl";
+
+  private static final String DEFAULT_SELENIUM_GRID_URL = "http://localhost:4444/wd/hub";
+
   @Reference
   private HttpRequestExecutorFactory requestExecutorFactory;
 
@@ -67,6 +74,10 @@ public class FirefoxWebDriverFactory implements WebDriverFactory {
 
   @Property(name = LOG_FILE_PATH, label = "Path to firefox error log", value = DEFAULT_FIREFOX_ERROR_LOG_FILE_PATH)
   private String logFilePath;
+
+  @Property(name = SELENIUM_GRID_URL, label = "Url to selenium grid hub", value = DEFAULT_SELENIUM_GRID_URL)
+  private String seleniumGridUrl;
+
 
   @Override
   public String getName() {
@@ -134,11 +145,13 @@ public class FirefoxWebDriverFactory implements WebDriverFactory {
   private void setCommonCapabilities(DesiredCapabilities capabilities, FirefoxProfile fp) {
     capabilities.setCapability(FirefoxDriver.PROFILE, fp);
     capabilities.setCapability("marionette", false);
-    capabilities.setCapability("firefox_binary", new File(path).getAbsolutePath());
+    capabilities.setCapability("firefox_binary", path);
   }
 
-  private WebDriver getFirefoxDriver(DesiredCapabilities capabilities) {
-    WebDriver driver = new FirefoxDriver(capabilities);
+  private WebDriver getFirefoxDriver(DesiredCapabilities capabilities)
+      throws MalformedURLException {
+    WebDriver driver = StringUtils.isNotBlank(seleniumGridUrl) ? new RemoteWebDriver(
+        new URL(seleniumGridUrl), capabilities) : new FirefoxDriver(capabilities);
     driver.manage().timeouts().pageLoadTimeout(5L, TimeUnit.MINUTES);
     return driver;
   }
@@ -149,7 +162,8 @@ public class FirefoxWebDriverFactory implements WebDriverFactory {
     this.path = PropertiesUtil.toString(properties.get(PATH), DEFAULT_FIREFOX_BINARY_PATH);
     this.logFilePath = PropertiesUtil
         .toString(properties.get(LOG_FILE_PATH), DEFAULT_FIREFOX_ERROR_LOG_FILE_PATH);
-
+    this.seleniumGridUrl = PropertiesUtil
+        .toString(properties.get(SELENIUM_GRID_URL), DEFAULT_SELENIUM_GRID_URL);
   }
 
 }

@@ -198,6 +198,15 @@ a collector responsible for collecting a screenshot of the page under a given UR
 *Selenium*  
 a portable software testing framework for web applications. At the moment AET makes use of Selenium 3.8.1.
 
+*Selenium Grid*  
+a test tool that allows to run tests on different machines against different browsers. At the moment AET makes use of Selenium Grid 3.8.1.
+
+*Selenium Grid hub*  
+point that receives all test requests and distribute them the the right nodes.
+
+*Selenium Grid nodes*  
+endpoints registered to a hub configured to run tests on specific platform and browser.  
+
 *Selenium Driver*  
 a test tool that allows to perform specific actions in a browser environment (e.g. take a screenshot of a page).
 
