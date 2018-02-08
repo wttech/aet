@@ -34,11 +34,20 @@ define([], function () {
     vm.showAcceptButton = patternsMayBeUpdated;
     vm.showRevertButton = patternsMarkedForUpdateMayBeReverted;
     vm.displayCommentModal = displayCommentModal;
+    vm.scrollSidepanel = scrollSidepanel;
 
     $rootScope.$on('metadata:changed', updateToolbar);
+    $scope.$watch('viewMode', function() {
+        setTimeout(function() {
+          $('[data-toggle="popover"]').not('.pre-initialized-popover').popover({
+                placement: 'bottom'
+          });
+        }, 0);
+    });
+
     $('[data-toggle="popover"]').popover({
       placement: 'bottom'
-    });
+    }).addClass('pre-initialized-popover');
 
     updateToolbar();
 
@@ -110,6 +119,20 @@ define([], function () {
       });
     }
 
+    function scrollSidepanel(findParentGroup) {
+      var element = $('a.test-name.is-active, a.test-url.is-active');
+      var reportGroup;
+
+      if (findParentGroup) {
+          reportGroup = element.closest('.aside-report.is-visible');
+          element = reportGroup.find('.test-name');
+          element.click();
+          reportGroup.addClass('is-expanded');
+      }
+
+      element[0].scrollIntoView({behavior: 'smooth', block: 'center', inline: 'nearest'});
+    }
+
     /***************************************
      ***********  SUITE VIEW PART  *********
      ***************************************/
@@ -141,8 +164,11 @@ define([], function () {
      ***********  URL VIEW PART  *********
      ***************************************/
     function setupUrlToolbarModel() {
+      var testName = $stateParams.test;
+
       vm.model = metadataAccessService.getUrl($stateParams.test,
           $stateParams.url);
+      vm.model.testGroupName = metadataAccessService.getTest(testName).name;
       vm.updatePatterns = function () {
         patternsService.updateUrl($stateParams.test, $stateParams.url, true);
       };
