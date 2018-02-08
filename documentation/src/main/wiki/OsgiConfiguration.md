@@ -17,9 +17,12 @@ The diagram below shows which AET OSGi service should connect to which system co
 
 ![aet-osgi-configuration](assets/diagrams/aet-osgi-configuration.png)
 
+
+There are more services that require configuration which are not present on the diagram above. These are described below.
+
 ##### Collectors and comparators configuration
 
-There are two more services that require configuration which are not present on the diagram above. The services are **AET Collector Message Listener** and **AET Comparator Message Listener**. There must be at least one of each of those services configured. Below there are listed the properties of each of above mentioned services with required values.
+ The services are **AET Collector Message Listener** and **AET Comparator Message Listener**. There must be at least one of each of those services configured. Below there are listed the properties of each of above mentioned services with required values.
 
 ###### AET Collector Message Listener
 
