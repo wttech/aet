@@ -19,9 +19,6 @@ import static com.cognifide.aet.worker.drivers.WebDriverHelper.DEFAULT_SELENIUM_
 import static com.cognifide.aet.worker.drivers.WebDriverHelper.NAME;
 import static com.cognifide.aet.worker.drivers.WebDriverHelper.NAME_DESC;
 import static com.cognifide.aet.worker.drivers.WebDriverHelper.NAME_LABEL;
-import static com.cognifide.aet.worker.drivers.WebDriverHelper.PATH;
-import static com.cognifide.aet.worker.drivers.WebDriverHelper.PATH_DESC;
-import static com.cognifide.aet.worker.drivers.WebDriverHelper.PATH_LABEL;
 import static com.cognifide.aet.worker.drivers.WebDriverHelper.SELENIUM_GRID_URL;
 import static com.cognifide.aet.worker.drivers.WebDriverHelper.SELENIUM_GRID_URL_LABEL;
 import static com.cognifide.aet.worker.drivers.WebDriverHelper.getProp;
@@ -63,7 +60,6 @@ import org.osgi.framework.Constants;
 @Properties({@Property(name = Constants.SERVICE_VENDOR, value = "Cognifide Ltd")})
 public class ChromeWebDriverFactory implements WebDriverFactory {
 
-  private static final String DEFAULT_DRIVER_PATH = "/usr/bin/chromedriver";
   private static final String DEFAULT_BROWSER_NAME = "chrome";
 
   @Reference
@@ -75,11 +71,6 @@ public class ChromeWebDriverFactory implements WebDriverFactory {
       value = DEFAULT_BROWSER_NAME)
   private String name;
 
-  @Property(name = PATH,
-      label = PATH_LABEL,
-      description = PATH_DESC)
-  private String path;
-
   @Property(name = SELENIUM_GRID_URL,
       label = SELENIUM_GRID_URL_LABEL,
       description = "Url to selenium grid hub. When null local Chrome driver will be used. Local Chrome driver does not work on Linux",
@@ -89,7 +80,6 @@ public class ChromeWebDriverFactory implements WebDriverFactory {
   @Activate
   public void activate(Map<String, String> properties) {
     this.name = getProp(properties, NAME, DEFAULT_BROWSER_NAME);
-    this.path = getProp(properties, PATH, DEFAULT_DRIVER_PATH);
     this.seleniumGridUrl = getProp(properties, SELENIUM_GRID_URL, DEFAULT_SELENIUM_GRID_URL);
   }
 
@@ -135,7 +125,6 @@ public class ChromeWebDriverFactory implements WebDriverFactory {
   }
 
   private DesiredCapabilities setupCapabilities() {
-    System.setProperty("webdriver.chrome.driver", path);
     final DesiredCapabilities capabilities = DesiredCapabilities.chrome();
     capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
 

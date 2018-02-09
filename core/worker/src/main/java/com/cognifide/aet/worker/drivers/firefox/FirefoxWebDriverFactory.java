@@ -20,8 +20,8 @@ import static com.cognifide.aet.worker.drivers.WebDriverHelper.NAME;
 import static com.cognifide.aet.worker.drivers.WebDriverHelper.NAME_DESC;
 import static com.cognifide.aet.worker.drivers.WebDriverHelper.NAME_LABEL;
 import static com.cognifide.aet.worker.drivers.WebDriverHelper.PATH;
-import static com.cognifide.aet.worker.drivers.WebDriverHelper.PATH_LABEL;
 import static com.cognifide.aet.worker.drivers.WebDriverHelper.PATH_DESC;
+import static com.cognifide.aet.worker.drivers.WebDriverHelper.PATH_LABEL;
 import static com.cognifide.aet.worker.drivers.WebDriverHelper.SELENIUM_GRID_URL;
 import static com.cognifide.aet.worker.drivers.WebDriverHelper.SELENIUM_GRID_URL_LABEL;
 import static com.cognifide.aet.worker.drivers.WebDriverHelper.getProp;
@@ -32,7 +32,6 @@ import com.cognifide.aet.job.api.collector.ProxyServerWrapper;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.worker.api.WebDriverFactory;
 import com.cognifide.aet.worker.exceptions.WorkerException;
-import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.Map;
@@ -54,16 +53,16 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.osgi.framework.Constants;
 
 @Service
-@Component(
-    description = "AET Firefox WebDriver Factory",
-    label = "AET Firefox WebDriver Factory",
-    metatype = true)
+@Component(immediate = false, description = "AET Firefox WebDriver Factory", label = "AET Firefox WebDriver Factory", metatype = true)
 @Properties({@Property(name = Constants.SERVICE_VENDOR, value = "Cognifide Ltd")})
 public class FirefoxWebDriverFactory implements WebDriverFactory {
 
   private static final String DEFAULT_FIREFOX_BINARY_PATH = "/usr/bin/firefox";
+
   private static final String DEFAULT_FIREFOX_ERROR_LOG_FILE_PATH = "/opt/aet/firefox/log/stderr.log";
+
   private static final String LOG_FILE_PATH = "logFilePath";
+
   private static final String DEFAULT_FF_NAME = "ff";
 
   @Reference
@@ -162,7 +161,7 @@ public class FirefoxWebDriverFactory implements WebDriverFactory {
   private void setCommonCapabilities(DesiredCapabilities capabilities, FirefoxProfile fp) {
     capabilities.setCapability(FirefoxDriver.PROFILE, fp);
     capabilities.setCapability("marionette", false);
-    capabilities.setCapability("firefox_binary", new File(path).getAbsolutePath());
+    capabilities.setCapability("firefox_binary", path);
   }
 
   private WebDriver getFirefoxDriver(DesiredCapabilities capabilities)
