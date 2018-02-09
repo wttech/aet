@@ -23,6 +23,7 @@ Windows Setup.
 3. Install JDK 8 and set JAVA_HOME variable: C:\Program Files\Java\jdkYouVersion.
 4. Create dir under C:\ for karaf files. Preferably C:\aet\.
 5. Unpack [Apache Karaf 4.1.4](https://archive.apache.org/dist/karaf/4.1.4/apache-karaf-4.1.4.zip) to *C:\aet\karaf\current*.
+6. Update JAVA memory settings in *C:\aet\karaf\current\bin\setenv.bat* file.
 7. Unpack “configs.zip” to  *C:\aet\karaf\aet_configs\current*.
 8. Unpack “features.zip” to *C:\aet\karaf\aet_features\current*.
 9. Unpack “bundles.zip” to  *C:\aet\karaf\aet_bundles\current*.
