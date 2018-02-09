@@ -40,9 +40,9 @@ There are more services that require configuration which are not present on the 
 | Consumer queue name | Fixed value `AET.comparatorJobs` |
 | Producer queue name | Fixed value `AET.comparatorResults` |
 
-##### Firefox Web Driver Factory configuration
+##### Web Driver Factories configuration
 
-The service is **Firefox Web Driver Factory**. Below are listed it's properties with required values.
+The service are **Firefox Web Driver Factory** and **Chrome Web Driver Factory**. Below are listed it's properties with required values.
 
 ###### Firefox Web Driver Factory
 
@@ -53,14 +53,9 @@ The service is **Firefox Web Driver Factory**. Below are listed it's properties 
 | Log file path | Path to Firefox log file |
 | Selenium Grid URL | Url to Selenium Grid Hub. If blank, tests are handled in a legacy way - without Selenium Grid hub. |
 
-##### Chrome Web Driver Factory configuration
-
-The service is **Chrome Web Driver Factory**. Below are listed it's properties with required values.
-
 ###### Chrome Web Driver Factory
 
 | Property name | Value |
 | ------------- | ----- |
 | Name | Fixed value `chrome` |
-| Path | Path to Chrome binary (does not work on CentOS 6.x) |
 | Selenium Grid URL | Url to Selenium Grid Hub. If blank, tests are handled in a legacy way - without Selenium Grid hub. |
