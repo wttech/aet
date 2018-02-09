@@ -32,6 +32,19 @@
     left: 0;
   }
 
+  &-resizer {
+    @include transition(left 0.1s, width 0.1s);
+    display: block;
+    height: 100%;
+    width: 1.5rem;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 100;
+    cursor: col-resize;
+    background-color: $aside_background;
+  }
+
   .logo-holder {
     width: 100%;
     padding-top: 10px;
@@ -240,23 +253,6 @@
       }
     }
   }
-
-  &-resizer {
-    @include transition(left 0.1s, width 0.1s);
-    display: block;
-    height: 100%;
-    width: 1.5rem;
-    position: absolute;
-    top: 0;
-    right: 0;
-    z-index: 100;
-    cursor: col-resize;
-    background-color: $aside_background;
-
-    .menu-expanded & {
-      right: 0;
-    }
-  }
 }
 
 .aside-report-summary {
@@ -321,8 +317,4 @@
   &:before {
     color: $white !important;
   }
-}
-
-.sidepanel {
-
 }

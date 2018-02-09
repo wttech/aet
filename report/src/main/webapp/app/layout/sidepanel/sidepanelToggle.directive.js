@@ -22,6 +22,8 @@ define(['angularAMD'], function (angularAMD) {
       ['$rootScope', 'localStorageService', ToggleSidepanelDirective]);
 
   function ToggleSidepanelDirective($rootScope, localStorageService) {
+    var $content = $('.main');
+    var $sidepanel = $('.aside');
     var EXPANDED_SIDEBAR_KEY_NAME = 'aet:expandedSidepanel',
         directive;
 
@@ -57,10 +59,18 @@ define(['angularAMD'], function (angularAMD) {
     }
 
     function expand() {
+      $content.css('left', $sidepanel.outerWidth());
+      $content.css('width', $('body').width() - $sidepanel.outerWidth());
+      $sidepanel.css('left', 0);
+
       localStorageService.put(EXPANDED_SIDEBAR_KEY_NAME, true);
     }
 
     function close() {
+      $content.css('left', 0);
+      $content.css('width', $('body').width());
+      $sidepanel.css('left', -$sidepanel.outerWidth());
+
       localStorageService.put(EXPANDED_SIDEBAR_KEY_NAME, false);
     }
 
