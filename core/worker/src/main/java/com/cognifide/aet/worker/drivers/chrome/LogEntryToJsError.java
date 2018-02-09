@@ -15,11 +15,10 @@
  */
 package com.cognifide.aet.worker.drivers.chrome;
 
-import org.apache.commons.lang3.StringUtils;
-import org.openqa.selenium.logging.LogEntry;
-
 import com.cognifide.aet.job.api.collector.JsErrorLog;
 import com.google.common.base.Function;
+import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.logging.LogEntry;
 
 public class LogEntryToJsError implements Function<LogEntry, JsErrorLog> {
 

@@ -53,7 +53,10 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.osgi.framework.Constants;
 
 @Service
-@Component(immediate = false, description = "AET Firefox WebDriver Factory", label = "AET Firefox WebDriver Factory", metatype = true)
+@Component(
+    description = "AET Firefox WebDriver Factory",
+    label = "AET Firefox WebDriver Factory",
+    metatype = true)
 @Properties({@Property(name = Constants.SERVICE_VENDOR, value = "Cognifide Ltd")})
 public class FirefoxWebDriverFactory implements WebDriverFactory {
 

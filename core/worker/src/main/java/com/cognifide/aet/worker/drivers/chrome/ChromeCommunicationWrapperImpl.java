@@ -15,23 +15,21 @@
  */
 package com.cognifide.aet.worker.drivers.chrome;
 
+import com.cognifide.aet.job.api.collector.HttpRequestExecutor;
+import com.cognifide.aet.job.api.collector.JsErrorLog;
+import com.cognifide.aet.job.api.collector.ProxyServerWrapper;
+import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
+import com.google.common.collect.Ordering;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.logging.LogEntries;
 import org.openqa.selenium.logging.LogEntry;
 import org.openqa.selenium.logging.LogType;
-
-import com.cognifide.aet.job.api.collector.HttpRequestExecutor;
-import com.cognifide.aet.job.api.collector.JsErrorLog;
-import com.cognifide.aet.job.api.collector.ProxyServerWrapper;
-import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
-import com.google.common.collect.Ordering;
 
 public class ChromeCommunicationWrapperImpl implements WebCommunicationWrapper {
 
