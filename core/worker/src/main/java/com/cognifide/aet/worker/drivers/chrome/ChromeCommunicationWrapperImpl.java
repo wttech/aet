@@ -22,6 +22,7 @@ import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.google.common.collect.Ordering;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.function.Function;
 import java.util.function.Predicate;
 import java.util.logging.Level;
 import java.util.stream.Collectors;
@@ -33,7 +34,7 @@ import org.openqa.selenium.logging.LogType;
 
 public class ChromeCommunicationWrapperImpl implements WebCommunicationWrapper {
 
-  private static final LogEntryToJsError LOG_ENTRY_TO_JS_ERROR = new LogEntryToJsError();
+  private static final Function<LogEntry, JsErrorLog> LOG_ENTRY_TO_JS_ERROR = new LogEntryToJsError();
 
   private static final Predicate<LogEntry> ONLY_SEVERE_ERRORS = input -> Level.SEVERE
       .equals(input.getLevel());

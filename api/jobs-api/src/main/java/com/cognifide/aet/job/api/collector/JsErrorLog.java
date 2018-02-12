@@ -21,7 +21,7 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
 
 public class JsErrorLog implements Serializable, Comparable<JsErrorLog> {
 
-  private static final long serialVersionUID = -8438978831466054811L;
+  private static final long serialVersionUID = -8929508257448156720L;
 
   private final String errorMessage;
 
@@ -70,14 +70,5 @@ public class JsErrorLog implements Serializable, Comparable<JsErrorLog> {
   public int compareTo(JsErrorLog o) {
     return new CompareToBuilder().append(sourceName, o.sourceName).append(lineNumber, o.lineNumber)
         .append(errorMessage, o.errorMessage).toComparison();
-  }
-
-  @Override
-  public String toString() {
-    return "JsErrorLog{" +
-        "errorMessage='" + errorMessage + '\'' +
-        ", sourceName='" + sourceName + '\'' +
-        ", lineNumber=" + lineNumber +
-        '}';
   }
 }
