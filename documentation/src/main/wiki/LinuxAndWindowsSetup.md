@@ -17,7 +17,6 @@ Please note that full list of required tools and its versions can be found in [S
     * Configure site for the following path: `/opt/aet/apache/aet_reports/current`
     
 ##### Windows Setup
-Windows Setup.
 1. [Follow to link](https://github.com/Cognifide/aet/releases) and download all packages to your local instance.
 2. Turn off Windows Firewall (both, private and public network location settings).
 3. Install JDK 8 and set JAVA_HOME variable: C:\Program Files\Java\jdkYouVersion.
@@ -54,9 +53,22 @@ The content of these files should be `felix.fileinstall.dir=./../aet_configs/cur
          * Set “Report application domain”: `https://aet-example.cognifide.com/report` 
 18. Run example/test job.
 
+##### ChromeDriver Setup on Windows for Selenium Grid.
+1. Download [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/downloads) and save it (tested on version 2.35).
+2. Download [Selenium Standalone Server](http://www.seleniumhq.org/download/) and save it (tested on version 3.8.1).
+3. Run Register Chrome Driver on Selenium by executing:
+   ```
+   java -Dwebdriver.chrome.driver="<path to chromedriver exe>" -jar <path to selenium-server-standalone jar> -role node -hub http://<IP of Selenium Grid machine>:4444/grid/register -browser "browserName=chrome,maxInstances=20" -maxSession 20
+   ```
+4. Go to [Selenium Grid Console](http://<IP of Selenium Grid machine>:4444/grid/console) and check if Chrome WebDrivers are available
+5. Go to [Apache Karaf Web Console Configuration](http://localhost:8181/system/console/configMgr) and:
+   * check if **RestProxyManager** - *server* is set to Browsermob IP address (most likely `localhost`)
+   * check if **ChromeWebDriverFactory** - *seleniumGridUrl* is set to grid hub address (e.g. *http://<IP of Selenium Grid machine>:4444/wd/hub*) and *name* is set to *chrome* 
+   * check if all **CollectorMessageListenerImpl** - *name* is set to *chrome*
+6. Run example/test job.
 
 
-##### AET deployment
+#### AET deployment
 Here's a description where to deploy all the artifacts.
 
 | Artifact                       | Environment     | Default folder                         |
@@ -71,6 +83,6 @@ Here's a description where to deploy all the artifacts.
 | nssm-2.24.zip                  | Windows - Karaf | C:\aet\nssm-2.24                       |
 | report.zip                     | Linux - Apache  | /opt/aet/apache/aet_reports/current    |
 
-##### Optional Software
+#### Optional Software
 
 On Windows you can also install [Baretail](https://www.baremetalsoft.com/baretail/) and [Notepad++](https://notepad-plus-plus.org/download/) for viewing logs and configuration files.
