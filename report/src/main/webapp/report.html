@@ -27,7 +27,7 @@
   <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon">
 </head>
 
-<body aet-hide-popovers aet-keyboard-shortcuts ng-class="{'menu-expanded': sidebarExpanded }">
+<body aet-hide-popovers aet-keyboard-shortcuts aet-sidepanel ng-class="{ 'menu-expanded': $root.sidebarExpanded }">
 
 <div class="screen-cover js-loader-app" ng-if="metadataSaveInProgress"><h1>Saving data...</h1></div>
 <div class="screen-cover data-loading-error" ng-if="metadataLoadingStatus == 'FAILED'"><h1>Failed to

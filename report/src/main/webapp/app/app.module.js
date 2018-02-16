@@ -50,8 +50,7 @@ define(['angularAMD',
   'viewModeService',
 
   // sidepanel
-  'sidepanelToggleDirective',
-  'sidepanelResizerDirective',
+  'sidepanelDirective',
   'sidepanelStatusFilterDirective',
   'sidepanelSearchDirective',
   'sidepanelToggleLinkDirective',
