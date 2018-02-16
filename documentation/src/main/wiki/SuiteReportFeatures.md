@@ -39,6 +39,12 @@ It is possible to search tests and URLs by the query. Searched fields are the UR
 
 ![Search example](assets/suiteReport/search-example.png)
 
+#### Scrolling Side Panel to currently opened test/URL
+It is possible to find currently opened test/URL in Side Panel by using the crosshair buttons. 
+Moreover, every URL has information to which test group it belongs.
+
+![Find example](assets/suiteReport/find-in-sidepanel-example.png)
+
 #### Navigation via keyboard shortcuts
 * press **q** to expand/collapse all items
 * press **e** to expand/collapse all error items
