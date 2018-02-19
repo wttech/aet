@@ -95,8 +95,6 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
         } else {
           $active.next().find('a').click();
         }
-
-        $tabs.mCustomScrollbar('scrollTo', $tabs.find('.active'));
       }
 
       function toggleErrors() {
