@@ -31,29 +31,31 @@ define(['angularAMD'], function (angularAMD) {
 
     return {
       restrict: 'AE',
-      scope: {
-        'type': '@'
-      },
       link: linkFunc
     };
 
     function linkFunc($scope, $element) {
-      var storedExpanded = localStorageService.get(EXPANDED_SIDEBAR_KEY_NAME);
       var pageX = INIT_SIDEPANEL_WIDTH;
       var isSidepanelResized = false;
 
-      if (storedExpanded === null) {
+      $scope.sidebarExpanded = isExpanded();
+
+      if ($scope.sidebarExpanded === null) {
         expand();
       }
 
       $body = $element;
 
-      $rootScope.sidebarExpanded = isExpanded();
-
       $rootScope.$on('$stateChangeSuccess', function() {
         $content = $element.find('.main');
         $sidepanel = $element.find('.aside');
         $toggleIcon = $element.find('.toolbar-toggle i');
+
+        $scope.$watch('sidebarExpanded', function(newValue, oldValue) {
+          if (newValue !== oldValue) {
+            toggleSidepanel();
+          }
+        });
       });
 
       $element.on('mousedown', '.aside-resizer', function (e) {
@@ -75,16 +77,8 @@ define(['angularAMD'], function (angularAMD) {
       });
 
       $element.on('click', '.toolbar-toggle', function () {
-        $element.toggleClass('menu-expanded');
-        toggleSidepanel();
-
-        if (isExpanded()) {
-          $toggleIcon.removeClass('glyphicon-chevron-right').addClass(
-              'glyphicon-chevron-left');
-        } else {
-          $toggleIcon.removeClass('glyphicon-chevron-left').addClass(
-              'glyphicon-chevron-right');
-        }
+        $scope.sidebarExpanded = !$scope.sidebarExpanded;
+        $scope.$apply();
       });
     }
 

@@ -94,12 +94,8 @@ define(['angularAMD',
       $rootScope.fullSourceVisible = userSettingsService.isFullSourceVisible();
     }]);
 
-  app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
-    '$compileProvider',
-    function ($stateProvider, $urlRouterProvider, $locationProvider,
-        $compileProvider) {
-      $compileProvider.debugInfoEnabled(false);
-
+  app.config(['$stateProvider', '$urlRouterProvider',
+    function ($stateProvider, $urlRouterProvider) {
       $stateProvider
       .state('root', angularAMD.route({
         views: {
