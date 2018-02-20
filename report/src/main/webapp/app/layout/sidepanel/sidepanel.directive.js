@@ -47,7 +47,6 @@ define(['angularAMD'], function (angularAMD) {
       }
 
       $body = $element;
-      console.log($rootScope);
 
       $rootScope.sidebarExpanded = isExpanded();
 
@@ -76,7 +75,7 @@ define(['angularAMD'], function (angularAMD) {
       });
 
       $element.on('click', '.toolbar-toggle', function () {
-        $element.toggleClass('menu-expanded'); // TODO - check ng-class?
+        $element.toggleClass('menu-expanded');
         toggleSidepanel();
 
         if (isExpanded()) {
