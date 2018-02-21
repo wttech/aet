@@ -71,7 +71,13 @@ public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
 
     return FluentIterable
         .from(filteredJsErrors)
-        .filter(input -> !shouldFilterOut(input))
+        .filter(
+            new Predicate<JsErrorLog>() {
+              @Override
+              public boolean apply(@Nullable JsErrorLog input) {
+                return !shouldFilterOut(input);
+              }
+            })
         .toSet();
   }
 
