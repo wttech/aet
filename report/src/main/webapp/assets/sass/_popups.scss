@@ -39,6 +39,18 @@
     }
   }
 
+  &-footer_flex {
+    & {
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    button + button {
+      margin-right: 0px;
+    }
+  }
+
   &-question {
     font-weight: bold;
   }
