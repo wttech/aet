@@ -51,7 +51,7 @@
       <span class="comments-status pull-left"
             data-toggle="popover"
             data-ng-class="toolbarBottom.model.comment ? 'present' : 'absent'"
-            data-content="{{toolbarBottom.model.comment && '<p>' + toolbarBottom.model.comment + '</p><br>'}}<span class='preformatted'>Click to update this {{toolbarBottom.viewMode}} note</span>"
+            data-content="{{toolbarBottom.model.comment && '<p>' + toolbarBottom.model.comment + '</p>' || !toolbarBottom.model.comment && '<span>Click to update this ' + toolbarBottom.viewMode + ' note</span>'}}"
             data-html="true" data-trigger="hover"
             data-ng-click="toolbarBottom.displayCommentModal()">
                 <div ng-if="toolbarBottom.model.comment">
