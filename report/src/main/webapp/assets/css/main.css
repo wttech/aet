@@ -3922,7 +3922,7 @@ input[type=text]::-webkit-input-placeholder { color: #85898e; }
 /* line 172, ../sass/_toolbar.scss */
 .comments-status.small { line-height: 37px; font-size: 11px; }
 /* line 177, ../sass/_toolbar.scss */
-.comments-status.present { color: #c08830; }
+.comments-status.present { color: #96d700; }
 /* line 181, ../sass/_toolbar.scss */
 .comments-status.absent { color: #3c4550; }
 
