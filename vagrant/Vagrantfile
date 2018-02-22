@@ -94,8 +94,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     }
     chef.run_list = [
       "recipe[aet::_develop]",
-      "recipe[aet::seleniumgrid_hub]",
-      "recipe[aet::seleniumgrid_node_ff]",
       "recipe[aet::karaf]",
       "recipe[aet::deploy_aet_for_karaf]",
       "recipe[aet::postdeploy_restart]",

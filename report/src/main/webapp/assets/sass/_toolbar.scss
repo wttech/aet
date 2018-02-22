@@ -99,47 +99,18 @@
     padding: 0 20px;
     background: $white;
 
-    h4, h5 {
+    h4 {
+      font-size: 24px;
       font-weight: normal;
       color: $gray_darker;
       padding-right: 20px;
-
-      .glyphicon-screenshot {
-        position: relative;
-        cursor: pointer;
-      }
-
+      line-height: 54px;
       a {
         color: $gray_darker;
 
         &:hover {
           color: darken($gray_darker, 10%);
         }
-      }
-    }
-
-    h4 {
-      font-size: 24px;
-      line-height: 54px;
-
-      .glyphicon-screenshot {
-        top: 4px;
-      }
-
-      &:not(:last-child) {
-        margin-bottom: 0;
-      }
-    }
-
-    h5 {
-      margin-top: 0;
-      margin-bottom: 26px;
-      padding-left: 4px;
-      font-size: 16px;
-      line-height: 18px;
-
-      .glyphicon-screenshot {
-        top: 3px;
       }
     }
   }
@@ -204,7 +175,7 @@
   }
 
   &.present {
-    color: $yellow;
+    color: $green_darker;
   }
 
   &.absent {
@@ -235,6 +206,6 @@
   display: inline-block;
 }
 
-.preformatted {
-  font-family: monospace;
+.popover-content > p {
+  margin-bottom: 0;
 }

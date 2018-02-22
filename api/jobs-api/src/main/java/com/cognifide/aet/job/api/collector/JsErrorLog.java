@@ -19,6 +19,9 @@ import java.io.Serializable;
 import java.util.Objects;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 
+/**
+ * @author lukasz.wieczorek
+ */
 public class JsErrorLog implements Serializable, Comparable<JsErrorLog> {
 
   private static final long serialVersionUID = -8929508257448156720L;

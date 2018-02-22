@@ -20,31 +20,15 @@
 <div class="toolbar-bottom">
   <div class="toolbar-link">
     <h4 class="toolbar-link-header ellipsis">
-        <i class="glyphicon glyphicon-screenshot"
-           data-toggle="popover"
-           data-content="Localize the currently opened url on side panel"
-           data-trigger="hover"
-           data-container="body"
-           data-ng-click="toolbarBottom.scrollSidepanel(false)"></i>
-        <span class="preformatted">{{toolbarBottom.viewMode}}:</span>
-        <span ng-if="toolbarBottom.viewMode != 'url'">{{toolbarBottom.model.name}}</span>
-        <a ng-if="toolbarBottom.viewMode == 'url'"
-            href="{{toolbarBottom.model.domain + toolbarBottom.model.url}}" target="_blank"
-            data-toggle="popover"
-            data-content="Click to open: {{toolbarBottom.model.domain + toolbarBottom.model.url}}"
-            data-trigger="hover"
-            data-container="body">{{toolbarBottom.model.name}}</a>
-    </h4>
-    <h5 ng-if="toolbarBottom.viewMode == 'url'">
-      <i class="glyphicon glyphicon-screenshot"
+      <span class="preformatted">{{toolbarBottom.viewMode}}:</span>
+      <span ng-if="toolbarBottom.viewMode != 'url'">{{toolbarBottom.model.name}}</span>
+      <a ng-if="toolbarBottom.viewMode == 'url'"
+         href="{{toolbarBottom.model.domain + toolbarBottom.model.url}}" target="_blank"
          data-toggle="popover"
-         data-content="Localize the test group of the currently opened url on side panel"
+         data-content="Click to open: {{toolbarBottom.model.domain + toolbarBottom.model.url}}"
          data-trigger="hover"
-         data-container="body"
-         data-ng-click="toolbarBottom.scrollSidepanel(true)"></i>
-        </i>
-    <span class="preformatted">test:</span><span>{{toolbarBottom.model.testGroupName}}</span>
-    </h5>
+         data-container="body">{{toolbarBottom.model.name}}</a>
+    </h4>
   </div>
   <div class="toolbar-blocks">
     <div class="toolbar-btns is-absolute">
@@ -67,10 +51,15 @@
       <span class="comments-status pull-left"
             data-toggle="popover"
             data-ng-class="toolbarBottom.model.comment ? 'present' : 'absent'"
-            data-content="<p>{{toolbarBottom.model.comment}}</p><br><span class='preformatted'>Click to update this {{toolbarBottom.viewMode}} note</span>"
+            data-content="{{toolbarBottom.model.comment && '<p>' + toolbarBottom.model.comment + '</p>' || !toolbarBottom.model.comment && '<span>Click to update this ' + toolbarBottom.viewMode + ' note</span>'}}"
             data-html="true" data-trigger="hover"
             data-ng-click="toolbarBottom.displayCommentModal()">
-                <i class="glyphicon glyphicon-comment"></i>
+                <div ng-if="toolbarBottom.model.comment">
+                    <i class="fas fa-ellipsis-h" data-fa-transform="shrink-10 up-.5" data-fa-mask="fas fa-comment"></i>
+                </div>
+                <div ng-if="!toolbarBottom.model.comment">
+                    <i class="fas fa-pencil-alt" data-fa-transform="shrink-10 up-.5" data-fa-mask="fas fa-comment"></i>
+                </div>
             </span>
 
       <span class="button button-dark button-disabled"
