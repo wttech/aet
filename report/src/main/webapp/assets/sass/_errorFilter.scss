@@ -1,0 +1,28 @@
+.filterInfo{
+  padding: 5px 0;
+
+  &-column {
+    text-align: center;
+  }
+
+  &-title {
+    display: inline-block;
+    font-weight: 700;
+    padding: 0 0 5px;
+    text-decoration: underline;
+  }
+
+  &-parameter {
+    vertical-align: top;
+  }
+
+  &-key {
+    min-width: 85px;
+    text-transform: capitalize;
+    padding: 0 8px 2px 0;
+  }
+
+  &-value {
+    color: $gray_darker;
+  }
+}

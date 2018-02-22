@@ -27,6 +27,7 @@
 @import "popups";
 @import "test";
 @import "report";
+@import "errorFilter";
 
 html,
 body {
@@ -191,5 +192,13 @@ body {
 	.name {
 		font-family: $font_bold;
 		font-size: 18px;
+	}
+}
+
+.popover {
+	max-width: none;
+
+	&-title {
+		font-weight: 700;
 	}
 }

@@ -59,6 +59,7 @@ define(['angularAMD',
   // main
   'includedCommentPopoverDirective',
   'expandablePanelDirective',
+  'activeFilterInformationPopoverDirective',
   // modals
   'noteModalController',
   'unsavedChangesModalController'], function (angularAMD, _) {

@@ -30,53 +30,43 @@
       No issues found
   </span>
   <div ng-if="case.result && case.result != ''">
-    <table class="table table-striped table-hover">
+    <h4>JavaScript Errors information:</h4>
+    <table class="table">
       <thead>
       <tr>
         <th>No.</th>
         <th>Error</th>
         <th>Source</th>
         <th>Line number</th>
+        <th>Active filter information</th>
       </tr>
       </thead>
       <tbody>
-      <tr ng-repeat="item in case.result track by $index">
+      <tr ng-repeat="item in case.result track by $index"
+          ng-class="{ 'success': item.ignored, 'error': !item.ignored }">
         <td>{{$index+1}}</td>
         <td>{{item.errorMessage}}</td>
         <td>
           <a href="{{item.sourceName}}">{{item.sourceName}}</a>
         </td>
         <td>{{item.lineNumber}}</td>
+        <td class="filterInfo-column">
+          <div class="glyphicon glyphicon-info-sign"
+             uib-popover-template="'app/layout/main/url/reports/activeFilterInformationPopover.html'"
+             data-popover-placement="left"
+             data-popover-trigger="mouseenter"
+             data-popover-title="Active filter information"
+             ng-if="item.ignored"
+             data-filter-information-popover>
+          </div>
+        </td>
       </tr>
       </tbody>
     </table>
   </div>
 
-  <div ng-if="case.comparator.filters && case.comparator.filters.length > 0">
-    <br>
-    <span>
-        JS Errors filters applied:
-    </span>
-    <table class="table table-striped table-hover">
-      <thead>
-      <tr>
-        <th>No.</th>
-        <th>Source</th>
-        <th>Error</th>
-        <th>Line number</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr ng-repeat="filter in case.comparator.filters">
-        <td>{{$index+1}}</td>
-        <td>{{filter.parameters.source}}</td>
-        <td ng-if="filter.parameters.error">{{filter.parameters.error}}</td>
-        <td ng-if="!filter.parameters.error">-</td>
-
-        <td ng-if="filter.parameters.line">{{filter.parameters.line}}</td>
-        <td ng-if="!filter.parameters.line">-</td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
+  <span ng-if="case.comparator.filters && case.comparator.filters.length > 0">
+        JS Errors filters applied: {{case.comparator.filters.length}}
+        Active JS Errors: x [???]
+  </span>
 </div>

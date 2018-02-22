@@ -3860,13 +3860,13 @@ table { border-collapse: collapse; border-spacing: 0; }
 /* line 155, ../sass/_typography.scss */
 .name { font-style: italic; }
 
-/* line 61, ../../../../../../../../../../soft/programming/compilers-interpreters/Ruby233/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+/* line 61, C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]:-moz-placeholder { color: #85898e; }
-/* line 64, ../../../../../../../../../../soft/programming/compilers-interpreters/Ruby233/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+/* line 64, C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]::-moz-placeholder { color: #85898e; }
-/* line 67, ../../../../../../../../../../soft/programming/compilers-interpreters/Ruby233/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+/* line 67, C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]:-ms-input-placeholder { color: #85898e; }
-/* line 56, ../../../../../../../../../../soft/programming/compilers-interpreters/Ruby233/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+/* line 56, C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]::-webkit-input-placeholder { color: #85898e; }
 
 /* AET  Copyright (C) 2013 Cognifide Limited  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */
@@ -4364,80 +4364,98 @@ ul li.warning a.nav-link, ul li.warning a.nav-link:focus, ul li.warning a.nav-li
 /* line 324, ../sass/_report.scss */
 .passed .cookie-test { font-weight: bold; display: inline !important; color: #6f9f00 !important; }
 
-/* line 31, ../sass/main.scss */
+/* line 1, ../sass/_errorFilter.scss */
+.filterInfo { padding: 5px 0; }
+/* line 4, ../sass/_errorFilter.scss */
+.filterInfo-column { text-align: center; }
+/* line 8, ../sass/_errorFilter.scss */
+.filterInfo-title { display: inline-block; font-weight: 700; padding: 0 0 5px; text-decoration: underline; }
+/* line 15, ../sass/_errorFilter.scss */
+.filterInfo-parameter { vertical-align: top; }
+/* line 19, ../sass/_errorFilter.scss */
+.filterInfo-key { min-width: 85px; text-transform: capitalize; padding: 0 8px 2px 0; }
+/* line 25, ../sass/_errorFilter.scss */
+.filterInfo-value { color: #85898e; }
+
+/* line 32, ../sass/main.scss */
 html, body { height: 100%; }
 
-/* line 36, ../sass/main.scss */
+/* line 37, ../sass/main.scss */
 body { overflow-y: scroll; overflow-x: hidden; }
-/* line 39, ../sass/main.scss */
+/* line 40, ../sass/main.scss */
 body.modal-open { overflow-y: scroll; padding-right: 0 !important; }
 
-/* line 45, ../sass/main.scss */
+/* line 46, ../sass/main.scss */
 * { box-sizing: border-box; box-shadow: none !important; }
-/* line 49, ../sass/main.scss */
+/* line 50, ../sass/main.scss */
 *:hover, *:focus, *:active { outline: none; box-shadow: none; }
 
-/* line 55, ../sass/main.scss */
+/* line 56, ../sass/main.scss */
 a { -webkit-transition: color 0.3s; -o-transition: color 0.3s; transition: color 0.3s; }
-/* line 58, ../sass/main.scss */
+/* line 59, ../sass/main.scss */
 a:hover, a:focus, a:active { text-decoration: none; }
 
-/* line 63, ../sass/main.scss */
+/* line 64, ../sass/main.scss */
 body { color: #333333; font-family: "montserratregular", sans-serif; }
 
-/* line 68, ../sass/main.scss */
+/* line 69, ../sass/main.scss */
 .main { -webkit-transition: left 0.3s, width 0.3s; -o-transition: left 0.3s, width 0.3s; transition: left 0.3s, width 0.3s; position: relative; width: 100%; left: 0; }
-/* line 74, ../sass/main.scss */
+/* line 75, ../sass/main.scss */
 .menu-expanded .main { left: 350px; width: calc(100% - 350px); }
 
-/* line 80, ../sass/main.scss */
+/* line 81, ../sass/main.scss */
 .page-main { z-index: 1; width: 100%; float: left; padding: 0 25px; }
 
-/* line 87, ../sass/main.scss */
+/* line 88, ../sass/main.scss */
 .is-hidden { display: none !important; }
 
-/* line 91, ../sass/main.scss */
+/* line 92, ../sass/main.scss */
 .is-disabled { pointer-events: none; opacity: 0.5; cursor: not-allowed !important; }
 
-/* line 97, ../sass/main.scss */
+/* line 98, ../sass/main.scss */
 .screen-cover { background-repeat: no-repeat; background-position: center center; position: absolute; left: 0; width: 100%; opacity: 1; height: 100vh; }
-/* line 106, ../sass/main.scss */
+/* line 107, ../sass/main.scss */
 .screen-cover.js-loader-app { top: 0; height: 100%; z-index: 999; background-color: #2c333b; background-image: url(../img/tail-spin-light.svg); }
-/* line 114, ../sass/main.scss */
+/* line 115, ../sass/main.scss */
 .screen-cover.data-loading-error { top: 0; height: 100%; z-index: 999; background-color: #000000; }
-/* line 122, ../sass/main.scss */
+/* line 123, ../sass/main.scss */
 .menu-expanded .screen-cover.js-loader-content { width: calc(100vw - 365px); }
-/* line 127, ../sass/main.scss */
+/* line 128, ../sass/main.scss */
 .screen-cover h1 { color: #ffffff; text-align: center; }
-/* line 132, ../sass/main.scss */
+/* line 133, ../sass/main.scss */
 .screen-cover p { color: #ffffff; text-align: center; }
 
-/* line 139, ../sass/main.scss */
+/* line 140, ../sass/main.scss */
 .status { font-weight: bold; display: inline !important; }
-/* line 142, ../sass/main.scss */
+/* line 143, ../sass/main.scss */
 .status.failed { color: #bb5a5a !important; }
-/* line 146, ../sass/main.scss */
+/* line 147, ../sass/main.scss */
 .status.warning { color: #f0ad4e !important; }
-/* line 150, ../sass/main.scss */
+/* line 151, ../sass/main.scss */
 .status.rebased { color: #0097fe !important; }
-/* line 154, ../sass/main.scss */
+/* line 155, ../sass/main.scss */
 .status.passed { color: #6f9f00 !important; }
 
-/* line 159, ../sass/main.scss */
+/* line 160, ../sass/main.scss */
 .url-tile { text-align: center; word-break: break-all; }
-/* line 163, ../sass/main.scss */
+/* line 164, ../sass/main.scss */
 .url-tile.passed { color: #6f9f00; }
-/* line 167, ../sass/main.scss */
+/* line 168, ../sass/main.scss */
 .url-tile.rebased { color: #0097fe; }
-/* line 169, ../sass/main.scss */
+/* line 170, ../sass/main.scss */
 .url-tile.rebased span, .url-tile.rebased i { color: #ffffff; }
-/* line 174, ../sass/main.scss */
+/* line 175, ../sass/main.scss */
 .url-tile.warning { color: #f0ad4e; }
-/* line 178, ../sass/main.scss */
+/* line 179, ../sass/main.scss */
 .url-tile.failed { color: #bb5a5a; }
-/* line 182, ../sass/main.scss */
+/* line 183, ../sass/main.scss */
 .url-tile .glyphicon { font-size: 60px; line-height: 60px; }
-/* line 187, ../sass/main.scss */
+/* line 188, ../sass/main.scss */
 .url-tile .statistics { color: #77777c !important; }
-/* line 191, ../sass/main.scss */
+/* line 192, ../sass/main.scss */
 .url-tile .name { font-family: "montserratbold", sans-serif; font-size: 18px; }
+
+/* line 198, ../sass/main.scss */
+.popover { max-width: none; }
+/* line 201, ../sass/main.scss */
+.popover-title { font-weight: 700; }

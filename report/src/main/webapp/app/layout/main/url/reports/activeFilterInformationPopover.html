@@ -1,0 +1,15 @@
+<div>
+  <div class="filterInfo"
+       ng-repeat="filter in item.filters track by $index">
+    <div class="filterInfo-title">Filter {{$index+1}}:</div>
+    <table>
+      <tbody>
+        <tr class="filterInfo-parameter"
+            ng-repeat="(key, value) in filter.parameters">
+          <td class="filterInfo-key">{{key}}: </td>
+          <td class="filterInfo-value">{{value}}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
