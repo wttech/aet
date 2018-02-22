@@ -123,7 +123,8 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
           testUrlSelector) {
         var currentTest,
             currentLocation = window.location.hash,
-            $nextElement;
+            $nextElement,
+            $firstElementInTest;
 
         if (!(ifRootPage(currentLocation, '/url/') || ifRootPage(
                 currentLocation, '/test/') || ifRootPage(currentLocation,
@@ -145,22 +146,23 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
               toggleNextTest(suiteContainer);
               $nextElement = suiteContainer.nextAll(
                   '.aside-report:not(.is-hidden)').first();
-              scrollTo($nextElement);
               $nextElement.addClass('is-expanded');
               $nextElement.children().first().addClass('is-active');
+              scrollTo($nextElement.find('.is-active'));
             }
 
           } else {
-            scrollTo(nextUrl);
             nextUrl.click();
+            scrollTo(nextUrl);
             $(testUrlSelector).not(nextUrl).removeClass('is-active');
           }
         } else {
-          currentTest = findCurrentTest(currentLocation.split('/').pop());
-          currentTest.addClass('is-expanded');
-          scrollTo(currentTest);
-          currentTest.find('.url-name:not(.is-hidden)').find(
-              testUrlSelector).first().click();
+            currentTest = findCurrentTest(currentLocation.split('/').pop());
+            $firstElementInTest = currentTest.find('.url-name:not(.is-hidden)').find(
+                testUrlSelector).first();
+            currentTest.addClass('is-expanded');
+            $firstElementInTest.click();
+            scrollTo($firstElementInTest);
         }
       }
 
