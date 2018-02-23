@@ -51,13 +51,9 @@
         </td>
         <td>{{item.lineNumber}}</td>
         <td class="filterInfo-column">
-          <div class="glyphicon glyphicon-info-sign"
-             uib-popover-template="'app/layout/main/url/reports/activeFilterInformationPopover.html'"
-             data-popover-placement="left"
-             data-popover-trigger="mouseenter"
-             data-popover-title="Active filter information"
-             ng-if="item.ignored"
-             data-filter-information-popover>
+          <div
+             data-item="item"
+             data-aet-filter-information>
           </div>
         </td>
       </tr>

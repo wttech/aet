@@ -17,16 +17,20 @@
  */
 define(['angularAMD'], function (angularAMD) {
   'use strict';
-  angularAMD.directive('aetFilterInformationPopover', FilterInformationPopover);
+  angularAMD.directive('aetFilterInformation', FilterInformation);
 
-  function FilterInformationPopover() {
+  function FilterInformation() {
     return {
       restrict: 'AE',
+      scope: {
+        item: '='
+      },
+      templateUrl: 'app/layout/main/url/activeFilterInfo/activeFilterInfo.icon.html',
       link: linkFunc
     };
 
     function linkFunc($scope) {
-      $scope.templateUrl = 'app/layout/main/url/reports/activeFilterInformationPopover.html';
+      $scope.popoverContentTemplate = 'app/layout/main/url/activeFilterInfo/activeFilterInfo.content.html';
     }
   }
 });
