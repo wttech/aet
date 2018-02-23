@@ -11,6 +11,7 @@ All notable changes to AET will be documented in this file.
 **List of changes that are finished but not yet released in any final version.**
 
 - [PR-218](https://github.com/Cognifide/aet/pull/218) Improved notes (new icons, buttons order)
+- [PR-221](https://github.com/Cognifide/aet/pull/221) Added crosshair buttons for scrolling Side Panel to currently opened url/test.
 - [PR-209](https://github.com/Cognifide/aet/pull/209) Selenium upgraded to 3.8.1. Guava upgraded to 23.6-jre
 
 ## Version 2.1.4

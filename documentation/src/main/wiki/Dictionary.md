@@ -33,6 +33,12 @@ a snapshot of the page, stored in a file, against which future versions will be 
 *Browsermob*  
 a proxy server used by AET to collect some kinds of data from tested pages.
 
+*Chrome*  
+a browser the AET tool makes use of, tested version is 64.0.3282.140.
+
+*ChromeDriver*  
+a browser driver the AET tool uses to connect with *Chrome*, tested version is ChromeDriver 2.35.
+
 *Cleaner*  
 a module responsible for removing old and unused artifacts from the database.
 
@@ -71,6 +77,9 @@ a part of the AET system which covers a full testing case e.g. layout - this fea
 
 *Firefox*  
 a browser the AET tool makes use of, currently the version that is used is 38.6.0 ESR (en-US).
+
+*FirefoxDriver*  
+a browser driver the AET tool uses to connect with *Firefox*.
 
 *Header Modifier*  
 a modifier responsible for adding additional headers to a page.
@@ -197,6 +206,15 @@ a collector responsible for collecting a screenshot of the page under a given UR
 
 *Selenium*  
 a portable software testing framework for web applications. At the moment AET makes use of Selenium 3.8.1.
+
+*Selenium Grid*  
+a test tool that allows to run tests on different machines against different browsers. At the moment AET makes use of Selenium Grid 3.8.1.
+
+*Selenium Grid hub*  
+point that receives all test requests and distribute them the the right nodes.
+
+*Selenium Grid nodes*  
+endpoints registered to a hub configured to run tests on specific platform and browser.  
 
 *Selenium Driver*  
 a test tool that allows to perform specific actions in a browser environment (e.g. take a screenshot of a page).
