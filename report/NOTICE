@@ -24,7 +24,6 @@ This project includes:
   JQuery under https://jquery.org/license/, version 2.2.3 from https://github.com/jquery/jquery
   jQuery Mousewheel under MIT, version 3.1.13 from https://github.com/jquery/jquery-mousewheel
   lodash under MIT, version 4.11.2 from https://lodash.com/
-  malihu jquery custom scrollbar plugin under MIT, version 3.1.3 from http://manos.malihu.gr/jquery-custom-content-scroller/
   normalize.css under MIT, version 2.1.3 from https://github.com/necolas/normalize.css
   RequireJS under MIT, version 2.1.22 from http://requirejs.org/docs/download.html
   requirejs/text under MIT, version 2.0.15, from https://github.com/requirejs/text
