@@ -27,7 +27,6 @@ define(['angularAMD'], function (angularAMD) {
     var $sidepanel;
     var $content;
     var $toggleIcon;
-    var $body;
 
     return {
       restrict: 'AE',
@@ -35,21 +34,19 @@ define(['angularAMD'], function (angularAMD) {
     };
 
     function linkFunc($scope, $element) {
-      var pageX = INIT_SIDEPANEL_WIDTH;
+      var newWidth = INIT_SIDEPANEL_WIDTH;
       var isSidepanelResized = false;
-
-      $scope.sidebarExpanded = isExpanded();
-
-      if ($scope.sidebarExpanded === null) {
-        expand();
-      }
-
-      $body = $element;
 
       $rootScope.$on('$stateChangeSuccess', function() {
         $content = $element.find('.main');
         $sidepanel = $element.find('.aside');
         $toggleIcon = $element.find('.toolbar-toggle i');
+
+        if (!$scope.sidebarExpanded) {
+          expand();
+        }
+
+        $scope.sidebarExpanded = isExpanded();
 
         $scope.$watch('sidebarExpanded', function(newValue, oldValue) {
           if (newValue !== oldValue) {
@@ -66,8 +63,8 @@ define(['angularAMD'], function (angularAMD) {
 
       $element.on('mousemove', function (e) {
         if (isSidepanelResized) {
-          pageX = limitResize(e.pageX);
-          updateWidth(pageX);
+          newWidth = limitSidepanelSize(e.pageX);
+          updateWidth(newWidth);
           e.preventDefault();
         }
       });
@@ -94,32 +91,38 @@ define(['angularAMD'], function (angularAMD) {
       }
     }
 
+    function onWindowResize() {
+      updateWidth(limitSidepanelSize($sidepanel.outerWidth()));
+    }
+
     function expand() {
       $content.css('left', $sidepanel.outerWidth());
-      $content.css('width', $body.width() - $sidepanel.outerWidth());
+      $content.css('width', document.body.clientWidth - $sidepanel.outerWidth());
       $sidepanel.css('left', 0);
 
+      $(window).on('resize', onWindowResize);
       localStorageService.put(EXPANDED_SIDEBAR_KEY_NAME, true);
     }
 
     function close() {
       $content.css('left', 0);
-      $content.css('width', $body.width());
+      $content.css('width', '100%');
       $sidepanel.css('left', -$sidepanel.outerWidth());
 
+      $(window).off('resize', onWindowResize);
       localStorageService.put(EXPANDED_SIDEBAR_KEY_NAME, false);
     }
 
     function updateWidth(newWidth) {
-      var newContentWidth = $body.width() - newWidth;
+      var newContentWidth = document.body.clientWidth - newWidth;
 
       $content.css('left', newWidth);
       $content.css('width', newContentWidth);
       $sidepanel.css('width', newWidth);
     }
 
-    function limitResize(xPos) {
-      return Math.min(Math.max(INIT_SIDEPANEL_WIDTH, xPos), $body.width()/2);
+    function limitSidepanelSize(xPos) {
+      return Math.min(Math.max(INIT_SIDEPANEL_WIDTH, xPos), document.body.clientWidth/2);
     }
   }
 });
