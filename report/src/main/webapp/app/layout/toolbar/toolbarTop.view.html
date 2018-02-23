@@ -21,7 +21,7 @@
 <div class="toolbar-top">
   <div class="toolbar-toggle">
     <i class="glyphicon"
-       data-ng-class="{ 'glyphicon-chevron-left' : sidebarExpanded, 'glyphicon-chevron-right' : !sidebarExpanded }"></i>
+       data-ng-class="sidebarExpanded ? 'glyphicon-chevron-left' : 'glyphicon-chevron-right'"></i>
   </div>
   <div class="toolbar-blocks">
     <div class="toolbar-block" ng-class="{'hidden': toolbarTop.pattern}">
