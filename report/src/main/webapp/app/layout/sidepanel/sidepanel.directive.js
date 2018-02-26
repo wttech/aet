@@ -39,22 +39,18 @@ define(['angularAMD'], function (angularAMD) {
       var newWidth = INIT_SIDEPANEL_WIDTH;
       var isSidepanelResized = false;
 
+      $scope.sidebarExpanded = true;
+
       $rootScope.$on('$stateChangeSuccess', function() {
         $content = $element.find('.main');
         $sidepanel = $element.find('.aside');
         $toggleIcon = $element.find('.toolbar-toggle i');
+      });
 
-        if (!$scope.sidebarExpanded) {
-          expand();
+      $scope.$watch('sidebarExpanded', function(newValue, oldValue) {
+        if (newValue !== oldValue) {
+          toggleSidepanel();
         }
-
-        $scope.sidebarExpanded = isExpanded();
-
-        $scope.$watch('sidebarExpanded', function(newValue, oldValue) {
-          if (newValue !== oldValue) {
-            toggleSidepanel();
-          }
-        });
       });
 
       $element.on('mousedown', '.aside-resizer', function (e) {
