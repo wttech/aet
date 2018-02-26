@@ -104,7 +104,7 @@ define(['angularAMD'], function (angularAMD) {
       $content.css('width', document.body.clientWidth - $sidepanel.outerWidth());
       $sidepanel.css('left', 0);
 
-      $(window).on('resize', onWindowResizeThrottled);
+      $(window).on('resize', onWindowResizeThrottled());
       localStorageService.put(EXPANDED_SIDEBAR_KEY_NAME, true);
     }
 
@@ -113,7 +113,7 @@ define(['angularAMD'], function (angularAMD) {
       $content.css('width', '');
       $sidepanel.css('left', -$sidepanel.outerWidth());
 
-      $(window).off('resize', onWindowResizeThrottled);
+      $(window).off('resize', onWindowResizeThrottled());
       localStorageService.put(EXPANDED_SIDEBAR_KEY_NAME, false);
     }
 
