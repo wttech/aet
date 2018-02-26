@@ -3966,7 +3966,7 @@ input[type=text]::-webkit-input-placeholder { color: #85898e; }
 /* line 58, ../sass/_sidebar.scss */
 .aside-report { line-height: 47px; max-height: 47px; overflow: hidden; position: relative; }
 /* line 64, ../sass/_sidebar.scss */
-.aside-report.is-expanded { max-height: calc(100vh - 250px); overflow-y: auto; }
+.aside-report.is-expanded { max-height: initial; overflow-y: auto; }
 /* line 68, ../sass/_sidebar.scss */
 .aside-report.is-expanded ul { display: block; overflow: hidden; }
 /* line 74, ../sass/_sidebar.scss */
@@ -4166,111 +4166,105 @@ input[type=text]::-webkit-input-placeholder { color: #85898e; }
 
 /* line 108, ../sass/_test.scss */
 .tabs { -webkit-transition: left, 0.3s; -o-transition: left, 0.3s; transition: left, 0.3s; display: table; background: #ffffff; position: fixed; left: 20px; top: 124px; width: 100%; z-index: 5; }
-/* line 118, ../sass/_test.scss */
-.tabs .mCustomScrollBox { height: 61px; }
-/* line 122, ../sass/_test.scss */
-.tabs .mCSB_scrollTools.mCSB_scrollTools_horizontal { bottom: -3px; }
-/* line 125, ../sass/_test.scss */
-.tabs .mCSB_scrollTools.mCSB_scrollTools_horizontal .mCSB_dragger { width: 100px; }
 
-/* line 134, ../sass/_test.scss */
+/* line 121, ../sass/_test.scss */
 .menu-expanded .nav-tabs-wrapper { width: calc(100vw - 400px); max-width: none; padding-right: 100px; }
 
-/* line 141, ../sass/_test.scss */
+/* line 128, ../sass/_test.scss */
 .nav-tabs-wrapper { max-width: calc(100% - 100px); padding-right: 30px; overflow: auto; position: relative; }
 
-/* line 148, ../sass/_test.scss */
+/* line 135, ../sass/_test.scss */
 .navbar-controls { position: absolute; right: 20px; top: -9px; }
 
 /* Layout comparison
 */
-/* line 158, ../sass/_test.scss */
+/* line 145, ../sass/_test.scss */
 .layout-compare-item { position: relative; width: 50%; text-align: center; padding: 0 15px; }
-/* line 164, ../sass/_test.scss */
+/* line 151, ../sass/_test.scss */
 .layout-compare-item .mask-container { position: relative; }
-/* line 169, ../sass/_test.scss */
+/* line 156, ../sass/_test.scss */
 .layout-compare-item .mask-container:hover .mask { display: none !important; }
-/* line 175, ../sass/_test.scss */
+/* line 162, ../sass/_test.scss */
 .layout-compare-item .mask { position: absolute; top: 0; display: none; -webkit-filter: drop-shadow(5px 5px 5px #222); filter: drop-shadow(5px 5px 5px #222); }
-/* line 182, ../sass/_test.scss */
+/* line 169, ../sass/_test.scss */
 .layout-compare-item .mask.is-visible { display: block; }
-/* line 189, ../sass/_test.scss */
+/* line 176, ../sass/_test.scss */
 .layout-compare-description { padding: 10px 0; font-size: 20px; color: #85898e; }
 
 /* Source codes
 */
-/* line 199, ../sass/_test.scss */
+/* line 186, ../sass/_test.scss */
 .diff-report table { table-layout: fixed; }
-/* line 202, ../sass/_test.scss */
+/* line 189, ../sass/_test.scss */
 .diff-report table thead { position: relative; display: block; }
-/* line 206, ../sass/_test.scss */
+/* line 193, ../sass/_test.scss */
 .diff-report table tbody { white-space: nowrap; font-size: 11px; display: block; height: 500px; overflow: auto; }
-/* line 216, ../sass/_test.scss */
+/* line 203, ../sass/_test.scss */
 .diff-report table.table-w3c thead { border: 1px solid #ddd; }
-/* line 218, ../sass/_test.scss */
+/* line 205, ../sass/_test.scss */
 .diff-report table.table-w3c thead th { border-bottom: 0 none; }
-/* line 226, ../sass/_test.scss */
+/* line 213, ../sass/_test.scss */
 .diff-report table.table-w3c th.num, .diff-report table.table-w3c td.num { width: 50px; display: block; }
-/* line 232, ../sass/_test.scss */
+/* line 219, ../sass/_test.scss */
 .diff-report table.table-w3c td.code { white-space: normal; }
-/* line 236, ../sass/_test.scss */
+/* line 223, ../sass/_test.scss */
 .diff-report table.table-w3c tbody { height: auto; font-size: 14px; }
-/* line 244, ../sass/_test.scss */
+/* line 231, ../sass/_test.scss */
 .diff-report table th.num { min-width: 50px; }
-/* line 248, ../sass/_test.scss */
+/* line 235, ../sass/_test.scss */
 .diff-report table th.code { width: 100%; }
-/* line 253, ../sass/_test.scss */
+/* line 240, ../sass/_test.scss */
 .diff-report table td.code { min-width: 100px; white-space: pre-wrap; }
-/* line 257, ../sass/_test.scss */
+/* line 244, ../sass/_test.scss */
 .diff-report table td.code.code { width: 100%; }
-/* line 260, ../sass/_test.scss */
+/* line 247, ../sass/_test.scss */
 .diff-report table td.code.code p { margin: 0; }
-/* line 264, ../sass/_test.scss */
+/* line 251, ../sass/_test.scss */
 .diff-report table td.code.code span, .diff-report table td.code.code small { white-space: normal; }
-/* line 270, ../sass/_test.scss */
+/* line 257, ../sass/_test.scss */
 .diff-report table td.code.num { min-width: 50px; }
 
-/* line 276, ../sass/_test.scss */
+/* line 263, ../sass/_test.scss */
 .w3c-error { white-space: nowrap; }
-/* line 279, ../sass/_test.scss */
+/* line 266, ../sass/_test.scss */
 .w3c-error span, .w3c-error mark { padding: 0; }
 
-/* line 287, ../sass/_test.scss */
+/* line 274, ../sass/_test.scss */
 tr.no-change { background: #ffffff; }
-/* line 291, ../sass/_test.scss */
+/* line 278, ../sass/_test.scss */
 tr.insert, tr.info, tr.notice { background: #d9edf7; }
-/* line 297, ../sass/_test.scss */
+/* line 284, ../sass/_test.scss */
 tr.change { background: #fcf8e3; }
-/* line 301, ../sass/_test.scss */
+/* line 288, ../sass/_test.scss */
 tr.warn { background: #faf2cc; }
-/* line 305, ../sass/_test.scss */
+/* line 292, ../sass/_test.scss */
 tr.delete, tr.err, tr.error { background: #f2dede; }
 
-/* line 314, ../sass/_test.scss */
+/* line 301, ../sass/_test.scss */
 .tab-content .tab-pane { display: none; }
-/* line 318, ../sass/_test.scss */
+/* line 305, ../sass/_test.scss */
 .tab-content .active { display: block; }
 
 /* performance table
 */
-/* line 327, ../sass/_test.scss */
+/* line 314, ../sass/_test.scss */
 .performance-table { margin-top: 0; }
-/* line 330, ../sass/_test.scss */
+/* line 317, ../sass/_test.scss */
 .performance-table .nav-tabs { width: 400px; float: left; }
-/* line 334, ../sass/_test.scss */
+/* line 321, ../sass/_test.scss */
 .performance-table .nav-tabs li { display: block; float: none; }
 
-/* line 341, ../sass/_test.scss */
+/* line 328, ../sass/_test.scss */
 .tab-content-performance { margin-top: 0; }
 
-/* line 345, ../sass/_test.scss */
+/* line 332, ../sass/_test.scss */
 .links-list { margin-top: 10px; padding-top: 10px; border-top: solid 1px #ebebeb; }
-/* line 350, ../sass/_test.scss */
+/* line 337, ../sass/_test.scss */
 .links-list a { display: block; color: #77777c; }
 
-/* line 359, ../sass/_test.scss */
+/* line 346, ../sass/_test.scss */
 .label-A { background-color: #5cb85c !important; }
-/* line 363, ../sass/_test.scss */
+/* line 350, ../sass/_test.scss */
 .label-F { background-color: #d9534f !important; }
 
 /* AET  Copyright (C) 2013 Cognifide Limited  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */

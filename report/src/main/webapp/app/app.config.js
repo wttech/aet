@@ -26,7 +26,6 @@ require.config({
     'angularAMD': '../assets/libs/angularAMD/angularAMD',
     'lodash': '../assets/libs/lodash/dist/lodash',
     'angular-bootstrap': '../assets/libs/angular-bootstrap/ui-bootstrap-tpls',
-    'scroller': '../assets/libs/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar',
     // **************** AET custom ********************
     //components
     'testSearchFilter': 'components/testSearch.filter',
@@ -85,10 +84,6 @@ require.config({
     },
     lodash: {
       exports: '_'
-    },
-    scroller: {
-      deps: ['jquery'],
-      exports: 'mCustomScrollbar'
     },
     'angular-bootstrap': ['angular'],
     'angular-ui-router': ['angular'],

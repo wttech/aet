@@ -62,7 +62,7 @@
     position: relative;
 
     &.is-expanded {
-      max-height: calc(100vh - 250px);
+      max-height: initial;
       overflow-y: auto;
 
       ul {
