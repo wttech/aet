@@ -4045,11 +4045,11 @@ input[type=text]::-webkit-input-placeholder { color: #85898e; }
 .report-item-stats { color: #85898e; position: absolute; right: 21px; top: 6px; background: #3c4550; font-family: "montserratbold", sans-serif; font-size: 14px; line-height: 32px; padding: 0 7px; }
 
 /* line 288, ../sass/_sidebar.scss */
-.js-manage-changes-wrapper { padding: 17px 0 16px; border-top: solid 1px #313942; }
+.aside-actions-wrapper { padding: 17px 0 16px; border-top: solid 1px #313942; }
 /* line 292, ../sass/_sidebar.scss */
-.js-manage-changes-wrapper .js-rebase-all, .js-manage-changes-wrapper .js-cancel-all { position: relative; width: 100%; background: #2c333b; z-index: 1; }
+.aside-actions-wrapper .js-rebase-all, .aside-actions-wrapper .js-cancel-all { position: relative; width: 100%; background: #2c333b; z-index: 1; }
 /* line 298, ../sass/_sidebar.scss */
-.js-manage-changes-wrapper .js-rebase-all:not(:last-child), .js-manage-changes-wrapper .js-cancel-all:not(:last-child) { margin-bottom: 16px; }
+.aside-actions-wrapper .js-rebase-all:not(:last-child), .aside-actions-wrapper .js-cancel-all:not(:last-child) { margin-bottom: 16px; }
 
 /* line 304, ../sass/_sidebar.scss */
 .is-active { color: #ffffff !important; }
