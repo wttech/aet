@@ -95,8 +95,6 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
         } else {
           $active.next().find('a').click();
         }
-
-        $tabs.mCustomScrollbar('scrollTo', $tabs.find('.active'));
       }
 
       function toggleErrors() {
@@ -125,7 +123,8 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
           testUrlSelector) {
         var currentTest,
             currentLocation = window.location.hash,
-            $nextElement;
+            $nextElement,
+            $firstElementInTest;
 
         if (!(ifRootPage(currentLocation, '/url/') || ifRootPage(
                 currentLocation, '/test/') || ifRootPage(currentLocation,
@@ -147,21 +146,23 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
               toggleNextTest(suiteContainer);
               $nextElement = suiteContainer.nextAll(
                   '.aside-report:not(.is-hidden)').first();
-              scrollTo($nextElement);
               $nextElement.addClass('is-expanded');
+              $nextElement.children().first().addClass('is-active');
+              scrollTo($nextElement.find('.is-active'));
             }
 
           } else {
-            scrollTo(nextUrl);
             nextUrl.click();
+            scrollTo(nextUrl);
             $(testUrlSelector).not(nextUrl).removeClass('is-active');
           }
         } else {
-          currentTest = findCurrentTest(currentLocation.split('/').pop());
-          currentTest.addClass('is-expanded');
-          scrollTo(currentTest);
-          currentTest.find('.url-name:not(.is-hidden)').find(
-              testUrlSelector).first().click();
+            currentTest = findCurrentTest(currentLocation.split('/').pop());
+            $firstElementInTest = currentTest.find('.url-name:not(.is-hidden)').find(
+                testUrlSelector).first();
+            currentTest.addClass('is-expanded');
+            $firstElementInTest.click();
+            scrollTo($firstElementInTest);
         }
       }
 
@@ -202,37 +203,9 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
       }
 
       function scrollTo($element) {
-        var $sidePanel = $('.aside'),
-            $logoHolder = $('.aside .logo-holder'),
-            $elementToBeScrolledTo = $element.closest('.aside-report');
-
-        if (!_.isEmpty($elementToBeScrolledTo)) {
-          if (isElementBelowViewport($elementToBeScrolledTo, $sidePanel)) {
-            scrollPageDown($elementToBeScrolledTo, $sidePanel, $logoHolder);
-          } else if (isElementAboveViewport($elementToBeScrolledTo,
-                  $logoHolder)) {
-            scrollPageUp($elementToBeScrolledTo, $sidePanel);
-          }
+        if ($element[0]) {
+          $element[0].scrollIntoView({behavior: 'smooth', block: 'center', inline: 'nearest'});
         }
-      }
-
-      function scrollPageUp($element, $sidePanel) {
-        $sidePanel.scrollTop($sidePanel.scrollTop() + $element.position().top +
-            $element.height() - $sidePanel.outerHeight());
-      }
-
-      function scrollPageDown($element, $sidePanel, $logoHolder) {
-        $sidePanel.scrollTop($sidePanel.scrollTop() + $element.position().top -
-            $logoHolder.height());
-      }
-
-      function isElementBelowViewport($element, $sidePanel) {
-        var elementBottomOffset = $element.offset().top + $element.height();
-        return $sidePanel.outerHeight() <elementBottomOffset;
-      }
-
-      function isElementAboveViewport($element, $logoHolder) {
-        return $element.offset().top - $logoHolder.height() < 0;
       }
 
       function toggleNextTest(currentTest) {
