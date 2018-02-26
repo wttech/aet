@@ -25,12 +25,12 @@ define(['angularAMD'], function (angularAMD) {
       scope: {
         item: '='
       },
-      templateUrl: 'app/layout/main/url/activeFilterInfo/activeFilterInfo.icon.html',
+      templateUrl: 'app/layout/main/url/filterInformation/filterInformation.icon.html',
       link: linkFunc
     };
 
     function linkFunc($scope) {
-      $scope.popoverContentTemplate = 'app/layout/main/url/activeFilterInfo/activeFilterInfo.content.html';
+      $scope.popoverContentTemplate = 'app/layout/main/url/filterInformation/filterInformation.content.html';
     }
   }
 });

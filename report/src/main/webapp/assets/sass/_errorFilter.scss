@@ -1,15 +1,22 @@
 .filterInfo{
-  padding: 5px 0;
+  padding: 15px;
+  border-bottom: 1px solid #dbdbdb;
+  max-width: 500px;
 
   &-column {
     text-align: center;
+  }
+
+  &-popover {
+    .popover-content {
+      padding: 0;
+    }
   }
 
   &-title {
     display: inline-block;
     font-weight: 700;
     padding: 0 0 5px;
-    text-decoration: underline;
   }
 
   &-parameter {
@@ -17,9 +24,9 @@
   }
 
   &-key {
-    min-width: 85px;
-    text-transform: capitalize;
+    min-width: 90px;
     padding: 0 8px 2px 0;
+    text-transform: capitalize;
   }
 
   &-value {
