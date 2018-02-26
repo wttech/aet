@@ -61,13 +61,13 @@ define(['angularAMD'], function (angularAMD) {
         e.preventDefault();
       });
 
-      $element.on('mousemove', function (e) {
+      $element.on('mousemove', _.throttle(function (e) {
         if (isSidepanelResized) {
           newWidth = limitSidepanelSize(e.pageX);
           updateWidth(newWidth);
           e.preventDefault();
         }
-      });
+      }, 10));
 
       $element.on('mouseup', function () {
         isSidepanelResized = false;
@@ -100,13 +100,13 @@ define(['angularAMD'], function (angularAMD) {
       $content.css('width', document.body.clientWidth - $sidepanel.outerWidth());
       $sidepanel.css('left', 0);
 
-      $(window).on('resize', onWindowResize);
+      $(window).on('resize', _.throttle(onWindowResize, 100));
       localStorageService.put(EXPANDED_SIDEBAR_KEY_NAME, true);
     }
 
     function close() {
       $content.css('left', 0);
-      $content.css('width', '100%');
+      $content.css('width', '');
       $sidepanel.css('left', -$sidepanel.outerWidth());
 
       $(window).off('resize', onWindowResize);
