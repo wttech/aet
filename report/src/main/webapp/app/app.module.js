@@ -24,7 +24,6 @@ define(['angularAMD',
   'angular-ui-router',
   'jquery',
   'bootstrap',
-  'scroller',
   // components
   'hidePopoversDirective',
   'keyboardShortcutsDirective',
