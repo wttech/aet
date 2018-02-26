@@ -12,6 +12,9 @@
   }
 
   &-popover {
+    min-width: 400px;
+    max-width: 500px;
+
     .popover-content {
       padding: 0;
     }
