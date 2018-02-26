@@ -51,6 +51,10 @@ $font_regular: 'montserratregular', sans-serif;
 $font_light: 'montserratlight', sans-serif;
 $font_bold: 'montserratbold', sans-serif;
 
+//Dimensions
+$side_bar_header_height: 240px;
+$side_bar_manage_changes_wrapper_height: 124px;
+
 /** NEW STYLES AFTER REFACTOR **/
 $warning: #f0ad4e;
 $rebased: #0097fe;
@@ -61,5 +65,3 @@ $warning_bg: #fff085;
 $rebased_bg: #00c1ff;
 $failed_bg: #ddacac;
 $passed_bg: #caeb7f;
-
-$width_for_fixed_element_in_sidebar: 350px;
