@@ -4367,16 +4367,18 @@ ul li.warning a.nav-link, ul li.warning a.nav-link:focus, ul li.warning a.nav-li
 /* line 1, ../sass/_errorFilter.scss */
 .filterInfo { padding: 15px; border-bottom: 1px solid #dbdbdb; max-width: 500px; }
 /* line 6, ../sass/_errorFilter.scss */
+.filterInfo:last-child { border: none; }
+/* line 10, ../sass/_errorFilter.scss */
 .filterInfo-column { text-align: center; }
-/* line 11, ../sass/_errorFilter.scss */
+/* line 15, ../sass/_errorFilter.scss */
 .filterInfo-popover .popover-content { padding: 0; }
-/* line 16, ../sass/_errorFilter.scss */
+/* line 20, ../sass/_errorFilter.scss */
 .filterInfo-title { display: inline-block; font-weight: 700; padding: 0 0 5px; }
-/* line 22, ../sass/_errorFilter.scss */
-.filterInfo-parameter { vertical-align: top; }
 /* line 26, ../sass/_errorFilter.scss */
+.filterInfo-parameter { vertical-align: top; }
+/* line 30, ../sass/_errorFilter.scss */
 .filterInfo-key { min-width: 90px; padding: 0 8px 2px 0; text-transform: capitalize; }
-/* line 32, ../sass/_errorFilter.scss */
+/* line 36, ../sass/_errorFilter.scss */
 .filterInfo-value { color: #85898e; }
 
 /* line 32, ../sass/main.scss */

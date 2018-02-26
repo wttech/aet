@@ -3,6 +3,10 @@
   border-bottom: 1px solid #dbdbdb;
   max-width: 500px;
 
+  &:last-child {
+    border: none;
+  }
+
   &-column {
     text-align: center;
   }
