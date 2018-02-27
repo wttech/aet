@@ -25,7 +25,7 @@
   width: calc(100% + 50px);
   height: 47px;
   margin: 0 -25px 10px -25px;;
-  background: #ebebeb;
+  background: $gray_light;
   border: solid $border_color_darken;
   border-width: 1px 0;
   z-index: 1;
@@ -294,6 +294,11 @@ tr {
   &.error {
     background: #f2dede;
   }
+
+  &.divider-row {
+    font-weight: 700;
+    background-color: $gray_light;
+  }
 }
 
 .tab-content {
@@ -332,7 +337,7 @@ tr {
 .links-list {
   margin-top: 10px;
   padding-top: 10px;
-  border-top: solid 1px #ebebeb;
+  border-top: solid 1px $border_color_darken;
 
   a {
     display: block;
