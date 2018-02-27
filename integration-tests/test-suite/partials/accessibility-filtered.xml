@@ -82,7 +82,7 @@
 		</urls>
 	</test>
 
-	<test name="F-comparator-accessibility-with-standard-wcag2a-filtered-all">
+	<test name="S-comparator-accessibility-with-standard-wcag2a-filtered-all">
 		<collect>
 			<open />
 			<accessibility standard="WCAG2A" />
