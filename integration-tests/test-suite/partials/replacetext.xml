@@ -21,7 +21,7 @@
 <suite name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
 
     <!-- ReplaceText-Modifier BEGIN -->
-    <test name="replaceText-SUCCESS">
+    <test name="S-replaceText">
         <collect>
             <open/>
             <replaceText xpath="//*[@id='demo1']" value="xpath replaced !"/>

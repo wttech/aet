@@ -21,7 +21,7 @@
 <suite name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
 
 	<!-- Cookie-Comparator BEGIN -->
-	<test name="comparator-Cookie-SUCCESS-action-list">
+	<test name="S-comparator-Cookie-action-list">
 		<collect>
 			<open />
 			<cookie />
@@ -34,7 +34,7 @@
 			<url href="comparators/cookie/failed.jsp" description="list action have always success status" />
 		</urls>
 	</test>
-	<test name="comparator-Cookie-SUCCESS-action-test">
+	<test name="S-comparator-Cookie-action-test">
 		<collect>
 			<open />
 			<cookie />
@@ -47,7 +47,7 @@
 			<url href="comparators/cookie/success.jsp" />
 		</urls>
 	</test>
-	<test name="comparator-Cookie-SUCCESS-action-compare">
+	<test name="S-comparator-Cookie-action-compare">
 		<collect>
 			<open />
 			<cookie />
@@ -60,7 +60,7 @@
 			<url href="comparators/cookie/success.jsp" />
 		</urls>
 	</test>
-	<test name="comparator-Cookie-SUCCESS-action-test-cookie-name-and-value">
+	<test name="S-comparator-Cookie-action-test-cookie-name-and-value">
 		<collect>
 			<open />
 			<cookie />
@@ -73,7 +73,7 @@
 			<url href="comparators/cookie/success.jsp" />
 		</urls>
 	</test>
-	<test name="comparator-Cookie-FAILED-action-compare">
+	<test name="F-comparator-Cookie-action-compare">
 		<collect>
 			<open />
 			<cookie />
@@ -85,7 +85,7 @@
 			<url href="comparators/cookie/failed.jsp" />
 		</urls>
 	</test>
-	<test name="comparator-Cookie-FAILED-action-test-cookie-name">
+	<test name="F-comparator-Cookie-action-test-cookie-name">
 		<collect>
 			<open />
 			<cookie />
@@ -97,7 +97,7 @@
 			<url href="comparators/cookie/failed.jsp" />
 		</urls>
 	</test>
-	<test name="comparator-Cookie-FAILED-action-test-cookie-name-and-value">
+	<test name="F-comparator-Cookie-action-test-cookie-name-and-value">
 		<collect>
 			<open />
 			<cookie />
@@ -110,7 +110,7 @@
 			<url href="comparators/cookie/failed.jsp" />
 		</urls>
 	</test>
-	<test name="comparator-Cookie-Modifer-SUCCESS">
+	<test name="S-comparator-Cookie-Modifer">
 		<collect>
 			<modify-cookie action="add" cookie-name="sampleCookieName"
 				cookie-value="sampleCookieValue" />
@@ -125,7 +125,7 @@
 			<url href="modifiers/cookie/success.jsp" />
 		</urls>
 	</test>
-	<test name="comparator-Cookie-Modifer-FAILED">
+	<test name="F-comparator-Cookie-Modifer">
 		<collect>
 			<open />
 			<cookie />

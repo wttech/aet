@@ -21,7 +21,7 @@
 <suite name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
 
 	<!-- Click-Modifier BEGIN -->
-	<test name="modifier-Click-SUCCESS">
+	<test name="S-modifier-Click">
 		<collect>
 			<open />
 			<click xpath="//a[@id='hide']" timeout="3000"/>

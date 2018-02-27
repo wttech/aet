@@ -21,7 +21,7 @@
 <suite name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
 
 	<!-- Accessibility Comparator START -->
-	<test name="comparator-accessibility-SUCCESS-with-standard-wcag2a">
+	<test name="S-comparator-accessibility-with-standard-wcag2a">
 		<collect>
 			<open />
 			<accessibility standard="WCAG2A" />
@@ -34,7 +34,7 @@
 		</urls>
 	</test>
 
-	<test name="comparator-accessibility-SUCCESS-with-standard-wcag2aa">
+	<test name="S-comparator-accessibility-with-standard-wcag2aa">
 		<collect>
 			<open />
 			<accessibility />
@@ -47,7 +47,7 @@
 		</urls>
 	</test>
 
-	<test name="comparator-accessibility-SUCCESS-with-standard-wcag2aaa">
+	<test name="S-comparator-accessibility-with-standard-wcag2aaa">
 		<collect>
 			<open />
 			<accessibility standard="WCAG2AAA" />
@@ -60,7 +60,7 @@
 		</urls>
 	</test>
 
-	<test name="comparator-accessibility-SUCCESS-with-standard-wcag2aaa-report-level-error">
+	<test name="S-comparator-accessibility-with-standard-wcag2aaa-report-level-error">
 		<collect>
 			<open />
 			<accessibility standard="WCAG2AAA" />
@@ -73,7 +73,7 @@
 		</urls>
 	</test>
 
-	<test name="comparator-accessibility-WARNING-with-standard-wcag2aaa-report-level-warn">
+	<test name="W-comparator-accessibility-with-standard-wcag2aaa-report-level-warn">
 		<collect>
 			<open />
 			<accessibility standard="WCAG2AAA" />
@@ -86,7 +86,7 @@
 		</urls>
 	</test>
 
-	<test name="comparator-accessibility-WARNING-with-standard-wcag2aaa-report-level-notice">
+	<test name="W-comparator-accessibility-with-standard-wcag2aaa-report-level-notice">
 		<collect>
 			<open />
 			<accessibility standard="WCAG2AAA" />
@@ -99,7 +99,7 @@
 		</urls>
 	</test>
 
-	<test name="comparator-accessibility-WARNING-no-ignore-notice">
+	<test name="W-comparator-accessibility-no-ignore-notice">
 		<collect>
 			<open />
 			<accessibility standard="WCAG2AAA"/>
@@ -112,7 +112,7 @@
 		</urls>
 	</test>
 
-	<test name="comparator-accessibility-FAILED-with-standard-wcag2a">
+	<test name="F-comparator-accessibility-with-standard-wcag2a">
 		<collect>
 			<open />
 			<accessibility standard="WCAG2A" />
@@ -125,7 +125,7 @@
 		</urls>
 	</test>
 
-	<test name="comparator-accessibility-FAILED-with-standard-wcag2aa">
+	<test name="F-comparator-accessibility-with-standard-wcag2aa">
 		<collect>
 			<open />
 			<accessibility />
@@ -138,7 +138,7 @@
 		</urls>
 	</test>
 
-	<test name="comparator-accessibility-FAILED-with-standard-wcag2aaa">
+	<test name="F-comparator-accessibility-with-standard-wcag2aaa">
 		<collect>
 			<open />
 			<accessibility standard="WCAG2AAA" />
