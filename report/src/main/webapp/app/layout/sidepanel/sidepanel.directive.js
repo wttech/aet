@@ -75,6 +75,8 @@ define(['angularAMD'], function (angularAMD) {
         $scope.sidebarExpanded = !$scope.sidebarExpanded;
         $scope.$apply();
       });
+
+      $(window).on('resize', onWindowResizeThrottled);
     }
 
     function isExpanded() {
