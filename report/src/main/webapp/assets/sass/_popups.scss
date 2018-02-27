@@ -34,20 +34,18 @@
   }
 
   &-footer {
-    button + button {
+    & > button + button {
       margin-right: 20px;
     }
-  }
 
-  &-footer_flex {
-    & {
+    &_flex {
       align-items: center;
       display: flex;
       justify-content: space-between;
-    }
 
-    button + button {
-      margin-right: 0px;
+      &-right {
+        justify-content: flex-end;
+      }
     }
   }
 
