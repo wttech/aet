@@ -16,12 +16,13 @@
  * limitations under the License.
  */
 .aside {
-  @include transition(left 0.3s, width 0.3s);
+  @include transition(left 0.1s, width 0.1s);
   background: $aside_background;
   position: fixed;
   top: 0;
   left: -350px;
   width: 350px;
+  padding: 0 1.5rem;
   height: 100%;
   overflow: hidden;
   text-align: center;
@@ -29,6 +30,19 @@
 
   .menu-expanded & {
     left: 0;
+  }
+
+  &-resizer {
+    @include transition(left 0.1s, width 0.1s);
+    display: block;
+    height: 100%;
+    width: 1.5rem;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 100;
+    cursor: col-resize;
+    background-color: $aside_background;
   }
 
   .logo-holder {

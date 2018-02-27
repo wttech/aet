@@ -3956,18 +3956,20 @@ input[type=text]::-webkit-input-placeholder { color: #85898e; }
 
 /* AET  Copyright (C) 2013 Cognifide Limited  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */
 /* line 18, ../sass/_sidebar.scss */
-.aside { -webkit-transition: left 0.3s, width 0.3s; -o-transition: left 0.3s, width 0.3s; transition: left 0.3s, width 0.3s; background: #2c333b; position: fixed; top: 0; left: -350px; width: 350px; height: 100%; overflow: hidden; text-align: center; z-index: 99; }
-/* line 30, ../sass/_sidebar.scss */
+.aside { -webkit-transition: left 0.1s, width 0.1s; -o-transition: left 0.1s, width 0.1s; transition: left 0.1s, width 0.1s; background: #2c333b; position: fixed; top: 0; left: -350px; width: 350px; padding: 0 1.5rem; height: 100%; overflow: hidden; text-align: center; z-index: 99; }
+/* line 31, ../sass/_sidebar.scss */
 .menu-expanded .aside { left: 0; }
-/* line 34, ../sass/_sidebar.scss */
+/* line 35, ../sass/_sidebar.scss */
+.aside-resizer { -webkit-transition: left 0.1s, width 0.1s; -o-transition: left 0.1s, width 0.1s; transition: left 0.1s, width 0.1s; display: block; height: 100%; width: 1.5rem; position: absolute; top: 0; right: 0; z-index: 100; cursor: col-resize; background-color: #2c333b; }
+/* line 48, ../sass/_sidebar.scss */
 .aside .logo-holder { width: 100%; padding-top: 10px; text-align: center; background: #2c333b; height: 80px; top: 0; z-index: 2; }
-/* line 44, ../sass/_sidebar.scss */
+/* line 58, ../sass/_sidebar.scss */
 .aside-report { line-height: 47px; max-height: 47px; overflow: hidden; position: relative; }
-/* line 50, ../sass/_sidebar.scss */
+/* line 64, ../sass/_sidebar.scss */
 .aside-report.is-expanded { max-height: initial; overflow-y: auto; }
-/* line 54, ../sass/_sidebar.scss */
+/* line 68, ../sass/_sidebar.scss */
 .aside-report.is-expanded ul { display: block; overflow: hidden; }
-/* line 60, ../sass/_sidebar.scss */
+/* line 74, ../sass/_sidebar.scss */
 .aside-report-container { height: calc(100vh - 240px); overflow: auto; }
 /* line 64, ../sass/_sidebar.scss */
 .aside-report-container:not(:last-child) { height: calc(100vh - 240px - 124px); }
@@ -4383,7 +4385,7 @@ a:hover, a:focus, a:active { text-decoration: none; }
 body { color: #333333; font-family: "montserratregular", sans-serif; }
 
 /* line 68, ../sass/main.scss */
-.main { -webkit-transition: left 0.3s, width 0.3s; -o-transition: left 0.3s, width 0.3s; transition: left 0.3s, width 0.3s; position: relative; width: 100%; left: 0; }
+.main { -webkit-transition: left 0.1s, width 0.1s; -o-transition: left 0.1s, width 0.1s; transition: left 0.1s, width 0.1s; position: relative; width: 100%; left: 0; }
 /* line 74, ../sass/main.scss */
 .menu-expanded .main { left: 350px; width: calc(100% - 350px); }
 
