@@ -193,3 +193,11 @@ body {
 		font-size: 18px;
 	}
 }
+
+.fontawesome {
+	&-link {
+		cursor: pointer;
+		display: inline;
+		position: relative;
+	}
+}

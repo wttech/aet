@@ -3921,7 +3921,7 @@ input[type=text]::-webkit-input-placeholder { color: #85898e; }
 /* line 158, ../sass/_toolbar.scss */
 .toolbar-nav div { float: left; border: solid 1px #ededed; margin-left: -1px; padding: 0 12px; cursor: pointer; background: #ffffff; }
 /* line 166, ../sass/_toolbar.scss */
-.toolbar-nav div i { margin: 5px 0 8px 0; display: block; color: #85898e; }
+.toolbar-nav div svg { margin: 7px 2px; display: block; color: #85898e; }
 /* line 173, ../sass/_toolbar.scss */
 .toolbar-btns { border-left: solid 1px #ededed; padding-left: 30px; padding-top: 15px; height: 73px; display: flex; }
 /* line 180, ../sass/_toolbar.scss */
@@ -4064,28 +4064,32 @@ input[type=text]::-webkit-input-placeholder { color: #85898e; }
 .filters .form-group { position: relative; }
 /* line 29, ../sass/_filters.scss */
 .filters .form-group i { position: absolute; right: 15px; z-index: 1; top: 11px; font-size: 18px; color: #FFF; }
-/* line 39, ../sass/_filters.scss */
+/* line 38, ../sass/_filters.scss */
+.filters .form-group .fontawesome { position: absolute; right: 15px; z-index: 1; top: 11px; font-size: 18px; color: #FFF; }
+/* line 46, ../sass/_filters.scss */
+.filters .form-group .fontawesome .fa-times { cursor: pointer; }
+/* line 52, ../sass/_filters.scss */
 .filters input, .filters .filter-list { background-color: #3c4550; border: 0 none; color: #ffffff; font-family: "montserratlight", sans-serif; font-size: 15px; height: 40px; line-height: 40px; padding-left: 20px; padding-right: 40px; width: 100%; z-index: 1; cursor: pointer; }
-/* line 54, ../sass/_filters.scss */
-.filters input .icon, .filters .filter-list .icon { top: 3px; }
-/* line 59, ../sass/_filters.scss */
-.filters .popover { border: none; border-radius: 0; max-width: none; padding: 0; top: 40px; width: 100%; }
 /* line 67, ../sass/_filters.scss */
+.filters input .icon, .filters .filter-list .icon { top: 3px; }
+/* line 72, ../sass/_filters.scss */
+.filters .popover { border: none; border-radius: 0; max-width: none; padding: 0; top: 40px; width: 100%; }
+/* line 80, ../sass/_filters.scss */
 .filters .popover.is-active { display: block; }
-/* line 71, ../sass/_filters.scss */
+/* line 84, ../sass/_filters.scss */
 .filters .popover-content { padding: 0; }
-/* line 75, ../sass/_filters.scss */
+/* line 88, ../sass/_filters.scss */
 .filters .popover .dropdown-field { border-bottom: 1px solid #ededed; display: block; padding: 10px; width: 100%; }
-/* line 81, ../sass/_filters.scss */
+/* line 94, ../sass/_filters.scss */
 .filters .popover .dropdown-field:last-of-type { border-bottom: 0; }
-/* line 85, ../sass/_filters.scss */
+/* line 98, ../sass/_filters.scss */
 .filters .popover .dropdown-field label { margin: 0; }
-/* line 89, ../sass/_filters.scss */
+/* line 102, ../sass/_filters.scss */
 .filters .popover .dropdown-field input { border-radius: 0; display: inline; height: auto; margin-right: 10px; width: auto; }
-/* line 97, ../sass/_filters.scss */
+/* line 110, ../sass/_filters.scss */
 .filters .popover .dropdown-field a { color: #333333; display: inline; }
 
-/* line 105, ../sass/_filters.scss */
+/* line 118, ../sass/_filters.scss */
 .no-results { color: #ffffff; }
 
 /* AET  Copyright (C) 2013 Cognifide Limited  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */
@@ -4113,6 +4117,8 @@ input[type=text]::-webkit-input-placeholder { color: #85898e; }
 .button-small { font-size: 11px; line-height: 33px; }
 /* line 70, ../sass/_buttons.scss */
 .button i { margin-right: 6px; position: relative; top: 3px; }
+/* line 76, ../sass/_buttons.scss */
+.button svg { margin-right: 6px; }
 
 /* AET  Copyright (C) 2013 Cognifide Limited  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */
 /* line 21, ../sass/_popups.scss */
@@ -4441,3 +4447,6 @@ body { color: #333333; font-family: "montserratregular", sans-serif; }
 .url-tile .statistics { color: #77777c !important; }
 /* line 191, ../sass/main.scss */
 .url-tile .name { font-family: "montserratbold", sans-serif; font-size: 18px; }
+
+/* line 198, ../sass/main.scss */
+.fontawesome-link { cursor: pointer; display: inline; position: relative; }
