@@ -72,8 +72,12 @@
     }
 
     &-container {
-      height: calc(100vh - 240px);
+      height: calc(100vh - #{$side_bar_header_height});
       overflow: auto;
+
+      &:not(:last-child) {
+        height: calc(100vh - #{$side_bar_header_height} - #{$side_bar_manage_changes_wrapper_height});
+      }
     }
 
     .test-name {
@@ -170,7 +174,6 @@
 
         &:before {
           position: absolute;
-          left: -10px;
           font-size: 15px;
           left: -16px;
         }
@@ -296,18 +299,20 @@
   padding: 0 7px;
 }
 
-.js-rebase-all, .js-cancel-all {
-  position: fixed;
-  bottom: 0;
-  width: $width_for_fixed_element_in_sidebar;
+.aside-actions-wrapper {
+  padding: 17px 0 16px;
   border-top: solid 1px $border-color_dark;
-  padding: 16px;
-  background: $aside_background;
-  z-index: 1;
-}
 
-.js-rebase-all {
-  bottom: 60px;
+  .js-rebase-all, .js-cancel-all {
+    position: relative;
+    width: 100%;
+    background: $aside_background;
+    z-index: 1;
+
+    &:not(:last-child) {
+      margin-bottom: 16px;
+    }
+  }
 }
 
 .is-active {
