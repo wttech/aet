@@ -49,12 +49,23 @@
         <div class="filter-list">
           <div class="filter-list-title">
             <p>No filters applied</p>
-            <i class="glyphicon glyphicon-chevron-down" data-toggle="popover"
-               data-content="Apply filtering to urls" data-trigger="hover"
-               data-container="body"></i>
-            <i class="glyphicon glyphicon-remove" data-toggle="popover" data-content="Clear filters"
-               data-trigger="hover" data-container="body" ng-click="clearFilters()"
-               style="display: none;"></i>
+            <div class="fontawesome">
+                  <div class="apply-filters"
+                       data-toggle="popover"
+                       data-content="Apply filtering to urls"
+                       data-trigger="hover"
+                       data-container="body">
+                          <i class="fas fa-angle-down fa-lg"></i>
+                  </div>
+                  <div class="clear-filters" style="display: none;"
+                       data-toggle="popover"
+                       data-content="Clear filters"
+                       data-trigger="hover"
+                       data-container="body"
+                       ng-click="clearFilters()">
+                          <i class="fas fa-times"></i>
+                  </div>
+            </div>
           </div>
           <form class="dropdown-menu">
             <div class="dropdown-field">

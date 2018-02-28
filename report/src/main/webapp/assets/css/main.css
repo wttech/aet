@@ -4072,24 +4072,26 @@ input[type=text]::-webkit-input-placeholder { color: #85898e; }
 .filters input, .filters .filter-list { background-color: #3c4550; border: 0 none; color: #ffffff; font-family: "montserratlight", sans-serif; font-size: 15px; height: 40px; line-height: 40px; padding-left: 20px; padding-right: 40px; width: 100%; z-index: 1; cursor: pointer; }
 /* line 67, ../sass/_filters.scss */
 .filters input .icon, .filters .filter-list .icon { top: 3px; }
-/* line 72, ../sass/_filters.scss */
+/* line 71, ../sass/_filters.scss */
+.filters input .fontawesome, .filters .filter-list .fontawesome { top: 1px; }
+/* line 76, ../sass/_filters.scss */
 .filters .popover { border: none; border-radius: 0; max-width: none; padding: 0; top: 40px; width: 100%; }
-/* line 80, ../sass/_filters.scss */
-.filters .popover.is-active { display: block; }
 /* line 84, ../sass/_filters.scss */
-.filters .popover-content { padding: 0; }
+.filters .popover.is-active { display: block; }
 /* line 88, ../sass/_filters.scss */
+.filters .popover-content { padding: 0; }
+/* line 92, ../sass/_filters.scss */
 .filters .popover .dropdown-field { border-bottom: 1px solid #ededed; display: block; padding: 10px; width: 100%; }
-/* line 94, ../sass/_filters.scss */
-.filters .popover .dropdown-field:last-of-type { border-bottom: 0; }
 /* line 98, ../sass/_filters.scss */
-.filters .popover .dropdown-field label { margin: 0; }
+.filters .popover .dropdown-field:last-of-type { border-bottom: 0; }
 /* line 102, ../sass/_filters.scss */
+.filters .popover .dropdown-field label { margin: 0; }
+/* line 106, ../sass/_filters.scss */
 .filters .popover .dropdown-field input { border-radius: 0; display: inline; height: auto; margin-right: 10px; width: auto; }
-/* line 110, ../sass/_filters.scss */
+/* line 114, ../sass/_filters.scss */
 .filters .popover .dropdown-field a { color: #333333; display: inline; }
 
-/* line 118, ../sass/_filters.scss */
+/* line 122, ../sass/_filters.scss */
 .no-results { color: #ffffff; }
 
 /* AET  Copyright (C) 2013 Cognifide Limited  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */
