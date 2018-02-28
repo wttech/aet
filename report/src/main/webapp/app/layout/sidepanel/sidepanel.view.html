@@ -30,12 +30,19 @@
     <div class="form-group sidepanel-search-section">
       <input type="text" placeholder="Search..." data-aet-sidepanel-search
              data-ng-model="$root.searchText" class="search-input">
-      <i class="glyphicon glyphicon-search" data-toggle="popover"
-         data-content="Start typing to filter by url name" data-trigger="hover"
-         data-container="body"></i>
-      <i class="glyphicon glyphicon-remove" data-toggle="popover" data-content="Clear search"
-         data-trigger="hover" data-container="body" ng-click="clearSearch()"
-         style="display: none;"></i>
+      <div class="fontawesome"
+           data-toggle="popover"
+           data-content="{{!$root.searchText && 'Start typing to filter by url name' || $root.searchText && 'Clear search'}}"
+           data-trigger="hover"
+           data-container="body"
+           ng-click="clearSearch()">
+            <div ng-if="!$root.searchText">
+              <i class="fas fa-search"></i>
+            </div>
+            <div ng-if="$root.searchText">
+              <i class="fas fa-times"></i>
+            </div>
+      </div>
     </div>
     <div class="form-group">
       <div data-aet-sidepanel-status-filter class="pop" data-toggle="popover">
@@ -131,7 +138,7 @@
   <div class="js-rebase-all" ng-if="sidepanel.thereAreChangesToSave()"
        ng-click="sidepanel.saveAllChanges()">
         <span class="button button-blue button-wide">
-            <i class="glyphicon glyphicon-cloud-upload"></i>
+            <i class="fas fa-cloud-upload-alt"></i>
             Save all changes
         </span>
   </div>
@@ -139,7 +146,7 @@
   <div class="js-cancel-all" ng-if="sidepanel.thereAreChangesToSave()"
        ng-click="sidepanel.discardAllChanges()">
         <span class="button button-darkred button-wide">
-            <i class="glyphicon glyphicon-cloud-download"></i>
+            <i class="fas fa-cloud-download-alt"></i>
             Discard all changes
         </span>
   </div>
