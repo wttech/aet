@@ -80,7 +80,7 @@
       color: $gray_darker;
       display: block;
       width: 100%;
-      padding-left: 13px;
+      padding-left: 8px;
       border-top: solid 1px $border_color_dark;
 
       &.passed {
@@ -125,19 +125,17 @@
       cursor: pointer;
       text-align: left;
 
-      i {
+      svg {
         @include transition(transform, 100ms ease-out);
-        font-size: 13px;
         position: relative;
-        top: 2px;
         display: inline-block;
-        margin-right: 10px;
+        margin-right: 3px;
       }
     }
 
     &.is-expanded {
 
-      i {
+      svg {
         @include transform(rotate(90deg));
       }
     }
