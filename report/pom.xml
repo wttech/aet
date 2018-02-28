@@ -80,6 +80,7 @@
 
                 <exclude>src/main/webapp/assets/fonts/**</exclude>
                 <exclude>src/main/webapp/assets/img/**</exclude>
+                <exclude>src/main/webapp/assets/icons/**</exclude>
 
                 <!-- TODO: we would like to copy those files from node_modules -->
                 <exclude>src/main/webapp/assets/css/**</exclude>

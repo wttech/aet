@@ -20,9 +20,14 @@
 <span class="comments-status pull-left"
       data-toggle="popover"
       data-ng-class="case.comment ? 'present' : 'absent'"
-      data-content="<p>{{case.comment}}</p><br><span class='preformatted'>Click to update this case note</span>"
+      data-content="{{case.comment && '<p>' + case.comment + '</p>' || !case.model.comment && '<span>Click to update this case note</span>'}}"
       data-html="true" data-trigger="hover"
       data-aet-included-comment-popover
       data-ng-click="urlView.displayCommentModal(case)">
-      <i class="glyphicon glyphicon-comment"></i>
+          <div ng-if="case.comment">
+              <i class="fas fa-ellipsis-h" data-fa-transform="shrink-10 up-.5" data-fa-mask="fas fa-comment"></i>
+          </div>
+          <div ng-if="!case.comment">
+              <i class="fas fa-pencil-alt" data-fa-transform="shrink-10 up-.5" data-fa-mask="fas fa-comment"></i>
+          </div>
 </span>

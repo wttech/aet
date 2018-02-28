@@ -21,7 +21,7 @@
 <suite name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
 
 	<!-- Sleep-Modifier BEGIN -->
-	<test name="modifier-Sleep-SUCCESS">
+	<test name="S-modifier-Sleep">
 		<collect>
 			<open />
 			<sleep duration="6000" />
@@ -34,7 +34,7 @@
 			<url href="modifiers/sleep/success.jsp" />
 		</urls>
 	</test>
-	<test name="modifier-Sleep-FAILED">
+	<test name="F-modifier-Sleep">
 		<collect>
 			<open />
 			<sleep duration="1000" />

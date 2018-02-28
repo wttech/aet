@@ -66,7 +66,7 @@ body {
 }
 
 .main {
-	@include transition(left 0.3s, width 0.3s);
+	@include transition(left 0.1s, width 0.1s);
 	position: relative;
 	width: 100%;
 	left: 0;

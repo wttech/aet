@@ -17,7 +17,7 @@
     limitations under the License.
 
 -->
-<div class="aside" ui-view="aside" ng-class="{'has-filters-applied': asideHasFilters}">
+<div class="aside" ui-view="aside">
   <div class="logo-holder">
     <a ui-sref="suite">
       <img class="logo" src="assets/img/logo.png" alt="">
@@ -78,6 +78,8 @@
   <!--
       Tests/ reports listing
   -->
+  <div class="aside-resizer"></div>
+
   <div class="aside-report-summary">
     <header>
       Tests:
@@ -128,19 +130,21 @@
   <h4 class="no-results" ng-if="sidepanel.testsStats.total === 0">
     No results found
   </h4>
-  <div class="js-rebase-all" ng-if="sidepanel.thereAreChangesToSave()"
-       ng-click="sidepanel.saveAllChanges()">
+
+  <div class="aside-actions-wrapper" ng-if="sidepanel.thereAreChangesToSave()">
+    <div class="js-rebase-all" ng-click="sidepanel.saveAllChanges()">
         <span class="button button-blue button-wide">
             <i class="glyphicon glyphicon-cloud-upload"></i>
             Save all changes
         </span>
-  </div>
-
-  <div class="js-cancel-all" ng-if="sidepanel.thereAreChangesToSave()"
-       ng-click="sidepanel.discardAllChanges()">
+    </div>
+    <div class="js-cancel-all" ng-click="sidepanel.discardAllChanges()">
         <span class="button button-darkred button-wide">
             <i class="glyphicon glyphicon-cloud-download"></i>
             Discard all changes
         </span>
+    </div>
+
   </div>
+
 </div>

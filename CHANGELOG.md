@@ -11,7 +11,10 @@ All notable changes to AET will be documented in this file.
 **List of changes that are finished but not yet released in any final version.**
 
 - [PR-228](https://github.com/Cognifide/aet/pull/228) Remove 'jump to' button from whole suite view.
+- [PR-230](https://github.com/Cognifide/aet/pull/230) Bug Fixed: Side panel items not accessible when 'Save/Discard Changes' buttons are visible.
+- [PR-229](https://github.com/Cognifide/aet/pull/229) Improved notes (new icons, buttons order)
 - [PR-226](https://github.com/Cognifide/aet/pull/226) Side panel follows the currently opened report while navigating them using keyboard shortcuts. The unused mCustomScrollbar plugin was removed.
+- [PR-225](https://github.com/Cognifide/aet/pull/225) Added sidebar resize functionality for report app
 - [PR-221](https://github.com/Cognifide/aet/pull/221) Added crosshair buttons for scrolling Side Panel to currently opened url/test.
 - [PR-209](https://github.com/Cognifide/aet/pull/209) Selenium upgraded to 3.8.1. Guava upgraded to 23.6-jre
 
