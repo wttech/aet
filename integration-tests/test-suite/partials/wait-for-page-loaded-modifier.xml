@@ -21,7 +21,7 @@
 <suite name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
 	
 	<!-- Wait-For-Page-Loaded Modifer-BEGIN -->
-	<test name="modifier-Wait-For-Page-Loaded-SUCCESS">
+	<test name="S-modifier-Wait-For-Page-Loaded">
 		<collect>
 			<open />
 			<wait-for-page-loaded />
@@ -35,7 +35,7 @@
 		</urls>
 	</test>
 	<!-- should fail as shows timestamp until end of AJAX calls -->
-	<test name="modifier-Wait-For-Page-Loaded-FAILED">
+	<test name="F-modifier-Wait-For-Page-Loaded">
 		<collect>
 			<open />
 			<!-- needed for initial timestamp rendering on Vagrant -->
