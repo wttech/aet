@@ -10,6 +10,7 @@ All notable changes to AET will be documented in this file.
 ## Unreleased
 **List of changes that are finished but not yet released in any final version.**
 
+- [PR-229](https://github.com/Cognifide/aet/pull/229) Improved notes (new icons, buttons order)
 - [PR-226](https://github.com/Cognifide/aet/pull/226) Side panel follows the currently opened report while navigating them using keyboard shortcuts. The unused mCustomScrollbar plugin was removed.
 - [PR-225](https://github.com/Cognifide/aet/pull/225) Added sidebar resize functionality for report app
 - [PR-221](https://github.com/Cognifide/aet/pull/221) Added crosshair buttons for scrolling Side Panel to currently opened url/test.
