@@ -21,7 +21,7 @@
 <suite name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
 
 	<!--  Login-Modifier  BEGIN -->
-	<test name="loginModifier-SUCCESS">
+	<test name="S-loginModifier">
 		<collect>
 			<login
 					login="admin"
