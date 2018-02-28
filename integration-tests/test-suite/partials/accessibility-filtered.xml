@@ -21,7 +21,7 @@
 <suite name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
 
 	<!-- Accessibility Comparator START -->
-	<test name="comparator-accessibility-FAILED-with-standard-wcag2a-filtered-only-by-principle">
+	<test name="F-comparator-accessibility-with-standard-wcag2a-filtered-only-by-principle">
 		<collect>
 			<open />
 			<accessibility standard="WCAG2A" />
@@ -36,7 +36,7 @@
 		</urls>
 	</test>
 
-	<test name="comparator-accessibility-FAILED-with-standard-wcag2a-filtered-only-by-error">
+	<test name="F-comparator-accessibility-with-standard-wcag2a-filtered-only-by-error">
 		<collect>
 			<open />
 			<accessibility standard="WCAG2A" />
@@ -51,7 +51,7 @@
 		</urls>
 	</test>
 
-	<test name="comparator-accessibility-FAILED-with-standard-wcag2a-filtered-only-by-line">
+	<test name="F-comparator-accessibility-with-standard-wcag2a-filtered-only-by-line">
 		<collect>
 			<open />
 			<accessibility standard="WCAG2A" />
@@ -67,7 +67,7 @@
 		</urls>
 	</test>
 
-	<test name="comparator-accessibility-FAILED-with-standard-wcag2a-filtered-only-by-column">
+	<test name="F-comparator-accessibility-with-standard-wcag2a-filtered-only-by-column">
 		<collect>
 			<open />
 			<accessibility standard="WCAG2A" />
@@ -82,7 +82,7 @@
 		</urls>
 	</test>
 
-	<test name="comparator-accessibility-SUCCESS-with-standard-wcag2a-filtered-all">
+	<test name="S-comparator-accessibility-with-standard-wcag2a-filtered-all">
 		<collect>
 			<open />
 			<accessibility standard="WCAG2A" />

@@ -21,7 +21,7 @@
 <suite name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
 
 	<!-- Layout-Comparator BEGIN -->
-	<test name="comparator-Layout-SUCCESS">
+	<test name="S-comparator-Layout">
 		<collect>
 			<open />
 			<sleep duration="3000" />
@@ -34,7 +34,7 @@
 			<url href="comparators/layout/success.jsp" />
 		</urls>
 	</test>
-	<test name="comparator-Layout-FAILED">
+	<test name="F-comparator-Layout">
 		<collect>
 			<open />
 			<sleep duration="3000" />
@@ -47,7 +47,7 @@
 			<url href="comparators/layout/failed.jsp" />
 		</urls>
 	</test>
-	<test name="comparator-Layout-Hide-SUCCESS">
+	<test name="S-comparator-Layout-Hide">
 		<collect>
 			<open />
 			<sleep duration="3000" />
@@ -62,7 +62,7 @@
 			<url href="comparators/layout/failed.jsp" />
 		</urls>
 	</test>
-	<test name="comparator-Layout-Hide-FAILED-space">
+	<test name="F-comparator-Layout-Hide-space">
 		<collect>
 			<open />
 			<sleep duration="3000" />
@@ -76,7 +76,7 @@
 			<url href="comparators/layout/different_sized_divs.jsp" />
 		</urls>
 	</test>
-	<test name="comparator-Layout-Hide-SUCCESS-leaveBlankSpace-false">
+	<test name="S-comparator-Layout-Hide-leaveBlankSpace-false">
 		<collect>
 			<open />
 			<sleep duration="3000" />
@@ -90,7 +90,7 @@
 			<url href="comparators/layout/different_sized_divs.jsp" />
 		</urls>
 	</test>
-	<test name="comparator-Layout-Resolution-SUCCESS">
+	<test name="S-comparator-Layout-Resolution">
 		<collect>
 			<open />
 			<resolution width="200" height="300" />
@@ -104,7 +104,7 @@
 			<url href="comparators/layout/success_resolution.jsp" />
 		</urls>
 	</test>
-	<test name="comparator-Layout-Resolution-FAILED">
+	<test name="F-comparator-Layout-Resolution">
 		<collect>
 			<open />
 			<resolution width="200" height="300" />
@@ -119,7 +119,7 @@
 		</urls>
 	</test>
 
-	<test name="comparator-Layout-Partial-By-CSS-SUCCESS">
+	<test name="S-comparator-Layout-Partial-By-CSS">
 		<collect>
 			<open />
 			<resolution width="200" height="300" />
@@ -134,7 +134,7 @@
 		</urls>
 	</test>
 
-	<test name="comparator-Layout-Partial-By-XPATH-SUCCESS">
+	<test name="S-comparator-Layout-Partial-By-XPATH">
 		<collect>
 			<open />
 			<resolution width="200" height="300" />

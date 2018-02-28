@@ -21,7 +21,7 @@
 <suite name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
 
 	<!-- JS ERRORS-Comparator START -->
-	<test name="comparator-JsErrors-FAILED-filter-by-source-external-only">
+	<test name="F-comparator-JsErrors-filter-by-source-external-only">
 		<collect>
 			<open />
 			<sleep duration="2000" />
@@ -38,7 +38,7 @@
 		</urls>
 	</test>
 
-	<test name="comparator-JsErrors-FAILED-filter-by-source-mainpage-only">
+	<test name="F-comparator-JsErrors-filter-by-source-mainpage-only">
 		<collect>
 			<open />
 			<sleep duration="2000" />
@@ -56,7 +56,7 @@
 	</test>
 
 	<test
-		name="comparator-JsErrors-SUCCESS-filter-by-source-mainpage-and-external">
+		name="S-comparator-JsErrors-filter-by-source-mainpage-and-external">
 		<collect>
 			<open />
 			<sleep duration="2000" />
@@ -74,7 +74,7 @@
 	</test>
 
 
-	<test name="comparator-JsErrors-FAILED-filter-by-source-and-line-number-20">
+	<test name="F-comparator-JsErrors-filter-by-source-and-line-number-20">
 		<collect>
 			<open />
 			<sleep duration="2000" />
@@ -91,7 +91,7 @@
 	</test>
 
 	<test
-		name="comparator-JsErrors-SUCCESS-filter-by-source-and-line-number-22-and-390">
+		name="S-comparator-JsErrors-filter-by-source-and-line-number-22-and-390">
 		<collect>
 			<open />
 			<sleep duration="1000" />
@@ -109,7 +109,7 @@
 	</test>
 
 	<test
-		name="comparator-JsErrors-SUCCESS-filter-by-file-source-external-resource">
+		name="S-comparator-JsErrors-filter-by-file-source-external-resource">
 		<collect>
 			<open />
 			<sleep duration="1000" />
