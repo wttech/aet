@@ -163,6 +163,7 @@
           text-align: left;
           padding-left: 10px;
           @extend .ellipsis;
+          -webkit-font-smoothing: antialiased;
         }
 
         &:before {
