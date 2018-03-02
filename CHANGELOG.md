@@ -10,6 +10,7 @@ All notable changes to AET will be documented in this file.
 ## Unreleased
 **List of changes that are finished but not yet released in any final version.**
 
+- [PR-233](https://github.com/Cognifide/aet/pull/233) Font Awesome introduced to AET
 - [PR-229](https://github.com/Cognifide/aet/pull/229) Improved notes (new icons, buttons order)
 - [PR-226](https://github.com/Cognifide/aet/pull/226) Side panel follows the currently opened report while navigating them using keyboard shortcuts. The unused mCustomScrollbar plugin was removed.
 - [PR-225](https://github.com/Cognifide/aet/pull/225) Added sidebar resize functionality for report app
