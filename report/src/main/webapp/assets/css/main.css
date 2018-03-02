@@ -220,10 +220,10 @@ td, th { padding: 0; }
 .glyphicon-th-list:before { content: "\e012"; }
 
 /* line 56, ../../node_modules/bootstrap-sass-twbs/assets/stylesheets/bootstrap/_glyphicons.scss */
-.glyphicon-ok:before, .reports-list-item i.passed:before { content: "\e013"; }
+.glyphicon-ok:before { content: "\e013"; }
 
 /* line 57, ../../node_modules/bootstrap-sass-twbs/assets/stylesheets/bootstrap/_glyphicons.scss */
-.glyphicon-remove:before, .reports-list-item i.failed:before { content: "\e014"; }
+.glyphicon-remove:before { content: "\e014"; }
 
 /* line 58, ../../node_modules/bootstrap-sass-twbs/assets/stylesheets/bootstrap/_glyphicons.scss */
 .glyphicon-zoom-in:before { content: "\e015"; }
@@ -757,7 +757,7 @@ td, th { padding: 0; }
 .glyphicon-cloud-download:before { content: "\e197"; }
 
 /* line 235, ../../node_modules/bootstrap-sass-twbs/assets/stylesheets/bootstrap/_glyphicons.scss */
-.glyphicon-cloud-upload:before, .reports-list-item i.rebased:before { content: "\e198"; }
+.glyphicon-cloud-upload:before { content: "\e198"; }
 
 /* line 236, ../../node_modules/bootstrap-sass-twbs/assets/stylesheets/bootstrap/_glyphicons.scss */
 .glyphicon-tree-conifer:before { content: "\e199"; }
@@ -784,7 +784,7 @@ td, th { padding: 0; }
 .glyphicon-paste:before { content: "\e206"; }
 
 /* line 252, ../../node_modules/bootstrap-sass-twbs/assets/stylesheets/bootstrap/_glyphicons.scss */
-.glyphicon-alert:before, .reports-list-item i.warning:before { content: "\e209"; }
+.glyphicon-alert:before { content: "\e209"; }
 
 /* line 253, ../../node_modules/bootstrap-sass-twbs/assets/stylesheets/bootstrap/_glyphicons.scss */
 .glyphicon-equalizer:before { content: "\e210"; }
@@ -4304,79 +4304,79 @@ tr.delete, tr.err, tr.error { background: #f2dede; }
 /* line 79, ../sass/_report.scss */
 .reports-list-item.passed { background: #caeb7f; border-top: solid 10px #6f9f00; }
 /* line 83, ../sass/_report.scss */
-.reports-list-item.passed span, .reports-list-item.passed i { color: #6f9f00; }
+.reports-list-item.passed span, .reports-list-item.passed svg { color: #6f9f00; }
 /* line 88, ../sass/_report.scss */
 .reports-list-item.failed, .reports-list-item.processing_error { background: #ddacac; border-top: solid 10px #bb5a5a; }
 /* line 93, ../sass/_report.scss */
-.reports-list-item.failed span, .reports-list-item.failed i, .reports-list-item.processing_error span, .reports-list-item.processing_error i { color: #bb5a5a; }
+.reports-list-item.failed span, .reports-list-item.failed svg, .reports-list-item.processing_error span, .reports-list-item.processing_error svg { color: #bb5a5a; }
 /* line 98, ../sass/_report.scss */
 .reports-list-item.rebased { background: #00c1ff; border-top: solid 10px #0079cb; }
 /* line 102, ../sass/_report.scss */
-.reports-list-item.rebased span, .reports-list-item.rebased i { color: #ffffff; }
+.reports-list-item.rebased span, .reports-list-item.rebased svg { color: #ffffff; }
 /* line 108, ../sass/_report.scss */
 .reports-list-item.warning { background: #fff085; border-top: solid 10px #f0ad4e; }
 /* line 112, ../sass/_report.scss */
-.reports-list-item.warning span, .reports-list-item.warning i { color: #f0ad4e; }
+.reports-list-item.warning span, .reports-list-item.warning svg { color: #f0ad4e; }
 /* line 118, ../sass/_report.scss */
 .reports-list-item:hover .test-icons { z-index: 2; opacity: 1; }
 /* line 124, ../sass/_report.scss */
 .reports-list-item a { -webkit-transition: none; -o-transition: none; transition: none; display: table; height: 269px; width: 100%; padding: 30px 10px 40px; }
 /* line 136, ../sass/_report.scss */
 .reports-list-item.warning .icon, .reports-list-item.rebased .icon, .reports-list-item.processing_error .icon, .reports-list-item.failed .icon { height: 70px; padding-top: 7px; }
-/* line 163, ../sass/_report.scss */
+/* line 145, ../sass/_report.scss */
 .reports-list .test-count, .reports-list .errors-count, .reports-list .success-count { text-align: center; overflow: hidden; }
-/* line 167, ../sass/_report.scss */
+/* line 149, ../sass/_report.scss */
 .reports-list .test-count svg, .reports-list .errors-count svg, .reports-list .success-count svg { font-size: 45px; margin-bottom: 10px; }
-/* line 172, ../sass/_report.scss */
+/* line 154, ../sass/_report.scss */
 .reports-list .test-count i, .reports-list .errors-count i, .reports-list .success-count i { font-size: 45px; line-height: 50px; display: block; font-family: "montserratbold", sans-serif; }
-/* line 179, ../sass/_report.scss */
+/* line 161, ../sass/_report.scss */
 .reports-list .test-count span, .reports-list .errors-count span, .reports-list .success-count span { font-size: 18px; font-family: "montserratbold", sans-serif; display: block; word-break: break-all; }
-/* line 186, ../sass/_report.scss */
+/* line 168, ../sass/_report.scss */
 .reports-list .test-count-large { border-right: 0 none; }
-/* line 195, ../sass/_report.scss */
+/* line 177, ../sass/_report.scss */
 .reports-list .errors-count { border-right: solid 1px #bb5a5a; }
-/* line 198, ../sass/_report.scss */
+/* line 180, ../sass/_report.scss */
 .reports-list .errors-count i { color: #bb5a5a; }
-/* line 202, ../sass/_report.scss */
+/* line 184, ../sass/_report.scss */
 .reports-list .errors-count span { color: #bb5a5a; }
-/* line 208, ../sass/_report.scss */
+/* line 190, ../sass/_report.scss */
 .reports-list .success-count i { color: #6f9f00; }
-/* line 212, ../sass/_report.scss */
+/* line 194, ../sass/_report.scss */
 .reports-list .success-count span { color: #6f9f00; }
-/* line 218, ../sass/_report.scss */
+/* line 200, ../sass/_report.scss */
 .reports-list .errors-list span { font-family: "montserratbold", sans-serif; font-size: 18px; color: #bb5a5a; }
-/* line 224, ../sass/_report.scss */
+/* line 206, ../sass/_report.scss */
 .reports-list .errors-list ul { margin: 0 0 10px 0; padding: 0; list-style: none; }
-/* line 229, ../sass/_report.scss */
+/* line 211, ../sass/_report.scss */
 .reports-list .errors-list ul li { font-size: 14px; color: #bb5a5a; position: relative; padding-left: 15px; }
-/* line 235, ../sass/_report.scss */
+/* line 217, ../sass/_report.scss */
 .reports-list .errors-list ul li:before { content: '-'; position: absolute; left: 0; }
 
-/* line 245, ../sass/_report.scss */
+/* line 227, ../sass/_report.scss */
 .test-icons { -webkit-transition: all 0.3s; -o-transition: all 0.3s; transition: all 0.3s; position: absolute; width: 100%; text-align: center; left: 0; bottom: 67px; z-index: -1; opacity: 0; }
-/* line 255, ../sass/_report.scss */
+/* line 237, ../sass/_report.scss */
 .test-icons span { border-radius: 999px; display: inline-block; width: 35px; height: 35px; line-height: 39px; text-align: center; font-size: 16px; cursor: pointer; color: #ffffff; }
-/* line 267, ../sass/_report.scss */
+/* line 249, ../sass/_report.scss */
 .test-icons-comment { background: #85898e; }
-/* line 271, ../sass/_report.scss */
+/* line 253, ../sass/_report.scss */
 .test-icons-rebase { background: #0097fe; }
 
-/* line 279, ../sass/_report.scss */
+/* line 261, ../sass/_report.scss */
 ul li a.nav-link { text-transform: uppercase; font-size: 18px; color: #77777c; }
 
-/* line 288, ../sass/_report.scss */
+/* line 270, ../sass/_report.scss */
 ul li.passed a.nav-link, ul li.passed a.nav-link:focus, ul li.passed a.nav-link:hover { color: #6f9f00; }
-/* line 296, ../sass/_report.scss */
+/* line 278, ../sass/_report.scss */
 ul li.failed a.nav-link, ul li.failed a.nav-link:focus, ul li.failed a.nav-link:hover, ul li.processing_error a.nav-link, ul li.processing_error a.nav-link:focus, ul li.processing_error a.nav-link:hover { color: #bb5a5a; }
-/* line 303, ../sass/_report.scss */
+/* line 285, ../sass/_report.scss */
 ul li.rebased a.nav-link, ul li.rebased a.nav-link:focus, ul li.rebased a.nav-link:hover { color: #0097fe; }
-/* line 310, ../sass/_report.scss */
+/* line 292, ../sass/_report.scss */
 ul li.warning a.nav-link, ul li.warning a.nav-link:focus, ul li.warning a.nav-link:hover { color: #f0ad4e; }
 
-/* line 321, ../sass/_report.scss */
+/* line 303, ../sass/_report.scss */
 .failed .cookie-test { font-weight: bold; display: inline !important; color: #bb5a5a !important; }
 
-/* line 329, ../sass/_report.scss */
+/* line 311, ../sass/_report.scss */
 .passed .cookie-test { font-weight: bold; display: inline !important; color: #6f9f00 !important; }
 
 /* line 31, ../sass/main.scss */
