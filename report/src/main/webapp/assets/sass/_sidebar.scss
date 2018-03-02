@@ -125,7 +125,7 @@
       cursor: pointer;
       text-align: left;
 
-      svg {
+      svg.rotate-svg {
         @include transition(transform, 100ms ease-out);
         position: relative;
         display: inline-block;
@@ -135,7 +135,7 @@
 
     &.is-expanded {
 
-      svg {
+      svg.rotate-svg {
         @include transform(rotate(90deg));
       }
     }
@@ -155,7 +155,6 @@
         position: relative;
         line-height: normal;
         margin-bottom: 20px;
-        margin-left: 15px;
         color: $gray_dark;
 
         a {
@@ -177,22 +176,18 @@
         &.failedcommented,
         &.processing_error {
           color: $failed;
-          @extend .glyphicon-remove;
         }
 
         &.passed {
           color: $passed;
-          @extend .glyphicon-ok;
         }
 
         &.warning {
           color: $warning;
-          @extend .glyphicon-alert;
         }
 
         &.rebased {
           color: $rebased;
-          @extend .glyphicon-cloud-upload;
         }
       }
     }
@@ -208,6 +203,15 @@
       }
     }
   }
+
+  .fontawesome {
+    display: inline;
+  }
+
+  .text-left.nowrap.ng-isolate-scope {
+    display: flex;
+  }
+
   &.show-failed {
 
     .url-name,
