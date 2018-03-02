@@ -3860,13 +3860,13 @@ table { border-collapse: collapse; border-spacing: 0; }
 /* line 155, ../sass/_typography.scss */
 .name { font-style: italic; }
 
-/* line 61, ../../../../../../../../../../../Ruby24-x64/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+/* line 61, ../../../../../../../../../../../Library/Ruby/Gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]:-moz-placeholder { color: #85898e; }
-/* line 64, ../../../../../../../../../../../Ruby24-x64/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+/* line 64, ../../../../../../../../../../../Library/Ruby/Gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]::-moz-placeholder { color: #85898e; }
-/* line 67, ../../../../../../../../../../../Ruby24-x64/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+/* line 67, ../../../../../../../../../../../Library/Ruby/Gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]:-ms-input-placeholder { color: #85898e; }
-/* line 56, ../../../../../../../../../../../Ruby24-x64/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+/* line 56, ../../../../../../../../../../../Library/Ruby/Gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]::-webkit-input-placeholder { color: #85898e; }
 
 /* AET  Copyright (C) 2013 Cognifide Limited  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */
@@ -3971,10 +3971,10 @@ input[type=text]::-webkit-input-placeholder { color: #85898e; }
 .aside-report.is-expanded ul { display: block; overflow: hidden; }
 /* line 74, ../sass/_sidebar.scss */
 .aside-report-container { height: calc(100vh - 240px); overflow: auto; }
-/* line 79, ../sass/_sidebar.scss */
+/* line 78, ../sass/_sidebar.scss */
+.aside-report-container:not(:last-child) { height: calc(100vh - 240px - 124px); }
+/* line 83, ../sass/_sidebar.scss */
 .aside-report .test-name { color: #85898e; display: block; width: 100%; padding-left: 8px; border-top: solid 1px #313942; }
-/* line 86, ../sass/_sidebar.scss */
-.aside-report .test-name.passed { color: #6f9f00; }
 /* line 90, ../sass/_sidebar.scss */
 .aside-report .test-name.passed { color: #6f9f00; }
 /* line 94, ../sass/_sidebar.scss */
@@ -3991,74 +3991,75 @@ input[type=text]::-webkit-input-placeholder { color: #85898e; }
 .aside-report .test-name.is-active:before { color: inherit; }
 /* line 122, ../sass/_sidebar.scss */
 .aside-report span { white-space: nowrap; overflow: hidden; -ms-text-overflow: ellipsis; -o-text-overflow: ellipsis; text-overflow: ellipsis; color: inherit; font-family: "montserratlight", sans-serif; font-size: 15px; width: 80%; display: block; cursor: pointer; text-align: left; }
-/* line 128, ../sass/_sidebar.scss */
+/* line 132, ../sass/_sidebar.scss */
 .aside-report span svg.rotate-svg { -webkit-transition: transform, 100ms ease-out; -o-transition: transform, 100ms ease-out; transition: transform, 100ms ease-out; position: relative; display: inline-block; margin-right: 3px; }
-/* line 138, ../sass/_sidebar.scss */
+/* line 142, ../sass/_sidebar.scss */
 .aside-report.is-expanded svg.rotate-svg { -moz-transform: rotate(90deg); -ms-transform: rotate(90deg); -webkit-transform: rotate(90deg); transform: rotate(90deg); }
-/* line 143, ../sass/_sidebar.scss */
+/* line 147, ../sass/_sidebar.scss */
 .aside-report ul { padding: 0; margin: 0 0 0 30px; background: #2c333b; display: none; }
-/* line 149, ../sass/_sidebar.scss */
+/* line 153, ../sass/_sidebar.scss */
 .aside-report ul li { width: 80%; display: block; font-size: 15px; font-family: "montserratlight", sans-serif; background: #2c333b; position: relative; line-height: normal; margin-bottom: 20px; color: #77777c; }
-/* line 160, ../sass/_sidebar.scss */
+/* line 164, ../sass/_sidebar.scss */
 .aside-report ul li a { display: block; color: inherit; text-align: left; padding-left: 10px; -webkit-font-smoothing: antialiased; }
-/* line 169, ../sass/_sidebar.scss */
-.aside-report ul li:before { position: absolute; left: -10px; font-size: 15px; left: -16px; }
-/* line 176, ../sass/_sidebar.scss */
+/* line 173, ../sass/_sidebar.scss */
+.aside-report ul li:before { position: absolute; font-size: 15px; left: -16px; }
+/* line 179, ../sass/_sidebar.scss */
 .aside-report ul li.failed, .aside-report ul li.failedcommented, .aside-report ul li.processing_error { color: #bb5a5a; }
-/* line 182, ../sass/_sidebar.scss */
+/* line 185, ../sass/_sidebar.scss */
 .aside-report ul li.passed { color: #6f9f00; }
-/* line 186, ../sass/_sidebar.scss */
+/* line 189, ../sass/_sidebar.scss */
 .aside-report ul li.warning { color: #f0ad4e; }
-/* line 190, ../sass/_sidebar.scss */
+/* line 193, ../sass/_sidebar.scss */
 .aside-report ul li.rebased { color: #0097fe; }
-/* line 199, ../sass/_sidebar.scss */
+/* line 202, ../sass/_sidebar.scss */
 .aside.has-filters-applied .aside-report:not(.is-hidden) { max-height: none; }
-/* line 201, ../sass/_sidebar.scss */
+/* line 204, ../sass/_sidebar.scss */
 .aside.has-filters-applied .aside-report:not(.is-hidden) ul { display: block; }
-/* line 208, ../sass/_sidebar.scss */
+/* line 211, ../sass/_sidebar.scss */
 .aside .fontawesome { display: inline; }
-/* line 212, ../sass/_sidebar.scss */
+/* line 215, ../sass/_sidebar.scss */
 .aside .text-left.nowrap.ng-isolate-scope { display: flex; }
-/* line 218, ../sass/_sidebar.scss */
+/* line 221, ../sass/_sidebar.scss */
 .aside.show-failed .url-name, .aside.show-failed .test-name { display: none; }
-/* line 222, ../sass/_sidebar.scss */
+/* line 225, ../sass/_sidebar.scss */
 .aside.show-failed .url-name.failed, .aside.show-failed .test-name.failed { display: block; }
-/* line 230, ../sass/_sidebar.scss */
-.aside.show-commented .url-name, .aside.show-commented .test-name { display: none; }
 /* line 233, ../sass/_sidebar.scss */
+.aside.show-commented .url-name, .aside.show-commented .test-name { display: none; }
+/* line 236, ../sass/_sidebar.scss */
 .aside.show-commented .url-name.commented, .aside.show-commented .test-name.commented { display: block; }
-/* line 241, ../sass/_sidebar.scss */
+/* line 244, ../sass/_sidebar.scss */
 .aside.show-passed .url-name, .aside.show-passed .test-name { display: none; }
-/* line 243, ../sass/_sidebar.scss */
+/* line 246, ../sass/_sidebar.scss */
 .aside.show-passed .url-name.passed, .aside.show-passed .test-name.passed { display: block; }
-/* line 251, ../sass/_sidebar.scss */
-.aside.show-warning .url-name, .aside.show-warning .test-name { display: none; }
 /* line 254, ../sass/_sidebar.scss */
+.aside.show-warning .url-name, .aside.show-warning .test-name { display: none; }
+/* line 257, ../sass/_sidebar.scss */
 .aside.show-warning .url-name.warning, .aside.show-warning .test-name.warning { display: block; }
 
-/* line 261, ../sass/_sidebar.scss */
+/* line 264, ../sass/_sidebar.scss */
 .aside-report-summary { display: table; width: 100%; border-bottom: solid 1px #313942; text-transform: uppercase; padding: 0 15px; line-height: 40px; }
-/* line 269, ../sass/_sidebar.scss */
+/* line 272, ../sass/_sidebar.scss */
 .aside-report-summary header { float: left; color: #ffffff; font-size: 16px; text-transform: uppercase; }
-/* line 276, ../sass/_sidebar.scss */
+/* line 279, ../sass/_sidebar.scss */
 .aside-report-summary .stats { font-size: 14px; color: #ffffff; }
-/* line 280, ../sass/_sidebar.scss */
+/* line 283, ../sass/_sidebar.scss */
 .aside-report-summary .stats.has-errors { color: #f0ad4e; }
-/* line 284, ../sass/_sidebar.scss */
+/* line 287, ../sass/_sidebar.scss */
 .aside-report-summary .stats.is-filtered { color: #ffffff; }
 
-/* line 290, ../sass/_sidebar.scss */
+/* line 293, ../sass/_sidebar.scss */
 .report-item-stats { color: #85898e; position: absolute; right: 21px; top: 6px; background: #3c4550; font-family: "montserratbold", sans-serif; font-size: 14px; line-height: 32px; padding: 0 7px; }
 
-/* line 302, ../sass/_sidebar.scss */
-.js-rebase-all, .js-cancel-all { position: fixed; bottom: 0; width: 350px; border-top: solid 1px #313942; padding: 16px; background: #2c333b; z-index: 1; }
+/* line 305, ../sass/_sidebar.scss */
+.aside-actions-wrapper { padding: 17px 0 16px; border-top: solid 1px #313942; }
+/* line 309, ../sass/_sidebar.scss */
+.aside-actions-wrapper .js-rebase-all, .aside-actions-wrapper .js-cancel-all { position: relative; width: 100%; background: #2c333b; z-index: 1; }
+/* line 315, ../sass/_sidebar.scss */
+.aside-actions-wrapper .js-rebase-all:not(:last-child), .aside-actions-wrapper .js-cancel-all:not(:last-child) { margin-bottom: 16px; }
 
-/* line 312, ../sass/_sidebar.scss */
-.js-rebase-all { bottom: 60px; }
-
-/* line 316, ../sass/_sidebar.scss */
+/* line 321, ../sass/_sidebar.scss */
 .is-active { color: #ffffff !important; }
-/* line 319, ../sass/_sidebar.scss */
+/* line 324, ../sass/_sidebar.scss */
 .is-active a, .is-active:before { color: #ffffff !important; }
 
 /* AET  Copyright (C) 2013 Cognifide Limited  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */
