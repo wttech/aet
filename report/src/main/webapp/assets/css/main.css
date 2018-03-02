@@ -4132,20 +4132,18 @@ input[type=text]::-webkit-input-placeholder { color: #85898e; }
 /* line 27, ../sass/_popups.scss */
 .modal-body textarea { width: 100%; border: solid 1px #ededed; background-color: #ffffff; height: 300px; resize: none; }
 /* line 37, ../sass/_popups.scss */
-.modal-footer > button + button { margin-right: 20px; }
-/* line 41, ../sass/_popups.scss */
 .modal-footer_flex { align-items: center; display: flex; justify-content: space-between; }
-/* line 46, ../sass/_popups.scss */
+/* line 42, ../sass/_popups.scss */
 .modal-footer_flex-right { justify-content: flex-end; }
-/* line 52, ../sass/_popups.scss */
+/* line 48, ../sass/_popups.scss */
 .modal-question { font-weight: bold; }
-/* line 56, ../sass/_popups.scss */
+/* line 52, ../sass/_popups.scss */
 .modal .close { font-size: 30px; color: #77777c; opacity: 1; }
 
-/* line 65, ../sass/_popups.scss */
+/* line 61, ../sass/_popups.scss */
 .filter-list-title p { text-align: left; white-space: nowrap; overflow: hidden; -ms-text-overflow: ellipsis; -o-text-overflow: ellipsis; text-overflow: ellipsis; max-width: 86%; }
 
-/* line 74, ../sass/_popups.scss */
+/* line 70, ../sass/_popups.scss */
 .dropdown-field p { display: inline; color: #000000; font-weight: normal; }
 
 /* AET  Copyright (C) 2013 Cognifide Limited  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */

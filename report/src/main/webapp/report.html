@@ -46,32 +46,7 @@
   <div ui-view="content"></div>
 </div>
 
-<!--
-    Comments modal
--->
-<div class="modal fade" id="commentModal" tabindex="-1" role="dialog"
-     aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-            aria-hidden="true"><i class="glyphicon glyphicon-remove"></i></span></button>
-        <h4 class="modal-title" id="myModalLabel">Add Comment</h4>
-      </div>
-      <div class="modal-body">
-        <textarea name="" id="newComment" ng-model="newComment"></textarea>
-      </div>
-      <div class="modal-footer">
-        <button class="button button-blue pull-right" aet-save-changes change="{{commentType}}"
-                type="comment" text="{{newComment}}"><i class="glyphicon glyphicon-ok"></i>Save
-        </button>
-        <button type="button" class="button button-dark pull-right" data-dismiss="modal"><i
-            class="glyphicon glyphicon-remove"></i>Cancel
-        </button>
-      </div>
-    </div>
-  </div>
-</div>
+
 <!--
     Help modal
 -->

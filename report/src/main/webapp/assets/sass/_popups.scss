@@ -34,10 +34,6 @@
   }
 
   &-footer {
-    & > button + button {
-      margin-right: 20px;
-    }
-
     &_flex {
       align-items: center;
       display: flex;
