@@ -3887,71 +3887,73 @@ input[type=text]::-webkit-input-placeholder { color: #85898e; }
 /* line 62, ../sass/_toolbar.scss */
 .toolbar-block { text-align: center; border-left: solid 1px #ededed; font-family: "montserratlight", sans-serif; color: #77777c; font-size: 14px; padding: 16px 22px; }
 /* line 70, ../sass/_toolbar.scss */
-.toolbar-block i { cursor: pointer; font-size: 20px; align-self: center; }
-/* line 76, ../sass/_toolbar.scss */
+.toolbar-block svg { color: #77777c; cursor: pointer; font-size: 20px; align-self: center; }
+/* line 77, ../sass/_toolbar.scss */
 .toolbar-block:last-child { display: flex; border-right: solid 1px #ededed; }
-/* line 82, ../sass/_toolbar.scss */
+/* line 83, ../sass/_toolbar.scss */
 .toolbar-blocks { display: flex; flex-wrap: nowrap; z-index: 100; }
-/* line 87, ../sass/_toolbar.scss */
+/* line 88, ../sass/_toolbar.scss */
 .toolbar-blocks.is-absolute { right: 0; padding-right: 15px; background: #ffffff; position: absolute; }
 /* line 95, ../sass/_toolbar.scss */
-.toolbar-bottom { display: flex; justify-content: space-between; width: 100%; padding: 0 20px; background: #ffffff; }
+.toolbar-blocks .fontawesome-link { align-items: center; display: flex; justify-content: center; }
 /* line 102, ../sass/_toolbar.scss */
+.toolbar-bottom { display: flex; justify-content: space-between; width: 100%; padding: 0 20px; background: #ffffff; }
+/* line 109, ../sass/_toolbar.scss */
 .toolbar-bottom h4, .toolbar-bottom h5 { font-weight: normal; color: #85898e; padding-right: 20px; }
-/* line 107, ../sass/_toolbar.scss */
+/* line 114, ../sass/_toolbar.scss */
 .toolbar-bottom h4 .glyphicon-screenshot, .toolbar-bottom h5 .glyphicon-screenshot { position: relative; cursor: pointer; }
-/* line 112, ../sass/_toolbar.scss */
+/* line 119, ../sass/_toolbar.scss */
 .toolbar-bottom h4 a, .toolbar-bottom h5 a { color: #85898e; }
-/* line 115, ../sass/_toolbar.scss */
+/* line 122, ../sass/_toolbar.scss */
 .toolbar-bottom h4 a:hover, .toolbar-bottom h5 a:hover { color: #6c7074; }
-/* line 121, ../sass/_toolbar.scss */
+/* line 128, ../sass/_toolbar.scss */
 .toolbar-bottom h4 { font-size: 24px; line-height: 54px; }
-/* line 125, ../sass/_toolbar.scss */
+/* line 132, ../sass/_toolbar.scss */
 .toolbar-bottom h4 .glyphicon-screenshot { top: 4px; }
-/* line 129, ../sass/_toolbar.scss */
+/* line 136, ../sass/_toolbar.scss */
 .toolbar-bottom h4:not(:last-child) { margin-bottom: 0; }
-/* line 134, ../sass/_toolbar.scss */
-.toolbar-bottom h5 { margin-top: 0; margin-bottom: 26px; padding-left: 4px; font-size: 16px; line-height: 18px; }
 /* line 141, ../sass/_toolbar.scss */
+.toolbar-bottom h5 { margin-top: 0; margin-bottom: 26px; padding-left: 4px; font-size: 16px; line-height: 18px; }
+/* line 148, ../sass/_toolbar.scss */
 .toolbar-bottom h5 .glyphicon-screenshot { top: 3px; }
-/* line 147, ../sass/_toolbar.scss */
+/* line 154, ../sass/_toolbar.scss */
 .toolbar-nav { width: 95px; padding-top: 5px; margin-right: 20px; }
-/* line 152, ../sass/_toolbar.scss */
+/* line 159, ../sass/_toolbar.scss */
 .toolbar-nav.is-absolute { right: 15px; background: #ffffff; position: absolute; }
-/* line 158, ../sass/_toolbar.scss */
+/* line 165, ../sass/_toolbar.scss */
 .toolbar-nav div { float: left; border: solid 1px #ededed; margin-left: -1px; padding: 0 12px; cursor: pointer; background: #ffffff; }
-/* line 166, ../sass/_toolbar.scss */
-.toolbar-nav div svg { margin: 7px 2px; display: block; color: #85898e; }
 /* line 173, ../sass/_toolbar.scss */
-.toolbar-btns { border-left: solid 1px #ededed; padding-left: 30px; padding-top: 15px; height: 73px; display: flex; }
+.toolbar-nav div svg { margin: 7px 2px; display: block; color: #85898e; }
 /* line 180, ../sass/_toolbar.scss */
+.toolbar-btns { border-left: solid 1px #ededed; padding-left: 30px; padding-top: 15px; height: 73px; display: flex; }
+/* line 187, ../sass/_toolbar.scss */
 .toolbar-btns .button { float: left; margin-left: 12px; }
-/* line 185, ../sass/_toolbar.scss */
+/* line 192, ../sass/_toolbar.scss */
 .tab-content-toolbar .toolbar-btns { padding-top: 3px; padding-right: 15px; height: 47px; }
 
-/* line 193, ../sass/_toolbar.scss */
+/* line 200, ../sass/_toolbar.scss */
 .comments-status { width: 45px; font-family: "montserratlight", sans-serif; font-size: 30px; display: block; line-height: 44px; cursor: pointer; }
-/* line 201, ../sass/_toolbar.scss */
+/* line 208, ../sass/_toolbar.scss */
 .comments-status.small { line-height: 37px; font-size: 11px; }
-/* line 206, ../sass/_toolbar.scss */
+/* line 213, ../sass/_toolbar.scss */
 .comments-status.present { color: #6f9f00; }
-/* line 210, ../sass/_toolbar.scss */
+/* line 217, ../sass/_toolbar.scss */
 .comments-status.absent { color: #3c4550; }
 
-@media (max-width: 1300px) { /* line 215, ../sass/_toolbar.scss */
+@media (max-width: 1300px) { /* line 222, ../sass/_toolbar.scss */
   .tab-content-toolbar { height: 94px; } }
-/* line 221, ../sass/_toolbar.scss */
+/* line 228, ../sass/_toolbar.scss */
 .tab-content-toolbar .toolbar-btns, .tab-content-toolbar .comments-status { width: auto; }
-/* line 225, ../sass/_toolbar.scss */
+/* line 232, ../sass/_toolbar.scss */
 .tab-content-toolbar .toolbar-blocks { display: inline; }
 
-/* line 230, ../sass/_toolbar.scss */
+/* line 237, ../sass/_toolbar.scss */
 .important-message { background: #fff085; }
 
-/* line 234, ../sass/_toolbar.scss */
+/* line 241, ../sass/_toolbar.scss */
 .button-dark.js-trigger-modal { display: inline-block; }
 
-/* line 238, ../sass/_toolbar.scss */
+/* line 245, ../sass/_toolbar.scss */
 .preformatted { font-family: monospace; }
 
 /* AET  Copyright (C) 2013 Cognifide Limited  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */
