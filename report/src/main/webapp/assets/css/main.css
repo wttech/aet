@@ -3823,41 +3823,38 @@ table { border-collapse: collapse; border-spacing: 0; }
 @font-face { font-family: 'montserratlight'; src: url("../fonts/montserrat-light-webfont.eot"); src: url("../fonts/montserrat-light-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/montserrat-light-webfont.woff2") format("woff2"), url("../fonts/montserrat-light-webfont.woff") format("woff"), url("../fonts/montserrat-light-webfont.ttf") format("truetype"), url("../fonts/montserrat-light-webfont.svg#montserratlight") format("svg"); font-weight: normal; font-style: normal; }
 @font-face { font-family: 'montserratregular'; src: url("../fonts/montserrat-regular-webfont.eot"); src: url("../fonts/montserrat-regular-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/montserrat-regular-webfont.woff2") format("woff2"), url("../fonts/montserrat-regular-webfont.woff") format("woff"), url("../fonts/montserrat-regular-webfont.ttf") format("truetype"), url("../fonts/montserrat-regular-webfont.svg#montserratregular") format("svg"); font-weight: normal; font-style: normal; }
 /* line 54, ../sass/_typography.scss */
-.glyphicon:before { font-family: 'Glyphicons Halflings' !important; font-style: normal !important; font-weight: normal !important; font-variant: normal !important; text-transform: none !important; speak: none; line-height: 1; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-
-/* line 66, ../sass/_typography.scss */
 .ellipsis, .aside-report ul li a { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-/* line 72, ../sass/_typography.scss */
+/* line 60, ../sass/_typography.scss */
 .reverse-ellipsis { text-overflow: clip; position: relative; background-color: inherit; }
-/* line 79, ../sass/_typography.scss */
+/* line 67, ../sass/_typography.scss */
 .reverse-ellipsis.failed:before { color: #ddacac; }
 
-/* line 85, ../sass/_typography.scss */
+/* line 73, ../sass/_typography.scss */
 .reverse-ellipsis:before { content: '\02026'; position: absolute; z-index: 1; left: -1em; background-color: inherit; padding-left: 1em; margin-left: 0.5em; }
 
-/* line 97, ../sass/_typography.scss */
+/* line 85, ../sass/_typography.scss */
 .reverse-ellipsis a, .reverse-ellipsis h4, .reverse-ellipsis span { min-width: 100%; position: relative; display: inline-block; float: right; overflow: visible; background-color: inherit; text-indent: 0.5em; }
-/* line 106, ../sass/_typography.scss */
+/* line 94, ../sass/_typography.scss */
 .reverse-ellipsis a:before, .reverse-ellipsis h4:before, .reverse-ellipsis span:before { content: ''; position: absolute; display: inline-block; width: 1em; height: 1em; background-colaor: inherit; left: -.5em; }
 
-/* line 118, ../sass/_typography.scss */
+/* line 106, ../sass/_typography.scss */
 .nowrap { white-space: nowrap; }
 
-/* line 122, ../sass/_typography.scss */
+/* line 110, ../sass/_typography.scss */
 .test-no-issues { display: block; text-align: center; font-family: "montserratlight", sans-serif; padding: 30px 0; }
 
-/* line 129, ../sass/_typography.scss */
+/* line 117, ../sass/_typography.scss */
 .processing-error-comparators { margin-top: 30px; }
-/* line 132, ../sass/_typography.scss */
+/* line 120, ../sass/_typography.scss */
 .processing-error-comparators span { display: block; font-size: 16px; font-family: "montserratlight", sans-serif; margin-bottom: 10px; }
-/* line 139, ../sass/_typography.scss */
+/* line 127, ../sass/_typography.scss */
 .processing-error-comparators i { display: block; margin-bottom: 5px; }
 
-/* line 147, ../sass/_typography.scss */
+/* line 135, ../sass/_typography.scss */
 .processing-error i { display: block; margin-top: 20px; font-size: 14px; font-family: "montserratlight", sans-serif; }
 
-/* line 155, ../sass/_typography.scss */
+/* line 143, ../sass/_typography.scss */
 .name { font-style: italic; }
 
 /* line 61, ../../../../../../../../../../../Library/Ruby/Gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
@@ -4072,35 +4069,33 @@ input[type=text]::-webkit-input-placeholder { color: #85898e; }
 /* line 26, ../sass/_filters.scss */
 .filters .form-group { position: relative; }
 /* line 29, ../sass/_filters.scss */
-.filters .form-group i { position: absolute; right: 15px; z-index: 1; top: 11px; font-size: 18px; color: #FFF; }
-/* line 38, ../sass/_filters.scss */
 .filters .form-group .fontawesome { position: absolute; right: 15px; z-index: 1; top: 11px; font-size: 18px; color: #FFF; }
-/* line 46, ../sass/_filters.scss */
+/* line 37, ../sass/_filters.scss */
 .filters .form-group .fontawesome .fa-times { cursor: pointer; }
-/* line 52, ../sass/_filters.scss */
+/* line 43, ../sass/_filters.scss */
 .filters input, .filters .filter-list { background-color: #3c4550; border: 0 none; color: #ffffff; font-family: "montserratlight", sans-serif; font-size: 15px; height: 40px; line-height: 40px; padding-left: 20px; padding-right: 40px; width: 100%; z-index: 1; cursor: pointer; }
-/* line 67, ../sass/_filters.scss */
+/* line 58, ../sass/_filters.scss */
 .filters input .icon, .filters .filter-list .icon { top: 3px; }
-/* line 71, ../sass/_filters.scss */
+/* line 62, ../sass/_filters.scss */
 .filters input .fontawesome, .filters .filter-list .fontawesome { top: 1px; }
-/* line 76, ../sass/_filters.scss */
+/* line 67, ../sass/_filters.scss */
 .filters .popover { border: none; border-radius: 0; max-width: none; padding: 0; top: 40px; width: 100%; }
-/* line 84, ../sass/_filters.scss */
+/* line 75, ../sass/_filters.scss */
 .filters .popover.is-active { display: block; }
-/* line 88, ../sass/_filters.scss */
+/* line 79, ../sass/_filters.scss */
 .filters .popover-content { padding: 0; }
-/* line 92, ../sass/_filters.scss */
+/* line 83, ../sass/_filters.scss */
 .filters .popover .dropdown-field { border-bottom: 1px solid #ededed; display: block; padding: 10px; width: 100%; }
-/* line 98, ../sass/_filters.scss */
+/* line 89, ../sass/_filters.scss */
 .filters .popover .dropdown-field:last-of-type { border-bottom: 0; }
-/* line 102, ../sass/_filters.scss */
+/* line 93, ../sass/_filters.scss */
 .filters .popover .dropdown-field label { margin: 0; }
-/* line 106, ../sass/_filters.scss */
+/* line 97, ../sass/_filters.scss */
 .filters .popover .dropdown-field input { border-radius: 0; display: inline; height: auto; margin-right: 10px; width: auto; }
-/* line 114, ../sass/_filters.scss */
+/* line 105, ../sass/_filters.scss */
 .filters .popover .dropdown-field a { color: #333333; display: inline; }
 
-/* line 122, ../sass/_filters.scss */
+/* line 113, ../sass/_filters.scss */
 .no-results { color: #ffffff; }
 
 /* AET  Copyright (C) 2013 Cognifide Limited  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */
@@ -4127,8 +4122,6 @@ input[type=text]::-webkit-input-placeholder { color: #85898e; }
 /* line 65, ../sass/_buttons.scss */
 .button-small { font-size: 11px; line-height: 33px; }
 /* line 70, ../sass/_buttons.scss */
-.button i { margin-right: 6px; position: relative; top: 3px; }
-/* line 76, ../sass/_buttons.scss */
 .button svg { margin-right: 6px; }
 
 /* AET  Copyright (C) 2013 Cognifide Limited  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */
@@ -4330,55 +4323,53 @@ tr.delete, tr.err, tr.error { background: #f2dede; }
 /* line 149, ../sass/_report.scss */
 .reports-list .test-count svg, .reports-list .errors-count svg, .reports-list .success-count svg { font-size: 45px; margin-bottom: 10px; }
 /* line 154, ../sass/_report.scss */
-.reports-list .test-count i, .reports-list .errors-count i, .reports-list .success-count i { font-size: 45px; line-height: 50px; display: block; font-family: "montserratbold", sans-serif; }
-/* line 161, ../sass/_report.scss */
 .reports-list .test-count span, .reports-list .errors-count span, .reports-list .success-count span { font-size: 18px; font-family: "montserratbold", sans-serif; display: block; word-break: break-all; }
-/* line 168, ../sass/_report.scss */
+/* line 161, ../sass/_report.scss */
 .reports-list .test-count-large { border-right: 0 none; }
-/* line 177, ../sass/_report.scss */
+/* line 170, ../sass/_report.scss */
 .reports-list .errors-count { border-right: solid 1px #bb5a5a; }
-/* line 180, ../sass/_report.scss */
+/* line 173, ../sass/_report.scss */
 .reports-list .errors-count i { color: #bb5a5a; }
-/* line 184, ../sass/_report.scss */
+/* line 177, ../sass/_report.scss */
 .reports-list .errors-count span { color: #bb5a5a; }
-/* line 190, ../sass/_report.scss */
+/* line 183, ../sass/_report.scss */
 .reports-list .success-count i { color: #6f9f00; }
-/* line 194, ../sass/_report.scss */
+/* line 187, ../sass/_report.scss */
 .reports-list .success-count span { color: #6f9f00; }
-/* line 200, ../sass/_report.scss */
+/* line 193, ../sass/_report.scss */
 .reports-list .errors-list span { font-family: "montserratbold", sans-serif; font-size: 18px; color: #bb5a5a; }
-/* line 206, ../sass/_report.scss */
+/* line 199, ../sass/_report.scss */
 .reports-list .errors-list ul { margin: 0 0 10px 0; padding: 0; list-style: none; }
-/* line 211, ../sass/_report.scss */
+/* line 204, ../sass/_report.scss */
 .reports-list .errors-list ul li { font-size: 14px; color: #bb5a5a; position: relative; padding-left: 15px; }
-/* line 217, ../sass/_report.scss */
+/* line 210, ../sass/_report.scss */
 .reports-list .errors-list ul li:before { content: '-'; position: absolute; left: 0; }
 
-/* line 227, ../sass/_report.scss */
+/* line 220, ../sass/_report.scss */
 .test-icons { -webkit-transition: all 0.3s; -o-transition: all 0.3s; transition: all 0.3s; position: absolute; width: 100%; text-align: center; left: 0; bottom: 67px; z-index: -1; opacity: 0; }
-/* line 237, ../sass/_report.scss */
+/* line 230, ../sass/_report.scss */
 .test-icons span { border-radius: 999px; display: inline-block; width: 35px; height: 35px; line-height: 39px; text-align: center; font-size: 16px; cursor: pointer; color: #ffffff; }
-/* line 249, ../sass/_report.scss */
+/* line 242, ../sass/_report.scss */
 .test-icons-comment { background: #85898e; }
-/* line 253, ../sass/_report.scss */
+/* line 246, ../sass/_report.scss */
 .test-icons-rebase { background: #0097fe; }
 
-/* line 261, ../sass/_report.scss */
+/* line 254, ../sass/_report.scss */
 ul li a.nav-link { text-transform: uppercase; font-size: 18px; color: #77777c; }
 
-/* line 270, ../sass/_report.scss */
+/* line 263, ../sass/_report.scss */
 ul li.passed a.nav-link, ul li.passed a.nav-link:focus, ul li.passed a.nav-link:hover { color: #6f9f00; }
-/* line 278, ../sass/_report.scss */
+/* line 271, ../sass/_report.scss */
 ul li.failed a.nav-link, ul li.failed a.nav-link:focus, ul li.failed a.nav-link:hover, ul li.processing_error a.nav-link, ul li.processing_error a.nav-link:focus, ul li.processing_error a.nav-link:hover { color: #bb5a5a; }
-/* line 285, ../sass/_report.scss */
+/* line 278, ../sass/_report.scss */
 ul li.rebased a.nav-link, ul li.rebased a.nav-link:focus, ul li.rebased a.nav-link:hover { color: #0097fe; }
-/* line 292, ../sass/_report.scss */
+/* line 285, ../sass/_report.scss */
 ul li.warning a.nav-link, ul li.warning a.nav-link:focus, ul li.warning a.nav-link:hover { color: #f0ad4e; }
 
-/* line 303, ../sass/_report.scss */
+/* line 296, ../sass/_report.scss */
 .failed .cookie-test { font-weight: bold; display: inline !important; color: #bb5a5a !important; }
 
-/* line 311, ../sass/_report.scss */
+/* line 304, ../sass/_report.scss */
 .passed .cookie-test { font-weight: bold; display: inline !important; color: #6f9f00 !important; }
 
 /* line 31, ../sass/main.scss */
@@ -4447,17 +4438,15 @@ body { color: #333333; font-family: "montserratregular", sans-serif; }
 /* line 167, ../sass/main.scss */
 .url-tile.rebased { color: #0097fe; }
 /* line 169, ../sass/main.scss */
-.url-tile.rebased span, .url-tile.rebased i { color: #ffffff; }
+.url-tile.rebased span, .url-tile.rebased svg { color: #ffffff; }
 /* line 174, ../sass/main.scss */
 .url-tile.warning { color: #f0ad4e; }
 /* line 178, ../sass/main.scss */
 .url-tile.failed { color: #bb5a5a; }
 /* line 182, ../sass/main.scss */
-.url-tile .glyphicon { font-size: 60px; line-height: 60px; }
-/* line 187, ../sass/main.scss */
 .url-tile .statistics { color: #77777c !important; }
-/* line 191, ../sass/main.scss */
+/* line 186, ../sass/main.scss */
 .url-tile .name { font-family: "montserratbold", sans-serif; font-size: 18px; }
 
-/* line 198, ../sass/main.scss */
+/* line 193, ../sass/main.scss */
 .fontawesome-link { cursor: pointer; display: inline; position: relative; }

@@ -166,7 +166,7 @@ body {
 
 	&.rebased {
 		color: $rebased;
-		span, i {
+		span, svg {
 			color: $white
 		}
 	}
@@ -177,11 +177,6 @@ body {
 
 	&.failed {
 		color: $failed;
-	}
-
-	.glyphicon {
-		font-size: 60px;
-		line-height: 60px;
 	}
 
 	.statistics {
