@@ -22,6 +22,7 @@ import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.job.common.utils.ParamsHelper;
 import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
@@ -57,14 +58,27 @@ public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
     ParamsHelper.atLeastOneIsProvided(errorMessagePattern, sourceFile, line);
   }
 
+  /**
+   * Filters JS errors and removes errors ignored because of filters.
+   *
+   * @param data collected JS errors
+   *
+   * @return errors that were not ignored by this filter
+   */
   @Override
-  public Set<JsErrorLog> modifyData(Set<JsErrorLog> data) throws ProcessingException {
-    return FluentIterable.from(data).filter(new Predicate<JsErrorLog>() {
-      @Override
-      public boolean apply(@Nullable JsErrorLog input) {
-        return !shouldFilterOut(input);
-      }
-    }).toSet();
+  public Set<JsErrorLog> modifyData(Set<JsErrorLog> data) {
+    Set<JsErrorLog> filteredJsErrors = new HashSet<>(data);
+
+    return FluentIterable
+        .from(filteredJsErrors)
+        .filter(
+            new Predicate<JsErrorLog>() {
+              @Override
+              public boolean apply(@Nullable JsErrorLog input) {
+                return !shouldFilterOut(input);
+              }
+            })
+        .toSet();
   }
 
   private boolean shouldFilterOut(JsErrorLog jse) {
