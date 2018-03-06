@@ -67,7 +67,8 @@
     font-size: 14px;
     padding: 16px 22px;
 
-    i {
+    svg {
+      color: $gray_dark;
       cursor: pointer;
       font-size: 20px;
       align-self: center;
@@ -89,6 +90,12 @@
       padding-right: 15px;
       background: $white;
       position: absolute;
+    }
+
+    .fontawesome-link {
+      align-items: center;
+      display: flex;
+      justify-content: center;
     }
   }
 
@@ -163,8 +170,8 @@
       cursor: pointer;
       background: $white;
 
-      i {
-        margin: 5px 0 8px 0;
+      svg {
+        margin: 7px 2px;
         display: block;
         color: $gray_darker;
       }

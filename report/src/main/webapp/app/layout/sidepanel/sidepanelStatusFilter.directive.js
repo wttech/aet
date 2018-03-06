@@ -92,8 +92,8 @@ define(['angularAMD'], function (angularAMD) {
 
     function updateFiltersLabel(activeFilters) {
       var titleElement = $('.filter-list-title p '),
-          iconApply = $('.filter-list-title .glyphicon-chevron-down'),
-          iconCancel = $('.filter-list-title .glyphicon-remove');
+          iconApply = $('.filter-list-title .apply-filters'),
+          iconCancel = $('.filter-list-title .clear-filters');
 
       if (!_.isEmpty(activeFilters)) {
         var labelText = '';

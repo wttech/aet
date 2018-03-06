@@ -220,10 +220,10 @@ td, th { padding: 0; }
 .glyphicon-th-list:before { content: "\e012"; }
 
 /* line 56, ../../node_modules/bootstrap-sass-twbs/assets/stylesheets/bootstrap/_glyphicons.scss */
-.glyphicon-ok:before, .aside-report ul li.passed:before, .reports-list-item i.passed:before { content: "\e013"; }
+.glyphicon-ok:before { content: "\e013"; }
 
 /* line 57, ../../node_modules/bootstrap-sass-twbs/assets/stylesheets/bootstrap/_glyphicons.scss */
-.glyphicon-remove:before, .aside-report ul li.failed:before, .aside-report ul li.failedcommented:before, .aside-report ul li.processing_error:before, .reports-list-item i.failed:before { content: "\e014"; }
+.glyphicon-remove:before { content: "\e014"; }
 
 /* line 58, ../../node_modules/bootstrap-sass-twbs/assets/stylesheets/bootstrap/_glyphicons.scss */
 .glyphicon-zoom-in:before { content: "\e015"; }
@@ -757,7 +757,7 @@ td, th { padding: 0; }
 .glyphicon-cloud-download:before { content: "\e197"; }
 
 /* line 235, ../../node_modules/bootstrap-sass-twbs/assets/stylesheets/bootstrap/_glyphicons.scss */
-.glyphicon-cloud-upload:before, .aside-report ul li.rebased:before, .reports-list-item i.rebased:before { content: "\e198"; }
+.glyphicon-cloud-upload:before { content: "\e198"; }
 
 /* line 236, ../../node_modules/bootstrap-sass-twbs/assets/stylesheets/bootstrap/_glyphicons.scss */
 .glyphicon-tree-conifer:before { content: "\e199"; }
@@ -784,7 +784,7 @@ td, th { padding: 0; }
 .glyphicon-paste:before { content: "\e206"; }
 
 /* line 252, ../../node_modules/bootstrap-sass-twbs/assets/stylesheets/bootstrap/_glyphicons.scss */
-.glyphicon-alert:before, .aside-report ul li.warning:before, .reports-list-item i.warning:before { content: "\e209"; }
+.glyphicon-alert:before { content: "\e209"; }
 
 /* line 253, ../../node_modules/bootstrap-sass-twbs/assets/stylesheets/bootstrap/_glyphicons.scss */
 .glyphicon-equalizer:before { content: "\e210"; }
@@ -3823,50 +3823,47 @@ table { border-collapse: collapse; border-spacing: 0; }
 @font-face { font-family: 'montserratlight'; src: url("../fonts/montserrat-light-webfont.eot"); src: url("../fonts/montserrat-light-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/montserrat-light-webfont.woff2") format("woff2"), url("../fonts/montserrat-light-webfont.woff") format("woff"), url("../fonts/montserrat-light-webfont.ttf") format("truetype"), url("../fonts/montserrat-light-webfont.svg#montserratlight") format("svg"); font-weight: normal; font-style: normal; }
 @font-face { font-family: 'montserratregular'; src: url("../fonts/montserrat-regular-webfont.eot"); src: url("../fonts/montserrat-regular-webfont.eot?#iefix") format("embedded-opentype"), url("../fonts/montserrat-regular-webfont.woff2") format("woff2"), url("../fonts/montserrat-regular-webfont.woff") format("woff"), url("../fonts/montserrat-regular-webfont.ttf") format("truetype"), url("../fonts/montserrat-regular-webfont.svg#montserratregular") format("svg"); font-weight: normal; font-style: normal; }
 /* line 54, ../sass/_typography.scss */
-.glyphicon:before { font-family: 'Glyphicons Halflings' !important; font-style: normal !important; font-weight: normal !important; font-variant: normal !important; text-transform: none !important; speak: none; line-height: 1; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
-
-/* line 66, ../sass/_typography.scss */
 .ellipsis, .aside-report ul li a { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-/* line 72, ../sass/_typography.scss */
+/* line 60, ../sass/_typography.scss */
 .reverse-ellipsis { text-overflow: clip; position: relative; background-color: inherit; }
-/* line 79, ../sass/_typography.scss */
+/* line 67, ../sass/_typography.scss */
 .reverse-ellipsis.failed:before { color: #ddacac; }
 
-/* line 85, ../sass/_typography.scss */
+/* line 73, ../sass/_typography.scss */
 .reverse-ellipsis:before { content: '\02026'; position: absolute; z-index: 1; left: -1em; background-color: inherit; padding-left: 1em; margin-left: 0.5em; }
 
-/* line 97, ../sass/_typography.scss */
+/* line 85, ../sass/_typography.scss */
 .reverse-ellipsis a, .reverse-ellipsis h4, .reverse-ellipsis span { min-width: 100%; position: relative; display: inline-block; float: right; overflow: visible; background-color: inherit; text-indent: 0.5em; }
-/* line 106, ../sass/_typography.scss */
+/* line 94, ../sass/_typography.scss */
 .reverse-ellipsis a:before, .reverse-ellipsis h4:before, .reverse-ellipsis span:before { content: ''; position: absolute; display: inline-block; width: 1em; height: 1em; background-colaor: inherit; left: -.5em; }
 
-/* line 118, ../sass/_typography.scss */
+/* line 106, ../sass/_typography.scss */
 .nowrap { white-space: nowrap; }
 
-/* line 122, ../sass/_typography.scss */
+/* line 110, ../sass/_typography.scss */
 .test-no-issues { display: block; text-align: center; font-family: "montserratlight", sans-serif; padding: 30px 0; }
 
-/* line 129, ../sass/_typography.scss */
+/* line 117, ../sass/_typography.scss */
 .processing-error-comparators { margin-top: 30px; }
-/* line 132, ../sass/_typography.scss */
+/* line 120, ../sass/_typography.scss */
 .processing-error-comparators span { display: block; font-size: 16px; font-family: "montserratlight", sans-serif; margin-bottom: 10px; }
-/* line 139, ../sass/_typography.scss */
+/* line 127, ../sass/_typography.scss */
 .processing-error-comparators i { display: block; margin-bottom: 5px; }
 
-/* line 147, ../sass/_typography.scss */
+/* line 135, ../sass/_typography.scss */
 .processing-error i { display: block; margin-top: 20px; font-size: 14px; font-family: "montserratlight", sans-serif; }
 
-/* line 155, ../sass/_typography.scss */
+/* line 143, ../sass/_typography.scss */
 .name { font-style: italic; }
 
-/* line 61, ../../../../../../../../../../../Ruby24-x64/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+/* line 61, ../../../../../../../../../../../Library/Ruby/Gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]:-moz-placeholder { color: #85898e; }
-/* line 64, ../../../../../../../../../../../Ruby24-x64/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+/* line 64, ../../../../../../../../../../../Library/Ruby/Gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]::-moz-placeholder { color: #85898e; }
-/* line 67, ../../../../../../../../../../../Ruby24-x64/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+/* line 67, ../../../../../../../../../../../Library/Ruby/Gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]:-ms-input-placeholder { color: #85898e; }
-/* line 56, ../../../../../../../../../../../Ruby24-x64/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+/* line 56, ../../../../../../../../../../../Library/Ruby/Gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]::-webkit-input-placeholder { color: #85898e; }
 
 /* AET  Copyright (C) 2013 Cognifide Limited  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */
@@ -3887,71 +3884,73 @@ input[type=text]::-webkit-input-placeholder { color: #85898e; }
 /* line 62, ../sass/_toolbar.scss */
 .toolbar-block { text-align: center; border-left: solid 1px #ededed; font-family: "montserratlight", sans-serif; color: #77777c; font-size: 14px; padding: 16px 22px; }
 /* line 70, ../sass/_toolbar.scss */
-.toolbar-block i { cursor: pointer; font-size: 20px; align-self: center; }
-/* line 76, ../sass/_toolbar.scss */
+.toolbar-block svg { color: #77777c; cursor: pointer; font-size: 20px; align-self: center; }
+/* line 77, ../sass/_toolbar.scss */
 .toolbar-block:last-child { display: flex; border-right: solid 1px #ededed; }
-/* line 82, ../sass/_toolbar.scss */
+/* line 83, ../sass/_toolbar.scss */
 .toolbar-blocks { display: flex; flex-wrap: nowrap; z-index: 100; }
-/* line 87, ../sass/_toolbar.scss */
+/* line 88, ../sass/_toolbar.scss */
 .toolbar-blocks.is-absolute { right: 0; padding-right: 15px; background: #ffffff; position: absolute; }
 /* line 95, ../sass/_toolbar.scss */
-.toolbar-bottom { display: flex; justify-content: space-between; width: 100%; padding: 0 20px; background: #ffffff; }
+.toolbar-blocks .fontawesome-link { align-items: center; display: flex; justify-content: center; }
 /* line 102, ../sass/_toolbar.scss */
+.toolbar-bottom { display: flex; justify-content: space-between; width: 100%; padding: 0 20px; background: #ffffff; }
+/* line 109, ../sass/_toolbar.scss */
 .toolbar-bottom h4, .toolbar-bottom h5 { font-weight: normal; color: #85898e; padding-right: 20px; }
-/* line 107, ../sass/_toolbar.scss */
+/* line 114, ../sass/_toolbar.scss */
 .toolbar-bottom h4 .glyphicon-screenshot, .toolbar-bottom h5 .glyphicon-screenshot { position: relative; cursor: pointer; }
-/* line 112, ../sass/_toolbar.scss */
+/* line 119, ../sass/_toolbar.scss */
 .toolbar-bottom h4 a, .toolbar-bottom h5 a { color: #85898e; }
-/* line 115, ../sass/_toolbar.scss */
+/* line 122, ../sass/_toolbar.scss */
 .toolbar-bottom h4 a:hover, .toolbar-bottom h5 a:hover { color: #6c7074; }
-/* line 121, ../sass/_toolbar.scss */
+/* line 128, ../sass/_toolbar.scss */
 .toolbar-bottom h4 { font-size: 24px; line-height: 54px; }
-/* line 125, ../sass/_toolbar.scss */
+/* line 132, ../sass/_toolbar.scss */
 .toolbar-bottom h4 .glyphicon-screenshot { top: 4px; }
-/* line 129, ../sass/_toolbar.scss */
+/* line 136, ../sass/_toolbar.scss */
 .toolbar-bottom h4:not(:last-child) { margin-bottom: 0; }
-/* line 134, ../sass/_toolbar.scss */
-.toolbar-bottom h5 { margin-top: 0; margin-bottom: 26px; padding-left: 4px; font-size: 16px; line-height: 18px; }
 /* line 141, ../sass/_toolbar.scss */
+.toolbar-bottom h5 { margin-top: 0; margin-bottom: 26px; padding-left: 4px; font-size: 16px; line-height: 18px; }
+/* line 148, ../sass/_toolbar.scss */
 .toolbar-bottom h5 .glyphicon-screenshot { top: 3px; }
-/* line 147, ../sass/_toolbar.scss */
+/* line 154, ../sass/_toolbar.scss */
 .toolbar-nav { width: 95px; padding-top: 5px; margin-right: 20px; }
-/* line 152, ../sass/_toolbar.scss */
+/* line 159, ../sass/_toolbar.scss */
 .toolbar-nav.is-absolute { right: 15px; background: #ffffff; position: absolute; }
-/* line 158, ../sass/_toolbar.scss */
+/* line 165, ../sass/_toolbar.scss */
 .toolbar-nav div { float: left; border: solid 1px #ededed; margin-left: -1px; padding: 0 12px; cursor: pointer; background: #ffffff; }
-/* line 166, ../sass/_toolbar.scss */
-.toolbar-nav div i { margin: 5px 0 8px 0; display: block; color: #85898e; }
 /* line 173, ../sass/_toolbar.scss */
-.toolbar-btns { border-left: solid 1px #ededed; padding-left: 30px; padding-top: 15px; height: 73px; display: flex; }
+.toolbar-nav div svg { margin: 7px 2px; display: block; color: #85898e; }
 /* line 180, ../sass/_toolbar.scss */
+.toolbar-btns { border-left: solid 1px #ededed; padding-left: 30px; padding-top: 15px; height: 73px; display: flex; }
+/* line 187, ../sass/_toolbar.scss */
 .toolbar-btns .button { float: left; margin-left: 12px; }
-/* line 185, ../sass/_toolbar.scss */
+/* line 192, ../sass/_toolbar.scss */
 .tab-content-toolbar .toolbar-btns { padding-top: 3px; padding-right: 15px; height: 47px; }
 
-/* line 193, ../sass/_toolbar.scss */
+/* line 200, ../sass/_toolbar.scss */
 .comments-status { width: 45px; font-family: "montserratlight", sans-serif; font-size: 30px; display: block; line-height: 44px; cursor: pointer; }
-/* line 201, ../sass/_toolbar.scss */
+/* line 208, ../sass/_toolbar.scss */
 .comments-status.small { line-height: 37px; font-size: 11px; }
-/* line 206, ../sass/_toolbar.scss */
+/* line 213, ../sass/_toolbar.scss */
 .comments-status.present { color: #6f9f00; }
-/* line 210, ../sass/_toolbar.scss */
+/* line 217, ../sass/_toolbar.scss */
 .comments-status.absent { color: #3c4550; }
 
-@media (max-width: 1300px) { /* line 215, ../sass/_toolbar.scss */
+@media (max-width: 1300px) { /* line 222, ../sass/_toolbar.scss */
   .tab-content-toolbar { height: 94px; } }
-/* line 221, ../sass/_toolbar.scss */
+/* line 228, ../sass/_toolbar.scss */
 .tab-content-toolbar .toolbar-btns, .tab-content-toolbar .comments-status { width: auto; }
-/* line 225, ../sass/_toolbar.scss */
+/* line 232, ../sass/_toolbar.scss */
 .tab-content-toolbar .toolbar-blocks { display: inline; }
 
-/* line 230, ../sass/_toolbar.scss */
+/* line 237, ../sass/_toolbar.scss */
 .important-message { background: #fff085; }
 
-/* line 234, ../sass/_toolbar.scss */
+/* line 241, ../sass/_toolbar.scss */
 .button-dark.js-trigger-modal { display: inline-block; }
 
-/* line 238, ../sass/_toolbar.scss */
+/* line 245, ../sass/_toolbar.scss */
 .preformatted { font-family: monospace; }
 
 /* AET  Copyright (C) 2013 Cognifide Limited  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */
@@ -3974,7 +3973,7 @@ input[type=text]::-webkit-input-placeholder { color: #85898e; }
 /* line 78, ../sass/_sidebar.scss */
 .aside-report-container:not(:last-child) { height: calc(100vh - 240px - 124px); }
 /* line 83, ../sass/_sidebar.scss */
-.aside-report .test-name { color: #85898e; display: block; width: 100%; padding-left: 13px; border-top: solid 1px #313942; }
+.aside-report .test-name { color: #85898e; display: block; width: 100%; padding-left: 8px; border-top: solid 1px #313942; }
 /* line 90, ../sass/_sidebar.scss */
 .aside-report .test-name.passed { color: #6f9f00; }
 /* line 94, ../sass/_sidebar.scss */
@@ -3992,70 +3991,74 @@ input[type=text]::-webkit-input-placeholder { color: #85898e; }
 /* line 122, ../sass/_sidebar.scss */
 .aside-report span { white-space: nowrap; overflow: hidden; -ms-text-overflow: ellipsis; -o-text-overflow: ellipsis; text-overflow: ellipsis; color: inherit; font-family: "montserratlight", sans-serif; font-size: 15px; width: 80%; display: block; cursor: pointer; text-align: left; }
 /* line 132, ../sass/_sidebar.scss */
-.aside-report span i { -webkit-transition: transform, 100ms ease-out; -o-transition: transform, 100ms ease-out; transition: transform, 100ms ease-out; font-size: 13px; position: relative; top: 2px; display: inline-block; margin-right: 10px; }
-/* line 144, ../sass/_sidebar.scss */
-.aside-report.is-expanded i { -moz-transform: rotate(90deg); -ms-transform: rotate(90deg); -webkit-transform: rotate(90deg); transform: rotate(90deg); }
-/* line 149, ../sass/_sidebar.scss */
+.aside-report span svg.rotate-svg { -webkit-transition: transform, 100ms ease-out; -o-transition: transform, 100ms ease-out; transition: transform, 100ms ease-out; position: relative; display: inline-block; margin-right: 3px; }
+/* line 142, ../sass/_sidebar.scss */
+.aside-report.is-expanded svg.rotate-svg { -moz-transform: rotate(90deg); -ms-transform: rotate(90deg); -webkit-transform: rotate(90deg); transform: rotate(90deg); }
+/* line 147, ../sass/_sidebar.scss */
 .aside-report ul { padding: 0; margin: 0 0 0 30px; background: #2c333b; display: none; }
-/* line 155, ../sass/_sidebar.scss */
-.aside-report ul li { width: 80%; display: block; font-size: 15px; font-family: "montserratlight", sans-serif; background: #2c333b; position: relative; line-height: normal; margin-bottom: 20px; margin-left: 15px; color: #77777c; }
-/* line 167, ../sass/_sidebar.scss */
-.aside-report ul li a { display: block; color: inherit; text-align: left; padding-left: 10px; }
-/* line 175, ../sass/_sidebar.scss */
+/* line 153, ../sass/_sidebar.scss */
+.aside-report ul li { width: 80%; display: block; font-size: 15px; font-family: "montserratlight", sans-serif; background: #2c333b; position: relative; line-height: normal; margin-bottom: 20px; color: #77777c; }
+/* line 164, ../sass/_sidebar.scss */
+.aside-report ul li a { display: block; color: inherit; text-align: left; padding-left: 10px; -webkit-font-smoothing: antialiased; }
+/* line 173, ../sass/_sidebar.scss */
 .aside-report ul li:before { position: absolute; font-size: 15px; left: -16px; }
-/* line 181, ../sass/_sidebar.scss */
+/* line 179, ../sass/_sidebar.scss */
 .aside-report ul li.failed, .aside-report ul li.failedcommented, .aside-report ul li.processing_error { color: #bb5a5a; }
-/* line 188, ../sass/_sidebar.scss */
+/* line 185, ../sass/_sidebar.scss */
 .aside-report ul li.passed { color: #6f9f00; }
-/* line 193, ../sass/_sidebar.scss */
+/* line 189, ../sass/_sidebar.scss */
 .aside-report ul li.warning { color: #f0ad4e; }
-/* line 198, ../sass/_sidebar.scss */
+/* line 193, ../sass/_sidebar.scss */
 .aside-report ul li.rebased { color: #0097fe; }
-/* line 208, ../sass/_sidebar.scss */
+/* line 202, ../sass/_sidebar.scss */
 .aside.has-filters-applied .aside-report:not(.is-hidden) { max-height: none; }
-/* line 210, ../sass/_sidebar.scss */
+/* line 204, ../sass/_sidebar.scss */
 .aside.has-filters-applied .aside-report:not(.is-hidden) ul { display: block; }
-/* line 218, ../sass/_sidebar.scss */
+/* line 211, ../sass/_sidebar.scss */
+.aside .fontawesome { display: inline; }
+/* line 215, ../sass/_sidebar.scss */
+.aside .text-left.nowrap.ng-isolate-scope { display: flex; }
+/* line 221, ../sass/_sidebar.scss */
 .aside.show-failed .url-name, .aside.show-failed .test-name { display: none; }
-/* line 222, ../sass/_sidebar.scss */
+/* line 225, ../sass/_sidebar.scss */
 .aside.show-failed .url-name.failed, .aside.show-failed .test-name.failed { display: block; }
-/* line 230, ../sass/_sidebar.scss */
-.aside.show-commented .url-name, .aside.show-commented .test-name { display: none; }
 /* line 233, ../sass/_sidebar.scss */
+.aside.show-commented .url-name, .aside.show-commented .test-name { display: none; }
+/* line 236, ../sass/_sidebar.scss */
 .aside.show-commented .url-name.commented, .aside.show-commented .test-name.commented { display: block; }
-/* line 241, ../sass/_sidebar.scss */
+/* line 244, ../sass/_sidebar.scss */
 .aside.show-passed .url-name, .aside.show-passed .test-name { display: none; }
-/* line 243, ../sass/_sidebar.scss */
+/* line 246, ../sass/_sidebar.scss */
 .aside.show-passed .url-name.passed, .aside.show-passed .test-name.passed { display: block; }
-/* line 251, ../sass/_sidebar.scss */
-.aside.show-warning .url-name, .aside.show-warning .test-name { display: none; }
 /* line 254, ../sass/_sidebar.scss */
+.aside.show-warning .url-name, .aside.show-warning .test-name { display: none; }
+/* line 257, ../sass/_sidebar.scss */
 .aside.show-warning .url-name.warning, .aside.show-warning .test-name.warning { display: block; }
 
-/* line 261, ../sass/_sidebar.scss */
+/* line 264, ../sass/_sidebar.scss */
 .aside-report-summary { display: table; width: 100%; border-bottom: solid 1px #313942; text-transform: uppercase; padding: 0 15px; line-height: 40px; }
-/* line 269, ../sass/_sidebar.scss */
+/* line 272, ../sass/_sidebar.scss */
 .aside-report-summary header { float: left; color: #ffffff; font-size: 16px; text-transform: uppercase; }
-/* line 276, ../sass/_sidebar.scss */
+/* line 279, ../sass/_sidebar.scss */
 .aside-report-summary .stats { font-size: 14px; color: #ffffff; }
-/* line 280, ../sass/_sidebar.scss */
+/* line 283, ../sass/_sidebar.scss */
 .aside-report-summary .stats.has-errors { color: #f0ad4e; }
-/* line 284, ../sass/_sidebar.scss */
+/* line 287, ../sass/_sidebar.scss */
 .aside-report-summary .stats.is-filtered { color: #ffffff; }
 
-/* line 290, ../sass/_sidebar.scss */
+/* line 293, ../sass/_sidebar.scss */
 .report-item-stats { color: #85898e; position: absolute; right: 21px; top: 6px; background: #3c4550; font-family: "montserratbold", sans-serif; font-size: 14px; line-height: 32px; padding: 0 7px; }
 
-/* line 302, ../sass/_sidebar.scss */
+/* line 305, ../sass/_sidebar.scss */
 .aside-actions-wrapper { padding: 17px 0 16px; border-top: solid 1px #313942; }
-/* line 306, ../sass/_sidebar.scss */
+/* line 309, ../sass/_sidebar.scss */
 .aside-actions-wrapper .js-rebase-all, .aside-actions-wrapper .js-cancel-all { position: relative; width: 100%; background: #2c333b; z-index: 1; }
-/* line 312, ../sass/_sidebar.scss */
+/* line 315, ../sass/_sidebar.scss */
 .aside-actions-wrapper .js-rebase-all:not(:last-child), .aside-actions-wrapper .js-cancel-all:not(:last-child) { margin-bottom: 16px; }
 
-/* line 318, ../sass/_sidebar.scss */
-.is-active { color: #ffffff !important; }
 /* line 321, ../sass/_sidebar.scss */
+.is-active { color: #ffffff !important; }
+/* line 324, ../sass/_sidebar.scss */
 .is-active a, .is-active:before { color: #ffffff !important; }
 
 /* AET  Copyright (C) 2013 Cognifide Limited  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */
@@ -4066,29 +4069,33 @@ input[type=text]::-webkit-input-placeholder { color: #85898e; }
 /* line 26, ../sass/_filters.scss */
 .filters .form-group { position: relative; }
 /* line 29, ../sass/_filters.scss */
-.filters .form-group i { position: absolute; right: 15px; z-index: 1; top: 11px; font-size: 18px; color: #FFF; }
-/* line 39, ../sass/_filters.scss */
+.filters .form-group .fontawesome { position: absolute; right: 15px; z-index: 1; top: 11px; font-size: 18px; color: #FFF; }
+/* line 37, ../sass/_filters.scss */
+.filters .form-group .fontawesome .fa-times { cursor: pointer; }
+/* line 43, ../sass/_filters.scss */
 .filters input, .filters .filter-list { background-color: #3c4550; border: 0 none; color: #ffffff; font-family: "montserratlight", sans-serif; font-size: 15px; height: 40px; line-height: 40px; padding-left: 20px; padding-right: 40px; width: 100%; z-index: 1; cursor: pointer; }
-/* line 54, ../sass/_filters.scss */
+/* line 58, ../sass/_filters.scss */
 .filters input .icon, .filters .filter-list .icon { top: 3px; }
-/* line 59, ../sass/_filters.scss */
-.filters .popover { border: none; border-radius: 0; max-width: none; padding: 0; top: 40px; width: 100%; }
+/* line 62, ../sass/_filters.scss */
+.filters input .fontawesome, .filters .filter-list .fontawesome { top: 1px; }
 /* line 67, ../sass/_filters.scss */
-.filters .popover.is-active { display: block; }
-/* line 71, ../sass/_filters.scss */
-.filters .popover-content { padding: 0; }
+.filters .popover { border: none; border-radius: 0; max-width: none; padding: 0; top: 40px; width: 100%; }
 /* line 75, ../sass/_filters.scss */
+.filters .popover.is-active { display: block; }
+/* line 79, ../sass/_filters.scss */
+.filters .popover-content { padding: 0; }
+/* line 83, ../sass/_filters.scss */
 .filters .popover .dropdown-field { border-bottom: 1px solid #ededed; display: block; padding: 10px; width: 100%; }
-/* line 81, ../sass/_filters.scss */
-.filters .popover .dropdown-field:last-of-type { border-bottom: 0; }
-/* line 85, ../sass/_filters.scss */
-.filters .popover .dropdown-field label { margin: 0; }
 /* line 89, ../sass/_filters.scss */
-.filters .popover .dropdown-field input { border-radius: 0; display: inline; height: auto; margin-right: 10px; width: auto; }
+.filters .popover .dropdown-field:last-of-type { border-bottom: 0; }
+/* line 93, ../sass/_filters.scss */
+.filters .popover .dropdown-field label { margin: 0; }
 /* line 97, ../sass/_filters.scss */
+.filters .popover .dropdown-field input { border-radius: 0; display: inline; height: auto; margin-right: 10px; width: auto; }
+/* line 105, ../sass/_filters.scss */
 .filters .popover .dropdown-field a { color: #333333; display: inline; }
 
-/* line 105, ../sass/_filters.scss */
+/* line 113, ../sass/_filters.scss */
 .no-results { color: #ffffff; }
 
 /* AET  Copyright (C) 2013 Cognifide Limited  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */
@@ -4115,7 +4122,7 @@ input[type=text]::-webkit-input-placeholder { color: #85898e; }
 /* line 65, ../sass/_buttons.scss */
 .button-small { font-size: 11px; line-height: 33px; }
 /* line 70, ../sass/_buttons.scss */
-.button i { margin-right: 6px; position: relative; top: 3px; }
+.button svg { margin-right: 6px; }
 
 /* AET  Copyright (C) 2013 Cognifide Limited  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */
 /* line 21, ../sass/_popups.scss */
@@ -4123,20 +4130,18 @@ input[type=text]::-webkit-input-placeholder { color: #85898e; }
 /* line 27, ../sass/_popups.scss */
 .modal-body textarea { width: 100%; border: solid 1px #ededed; background-color: #ffffff; height: 300px; resize: none; }
 /* line 37, ../sass/_popups.scss */
-.modal-footer > button + button { margin-right: 20px; }
-/* line 41, ../sass/_popups.scss */
 .modal-footer_flex { align-items: center; display: flex; justify-content: space-between; }
-/* line 46, ../sass/_popups.scss */
+/* line 42, ../sass/_popups.scss */
 .modal-footer_flex-right { justify-content: flex-end; }
-/* line 52, ../sass/_popups.scss */
+/* line 48, ../sass/_popups.scss */
 .modal-question { font-weight: bold; }
-/* line 56, ../sass/_popups.scss */
+/* line 52, ../sass/_popups.scss */
 .modal .close { font-size: 30px; color: #77777c; opacity: 1; }
 
-/* line 65, ../sass/_popups.scss */
+/* line 61, ../sass/_popups.scss */
 .filter-list-title p { text-align: left; white-space: nowrap; overflow: hidden; -ms-text-overflow: ellipsis; -o-text-overflow: ellipsis; text-overflow: ellipsis; max-width: 86%; }
 
-/* line 74, ../sass/_popups.scss */
+/* line 70, ../sass/_popups.scss */
 .dropdown-field p { display: inline; color: #000000; font-weight: normal; }
 
 /* AET  Copyright (C) 2013 Cognifide Limited  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */
@@ -4294,77 +4299,77 @@ tr.delete, tr.err, tr.error { background: #f2dede; }
 /* line 79, ../sass/_report.scss */
 .reports-list-item.passed { background: #caeb7f; border-top: solid 10px #6f9f00; }
 /* line 83, ../sass/_report.scss */
-.reports-list-item.passed span, .reports-list-item.passed i { color: #6f9f00; }
+.reports-list-item.passed span, .reports-list-item.passed svg { color: #6f9f00; }
 /* line 88, ../sass/_report.scss */
 .reports-list-item.failed, .reports-list-item.processing_error { background: #ddacac; border-top: solid 10px #bb5a5a; }
 /* line 93, ../sass/_report.scss */
-.reports-list-item.failed span, .reports-list-item.failed i, .reports-list-item.processing_error span, .reports-list-item.processing_error i { color: #bb5a5a; }
+.reports-list-item.failed span, .reports-list-item.failed svg, .reports-list-item.processing_error span, .reports-list-item.processing_error svg { color: #bb5a5a; }
 /* line 98, ../sass/_report.scss */
 .reports-list-item.rebased { background: #00c1ff; border-top: solid 10px #0079cb; }
 /* line 102, ../sass/_report.scss */
-.reports-list-item.rebased span, .reports-list-item.rebased i { color: #ffffff; }
+.reports-list-item.rebased span, .reports-list-item.rebased svg { color: #ffffff; }
 /* line 108, ../sass/_report.scss */
 .reports-list-item.warning { background: #fff085; border-top: solid 10px #f0ad4e; }
 /* line 112, ../sass/_report.scss */
-.reports-list-item.warning span, .reports-list-item.warning i { color: #f0ad4e; }
+.reports-list-item.warning span, .reports-list-item.warning svg { color: #f0ad4e; }
 /* line 118, ../sass/_report.scss */
 .reports-list-item:hover .test-icons { z-index: 2; opacity: 1; }
 /* line 124, ../sass/_report.scss */
 .reports-list-item a { -webkit-transition: none; -o-transition: none; transition: none; display: table; height: 269px; width: 100%; padding: 30px 10px 40px; }
 /* line 136, ../sass/_report.scss */
 .reports-list-item.warning .icon, .reports-list-item.rebased .icon, .reports-list-item.processing_error .icon, .reports-list-item.failed .icon { height: 70px; padding-top: 7px; }
-/* line 163, ../sass/_report.scss */
+/* line 145, ../sass/_report.scss */
 .reports-list .test-count, .reports-list .errors-count, .reports-list .success-count { text-align: center; overflow: hidden; }
-/* line 167, ../sass/_report.scss */
-.reports-list .test-count i, .reports-list .errors-count i, .reports-list .success-count i { font-size: 45px; line-height: 50px; display: block; font-family: "montserratbold", sans-serif; }
-/* line 174, ../sass/_report.scss */
+/* line 149, ../sass/_report.scss */
+.reports-list .test-count svg, .reports-list .errors-count svg, .reports-list .success-count svg { font-size: 45px; margin-bottom: 10px; }
+/* line 154, ../sass/_report.scss */
 .reports-list .test-count span, .reports-list .errors-count span, .reports-list .success-count span { font-size: 18px; font-family: "montserratbold", sans-serif; display: block; word-break: break-all; }
-/* line 181, ../sass/_report.scss */
+/* line 161, ../sass/_report.scss */
 .reports-list .test-count-large { border-right: 0 none; }
-/* line 190, ../sass/_report.scss */
+/* line 170, ../sass/_report.scss */
 .reports-list .errors-count { border-right: solid 1px #bb5a5a; }
-/* line 193, ../sass/_report.scss */
+/* line 173, ../sass/_report.scss */
 .reports-list .errors-count i { color: #bb5a5a; }
-/* line 197, ../sass/_report.scss */
+/* line 177, ../sass/_report.scss */
 .reports-list .errors-count span { color: #bb5a5a; }
-/* line 203, ../sass/_report.scss */
+/* line 183, ../sass/_report.scss */
 .reports-list .success-count i { color: #6f9f00; }
-/* line 207, ../sass/_report.scss */
+/* line 187, ../sass/_report.scss */
 .reports-list .success-count span { color: #6f9f00; }
-/* line 213, ../sass/_report.scss */
+/* line 193, ../sass/_report.scss */
 .reports-list .errors-list span { font-family: "montserratbold", sans-serif; font-size: 18px; color: #bb5a5a; }
-/* line 219, ../sass/_report.scss */
+/* line 199, ../sass/_report.scss */
 .reports-list .errors-list ul { margin: 0 0 10px 0; padding: 0; list-style: none; }
-/* line 224, ../sass/_report.scss */
+/* line 204, ../sass/_report.scss */
 .reports-list .errors-list ul li { font-size: 14px; color: #bb5a5a; position: relative; padding-left: 15px; }
-/* line 230, ../sass/_report.scss */
+/* line 210, ../sass/_report.scss */
 .reports-list .errors-list ul li:before { content: '-'; position: absolute; left: 0; }
 
-/* line 240, ../sass/_report.scss */
+/* line 220, ../sass/_report.scss */
 .test-icons { -webkit-transition: all 0.3s; -o-transition: all 0.3s; transition: all 0.3s; position: absolute; width: 100%; text-align: center; left: 0; bottom: 67px; z-index: -1; opacity: 0; }
-/* line 250, ../sass/_report.scss */
+/* line 230, ../sass/_report.scss */
 .test-icons span { border-radius: 999px; display: inline-block; width: 35px; height: 35px; line-height: 39px; text-align: center; font-size: 16px; cursor: pointer; color: #ffffff; }
-/* line 262, ../sass/_report.scss */
+/* line 242, ../sass/_report.scss */
 .test-icons-comment { background: #85898e; }
-/* line 266, ../sass/_report.scss */
+/* line 246, ../sass/_report.scss */
 .test-icons-rebase { background: #0097fe; }
 
-/* line 274, ../sass/_report.scss */
+/* line 254, ../sass/_report.scss */
 ul li a.nav-link { text-transform: uppercase; font-size: 18px; color: #77777c; }
 
-/* line 283, ../sass/_report.scss */
+/* line 263, ../sass/_report.scss */
 ul li.passed a.nav-link, ul li.passed a.nav-link:focus, ul li.passed a.nav-link:hover { color: #6f9f00; }
-/* line 291, ../sass/_report.scss */
+/* line 271, ../sass/_report.scss */
 ul li.failed a.nav-link, ul li.failed a.nav-link:focus, ul li.failed a.nav-link:hover, ul li.processing_error a.nav-link, ul li.processing_error a.nav-link:focus, ul li.processing_error a.nav-link:hover { color: #bb5a5a; }
-/* line 298, ../sass/_report.scss */
+/* line 278, ../sass/_report.scss */
 ul li.rebased a.nav-link, ul li.rebased a.nav-link:focus, ul li.rebased a.nav-link:hover { color: #0097fe; }
-/* line 305, ../sass/_report.scss */
+/* line 285, ../sass/_report.scss */
 ul li.warning a.nav-link, ul li.warning a.nav-link:focus, ul li.warning a.nav-link:hover { color: #f0ad4e; }
 
-/* line 316, ../sass/_report.scss */
+/* line 296, ../sass/_report.scss */
 .failed .cookie-test { font-weight: bold; display: inline !important; color: #bb5a5a !important; }
 
-/* line 324, ../sass/_report.scss */
+/* line 304, ../sass/_report.scss */
 .passed .cookie-test { font-weight: bold; display: inline !important; color: #6f9f00 !important; }
 
 /* line 31, ../sass/main.scss */
@@ -4433,14 +4438,15 @@ body { color: #333333; font-family: "montserratregular", sans-serif; }
 /* line 167, ../sass/main.scss */
 .url-tile.rebased { color: #0097fe; }
 /* line 169, ../sass/main.scss */
-.url-tile.rebased span, .url-tile.rebased i { color: #ffffff; }
+.url-tile.rebased span, .url-tile.rebased svg { color: #ffffff; }
 /* line 174, ../sass/main.scss */
 .url-tile.warning { color: #f0ad4e; }
 /* line 178, ../sass/main.scss */
 .url-tile.failed { color: #bb5a5a; }
 /* line 182, ../sass/main.scss */
-.url-tile .glyphicon { font-size: 60px; line-height: 60px; }
-/* line 187, ../sass/main.scss */
 .url-tile .statistics { color: #77777c !important; }
-/* line 191, ../sass/main.scss */
+/* line 186, ../sass/main.scss */
 .url-tile .name { font-family: "montserratbold", sans-serif; font-size: 18px; }
+
+/* line 193, ../sass/main.scss */
+.fontawesome-link { cursor: pointer; display: inline; position: relative; }

@@ -20,12 +20,14 @@
 <div class="toolbar-bottom">
   <div class="toolbar-link">
     <h4 class="toolbar-link-header ellipsis">
-        <i ng-if="toolbarBottom.viewMode != 'suite'" class="glyphicon glyphicon-screenshot"
+        <div ng-if="toolbarBottom.viewMode != 'suite'"class="fontawesome-link"
            data-toggle="popover"
            data-content="Localize the currently opened url on side panel"
            data-trigger="hover"
            data-container="body"
-           data-ng-click="toolbarBottom.scrollSidepanel(false)"></i>
+           data-ng-click="toolbarBottom.scrollSidepanel(false)">
+            <i class="fas fa-crosshairs fa-sm"></i>
+        </div>
         <span class="preformatted">{{toolbarBottom.viewMode}}:</span>
         <span ng-if="toolbarBottom.viewMode != 'url'">{{toolbarBottom.model.name}}</span>
         <a ng-if="toolbarBottom.viewMode == 'url'"
@@ -36,12 +38,14 @@
             data-container="body">{{toolbarBottom.model.name}}</a>
     </h4>
     <h5 ng-if="toolbarBottom.viewMode == 'url'">
-      <i class="glyphicon glyphicon-screenshot"
+      <div class="fontawesome-link"
          data-toggle="popover"
          data-content="Localize the test group of the currently opened url on side panel"
          data-trigger="hover"
          data-container="body"
-         data-ng-click="toolbarBottom.scrollSidepanel(true)"></i>
+         data-ng-click="toolbarBottom.scrollSidepanel(true)">
+          <i class="fas fa-crosshairs"></i>
+      </div>
         </i>
     <span class="preformatted">test:</span><span>{{toolbarBottom.model.testGroupName}}</span>
     </h5>
@@ -53,14 +57,14 @@
            ng-show="toolbarBottom.viewMode == 'url' || toolbarBottom.viewMode == 'test'">
         <a ng-click="traverseTree('up')">
           <div class="nav-prev">
-            <i class="glyphicon glyphicon-chevron-left"></i>
+            <i class="fas fa-chevron-left"></i>
           </div>
         </a>
 
         <a ng-click="traverseTree('down')"
            ng-show="toolbarBottom.viewMode == 'url' || toolbarBottom.viewMode == 'test'">
           <div class="nav-next">
-            <i class="glyphicon glyphicon-chevron-right"></i>
+            <i class="fas fa-chevron-right"></i>
           </div>
         </a>
       </div>
@@ -97,7 +101,7 @@
       <span class="button js-rebase-suite button-red"
             data-ng-if="toolbarBottom.showRevertButton()"
             data-ng-click="toolbarBottom.revertAcceptedPatterns()">
-                <i class="glyphicon glyphicon-cloud-download"></i>
+                <i class="fas fa-cloud-download-alt"></i>
                 Revert {{toolbarBottom.viewMode}}
             </span>
     </div>

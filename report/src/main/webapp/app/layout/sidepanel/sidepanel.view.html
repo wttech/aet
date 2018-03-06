@@ -30,24 +30,42 @@
     <div class="form-group sidepanel-search-section">
       <input type="text" placeholder="Search..." data-aet-sidepanel-search
              data-ng-model="$root.searchText" class="search-input">
-      <i class="glyphicon glyphicon-search" data-toggle="popover"
-         data-content="Start typing to filter by url name" data-trigger="hover"
-         data-container="body"></i>
-      <i class="glyphicon glyphicon-remove" data-toggle="popover" data-content="Clear search"
-         data-trigger="hover" data-container="body" ng-click="clearSearch()"
-         style="display: none;"></i>
+      <div class="fontawesome"
+           data-toggle="popover"
+           data-content="{{!$root.searchText && 'Start typing to filter by url name' || $root.searchText && 'Clear search'}}"
+           data-trigger="hover"
+           data-container="body"
+           ng-click="clearSearch()">
+            <div ng-if="!$root.searchText">
+              <i class="fas fa-search"></i>
+            </div>
+            <div ng-if="$root.searchText">
+              <i class="fas fa-times"></i>
+            </div>
+      </div>
     </div>
     <div class="form-group">
       <div data-aet-sidepanel-status-filter class="pop" data-toggle="popover">
         <div class="filter-list">
           <div class="filter-list-title">
             <p>No filters applied</p>
-            <i class="glyphicon glyphicon-chevron-down" data-toggle="popover"
-               data-content="Apply filtering to urls" data-trigger="hover"
-               data-container="body"></i>
-            <i class="glyphicon glyphicon-remove" data-toggle="popover" data-content="Clear filters"
-               data-trigger="hover" data-container="body" ng-click="clearFilters()"
-               style="display: none;"></i>
+            <div class="fontawesome">
+                  <div class="apply-filters"
+                       data-toggle="popover"
+                       data-content="Apply filtering to urls"
+                       data-trigger="hover"
+                       data-container="body">
+                          <i class="fas fa-angle-down fa-lg"></i>
+                  </div>
+                  <div class="clear-filters" style="display: none;"
+                       data-toggle="popover"
+                       data-content="Clear filters"
+                       data-trigger="hover"
+                       data-container="body"
+                       ng-click="clearFilters()">
+                          <i class="fas fa-times"></i>
+                  </div>
+            </div>
           </div>
           <form class="dropdown-menu">
             <div class="dropdown-field">
@@ -105,7 +123,7 @@
          class="test-name {{filteredUrls.length > 0 ? 'is-visible' : 'is-hidden'}}" aet-toggle-link
          type="test-name" ng-class="[test.getStatus()]" data-url="{{test.name}}">
             <span>
-                <i class="glyphicon glyphicon-chevron-right"></i>
+                <i class="rotate-svg fas fa-angle-right fa-lg fa-fw"></i>
                 {{test.name}}
             </span>
         <div class="report-item-stats" data-toggle="popover" data-content="Urls in test"
@@ -115,9 +133,21 @@
       </a>
       <ul class="urls-list">
         <li ng-repeat="url in test.urls | filter: {name: $root.searchText} | aetUrlStatusFilter:$root.activeFilters | orderBy:'name' as filteredUrls"
-            ng-class="[url.getStatus()]" class="glyphicon url-name">
+            ng-class="[url.getStatus()]" class="url-name">
           <div aet-truncate-urls class="text-left nowrap">
-            <a class="test-url" ui-sref-active="is-active"
+              <div ng-if="url.getStatus() == 'failed'" class="fontawesome">
+                  <i class="fas fa-times"></i>
+              </div>
+              <div ng-if="url.getStatus() == 'passed'" class="fontawesome">
+                  <i class="fas fa-check"></i>
+              </div>
+              <div ng-if="url.getStatus() == 'warning'" class="fontawesome">
+                  <i class="fas fa-exclamation-triangle"></i>
+              </div>
+              <div ng-if="url.getStatus() == 'rebased'" class="fontawesome">
+                  <i class="fas fa-cloud-upload-alt"></i>
+              </div>
+              <a class="test-url" ui-sref-active="is-active"
                ui-sref="url({'suite':$root.params.project,'test':test.name, 'url':url.name})">
               {{url.name}}
             </a>
@@ -134,13 +164,13 @@
   <div class="aside-actions-wrapper" ng-if="sidepanel.thereAreChangesToSave()">
     <div class="js-rebase-all" ng-click="sidepanel.saveAllChanges()">
         <span class="button button-blue button-wide">
-            <i class="glyphicon glyphicon-cloud-upload"></i>
+            <i class="fas fa-cloud-upload-alt"></i>
             Save all changes
         </span>
     </div>
     <div class="js-cancel-all" ng-click="sidepanel.discardAllChanges()">
         <span class="button button-darkred button-wide">
-            <i class="glyphicon glyphicon-cloud-download"></i>
+            <i class="fas fa-cloud-download-alt"></i>
             Discard all changes
         </span>
     </div>

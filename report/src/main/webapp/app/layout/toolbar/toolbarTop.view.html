@@ -19,9 +19,13 @@
 -->
 
 <div class="toolbar-top">
-  <div class="toolbar-toggle">
-    <i class="glyphicon"
-       data-ng-class="sidebarExpanded ? 'glyphicon-chevron-left' : 'glyphicon-chevron-right'"></i>
+  <div class="toolbar-toggle fontawesome-link">
+    <div ng-if="sidebarExpanded">
+      <i class="fas fa-angle-left fa-lg"></i>
+    </div>
+    <div ng-if="!sidebarExpanded">
+      <i class="fas fa-angle-right fa-lg"></i>
+    </div>
   </div>
   <div class="toolbar-blocks">
     <div class="toolbar-block" ng-class="{'hidden': toolbarTop.pattern}">
@@ -33,12 +37,12 @@
     <div class="toolbar-block important-message" ng-if="toolbarTop.pattern">
       Uses patterns from <a href="{{toolbarTop.pattern.url}}">{{toolbarTop.pattern.name}}</a>.
       <a href="https://github.com/Cognifide/aet/wiki/SharedPatterns" target="_blank">
-        <span class="glyphicon glyphicon-question-sign"></span>
+        <i class="fas fa-question-circle"></i>
       </a>
     </div>
     <div class="toolbar-block">
       Total cases: <span class="name">{{toolbarTop.suiteStatistics.total}}</span>
-      ( <span class="status failed" data-toggle="popover" data-content="Failed cases"
+      (&nbsp;<span class="status failed" data-toggle="popover" data-content="Failed cases"
               data-trigger="hover"
               data-container="body">{{toolbarTop.suiteStatistics.failed}}</span> /
       <span class="status warning" data-toggle="popover" data-content="Warning cases"
@@ -48,14 +52,12 @@
             data-trigger="hover" data-container="body">{{toolbarTop.suiteStatistics.passed}}</span>
       /
       <span class="status rebased" data-toggle="popover" data-content="Accepted cases"
-            data-trigger="hover" data-container="body">{{toolbarTop.suiteStatistics.rebased}}</span>
-      )
-      ( <span class="status rebased" data-toggle="popover" data-content="Not saved, accepted cases"
+            data-trigger="hover" data-container="body">{{toolbarTop.suiteStatistics.rebased}}</span>&nbsp;)
+      (&nbsp;<span class="status rebased" data-toggle="popover" data-content="Not saved, accepted cases"
               data-trigger="hover" data-container="body">{{toolbarTop.suiteStatistics.acceptedPatterns}}</span>
       /
       <span class="status failed" data-toggle="popover" data-content="Cases that may be accepted"
-            data-trigger="hover" data-container="body">{{toolbarTop.suiteStatistics.patternsToAccept - toolbarTop.suiteStatistics.acceptedPatterns}}</span>
-      )
+            data-trigger="hover" data-container="body">{{toolbarTop.suiteStatistics.patternsToAccept - toolbarTop.suiteStatistics.acceptedPatterns}}</span>&nbsp;)
     </div>
     <div class="toolbar-block">
       Project: <span class="name">{{toolbarTop.suiteInfo.project}}</span>
@@ -73,8 +75,8 @@
     <div class="toolbar-block">
       Execution time: {{toolbarTop.suiteInfo.duration | date: 'mm:ss'}}
     </div>
-    <div class="toolbar-block" data-toggle="modal" data-target="#helpModal">
-      <i class="glyphicon glyphicon-question-sign"></i>
+    <div class="toolbar-block fontawesome-link" data-toggle="modal" data-target="#helpModal">
+      <i class="fas fa-question-circle fa-lg"></i>
     </div>
   </div>
 </div>
