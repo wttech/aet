@@ -21,7 +21,7 @@
 <suite name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
 
 	<!-- W3C-HTML5-Comparator START -->
-    <test name="comparator-w3c-html5-SUCCESS-with-filtering-messagePattern">
+    <test name="S-comparator-w3c-html5-with-filtering-messagePattern">
         <collect>
             <open/>
             <source/>
@@ -41,7 +41,7 @@
         </urls>
     </test>
 
-    <test name="comparator-w3c-html5-SUCCESS-with-filtering-lines">
+    <test name="S-comparator-w3c-html5-with-filtering-lines">
         <collect>
             <open/>
             <source/>
@@ -58,7 +58,7 @@
         </urls>
     </test>
 
-    <test name="comparator-w3c-html5-SUCCESS-with-filtering-columns">
+    <test name="S-comparator-w3c-html5-with-filtering-columns">
         <collect>
             <open/>
             <source/>
@@ -76,7 +76,7 @@
         </urls>
     </test>
 
-    <test name="comparator-w3c-html5-SUCCESS-with-filtering-all">
+    <test name="S-comparator-w3c-html5-with-filtering-all">
         <collect>
             <open/>
             <source/>

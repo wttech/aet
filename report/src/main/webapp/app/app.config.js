@@ -26,7 +26,6 @@ require.config({
     'angularAMD': '../assets/libs/angularAMD/angularAMD',
     'lodash': '../assets/libs/lodash/dist/lodash',
     'angular-bootstrap': '../assets/libs/angular-bootstrap/ui-bootstrap-tpls',
-    'scroller': '../assets/libs/malihu-custom-scrollbar-plugin/jquery.mCustomScrollbar',
     // **************** AET custom ********************
     //components
     'testSearchFilter': 'components/testSearch.filter',
@@ -55,7 +54,7 @@ require.config({
     //toolbarBottom
     'toolbarBottomController': 'layout/toolbar/toolbarBottom.controller',
     //sidepanel
-    'sidepanelToggleDirective': 'layout/sidepanel/sidepanelToggle.directive',
+    'sidepanelDirective': 'layout/sidepanel/sidepanel.directive',
     'sidepanelStatusFilterDirective': 'layout/sidepanel/sidepanelStatusFilter.directive',
     'sidepanelSearchDirective': 'layout/sidepanel/sidepanelSearch.directive',
     'sidepanelToggleLinkDirective': 'layout/sidepanel/toggleLink.directive',
@@ -85,10 +84,6 @@ require.config({
     },
     lodash: {
       exports: '_'
-    },
-    scroller: {
-      deps: ['jquery'],
-      exports: 'mCustomScrollbar'
     },
     'angular-bootstrap': ['angular'],
     'angular-ui-router': ['angular'],

@@ -21,7 +21,7 @@
 <suite name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
 
 	<!-- W3C-HTML5-Comparator START -->
-	<test name="comparator-w3c-html5-SUCCESS">
+	<test name="S-comparator-w3c-html5">
 		<collect>
 			<open />
 			<source />
@@ -34,7 +34,7 @@
 		</urls>
 	</test>
 
-	<test name="comparator-w3c-html5-SUCCESS-with-ignore-warnings-on-page-with-warnings">
+	<test name="S-comparator-w3c-html5-with-ignore-warnings-on-page-with-warnings">
 		<collect>
 			<open />
 			<source />
@@ -47,7 +47,7 @@
 		</urls>
 	</test>
 
-	<test name="comparator-w3c-html5-WARNING">
+	<test name="W-comparator-w3c-html5">
 		<collect>
 			<open />
 			<source />
@@ -60,7 +60,7 @@
 		</urls>
 	</test>
 
-	<test name="comparator-w3c-html5-FAILED">
+	<test name="F-comparator-w3c-html5">
 		<collect>
 			<open />
 			<source />
