@@ -15,7 +15,7 @@ Resource name: source
 
 | ! Note |
 |:------ |
-| One of these parameters is required. Only one parameter (either the `elementId` attribute or the `class` attribute) can be provided. |
+| One of these parameters is required. Only one parameter (either the `elementId` attribute or the `class` attribute) can be provided. If `class`attribute will be provided AET will extract markup for all elements with given class using JSoup [getElementsByClass](https://jsoup.org/apidocs/org/jsoup/nodes/Element.html#getElementsByClass-java.lang.String-) method |
 
 ##### Example Usage
 
