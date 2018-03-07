@@ -44,11 +44,6 @@ Resource name: source
 </suite>
 ```
 
-##### Filters for Collected Source
-
-Following filters could be applied to collected source before comparison:
-
-* [Extract Element Data Filter|ExtractElementDataFilter]
-* [Remove Lines Data Filter|RemoveLinesDataFilter]
-* [Remove Nodes Data Filter|RemoveNodesDataFilter]
-* [Remove Regex Data Filter|RemoveRegexDataFilter]
+| ! Important information |
+|:----------------------- |
+| [Extract Element Data Filter](ExtractElementDataFilter.md), [Remove Lines Data Filter](RemoveLinesDataFilter.md), [Remove Nodes Data Filter](RemoveNodesDataFilter.md) and [Remove Regexp Data Filter](RemoveRegexDataFilter.md) can be applied to collected source before comparison to modify source data that is to be compared. |

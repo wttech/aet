@@ -1,6 +1,6 @@
 #### Extract Element Data Filter
 
-Extract Element Data Filter allows to extract an element from the html source (collected by [[Source Collector|SourceCollector]]) by providing an id attribute or a class attribute. Only the extracted source of the element is processed by the comparator.
+Extract Element Data Filter allows to extract an element from the html source (collected by [Source Collector](SourceCollector.md)) by providing an id attribute or a class attribute. Only the extracted source of the element is processed by the comparator.
 
 Module name: **extract-element**
 
