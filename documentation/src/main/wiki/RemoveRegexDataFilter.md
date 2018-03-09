@@ -1,6 +1,6 @@
 #### Remove Regex Data Filter
 
-Remove Regex Data Filter allows to remove parts of source based on regex expressions from compared source (data and/or pattern). This may be helpful when we need to compare page sources with dynamic content. We can then remove these dynamic content markup. See also [Remove Lines](RemoveLinesDataFilter.md) and [Remove Nodes](RemoveNodesDataFilter.md) data Filters.
+Remove Regex Data Filter allows to remove parts of source based on regex expressions from compared source (data and/or pattern). This may be helpful when we need to compare page sources with dynamic content. We can then remove these dynamic content markup. See also [Remove Lines](RemoveLinesDataFilter) and [Remove Nodes](RemoveNodesDataFilter) data Filters.
 
 Module name: **remove-regexp**
 

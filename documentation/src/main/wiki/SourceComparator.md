@@ -48,7 +48,7 @@ Resource name: source
 
 Following filters could be applied to collected source before comparison:
 
-* [Extract Element Data Filter](ExtractElementDataFilter.md)
-* [Remove Lines Data Filter](RemoveLinesDataFilter.md)
-* [Remove Nodes Data Filter](RemoveNodesDataFilter.md)
-* [Remove Regex Data Filter](RemoveRegexDataFilter.md)
+* [Extract Element Data Filter](ExtractElementDataFilter)
+* [Remove Lines Data Filter](RemoveLinesDataFilter)
+* [Remove Nodes Data Filter](RemoveNodesDataFilter)
+* [Remove Regex Data Filter](RemoveRegexDataFilter)
