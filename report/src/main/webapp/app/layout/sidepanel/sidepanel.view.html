@@ -136,16 +136,16 @@
             ng-class="[url.getStatus()]" class="url-name">
           <div aet-truncate-urls class="text-left nowrap">
               <div ng-if="url.getStatus() == 'failed'" class="fontawesome">
-                  <i class="fas fa-times"></i>
+                  <i class="fas {{statusClasses[url.getStatus()]}}"></i>
               </div>
               <div ng-if="url.getStatus() == 'passed'" class="fontawesome">
-                  <i class="fas fa-check"></i>
+                  <i class="fas {{statusClasses[url.getStatus()]}}"></i>
               </div>
               <div ng-if="url.getStatus() == 'warning'" class="fontawesome">
-                  <i class="fas fa-exclamation-triangle"></i>
+                  <i class="fas {{statusClasses[url.getStatus()]}}"></i>
               </div>
               <div ng-if="url.getStatus() == 'rebased'" class="fontawesome">
-                  <i class="fas fa-cloud-upload-alt"></i>
+                  <i class="fas {{statusClasses[url.getStatus()]}}"></i>
               </div>
               <a class="test-url" ui-sref-active="is-active"
                ui-sref="url({'suite':$root.params.project,'test':test.name, 'url':url.name})">
@@ -164,13 +164,13 @@
   <div class="aside-actions-wrapper" ng-if="sidepanel.thereAreChangesToSave()">
     <div class="js-rebase-all" ng-click="sidepanel.saveAllChanges()">
         <span class="button button-blue button-wide">
-            <i class="fas fa-cloud-upload-alt"></i>
+            <i class="fas {{statusClasses['rebased']}}"></i>
             Save all changes
         </span>
     </div>
     <div class="js-cancel-all" ng-click="sidepanel.discardAllChanges()">
         <span class="button button-darkred button-wide">
-            <i class="fas fa-cloud-download-alt"></i>
+            <i class="fas {{statusClasses['unrebased']}}"></i>
             Discard all changes
         </span>
     </div>

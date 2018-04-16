@@ -31,6 +31,7 @@ define(['angularAMD',
   'testStatusFilter',
   'urlSearchFilter',
   'urlStatusFilter',
+  'winterEdition',
   // services
   'endpointConfiguration',
   'artifactsService',
@@ -82,6 +83,14 @@ define(['angularAMD',
       metadataLoaderService.setup();
 
       $rootScope.$state = $state;
+
+      $rootScope.statusClasses = {
+        passed: 'fa-check',
+        failed: 'fa-times',
+        warning: 'fa-exclamation-triangle',
+        rebased: 'fa-cloud-upload-alt',
+        unrebased: 'fa-cloud-download-alt'
+      };
 
       $rootScope.$on('metadata:unsavedChangesDetected',
           function (event, oldSuite) {

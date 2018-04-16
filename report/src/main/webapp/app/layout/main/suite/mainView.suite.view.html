@@ -27,16 +27,16 @@
           <div ng-class="test.getStatus()">
             <div class="test-count test-count-dashboard">
               <div ng-if="test.getStatus() == 'failed'" class="failed">
-                <i class="fas fa-times"></i>
+                <i class="fas {{statusClasses[test.getStatus()]}}"></i>
               </div>
               <div ng-if="test.getStatus() == 'passed'">
-                <i class="fas fa-check"></i>
+                <i class="fas {{statusClasses[test.getStatus()]}}"></i>
               </div>
               <div ng-if="test.getStatus() == 'warning'">
-                <i class="fas fa-exclamation-triangle"></i>
+                <i class="fas {{statusClasses[test.getStatus()]}}"></i>
               </div>
               <div ng-if="test.getStatus() == 'rebased'">
-                <i class="fas fa-cloud-upload-alt"></i>
+                <i class="fas {{statusClasses[test.getStatus()]}}"></i>
               </div>
               <span>{{test.name}}</span>
             </div>
