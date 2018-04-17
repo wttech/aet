@@ -27,13 +27,7 @@
           <div class="inner">
             <div ng-class="url.getStatus()">
               <div class="test-count test-count-dashboard">
-                <div ng-if="url.getStatus() == 'failed'">
-                  <i class="fas {{theme.statusClasses[url.getStatus()]}}"></i>
-                </div>
-                <div ng-if="url.getStatus() == 'passed'">
-                  <i class="fas {{theme.statusClasses[url.getStatus()]}}"></i>
-                </div>
-                <div ng-if="url.getStatus() == 'warning'">
+                <div ng-if="url.getStatus() != 'rebased'">
                   <i class="fas {{theme.statusClasses[url.getStatus()]}}"></i>
                 </div>
                 <div ng-if="url.getStatus() == 'rebased'">

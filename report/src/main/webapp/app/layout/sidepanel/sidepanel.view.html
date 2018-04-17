@@ -135,13 +135,7 @@
         <li ng-repeat="url in test.urls | filter: {name: $root.searchText} | aetUrlStatusFilter:$root.activeFilters | orderBy:'name' as filteredUrls"
             ng-class="[url.getStatus()]" class="url-name">
           <div aet-truncate-urls class="text-left nowrap">
-              <div ng-if="url.getStatus() == 'failed'" class="fontawesome">
-                  <i class="fas {{theme.statusClasses[url.getStatus()]}}"></i>
-              </div>
-              <div ng-if="url.getStatus() == 'passed'" class="fontawesome">
-                  <i class="fas {{theme.statusClasses[url.getStatus()]}}"></i>
-              </div>
-              <div ng-if="url.getStatus() == 'warning'" class="fontawesome">
+              <div ng-if="url.getStatus() != 'rebased'" class="fontawesome">
                   <i class="fas {{theme.statusClasses[url.getStatus()]}}"></i>
               </div>
               <div ng-if="url.getStatus() == 'rebased'" class="fontawesome">
