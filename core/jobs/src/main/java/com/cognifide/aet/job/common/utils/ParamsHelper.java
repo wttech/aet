@@ -87,7 +87,7 @@ public final class ParamsHelper {
    */
   public static Pattern getPatternFromPlainText(String key, Map<String, String> params) {
     String plainMessage = ParamsHelper.getParamAsString(key, params);
-    return StringUtils.isNotBlank(plainMessage) ? Pattern.compile(Pattern.quote(plainMessage) )
+    return StringUtils.isNotBlank(plainMessage) ? Pattern.compile(Pattern.quote(plainMessage))
         : null;
   }
 
@@ -101,6 +101,12 @@ public final class ParamsHelper {
   public static Pattern getPatternFromPatternParameterOrPlainText(String regexpKey,
       String plainTextKey,
       Map<String, String> params) throws ParametersException {
+    Pattern result = getParamAsPattern(regexpKey, params);
+    return result != null ? result : getPatternFromPlainText(plainTextKey, params);
+  }
+
+  public static Pattern getParamAsPattern(String regexpKey, Map<String, String> params)
+      throws ParametersException {
     Pattern result = null;
     if (params.containsKey(regexpKey)) {
       try {
@@ -110,7 +116,6 @@ public final class ParamsHelper {
             e);
       }
     }
-    return result != null ? result : getPatternFromPlainText(plainTextKey, params);
+    return result;
   }
-
 }

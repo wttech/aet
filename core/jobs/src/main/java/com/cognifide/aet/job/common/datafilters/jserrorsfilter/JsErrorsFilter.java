@@ -40,14 +40,16 @@ public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
 
   private Pattern errorMessagePattern;
 
+  private String errorPlainText;
+
   private String sourceFile;
 
   private Integer line;
 
   @Override
   public void setParameters(Map<String, String> params) throws ParametersException {
-    errorMessagePattern = ParamsHelper
-        .getPatternFromPatternParameterOrPlainText(PARAM_ERROR_PATTERN, PARAM_ERROR, params);
+    errorMessagePattern = ParamsHelper.getParamAsPattern(PARAM_ERROR_PATTERN, params);
+    errorPlainText = ParamsHelper.getParamAsString(PARAM_ERROR, params);
     line = ParamsHelper.getParamAsInteger(PARAM_LINE, params);
 
     sourceFile = ParamsHelper.getParamAsString(PARAM_SOURCE, params);
