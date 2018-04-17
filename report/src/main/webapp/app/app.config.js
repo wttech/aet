@@ -26,7 +26,7 @@ require.config({
     'angularAMD': '../assets/libs/angularAMD/angularAMD',
     'lodash': '../assets/libs/lodash/dist/lodash',
     'angular-bootstrap': '../assets/libs/angular-bootstrap/ui-bootstrap-tpls',
-    'snowfall': '../assets/libs/snowfall/snowfall.min',
+    'snowfall': '../assets/js/snowfall/snowfall.min',
     // **************** AET custom ********************
     //components
     'testSearchFilter': 'components/testSearch.filter',
