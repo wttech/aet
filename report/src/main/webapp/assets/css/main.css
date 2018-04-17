@@ -3878,7 +3878,7 @@ input[type=text]::-webkit-input-placeholder { color: #85898e; }
 /* line 43, ../sass/_toolbar.scss */
 .toolbar-toggle span { display: block; width: 20px; background: #77777c; height: 3px; margin-bottom: 3px; }
 /* line 52, ../sass/_toolbar.scss */
-.toolbar-link { -webkit-transition: width, 0.3s; -o-transition: width, 0.3s; transition: width, 0.3s; width: calc(100% - 200px); background: #ffffff; }
+.toolbar-link { -webkit-transition: width, 0.3s; -o-transition: width, 0.3s; transition: width, 0.3s; width: calc(100% - 400px); background: #ffffff; }
 /* line 57, ../sass/_toolbar.scss */
 .toolbar-link > { float: right; }
 /* line 62, ../sass/_toolbar.scss */
@@ -3922,35 +3922,35 @@ input[type=text]::-webkit-input-placeholder { color: #85898e; }
 /* line 173, ../sass/_toolbar.scss */
 .toolbar-nav div svg { margin: 7px 2px; display: block; color: #85898e; }
 /* line 180, ../sass/_toolbar.scss */
-.toolbar-btns { border-left: solid 1px #ededed; padding-left: 30px; padding-top: 15px; height: 73px; display: flex; }
+.toolbar-btns { border-left: solid 1px #ededed; padding-left: 20px; padding-top: 15px; height: 73px; display: flex; }
 /* line 187, ../sass/_toolbar.scss */
-.toolbar-btns .button { float: left; margin-left: 12px; }
+.toolbar-btns .button { float: left; margin-left: 15px; }
 /* line 192, ../sass/_toolbar.scss */
 .tab-content-toolbar .toolbar-btns { padding-top: 3px; padding-right: 15px; height: 47px; }
 
 /* line 200, ../sass/_toolbar.scss */
-.comments-status { width: 45px; font-family: "montserratlight", sans-serif; font-size: 30px; display: block; line-height: 44px; cursor: pointer; }
-/* line 208, ../sass/_toolbar.scss */
+.comments-status { font-family: "montserratlight", sans-serif; font-size: 30px; display: block; line-height: 44px; cursor: pointer; }
+/* line 207, ../sass/_toolbar.scss */
 .comments-status.small { line-height: 37px; font-size: 11px; }
-/* line 213, ../sass/_toolbar.scss */
+/* line 212, ../sass/_toolbar.scss */
 .comments-status.present { color: #6f9f00; }
-/* line 217, ../sass/_toolbar.scss */
+/* line 216, ../sass/_toolbar.scss */
 .comments-status.absent { color: #3c4550; }
 
-@media (max-width: 1300px) { /* line 222, ../sass/_toolbar.scss */
+@media (max-width: 1300px) { /* line 221, ../sass/_toolbar.scss */
   .tab-content-toolbar { height: 94px; } }
-/* line 228, ../sass/_toolbar.scss */
+/* line 227, ../sass/_toolbar.scss */
 .tab-content-toolbar .toolbar-btns, .tab-content-toolbar .comments-status { width: auto; }
-/* line 232, ../sass/_toolbar.scss */
+/* line 231, ../sass/_toolbar.scss */
 .tab-content-toolbar .toolbar-blocks { display: inline; }
 
-/* line 237, ../sass/_toolbar.scss */
+/* line 236, ../sass/_toolbar.scss */
 .important-message { background: #fff085; }
 
-/* line 241, ../sass/_toolbar.scss */
+/* line 240, ../sass/_toolbar.scss */
 .button-dark.js-trigger-modal { display: inline-block; }
 
-/* line 245, ../sass/_toolbar.scss */
+/* line 244, ../sass/_toolbar.scss */
 .preformatted { font-family: monospace; }
 
 /* AET  Copyright (C) 2013 Cognifide Limited  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */
