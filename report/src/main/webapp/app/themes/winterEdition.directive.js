@@ -40,7 +40,7 @@ define(['angularAMD'], function (angularAMD) {
       var TODAY = new Date();
       var CHRISTMAS_DATE = new Date(TODAY.getFullYear(), 11, 25);
       var DAY_MARGIN = 14;
-      var isChristmas = isInDateRange(TODAY, CHRISTMAS_DATE, DAY_MARGIN);
+      var isChristmas = isDateWithinMargin(TODAY, CHRISTMAS_DATE, DAY_MARGIN);
 
       if (isChristmas) {
         _.merge($scope.theme, WINTER_THEME);
@@ -48,7 +48,7 @@ define(['angularAMD'], function (angularAMD) {
       }
     }
 
-    function isInDateRange(today, eventDate, dayMargin) {
+    function isDateWithinMargin(today, eventDate, dayMargin) {
       var eventStartDate = new Date(eventDate);
       var eventEndDate = new Date(eventDate);
 
