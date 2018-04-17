@@ -89,5 +89,6 @@ require.config({
     'angular-ui-router': ['angular'],
     'angularAMD': ['angular']
   },
-  deps: ['app.module']
+  deps: ['app.module'],
+  waitSeconds: 0
 });
