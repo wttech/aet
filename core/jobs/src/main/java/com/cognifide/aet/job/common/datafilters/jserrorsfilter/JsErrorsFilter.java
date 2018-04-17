@@ -38,9 +38,9 @@ public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
 
   private static final String PARAM_LINE = "line";
 
-  private Pattern errorMessagePattern;
+  private String errorMessage;
 
-  private String errorPlainText;
+  private Pattern errorMessagePattern;
 
   private String sourceFile;
 
@@ -48,13 +48,12 @@ public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
 
   @Override
   public void setParameters(Map<String, String> params) throws ParametersException {
+    errorMessage = ParamsHelper.getParamAsString(PARAM_ERROR, params);
     errorMessagePattern = ParamsHelper.getParamAsPattern(PARAM_ERROR_PATTERN, params);
-    errorPlainText = ParamsHelper.getParamAsString(PARAM_ERROR, params);
     line = ParamsHelper.getParamAsInteger(PARAM_LINE, params);
-
     sourceFile = ParamsHelper.getParamAsString(PARAM_SOURCE, params);
 
-    ParamsHelper.atLeastOneIsProvided(errorMessagePattern, sourceFile, line);
+    ParamsHelper.atLeastOneIsProvided(errorMessage, errorMessagePattern, sourceFile, line);
   }
 
   /**
@@ -76,6 +75,7 @@ public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
     String source = jse.getSourceName();
     return shouldExcludeRegardingSource(source)
         && ParamsHelper.matches(errorMessagePattern, jse.getErrorMessage())
+        && (errorMessage == null || errorMessage.equals(jse.getErrorMessage()))
         && ParamsHelper.equalOrNotSet(line, jse.getLineNumber());
   }
 
