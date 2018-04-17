@@ -35,7 +35,7 @@ require.config({
     'urlStatusFilter': 'components/urlStatus.filter',
     'keyboardShortcutsDirective': 'components/keyboardShortcuts.directive',
     'hidePopoversDirective': 'components/hidePopovers.directive',
-    'winterEdition': 'components/winterEdition.directive',
+    'winterEdition': 'themes/winterEdition.directive',
     //services
     'endpointConfiguration': 'services/endpointConfiguration.service',
     'artifactsService': 'services/artifacts.service',
