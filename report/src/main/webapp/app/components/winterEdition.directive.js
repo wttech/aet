@@ -38,7 +38,7 @@ define(['angularAMD'], function (angularAMD) {
         }
       };
       var TODAY = new Date();
-      var CHRISTMAS_DATE = new Date(TODAY.getFullYear(), 3, 25);
+      var CHRISTMAS_DATE = new Date(TODAY.getFullYear(), 11, 25);
       var DAY_MARGIN = 14;
       var isChristmas = isInDateRange(TODAY, CHRISTMAS_DATE, DAY_MARGIN);
 
