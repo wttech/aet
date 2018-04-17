@@ -27,17 +27,24 @@ define(['angularAMD'], function (angularAMD) {
     };
 
     function linkFunc($scope) {
-      var today = new Date();
-      var CHRISTMAS_DATE = new Date(today.getFullYear(), 3, 15);
-
-      var isChristmas = isInDateRange(today, CHRISTMAS_DATE, 14);
+      var WINTER_THEME = {
+        name: 'winter',
+        statusClasses: {
+          passed: 'fa-tree',
+          failed: 'fa-gift',
+          warning: 'fa-bell',
+          rebased: 'fa-snowflake',
+          unrebased: 'fa-eraser'
+        }
+      };
+      var TODAY = new Date();
+      var CHRISTMAS_DATE = new Date(TODAY.getFullYear(), 3, 25);
+      var DAY_MARGIN = 14;
+      var isChristmas = isInDateRange(TODAY, CHRISTMAS_DATE, DAY_MARGIN);
 
       if (isChristmas) {
-        $scope.statusClasses.passed = 'fa-tree';
-        $scope.statusClasses.failed = 'fa-gift';
-        $scope.statusClasses.warning = 'fa-bell';
-        $scope.statusClasses.rebased = 'fa-snowflake';
-        $scope.statusClasses.unrebased = 'fa-eraser';
+        _.merge($scope.theme, WINTER_THEME);
+        snowFall.snow(document.body, {flakeCount: 200, maxSpeed: 20});
       }
     }
 

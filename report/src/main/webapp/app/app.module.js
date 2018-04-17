@@ -24,6 +24,7 @@ define(['angularAMD',
   'angular-ui-router',
   'jquery',
   'bootstrap',
+  'snowfall',
   // components
   'hidePopoversDirective',
   'keyboardShortcutsDirective',
@@ -79,18 +80,21 @@ define(['angularAMD',
         userSettingsService,
         metadataLoaderService) {
 
+      $rootScope.theme = {
+        name: 'regular',
+        statusClasses: {
+          passed: 'fa-check',
+          failed: 'fa-times',
+          warning: 'fa-exclamation-triangle',
+          rebased: 'fa-cloud-upload-alt',
+          unrebased: 'fa-cloud-download-alt'
+        }
+      };
+
       $rootScope.metadataSaveInProgress = false;
       metadataLoaderService.setup();
 
       $rootScope.$state = $state;
-
-      $rootScope.statusClasses = {
-        passed: 'fa-check',
-        failed: 'fa-times',
-        warning: 'fa-exclamation-triangle',
-        rebased: 'fa-cloud-upload-alt',
-        unrebased: 'fa-cloud-download-alt'
-      };
 
       $rootScope.$on('metadata:unsavedChangesDetected',
           function (event, oldSuite) {

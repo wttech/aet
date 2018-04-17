@@ -28,16 +28,16 @@
             <div ng-class="url.getStatus()">
               <div class="test-count test-count-dashboard">
                 <div ng-if="url.getStatus() == 'failed'">
-                  <i class="fas {{statusClasses[url.getStatus()]}}"></i>
+                  <i class="fas {{theme.statusClasses[url.getStatus()]}}"></i>
                 </div>
                 <div ng-if="url.getStatus() == 'passed'">
-                  <i class="fas {{statusClasses[url.getStatus()]}}"></i>
+                  <i class="fas {{theme.statusClasses[url.getStatus()]}}"></i>
                 </div>
                 <div ng-if="url.getStatus() == 'warning'">
-                  <i class="fas {{statusClasses[url.getStatus()]}}"></i>
+                  <i class="fas {{theme.statusClasses[url.getStatus()]}}"></i>
                 </div>
                 <div ng-if="url.getStatus() == 'rebased'">
-                  <i class="fas {{statusClasses[url.getStatus()]}}"></i>
+                  <i class="fas {{theme.statusClasses[url.getStatus()]}}"></i>
                 </div>
                 <div class="tile-stats">
                   <span class="statistics">Url cases statistics:</span>

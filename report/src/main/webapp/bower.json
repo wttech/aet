@@ -11,7 +11,8 @@
     "angular-ui-router": "^0.2.18",
     "angular-bootstrap": "^1.1.0",
     "angularAMD": "^0.2.1",
-    "lodash": "^4.11.0"
+    "lodash": "^4.11.0",
+    "jquery-snowfall": "^1.7.4"
   },
   "resolutions": {
     "angular": "1.5.5"
