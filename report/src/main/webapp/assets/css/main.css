@@ -3860,13 +3860,13 @@ table { border-collapse: collapse; border-spacing: 0; }
 /* line 155, ../sass/_typography.scss */
 .name { font-style: italic; }
 
-/* line 61, C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+/* line 61, ../../../../../../../../../../soft/programming/compilers-interpreters/Ruby233/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]:-moz-placeholder { color: #85898e; }
-/* line 64, C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+/* line 64, ../../../../../../../../../../soft/programming/compilers-interpreters/Ruby233/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]::-moz-placeholder { color: #85898e; }
-/* line 67, C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+/* line 67, ../../../../../../../../../../soft/programming/compilers-interpreters/Ruby233/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]:-ms-input-placeholder { color: #85898e; }
-/* line 56, C:/Ruby24-x64/lib/ruby/gems/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+/* line 56, ../../../../../../../../../../soft/programming/compilers-interpreters/Ruby233/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]::-webkit-input-placeholder { color: #85898e; }
 
 /* AET  Copyright (C) 2013 Cognifide Limited  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */
@@ -4360,23 +4360,24 @@ ul li.warning a.nav-link, ul li.warning a.nav-link:focus, ul li.warning a.nav-li
 /* line 324, ../sass/_report.scss */
 .passed .cookie-test { font-weight: bold; display: inline !important; color: #6f9f00 !important; }
 
-/* line 1, ../sass/_filterInfo.scss */
-.filterInfo { padding: 15px; border-bottom: 1px solid #dbdbdb; max-width: 500px; }
-/* line 6, ../sass/_filterInfo.scss */
-.filterInfo:last-child { border: none; }
-/* line 10, ../sass/_filterInfo.scss */
-.filterInfo-column { text-align: center; }
-/* line 14, ../sass/_filterInfo.scss */
-.filterInfo-popover { min-width: 400px; max-width: 500px; }
+/* AET  Copyright (C) 2013 Cognifide Limited  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */
 /* line 18, ../sass/_filterInfo.scss */
-.filterInfo-popover .popover-content { padding: 0; }
+.filterInfo { padding: 15px; border-bottom: 1px solid #dbdbdb; max-width: 500px; }
 /* line 23, ../sass/_filterInfo.scss */
+.filterInfo:last-child { border: none; }
+/* line 27, ../sass/_filterInfo.scss */
+.filterInfo-column { text-align: center; }
+/* line 31, ../sass/_filterInfo.scss */
+.filterInfo-popover { min-width: 400px; max-width: 500px; }
+/* line 35, ../sass/_filterInfo.scss */
+.filterInfo-popover .popover-content { padding: 0; }
+/* line 40, ../sass/_filterInfo.scss */
 .filterInfo-title { display: inline-block; font-weight: 700; padding: 0 0 5px; }
-/* line 29, ../sass/_filterInfo.scss */
+/* line 46, ../sass/_filterInfo.scss */
 .filterInfo-parameter { vertical-align: top; }
-/* line 33, ../sass/_filterInfo.scss */
+/* line 50, ../sass/_filterInfo.scss */
 .filterInfo-key { min-width: 90px; padding: 0 8px 2px 0; text-transform: capitalize; }
-/* line 39, ../sass/_filterInfo.scss */
+/* line 56, ../sass/_filterInfo.scss */
 .filterInfo-value { color: #85898e; }
 
 /* line 32, ../sass/main.scss */
