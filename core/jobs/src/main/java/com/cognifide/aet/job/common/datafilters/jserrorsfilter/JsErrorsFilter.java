@@ -67,10 +67,21 @@ public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
   @Override
   public Set<JsErrorLog> modifyData(Set<JsErrorLog> data) {
     Set<JsErrorLog> filteredJsErrors = new HashSet<>(data);
-    filteredJsErrors.stream()
-        .filter(this::shouldFilterOut)
-        .forEach(this::addErrorInfo);
+    filteredJsErrors.forEach(jsErrorLog -> {
+          if (shouldBeIgnored(jsErrorLog)) {
+            addErrorInfo(jsErrorLog);
+          }
+        });
+
     return filteredJsErrors;
+  }
+
+  private boolean shouldBeIgnored(JsErrorLog jse) {
+    String source = jse.getSourceName();
+    return shouldExcludeRegardingSource(source)
+        && ParamsHelper.matches(errorMessagePattern, jse.getErrorMessage())
+        && (errorMessage == null || errorMessage.equals(jse.getErrorMessage()))
+        && ParamsHelper.equalOrNotSet(line, jse.getLineNumber());
   }
 
   private void addErrorInfo(JsErrorLog errorLog) {
@@ -80,14 +91,6 @@ public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
         .add(PARAM_SOURCE, sourceFile)
         .add(PARAM_LINE, line);
     errorLog.addMatchedFilter(filterInfo);
-  }
-
-  private boolean shouldFilterOut(JsErrorLog jse) {
-    String source = jse.getSourceName();
-    return shouldExcludeRegardingSource(source)
-        && ParamsHelper.matches(errorMessagePattern, jse.getErrorMessage())
-        && (errorMessage == null || errorMessage.equals(jse.getErrorMessage()))
-        && ParamsHelper.equalOrNotSet(line, jse.getLineNumber());
   }
 
   private boolean shouldExcludeRegardingSource(String errorSource) {
