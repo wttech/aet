@@ -44,7 +44,7 @@ public class JsErrorsCollector implements CollectorJob {
   }
 
   @Override
-  public CollectorStepResult collect() throws ProcessingException {
+  public CollectorStepResult collect() {
     CollectorStepResult stepResult;
     Set<JsErrorLog> jsErrorLogs = webCommunicationWrapper.getJSErrorLogs();
     final String artifactId = artifactsDAO.saveArtifactInJsonFormat(properties, jsErrorLogs);
