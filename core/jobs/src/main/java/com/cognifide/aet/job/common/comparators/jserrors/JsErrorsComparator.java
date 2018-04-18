@@ -66,17 +66,32 @@ public class JsErrorsComparator implements ComparatorJob {
         jsErrorLogs = dataFilterJob.modifyData(jsErrorLogs);
       }
       LOGGER.info("Successfully ended data modifications using {}.", comparatorProperties);
-      if (jsErrorLogs.isEmpty()) {
-        result = new ComparatorStepResult(null, ComparatorStepResult.Status.PASSED);
+
+      String artifactId = null;
+      if (!jsErrorLogs.isEmpty()) {
+        artifactId = artifactsDAO.saveArtifactInJsonFormat(comparatorProperties, jsErrorLogs);
+      }
+
+      if (noErrorsOrIgnoredOnly(jsErrorLogs)) {
+        result = new ComparatorStepResult(artifactId, ComparatorStepResult.Status.PASSED);
       } else {
-        final String resultArtifactId = artifactsDAO
-            .saveArtifactInJsonFormat(comparatorProperties, jsErrorLogs);
-        result = new ComparatorStepResult(resultArtifactId, ComparatorStepResult.Status.FAILED);
+        result = new ComparatorStepResult(artifactId, ComparatorStepResult.Status.FAILED);
       }
     } catch (Exception e) {
       throw new ProcessingException("Failed to obtain Js Errors Collection Result!", e);
     }
     return result;
+  }
+
+  private boolean noErrorsOrIgnoredOnly(Set<JsErrorLog> jsErrorLogs) {
+    boolean noErrors = true;
+    for (JsErrorLog error : jsErrorLogs) {
+      boolean unexpectedError = !error.isIgnored();
+      if (unexpectedError) {
+        noErrors = false;
+      }
+    }
+    return noErrors;
   }
 
   private Set<JsErrorLog> getCollectedResult() throws IOException {
