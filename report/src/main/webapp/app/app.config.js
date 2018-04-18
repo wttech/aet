@@ -26,6 +26,7 @@ require.config({
     'angularAMD': '../assets/libs/angularAMD/angularAMD',
     'lodash': '../assets/libs/lodash/dist/lodash',
     'angular-bootstrap': '../assets/libs/angular-bootstrap/ui-bootstrap-tpls',
+    'snowfall': '../assets/js/snowfall/snowfall.min',
     // **************** AET custom ********************
     //components
     'testSearchFilter': 'components/testSearch.filter',
@@ -34,6 +35,7 @@ require.config({
     'urlStatusFilter': 'components/urlStatus.filter',
     'keyboardShortcutsDirective': 'components/keyboardShortcuts.directive',
     'hidePopoversDirective': 'components/hidePopovers.directive',
+    'winterEdition': 'themes/winterEdition.directive',
     //services
     'endpointConfiguration': 'services/endpointConfiguration.service',
     'artifactsService': 'services/artifacts.service',

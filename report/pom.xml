@@ -73,6 +73,7 @@
                 <exclude>src/main/webapp/.jshintrc</exclude>
 
                 <exclude>src/main/webapp/assets/libs/**</exclude>
+                <exclude>src/main/webapp/assets/js/**</exclude>
                 <exclude>src/test/jasmine/lib/**</exclude>
 
                 <exclude>src/main/webapp/node_modules/**</exclude>
