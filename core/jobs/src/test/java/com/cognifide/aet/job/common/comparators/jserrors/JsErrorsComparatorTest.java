@@ -36,7 +36,7 @@ public class JsErrorsComparatorTest extends AbstractComparatorTest {
   private JsErrorsComparator tested;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     artifactDaoMock = new ArtifactDAOMock(JsErrorsComparator.class);
   }
 
@@ -44,8 +44,7 @@ public class JsErrorsComparatorTest extends AbstractComparatorTest {
   public void testFailed() throws Exception {
     comparatorProperties = new ComparatorProperties(TEST_COMPANY, TEST_PROJECT, null,
         "data-result.json");
-    tested = new JsErrorsComparator(comparatorProperties, new ArrayList<DataFilterJob>(),
-        artifactDaoMock);
+    tested = new JsErrorsComparator(comparatorProperties, new ArrayList<>(), artifactDaoMock);
     result = tested.compare();
 
     assertEqualsToSavedArtifact("expected-result.json");
@@ -56,11 +55,10 @@ public class JsErrorsComparatorTest extends AbstractComparatorTest {
   public void testSuccess() throws Exception {
     comparatorProperties = new ComparatorProperties(TEST_COMPANY, TEST_PROJECT, null,
         "data-empty-result.json");
-    tested = new JsErrorsComparator(comparatorProperties, new ArrayList<DataFilterJob>(),
-        artifactDaoMock);
+    tested = new JsErrorsComparator(comparatorProperties, new ArrayList<>(), artifactDaoMock);
     result = tested.compare();
 
-    assertEquals(null, getActual());
+    assertEqualsToSavedArtifact("expected-empty-result.json");
     assertEquals(ComparatorStepResult.Status.PASSED, result.getStatus());
   }
 }
