@@ -20,12 +20,10 @@ import com.cognifide.aet.job.api.collector.JsErrorLog;
 import com.cognifide.aet.job.api.datafilter.AbstractDataModifierJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.common.utils.ParamsHelper;
-
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
-
 import org.apache.commons.lang3.StringUtils;
 
 public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {

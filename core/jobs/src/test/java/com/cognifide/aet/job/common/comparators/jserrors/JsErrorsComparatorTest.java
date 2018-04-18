@@ -16,7 +16,6 @@
 package com.cognifide.aet.job.common.comparators.jserrors;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 import com.cognifide.aet.communication.api.metadata.ComparatorStepResult;
 import com.cognifide.aet.job.api.comparator.ComparatorProperties;
@@ -37,7 +36,7 @@ public class JsErrorsComparatorTest extends AbstractComparatorTest {
   private JsErrorsComparator tested;
 
   @Before
-  public void setUp() {
+  public void setUp() throws Exception {
     artifactDaoMock = new ArtifactDAOMock(JsErrorsComparator.class);
   }
 
@@ -45,7 +44,7 @@ public class JsErrorsComparatorTest extends AbstractComparatorTest {
   public void testFailed() throws Exception {
     comparatorProperties = new ComparatorProperties(TEST_COMPANY, TEST_PROJECT, null,
         "data-result.json");
-    tested = new JsErrorsComparator(comparatorProperties, new ArrayList<>(),
+    tested = new JsErrorsComparator(comparatorProperties, new ArrayList<DataFilterJob>(),
         artifactDaoMock);
     result = tested.compare();
 
@@ -57,11 +56,11 @@ public class JsErrorsComparatorTest extends AbstractComparatorTest {
   public void testSuccess() throws Exception {
     comparatorProperties = new ComparatorProperties(TEST_COMPANY, TEST_PROJECT, null,
         "data-empty-result.json");
-    tested = new JsErrorsComparator(comparatorProperties, new ArrayList<>(),
+    tested = new JsErrorsComparator(comparatorProperties, new ArrayList<DataFilterJob>(),
         artifactDaoMock);
     result = tested.compare();
 
-    assertNull("There should be no errors saved by DAO", getActual());
+    assertEquals(null, getActual());
     assertEquals(ComparatorStepResult.Status.PASSED, result.getStatus());
   }
 }

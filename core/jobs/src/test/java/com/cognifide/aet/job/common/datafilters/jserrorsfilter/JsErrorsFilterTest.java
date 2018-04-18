@@ -18,9 +18,7 @@ package com.cognifide.aet.job.common.datafilters.jserrorsfilter;
 import static java.util.stream.Collectors.toSet;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.core.IsNot.not;
 
 import com.cognifide.aet.job.api.collector.JsErrorLog;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
@@ -31,7 +29,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Stream;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -112,7 +109,8 @@ public class JsErrorsFilterTest {
   }
 
   @Test
-  public void modifyDataTest_ignoreByErrorMessage() throws ParametersException {
+  public void modifyDataTest_excludeByErrorMessage()
+      throws ParametersException {
     params = createParams(null, null, null, PARAM_ERROR_VALUE);
     tested.setParameters(params);
     Set<JsErrorLog> result = tested.modifyData(data);
@@ -123,7 +121,8 @@ public class JsErrorsFilterTest {
   }
 
   @Test
-  public void modifyDataTest_ignoreByErrorMessagePattern() throws ParametersException {
+  public void modifyDataTest_filterByErrorMessagePattern()
+      throws ProcessingException, ParametersException {
     params = createParams(null, PARAM_ERROR_PATTERN_VALUE, null, null);
     tested.setParameters(params);
     Set<JsErrorLog> result = tested.modifyData(data);
@@ -134,7 +133,7 @@ public class JsErrorsFilterTest {
   }
 
   @Test
-  public void modifyDataTest_ignoreBySource() throws ParametersException {
+  public void modifyDataTest_filterBySource() throws ProcessingException, ParametersException {
     params = createParams(null, null, PARAM_SOURCE_VALUE_SHORT, null);
     tested.setParameters(params);
     Set<JsErrorLog> result = tested.modifyData(data);
@@ -145,7 +144,7 @@ public class JsErrorsFilterTest {
   }
 
   @Test
-  public void modifyDataTest_ignoreByLine() throws ParametersException {
+  public void modifyDataTest_filterByLine() throws ProcessingException, ParametersException {
     params = createParams(PARAM_LINE_VALUE, null, null, null);
     tested.setParameters(params);
     Set<JsErrorLog> result = tested.modifyData(data);
@@ -156,7 +155,8 @@ public class JsErrorsFilterTest {
   }
 
   @Test
-  public void modifyDataTest_ignoreByLineAndErrorMessagePattern() throws ParametersException {
+  public void modifyDataTest_excludeByLineAndErrorMessagePattern()
+      throws ProcessingException, ParametersException {
     params = createParams(PARAM_LINE_VALUE, PARAM_ERROR_PATTERN_VALUE, null, null);
     tested.setParameters(params);
     Set<JsErrorLog> result = tested.modifyData(data);
