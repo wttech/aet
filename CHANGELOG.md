@@ -10,6 +10,9 @@ All notable changes to AET will be documented in this file.
 ## Unreleased
 **List of changes that are finished but not yet released in any final version.**
 
+## Version 2.1.5-rc01
+
+
 - [PR-239](https://github.com/Cognifide/aet/pull/239) Switch off default require.js timeouts.
 - [PR-238](https://github.com/Cognifide/aet/pull/238) AET Winter Edition introduced
 - [PR-233](https://github.com/Cognifide/aet/pull/233) Font Awesome introduced to AET
