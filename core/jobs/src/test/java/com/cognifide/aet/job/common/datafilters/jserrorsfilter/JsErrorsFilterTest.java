@@ -15,6 +15,7 @@
  */
 package com.cognifide.aet.job.common.datafilters.jserrorsfilter;
 
+import static java.util.stream.Collectors.toSet;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasItems;
@@ -30,6 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Stream;
 import org.apache.commons.lang3.StringUtils;
 import org.junit.Before;
 import org.junit.Test;
@@ -51,6 +53,8 @@ public class JsErrorsFilterTest {
   private static final String PARAM_ERROR_VALUE = "Error message";
 
   private static final String PARAM_SOURCE_VALUE = "Source Value";
+
+  private static final String PARAM_SOURCE_VALUE_SHORT = "source";
 
   private static final String PARAM_ERROR_PATTERN = "errorPattern";
 
@@ -108,64 +112,74 @@ public class JsErrorsFilterTest {
   }
 
   @Test
-  public void modifyDataTest_excludeByErrorMessage()
-      throws ParametersException {
+  public void modifyDataTest_ignoreByErrorMessage() throws ParametersException {
     params = createParams(null, null, null, PARAM_ERROR_VALUE);
     tested.setParameters(params);
     Set<JsErrorLog> result = tested.modifyData(data);
-    assertThat(result, hasSize(6));
+    Set<JsErrorLog> ignored = result.stream().filter(JsErrorLog::isIgnored).collect(toSet());
+
+    assertSize(result, data.size());
+    assertSize(ignored, 1);
   }
 
   @Test
-  public void modifyDataTest_filterByErrorMessagePattern()
-      throws ProcessingException, ParametersException {
+  public void modifyDataTest_ignoreByErrorMessagePattern() throws ParametersException {
     params = createParams(null, PARAM_ERROR_PATTERN_VALUE, null, null);
     tested.setParameters(params);
     Set<JsErrorLog> result = tested.modifyData(data);
-    assertThat(result, hasSize(4));
-    assertThat(result, hasItems(errorLogsList.get(2), errorLogsList.get(3), errorLogsList.get(4)));
+    Set<JsErrorLog> ignored = result.stream().filter(JsErrorLog::isIgnored).collect(toSet());
+
+    assertSize(result, data.size());
+    assertSize(ignored, 3);
   }
 
   @Test
-  public void modifyDataTest_filterBySource() throws ProcessingException, ParametersException {
-    params = createParams(null, null, PARAM_SOURCE_VALUE, null);
+  public void modifyDataTest_ignoreBySource() throws ParametersException {
+    params = createParams(null, null, PARAM_SOURCE_VALUE_SHORT, null);
     tested.setParameters(params);
     Set<JsErrorLog> result = tested.modifyData(data);
-    assertThat(result, hasSize(6));
-    assertThat(result, not(hasItems(errorLogsList.get(6))));
+    Set<JsErrorLog> ignored = result.stream().filter(JsErrorLog::isIgnored).collect(toSet());
+
+    assertSize(result, data.size());
+    assertSize(ignored, 3);
   }
 
   @Test
-  public void modifyDataTest_filterByLine() throws ProcessingException, ParametersException {
+  public void modifyDataTest_ignoreByLine() throws ParametersException {
     params = createParams(PARAM_LINE_VALUE, null, null, null);
     tested.setParameters(params);
     Set<JsErrorLog> result = tested.modifyData(data);
-    assertThat(result, hasSize(4));
-    assertThat(result,
-        not(hasItems(errorLogsList.get(6), errorLogsList.get(5), errorLogsList.get(3))));
+    Set<JsErrorLog> ignored = result.stream().filter(JsErrorLog::isIgnored).collect(toSet());
+
+    assertSize(result, data.size());
+    assertSize(ignored, 3);
   }
 
   @Test
-  public void modifyDataTest_excludeByLineAndErrorMessagePattern()
-      throws ProcessingException, ParametersException {
+  public void modifyDataTest_ignoreByLineAndErrorMessagePattern() throws ParametersException {
     params = createParams(PARAM_LINE_VALUE, PARAM_ERROR_PATTERN_VALUE, null, null);
     tested.setParameters(params);
     Set<JsErrorLog> result = tested.modifyData(data);
-    assertThat(result, hasSize(5));
-    assertThat("Should not contain last item", result, not(hasItems(errorLogsList.get(6))));
+    Set<JsErrorLog> ignored = result.stream().filter(JsErrorLog::isIgnored).collect(toSet());
+
+    assertSize(result, data.size());
+    assertSize(ignored, 2);
   }
 
   private void initErrorLogs() {
     errorLogsList = Lists.newArrayList();
     errorLogsList.add(new JsErrorLog("error message", "source", 1));
-    errorLogsList.add(new JsErrorLog("Error message 2", "source", 2));
+    errorLogsList.add(new JsErrorLog("Error message 2", "SOURCE", 2));
     errorLogsList.add(new JsErrorLog("this should stay here", "this should stay here", 3));
-    errorLogsList.add(new JsErrorLog("Another message", "source", 10));
+    errorLogsList.add(new JsErrorLog("Another message", "prefixed source", 10));
     errorLogsList.add(new JsErrorLog("Another message2", "source", 1));
     errorLogsList.add(new JsErrorLog("Error message", PARAM_SOURCE_VALUE.toLowerCase(), 10));
     errorLogsList.add(new JsErrorLog("Error message random string", PARAM_SOURCE_VALUE, 10));
   }
 
+  private void assertSize(Set<JsErrorLog> jsErrors, int expectedSize) {
+    assertThat(jsErrors, hasSize(expectedSize));
+  }
 
   private Map<String, String> createParams(String line, String errorPattern, String source,
       String error) {
