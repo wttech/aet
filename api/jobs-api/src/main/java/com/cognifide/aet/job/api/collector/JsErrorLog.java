@@ -21,6 +21,10 @@ import java.util.List;
 import java.util.Objects;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 
+/**
+ * Representation of JavaScript error that will be saved in database.
+ * The class fields will be transformed to JSON attributes.
+ */
 public class JsErrorLog implements Serializable, Comparable<JsErrorLog> {
 
   private static final long serialVersionUID = -8929508257448156718L;
@@ -33,13 +37,13 @@ public class JsErrorLog implements Serializable, Comparable<JsErrorLog> {
 
   private boolean ignored;
 
-  private final List<FilterInfo> matchingFilterInfos;
+  private final List<FilterInfo> matchingFilters;
 
   public JsErrorLog(String errorMessage, String sourceName, int lineNumber) {
     this.errorMessage = errorMessage;
     this.sourceName = sourceName;
     this.lineNumber = lineNumber;
-    this.matchingFilterInfos = new ArrayList<>();
+    this.matchingFilters = new ArrayList<>();
   }
 
   public String getErrorMessage() {
@@ -85,6 +89,6 @@ public class JsErrorLog implements Serializable, Comparable<JsErrorLog> {
 
   public void addMatchedFilter(FilterInfo matchedFilterInfo) {
     this.ignored = true;
-    this.matchingFilterInfos.add(matchedFilterInfo);
+    this.matchingFilters.add(matchedFilterInfo);
   }
 }
