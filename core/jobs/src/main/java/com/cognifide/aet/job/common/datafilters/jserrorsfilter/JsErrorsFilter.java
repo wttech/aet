@@ -15,15 +15,17 @@
  */
 package com.cognifide.aet.job.common.datafilters.jserrorsfilter;
 
+import com.cognifide.aet.job.api.collector.FilterInfo;
 import com.cognifide.aet.job.api.collector.JsErrorLog;
 import com.cognifide.aet.job.api.datafilter.AbstractDataModifierJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.common.utils.ParamsHelper;
+
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
+
 import org.apache.commons.lang3.StringUtils;
 
 public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
@@ -65,10 +67,19 @@ public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
   @Override
   public Set<JsErrorLog> modifyData(Set<JsErrorLog> data) {
     Set<JsErrorLog> filteredJsErrors = new HashSet<>(data);
+    filteredJsErrors.stream()
+        .filter(this::shouldFilterOut)
+        .forEach(this::addErrorInfo);
+    return filteredJsErrors;
+  }
 
-    return filteredJsErrors.stream()
-        .filter(input -> !shouldFilterOut(input))
-        .collect(Collectors.toSet());
+  private void addErrorInfo(JsErrorLog errorLog) {
+    FilterInfo filterInfo = new FilterInfo()
+        .add(PARAM_ERROR, errorMessage)
+        .add(PARAM_ERROR_PATTERN, errorMessagePattern)
+        .add(PARAM_SOURCE, sourceFile)
+        .add(PARAM_LINE, line);
+    errorLog.addMatchedFilter(filterInfo);
   }
 
   private boolean shouldFilterOut(JsErrorLog jse) {

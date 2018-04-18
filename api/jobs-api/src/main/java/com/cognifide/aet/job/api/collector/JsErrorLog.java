@@ -16,6 +16,8 @@
 package com.cognifide.aet.job.api.collector;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 
@@ -29,10 +31,15 @@ public class JsErrorLog implements Serializable, Comparable<JsErrorLog> {
 
   private final int lineNumber;
 
+  private boolean ignored;
+
+  private final List<FilterInfo> matchingFilterInfos;
+
   public JsErrorLog(String errorMessage, String sourceName, int lineNumber) {
     this.errorMessage = errorMessage;
     this.sourceName = sourceName;
     this.lineNumber = lineNumber;
+    this.matchingFilterInfos = new ArrayList<>();
   }
 
   public String getErrorMessage() {
@@ -45,6 +52,10 @@ public class JsErrorLog implements Serializable, Comparable<JsErrorLog> {
 
   public int getLineNumber() {
     return lineNumber;
+  }
+
+  public boolean isIgnored() {
+    return this.ignored;
   }
 
   @Override
@@ -70,5 +81,10 @@ public class JsErrorLog implements Serializable, Comparable<JsErrorLog> {
   public int compareTo(JsErrorLog o) {
     return new CompareToBuilder().append(sourceName, o.sourceName).append(lineNumber, o.lineNumber)
         .append(errorMessage, o.errorMessage).toComparison();
+  }
+
+  public void addMatchedFilter(FilterInfo matchedFilterInfo) {
+    this.ignored = true;
+    this.matchingFilterInfos.add(matchedFilterInfo);
   }
 }
