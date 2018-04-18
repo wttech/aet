@@ -33,6 +33,7 @@ Vagrant.require_version '>= 1.9.0'
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.hostname = 'aet-vagrant'
   config.vm.box = 'bento/centos-6.8'
+  config.vm.box_url = 'https://app.vagrantup.com/bento/boxes/centos-6.8'
   config.vm.box_check_update = true
 
   config.vm.network :private_network, ip: '192.168.123.100'
