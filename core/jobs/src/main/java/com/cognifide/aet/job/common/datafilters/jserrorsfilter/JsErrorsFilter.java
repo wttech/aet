@@ -85,9 +85,11 @@ public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
   }
 
   private void addErrorInfo(JsErrorLog errorLog) {
+    String errorPattern = errorMessagePattern == null ? null : errorMessagePattern.toString();
+
     FilterInfo filterInfo = new FilterInfo()
         .add(PARAM_ERROR, errorMessage)
-        .add(PARAM_ERROR_PATTERN, errorMessagePattern)
+        .add(PARAM_ERROR_PATTERN, errorPattern)
         .add(PARAM_SOURCE, sourceFile)
         .add(PARAM_LINE, line);
     errorLog.addMatchedFilter(filterInfo);
