@@ -23,7 +23,7 @@ import org.apache.commons.lang3.builder.CompareToBuilder;
 
 public class JsErrorLog implements Serializable, Comparable<JsErrorLog> {
 
-  private static final long serialVersionUID = -8929508257448156720L;
+  private static final long serialVersionUID = -8929508257448156718L;
 
   private final String errorMessage;
 
