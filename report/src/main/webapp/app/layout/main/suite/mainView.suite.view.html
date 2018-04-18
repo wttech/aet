@@ -26,7 +26,12 @@
         <div class="inner">
           <div ng-class="test.getStatus()">
             <div class="test-count test-count-dashboard">
-              <i ng-class="test.getStatus()" class="glyphicon"></i>
+              <div ng-if="test.getStatus() != 'rebased'" class="failed">
+                <i class="fas {{theme.statusClasses[test.getStatus()]}}"></i>
+              </div>
+              <div ng-if="test.getStatus() == 'rebased'">
+                <i class="fas {{theme.statusClasses[test.getStatus()]}}"></i>
+              </div>
               <span>{{test.name}}</span>
             </div>
           </div>

@@ -28,10 +28,16 @@
   <div><textarea data-ng-model="noteModal.noteText"></textarea></div>
 </div>
 <div class="modal-footer">
-  <button class="btn btn-primary" type="button" data-ng-click="noteModal.updateNote()">Update
-  </button>
-  <button class="btn btn-warning" type="button" data-ng-click="noteModal.cancelNote()">Cancel
-  </button>
-  <button class="btn btn-danger" type="button" data-ng-click="noteModal.deleteNote()">Delete
-  </button>
+  <div class="modal-footer_flex">
+    <div>
+      <button class="btn btn-danger" type="button" data-ng-click="noteModal.deleteNote()">Delete
+      </button>
+    </div>
+    <div>
+      <button class="btn btn-warning" type="button" data-ng-click="noteModal.cancelNote()">Cancel
+      </button>
+      <button class="btn btn-primary" type="button" data-ng-click="noteModal.updateNote()">Update
+      </button>
+    </div>
+  </div>
 </div>

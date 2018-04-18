@@ -26,13 +26,17 @@
   .form-group {
     position: relative;
 
-    i {
+    .fontawesome {
       position: absolute;
       right: 15px;
       z-index: 1;
       top: 11px;
       font-size: 18px;
       color: #FFF;
+
+      .fa-times {
+        cursor: pointer;
+      }
     }
   }
 
@@ -53,6 +57,10 @@
 
     .icon {
       top: 3px;
+    }
+
+    .fontawesome {
+      top: 1px;
     }
   }
 

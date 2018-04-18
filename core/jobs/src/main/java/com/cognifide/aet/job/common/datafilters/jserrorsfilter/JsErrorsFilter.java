@@ -18,14 +18,12 @@ package com.cognifide.aet.job.common.datafilters.jserrorsfilter;
 import com.cognifide.aet.job.api.collector.JsErrorLog;
 import com.cognifide.aet.job.api.datafilter.AbstractDataModifierJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
-import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.job.common.utils.ParamsHelper;
-import com.google.common.base.Predicate;
-import com.google.common.collect.FluentIterable;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
-import javax.annotation.Nullable;
+import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 
 public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
@@ -40,6 +38,8 @@ public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
 
   private static final String PARAM_LINE = "line";
 
+  private String errorMessage;
+
   private Pattern errorMessagePattern;
 
   private String sourceFile;
@@ -48,29 +48,34 @@ public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
 
   @Override
   public void setParameters(Map<String, String> params) throws ParametersException {
-    errorMessagePattern = ParamsHelper
-        .getPatternFromPatternParameterOrPlainText(PARAM_ERROR_PATTERN, PARAM_ERROR, params);
+    errorMessage = ParamsHelper.getParamAsString(PARAM_ERROR, params);
+    errorMessagePattern = ParamsHelper.getParamAsPattern(PARAM_ERROR_PATTERN, params);
     line = ParamsHelper.getParamAsInteger(PARAM_LINE, params);
-
     sourceFile = ParamsHelper.getParamAsString(PARAM_SOURCE, params);
 
-    ParamsHelper.atLeastOneIsProvided(errorMessagePattern, sourceFile, line);
+    ParamsHelper.atLeastOneIsProvided(errorMessage, errorMessagePattern, sourceFile, line);
   }
 
+  /**
+   * Filters JS errors and removes errors ignored because of filters.
+   *
+   * @param data collected JS errors
+   * @return errors that were not ignored by this filter
+   */
   @Override
-  public Set<JsErrorLog> modifyData(Set<JsErrorLog> data) throws ProcessingException {
-    return FluentIterable.from(data).filter(new Predicate<JsErrorLog>() {
-      @Override
-      public boolean apply(@Nullable JsErrorLog input) {
-        return !shouldFilterOut(input);
-      }
-    }).toSet();
+  public Set<JsErrorLog> modifyData(Set<JsErrorLog> data) {
+    Set<JsErrorLog> filteredJsErrors = new HashSet<>(data);
+
+    return filteredJsErrors.stream()
+        .filter(input -> !shouldFilterOut(input))
+        .collect(Collectors.toSet());
   }
 
   private boolean shouldFilterOut(JsErrorLog jse) {
     String source = jse.getSourceName();
     return shouldExcludeRegardingSource(source)
         && ParamsHelper.matches(errorMessagePattern, jse.getErrorMessage())
+        && (errorMessage == null || errorMessage.equals(jse.getErrorMessage()))
         && ParamsHelper.equalOrNotSet(line, jse.getLineNumber());
   }
 

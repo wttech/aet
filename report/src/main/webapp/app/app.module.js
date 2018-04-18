@@ -24,6 +24,7 @@ define(['angularAMD',
   'angular-ui-router',
   'jquery',
   'bootstrap',
+  'snowfall',
   // components
   'hidePopoversDirective',
   'keyboardShortcutsDirective',
@@ -31,6 +32,7 @@ define(['angularAMD',
   'testStatusFilter',
   'urlSearchFilter',
   'urlStatusFilter',
+  'winterEdition',
   // services
   'endpointConfiguration',
   'artifactsService',
@@ -49,7 +51,7 @@ define(['angularAMD',
   'viewModeService',
 
   // sidepanel
-  'sidepanelToggleDirective',
+  'sidepanelDirective',
   'sidepanelStatusFilterDirective',
   'sidepanelSearchDirective',
   'sidepanelToggleLinkDirective',
@@ -79,6 +81,17 @@ define(['angularAMD',
         userSettingsService,
         metadataLoaderService) {
 
+      $rootScope.theme = {
+        name: 'regular',
+        statusClasses: {
+          passed: 'fa-check',
+          failed: 'fa-times',
+          warning: 'fa-exclamation-triangle',
+          rebased: 'fa-cloud-upload-alt',
+          unrebased: 'fa-cloud-download-alt'
+        }
+      };
+
       $rootScope.metadataSaveInProgress = false;
       metadataLoaderService.setup();
 
@@ -94,12 +107,8 @@ define(['angularAMD',
       $rootScope.fullSourceVisible = userSettingsService.isFullSourceVisible();
     }]);
 
-  app.config(['$stateProvider', '$urlRouterProvider', '$locationProvider',
-    '$compileProvider',
-    function ($stateProvider, $urlRouterProvider, $locationProvider,
-        $compileProvider) {
-      $compileProvider.debugInfoEnabled(false);
-
+  app.config(['$stateProvider', '$urlRouterProvider',
+    function ($stateProvider, $urlRouterProvider) {
       $stateProvider
       .state('root', angularAMD.route({
         views: {

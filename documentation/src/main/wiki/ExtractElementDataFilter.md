@@ -1,6 +1,6 @@
 #### Extract Element Data Filter
 
-Extract Element Data Filter allows to extract an element from the html source (collected by Screen Collector) by providing an id attribute or a class attribute. The found source of the element is processed by the comparator.
+Extract Element Data Filter allows to extract an element from the html source (collected by [Source Collector](SourceCollector)) by providing an id attribute or a class attribute. Only the extracted source of the element is processed by the comparator.
 
 Module name: **extract-element**
 
@@ -15,7 +15,7 @@ Resource name: source
 
 | ! Note |
 |:------ |
-| One of these parameters is required. Only one parameter (either the `elementId` attribute or the `class` attribute) can be provided. |
+| One of these parameters is required. Only one parameter (either the `elementId` attribute or the `class` attribute) can be provided. If `class`attribute will be provided AET will extract markup for all elements with given class using JSoup [getElementsByClass](https://jsoup.org/apidocs/org/jsoup/nodes/Element.html#getElementsByClass-java.lang.String-) method |
 
 ##### Example Usage
 

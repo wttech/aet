@@ -21,7 +21,7 @@
 <suite name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
 
 	<!-- Wait-For-Image-Completion-Modifier BEGIN -->
-	<test name="modifier-Wait-For-Image-Completion-SUCCESS">
+	<test name="S-modifier-Wait-For-Image-Completion">
 		<collect>
 			<open />
 			<wait-for-image-completion xpath="//img[@id = 'image-to-wait-for']" timeout = "15000"/>
@@ -35,7 +35,7 @@
 		</urls>
 	</test>
 	<!-- Should fail because the test doesn't wait for the image to load before timeout -->
-	<test name="modifier-Wait-For-Image-Completion-not-visible-FAILED">
+	<test name="F-modifier-Wait-For-Image-Completion-not-visible">
 		<collect>
 			<open />
 			<wait-for-image-completion css="#image-to-wait-for" timeout = "1000"/>
@@ -49,7 +49,7 @@
 		</urls>
 	</test>
 
-	<test name="modifier-Wait-For-Image-Completion-slow-image-SUCCESS">
+	<test name="S-modifier-Wait-For-Image-Completion-slow-image">
 		<collect>
 			<open />
 			<!-- image is served with additional latency -->
@@ -64,7 +64,7 @@
 		</urls>
 	</test>
 
-	<test name="modifier-Wait-For-Image-Completion-slow-image-FAILED">
+	<test name="F-modifier-Wait-For-Image-Completion-slow-image">
 		<collect>
 			<open />
 			<!-- image is served with additional latency -->

@@ -51,7 +51,7 @@
 
   &-link {
     @include transition(width, 0.3s);
-    width: calc(100% - 200px);
+    width: calc(100% - 400px);
     background: $white;
 
     > {
@@ -67,7 +67,8 @@
     font-size: 14px;
     padding: 16px 22px;
 
-    i {
+    svg {
+      color: $gray_dark;
       cursor: pointer;
       font-size: 20px;
       align-self: center;
@@ -89,6 +90,12 @@
       padding-right: 15px;
       background: $white;
       position: absolute;
+    }
+
+    .fontawesome-link {
+      align-items: center;
+      display: flex;
+      justify-content: center;
     }
   }
 
@@ -163,8 +170,8 @@
       cursor: pointer;
       background: $white;
 
-      i {
-        margin: 5px 0 8px 0;
+      svg {
+        margin: 7px 2px;
         display: block;
         color: $gray_darker;
       }
@@ -172,14 +179,14 @@
   }
   &-btns {
     border-left: solid 1px $border-color;
-    padding-left: 30px;
+    padding-left: 20px;
     padding-top: 15px;
     height: 73px;
     display: flex;
 
     .button {
       float: left;
-      margin-left: 12px;
+      margin-left: 15px;
     }
 
     .tab-content-toolbar & {
@@ -191,7 +198,6 @@
 }
 
 .comments-status {
-  width: 45px;
   font-family: $font_light;
   font-size: 30px;
   display: block;
@@ -204,7 +210,7 @@
   }
 
   &.present {
-    color: $yellow;
+    color: $green_darker;
   }
 
   &.absent {

@@ -21,7 +21,7 @@
 <suite name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
 
 	<!-- JS ERRORS-Comparator START -->
-	<test name="comparator-JsErrors-SUCCESS">
+	<test name="S-comparator-JsErrors">
 		<collect>
 			<open />
 			<sleep duration="1000" />
@@ -35,7 +35,7 @@
 		</urls>
 	</test>
 
-	<test name="comparator-JsErrors-SUCCESS-NONEXISTINGPAGE-404">
+	<test name="S-comparator-JsErrors-NONEXISTINGPAGE-404">
 		<collect>
 			<open />
 			<sleep duration="1000" />
@@ -49,7 +49,7 @@
 		</urls>
 	</test>
 
-	<test name="comparator-JsErrors-FAILED">
+	<test name="F-comparator-JsErrors">
 		<collect>
 			<open />
 			<sleep duration="1000" />
@@ -63,7 +63,7 @@
 		</urls>
 	</test>
 
-	<test name="comparator-JsErrors-SUCCESS-mix-of-filters">
+	<test name="S-comparator-JsErrors-mix-of-filters">
 		<collect>
 			<open />
 			<sleep duration="1000" />

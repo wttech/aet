@@ -27,7 +27,12 @@
           <div class="inner">
             <div ng-class="url.getStatus()">
               <div class="test-count test-count-dashboard">
-                <i ng-class="url.getStatus()" class="glyphicon"></i>
+                <div ng-if="url.getStatus() != 'rebased'">
+                  <i class="fas {{theme.statusClasses[url.getStatus()]}}"></i>
+                </div>
+                <div ng-if="url.getStatus() == 'rebased'">
+                  <i class="fas {{theme.statusClasses[url.getStatus()]}}"></i>
+                </div>
                 <div class="tile-stats">
                   <span class="statistics">Url cases statistics:</span>
                   <span class="status failed" data-toggle="popover" data-content="Failed cases"

@@ -67,7 +67,7 @@ body {
 }
 
 .main {
-	@include transition(left 0.3s, width 0.3s);
+	@include transition(left 0.1s, width 0.1s);
 	position: relative;
 	width: 100%;
 	left: 0;
@@ -167,7 +167,7 @@ body {
 
 	&.rebased {
 		color: $rebased;
-		span, i {
+		span, svg {
 			color: $white
 		}
 	}
@@ -180,11 +180,6 @@ body {
 		color: $failed;
 	}
 
-	.glyphicon {
-		font-size: 60px;
-		line-height: 60px;
-	}
-
 	.statistics {
 		color: $gray_dark !important;;
 	}
@@ -192,6 +187,14 @@ body {
 	.name {
 		font-family: $font_bold;
 		font-size: 18px;
+	}
+}
+
+.fontawesome {
+	&-link {
+		cursor: pointer;
+		display: inline;
+		position: relative;
 	}
 }
 

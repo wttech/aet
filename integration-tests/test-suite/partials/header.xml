@@ -21,7 +21,7 @@
 <suite name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
 
 	<!-- Header-Modifier BEGIN -->
-	<test name="modifier-Header-SUCCESS" useProxy="rest">
+	<test name="S-modifier-Header" useProxy="rest">
 		<collect>
 			<!--
 				the header here contains encoded username and password

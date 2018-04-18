@@ -80,7 +80,7 @@
       background: $passed_bg;
       border-top: solid 10px $passed;
 
-      span, i {
+      span, svg {
         color: $passed;
       }
     }
@@ -90,7 +90,7 @@
       background: $failed_bg;
       border-top: solid 10px $failed;
 
-      span, i {
+      span, svg {
         color: $failed;
       }
     }
@@ -99,7 +99,7 @@
       background: $rebased_bg;
       border-top: solid 10px darken($rebased, 10%);
 
-      span, i {
+      span, svg {
         color: $white
       }
 
@@ -109,7 +109,7 @@
       background: $warning_bg;
       border-top: solid 10px $warning;
 
-      span, i {
+      span, svg {
         color: $warning
       }
     }
@@ -138,24 +138,6 @@
         padding-top: 7px;
       }
     }
-
-    i {
-      &.passed {
-        @extend .glyphicon-ok;
-      }
-
-      &.warning {
-        @extend .glyphicon-alert;
-      }
-
-      &.failed {
-        @extend .glyphicon-remove;
-      }
-
-      &.rebased {
-        @extend .glyphicon-cloud-upload;
-      }
-    }
   }
 
   /* List style*/
@@ -164,11 +146,9 @@
     text-align: center;
     overflow: hidden;
 
-    i {
+    svg {
       font-size: 45px;
-      line-height: 50px;
-      display: block;
-      font-family: $font_bold;
+      margin-bottom: 10px;
     }
 
     span {

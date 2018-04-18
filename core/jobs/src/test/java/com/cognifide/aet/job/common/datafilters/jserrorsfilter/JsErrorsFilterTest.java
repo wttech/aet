@@ -108,6 +108,15 @@ public class JsErrorsFilterTest {
   }
 
   @Test
+  public void modifyDataTest_excludeByErrorMessage()
+      throws ParametersException {
+    params = createParams(null, null, null, PARAM_ERROR_VALUE);
+    tested.setParameters(params);
+    Set<JsErrorLog> result = tested.modifyData(data);
+    assertThat(result, hasSize(6));
+  }
+
+  @Test
   public void modifyDataTest_filterByErrorMessagePattern()
       throws ProcessingException, ParametersException {
     params = createParams(null, PARAM_ERROR_PATTERN_VALUE, null, null);
@@ -137,7 +146,7 @@ public class JsErrorsFilterTest {
   }
 
   @Test
-  public void modifyDataTest_excludeByLineAndErrorMessage()
+  public void modifyDataTest_excludeByLineAndErrorMessagePattern()
       throws ProcessingException, ParametersException {
     params = createParams(PARAM_LINE_VALUE, PARAM_ERROR_PATTERN_VALUE, null, null);
     tested.setParameters(params);
@@ -171,7 +180,7 @@ public class JsErrorsFilterTest {
       params.put(PARAM_SOURCE, source);
     }
     if (StringUtils.isNotBlank(error)) {
-      params.put(PARAM_ERROR_PATTERN, error);
+      params.put(PARAM_ERROR, error);
     }
     return params;
   }
