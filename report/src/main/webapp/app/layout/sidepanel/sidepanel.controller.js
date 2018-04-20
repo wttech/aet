@@ -74,7 +74,6 @@ define([], function () {
         rebased: 0
       };
       vm.tests = metadataAccessService.getTests();
-
       $timeout(updateTestsStats);
     }
 
