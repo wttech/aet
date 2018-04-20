@@ -128,7 +128,6 @@ define([], function () {
             $parentElement.click();
             performScroll($parentElement);
             $reportGroup.addClass('is-expanded');
-
         } else {
             $reportGroup.addClass('is-expanded');
             performScroll($currentElement);
