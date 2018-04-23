@@ -1,6 +1,8 @@
 #### JS Errors Data Filter
 
-Js Errors Data Filter filters JS Errors Collector result - it removes matched javascript errors from reports.  
+Js Errors Data Filter filters JS Errors Collector result - it marks filtered errors as ignored
+and attaches data about applied filters.
+
 This filter can be only applied to `js-errors` comparator tag in test case.  
 When more than one parameter is provided then only fully matched errors are filtered.  
 If some XML-specific charactes (e.g. `&`) are in parameter's value, then they must be escaped.
@@ -21,11 +23,15 @@ Resource name: js-errors
 *Note:*
 - filter will check if value of `source` param is a suffix of JS error source. So we can use `"/jquery-1.8.3.js"` to filter errors from all JQuery files regardless of path or even filter errors from all JavaScript files with `".js"`.
 - `error` param will be overridden by `errorPattern` if set
-- If there are some If some XML-specific charactes (e.g. `&`) are in parameter's value, then they have to be escaped. Suite should be valid XML document.
+- If some XML-specific charactes (e.g. `&`) are in parameter's value, then they have to be escaped. Suite should be valid XML document:
+
+```xml
+<js-errors-filter source="http://www.example.com/jquery-1.8.3.js?q=1&amp;p=2" />
+```
 
 ##### Example Usage
 
-In this sample exact match of js error from file  "[http://w.iplsc.com/external/jquery/jquery-1.8.3.js](http://w.iplsc.com/external/jquery/jquery-1.8.3.js)", line 2 with message "Error: Syntax error, unrecognized expression: .iwa_block=pasek-ding" will be totally ignored (not included in report)
+In this sample exact match of js error from file  "[http://w.iplsc.com/external/jquery/jquery-1.8.3.js](http://w.iplsc.com/external/jquery/jquery-1.8.3.js)", line 2 with message "Error: Syntax error, unrecognized expression: .iwa_block=pasek-ding" will be ignored. That is to say, it will be marked in report as ignored and it will have associated information about the applied filter. In this case, about filter specified in first `js-errors-filter` node below. 
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>

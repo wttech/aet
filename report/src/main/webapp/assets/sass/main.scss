@@ -27,6 +27,7 @@
 @import "popups";
 @import "test";
 @import "report";
+@import "filterInfo";
 
 html,
 body {
@@ -194,5 +195,13 @@ body {
 		cursor: pointer;
 		display: inline;
 		position: relative;
+	}
+}
+
+.popover {
+	max-width: none;
+
+	&-title {
+		font-weight: 700;
 	}
 }

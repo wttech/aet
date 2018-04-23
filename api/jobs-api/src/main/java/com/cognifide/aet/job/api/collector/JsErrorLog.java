@@ -16,12 +16,18 @@
 package com.cognifide.aet.job.api.collector;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import org.apache.commons.lang3.builder.CompareToBuilder;
 
+/**
+ * Representation of JavaScript error that will be saved in database.
+ * The class fields will be transformed to JSON attributes.
+ */
 public class JsErrorLog implements Serializable, Comparable<JsErrorLog> {
 
-  private static final long serialVersionUID = -8929508257448156720L;
+  private static final long serialVersionUID = -8929508257448156718L;
 
   private final String errorMessage;
 
@@ -29,10 +35,15 @@ public class JsErrorLog implements Serializable, Comparable<JsErrorLog> {
 
   private final int lineNumber;
 
+  private boolean ignored;
+
+  private final List<FilterInfo> matchingFilters;
+
   public JsErrorLog(String errorMessage, String sourceName, int lineNumber) {
     this.errorMessage = errorMessage;
     this.sourceName = sourceName;
     this.lineNumber = lineNumber;
+    this.matchingFilters = new ArrayList<>();
   }
 
   public String getErrorMessage() {
@@ -45,6 +56,10 @@ public class JsErrorLog implements Serializable, Comparable<JsErrorLog> {
 
   public int getLineNumber() {
     return lineNumber;
+  }
+
+  public boolean isIgnored() {
+    return this.ignored;
   }
 
   @Override
@@ -70,5 +85,10 @@ public class JsErrorLog implements Serializable, Comparable<JsErrorLog> {
   public int compareTo(JsErrorLog o) {
     return new CompareToBuilder().append(sourceName, o.sourceName).append(lineNumber, o.lineNumber)
         .append(errorMessage, o.errorMessage).toComparison();
+  }
+
+  public void addMatchedFilter(FilterInfo matchedFilterInfo) {
+    this.ignored = true;
+    this.matchingFilters.add(matchedFilterInfo);
   }
 }

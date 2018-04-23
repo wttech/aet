@@ -15,6 +15,7 @@
  */
 package com.cognifide.aet.job.common.datafilters.jserrorsfilter;
 
+import com.cognifide.aet.job.api.collector.FilterInfo;
 import com.cognifide.aet.job.api.collector.JsErrorLog;
 import com.cognifide.aet.job.api.datafilter.AbstractDataModifierJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
@@ -23,7 +24,6 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 
 public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
@@ -65,18 +65,32 @@ public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
   @Override
   public Set<JsErrorLog> modifyData(Set<JsErrorLog> data) {
     Set<JsErrorLog> filteredJsErrors = new HashSet<>(data);
+    filteredJsErrors.forEach(jsErrorLog -> {
+      if (shouldBeIgnored(jsErrorLog)) {
+        addErrorInfo(jsErrorLog);
+      }
+    });
 
-    return filteredJsErrors.stream()
-        .filter(input -> !shouldFilterOut(input))
-        .collect(Collectors.toSet());
+    return filteredJsErrors;
   }
 
-  private boolean shouldFilterOut(JsErrorLog jse) {
+  private boolean shouldBeIgnored(JsErrorLog jse) {
     String source = jse.getSourceName();
     return shouldExcludeRegardingSource(source)
         && ParamsHelper.matches(errorMessagePattern, jse.getErrorMessage())
         && (errorMessage == null || errorMessage.equals(jse.getErrorMessage()))
         && ParamsHelper.equalOrNotSet(line, jse.getLineNumber());
+  }
+
+  private void addErrorInfo(JsErrorLog errorLog) {
+    String errorPattern = errorMessagePattern == null ? null : errorMessagePattern.toString();
+
+    FilterInfo filterInfo = new FilterInfo()
+        .add(PARAM_ERROR, errorMessage)
+        .add(PARAM_ERROR_PATTERN, errorPattern)
+        .add(PARAM_SOURCE, sourceFile)
+        .add(PARAM_LINE, line);
+    errorLog.addMatchedFilter(filterInfo);
   }
 
   private boolean shouldExcludeRegardingSource(String errorSource) {

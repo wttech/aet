@@ -69,6 +69,7 @@ require.config({
     'urlController': 'layout/main/url/mainView.url.controller',
     'caseFactory': 'layout/main/url/caseFactory.service',
     'expandablePanelDirective': 'layout/main/url/expandablePanel.directive',
+    'filterInformationDirective': 'layout/main/url/filterInformation/filterInformation.directive',
     'includedCommentPopoverDirective': 'layout/main/url/includedCommentPopover.directive',
     //modals
     'unsavedChangesModalController': 'layout/modal/unsavedChanges/unsavedChangesModal.controller',

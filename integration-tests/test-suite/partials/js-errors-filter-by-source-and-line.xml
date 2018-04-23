@@ -101,6 +101,10 @@
 			<js-errors>
 				<js-errors-filter source="failed.jsp" line="22" />
 				<js-errors-filter source="failed.jsp" line="390" />
+				<js-errors-filter errorPattern=".*nonExistingVariable.*" />
+				<js-errors-filter
+					error="ReferenceError: nonExistingVariable is not defined"
+					source="/sample-site/sanity/comparators/jserrors/failed.jsp"/>
 			</js-errors>
 		</compare>
 		<urls>
