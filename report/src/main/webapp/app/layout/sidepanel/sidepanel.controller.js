@@ -29,16 +29,21 @@ define([], function () {
 
     $rootScope.$on('metadata:changed', updateNavigationTree);
     $rootScope.$on('filter:applied', updateTestsStats);
-    $scope.$watch('sidepanel.tests', function() {
+    var expandSidepanel = function() {
       $timeout(function() {
-          var url = $location.url();
-          var hrefSelector = 'a[href="#' + url + '"';
-          var $element = $(hrefSelector);
+        var url = $location.url();
+        var hrefSelector = 'a[href="#' + url + '"';
+        var $element = $(hrefSelector);
 
-          $element.closest('.aside-report.is-visible').addClass('is-expanded');
-          $element[0].scrollIntoView({behavior: 'smooth', block: 'center', inline: 'nearest'});
+        $element.closest('.aside-report.is-visible').addClass('is-expanded');
+        $element[0].scrollIntoView({behavior: 'smooth', block: 'center', inline: 'nearest'});
       });
-    });
+    };
+
+    // when page is opened with specific URL for the first time:
+    $scope.$watch('sidepanel.tests', expandSidepanel);
+    // when new URL is pasted while viewing report:
+    $scope.$on('$locationChangeSuccess', expandSidepanel);
 
     $('[data-toggle="popover"]').popover({
       placement: 'bottom'
