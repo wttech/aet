@@ -20,10 +20,10 @@ import java.util.Map;
 
 public class FilterInfo {
 
-	private Map<String, Object> parameters = new HashMap<>();
+  private Map<String, Object> parameters = new HashMap<>();
 
-	public FilterInfo add(String key, Object value) {
-		parameters.put(key, value);
-		return this;
-	}
+  public FilterInfo add(String key, Object value) {
+    parameters.put(key, value);
+    return this;
+  }
 }

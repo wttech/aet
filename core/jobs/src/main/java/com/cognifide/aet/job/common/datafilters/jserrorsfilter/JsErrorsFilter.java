@@ -66,10 +66,10 @@ public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
   public Set<JsErrorLog> modifyData(Set<JsErrorLog> data) {
     Set<JsErrorLog> filteredJsErrors = new HashSet<>(data);
     filteredJsErrors.forEach(jsErrorLog -> {
-          if (shouldBeIgnored(jsErrorLog)) {
-            addErrorInfo(jsErrorLog);
-          }
-        });
+      if (shouldBeIgnored(jsErrorLog)) {
+        addErrorInfo(jsErrorLog);
+      }
+    });
 
     return filteredJsErrors;
   }

@@ -84,14 +84,7 @@ public class JsErrorsComparator implements ComparatorJob {
   }
 
   private boolean noErrorsOrIgnoredOnly(Set<JsErrorLog> jsErrorLogs) {
-    boolean noErrors = true;
-    for (JsErrorLog error : jsErrorLogs) {
-      boolean unexpectedError = !error.isIgnored();
-      if (unexpectedError) {
-        noErrors = false;
-      }
-    }
-    return noErrors;
+    return jsErrorLogs.stream().allMatch(JsErrorLog::isIgnored);
   }
 
   private Set<JsErrorLog> getCollectedResult() throws IOException {
