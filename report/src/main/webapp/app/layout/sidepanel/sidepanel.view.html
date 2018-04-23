@@ -20,7 +20,7 @@
 <div class="aside" ui-view="aside">
   <div class="logo-holder">
     <a ui-sref="suite">
-      <img class="logo" src="assets/img/logo.png" alt="">
+      <img class="logo" ng-src="assets/img/logo_{{theme.name}}.png" alt="">
     </a>
   </div>
   <!--
@@ -135,17 +135,11 @@
         <li ng-repeat="url in test.urls | filter: {name: $root.searchText} | aetUrlStatusFilter:$root.activeFilters | orderBy:'name' as filteredUrls"
             ng-class="[url.getStatus()]" class="url-name">
           <div aet-truncate-urls class="text-left nowrap">
-              <div ng-if="url.getStatus() == 'failed'" class="fontawesome">
-                  <i class="fas fa-times"></i>
-              </div>
-              <div ng-if="url.getStatus() == 'passed'" class="fontawesome">
-                  <i class="fas fa-check"></i>
-              </div>
-              <div ng-if="url.getStatus() == 'warning'" class="fontawesome">
-                  <i class="fas fa-exclamation-triangle"></i>
+              <div ng-if="url.getStatus() != 'rebased'" class="fontawesome">
+                  <i class="fas {{theme.statusClasses[url.getStatus()]}}"></i>
               </div>
               <div ng-if="url.getStatus() == 'rebased'" class="fontawesome">
-                  <i class="fas fa-cloud-upload-alt"></i>
+                  <i class="fas {{theme.statusClasses[url.getStatus()]}}"></i>
               </div>
               <a class="test-url" ui-sref-active="is-active"
                ui-sref="url({'suite':$root.params.project,'test':test.name, 'url':url.name})">
@@ -164,13 +158,13 @@
   <div class="aside-actions-wrapper" ng-if="sidepanel.thereAreChangesToSave()">
     <div class="js-rebase-all" ng-click="sidepanel.saveAllChanges()">
         <span class="button button-blue button-wide">
-            <i class="fas fa-cloud-upload-alt"></i>
+            <i class="fas {{theme.statusClasses['rebased']}}"></i>
             Save all changes
         </span>
     </div>
     <div class="js-cancel-all" ng-click="sidepanel.discardAllChanges()">
         <span class="button button-darkred button-wide">
-            <i class="fas fa-cloud-download-alt"></i>
+            <i class="fas {{theme.statusClasses['unrebased']}}"></i>
             Discard all changes
         </span>
     </div>

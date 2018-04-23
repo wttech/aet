@@ -51,7 +51,7 @@
 
   &-link {
     @include transition(width, 0.3s);
-    width: calc(100% - 200px);
+    width: calc(100% - 400px);
     background: $white;
 
     > {
@@ -179,14 +179,14 @@
   }
   &-btns {
     border-left: solid 1px $border-color;
-    padding-left: 30px;
+    padding-left: 20px;
     padding-top: 15px;
     height: 73px;
     display: flex;
 
     .button {
       float: left;
-      margin-left: 12px;
+      margin-left: 15px;
     }
 
     .tab-content-toolbar & {
@@ -198,7 +198,6 @@
 }
 
 .comments-status {
-  width: 45px;
   font-family: $font_light;
   font-size: 30px;
   display: block;

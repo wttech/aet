@@ -24,6 +24,7 @@ define(['angularAMD',
   'angular-ui-router',
   'jquery',
   'bootstrap',
+  'snowfall',
   // components
   'hidePopoversDirective',
   'keyboardShortcutsDirective',
@@ -31,6 +32,7 @@ define(['angularAMD',
   'testStatusFilter',
   'urlSearchFilter',
   'urlStatusFilter',
+  'winterEdition',
   // services
   'endpointConfiguration',
   'artifactsService',
@@ -77,6 +79,17 @@ define(['angularAMD',
         metadataService,
         userSettingsService,
         metadataLoaderService) {
+
+      $rootScope.theme = {
+        name: 'regular',
+        statusClasses: {
+          passed: 'fa-check',
+          failed: 'fa-times',
+          warning: 'fa-exclamation-triangle',
+          rebased: 'fa-cloud-upload-alt',
+          unrebased: 'fa-cloud-download-alt'
+        }
+      };
 
       $rootScope.metadataSaveInProgress = false;
       metadataLoaderService.setup();

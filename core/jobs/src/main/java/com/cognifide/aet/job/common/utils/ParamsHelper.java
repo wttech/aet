@@ -42,7 +42,7 @@ public final class ParamsHelper {
         result = Integer.parseInt(params.get(key));
       } catch (NumberFormatException e) {
         throw new ParametersException(
-            "Provided line: " + params.get(result) + " is not a numeric value.", e);
+            "Provided line: " + params.get(key) + " is not a numeric value.", e);
       }
     }
     return result;
@@ -50,7 +50,7 @@ public final class ParamsHelper {
 
 
   public static String getParamAsString(String key, Map<String, String> params) {
-    return params.containsKey(key) ? params.get(key) : null;
+    return params.getOrDefault(key, null);
   }
 
   /***
@@ -92,25 +92,30 @@ public final class ParamsHelper {
   }
 
   /***
-   * @param primaryKey property name that should stores regexp pattern
-   * @param secondaryKey property name that should store plain text
+   * @param regexpKey property name that should store regexp pattern
+   * @param plainTextKey property name that should store plain text
    * @param params map of parameters
-   * @return pattern under primaryKey or if retrurns null Pattern from quoted plain text under secondaryKey
+   * @return pattern under primaryKey or if retrurns null Pattern from quoted plain text under plainTextKey
    * @throws ParametersException if Pattern under primaryKey is provided but invalid
    */
-  public static Pattern getPatternFromPatternParameterOrPlainText(String primaryKey,
-      String secondaryKey,
+  public static Pattern getPatternFromPatternParameterOrPlainText(String regexpKey,
+      String plainTextKey,
       Map<String, String> params) throws ParametersException {
+    Pattern result = getParamAsPattern(regexpKey, params);
+    return result != null ? result : getPatternFromPlainText(plainTextKey, params);
+  }
+
+  public static Pattern getParamAsPattern(String regexpKey, Map<String, String> params)
+      throws ParametersException {
     Pattern result = null;
-    if (params.containsKey(primaryKey)) {
+    if (params.containsKey(regexpKey)) {
       try {
-        result = Pattern.compile(params.get(primaryKey));
+        result = Pattern.compile(params.get(regexpKey));
       } catch (PatternSyntaxException e) {
         throw new ParametersException("errorPattern value is invalid regular-expression pattern.",
             e);
       }
     }
-    return result != null ? result : getPatternFromPlainText(secondaryKey, params);
+    return result;
   }
-
 }

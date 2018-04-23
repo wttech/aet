@@ -11,6 +11,8 @@ All notable changes to AET will be documented in this file.
 **List of changes that are finished but not yet released in any final version.**
 
 - [PR-244](https://github.com/Cognifide/aet/pull/244) Side panel scrolled automatically when navigating under specific test/url on first application load.
+- [PR-239](https://github.com/Cognifide/aet/pull/239) Switch off default require.js timeouts.
+- [PR-238](https://github.com/Cognifide/aet/pull/238) AET Winter Edition introduced
 - [PR-233](https://github.com/Cognifide/aet/pull/233) Font Awesome introduced to AET
 - [PR-228](https://github.com/Cognifide/aet/pull/228) Remove 'jump to' button from whole suite view.
 - [PR-230](https://github.com/Cognifide/aet/pull/230) Bug Fixed: Side panel items not accessible when 'Save/Discard Changes' buttons are visible.
