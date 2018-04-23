@@ -30,7 +30,6 @@ define([], function () {
     $rootScope.$on('metadata:changed', updateNavigationTree);
     $rootScope.$on('filter:applied', updateTestsStats);
     var expandSidepanel = function() {
-      console.log("expanding sidepanel: " + new Date());
       $timeout(function() {
         var url = $location.url();
         var hrefSelector = 'a[href="#' + url + '"';
