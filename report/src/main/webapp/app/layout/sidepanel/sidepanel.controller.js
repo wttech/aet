@@ -17,10 +17,10 @@
  */
 define([], function () {
   'use strict';
-  return ['$rootScope', '$scope', '$timeout', 'metadataAccessService',
+  return ['$rootScope', '$scope', '$timeout', '$location', 'metadataAccessService',
     'metadataService', 'notesService', SidepanelController];
 
-  function SidepanelController($rootScope, $scope, $timeout,
+  function SidepanelController($rootScope, $scope, $timeout, $location,
       metadataAccessService, metadataService, notesService) {
     var vm = this;
     vm.thereAreChangesToSave = thereAreChangesToSave;
@@ -29,6 +29,16 @@ define([], function () {
 
     $rootScope.$on('metadata:changed', updateNavigationTree);
     $rootScope.$on('filter:applied', updateTestsStats);
+    $scope.$watch('sidepanel.tests', function() {
+      $timeout(function() {
+          var url = $location.url();
+          var hrefSelector = 'a[href="#' + url + '"';
+          var $element = $(hrefSelector);
+
+          $element.closest('.aside-report.is-visible').addClass('is-expanded');
+          $element[0].scrollIntoView({behavior: 'smooth', block: 'center', inline: 'nearest'});
+      });
+    });
 
     $('[data-toggle="popover"]').popover({
       placement: 'bottom'

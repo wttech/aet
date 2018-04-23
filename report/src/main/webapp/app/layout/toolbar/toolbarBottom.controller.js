@@ -120,17 +120,22 @@ define([], function () {
     }
 
     function scrollSidepanel(findParentGroup) {
-      var element = $('a.test-name.is-active, a.test-url.is-active');
-      var reportGroup;
+        var $currentElement = $('a.test-name.is-active, a.test-url.is-active');
+        var $reportGroup = $currentElement.closest('.aside-report.is-visible');
+        var $parentElement = $reportGroup.find('.test-name');
 
-      if (findParentGroup) {
-          reportGroup = element.closest('.aside-report.is-visible');
-          element = reportGroup.find('.test-name');
-          element.click();
-          reportGroup.addClass('is-expanded');
-      }
+        if (findParentGroup) {
+            $parentElement.click();
+            performScroll($parentElement);
+            $reportGroup.addClass('is-expanded');
+        } else {
+            $reportGroup.addClass('is-expanded');
+            performScroll($currentElement);
+        }
+    }
 
-      element[0].scrollIntoView({behavior: 'smooth', block: 'center', inline: 'nearest'});
+    function performScroll (element) {
+        element[0].scrollIntoView({behavior: 'smooth', block: 'center', inline: 'nearest'});
     }
 
     /***************************************
