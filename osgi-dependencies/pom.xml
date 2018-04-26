@@ -78,27 +78,10 @@
             <groupId>org.codehaus.mojo</groupId>
             <artifactId>wagon-maven-plugin</artifactId>
             <executions>
-              <!-- skip execution from parent as this module has no artifact built -->
+              <!-- skip execution inherited from parent as this module has no artifact built -->
               <execution>
                 <id>upload-single-bundle-to-karaf</id>
                 <phase>none</phase>
-              </execution>
-              <execution>
-                <id>upload-webconsole-branding</id>
-                <phase>install</phase>
-                <goals>
-                  <goal>upload</goal>
-                </goals>
-                <configuration>
-                  <includes>org.apache.karaf.webconsole.branding-2.3.9.jar</includes>
-                  <!--
-                      please configure credentials for ${target.karaf.serverId}
-                      in your settings.xml file
-                      and check file and folders permissions
-                  -->
-                  <serverId>${target.karaf.serverId}</serverId>
-                  <url>${target.karaf.bundles.url}</url>
-                </configuration>
               </execution>
               <execution>
                 <id>upload-features</id>

@@ -210,7 +210,6 @@
                       <includes>
                         <include>aet-features.xml</include>
                         <include>aet-webconsole.xml</include>
-                        <include>org.apache.karaf.webconsole.branding-2.3.9.jar</include>
                       </includes>
                     </resource>
                   </resources>
@@ -360,8 +359,6 @@
                   <fileset>
                     <directory>${project.build.directory}</directory>
                     <includes>
-                      <!-- branding -->
-                      <include>org.apache.karaf.webconsole.branding-2.3.9.jar</include>
                       <!-- dependencies wrapped for OSGi -->
                       <include>${project.groupId}.selenium-${project.version}.jar</include>
                       <include>${project.groupId}.w3chtml5validator-${project.version}.jar</include>
