@@ -26,10 +26,10 @@
   </div>
 </div>
 <div>
-  <span ng-if="!case.result || case.result == ''" class="test-no-issues">
+  <span ng-if="!case.collectorResult || case.collectorResult.length == 0" class="test-no-issues">
       No issues found
   </span>
-  <div ng-if="case.result && case.result != ''">
+  <div ng-if="case.collectorResult && case.collectorResult.length > 0">
     <h4>JavaScript Errors information:</h4>
     <table class="table">
       <thead>
