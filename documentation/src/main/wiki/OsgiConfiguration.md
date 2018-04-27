@@ -39,23 +39,3 @@ There are more services that require configuration which are not present on the 
 | Comparator name | Has to be unique within Comparator Message Listeners. |
 | Consumer queue name | Fixed value `AET.comparatorJobs` |
 | Producer queue name | Fixed value `AET.comparatorResults` |
-
-##### Web Driver Factories configuration
-
-The service are **Firefox Web Driver Factory** and **Chrome Web Driver Factory**. Below are listed it's properties with required values.
-
-###### Firefox Web Driver Factory
-
-| Property name | Value |
-| ------------- | ----- |
-| Name | Fixed value `ff` |
-| Path | Path to Firefox binary |
-| Log file path | Path to Firefox log file |
-| Selenium Grid URL | Url to Selenium Grid Hub. If blank, tests are handled in a legacy way - without Selenium Grid hub. |
-
-###### Chrome Web Driver Factory
-
-| Property name | Value |
-| ------------- | ----- |
-| Name | Fixed value `chrome` |
-| Selenium Grid URL | Url to Selenium Grid Hub. If blank, tests are handled in a legacy way - without Selenium Grid hub. |
