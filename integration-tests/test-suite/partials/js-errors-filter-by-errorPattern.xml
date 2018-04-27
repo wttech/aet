@@ -29,7 +29,7 @@
 		</collect>
 		<compare>
 			<js-errors>
-				<js-errors-filter errorPattern="[\w]+: nonExistingJsFunction is [\w]+" />
+				<js-errors-filter errorPattern="[\w]+: nonExistingJsFunction is .*" />
 				<js-errors-filter errorPattern="[\w]* some non-existing error \d+" />
 			</js-errors>
 		</compare>
