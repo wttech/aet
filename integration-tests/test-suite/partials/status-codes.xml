@@ -58,7 +58,7 @@
 			<sleep duration="3000"/>
 		</collect>
 		<compare>
-
+			<!-- we could use filterCodes here, but we want to test this case -->
 			<status-codes filterRange="404,404" showExcluded="true"/>
 		</compare>
 		<urls>

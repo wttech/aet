@@ -41,7 +41,7 @@
         Excluded status codes:
       </td>
     </tr>
-    <tr class="success"
+    <tr class="ignored"
         ng-repeat="item in case.result.excludedStatusCodes | filter: {code: case.comparator.parameters.filterCodes}"
         ng-if="case.comparator.parameters.showExcluded && case.comparator.parameters.filterCodes">
       <td>{{$index+1}}</td>
@@ -65,7 +65,7 @@
         Excluded status codes:
       </td>
     </tr>
-    <tr class="success" ng-repeat="item in case.result.excludedStatusCodes"
+    <tr class="ignored" ng-repeat="item in case.result.excludedStatusCodes"
         ng-if="case.comparator.parameters.showExcluded && !case.comparator.parameters.filterCodes && case.result.excludedStatusCodes.length > 0">
       <td>{{$index+1}}</td>
       <td>{{item.code}}</td>

@@ -24,7 +24,7 @@
 ENV["GEM_PATH"] = nil
 ENV["GEM_HOME"] = nil
 
-AET_VERSION = '2.1.4'
+AET_VERSION = '2.1.5'
 
 VAGRANTFILE_API_VERSION = '2'
 
@@ -95,8 +95,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     }
     chef.run_list = [
       "recipe[aet::_develop]",
-      "recipe[aet::seleniumgrid_hub]",
-      "recipe[aet::seleniumgrid_node_ff]",
+# commented for now as we want to release a version without Selenium Grid
+#      "recipe[aet::seleniumgrid_hub]",
+#      "recipe[aet::seleniumgrid_node_ff]",
       "recipe[aet::karaf]",
       "recipe[aet::deploy_aet_for_karaf]",
       "recipe[aet::postdeploy_restart]",

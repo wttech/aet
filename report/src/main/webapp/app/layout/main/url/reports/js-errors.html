@@ -38,12 +38,12 @@
         <th>Error</th>
         <th>Source</th>
         <th>Line number</th>
-        <th>Active filter information</th>
+        <th>Active filters information</th>
       </tr>
       </thead>
       <tbody>
       <tr ng-repeat="item in case.result track by $index"
-          ng-class="{ 'success': item.ignored, 'error': !item.ignored }">
+          ng-class="{ 'ignored': item.ignored, 'error': !item.ignored }">
         <td>{{$index+1}}</td>
         <td>{{item.errorMessage}}</td>
         <td>
