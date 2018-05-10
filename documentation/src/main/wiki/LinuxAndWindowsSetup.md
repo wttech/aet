@@ -23,11 +23,7 @@ Please note that full list of required tools and its versions can be found in [S
 4. Create dir under C:\ for karaf files. Preferably C:\aet\.
 5. Unpack [Apache Karaf 4.1.4](https://archive.apache.org/dist/karaf/4.1.4/apache-karaf-4.1.4.zip) to *C:\aet\karaf\current*.
 6. Update JAVA memory settings in *C:\aet\karaf\current\bin\setenv.bat* file.
-7. Unpack “configs.zip” to  *C:\aet\karaf\aet_configs\current*.
-8. Unpack “features.zip” to *C:\aet\karaf\aet_features\current*.
-9. Unpack “bundles.zip” to  *C:\aet\karaf\aet_bundles\current*.
-10. Add two files in *C:\aet\karaf\current\deploy*: “org.apache.felix.fileinstall-configs.cfg” and “org.apache.felix.fileinstall-features.cfg”.
-The content of these files should be `felix.fileinstall.dir=./../aet_configs/current` and `felix.fileinstall.dir=./../aet_features/current` respectively.
+7. Unpack “configs.zip”, “features.zip” and “bundles.zip” to  *C:\aet\karaf\current\deploy*.
 10. Unpack nssm-2.24 under *C:\aet*.
 11. Install Karaf as Windows service:
     * run `C:\aet\nssm-2.24\win64\nssm.exe install apache-karaf`
