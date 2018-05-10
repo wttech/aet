@@ -21,7 +21,7 @@ source "https://supermarket.chef.io"
 # Uncomment one of the below lines to use aet cookbook from alternative location.
 # And update the cookbook required version in 'metadata.rb' file.
 
-#cookbook 'aet', git: 'https://github.com/Cognifide/aet-cookbook.git', branch: 'master'
+cookbook 'aet', git: 'https://github.com/Cognifide/aet-cookbook.git', branch: 'simple-deployment'
 #cookbook 'aet', path: '../../aet-cookbook'
 
 metadata

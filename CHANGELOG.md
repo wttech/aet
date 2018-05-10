@@ -10,6 +10,8 @@ All notable changes to AET will be documented in this file.
 ## Unreleased
 **List of changes that are finished but not yet released in any final version.**
 
+- [PR-257](https://github.com/Cognifide/aet/pull/257) Simpler deployment for Karaf
+
 ## Version 2.1.5
 
 
