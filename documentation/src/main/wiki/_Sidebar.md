@@ -13,6 +13,7 @@
         * [[Suite Structure|SuiteStructure]]
     * [[Running Suite|RunningSuite]]
         * [[Tracking Progress|TrackingProgress]]
+    * [[Best practices for writing test scripts|BestPractices]]
     * [[Features|Features]]
         * [[Open|Open]]
         * [[Collectors|Collectors]]
