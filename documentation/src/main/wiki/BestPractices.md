@@ -38,10 +38,10 @@ using the default resolution and then switches to 1280x768px.
 ###### Script B
 ```xml
 <test>
-	(...)
+	[...]
 	<resolution width="1280" height="768"/>
 	<open/>
-	(...)
+	[...]
 	<screen/>
 </test>
 ```
@@ -54,7 +54,7 @@ A test can provide different results depending on how you use wait commands.
 ###### Script A
 ```xml
 <test>
-	(...)
+	[...]
 	<sleep duration="5000"/>
 	<click css="#bigButton" timeout="5000"/>
 	<screen/>
@@ -66,7 +66,7 @@ This means that maybe the page won't always manage to get to a stable state befo
 ###### Script B
 ```xml
 <test>
-	(...)
+	[...]
 	<click css="#bigButton" timeout="5000"/>
 	<sleep duration="5000"/>
 	<screen/>
@@ -86,7 +86,7 @@ try to interact with it.
 ###### Script A
 ```xml
 <test>
-	(...)
+	[...]
 	<click css="#bigButton" timeout="5000"/>
 	<screen/>
 </test>
@@ -97,7 +97,7 @@ after that the click command is ignored, an exception is thrown in the logs and 
 ###### Script B
 ```xml
 <test>
-	(...)
+	[...]
 	<click css="#bigButton"/>
 	<screen/>
 </test>
@@ -109,7 +109,7 @@ an exception is thrown in the logs and the test continues.
 ###### Script C
 ```xml
 <test>
-	(...)
+	[...]
 	<click css="#bigButton" timeout="0"/>
 	<screen/>
 </test>
@@ -127,7 +127,7 @@ without having the user write a wait command for each element on the page that m
 ##### Example
 ```xml
 <test>
-	(...)
+	[...]
 	<click css="#bigButton" timeout="5000"/>
 	<sleep duration="5000"/>
 	<screen/>
@@ -147,7 +147,7 @@ Examples
 ###### Script A
 ```xml
 <test>
-	(...)
+	[...]
 	<sleep duration="20000"/>
 	<screen/>
 </test>
@@ -158,7 +158,7 @@ This test test waits 20 seconds no matter how fast the page and the elements we'
 ###### Script B
 ```xml
 <test>
-	(...)
+	[...]
 	<click css="#bestButton" timeout="15000"/>
 	<sleep duration="5000"/>
 	<screen/>
@@ -178,13 +178,13 @@ Example
 
 ```xml
 <test>
-	(...)
+	[...]
 	<hide css="#uselessElement" leaveBlankSpace="false" timeout="5000"/>
 	<replaceText css="img" attributeName="src" value="/content/dam/test/uk/en_gb/dummy/dummy.png.renditions.original.png" />
 	<replaceText attributeName="style"
 	    value="background-image: url('/content/dam/test/uk/en_gb/dummy/dummy.png.renditions.original.png')"
 	    css="#backgroundStuff" timeout="5000"/>
-	(...)
+	[...]
 	<screen/>
 </test>
 ```
