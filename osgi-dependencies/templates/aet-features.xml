@@ -23,6 +23,8 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://karaf.apache.org/xmlns/features/v1.3.0 http://karaf.apache.org/xmlns/features/v1.3.0">
 
+    <!-- older version of spring required for ActiveMQ -->
+    <repository>mvn:org.apache.karaf.features/spring-legacy/4.2.0/xml/features</repository>
     <repository>mvn:org.apache.activemq/activemq-karaf/5.15.2/xml/features</repository>
     <repository>mvn:org.apache.cxf.karaf/apache-cxf/3.2.0/xml/features</repository>
 
@@ -36,7 +38,8 @@
     </feature>
 
     <feature name="aet-activemq" version="0.6.0" description="Active MQ for AET" install="auto">
-        <feature dependency="true" >activemq-client</feature>
+        <feature>aries-blueprint</feature>
+        <feature>activemq-client</feature>
     </feature>
 
     <feature name="aet-crypto" version="0.6.0" description="Cryptography libraries for AET" install="auto">
@@ -137,14 +140,14 @@
 
     <feature name="aet-bundles" version="0.6.0" description="AET Bundles" install="auto">
 
-        <feature dependency="true" prerequisite="true">aet-scr-and-war</feature>
-        <feature dependency="true" prerequisite="true">aet-cxf</feature>
-        <feature dependency="true" prerequisite="true">aet-activemq</feature>
-        <feature dependency="true" prerequisite="true">aet-crypto</feature>
-        <feature dependency="true" prerequisite="true">aet-apache-commons</feature>
-        <feature dependency="true" prerequisite="true">aet-guice</feature>
-        <feature dependency="true" prerequisite="true">aet-jackson</feature>
-        <feature dependency="true" prerequisite="true">aet-dependencies</feature>
+        <feature>aet-scr-and-war</feature>
+        <feature>aet-cxf</feature>
+        <feature>aet-activemq</feature>
+        <feature>aet-crypto</feature>
+        <feature>aet-apache-commons</feature>
+        <feature>aet-guice</feature>
+        <feature>aet-jackson</feature>
+        <feature>aet-dependencies</feature>
 
         <bundle>file:./../aet_bundles/current/com.cognifide.aet.communication-api-${project.version}.jar</bundle>
         <bundle>file:./../aet_bundles/current/com.cognifide.aet.datastorage-api-${project.version}.jar</bundle>
