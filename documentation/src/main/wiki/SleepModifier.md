@@ -40,3 +40,38 @@ Module name: **sleep**
     </reports>
 </suite>
 ```
+
+#### Tips and tricks
+Try using wait commands instead of "sleep" when possible: [[wait-for-element-to-be-visible|WaitForElementToBeVisibleModifier]] and [[wait-for-image-completion|WaitForImageCompletionModifier]].
+A test can provide different results depending on how you use sleep commands.
+
+##### First "sleep" then interact with the page and finally take a screenshot
+```xml
+<test>
+    <collect>
+      ...
+      <sleep duration="5000"/>
+      <click css="#bigButton" timeout="5000"/>
+      <screen/>
+    </collect>
+    ...
+</test>
+```
+The screenshot taken during this test captures how the page looks like immediately after the #bigButton is clicked. 
+This means that maybe the page won't always manage to get to a stable state before the screenshot is taken.
+
+##### First interact with the page then "sleep" and finally take a screenshot
+```xml
+<test>
+    <collect>
+      ...
+      <click css="#bigButton" timeout="5000"/>
+      <sleep duration="5000"/>
+      <screen/>
+    </collect>
+    ...
+</test>
+```
+The screenshot taken during this test captures how the page looks like five seconds after the #bigButton is clicked. 
+First the button is clicked if it appears within five seconds, then the test waits five seconds for the page to load 
+and eventually the screenshot is taken.

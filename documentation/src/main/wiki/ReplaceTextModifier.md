@@ -48,3 +48,44 @@ Module name: **replaceText**
     </reports>
 </suite>
 ```
+
+#### Tips and tricks
+
+Some page elements such as images or third-party components might not load as fast as the rest of the page under test. 
+In cases where we don't really need to test this slowly loading element we can either hide it or replace a large, 
+heavy image with a small placeholder.
+
+##### Replace image in an img element
+
+```xml
+<test>
+    <collect>
+      ...
+      <replaceText css="img" attributeName="src" value="/content/dam/test/uk/en_gb/dummy/dummy.png.renditions.original.png" />
+       ...
+       <screen/>
+    </collect>
+     ...
+</test>
+```
+
+"replacetext" replaces the src attribute for all img elements on the page under test, this way the test can become more stable because it becomes independent of external image sources.
+
+##### Replace background image in a page element
+
+```xml
+<test>
+    <collect>
+      ...
+      <replaceText attributeName="style"
+	    value="background-image: url('/content/dam/test/uk/en_gb/dummy/dummy.png.renditions.original.png')"
+	    css="#backgroundStuff" timeout="5000"/>
+       ...
+       <screen/>
+    </collect>
+     ...
+</test>
+```
+
+"replacetext" replaces the background image for the selected element, this way the test can become more stable because it becomes independent of external image sources.
+
