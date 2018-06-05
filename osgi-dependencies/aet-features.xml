@@ -135,18 +135,4 @@
         <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.xmlbeans/2.6.0_2</bundle>
     </feature>
 
-    <feature name="aet-bundles" version="0.6.0" description="AET Bundles" install="auto">
-
-        <feature>aet-scr-and-war</feature>
-        <feature>aet-cxf</feature>
-        <feature>aet-activemq</feature>
-        <feature>aet-crypto</feature>
-        <feature>aet-apache-commons</feature>
-        <feature>aet-guice</feature>
-        <feature>aet-jackson</feature>
-        <feature>aet-dependencies</feature>
-
-    </feature>
-
-
 </features>
