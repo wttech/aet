@@ -1,7 +1,7 @@
 ![Cognifide logo](http://cognifide.github.io/images/cognifide-logo.png)
 
 [![Build Status](https://travis-ci.org/Cognifide/aet.svg?branch=master)](https://travis-ci.org/Cognifide/aet)
-[![Apache License, Version 2.0, January 2004](https://img.shields.io/github/license/cognifide/aet.svg?label=License)](http://www.apache.org/licenses/)
+[![Apache License, Version 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](http://www.apache.org/licenses/)
 [![][gitter img]][gitter]
 
 # AET
