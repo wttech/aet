@@ -21,7 +21,7 @@ Please note that full list of required tools and its versions can be found in [S
 2. Turn off Windows Firewall (both, private and public network location settings).
 3. Install JDK 8 and set JAVA_HOME variable: C:\Program Files\Java\jdkYouVersion.
 4. Create dir under C:\ for karaf files. Preferably C:\aet\.
-5. Unpack [Apache Karaf 4.1.4](https://archive.apache.org/dist/karaf/4.1.4/apache-karaf-4.1.4.zip) to *C:\aet\karaf\current*.
+5. Unpack [Apache Karaf 4.2.0](https://archive.apache.org/dist/karaf/4.2.0/apache-karaf-4.2.0.zip) to *C:\aet\karaf\current*.
 6. Update JAVA memory settings in *C:\aet\karaf\current\bin\setenv.bat* file.
 7. Unpack “configs.zip” to  *C:\aet\karaf\aet_configs\current*.
 8. Unpack “features.zip” to *C:\aet\karaf\aet_features\current*.
@@ -58,7 +58,7 @@ Here's a description where to deploy all the artifacts.
 
 | Artifact                       | Environment     | Default folder                         |
 | ------------------------------ | --------------- | -------------------------------------- |
-| apache-karaf-4.1.4.zip         | Windows - Karaf | C:\aet\karaf\current                   |
+| apache-karaf-4.2.0.zip         | Windows - Karaf | C:\aet\karaf\current                   |
 | browsermob-proxy-2.0.0-bin.zip | Windows - Karaf | C:\aet\browsermob-proxy-2.0.0          |
 | bundles.zip                    | Windows - Karaf | C:\aet\karaf\aet_bundles\current       |
 | configs.zip                    | Windows - Karaf | C:\aet\karaf\aet_configs\current       |

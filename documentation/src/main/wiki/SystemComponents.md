@@ -52,7 +52,7 @@ AET uses the following third party software as parts of the system:
 
 | Software | Used version | Function |
 | -------- | ------------ | -------- |
-|[Apache Karaf](http://karaf.apache.org/)|4.1.4|OSGi container for AET bundles and REST API.|
+|[Apache Karaf](http://karaf.apache.org/)|4.2.0|OSGi container for AET bundles and REST API.|
 |[Apache ActiveMQ](http://activemq.apache.org/)|5.15.2|JMS Sever used for communication between system components.|
 |[MongoDB](https://www.mongodb.org/)|3.2.3|System database.|
 |[Browsermob](http://bmp.lightbody.net/)|2.1.4|Proxy server.|
