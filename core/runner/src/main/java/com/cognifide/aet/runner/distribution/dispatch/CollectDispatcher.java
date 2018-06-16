@@ -97,7 +97,7 @@ public class CollectDispatcher extends StepManager {
       if (msgIndex % urlPackageSize == 0 || msgIndex == totalUrls) {
         final CollectorJobData data = new CollectorJobData(suite.get().getCompany(),
             suite.get().getProject(), suite.get().getName(), test.getName(), urlsToSend,
-            test.getProxy());
+            test.getProxy(), test.getWebDriverId());
         ObjectMessage message = session.createObjectMessage(data);
         message.setJMSCorrelationID(correlationId);
         messagesQueue.add(new MessageWithDestination(getQueueOut(), message, urlsToSend.size()));

@@ -22,6 +22,7 @@ import com.cognifide.aet.worker.api.WebDriverFactory;
 import com.cognifide.aet.worker.exceptions.WorkerException;
 import com.google.common.collect.Maps;
 import java.util.Map;
+import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Properties;
 import org.apache.felix.scr.annotations.Property;
@@ -30,14 +31,23 @@ import org.apache.felix.scr.annotations.ReferenceCardinality;
 import org.apache.felix.scr.annotations.ReferencePolicy;
 import org.apache.felix.scr.annotations.Service;
 import org.osgi.framework.Constants;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * @author lukasz.wieczorek
  */
 @Service(WebDriverProvider.class)
-@Component(label = "AET WebDriver Provider", description = "AET WebDriver Provider", immediate = true)
+@Component(label = "AET WebDriver Provider", description = "AET WebDriver Provider", immediate = true, metatype = true)
 @Properties({@Property(name = Constants.SERVICE_VENDOR, value = "Cognifide Ltd")})
 public class WebDriverProvider {
+
+  private static final Logger LOG = LoggerFactory.getLogger(WebDriverProvider.class);
+
+  private static final String DEFAULT_WEB_DRIVER_NAME = "defaultWebDriverName";
+
+  @Property(name = DEFAULT_WEB_DRIVER_NAME, label = "Default Web Driver name", value = "ff")
+  private String defaultWebDriverName;
 
   @Reference(referenceInterface = WebDriverFactory.class, policy = ReferencePolicy.DYNAMIC, cardinality = ReferenceCardinality.OPTIONAL_MULTIPLE, bind = "bindWebDriverFactory", unbind = "unbindWebDriverFactory")
   private final Map<String, WebDriverFactory> collectorFactories = Maps.newConcurrentMap();
@@ -45,12 +55,14 @@ public class WebDriverProvider {
   @Reference
   private ProxyServerProvider proxyServerProvider;
 
-  public WebCommunicationWrapper createWebDriverWithProxy(String webDriverName, String proxyName)
+  @Activate
+  void activate(Map<String, String> properties) {
+    defaultWebDriverName = properties.get(DEFAULT_WEB_DRIVER_NAME);
+  }
+
+  public WebCommunicationWrapper createWebDriverWithProxy(String preferredWebDriver, String proxyName)
       throws WorkerException {
-    WebDriverFactory webDriverFactory = collectorFactories.get(webDriverName);
-    if (webDriverFactory == null) {
-      throw new WorkerException("Undefined WebDriver " + webDriverName);
-    }
+    WebDriverFactory webDriverFactory = findWebDriverFactory(preferredWebDriver);
     try {
       return webDriverFactory.createWebDriver(proxyServerProvider.createProxy(proxyName));
     } catch (ProxyException e) {
@@ -58,11 +70,8 @@ public class WebDriverProvider {
     }
   }
 
-  public WebCommunicationWrapper createWebDriver(String webDriverName) throws WorkerException {
-    WebDriverFactory webDriverFactory = collectorFactories.get(webDriverName);
-    if (webDriverFactory == null) {
-      throw new WorkerException("Undefined WebDriver " + webDriverName);
-    }
+  public WebCommunicationWrapper createWebDriver(String preferredWebDriver) throws WorkerException {
+    WebDriverFactory webDriverFactory = findWebDriverFactory(preferredWebDriver);
     return webDriverFactory.createWebDriver();
   }
 
@@ -74,4 +83,21 @@ public class WebDriverProvider {
     this.collectorFactories.remove(webDriverFactory.getName());
   }
 
+
+  /**
+   * Finds web driver factory for given ID or default one if the argument is null.
+   *
+   * @param preferredWebDriver web driver ID specified in suite XML.
+   * @return web driver factory for given ID or default one.
+   * @throws WorkerException if there is no factory registered for given id.
+   */
+  private WebDriverFactory findWebDriverFactory(String preferredWebDriver) throws WorkerException {
+    final WebDriverFactory webDriverFactory;
+    String id = preferredWebDriver == null ? defaultWebDriverName : preferredWebDriver;
+    webDriverFactory = collectorFactories.get(id);
+    if (webDriverFactory == null) {
+      throw new WorkerException("Undefined WebDriver " + id);
+    }
+    return webDriverFactory;
+  }
 }

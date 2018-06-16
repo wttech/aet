@@ -24,11 +24,13 @@ import java.util.List;
  */
 public class CollectorJobData extends JobData {
 
-  private static final long serialVersionUID = -1868453529026678407L;
+  private static final long serialVersionUID = -1868453529026678404L;
 
   private final List<Url> urls;
 
   private final String proxy;
+
+  private final String webDriverId;
 
   /**
    * @param company - company name.
@@ -40,10 +42,11 @@ public class CollectorJobData extends JobData {
    */
   public CollectorJobData(String company, String project, String suiteName, String testName,
       List<Url> urls,
-      String proxy) {
+      String proxy, String webDriverId) {
     super(company, project, suiteName, testName);
     this.urls = urls;
     this.proxy = proxy;
+    this.webDriverId = webDriverId;
   }
 
   /**
@@ -55,5 +58,9 @@ public class CollectorJobData extends JobData {
 
   public String getProxy() {
     return proxy;
+  }
+
+  public String getWebDriverId() {
+    return webDriverId;
   }
 }
