@@ -44,3 +44,39 @@ No parameters
     </reports>
 </suite>
 ```
+
+#### Tips and tricks 
+A test can provide different results depending on whether first the browser 
+window is opened or it's target resolution is defined.
+
+##### First "open" then "resolution"
+```xml
+<test>
+    <collect>
+      ...
+      <open/>
+      <resolution width="1280" height="768"/>
+      ...
+      <screen/>
+    </collect>
+    ...
+</test>
+```
+The screenshot taken during this test captures how the page looks like when the user opens the page 
+using the default resolution and then switches to 1280x768px.
+
+##### First "resolution" then "open"
+```xml
+<test>
+    <collect>
+      ...
+      <resolution width="1280" height="768"/>
+      <open/>
+      ...
+      <screen/>
+    </collect>
+    ...
+</test>
+```
+The screenshot taken during this test captures how the page looks like when the user opens the page 
+using the resolution 1280x768px from the very beginning.

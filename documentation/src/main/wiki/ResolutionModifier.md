@@ -45,3 +45,12 @@ Module name: **resolution**
     </reports>
 </suite>
 ```
+
+#### Tips and tricks
+
+In order to make sure that your screenshots have the resolution you expect them to have you need to test it first.
+Run the test case your developing currently and check if the screenshot resolution fits your requirements.
+If it's different from what you expected then you can try adding X pixels 
+where X is the width of the browsers scrollbar.
+Another thing that you can try is increasing the height of the screenshot to be 
+greater or equal to the height of the page's content.

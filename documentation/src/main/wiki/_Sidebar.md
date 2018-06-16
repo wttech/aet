@@ -11,6 +11,7 @@
             * [[OSGi Configuration|OsgiConfiguration]]
     * [[Defining Suite|DefiningSuite]]
         * [[Suite Structure|SuiteStructure]]
+        * [[Best practices|BestPractices]]
     * [[Running Suite|RunningSuite]]
         * [[Tracking Progress|TrackingProgress]]
     * [[Features|Features]]

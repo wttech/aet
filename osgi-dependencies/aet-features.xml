@@ -138,35 +138,4 @@
         <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.xmlbeans/2.6.0_2</bundle>
     </feature>
 
-    <feature name="aet-bundles" version="0.6.0" description="AET Bundles" install="auto">
-
-        <feature>aet-scr-and-war</feature>
-        <feature>aet-cxf</feature>
-        <feature>aet-activemq</feature>
-        <feature>aet-crypto</feature>
-        <feature>aet-apache-commons</feature>
-        <feature>aet-guice</feature>
-        <feature>aet-jackson</feature>
-        <feature>aet-dependencies</feature>
-
-        <bundle>file:./../aet_bundles/current/com.cognifide.aet.communication-api-${project.version}.jar</bundle>
-        <bundle>file:./../aet_bundles/current/com.cognifide.aet.datastorage-api-${project.version}.jar</bundle>
-        <bundle>file:./../aet_bundles/current/com.cognifide.aet.jobs-api-${project.version}.jar</bundle>
-        <bundle>file:./../aet_bundles/current/com.cognifide.aet.validation-api-${project.version}.jar</bundle>
-
-        <bundle>file:./../aet_bundles/current/com.cognifide.aet.cleaner-${project.version}.jar</bundle>
-        <bundle>file:./../aet_bundles/current/com.cognifide.aet.communication-${project.version}.jar</bundle>
-        <bundle>file:./../aet_bundles/current/com.cognifide.aet.datastorage-${project.version}.jar</bundle>
-        <bundle>file:./../aet_bundles/current/com.cognifide.aet.jobs-${project.version}.jar</bundle>
-        <bundle>file:./../aet_bundles/current/com.cognifide.aet.proxy-${project.version}.jar</bundle>
-        <bundle>file:./../aet_bundles/current/com.cognifide.aet.rest-endpoint-${project.version}.jar</bundle>
-        <bundle>file:./../aet_bundles/current/com.cognifide.aet.runner-${project.version}.jar</bundle>
-        <bundle>file:./../aet_bundles/current/com.cognifide.aet.selenium-${project.version}.jar</bundle>
-        <bundle>file:./../aet_bundles/current/com.cognifide.aet.test-executor-${project.version}.jar</bundle>
-        <bundle>file:./../aet_bundles/current/com.cognifide.aet.validation-${project.version}.jar</bundle>
-        <bundle>file:./../aet_bundles/current/com.cognifide.aet.w3chtml5validator-${project.version}.jar</bundle>
-        <bundle>file:./../aet_bundles/current/com.cognifide.aet.worker-${project.version}.jar</bundle>
-    </feature>
-
-
 </features>
