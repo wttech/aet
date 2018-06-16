@@ -13,12 +13,14 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.worker.drivers.firefox;
+package com.cognifide.aet.worker.drivers.firefox.local;
 
 import static com.cognifide.aet.worker.drivers.WebDriverHelper.NAME;
 import static com.cognifide.aet.worker.drivers.WebDriverHelper.NAME_LABEL;
 import static com.cognifide.aet.worker.drivers.WebDriverHelper.PATH;
 
+import com.cognifide.aet.worker.drivers.firefox.FirefoxCommunicationWrapperImpl;
+import com.cognifide.aet.worker.drivers.firefox.FirefoxProfileBuilder;
 import com.cognifide.aet.job.api.collector.HttpRequestExecutorFactory;
 import com.cognifide.aet.job.api.collector.ProxyServerWrapper;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
