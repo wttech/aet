@@ -10,7 +10,7 @@ All notable changes to AET will be documented in this file.
 ## Unreleased
 **List of changes that are finished but not yet released in any final version.**
 
-- [PR-261](https://github.com/Cognifide/aet/pull/261) Watch added for Karaf AET artifacts
+- [PR-261](https://github.com/Cognifide/aet/pull/261) AET artifacts folders watched for new files
 
 
 ## Version 2.1.5
