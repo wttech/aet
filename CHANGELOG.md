@@ -10,8 +10,10 @@ All notable changes to AET will be documented in this file.
 ## Unreleased
 **List of changes that are finished but not yet released in any final version.**
 
-## Version 2.1.5
+- [PR-261](https://github.com/Cognifide/aet/pull/261) AET artifacts folders watched for new files
 
+
+## Version 2.1.5
 
 - [PR-252](https://github.com/Cognifide/aet/pull/252) Bug fix for JS Error table
 - [PR-244](https://github.com/Cognifide/aet/pull/244) Side panel scrolled automatically when navigating under specific test/url on first application load.
