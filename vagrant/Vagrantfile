@@ -24,7 +24,7 @@
 ENV["GEM_PATH"] = nil
 ENV["GEM_HOME"] = nil
 
-AET_VERSION = '2.1.6-artifacts-watched'
+AET_VERSION = '2.1.6-new-karaf'
 
 VAGRANTFILE_API_VERSION = '2'
 
@@ -88,6 +88,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       "aet" => {
         "base_link" => "https://www.kubiczak.pl/aet",
         "karaf" => {
+          "source" => "https://archive.apache.org/dist/karaf/4.2.0/apache-karaf-4.2.0.tar.gz",
           "java_max_mem" => "3072M",
           "enable_debug" => true
         },

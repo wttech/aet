@@ -23,6 +23,8 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:schemaLocation="http://karaf.apache.org/xmlns/features/v1.3.0 http://karaf.apache.org/xmlns/features/v1.3.0">
 
+    <!-- older version of spring required for ActiveMQ -->
+    <repository>mvn:org.apache.karaf.features/spring-legacy/4.2.0/xml/features</repository>
     <repository>mvn:org.apache.activemq/activemq-karaf/5.15.2/xml/features</repository>
     <repository>mvn:org.apache.cxf.karaf/apache-cxf/3.2.0/xml/features</repository>
 
@@ -36,6 +38,7 @@
     </feature>
 
     <feature name="aet-activemq" version="0.6.0" description="Active MQ for AET" install="auto">
+        <feature>aries-blueprint</feature>
         <feature>activemq-client</feature>
     </feature>
 
