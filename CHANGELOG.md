@@ -13,6 +13,7 @@ All notable changes to AET will be documented in this file.
 - [PR-260](https://github.com/Cognifide/aet/pull/260) Upgrade to Karaf 4.2.0
 - [PR-261](https://github.com/Cognifide/aet/pull/261) AET artifacts folders watched for new files
 
+
 ## Version 2.1.5
 
 - [PR-252](https://github.com/Cognifide/aet/pull/252) Bug fix for JS Error table

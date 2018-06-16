@@ -89,7 +89,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         "base_link" => "https://www.kubiczak.pl/aet",
         "karaf" => {
           "source" => "https://archive.apache.org/dist/karaf/4.2.0/apache-karaf-4.2.0.tar.gz",
-          "java_max_mem" => "4096M",
+          "java_max_mem" => "3072M",
           "enable_debug" => true
         },
         "version" => AET_VERSION
