@@ -17,6 +17,8 @@ package com.cognifide.aet.runner;
 
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
+import com.cognifide.aet.runner.suite.SuiteExecutionTask;
+import com.cognifide.aet.runner.suite.data.SuiteDataService;
 import com.cognifide.aet.runner.util.MessagesManager;
 import java.util.Map;
 import java.util.concurrent.Executors;
@@ -51,6 +53,9 @@ public class SuiteExecutorService {
   @Reference
   private JmsConnection jmsConnection;
 
+  @Reference
+  private SuiteDataService suiteDataService;
+
   private CollectorJobScheduler collectorJobScheduler;
 
   private Future<?> collectorJobSchedulerFeature;
@@ -83,6 +88,9 @@ public class SuiteExecutorService {
   }
 
   public void scheduleSuite(Suite suite, Destination jmsReplyTo, boolean isMaintenanceMessage) {
-    LOGGER.info("Suite {} scheduled!", suite);
+    LOGGER.debug("Scheduling {}!", suite);
+    SuiteExecutionTask task = new SuiteExecutionTask(suite, jmsReplyTo, suiteDataService,
+        jmsConnection, runnerConfiguration, collectorJobScheduler);
+    executor.submit(task);
   }
 }
