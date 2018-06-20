@@ -16,17 +16,14 @@
 package com.cognifide.aet.runner;
 
 import com.cognifide.aet.communication.api.metadata.Suite;
-import com.cognifide.aet.communication.api.queues.JmsConnection;
-import com.cognifide.aet.runner.configs.MessagingConfiguration;
 import com.cognifide.aet.runner.configs.RunnerConfiguration;
-import com.cognifide.aet.runner.processing.SuiteDataService;
 import com.cognifide.aet.runner.processing.SuiteExecutionFactory;
 import com.cognifide.aet.runner.processing.SuiteExecutionTask;
+import com.cognifide.aet.runner.processing.data.SuiteDataService;
 import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import javax.jms.Destination;
-import javax.jms.JMSException;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Deactivate;
@@ -41,18 +38,10 @@ public class SuiteExecutorService {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SuiteExecutorService.class);
 
-  private static final int MAX_POOL_SIZE = 20;
-
   private ScheduledExecutorService executor;
 
   @Reference
   private RunnerConfiguration runnerConfiguration;
-
-  @Reference
-  private MessagingConfiguration messagingConfiguration;
-
-  @Reference
-  private JmsConnection jmsConnection;
 
   @Reference
   private SuiteDataService suiteDataService;
@@ -61,9 +50,9 @@ public class SuiteExecutorService {
   private SuiteExecutionFactory suiteExecutionFactory;
 
   @Activate
-  public void activate(Map<String, String> properties) throws JMSException {
+  public void activate(Map<String, String> properties) {
     LOGGER.debug("Activating SuiteExecutorService");
-    executor = Executors.newScheduledThreadPool(MAX_POOL_SIZE);
+    executor = Executors.newScheduledThreadPool(runnerConfiguration.getMaxConcurrentSuitesCount());
   }
 
   @Deactivate
@@ -74,10 +63,10 @@ public class SuiteExecutorService {
     }
   }
 
-  public void scheduleSuite(Suite suite, Destination jmsReplyTo, boolean isMaintenanceMessage) {
+  void scheduleSuite(Suite suite, Destination jmsReplyTo) {
     LOGGER.debug("Scheduling {}!", suite);
     SuiteExecutionTask task = new SuiteExecutionTask(suite, jmsReplyTo, suiteDataService,
-        jmsConnection, runnerConfiguration, suiteExecutionFactory);
+        runnerConfiguration, suiteExecutionFactory);
     executor.submit(task);
   }
 }

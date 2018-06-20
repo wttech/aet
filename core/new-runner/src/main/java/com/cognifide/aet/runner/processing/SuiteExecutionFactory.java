@@ -18,10 +18,12 @@ package com.cognifide.aet.runner.processing;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.runner.configs.MessagingConfiguration;
 import com.cognifide.aet.runner.configs.RunnerConfiguration;
+import com.cognifide.aet.runner.processing.data.SuiteIndexWrapper;
 import com.cognifide.aet.runner.processing.steps.CollectDispatcher;
 import com.cognifide.aet.runner.processing.steps.CollectionResultsRouter;
 import com.cognifide.aet.runner.processing.steps.ComparisonResultsRouter;
 import com.cognifide.aet.runner.scheduler.CollectorJobSchedulerService;
+import javax.jms.Destination;
 import javax.jms.JMSException;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Reference;
@@ -61,5 +63,9 @@ public class SuiteExecutionFactory {
       SuiteIndexWrapper suite) throws JMSException {
     return new ComparisonResultsRouter(timeoutWatch, jmsConnection,
         runnerConfiguration, suite);
+  }
+
+  public MessagesSender getMessagesSender(Destination jmsReplyTo) throws JMSException {
+    return new MessagesSender(jmsReplyTo, jmsConnection);
   }
 }

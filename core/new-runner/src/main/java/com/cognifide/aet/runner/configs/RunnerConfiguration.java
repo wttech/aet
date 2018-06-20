@@ -15,12 +15,10 @@
  */
 package com.cognifide.aet.runner.configs;
 
-import com.cognifide.aet.runner.RunnerMode;
 import java.util.Map;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Property;
-import org.apache.felix.scr.annotations.PropertyOption;
 import org.apache.felix.scr.annotations.Service;
 import org.apache.sling.commons.osgi.PropertiesUtil;
 import org.slf4j.Logger;
@@ -46,7 +44,9 @@ public class RunnerConfiguration {
 
   private static final String PARAM_MAX_MESSAGES_IN_COLLECTOR_QUEUE = "maxMessagesInCollectorQueue";
 
-  private static final String RUNNER_MODE = "runnerMode";
+  private static final String PARAM_MAX_CONCURRENT_SUITES_PROCESSED_COUNT = "maxConcurrentSuitesCount";
+
+  private static final int DEFAULT_MAX_CONCURRENT_SUITES_PROCESSED_COUNT = 20;
 
   @Property(name = PARAM_FAILURE_TIMEOUT, label = "Failure timeout", description =
       "Time in seconds, test run will be interrupted if no response was received in duration of this parameter. Default: "
@@ -77,11 +77,11 @@ public class RunnerConfiguration {
           + " messages", intValue = DEFAULT_MAX_MESSAGES_IN_COLLECTOR_QUEUE)
   private int maxMessagesInCollectorQueue = DEFAULT_MAX_MESSAGES_IN_COLLECTOR_QUEUE;
 
-  @Property(name = RUNNER_MODE, label = "Runner mode", options = {
-      @PropertyOption(name = "online", value = "online"),
-      @PropertyOption(name = "maintenance", value = "maintenance"),
-      @PropertyOption(name = "offline", value = "offline")}, value = "online", description = "Runner mode: online - listening to AET.runner-in queue only, maintenance - listening to AET.runner-in and AET.maintenance-in queues (running only from AET.maintenance-in queue), offline - listening only to AET-maintenance-in queue.")
-  private RunnerMode runnerMode;
+  @Property(name = PARAM_MAX_CONCURRENT_SUITES_PROCESSED_COUNT, label = "Max Concurrent Suites Count", description =
+      "Defines the maximum number of suites processed concurrently byt the Runner. Default: "
+          + DEFAULT_MAX_CONCURRENT_SUITES_PROCESSED_COUNT
+          + " messages", intValue = DEFAULT_MAX_CONCURRENT_SUITES_PROCESSED_COUNT)
+  private int maxConcurrentSuitesCount = DEFAULT_MAX_CONCURRENT_SUITES_PROCESSED_COUNT;
 
   @Activate
   public void activate(Map<String, String> properties) {
@@ -94,13 +94,13 @@ public class RunnerConfiguration {
     maxMessagesInCollectorQueue = PropertiesUtil.toInteger(
         properties.get(PARAM_MAX_MESSAGES_IN_COLLECTOR_QUEUE),
         DEFAULT_MAX_MESSAGES_IN_COLLECTOR_QUEUE);
-
-    runnerMode = RunnerMode.valueOf(PropertiesUtil.toString(properties.get(RUNNER_MODE), "online")
-        .toUpperCase());
+    maxConcurrentSuitesCount = PropertiesUtil.toInteger(
+        properties.get(PARAM_MAX_CONCURRENT_SUITES_PROCESSED_COUNT),
+        DEFAULT_MAX_CONCURRENT_SUITES_PROCESSED_COUNT);
 
     LOGGER.info(
-        "Runner configured with parameters: [ft: {} sec ; mttl: {} ; urlPackageSize: {} ; maxMessagesInCollectorQueue: {}; runnerMode: {}.]",
-        ft, mttl, urlPackageSize, maxMessagesInCollectorQueue, runnerMode);
+        "Runner configured with parameters: [ft: {} sec ; mttl: {} ; urlPackageSize: {} ; maxMessagesInCollectorQueue: {}; maxConcurrentSuitesCount: {}.]",
+        ft, mttl, urlPackageSize, maxMessagesInCollectorQueue, maxConcurrentSuitesCount);
   }
 
 
@@ -137,11 +137,9 @@ public class RunnerConfiguration {
   }
 
   /**
-   * @return runner mode: online - listening to AET.runner-in queue only, maintenance - listening to
-   * AET.runner-in and AET.maintenance-in queues (running only from AET.maintenance-in queue),
-   * offline - listening only to AET-maintenance-in queue.
+   * @return how many suites can be processed concurrently byt the Runner.
    */
-  public RunnerMode getRunnerMode() {
-    return runnerMode;
+  public int getMaxConcurrentSuitesCount() {
+    return maxConcurrentSuitesCount;
   }
 }

@@ -13,7 +13,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.runner.processing;
+package com.cognifide.aet.runner.processing.data;
 
 
 import com.cognifide.aet.communication.api.metadata.Commentable;
@@ -26,7 +26,7 @@ import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableMap;
 
-public final class SuiteMergeStrategy {
+final class SuiteMergeStrategy {
 
   private static final NamedToMapFunction<Test> TEST_TO_MAP = new NamedToMapFunction<>();
 

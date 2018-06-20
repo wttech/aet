@@ -27,7 +27,7 @@ import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.communication.api.util.ExecutionTimer;
 import com.cognifide.aet.runner.configs.RunnerConfiguration;
 import com.cognifide.aet.runner.configs.MessagingConfiguration;
-import com.cognifide.aet.runner.processing.SuiteIndexWrapper;
+import com.cognifide.aet.runner.processing.data.SuiteIndexWrapper;
 import com.cognifide.aet.runner.processing.TimeoutWatch;
 import com.google.common.base.Optional;
 import javax.jms.JMSException;
@@ -101,11 +101,11 @@ public class ComparisonResultsRouter extends StepManager implements ChangeObserv
     if (allResultsReceived()) {
       LOGGER.info("All results received ({})! Persisting metadata. CorrelationId: {}",
           messagesToReceive.get(), correlationId);
-      final Suite suite = this.suite.get();
-      timer.finishAndLog(suite.getName());
-      suite.setFinishedTimestamp(new Timestamp(System.currentTimeMillis()));
-      long delta = suite.getFinishedTimestamp().get() - suite.getRunTimestamp().get();
-      suite.setStatistics(new Statistics(delta));
+      final Suite currentSuite = this.suite.get();
+      timer.finishAndLog(currentSuite.getName());
+      currentSuite.setFinishedTimestamp(new Timestamp(System.currentTimeMillis()));
+      long delta = currentSuite.getFinishedTimestamp().get() - currentSuite.getRunTimestamp().get();
+      currentSuite.setStatistics(new Statistics(delta));
     }
   }
 

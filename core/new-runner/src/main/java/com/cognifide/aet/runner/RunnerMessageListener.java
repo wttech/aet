@@ -48,7 +48,8 @@ public class RunnerMessageListener implements MessageListener {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(RunnerMessageListener.class);
 
-  private static final String API_QUEUE_IN = MessagingConfiguration.createFullQueueName("runner-in");
+  private static final String API_QUEUE_IN = MessagingConfiguration
+      .createFullQueueName("runner-in");
 
   private static final String MAINTENANCE_QUEUE_IN = MessagingConfiguration
       .createFullQueueName("maintenance-in");
@@ -78,13 +79,9 @@ public class RunnerMessageListener implements MessageListener {
     LOGGER.debug("Activating RunnerMessageListener");
     try {
       session = jmsConnection.getJmsSession();
-      if (runnerConfiguration.getRunnerMode() != RunnerMode.OFFLINE) {
-        LOGGER.info("Start listening on {} queue.", API_QUEUE_IN);
-        inConsumer = session.createConsumer(session.createQueue(API_QUEUE_IN));
-        inConsumer.setMessageListener(this);
-      } else {
-        inConsumer = null;
-      }
+      LOGGER.info("Start listening on {} queue.", API_QUEUE_IN);
+      inConsumer = session.createConsumer(session.createQueue(API_QUEUE_IN));
+      inConsumer.setMessageListener(this);
       LOGGER.info("Start listening on {} queue.", MAINTENANCE_QUEUE_IN);
       maintenanceConsumer = session.createConsumer(session.createQueue(MAINTENANCE_QUEUE_IN));
       maintenanceConsumer.setMessageListener(this);
@@ -131,10 +128,7 @@ public class RunnerMessageListener implements MessageListener {
   private void processTestSuite(Message wrapperMessage, TaskMessage message) {
     Suite suite = (Suite) message.getData();
     try {
-      boolean isMaintenanceMessage = StringUtils.endsWith(
-          wrapperMessage.getJMSDestination().toString(), MAINTENANCE_QUEUE_IN);
-      suiteExecutorService
-          .scheduleSuite(suite, wrapperMessage.getJMSReplyTo(), isMaintenanceMessage);
+      suiteExecutorService.scheduleSuite(suite, wrapperMessage.getJMSReplyTo());
     } catch (JMSException e) {
       LOGGER.error("Error wile processing RUN {}: ", suite.getCorrelationId(), e);
       sendFatalMessage(wrapperMessage, e.getMessage());

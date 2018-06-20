@@ -23,7 +23,7 @@ import com.cognifide.aet.runner.configs.RunnerConfiguration;
 import com.cognifide.aet.runner.scheduler.CollectorJobSchedulerService;
 import com.cognifide.aet.runner.scheduler.MessageWithDestination;
 import com.cognifide.aet.runner.processing.ProgressLog;
-import com.cognifide.aet.runner.processing.SuiteIndexWrapper;
+import com.cognifide.aet.runner.processing.data.SuiteIndexWrapper;
 import com.cognifide.aet.runner.processing.TimeoutWatch;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Queues;

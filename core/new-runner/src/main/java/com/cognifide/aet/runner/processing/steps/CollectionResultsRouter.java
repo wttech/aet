@@ -27,7 +27,7 @@ import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.communication.api.util.ExecutionTimer;
 import com.cognifide.aet.runner.configs.MessagingConfiguration;
 import com.cognifide.aet.runner.configs.RunnerConfiguration;
-import com.cognifide.aet.runner.processing.SuiteIndexWrapper;
+import com.cognifide.aet.runner.processing.data.SuiteIndexWrapper;
 import com.cognifide.aet.runner.processing.TimeoutWatch;
 import com.cognifide.aet.runner.scheduler.CollectorJobSchedulerService;
 import java.util.List;

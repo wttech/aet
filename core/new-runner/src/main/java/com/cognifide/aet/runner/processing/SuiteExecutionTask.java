@@ -16,16 +16,16 @@
 package com.cognifide.aet.runner.processing;
 
 import com.cognifide.aet.communication.api.ProcessingError;
-import com.cognifide.aet.communication.api.exceptions.AETException;
 import com.cognifide.aet.communication.api.messages.FinishedSuiteProcessingMessage;
 import com.cognifide.aet.communication.api.messages.FinishedSuiteProcessingMessage.Status;
 import com.cognifide.aet.communication.api.messages.ProcessingErrorMessage;
 import com.cognifide.aet.communication.api.messages.ProgressMessage;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
-import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.communication.api.util.ExecutionTimer;
 import com.cognifide.aet.runner.configs.RunnerConfiguration;
+import com.cognifide.aet.runner.processing.data.SuiteDataService;
+import com.cognifide.aet.runner.processing.data.SuiteIndexWrapper;
 import com.cognifide.aet.runner.processing.steps.CollectDispatcher;
 import com.cognifide.aet.runner.processing.steps.CollectionResultsRouter;
 import com.cognifide.aet.runner.processing.steps.ComparisonResultsRouter;
@@ -45,7 +45,6 @@ public class SuiteExecutionTask implements Runnable {
   private final Suite suite;
   private final Destination jmsReplyTo;
   private final SuiteDataService suiteDataService;
-  private final JmsConnection jmsConnection;
   private final RunnerConfiguration runnerConfiguration;
   private final SuiteExecutionFactory suiteExecutionFactory;
 
@@ -60,13 +59,11 @@ public class SuiteExecutionTask implements Runnable {
   private MessagesSender messagesSender;
 
   public SuiteExecutionTask(Suite suite, Destination jmsReplyTo,
-      SuiteDataService suiteDataService,
-      JmsConnection jmsConnection, RunnerConfiguration runnerConfiguration,
+      SuiteDataService suiteDataService, RunnerConfiguration runnerConfiguration,
       SuiteExecutionFactory suiteExecutionFactory) {
     this.suite = suite;
     this.jmsReplyTo = jmsReplyTo;
     this.suiteDataService = suiteDataService;
-    this.jmsConnection = jmsConnection;
     this.runnerConfiguration = runnerConfiguration;
     this.suiteExecutionFactory = suiteExecutionFactory;
   }
@@ -80,6 +77,10 @@ public class SuiteExecutionTask implements Runnable {
       save();
     } catch (StorageException | JMSException | ValidatorException e) {
       LOGGER.error("Error during processing suite {}", suite, e);
+      FinishedSuiteProcessingMessage message = new FinishedSuiteProcessingMessage(Status.FAILED,
+          suite.getCorrelationId());
+      message.addError(e.getMessage());
+      messagesSender.sendMessage(message);
     } finally {
       cleanup();
     }
@@ -99,30 +100,22 @@ public class SuiteExecutionTask implements Runnable {
         .getCollectionResultsRouter(timeoutWatch, indexedSuite);
     comparisonResultsRouter = suiteExecutionFactory
         .getComparisonResultsRouter(timeoutWatch, indexedSuite);
-    messagesSender = new MessagesSender(jmsReplyTo, jmsConnection);
+    messagesSender = suiteExecutionFactory.getMessagesSender(jmsReplyTo);
 
     collectionResultsRouter.addObserver(messagesSender);
     comparisonResultsRouter.addObserver(messagesSender);
     collectionResultsRouter.addChangeObserver(comparisonResultsRouter);
   }
 
-  private void process() {
-    try {
-      ExecutionTimer timer = ExecutionTimer.createAndRun("RUNNER");
-      LOGGER.info("Start lifecycle of test suite run: {}", indexedSuite.get());
-      timeoutWatch.update();
-      process(timer);
-    } catch (JMSException | AETException e) {
-      LOGGER.error("Can't process suite {}!", suite.getCorrelationId(), e);
-      FinishedSuiteProcessingMessage message = new FinishedSuiteProcessingMessage(Status.FAILED,
-          suite.getCorrelationId());
-      message.addError(e.getMessage());
-      messagesSender.sendMessage(message);
-    }
+  private void process() throws JMSException {
+    ExecutionTimer timer = ExecutionTimer.createAndRun("RUNNER");
+    LOGGER.info("Start lifecycle of test suite run: {}", indexedSuite.get());
+    timeoutWatch.update();
+    process(timer);
   }
 
   private void process(ExecutionTimer timer)
-      throws JMSException, AETException {
+      throws JMSException {
     if (tryProcess()) {
       checkStatusUntilFinishedOrTimedOut();
       if (comparisonResultsRouter.isFinished()) {
@@ -174,7 +167,7 @@ public class SuiteExecutionTask implements Runnable {
     return StringUtils.join(Arrays.asList(compareLog, reportLog), " ::: ");
   }
 
-  private synchronized boolean tryProcess() throws JMSException, AETException {
+  private synchronized boolean tryProcess() throws JMSException {
     boolean result = !processed;
     if (!processed) {
       collectDispatcher.process();
