@@ -19,7 +19,7 @@ import com.cognifide.aet.communication.api.messages.FinishedSuiteProcessingMessa
 import com.cognifide.aet.communication.api.messages.FinishedSuiteProcessingMessage.Status;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
-import com.cognifide.aet.runner.configs.RunnerConfiguration;
+import com.cognifide.aet.runner.RunnerConfiguration;
 import com.cognifide.aet.runner.processing.data.SuiteDataService;
 import com.cognifide.aet.runner.processing.data.SuiteIndexWrapper;
 import com.cognifide.aet.vs.StorageException;

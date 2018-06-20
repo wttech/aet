@@ -19,7 +19,7 @@ import com.cognifide.aet.communication.api.job.CollectorJobData;
 import com.cognifide.aet.communication.api.metadata.Test;
 import com.cognifide.aet.communication.api.metadata.Url;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
-import com.cognifide.aet.runner.configs.RunnerConfiguration;
+import com.cognifide.aet.runner.RunnerConfiguration;
 import com.cognifide.aet.runner.scheduler.CollectorJobSchedulerService;
 import com.cognifide.aet.runner.scheduler.MessageWithDestination;
 import com.cognifide.aet.runner.processing.ProgressLog;

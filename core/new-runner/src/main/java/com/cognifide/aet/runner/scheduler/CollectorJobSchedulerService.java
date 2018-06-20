@@ -17,7 +17,7 @@ package com.cognifide.aet.runner.scheduler;
 
 import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.runner.MessagesManager;
-import com.cognifide.aet.runner.configs.RunnerConfiguration;
+import com.cognifide.aet.runner.RunnerConfiguration;
 import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.Executors;

@@ -21,7 +21,6 @@ import com.cognifide.aet.communication.api.messages.TaskMessage;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.queues.JmsUtils;
-import com.cognifide.aet.runner.configs.RunnerConfiguration;
 import com.cognifide.aet.runner.scheduler.CollectorJobSchedulerService;
 import java.util.Map;
 import javax.jms.Destination;

@@ -16,7 +16,6 @@
 package com.cognifide.aet.runner;
 
 import com.cognifide.aet.communication.api.metadata.Suite;
-import com.cognifide.aet.runner.configs.RunnerConfiguration;
 import com.cognifide.aet.runner.processing.SuiteExecutionFactory;
 import com.cognifide.aet.runner.processing.SuiteExecutionTask;
 import com.cognifide.aet.runner.processing.data.SuiteDataService;

@@ -19,7 +19,7 @@ import com.cognifide.aet.communication.api.ProcessingError;
 import com.cognifide.aet.communication.api.messages.ProcessingErrorMessage;
 import com.cognifide.aet.communication.api.messages.ProgressMessage;
 import com.cognifide.aet.communication.api.util.ExecutionTimer;
-import com.cognifide.aet.runner.configs.RunnerConfiguration;
+import com.cognifide.aet.runner.RunnerConfiguration;
 import com.cognifide.aet.runner.processing.data.SuiteIndexWrapper;
 import com.cognifide.aet.runner.processing.steps.CollectDispatcher;
 import com.cognifide.aet.runner.processing.steps.CollectionResultsRouter;
