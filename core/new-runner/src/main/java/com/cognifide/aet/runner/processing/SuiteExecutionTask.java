@@ -15,26 +15,16 @@
  */
 package com.cognifide.aet.runner.processing;
 
-import com.cognifide.aet.communication.api.ProcessingError;
 import com.cognifide.aet.communication.api.messages.FinishedSuiteProcessingMessage;
 import com.cognifide.aet.communication.api.messages.FinishedSuiteProcessingMessage.Status;
-import com.cognifide.aet.communication.api.messages.ProcessingErrorMessage;
-import com.cognifide.aet.communication.api.messages.ProgressMessage;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
-import com.cognifide.aet.communication.api.util.ExecutionTimer;
 import com.cognifide.aet.runner.configs.RunnerConfiguration;
 import com.cognifide.aet.runner.processing.data.SuiteDataService;
 import com.cognifide.aet.runner.processing.data.SuiteIndexWrapper;
-import com.cognifide.aet.runner.processing.steps.CollectDispatcher;
-import com.cognifide.aet.runner.processing.steps.CollectionResultsRouter;
-import com.cognifide.aet.runner.processing.steps.ComparisonResultsRouter;
 import com.cognifide.aet.vs.StorageException;
-import java.util.Arrays;
-import java.util.concurrent.TimeUnit;
 import javax.jms.Destination;
 import javax.jms.JMSException;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -48,15 +38,10 @@ public class SuiteExecutionTask implements Runnable {
   private final RunnerConfiguration runnerConfiguration;
   private final SuiteExecutionFactory suiteExecutionFactory;
 
-  private boolean processed;
-
   private SuiteIndexWrapper indexedSuite;
 
-  private TimeoutWatch timeoutWatch;
-  private CollectDispatcher collectDispatcher;
-  private CollectionResultsRouter collectionResultsRouter;
-  private ComparisonResultsRouter comparisonResultsRouter;
   private MessagesSender messagesSender;
+  private SuiteProcessor suiteProcessor;
 
   public SuiteExecutionTask(Suite suite, Destination jmsReplyTo,
       SuiteDataService suiteDataService, RunnerConfiguration runnerConfiguration,
@@ -93,102 +78,16 @@ public class SuiteExecutionTask implements Runnable {
 
   private void init() throws JMSException {
     LOGGER.debug("Initializing suite processors {}", suite);
-    timeoutWatch = new TimeoutWatch();
-    collectDispatcher = suiteExecutionFactory
-        .getCollectDispatcher(timeoutWatch, indexedSuite);
-    collectionResultsRouter = suiteExecutionFactory
-        .getCollectionResultsRouter(timeoutWatch, indexedSuite);
-    comparisonResultsRouter = suiteExecutionFactory
-        .getComparisonResultsRouter(timeoutWatch, indexedSuite);
     messagesSender = suiteExecutionFactory.getMessagesSender(jmsReplyTo);
-
-    collectionResultsRouter.addObserver(messagesSender);
-    comparisonResultsRouter.addObserver(messagesSender);
-    collectionResultsRouter.addChangeObserver(comparisonResultsRouter);
+    suiteProcessor = new SuiteProcessor(suiteExecutionFactory, indexedSuite, runnerConfiguration,
+        messagesSender);
   }
 
   private void process() throws JMSException {
-    ExecutionTimer timer = ExecutionTimer.createAndRun("RUNNER");
-    LOGGER.info("Start lifecycle of test suite run: {}", indexedSuite.get());
-    timeoutWatch.update();
-    process(timer);
+    LOGGER.info("Start processing: {}", indexedSuite.get());
+    suiteProcessor.start();
   }
 
-  private void process(ExecutionTimer timer)
-      throws JMSException {
-    if (tryProcess()) {
-      checkStatusUntilFinishedOrTimedOut();
-      if (comparisonResultsRouter.isFinished()) {
-        timer.finish();
-        LOGGER.info("Finished lifecycle of test run: {}. Task finished in {} ms ({}).",
-            indexedSuite.get().getCorrelationId(), timer.getExecutionTimeInMillis(),
-            timer.getExecutionTimeInMMSS());
-        LOGGER.info("Total tasks finished in steps: collect: {}; compare: {}.",
-            collectionResultsRouter.getTotalTasksCount(),
-            comparisonResultsRouter.getTotalTasksCount());
-      } else if (suiteIsTimedOut()) {
-        timer.finish();
-        LOGGER.warn(
-            "Lifecycle of run {} interrupted after {} ms ({}). Last message received: {} seconds ago... Trying to force report generation.",
-            indexedSuite.get().getCorrelationId(), timer.getExecutionTimeInMillis(),
-            timer.getExecutionTimeInMMSS(),
-            TimeUnit.NANOSECONDS.toSeconds(timeoutWatch.getLastUpdateDifference()));
-        forceFinishSuite();
-        collectDispatcher.cancel(indexedSuite.get().getCorrelationId());
-      }
-    }
-  }
-
-  private boolean suiteIsTimedOut() {
-    return timeoutWatch.isTimedOut(runnerConfiguration.getFt());
-  }
-
-  private void checkStatusUntilFinishedOrTimedOut() {
-    String logMessage = "";
-    while (!comparisonResultsRouter.isFinished() && !timeoutWatch
-        .isTimedOut(runnerConfiguration.getFt())) {
-      try {
-        String currentLog = composeProgressLog();
-        if (!currentLog.equals(logMessage)) {
-          logMessage = currentLog;
-          LOGGER.info("[{}]: {}", indexedSuite.get().getCorrelationId(), logMessage);
-          messagesSender.sendMessage(new ProgressMessage(logMessage));
-        }
-        Thread.sleep(1000);
-      } catch (InterruptedException e) {
-        Thread.currentThread().interrupt();
-      }
-    }
-  }
-
-  private String composeProgressLog() {
-    ProgressLog compareLog = collectionResultsRouter.getProgress();
-    ProgressLog reportLog = comparisonResultsRouter.getProgress();
-    return StringUtils.join(Arrays.asList(compareLog, reportLog), " ::: ");
-  }
-
-  private synchronized boolean tryProcess() throws JMSException {
-    boolean result = !processed;
-    if (!processed) {
-      collectDispatcher.process();
-      processed = true;
-    }
-    return result;
-  }
-
-  private void forceFinishSuite() {
-    messagesSender.sendMessage(new ProcessingErrorMessage(ProcessingError
-        .reportingError("Report will be generated after timeout - some results might be missing!"),
-        suite.getCorrelationId()));
-    timeoutWatch.update();
-    checkStatusUntilFinishedOrTimedOut();
-    if (!comparisonResultsRouter.isFinished()) {
-      messagesSender.sendMessage(new ProcessingErrorMessage(ProcessingError
-          .reportingError(
-              "Report will be generated after timeout - some results might be missing!"),
-          suite.getCorrelationId()));
-    }
-  }
 
   private void save() throws ValidatorException, StorageException {
     LOGGER.debug("Persisting suite {}", suite);
@@ -200,9 +99,8 @@ public class SuiteExecutionTask implements Runnable {
 
   private void cleanup() {
     LOGGER.debug("Cleaning up suite {}", suite);
-    comparisonResultsRouter.closeConnections();
-    collectionResultsRouter.closeConnections();
-    collectDispatcher.closeConnections();
     messagesSender.close();
+    suiteProcessor.cleanup();
   }
+
 }
