@@ -17,9 +17,10 @@ package com.cognifide.aet.runner;
 
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
+import com.cognifide.aet.runner.configs.RunnerConfiguration;
 import com.cognifide.aet.runner.suite.SuiteExecutionTask;
 import com.cognifide.aet.runner.suite.SuiteDataService;
-import com.cognifide.aet.runner.util.MessagesManager;
+import com.cognifide.aet.runner.configs.MessagingConfiguration;
 import java.util.Map;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -48,7 +49,7 @@ public class SuiteExecutorService {
   private RunnerConfiguration runnerConfiguration;
 
   @Reference
-  private MessagesManager messagesManager;
+  private MessagingConfiguration messagesManager;
 
   @Reference
   private JmsConnection jmsConnection;

@@ -26,7 +26,7 @@ import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.communication.api.util.ExecutionTimer;
 import com.cognifide.aet.runner.CollectorJobScheduler;
-import com.cognifide.aet.runner.RunnerConfiguration;
+import com.cognifide.aet.runner.configs.RunnerConfiguration;
 import com.cognifide.aet.vs.StorageException;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;

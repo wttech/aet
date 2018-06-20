@@ -21,7 +21,8 @@ import com.cognifide.aet.communication.api.messages.TaskMessage;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.queues.JmsUtils;
-import com.cognifide.aet.runner.util.MessagesManager;
+import com.cognifide.aet.runner.configs.MessagingConfiguration;
+import com.cognifide.aet.runner.configs.RunnerConfiguration;
 import java.util.Map;
 import javax.jms.Destination;
 import javax.jms.JMSException;
@@ -35,21 +36,20 @@ import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Deactivate;
 import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Listens to incoming runner queue messages. When message received, starts suite process.
+ * Listens to incoming runner queue messages. When message received, schedules suite processing.
  */
 @Component(immediate = true, description = "Runner Messages Listener", label = "Runner Messages Listener")
 public class RunnerMessageListener implements MessageListener {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(RunnerMessageListener.class);
 
-  private static final String API_QUEUE_IN = MessagesManager.createFullQueueName("runner-in");
+  private static final String API_QUEUE_IN = MessagingConfiguration.createFullQueueName("runner-in");
 
-  private static final String MAINTENANCE_QUEUE_IN = MessagesManager
+  private static final String MAINTENANCE_QUEUE_IN = MessagingConfiguration
       .createFullQueueName("maintenance-in");
 
   private MessageConsumer inConsumer;

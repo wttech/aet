@@ -13,7 +13,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.runner.util;
+package com.cognifide.aet.runner.configs;
 
 import com.cognifide.aet.communication.api.exceptions.AETException;
 import java.io.IOException;
@@ -34,12 +34,9 @@ import org.apache.sling.commons.osgi.PropertiesUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-/**
- * Created by tomasz.misiewicz on 2015-01-13.
- */
-@Service(MessagesManager.class)
-@Component(immediate = true, metatype = true, description = "AET Messages Manager", label = "AET Messages Manager")
-public class MessagesManager {
+@Service(MessagingConfiguration.class)
+@Component(immediate = true, metatype = true, description = "AET Runner Messages Configuration", label = "AET Runner Messages Configuration")
+public class MessagingConfiguration {
 
   private static final String JMX_URL_PROPERTY_NAME = "jxm-url";
 
@@ -51,7 +48,7 @@ public class MessagesManager {
 
   private static final String STRING_SIGNATURE = "java.lang.String";
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(MessagesManager.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(MessagingConfiguration.class);
 
   private static final String BROKER_OBJECT_NAME = "org.apache.activemq:type=Broker,brokerName=localhost";
 

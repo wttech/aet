@@ -26,8 +26,8 @@ import com.cognifide.aet.communication.api.metadata.Url;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.communication.api.util.ExecutionTimer;
 import com.cognifide.aet.runner.CollectorJobScheduler;
-import com.cognifide.aet.runner.RunnerConfiguration;
-import com.cognifide.aet.runner.util.MessagesManager;
+import com.cognifide.aet.runner.configs.RunnerConfiguration;
+import com.cognifide.aet.runner.configs.MessagingConfiguration;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import javax.jms.JMSException;
@@ -188,12 +188,12 @@ public class CollectionResultsRouter extends StepManager implements TaskFinishPo
 
   @Override
   protected String getQueueInName() {
-    return MessagesManager.createFullQueueName("collectorResults");
+    return MessagingConfiguration.createFullQueueName("collectorResults");
   }
 
   @Override
   protected String getQueueOutName() {
-    return MessagesManager.createFullQueueName("comparatorJobs");
+    return MessagingConfiguration.createFullQueueName("comparatorJobs");
   }
 
   @Override

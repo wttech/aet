@@ -13,8 +13,9 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.runner;
+package com.cognifide.aet.runner.configs;
 
+import com.cognifide.aet.runner.RunnerMode;
 import java.util.Map;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
