@@ -13,7 +13,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.runner.suite;
+package com.cognifide.aet.runner.processing;
 
 import com.cognifide.aet.communication.api.JobStatus;
 import com.cognifide.aet.communication.api.ProcessingError;
@@ -34,7 +34,7 @@ import javax.jms.ObjectMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ComparisonResultsRouter extends StepManager implements ChangeObserver,
+class ComparisonResultsRouter extends StepManager implements ChangeObserver,
     TaskFinishPoint {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(ComparisonResultsRouter.class);
@@ -45,13 +45,11 @@ public class ComparisonResultsRouter extends StepManager implements ChangeObserv
 
   private final ExecutionTimer timer;
 
-//  private MetadataPersister metadataPersister;
-
   private boolean collectingFinished;
 
   private boolean aborted;
 
-  public ComparisonResultsRouter(TimeoutWatch timeoutWatch, JmsConnection jmsConnection,
+  ComparisonResultsRouter(TimeoutWatch timeoutWatch, JmsConnection jmsConnection,
       RunnerConfiguration runnerConfiguration, SuiteIndexWrapper suite) throws JMSException {
     super(timeoutWatch, jmsConnection, suite.get().getCorrelationId(), runnerConfiguration.getMttl());
     this.suite = suite;
@@ -106,7 +104,6 @@ public class ComparisonResultsRouter extends StepManager implements ChangeObserv
       suite.setFinishedTimestamp(new Timestamp(System.currentTimeMillis()));
       long delta = suite.getFinishedTimestamp().get() - suite.getRunTimestamp().get();
       suite.setStatistics(new Statistics(delta));
-//      metadataPersister.persistMetadataAndNotifyObservers();
     }
   }
 
@@ -159,7 +156,4 @@ public class ComparisonResultsRouter extends StepManager implements ChangeObserv
     return STEP_NAME;
   }
 
-//  public void setMetadataPersister(MetadataPersister metadataPersister) {
-//    this.metadataPersister = metadataPersister;
-//  }
 }

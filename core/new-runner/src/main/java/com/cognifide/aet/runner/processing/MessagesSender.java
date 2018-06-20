@@ -13,7 +13,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.runner.suite;
+package com.cognifide.aet.runner.processing;
 
 import com.cognifide.aet.communication.api.messages.BasicMessage;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
@@ -27,14 +27,14 @@ import javax.jms.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class MessagesSender implements Observer {
+class MessagesSender implements Observer {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(MessagesSender.class);
 
   private final Session session;
   private final MessageProducer resultsProducer;
 
-  public MessagesSender(Destination jmsReplyTo, JmsConnection jmsConnection) throws JMSException {
+  MessagesSender(Destination jmsReplyTo, JmsConnection jmsConnection) throws JMSException {
     this.session = jmsConnection.getJmsSession();
     resultsProducer = session.createProducer(jmsReplyTo);
   }

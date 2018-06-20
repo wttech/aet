@@ -13,7 +13,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.runner.suite;
+package com.cognifide.aet.runner.processing;
 
 import com.cognifide.aet.communication.api.JobStatus;
 import com.cognifide.aet.communication.api.ProcessingError;
@@ -41,7 +41,7 @@ import org.slf4j.LoggerFactory;
  * CollectionResultsRouter - collects work from collector-workers, divides and schedules compare
  * work among compare-workers
  */
-public class CollectionResultsRouter extends StepManager implements TaskFinishPoint {
+class CollectionResultsRouter extends StepManager implements TaskFinishPoint {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(CollectionResultsRouter.class);
 
@@ -55,7 +55,7 @@ public class CollectionResultsRouter extends StepManager implements TaskFinishPo
 
   private final ExecutionTimer timer;
 
-  public CollectionResultsRouter(TimeoutWatch timeoutWatch, JmsConnection jmsConnection,
+  CollectionResultsRouter(TimeoutWatch timeoutWatch, JmsConnection jmsConnection,
       RunnerConfiguration runnerConfiguration,
       CollectorJobScheduler collectorJobScheduler, SuiteIndexWrapper suite) throws JMSException {
     super(timeoutWatch, jmsConnection, suite.get().getCorrelationId(), runnerConfiguration.getMttl());
@@ -177,7 +177,7 @@ public class CollectionResultsRouter extends StepManager implements TaskFinishPo
     test.addUrl(processedUrl);
   }
 
-  public void addChangeObserver(ChangeObserver observer) {
+  void addChangeObserver(ChangeObserver observer) {
     changeListeners.add(observer);
   }
 

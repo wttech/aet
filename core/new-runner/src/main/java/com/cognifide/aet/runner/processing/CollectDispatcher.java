@@ -13,7 +13,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.runner.suite;
+package com.cognifide.aet.runner.processing;
 
 import com.cognifide.aet.communication.api.job.CollectorJobData;
 import com.cognifide.aet.communication.api.metadata.Test;
@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
 /**
  * CollectDispatcher - divide and schedule collect work among workers
  */
-public class CollectDispatcher extends StepManager {
+class CollectDispatcher extends StepManager {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(CollectDispatcher.class);
 
@@ -45,7 +45,8 @@ public class CollectDispatcher extends StepManager {
 
   private final SuiteIndexWrapper suite;
 
-  public CollectDispatcher(TimeoutWatch timeoutWatch, JmsConnection jmsConnection, RunnerConfiguration runnerConfiguration,
+  CollectDispatcher(TimeoutWatch timeoutWatch, JmsConnection jmsConnection,
+      RunnerConfiguration runnerConfiguration,
       CollectorJobScheduler collectorJobScheduler, SuiteIndexWrapper suite) throws JMSException {
     super(timeoutWatch, jmsConnection, suite.get().getCorrelationId(), runnerConfiguration.getMttl());
     this.urlPackageSize = runnerConfiguration.getUrlPackageSize();
@@ -65,7 +66,7 @@ public class CollectDispatcher extends StepManager {
     return 0;
   }
 
-  public void process() throws JMSException {
+  void process() throws JMSException {
     Deque<MessageWithDestination> messagesQueue = Queues.newArrayDeque();
     LOGGER.info("Starting processing new Test Suite. CorrelationId: {} ", correlationId);
 
@@ -77,7 +78,7 @@ public class CollectDispatcher extends StepManager {
         correlationId);
   }
 
-  public void cancel(String correlationId) {
+  void cancel(String correlationId) {
     collectorJobScheduler.cleanup(correlationId);
   }
 
