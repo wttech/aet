@@ -15,8 +15,9 @@
  */
 package com.cognifide.aet.runner.suite;
 
-import com.cognifide.aet.communication.api.messages.ProgressMessage;
+import com.cognifide.aet.communication.api.messages.BasicMessage;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
+import com.cognifide.aet.queues.JmsUtils;
 import java.util.Observable;
 import java.util.Observer;
 import javax.jms.Destination;
@@ -26,35 +27,43 @@ import javax.jms.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ProgressMessageObserver implements Observer {
+public class MessagesSender implements Observer {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(ProgressMessageObserver.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(MessagesSender.class);
 
   private final Session session;
-
   private final MessageProducer resultsProducer;
 
-  public ProgressMessageObserver(Destination resultsDestination, JmsConnection jmsConnection,
-      Long messageTimeToLive) throws JMSException {
+  public MessagesSender(Destination jmsReplyTo, JmsConnection jmsConnection) throws JMSException {
     this.session = jmsConnection.getJmsSession();
-    resultsProducer = session.createProducer(resultsDestination);
-    resultsProducer.setTimeToLive(messageTimeToLive);
+    resultsProducer = session.createProducer(jmsReplyTo);
   }
 
   @Override
-  public void update(Observable o, Object data) {
-    if (canProcess(data)) {
-      try {
-        ProgressMessage message = (ProgressMessage) data;
-        resultsProducer.send(session.createObjectMessage(message));
-      } catch (JMSException e) {
-        LOGGER.warn("Failed to send ProcessingErrorMessage", e);
-      }
+  public void update(Observable o, Object message) {
+    LOGGER.debug("Updated with message: {}", message);
+    if (isMessage(message)) {
+      sendMessage((BasicMessage) message);
+    } else {
+      LOGGER.error("Notified with wrong message type: {} by {}", message, o);
     }
   }
 
-  private boolean canProcess(Object data) {
-    return data instanceof ProgressMessage;
+  void sendMessage(BasicMessage message) {
+    try {
+      LOGGER.debug("Sending message: {}", message);
+      resultsProducer.send(session.createObjectMessage(message));
+    } catch (JMSException e) {
+      LOGGER.warn("Failed to send message {}", message, e);
+    }
+  }
+
+  private boolean isMessage(Object message) {
+    return message instanceof BasicMessage;
+  }
+
+  void close() {
+    JmsUtils.closeQuietly(resultsProducer);
   }
 
 }

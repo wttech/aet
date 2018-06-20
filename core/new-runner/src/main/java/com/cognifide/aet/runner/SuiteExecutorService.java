@@ -18,7 +18,7 @@ package com.cognifide.aet.runner;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.runner.suite.SuiteExecutionTask;
-import com.cognifide.aet.runner.suite.data.SuiteDataService;
+import com.cognifide.aet.runner.suite.SuiteDataService;
 import com.cognifide.aet.runner.util.MessagesManager;
 import java.util.Map;
 import java.util.concurrent.Executors;

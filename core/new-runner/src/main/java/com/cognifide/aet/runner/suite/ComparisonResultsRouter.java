@@ -26,7 +26,6 @@ import com.cognifide.aet.communication.api.metadata.Url;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.communication.api.util.ExecutionTimer;
 import com.cognifide.aet.runner.RunnerConfiguration;
-import com.cognifide.aet.runner.suite.data.SuiteIndexWrapper;
 import com.cognifide.aet.runner.util.MessagesManager;
 import com.google.common.base.Optional;
 import javax.jms.JMSException;

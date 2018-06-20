@@ -16,7 +16,6 @@
 package com.cognifide.aet.runner.suite;
 
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
-import com.cognifide.aet.runner.suite.data.SuiteIndexWrapper;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.StorageException;
 import java.util.Observable;

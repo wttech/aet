@@ -17,6 +17,9 @@ package com.cognifide.aet.runner.suite;
 
 import com.cognifide.aet.communication.api.ProcessingError;
 import com.cognifide.aet.communication.api.exceptions.AETException;
+import com.cognifide.aet.communication.api.messages.FinishedSuiteProcessingMessage;
+import com.cognifide.aet.communication.api.messages.FinishedSuiteProcessingMessage.Status;
+import com.cognifide.aet.communication.api.messages.ProcessingErrorMessage;
 import com.cognifide.aet.communication.api.messages.ProgressMessage;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
@@ -24,11 +27,8 @@ import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.communication.api.util.ExecutionTimer;
 import com.cognifide.aet.runner.CollectorJobScheduler;
 import com.cognifide.aet.runner.RunnerConfiguration;
-import com.cognifide.aet.runner.suite.data.SuiteDataService;
-import com.cognifide.aet.runner.suite.data.SuiteIndexWrapper;
 import com.cognifide.aet.vs.StorageException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.concurrent.TimeUnit;
 import javax.jms.Destination;
 import javax.jms.JMSException;
@@ -55,9 +55,7 @@ public class SuiteExecutionTask implements Runnable {
   private CollectDispatcher collectDispatcher;
   private CollectionResultsRouter collectionResultsRouter;
   private ComparisonResultsRouter comparisonResultsRouter;
-  private ProcessingErrorMessageObserver processingErrorMessageObserver;
-  private SuiteAgent suiteAgent;
-  private ProgressMessageObserver progressMessageObserver;
+  private MessagesSender messagesSender;
 
   public SuiteExecutionTask(Suite suite, Destination jmsReplyTo,
       SuiteDataService suiteDataService,
@@ -99,18 +97,11 @@ public class SuiteExecutionTask implements Runnable {
         runnerConfiguration, collectorJobScheduler, indexedSuite);
     comparisonResultsRouter = new ComparisonResultsRouter(timeoutWatch, jmsConnection,
         runnerConfiguration, indexedSuite);
-    processingErrorMessageObserver = new ProcessingErrorMessageObserver(jmsReplyTo, jmsConnection,
-        runnerConfiguration.getMttl());
-    suiteAgent = new SuiteAgent(jmsConnection, indexedSuite, processingErrorMessageObserver,
-        jmsReplyTo, runnerConfiguration.getMttl());
-    progressMessageObserver = new ProgressMessageObserver(jmsReplyTo, jmsConnection,
-        runnerConfiguration.getMttl());
+    messagesSender = new MessagesSender(jmsReplyTo, jmsConnection);
 
-    suiteAgent.addProcessingErrorMessagesObservable(collectionResultsRouter);
-    suiteAgent.addProcessingErrorMessagesObservable(comparisonResultsRouter);
+    collectionResultsRouter.addObserver(messagesSender);
+    comparisonResultsRouter.addObserver(messagesSender);
     collectionResultsRouter.addChangeObserver(comparisonResultsRouter);
-//    comparisonResultsRouter.setMetadataPersister(metadataPersister);
-//    metadataPersister.addObserver(suiteAgent);
   }
 
   private void process() {
@@ -120,8 +111,11 @@ public class SuiteExecutionTask implements Runnable {
       timeoutWatch.update();
       process(timer);
     } catch (JMSException | AETException e) {
-      LOGGER.error("Can't run TestLifeCycle!", e);
-      suiteAgent.sendFailMessage(Collections.singletonList(e.getMessage()));
+      LOGGER.error("Can't process suite {}!", suite.getCorrelationId(), e);
+      FinishedSuiteProcessingMessage message = new FinishedSuiteProcessingMessage(Status.FAILED,
+          suite.getCorrelationId());
+      message.addError(e.getMessage());
+      messagesSender.sendMessage(message);
     }
   }
 
@@ -163,7 +157,7 @@ public class SuiteExecutionTask implements Runnable {
         if (!currentLog.equals(logMessage)) {
           logMessage = currentLog;
           LOGGER.info("[{}]: {}", indexedSuite.get().getCorrelationId(), logMessage);
-          progressMessageObserver.update(null, new ProgressMessage(logMessage));
+          messagesSender.sendMessage(new ProgressMessage(logMessage));
         }
         Thread.sleep(1000);
       } catch (InterruptedException e) {
@@ -188,22 +182,25 @@ public class SuiteExecutionTask implements Runnable {
   }
 
   private void forceFinishSuite() {
-    suiteAgent.onError(ProcessingError
-        .reportingError("Report will be generated after timeout - some results might be missing!"));
-    suiteAgent.enforceSuiteFinish();
+    messagesSender.sendMessage(new ProcessingErrorMessage(ProcessingError
+        .reportingError("Report will be generated after timeout - some results might be missing!"),
+        suite.getCorrelationId()));
     timeoutWatch.update();
-//    metadataPersister.persistMetadata();
     checkStatusUntilFinishedOrTimedOut();
     if (!comparisonResultsRouter.isFinished()) {
-      suiteAgent.sendFailMessage(Collections
-          .singletonList("Failed to generate reports because it took too much time!"));
+      messagesSender.sendMessage(new ProcessingErrorMessage(ProcessingError
+          .reportingError(
+              "Report will be generated after timeout - some results might be missing!"),
+          suite.getCorrelationId()));
     }
   }
 
   private void save() throws ValidatorException, StorageException {
     LOGGER.debug("Persisting suite {}", suite);
     suiteDataService.saveSuite(indexedSuite.get());
-    suiteAgent.processingFinished();
+    messagesSender.sendMessage(
+        new FinishedSuiteProcessingMessage(FinishedSuiteProcessingMessage.Status.OK,
+            suite.getCorrelationId()));
   }
 
   private void cleanup() {
@@ -211,6 +208,6 @@ public class SuiteExecutionTask implements Runnable {
     comparisonResultsRouter.closeConnections();
     collectionResultsRouter.closeConnections();
     collectDispatcher.closeConnections();
-    suiteAgent.close();
+    messagesSender.close();
   }
 }

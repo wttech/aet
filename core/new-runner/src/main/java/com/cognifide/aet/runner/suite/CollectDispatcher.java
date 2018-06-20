@@ -22,7 +22,6 @@ import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.runner.CollectorJobScheduler;
 import com.cognifide.aet.runner.RunnerConfiguration;
 import com.cognifide.aet.runner.model.MessageWithDestination;
-import com.cognifide.aet.runner.suite.data.SuiteIndexWrapper;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Queues;
 import java.util.Deque;
