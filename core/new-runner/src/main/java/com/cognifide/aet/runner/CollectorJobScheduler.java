@@ -41,7 +41,6 @@ import org.slf4j.LoggerFactory;
  *
  * @author lukasz.wieczorek
  */
-
 public class CollectorJobScheduler implements Runnable {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(CollectorJobScheduler.class);

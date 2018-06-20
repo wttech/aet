@@ -13,7 +13,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.runner.processing;
+package com.cognifide.aet.runner.processing.steps;
 
 import com.cognifide.aet.communication.api.job.CollectorJobData;
 import com.cognifide.aet.communication.api.metadata.Test;
@@ -22,6 +22,9 @@ import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.runner.CollectorJobScheduler;
 import com.cognifide.aet.runner.configs.RunnerConfiguration;
 import com.cognifide.aet.runner.model.MessageWithDestination;
+import com.cognifide.aet.runner.processing.ProgressLog;
+import com.cognifide.aet.runner.processing.SuiteIndexWrapper;
+import com.cognifide.aet.runner.processing.TimeoutWatch;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Queues;
 import java.util.Deque;
@@ -35,7 +38,7 @@ import org.slf4j.LoggerFactory;
 /**
  * CollectDispatcher - divide and schedule collect work among workers
  */
-class CollectDispatcher extends StepManager {
+public class CollectDispatcher extends StepManager {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(CollectDispatcher.class);
 
@@ -45,7 +48,7 @@ class CollectDispatcher extends StepManager {
 
   private final SuiteIndexWrapper suite;
 
-  CollectDispatcher(TimeoutWatch timeoutWatch, JmsConnection jmsConnection,
+  public CollectDispatcher(TimeoutWatch timeoutWatch, JmsConnection jmsConnection,
       RunnerConfiguration runnerConfiguration,
       CollectorJobScheduler collectorJobScheduler, SuiteIndexWrapper suite) throws JMSException {
     super(timeoutWatch, jmsConnection, suite.get().getCorrelationId(), runnerConfiguration.getMttl());
@@ -66,7 +69,7 @@ class CollectDispatcher extends StepManager {
     return 0;
   }
 
-  void process() throws JMSException {
+  public void process() throws JMSException {
     Deque<MessageWithDestination> messagesQueue = Queues.newArrayDeque();
     LOGGER.info("Starting processing new Test Suite. CorrelationId: {} ", correlationId);
 
@@ -78,7 +81,7 @@ class CollectDispatcher extends StepManager {
         correlationId);
   }
 
-  void cancel(String correlationId) {
+  public void cancel(String correlationId) {
     collectorJobScheduler.cleanup(correlationId);
   }
 

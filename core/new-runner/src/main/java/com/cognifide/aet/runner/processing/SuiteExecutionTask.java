@@ -27,6 +27,9 @@ import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.communication.api.util.ExecutionTimer;
 import com.cognifide.aet.runner.CollectorJobScheduler;
 import com.cognifide.aet.runner.configs.RunnerConfiguration;
+import com.cognifide.aet.runner.processing.steps.CollectDispatcher;
+import com.cognifide.aet.runner.processing.steps.CollectionResultsRouter;
+import com.cognifide.aet.runner.processing.steps.ComparisonResultsRouter;
 import com.cognifide.aet.vs.StorageException;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
@@ -45,6 +48,7 @@ public class SuiteExecutionTask implements Runnable {
   private final SuiteDataService suiteDataService;
   private final JmsConnection jmsConnection;
   private final RunnerConfiguration runnerConfiguration;
+  private final SuiteExecutionFactory suiteExecutionFactory;
   private final CollectorJobScheduler collectorJobScheduler;
 
   private boolean processed;
@@ -60,12 +64,14 @@ public class SuiteExecutionTask implements Runnable {
   public SuiteExecutionTask(Suite suite, Destination jmsReplyTo,
       SuiteDataService suiteDataService,
       JmsConnection jmsConnection, RunnerConfiguration runnerConfiguration,
+      SuiteExecutionFactory suiteExecutionFactory,
       CollectorJobScheduler collectorJobScheduler) {
     this.suite = suite;
     this.jmsReplyTo = jmsReplyTo;
     this.suiteDataService = suiteDataService;
     this.jmsConnection = jmsConnection;
     this.runnerConfiguration = runnerConfiguration;
+    this.suiteExecutionFactory = suiteExecutionFactory;
     this.collectorJobScheduler = collectorJobScheduler;
   }
 
@@ -91,12 +97,12 @@ public class SuiteExecutionTask implements Runnable {
   private void init() throws JMSException {
     LOGGER.debug("Initializing suite processors {}", suite);
     timeoutWatch = new TimeoutWatch();
-    collectDispatcher = new CollectDispatcher(timeoutWatch, jmsConnection, runnerConfiguration,
-        collectorJobScheduler, indexedSuite);
-    collectionResultsRouter = new CollectionResultsRouter(timeoutWatch, jmsConnection,
-        runnerConfiguration, collectorJobScheduler, indexedSuite);
-    comparisonResultsRouter = new ComparisonResultsRouter(timeoutWatch, jmsConnection,
-        runnerConfiguration, indexedSuite);
+    collectDispatcher = suiteExecutionFactory
+        .getCollectDispatcher(timeoutWatch, indexedSuite, collectorJobScheduler);
+    collectionResultsRouter = suiteExecutionFactory
+        .getCollectionResultsRouter(timeoutWatch, indexedSuite, collectorJobScheduler);
+    comparisonResultsRouter = suiteExecutionFactory
+        .getComparisonResultsRouter(timeoutWatch, indexedSuite);
     messagesSender = new MessagesSender(jmsReplyTo, jmsConnection);
 
     collectionResultsRouter.addObserver(messagesSender);

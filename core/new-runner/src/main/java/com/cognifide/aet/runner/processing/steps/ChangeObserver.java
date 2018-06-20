@@ -13,18 +13,17 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.runner.processing;
+package com.cognifide.aet.runner.processing.steps;
 
 /**
- * TaskFinishPoint
+ * ChangeObserver
  *
  * @author: Maciej Laskowski
  */
-public interface TaskFinishPoint {
+public interface ChangeObserver {
 
-  /**
-   * @return - <bb>true</bb> if this task is ready
-   */
-  boolean isFinished();
+  void updateAmountToReceive(int additionalCount);
+
+  void informChangesCompleted();
 
 }

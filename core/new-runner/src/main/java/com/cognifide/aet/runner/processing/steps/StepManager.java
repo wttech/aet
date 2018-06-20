@@ -13,13 +13,15 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.runner.processing;
+package com.cognifide.aet.runner.processing.steps;
 
 import com.cognifide.aet.communication.api.JobStatus;
 import com.cognifide.aet.communication.api.ProcessingError;
 import com.cognifide.aet.communication.api.messages.ProcessingErrorMessage;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.queues.JmsUtils;
+import com.cognifide.aet.runner.processing.ProgressLog;
+import com.cognifide.aet.runner.processing.TimeoutWatch;
 import java.util.Observable;
 import java.util.concurrent.atomic.AtomicInteger;
 import javax.jms.JMSException;
@@ -32,7 +34,7 @@ import javax.jms.Session;
 /**
  * StepManager - creates send/receive point for specified Test run step
  */
-abstract class StepManager extends Observable implements MessageListener {
+public abstract class StepManager extends Observable implements MessageListener {
 
   private static final String JMS_CORRELATION_ID_PATTERN = "JMSCorrelationID = '%s'";
 

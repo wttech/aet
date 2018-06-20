@@ -13,7 +13,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.runner.processing;
+package com.cognifide.aet.runner.processing.steps;
 
 import com.cognifide.aet.communication.api.JobStatus;
 import com.cognifide.aet.communication.api.ProcessingError;
@@ -28,6 +28,8 @@ import com.cognifide.aet.communication.api.util.ExecutionTimer;
 import com.cognifide.aet.runner.CollectorJobScheduler;
 import com.cognifide.aet.runner.configs.RunnerConfiguration;
 import com.cognifide.aet.runner.configs.MessagingConfiguration;
+import com.cognifide.aet.runner.processing.SuiteIndexWrapper;
+import com.cognifide.aet.runner.processing.TimeoutWatch;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import javax.jms.JMSException;
@@ -41,7 +43,7 @@ import org.slf4j.LoggerFactory;
  * CollectionResultsRouter - collects work from collector-workers, divides and schedules compare
  * work among compare-workers
  */
-class CollectionResultsRouter extends StepManager implements TaskFinishPoint {
+public class CollectionResultsRouter extends StepManager implements TaskFinishPoint {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(CollectionResultsRouter.class);
 
@@ -55,7 +57,7 @@ class CollectionResultsRouter extends StepManager implements TaskFinishPoint {
 
   private final ExecutionTimer timer;
 
-  CollectionResultsRouter(TimeoutWatch timeoutWatch, JmsConnection jmsConnection,
+  public CollectionResultsRouter(TimeoutWatch timeoutWatch, JmsConnection jmsConnection,
       RunnerConfiguration runnerConfiguration,
       CollectorJobScheduler collectorJobScheduler, SuiteIndexWrapper suite) throws JMSException {
     super(timeoutWatch, jmsConnection, suite.get().getCorrelationId(), runnerConfiguration.getMttl());
@@ -177,7 +179,7 @@ class CollectionResultsRouter extends StepManager implements TaskFinishPoint {
     test.addUrl(processedUrl);
   }
 
-  void addChangeObserver(ChangeObserver observer) {
+  public void addChangeObserver(ChangeObserver observer) {
     changeListeners.add(observer);
   }
 

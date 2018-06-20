@@ -13,7 +13,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.runner.processing;
+package com.cognifide.aet.runner.processing.steps;
 
 import com.cognifide.aet.communication.api.JobStatus;
 import com.cognifide.aet.communication.api.ProcessingError;
@@ -27,6 +27,8 @@ import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.communication.api.util.ExecutionTimer;
 import com.cognifide.aet.runner.configs.RunnerConfiguration;
 import com.cognifide.aet.runner.configs.MessagingConfiguration;
+import com.cognifide.aet.runner.processing.SuiteIndexWrapper;
+import com.cognifide.aet.runner.processing.TimeoutWatch;
 import com.google.common.base.Optional;
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -34,7 +36,7 @@ import javax.jms.ObjectMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-class ComparisonResultsRouter extends StepManager implements ChangeObserver,
+public class ComparisonResultsRouter extends StepManager implements ChangeObserver,
     TaskFinishPoint {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(ComparisonResultsRouter.class);
@@ -49,7 +51,7 @@ class ComparisonResultsRouter extends StepManager implements ChangeObserver,
 
   private boolean aborted;
 
-  ComparisonResultsRouter(TimeoutWatch timeoutWatch, JmsConnection jmsConnection,
+  public ComparisonResultsRouter(TimeoutWatch timeoutWatch, JmsConnection jmsConnection,
       RunnerConfiguration runnerConfiguration, SuiteIndexWrapper suite) throws JMSException {
     super(timeoutWatch, jmsConnection, suite.get().getCorrelationId(), runnerConfiguration.getMttl());
     this.suite = suite;
