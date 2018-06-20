@@ -17,7 +17,7 @@ package com.cognifide.aet.runner.scheduler;
 
 import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.queues.JmsUtils;
-import com.cognifide.aet.runner.configs.MessagingConfiguration;
+import com.cognifide.aet.runner.MessagesManager;
 import com.google.common.collect.Maps;
 import java.util.Iterator;
 import java.util.Map;
@@ -77,14 +77,14 @@ class CollectorJobScheduler implements Runnable {
 
   private final MessageProducer producer;
 
-  private final MessagingConfiguration messagesManager;
+  private final MessagesManager messagesManager;
 
   private final Integer maxMessagesInCollectorQueue;
 
   private volatile boolean running = true;
 
   CollectorJobScheduler(JmsConnection jmsConnection, Integer maxMessagesInCollectorQueue,
-      MessagingConfiguration messagesManager) throws JMSException {
+      MessagesManager messagesManager) throws JMSException {
     this.maxMessagesInCollectorQueue = maxMessagesInCollectorQueue;
     this.availableQueue = new Semaphore(maxMessagesInCollectorQueue);
     this.session = jmsConnection.getJmsSession();

@@ -16,7 +16,7 @@
 package com.cognifide.aet.runner.scheduler;
 
 import com.cognifide.aet.communication.api.queues.JmsConnection;
-import com.cognifide.aet.runner.configs.MessagingConfiguration;
+import com.cognifide.aet.runner.MessagesManager;
 import com.cognifide.aet.runner.configs.RunnerConfiguration;
 import java.util.Map;
 import java.util.Queue;
@@ -40,7 +40,7 @@ public class CollectorJobSchedulerService {
   @Reference
   private JmsConnection jmsConnection;
   @Reference
-  private MessagingConfiguration messagingConfiguration;
+  private MessagesManager messagesManager;
   @Reference
   private RunnerConfiguration runnerConfiguration;
 
@@ -51,7 +51,7 @@ public class CollectorJobSchedulerService {
   public void activate(Map<String, String> properties) throws JMSException {
     LOGGER.debug("Activating CollectorJobSchedulerService");
     collectorJobScheduler = new CollectorJobScheduler(jmsConnection,
-        runnerConfiguration.getMaxMessagesInCollectorQueue(), messagingConfiguration);
+        runnerConfiguration.getMaxMessagesInCollectorQueue(), messagesManager);
     collectorJobSchedulerFeature = Executors.newSingleThreadExecutor()
         .submit(collectorJobScheduler);
   }

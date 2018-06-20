@@ -16,7 +16,7 @@
 package com.cognifide.aet.runner.processing;
 
 import com.cognifide.aet.communication.api.queues.JmsConnection;
-import com.cognifide.aet.runner.configs.MessagingConfiguration;
+import com.cognifide.aet.runner.MessagesManager;
 import com.cognifide.aet.runner.configs.RunnerConfiguration;
 import com.cognifide.aet.runner.processing.data.SuiteIndexWrapper;
 import com.cognifide.aet.runner.processing.steps.CollectDispatcher;
@@ -37,7 +37,7 @@ public class SuiteExecutionFactory {
   private RunnerConfiguration runnerConfiguration;
 
   @Reference
-  private MessagingConfiguration messagesManager;
+  private MessagesManager messagesManager;
 
   @Reference
   private CollectorJobSchedulerService collectorJobSchedulerService;

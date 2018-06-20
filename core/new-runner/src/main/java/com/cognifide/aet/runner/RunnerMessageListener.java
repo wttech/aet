@@ -21,7 +21,6 @@ import com.cognifide.aet.communication.api.messages.TaskMessage;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.queues.JmsUtils;
-import com.cognifide.aet.runner.configs.MessagingConfiguration;
 import com.cognifide.aet.runner.configs.RunnerConfiguration;
 import com.cognifide.aet.runner.scheduler.CollectorJobSchedulerService;
 import java.util.Map;
@@ -32,7 +31,6 @@ import javax.jms.MessageConsumer;
 import javax.jms.MessageListener;
 import javax.jms.MessageProducer;
 import javax.jms.Session;
-import org.apache.commons.lang3.StringUtils;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Deactivate;
@@ -48,10 +46,10 @@ public class RunnerMessageListener implements MessageListener {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(RunnerMessageListener.class);
 
-  private static final String API_QUEUE_IN = MessagingConfiguration
+  private static final String API_QUEUE_IN = MessagesManager
       .createFullQueueName("runner-in");
 
-  private static final String MAINTENANCE_QUEUE_IN = MessagingConfiguration
+  private static final String MAINTENANCE_QUEUE_IN = MessagesManager
       .createFullQueueName("maintenance-in");
 
   private MessageConsumer inConsumer;
