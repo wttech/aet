@@ -16,12 +16,12 @@
 package com.cognifide.aet.runner.processing;
 
 import com.cognifide.aet.communication.api.queues.JmsConnection;
-import com.cognifide.aet.runner.CollectorJobScheduler;
 import com.cognifide.aet.runner.configs.MessagingConfiguration;
 import com.cognifide.aet.runner.configs.RunnerConfiguration;
 import com.cognifide.aet.runner.processing.steps.CollectDispatcher;
 import com.cognifide.aet.runner.processing.steps.CollectionResultsRouter;
 import com.cognifide.aet.runner.processing.steps.ComparisonResultsRouter;
+import com.cognifide.aet.runner.scheduler.CollectorJobSchedulerService;
 import javax.jms.JMSException;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Reference;
@@ -38,18 +38,23 @@ public class SuiteExecutionFactory {
   private MessagingConfiguration messagesManager;
 
   @Reference
+  private CollectorJobSchedulerService collectorJobSchedulerService;
+
+  @Reference
   private JmsConnection jmsConnection;
 
   public CollectDispatcher getCollectDispatcher(TimeoutWatch timeoutWatch,
-      SuiteIndexWrapper suite, CollectorJobScheduler collectorJobScheduler) throws JMSException {
+      SuiteIndexWrapper suite)
+      throws JMSException {
     return new CollectDispatcher(timeoutWatch, jmsConnection, runnerConfiguration,
-        collectorJobScheduler, suite);
+        collectorJobSchedulerService, suite);
   }
 
   public CollectionResultsRouter getCollectionResultsRouter(TimeoutWatch timeoutWatch,
-      SuiteIndexWrapper suite, CollectorJobScheduler collectorJobScheduler) throws JMSException {
+      SuiteIndexWrapper suite)
+      throws JMSException {
     return new CollectionResultsRouter(timeoutWatch, jmsConnection,
-        runnerConfiguration, collectorJobScheduler, suite);
+        runnerConfiguration, collectorJobSchedulerService, suite);
   }
 
   public ComparisonResultsRouter getComparisonResultsRouter(TimeoutWatch timeoutWatch,

@@ -20,11 +20,10 @@ import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.runner.configs.MessagingConfiguration;
 import com.cognifide.aet.runner.configs.RunnerConfiguration;
 import com.cognifide.aet.runner.processing.SuiteDataService;
-import com.cognifide.aet.runner.processing.SuiteExecutionTask;
 import com.cognifide.aet.runner.processing.SuiteExecutionFactory;
+import com.cognifide.aet.runner.processing.SuiteExecutionTask;
 import java.util.Map;
 import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import java.util.concurrent.ScheduledExecutorService;
 import javax.jms.Destination;
 import javax.jms.JMSException;
@@ -50,7 +49,7 @@ public class SuiteExecutorService {
   private RunnerConfiguration runnerConfiguration;
 
   @Reference
-  private MessagingConfiguration messagesManager;
+  private MessagingConfiguration messagingConfiguration;
 
   @Reference
   private JmsConnection jmsConnection;
@@ -61,19 +60,10 @@ public class SuiteExecutorService {
   @Reference
   private SuiteExecutionFactory suiteExecutionFactory;
 
-  private CollectorJobScheduler collectorJobScheduler;
-
-  private Future<?> collectorJobSchedulerFeature;
-
   @Activate
   public void activate(Map<String, String> properties) throws JMSException {
     LOGGER.debug("Activating SuiteExecutorService");
     executor = Executors.newScheduledThreadPool(MAX_POOL_SIZE);
-
-    collectorJobScheduler = new CollectorJobScheduler(jmsConnection,
-        runnerConfiguration.getMaxMessagesInCollectorQueue(), messagesManager);
-    collectorJobSchedulerFeature = Executors.newSingleThreadExecutor()
-        .submit(collectorJobScheduler);
   }
 
   @Deactivate
@@ -82,20 +72,12 @@ public class SuiteExecutorService {
     if (executor != null) {
       executor.shutdown();
     }
-    if (collectorJobScheduler != null) {
-      collectorJobScheduler.quit();
-      collectorJobSchedulerFeature.cancel(true);
-    }
-  }
-
-  public void cancel(String correlationID) {
-    collectorJobScheduler.cleanup(correlationID);
   }
 
   public void scheduleSuite(Suite suite, Destination jmsReplyTo, boolean isMaintenanceMessage) {
     LOGGER.debug("Scheduling {}!", suite);
     SuiteExecutionTask task = new SuiteExecutionTask(suite, jmsReplyTo, suiteDataService,
-        jmsConnection, runnerConfiguration, suiteExecutionFactory, collectorJobScheduler);
+        jmsConnection, runnerConfiguration, suiteExecutionFactory);
     executor.submit(task);
   }
 }

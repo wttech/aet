@@ -13,12 +13,10 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.runner;
+package com.cognifide.aet.runner.scheduler;
 
 import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.queues.JmsUtils;
-import com.cognifide.aet.runner.model.MessageWithDestination;
-import com.cognifide.aet.runner.model.ReceivedMessagesInfo;
 import com.cognifide.aet.runner.configs.MessagingConfiguration;
 import com.google.common.collect.Maps;
 import java.util.Iterator;
@@ -41,7 +39,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author lukasz.wieczorek
  */
-public class CollectorJobScheduler implements Runnable {
+class CollectorJobScheduler implements Runnable {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(CollectorJobScheduler.class);
 
@@ -85,7 +83,7 @@ public class CollectorJobScheduler implements Runnable {
 
   private volatile boolean running = true;
 
-  public CollectorJobScheduler(JmsConnection jmsConnection, Integer maxMessagesInCollectorQueue,
+  CollectorJobScheduler(JmsConnection jmsConnection, Integer maxMessagesInCollectorQueue,
       MessagingConfiguration messagesManager) throws JMSException {
     this.maxMessagesInCollectorQueue = maxMessagesInCollectorQueue;
     this.availableQueue = new Semaphore(maxMessagesInCollectorQueue);
@@ -134,7 +132,7 @@ public class CollectorJobScheduler implements Runnable {
     }
   }
 
-  public void add(Queue<MessageWithDestination> messagesQueue, String correlationID) {
+  void add(Queue<MessageWithDestination> messagesQueue, String correlationID) {
     if (messagesMap.putIfAbsent(correlationID, messagesQueue) == null) {
       availableMessages.release();
       LOGGER.debug(
@@ -146,7 +144,7 @@ public class CollectorJobScheduler implements Runnable {
     }
   }
 
-  public synchronized void messageReceived(String requestJMSMessageID, String correlationID) {
+  synchronized void messageReceived(String requestJMSMessageID, String correlationID) {
     ReceivedMessagesInfo msg = receivedMessagesCounter.get(requestJMSMessageID);
     if (msg != null) {
       int amount = msg.getMessagesAmount();
@@ -167,7 +165,7 @@ public class CollectorJobScheduler implements Runnable {
     }
   }
 
-  public void quit() {
+  void quit() {
     LOGGER.info("Quit CollectorJobScheduler.");
     running = false;
   }
@@ -178,7 +176,7 @@ public class CollectorJobScheduler implements Runnable {
    *
    * @param correlationID - correlationID of task that cleanup should be done for.
    */
-  public synchronized void cleanup(String correlationID) {
+  synchronized void cleanup(String correlationID) {
     LOGGER.info("Cleaning up after test suite execution with correlationID: {}", correlationID);
     removeFromQueueMap(correlationID);
     fixMessageCounter(correlationID);

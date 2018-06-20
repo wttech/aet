@@ -13,7 +13,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.runner.model;
+package com.cognifide.aet.runner.scheduler;
 
 import javax.jms.Destination;
 import javax.jms.JMSException;

@@ -23,6 +23,7 @@ import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.queues.JmsUtils;
 import com.cognifide.aet.runner.configs.MessagingConfiguration;
 import com.cognifide.aet.runner.configs.RunnerConfiguration;
+import com.cognifide.aet.runner.scheduler.CollectorJobSchedulerService;
 import java.util.Map;
 import javax.jms.Destination;
 import javax.jms.JMSException;
@@ -66,6 +67,10 @@ public class RunnerMessageListener implements MessageListener {
 
   @Reference
   private SuiteExecutorService suiteExecutorService;
+
+  @Reference
+  private CollectorJobSchedulerService collectorJobSchedulerService;
+
 
   @Activate
   public void activate(Map<String, String> properties) {
@@ -115,7 +120,7 @@ public class RunnerMessageListener implements MessageListener {
         case CANCEL:
           //This step is not implemented on client
           Suite suiteToCancel = (Suite) ((TaskMessage) message).getData();
-          suiteExecutorService.cancel(suiteToCancel.getCorrelationId());
+          collectorJobSchedulerService.cancel(suiteToCancel.getCorrelationId());
           break;
         default:
           LOGGER.error("Unknown message type: {}!", message.getMessageType());

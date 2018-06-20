@@ -25,11 +25,11 @@ import com.cognifide.aet.communication.api.metadata.Test;
 import com.cognifide.aet.communication.api.metadata.Url;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.communication.api.util.ExecutionTimer;
-import com.cognifide.aet.runner.CollectorJobScheduler;
-import com.cognifide.aet.runner.configs.RunnerConfiguration;
 import com.cognifide.aet.runner.configs.MessagingConfiguration;
+import com.cognifide.aet.runner.configs.RunnerConfiguration;
 import com.cognifide.aet.runner.processing.SuiteIndexWrapper;
 import com.cognifide.aet.runner.processing.TimeoutWatch;
+import com.cognifide.aet.runner.scheduler.CollectorJobSchedulerService;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 import javax.jms.JMSException;
@@ -51,7 +51,7 @@ public class CollectionResultsRouter extends StepManager implements TaskFinishPo
 
   private final List<ChangeObserver> changeListeners;
 
-  private final CollectorJobScheduler collectorJobScheduler;
+  private final CollectorJobSchedulerService collectorJobScheduler;
 
   private final SuiteIndexWrapper suite;
 
@@ -59,7 +59,7 @@ public class CollectionResultsRouter extends StepManager implements TaskFinishPo
 
   public CollectionResultsRouter(TimeoutWatch timeoutWatch, JmsConnection jmsConnection,
       RunnerConfiguration runnerConfiguration,
-      CollectorJobScheduler collectorJobScheduler, SuiteIndexWrapper suite) throws JMSException {
+      CollectorJobSchedulerService collectorJobScheduler, SuiteIndexWrapper suite) throws JMSException {
     super(timeoutWatch, jmsConnection, suite.get().getCorrelationId(), runnerConfiguration.getMttl());
     this.collectorJobScheduler = collectorJobScheduler;
     this.suite = suite;

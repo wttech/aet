@@ -19,9 +19,9 @@ import com.cognifide.aet.communication.api.job.CollectorJobData;
 import com.cognifide.aet.communication.api.metadata.Test;
 import com.cognifide.aet.communication.api.metadata.Url;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
-import com.cognifide.aet.runner.CollectorJobScheduler;
 import com.cognifide.aet.runner.configs.RunnerConfiguration;
-import com.cognifide.aet.runner.model.MessageWithDestination;
+import com.cognifide.aet.runner.scheduler.CollectorJobSchedulerService;
+import com.cognifide.aet.runner.scheduler.MessageWithDestination;
 import com.cognifide.aet.runner.processing.ProgressLog;
 import com.cognifide.aet.runner.processing.SuiteIndexWrapper;
 import com.cognifide.aet.runner.processing.TimeoutWatch;
@@ -44,13 +44,13 @@ public class CollectDispatcher extends StepManager {
 
   private final Integer urlPackageSize;
 
-  private final CollectorJobScheduler collectorJobScheduler;
+  private final CollectorJobSchedulerService collectorJobScheduler;
 
   private final SuiteIndexWrapper suite;
 
   public CollectDispatcher(TimeoutWatch timeoutWatch, JmsConnection jmsConnection,
       RunnerConfiguration runnerConfiguration,
-      CollectorJobScheduler collectorJobScheduler, SuiteIndexWrapper suite) throws JMSException {
+      CollectorJobSchedulerService collectorJobScheduler, SuiteIndexWrapper suite) throws JMSException {
     super(timeoutWatch, jmsConnection, suite.get().getCorrelationId(), runnerConfiguration.getMttl());
     this.urlPackageSize = runnerConfiguration.getUrlPackageSize();
     this.collectorJobScheduler = collectorJobScheduler;
@@ -82,7 +82,7 @@ public class CollectDispatcher extends StepManager {
   }
 
   public void cancel(String correlationId) {
-    collectorJobScheduler.cleanup(correlationId);
+    collectorJobScheduler.cancel(correlationId);
   }
 
   private void processUrlsAndGroupToPackages(Deque<MessageWithDestination> messagesQueue, Test test)
