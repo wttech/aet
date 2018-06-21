@@ -19,9 +19,16 @@ import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.runner.processing.SuiteExecutionFactory;
 import com.cognifide.aet.runner.processing.SuiteExecutionTask;
 import com.cognifide.aet.runner.processing.data.SuiteDataService;
+import com.google.common.collect.Sets;
+import com.google.common.util.concurrent.FutureCallback;
+import com.google.common.util.concurrent.Futures;
+import com.google.common.util.concurrent.ListenableFuture;
+import com.google.common.util.concurrent.ListeningExecutorService;
+import com.google.common.util.concurrent.MoreExecutors;
 import java.util.Map;
+import java.util.Set;
+import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
 import javax.jms.Destination;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
@@ -37,7 +44,9 @@ public class SuiteExecutorService {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SuiteExecutorService.class);
 
-  private ScheduledExecutorService executor;
+  private ListeningExecutorService executor;
+  private ExecutorService callbackExecutor;
+  private Set<String> scheduledSuites;
 
   @Reference
   private RunnerConfiguration runnerConfiguration;
@@ -51,7 +60,10 @@ public class SuiteExecutorService {
   @Activate
   public void activate(Map<String, String> properties) {
     LOGGER.debug("Activating SuiteExecutorService");
-    executor = Executors.newScheduledThreadPool(runnerConfiguration.getMaxConcurrentSuitesCount());
+    executor = MoreExecutors.listeningDecorator(
+        Executors.newFixedThreadPool(runnerConfiguration.getMaxConcurrentSuitesCount()));
+    callbackExecutor = Executors.newSingleThreadExecutor();
+    scheduledSuites = Sets.newConcurrentHashSet();
   }
 
   @Deactivate
@@ -60,12 +72,46 @@ public class SuiteExecutorService {
     if (executor != null) {
       executor.shutdown();
     }
+    if (callbackExecutor != null) {
+      callbackExecutor.shutdown();
+    }
+    scheduledSuites.clear();
   }
 
   void scheduleSuite(Suite suite, Destination jmsReplyTo) {
     LOGGER.debug("Scheduling {}!", suite);
-    SuiteExecutionTask task = new SuiteExecutionTask(suite, jmsReplyTo, suiteDataService,
-        runnerConfiguration, suiteExecutionFactory);
-    executor.submit(task);
+    final ListenableFuture<String> suiteExecutionTask = executor
+        .submit(new SuiteExecutionTask(suite, jmsReplyTo, suiteDataService, runnerConfiguration,
+            suiteExecutionFactory));
+    scheduledSuites.add(suite.getCorrelationId());
+    Futures.addCallback(suiteExecutionTask, new SuiteFinishedCallback(suite.getCorrelationId()),
+        callbackExecutor);
+    LOGGER.debug(
+        "Currently {} suites are scheduled in the system (max number of concurrent suites: {})",
+        scheduledSuites.size(), runnerConfiguration.getMaxConcurrentSuitesCount());
+  }
+
+  private class SuiteFinishedCallback implements FutureCallback<String> {
+
+    private final String correlationId;
+
+    SuiteFinishedCallback(String correlationId) {
+      this.correlationId = correlationId;
+    }
+
+    @Override
+    public void onSuccess(String result) {
+      scheduledSuites.remove(result);
+      LOGGER.info("Suite {} processing finished successfully! (Total {}/{} scheduled)",
+          result, scheduledSuites.size(), runnerConfiguration.getMaxConcurrentSuitesCount());
+    }
+
+    @Override
+    public void onFailure(Throwable t) {
+      scheduledSuites.remove(correlationId);
+      LOGGER.error("Suite {} processing finished successfully! (Total {}/{} scheduled)",
+          correlationId, scheduledSuites.size(), runnerConfiguration.getMaxConcurrentSuitesCount(),
+          t);
+    }
   }
 }

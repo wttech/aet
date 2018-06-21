@@ -23,12 +23,13 @@ import com.cognifide.aet.runner.RunnerConfiguration;
 import com.cognifide.aet.runner.processing.data.SuiteDataService;
 import com.cognifide.aet.runner.processing.data.SuiteIndexWrapper;
 import com.cognifide.aet.vs.StorageException;
+import java.util.concurrent.Callable;
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SuiteExecutionTask implements Runnable {
+public class SuiteExecutionTask implements Callable<String> {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SuiteExecutionTask.class);
 
@@ -54,7 +55,7 @@ public class SuiteExecutionTask implements Runnable {
   }
 
   @Override
-  public void run() {
+  public String call() {
     try {
       prepareSuiteWrapper();
       init();
@@ -69,6 +70,7 @@ public class SuiteExecutionTask implements Runnable {
     } finally {
       cleanup();
     }
+    return suite.getCorrelationId();
   }
 
   private void prepareSuiteWrapper() throws StorageException {

@@ -48,7 +48,6 @@ class SuiteProcessor {
   private final RunnerConfiguration runnerConfiguration;
   private final MessagesSender messagesSender;
 
-
   SuiteProcessor(SuiteExecutionFactory suiteExecutionFactory,
       SuiteIndexWrapper indexedSuite, RunnerConfiguration runnerConfiguration,
       MessagesSender messagesSender) throws JMSException {
@@ -73,7 +72,7 @@ class SuiteProcessor {
       checkStatusUntilFinishedOrTimedOut();
       if (comparisonResultsRouter.isFinished()) {
         timer.finish();
-        LOGGER.info("Finished lifecycle of test run: {}. Task finished in {} ms ({}).",
+        LOGGER.info("Finished suite run: {}. Task finished in {} ms ({}).",
             indexedSuite.get().getCorrelationId(), timer.getExecutionTimeInMillis(),
             timer.getExecutionTimeInMMSS());
         LOGGER.info("Total tasks finished in steps: collect: {}; compare: {}.",
@@ -82,7 +81,7 @@ class SuiteProcessor {
       } else if (suiteIsTimedOut()) {
         timer.finish();
         LOGGER.warn(
-            "Lifecycle of run {} interrupted after {} ms ({}). Last message received: {} seconds ago... Trying to force report generation.",
+            "Running {} interrupted after {} ms ({}). Last message received: {} seconds ago... Trying to force report generation.",
             indexedSuite.get().getCorrelationId(), timer.getExecutionTimeInMillis(),
             timer.getExecutionTimeInMMSS(),
             TimeUnit.NANOSECONDS.toSeconds(timeoutWatch.getLastUpdateDifference()));

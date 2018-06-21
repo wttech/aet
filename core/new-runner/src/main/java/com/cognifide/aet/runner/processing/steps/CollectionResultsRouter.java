@@ -27,8 +27,8 @@ import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.communication.api.util.ExecutionTimer;
 import com.cognifide.aet.runner.MessagesManager;
 import com.cognifide.aet.runner.RunnerConfiguration;
-import com.cognifide.aet.runner.processing.data.SuiteIndexWrapper;
 import com.cognifide.aet.runner.processing.TimeoutWatch;
+import com.cognifide.aet.runner.processing.data.SuiteIndexWrapper;
 import com.cognifide.aet.runner.scheduler.CollectorJobSchedulerService;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
@@ -59,8 +59,10 @@ public class CollectionResultsRouter extends StepManager implements TaskFinishPo
 
   public CollectionResultsRouter(TimeoutWatch timeoutWatch, JmsConnection jmsConnection,
       RunnerConfiguration runnerConfiguration,
-      CollectorJobSchedulerService collectorJobScheduler, SuiteIndexWrapper suite) throws JMSException {
-    super(timeoutWatch, jmsConnection, suite.get().getCorrelationId(), runnerConfiguration.getMttl());
+      CollectorJobSchedulerService collectorJobScheduler, SuiteIndexWrapper suite)
+      throws JMSException {
+    super(timeoutWatch, jmsConnection, suite.get().getCorrelationId(),
+        runnerConfiguration.getMttl());
     this.collectorJobScheduler = collectorJobScheduler;
     this.suite = suite;
     this.messagesToReceive.getAndSet(countUrls());
@@ -91,9 +93,8 @@ public class CollectionResultsRouter extends StepManager implements TaskFinishPo
         updateCounters(collectorResultData.getStatus());
 
         LOGGER.info(
-            "Reseived message {} - url {} in test `{}` collected with status {}. Results received "
-                +
-                "successful {} / failed {} of {} total. CorrelationId: {}.",
+            "Received message {} - url {} in test `{}` collected with status {}. Results received "
+                + "successful {} / failed {} of {} total. CorrelationId: {}.",
             message.getJMSMessageID(), collectorResultData.getUrl(), testName,
             collectorResultData.getStatus(), messagesReceivedSuccess.get(),
             messagesReceivedFailed.get(),

@@ -120,7 +120,7 @@ class CollectorJobScheduler implements Runnable {
         Map.Entry<String, Queue<MessageWithDestination>> entry = iterator.next();
         Queue<MessageWithDestination> messagesQueue = entry.getValue();
         MessageWithDestination messageWithDestination = messagesQueue.poll();
-        LOGGER.debug("safeRun thread ID: {}", Thread.currentThread().getId());
+        LOGGER.trace("CollectorJobScheduler loop at thread ID: {}", Thread.currentThread().getId());
         if (messageWithDestination != null) {
           sendMessage(messageWithDestination);
         } else {

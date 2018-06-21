@@ -25,10 +25,10 @@ import com.cognifide.aet.communication.api.metadata.Suite.Timestamp;
 import com.cognifide.aet.communication.api.metadata.Url;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.communication.api.util.ExecutionTimer;
-import com.cognifide.aet.runner.RunnerConfiguration;
 import com.cognifide.aet.runner.MessagesManager;
-import com.cognifide.aet.runner.processing.data.SuiteIndexWrapper;
+import com.cognifide.aet.runner.RunnerConfiguration;
 import com.cognifide.aet.runner.processing.TimeoutWatch;
+import com.cognifide.aet.runner.processing.data.SuiteIndexWrapper;
 import com.google.common.base.Optional;
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -53,7 +53,8 @@ public class ComparisonResultsRouter extends StepManager implements ChangeObserv
 
   public ComparisonResultsRouter(TimeoutWatch timeoutWatch, JmsConnection jmsConnection,
       RunnerConfiguration runnerConfiguration, SuiteIndexWrapper suite) throws JMSException {
-    super(timeoutWatch, jmsConnection, suite.get().getCorrelationId(), runnerConfiguration.getMttl());
+    super(timeoutWatch, jmsConnection, suite.get().getCorrelationId(),
+        runnerConfiguration.getMttl());
     this.suite = suite;
     timer = ExecutionTimer.createAndRun("comparison");
   }
@@ -112,12 +113,15 @@ public class ComparisonResultsRouter extends StepManager implements ChangeObserv
   private void addComparatorToSuite(ComparatorResultData comparisonResult) {
     final Optional<Url> urlOptional = suite
         .getTestUrl(comparisonResult.getTestName(), comparisonResult.getUrlName());
-    final Url url = urlOptional.get();
-    final Step step = url.getSteps().get(comparisonResult.getStepIndex());
-    if (step != null) {
-      step.addComparator(comparisonResult.getComparisonResult());
-    } else {
-      LOGGER.error("Fatal error while saving comparison result: {}.", comparisonResult);
+    if (urlOptional.isPresent()) {
+      final Url url = urlOptional.get();
+      final Step step = url.getSteps().get(comparisonResult.getStepIndex());
+      if (step != null) {
+        step.addComparator(comparisonResult.getComparisonResult());
+      } else {
+        LOGGER.error("Fatal error while saving comparison result: {} of suite.", comparisonResult,
+            suite.get().getCorrelationId());
+      }
     }
   }
 
@@ -136,7 +140,8 @@ public class ComparisonResultsRouter extends StepManager implements ChangeObserv
 
   public void abort() {
     if (!isFinished()) {
-      LOGGER.warn("Suite aborted!. Still waiting for {} of {} comparisons!",
+      LOGGER.warn("Suite {} aborted!. Still waiting for {} of {} comparisons!",
+          suite.get().getCorrelationId(),
           messagesToReceive.get() - messagesReceivedSuccess.get() - messagesReceivedFailed.get(),
           messagesToReceive.get());
     }
