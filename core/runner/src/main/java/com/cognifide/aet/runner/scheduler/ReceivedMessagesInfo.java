@@ -13,18 +13,25 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.runner.distribution.dispatch;
+package com.cognifide.aet.runner.scheduler;
 
-/**
- * TaskFinishPoint
- *
- * @author: Maciej Laskowski
- */
-public interface TaskFinishPoint {
+class ReceivedMessagesInfo {
 
-  /**
-   * @return - <bb>true</bb> if this task is ready
-   */
-  boolean isFinished();
+  private final Integer messagesAmount;
+
+  private final String correlationID;
+
+  ReceivedMessagesInfo(int messagesAmount, String correlationID) {
+    this.messagesAmount = messagesAmount;
+    this.correlationID = correlationID;
+  }
+
+  String getCorrelationID() {
+    return correlationID;
+  }
+
+  Integer getMessagesAmount() {
+    return messagesAmount;
+  }
 
 }

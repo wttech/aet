@@ -1,3 +1,11 @@
+package com.cognifide.aet.runner.processing;
+
+import static com.google.common.testing.GuavaAsserts.assertTrue;
+import static org.junit.Assert.assertFalse;
+
+import org.junit.Before;
+import org.junit.Test;
+
 /**
  * AET
  *
@@ -13,31 +21,18 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.runner.distribution.watch;
 
-import static com.google.common.testing.GuavaAsserts.assertTrue;
-import static org.junit.Assert.assertFalse;
-
-import org.junit.Before;
-import org.junit.Test;
-
-/**
- * TimeoutWatchTest
- *
- * @Author: Maciej Laskowski
- * @Date: 16.03.15
- */
 public class TimeoutWatchTest {
 
   private TimeoutWatch tested;
 
   @Before
-  public void setUp() throws Exception {
+  public void setUp() {
     tested = new TimeoutWatch();
   }
 
   @Test
-  public void update_expectTimestampUpdated() throws Exception {
+  public void update_expectTimestampUpdated() {
     long beforeUpdate = tested.getLastUpdateDifference();
     tested.update();
     long afterUpdate = tested.getLastUpdateDifference();

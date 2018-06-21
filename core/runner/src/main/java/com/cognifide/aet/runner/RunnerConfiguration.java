@@ -13,35 +13,26 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.runner.main;
+package com.cognifide.aet.runner;
 
-import com.cognifide.aet.communication.api.queues.JmsConnection;
-import com.cognifide.aet.runner.distribution.RunnerMessageListener;
-import com.cognifide.aet.runner.distribution.RunnerMode;
-import com.cognifide.aet.runner.modules.SimpleRunnerModule;
-import com.cognifide.aet.runner.util.MessagesManager;
-import com.cognifide.aet.vs.MetadataDAO;
-import com.google.inject.Guice;
-import com.google.inject.Injector;
 import java.util.Map;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Deactivate;
 import org.apache.felix.scr.annotations.Property;
-import org.apache.felix.scr.annotations.PropertyOption;
-import org.apache.felix.scr.annotations.Reference;
+import org.apache.felix.scr.annotations.Service;
 import org.apache.sling.commons.osgi.PropertiesUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Runner is an entry point for whole application, it main goal is to coordinate JMS communication
- * between workers.
+ * between workers. This class contains all necessary configuration for the runner bundle.
  */
-@Component(immediate = true, metatype = true, description = "AET Runner", label = "AET Runner")
-public class Runner {
+@Service(RunnerConfiguration.class)
+@Component(metatype = true, description = "AET Runner Configuration", label = "AET Runner Configuration")
+public class RunnerConfiguration {
 
-  private static final Logger LOG = LoggerFactory.getLogger(Runner.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(RunnerConfiguration.class);
 
   private static final int DEFAULT_TASK_RUN_FAILURE_TIMEOUT_SECONDS = 120;
 
@@ -53,7 +44,9 @@ public class Runner {
 
   private static final String PARAM_MAX_MESSAGES_IN_COLLECTOR_QUEUE = "maxMessagesInCollectorQueue";
 
-  private static final String RUNNER_MODE = "runnerMode";
+  private static final String PARAM_MAX_CONCURRENT_SUITES_PROCESSED_COUNT = "maxConcurrentSuitesCount";
+
+  private static final int DEFAULT_MAX_CONCURRENT_SUITES_PROCESSED_COUNT = 5;
 
   @Property(name = PARAM_FAILURE_TIMEOUT, label = "Failure timeout", description =
       "Time in seconds, test run will be interrupted if no response was received in duration of this parameter. Default: "
@@ -84,24 +77,14 @@ public class Runner {
           + " messages", intValue = DEFAULT_MAX_MESSAGES_IN_COLLECTOR_QUEUE)
   private int maxMessagesInCollectorQueue = DEFAULT_MAX_MESSAGES_IN_COLLECTOR_QUEUE;
 
-  @Property(name = RUNNER_MODE, label = "Runner mode", options = {
-      @PropertyOption(name = "online", value = "online"),
-      @PropertyOption(name = "maintenance", value = "maintenance"),
-      @PropertyOption(name = "offline", value = "offline")}, value = "online", description = "Runner mode: online - listening to AET.runner-in queue only, maintenance - listening to AET.runner-in and AET.maintenance-in queues (running only from AET.maintenance-in queue), offline - listening only to AET-maintenance-in queue.")
-  private RunnerMode runnerMode;
-  @Reference
-  private JmsConnection jmsConnection;
-
-  @Reference
-  private MessagesManager messagesManager;
-
-  @Reference
-  private MetadataDAO metadataDAO;
-
-  private RunnerMessageListener messageListener;
+  @Property(name = PARAM_MAX_CONCURRENT_SUITES_PROCESSED_COUNT, label = "Max Concurrent Suites Count", description =
+      "Defines the maximum number of suites processed concurrently byt the Runner. Default: "
+          + DEFAULT_MAX_CONCURRENT_SUITES_PROCESSED_COUNT
+          + " messages", intValue = DEFAULT_MAX_CONCURRENT_SUITES_PROCESSED_COUNT)
+  private int maxConcurrentSuitesCount = DEFAULT_MAX_CONCURRENT_SUITES_PROCESSED_COUNT;
 
   @Activate
-  public void activate(Map properties) {
+  public void activate(Map<String, String> properties) {
     ft = PropertiesUtil.toLong(properties.get(PARAM_FAILURE_TIMEOUT),
         DEFAULT_TASK_RUN_FAILURE_TIMEOUT_SECONDS);
     mttl = PropertiesUtil
@@ -111,26 +94,52 @@ public class Runner {
     maxMessagesInCollectorQueue = PropertiesUtil.toInteger(
         properties.get(PARAM_MAX_MESSAGES_IN_COLLECTOR_QUEUE),
         DEFAULT_MAX_MESSAGES_IN_COLLECTOR_QUEUE);
+    maxConcurrentSuitesCount = PropertiesUtil.toInteger(
+        properties.get(PARAM_MAX_CONCURRENT_SUITES_PROCESSED_COUNT),
+        DEFAULT_MAX_CONCURRENT_SUITES_PROCESSED_COUNT);
 
-    runnerMode = RunnerMode.valueOf(PropertiesUtil.toString(properties.get(RUNNER_MODE), "online")
-        .toUpperCase());
-
-    LOG.info(
-        "Running with parameters: [ft: {} sec ; mttl: {} ; urlPackageSize: {} ; maxMessagesInCollectorQueue: {}; runnerMode: {}.]",
-        ft, mttl, urlPackageSize, maxMessagesInCollectorQueue, runnerMode);
-
-    Injector injector = Guice
-        .createInjector(
-            new SimpleRunnerModule(ft, mttl, urlPackageSize, maxMessagesInCollectorQueue,
-                jmsConnection, messagesManager, runnerMode, metadataDAO));
-    messageListener = injector.getInstance(RunnerMessageListener.class);
+    LOGGER.info(
+        "Runner configured with parameters: [ft: {} sec ; mttl: {} ; urlPackageSize: {} ; maxMessagesInCollectorQueue: {}; maxConcurrentSuitesCount: {}.]",
+        ft, mttl, urlPackageSize, maxMessagesInCollectorQueue, maxConcurrentSuitesCount);
   }
 
-  @Deactivate
-  public void deactivate() {
-    if (messageListener != null) {
-      messageListener.close();
-    }
+
+  /**
+   * @return time in seconds, test run will be interrupted if no response was received in duration
+   * of this parameter.
+   */
+  public long getFt() {
+    return ft;
   }
 
+
+  /**
+   * @return time in seconds after which messages will be thrown out of queues.
+   */
+  public long getMttl() {
+    return mttl;
+  }
+
+
+  /**
+   * @return the maximum amount of messages in the collector queue.
+   */
+  public int getMaxMessagesInCollectorQueue() {
+    return maxMessagesInCollectorQueue;
+  }
+
+  /**
+   * @return how many links are being sent in one message. Each message is being processed by single
+   * CollectorListener.
+   */
+  public int getUrlPackageSize() {
+    return urlPackageSize;
+  }
+
+  /**
+   * @return how many suites can be processed concurrently byt the Runner.
+   */
+  public int getMaxConcurrentSuitesCount() {
+    return maxConcurrentSuitesCount;
+  }
 }

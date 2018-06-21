@@ -38,7 +38,6 @@
     <module>communication</module>
     <module>datastorage</module>
     <module>jobs</module>
-    <module>new-runner</module>
     <module>runner</module>
     <module>validation</module>
     <module>worker</module>

@@ -13,16 +13,13 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.runner.distribution.dispatch;
+package com.cognifide.aet.runner.scheduler;
 
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.Message;
 
-/**
- * @author lukasz.wieczorek
- */
-class MessageWithDestination {
+public class MessageWithDestination {
 
   private final Destination destination;
 
@@ -36,7 +33,7 @@ class MessageWithDestination {
     this.messagesToReceived = messagesToReceived;
   }
 
-  public Destination getDestination() {
+  Destination getDestination() {
     return destination;
   }
 
@@ -44,7 +41,7 @@ class MessageWithDestination {
     return message;
   }
 
-  public ReceivedMessagesInfo getMessagesToReceived() throws JMSException {
+  ReceivedMessagesInfo getMessagesToReceived() throws JMSException {
     return new ReceivedMessagesInfo(messagesToReceived, message.getJMSCorrelationID());
   }
 }

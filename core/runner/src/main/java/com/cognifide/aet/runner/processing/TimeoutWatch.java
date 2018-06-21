@@ -32,14 +32,14 @@ public class TimeoutWatch {
    * @param acceptedSecondsDifference accepted difference in seconds
    * @return true if last update was done more than acceptedSecondsDifference seconds from now
    */
-  public synchronized boolean isTimedOut(long acceptedSecondsDifference) {
+  synchronized boolean isTimedOut(long acceptedSecondsDifference) {
     return TimeUnit.NANOSECONDS.toSeconds(getLastUpdateDifference()) > acceptedSecondsDifference;
   }
 
   /**
    * @return last update timestamp and now difference in nanoseconds
    */
-  public long getLastUpdateDifference() {
+  long getLastUpdateDifference() {
     return System.nanoTime() - lastUpdateTimestamp;
   }
 }
