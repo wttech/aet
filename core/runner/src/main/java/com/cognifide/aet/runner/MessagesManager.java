@@ -35,7 +35,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Service(MessagesManager.class)
-@Component(immediate = true, metatype = true, description = "AET Runner Messages Configuration", label = "AET Runner Messages Configuration")
+@Component(immediate = true, metatype = true, description = "AET Messages Manager", label = "AET Messages Manager")
 public class MessagesManager {
 
   private static final String JMX_URL_PROPERTY_NAME = "jxm-url";
