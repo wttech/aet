@@ -49,7 +49,7 @@ public class RunnerConfiguration {
   private static final int DEFAULT_MAX_CONCURRENT_SUITES_PROCESSED_COUNT = 5;
 
   @Property(name = PARAM_FAILURE_TIMEOUT, label = "Failure timeout", description =
-      "Time in seconds, test run will be interrupted if no response was received in duration of this parameter. Default: "
+      "Time in seconds, after which suite processing will be interrupted if no notification was received in duration of this parameter. Default: "
           + DEFAULT_TASK_RUN_FAILURE_TIMEOUT_SECONDS
           + " sec", longValue = DEFAULT_TASK_RUN_FAILURE_TIMEOUT_SECONDS)
   private long ft = DEFAULT_TASK_RUN_FAILURE_TIMEOUT_SECONDS;
