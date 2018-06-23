@@ -37,6 +37,7 @@ import java.util.logging.Level;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
+import org.apache.felix.scr.annotations.ConfigurationPolicy;
 import org.apache.felix.scr.annotations.Properties;
 import org.apache.felix.scr.annotations.Property;
 import org.apache.felix.scr.annotations.Reference;
@@ -54,6 +55,7 @@ import org.osgi.framework.Constants;
 
 @Service
 @Component(
+    policy = ConfigurationPolicy.REQUIRE,
     description = "AET Chrome WebDriver Factory",
     label = "AET Chrome WebDriver Factory",
     metatype = true)
