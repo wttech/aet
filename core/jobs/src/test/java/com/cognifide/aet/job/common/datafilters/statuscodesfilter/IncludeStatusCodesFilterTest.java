@@ -15,10 +15,10 @@
  */
 package com.cognifide.aet.job.common.datafilters.statuscodesfilter;
 
-import static com.google.common.testing.GuavaAsserts.assertTrue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 import com.cognifide.aet.job.api.exceptions.ParametersException;

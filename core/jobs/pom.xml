@@ -127,10 +127,6 @@
       <artifactId>xmlunit</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.google.guiceberry</groupId>
-      <artifactId>guiceberry</artifactId>
-    </dependency>
-    <dependency>
       <groupId>uk.co.jemos.podam</groupId>
       <artifactId>podam</artifactId>
     </dependency>
