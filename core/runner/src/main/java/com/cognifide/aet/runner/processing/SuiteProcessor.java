@@ -66,7 +66,7 @@ class SuiteProcessor {
     collectionResultsRouter.addChangeObserver(comparisonResultsRouter);
   }
 
-  void start() throws JMSException {
+  void startProcessing() throws JMSException {
     timeoutWatch.update();
     if (tryProcess()) {
       checkStatusUntilFinishedOrTimedOut();

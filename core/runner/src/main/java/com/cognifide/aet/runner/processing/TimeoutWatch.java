@@ -18,7 +18,7 @@ package com.cognifide.aet.runner.processing;
 import java.util.concurrent.TimeUnit;
 
 /**
- * TimeoutWatch
+ * TimeoutWatch - used to measure gaps between updates from the suite processing done by workers.
  */
 public class TimeoutWatch {
 

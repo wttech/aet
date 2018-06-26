@@ -87,7 +87,7 @@ public class SuiteExecutionTask implements Callable<String> {
 
   private void process() throws JMSException {
     LOGGER.info("Start processing: {}", indexedSuite.get());
-    suiteProcessor.start();
+    suiteProcessor.startProcessing();
   }
 
 
