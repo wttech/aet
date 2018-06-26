@@ -30,7 +30,7 @@ public class CollectorJobData extends JobData {
 
   private final String proxy;
 
-  private final String webDriverId;
+  private final String preferredBrowserId;
 
   /**
    * @param company - company name.
@@ -39,14 +39,15 @@ public class CollectorJobData extends JobData {
    * @param testName - test name.
    * @param urls - list of urls for collector job.
    * @param proxy - used proxy name or null if none proxy is used
+   * @param preferredBrowserId - id of preferred browser or null if the default one should be used
    */
   public CollectorJobData(String company, String project, String suiteName, String testName,
       List<Url> urls,
-      String proxy, String webDriverId) {
+      String proxy, String preferredBrowserId) {
     super(company, project, suiteName, testName);
     this.urls = urls;
     this.proxy = proxy;
-    this.webDriverId = webDriverId;
+    this.preferredBrowserId = preferredBrowserId;
   }
 
   /**
@@ -60,7 +61,7 @@ public class CollectorJobData extends JobData {
     return proxy;
   }
 
-  public String getWebDriverId() {
-    return webDriverId;
+  public String getPreferredBrowserId() {
+    return preferredBrowserId;
   }
 }

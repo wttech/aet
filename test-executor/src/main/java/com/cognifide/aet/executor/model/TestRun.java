@@ -40,7 +40,7 @@ public class TestRun implements Serializable {
 
   private final String useProxy;
 
-  private final String webDriverId;
+  private final String browser;
 
   /**
    * @param collectorSteps - list of collector steps.
@@ -49,15 +49,16 @@ public class TestRun implements Serializable {
    * @param name - unique name of test.
    * @param useProxy - says what kind of proxy should be used, backward compatibility: set 'true' to
    * use 'rest' proxy, set 'false' to use none.
+   * @param browser - id of preferred browser or null if the default one should be used
    */
   public TestRun(List<CollectorStep> collectorSteps, Set<ComparatorStep> comparatorSteps,
-      List<ExtendedUrl> urls, String name, String useProxy, String webDriverId) {
+      List<ExtendedUrl> urls, String name, String useProxy, String browser) {
     this.collectorSteps = collectorSteps;
     this.comparatorSteps = getMap(comparatorSteps);
     this.urls = urls;
     this.name = name;
     this.useProxy = useProxy;
-    this.webDriverId = webDriverId;
+    this.browser = browser;
   }
 
   private Map<String, List<ComparatorStep>> getMap(Set<ComparatorStep> comparatorSteps) {
@@ -109,9 +110,9 @@ public class TestRun implements Serializable {
   }
 
   /**
-   * @return id of preferred web driver.
+   * @return id of preferred browser.
    */
-  public String getWebDriverId() {
-    return webDriverId;
+  public String getBrowser() {
+    return browser;
   }
 }

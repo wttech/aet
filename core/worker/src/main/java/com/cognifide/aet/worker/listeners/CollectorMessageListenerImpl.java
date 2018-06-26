@@ -93,7 +93,7 @@ public class CollectorMessageListenerImpl extends AbstractTaskMessageListener {
           name, collectorJobData.getUrls().size(), correlationId, requestMessageId);
       WebCommunicationWrapper webCommunicationWrapper = null;
       int collected = 0;
-      String preferredWebDriver = collectorJobData.getWebDriverId();
+      String preferredWebDriver = collectorJobData.getPreferredBrowserId();
       try {
         if (isProxyUsed(collectorJobData.getProxy())) {
           webCommunicationWrapper = this.webDriverProvider

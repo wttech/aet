@@ -36,7 +36,7 @@ public class Test {
   private String useProxy;
 
   @Attribute(required = false)
-  private String webDriverId;
+  private String browser;
 
   @Element
   private Collect collect;
@@ -50,7 +50,7 @@ public class Test {
   public TestRun adaptToTestRun() throws ParseException {
     try {
       TestRun result = new TestRun(collect.adaptToCollectorSteps(), compare.adaptToComparatorsSteps(),
-          ModelConverterUtils.extendUrlsList(urls), name, useProxy, webDriverId);
+          ModelConverterUtils.extendUrlsList(urls), name, useProxy, browser);
       return result;
     } catch (ParseException | UnsupportedEncodingException e) {
       throw new ParseException(

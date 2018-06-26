@@ -20,6 +20,7 @@ import com.cognifide.aet.job.api.exceptions.ProxyException;
 import com.cognifide.aet.proxy.ProxyServerProvider;
 import com.cognifide.aet.worker.api.WebDriverFactory;
 import com.cognifide.aet.worker.exceptions.WorkerException;
+import com.google.common.base.Joiner;
 import com.google.common.collect.Maps;
 import java.util.Map;
 import org.apache.felix.scr.annotations.Activate;
@@ -96,7 +97,9 @@ public class WebDriverProvider {
     String id = preferredWebDriver == null ? defaultWebDriverName : preferredWebDriver;
     webDriverFactory = collectorFactories.get(id);
     if (webDriverFactory == null) {
-      throw new WorkerException("Undefined WebDriver " + id);
+      String webDrivers = Joiner.on(", ").join(collectorFactories.keySet());
+      String errorMessage = String.format("Undefined WebDriver: '%s'. Available: %s", id, webDrivers);
+      throw new WorkerException(errorMessage);
     }
     return webDriverFactory;
   }
