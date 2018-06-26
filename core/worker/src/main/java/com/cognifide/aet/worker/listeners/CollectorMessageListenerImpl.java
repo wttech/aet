@@ -110,6 +110,12 @@ public class CollectorMessageListenerImpl extends AbstractTaskMessageListener {
               "Couldn't process following url `%s` because of error: %s", url.getUrl(),
               e.getMessage());
           LOGGER.error(errorMessage, e);
+          // updates all steps with worker exception
+          for (final Step step : url.getSteps()) {
+            CollectorStepResult result = CollectorStepResult.newProcessingErrorResult(errorMessage);
+            step.setStepResult(result);
+          }
+          // updates feedback queue
           CollectorResultData collectorResultData = CollectorResultData.createErrorResult(
               url, ProcessingError.collectingError(errorMessage), requestMessageId,
               collectorJobData.getTestName());
