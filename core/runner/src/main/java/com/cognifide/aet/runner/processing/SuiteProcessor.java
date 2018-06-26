@@ -56,11 +56,11 @@ class SuiteProcessor {
     this.messagesSender = messagesSender;
     this.timeoutWatch = new TimeoutWatch();
     timer = ExecutionTimer.createAndRun("RUNNER");
-    collectDispatcher = suiteExecutionFactory.getCollectDispatcher(timeoutWatch, this.indexedSuite);
+    collectDispatcher = suiteExecutionFactory.newCollectDispatcher(timeoutWatch, this.indexedSuite);
     collectionResultsRouter = suiteExecutionFactory
-        .getCollectionResultsRouter(timeoutWatch, this.indexedSuite);
+        .newCollectionResultsRouter(timeoutWatch, this.indexedSuite);
     comparisonResultsRouter = suiteExecutionFactory
-        .getComparisonResultsRouter(timeoutWatch, this.indexedSuite);
+        .newComparisonResultsRouter(timeoutWatch, this.indexedSuite);
     collectionResultsRouter.addObserver(messagesSender);
     comparisonResultsRouter.addObserver(messagesSender);
     collectionResultsRouter.addChangeObserver(comparisonResultsRouter);

@@ -45,27 +45,27 @@ public class SuiteExecutionFactory {
   @Reference
   private JmsConnection jmsConnection;
 
-  public CollectDispatcher getCollectDispatcher(TimeoutWatch timeoutWatch,
+  CollectDispatcher newCollectDispatcher(TimeoutWatch timeoutWatch,
       SuiteIndexWrapper suite)
       throws JMSException {
     return new CollectDispatcher(timeoutWatch, jmsConnection, runnerConfiguration,
         collectorJobSchedulerService, suite);
   }
 
-  public CollectionResultsRouter getCollectionResultsRouter(TimeoutWatch timeoutWatch,
+  CollectionResultsRouter newCollectionResultsRouter(TimeoutWatch timeoutWatch,
       SuiteIndexWrapper suite)
       throws JMSException {
     return new CollectionResultsRouter(timeoutWatch, jmsConnection,
         runnerConfiguration, collectorJobSchedulerService, suite);
   }
 
-  public ComparisonResultsRouter getComparisonResultsRouter(TimeoutWatch timeoutWatch,
+  ComparisonResultsRouter newComparisonResultsRouter(TimeoutWatch timeoutWatch,
       SuiteIndexWrapper suite) throws JMSException {
     return new ComparisonResultsRouter(timeoutWatch, jmsConnection,
         runnerConfiguration, suite);
   }
 
-  public MessagesSender getMessagesSender(Destination jmsReplyTo) throws JMSException {
+  MessagesSender newMessagesSender(Destination jmsReplyTo) throws JMSException {
     return new MessagesSender(jmsReplyTo, jmsConnection);
   }
 }

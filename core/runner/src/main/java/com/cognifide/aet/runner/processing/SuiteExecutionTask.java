@@ -80,7 +80,7 @@ public class SuiteExecutionTask implements Callable<String> {
 
   private void init() throws JMSException {
     LOGGER.debug("Initializing suite processors {}", suite);
-    messagesSender = suiteExecutionFactory.getMessagesSender(jmsReplyTo);
+    messagesSender = suiteExecutionFactory.newMessagesSender(jmsReplyTo);
     suiteProcessor = new SuiteProcessor(suiteExecutionFactory, indexedSuite, runnerConfiguration,
         messagesSender);
   }
