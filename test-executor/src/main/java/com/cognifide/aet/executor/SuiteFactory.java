@@ -46,7 +46,7 @@ class SuiteFactory {
   }
 
   private Test testFromTestRun(TestSuiteRun testSuiteRun, TestRun testRun) {
-    Test test = new Test(testRun.getName(), testRun.getUseProxy());
+    Test test = new Test(testRun.getName(), testRun.getUseProxy(), testRun.getBrowser());
     final Map<String, List<ComparatorStep>> comparatorSteps = testRun.getComparatorSteps();
 
     for (ExtendedUrl extendedUrl : testRun.getUrls()) {

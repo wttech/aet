@@ -28,7 +28,7 @@ import java.util.Set;
  */
 public class TestRun implements Serializable {
 
-  private static final long serialVersionUID = 1453942700093647296L;
+  private static final long serialVersionUID = 1453942700093647211L;
 
   private final List<CollectorStep> collectorSteps;
 
@@ -40,6 +40,8 @@ public class TestRun implements Serializable {
 
   private final String useProxy;
 
+  private final String browser;
+
   /**
    * @param collectorSteps - list of collector steps.
    * @param comparatorSteps - set of comparison steps.
@@ -47,14 +49,16 @@ public class TestRun implements Serializable {
    * @param name - unique name of test.
    * @param useProxy - says what kind of proxy should be used, backward compatibility: set 'true' to
    * use 'rest' proxy, set 'false' to use none.
+   * @param browser - id of preferred browser or null if the default one should be used
    */
   public TestRun(List<CollectorStep> collectorSteps, Set<ComparatorStep> comparatorSteps,
-      List<ExtendedUrl> urls, String name, String useProxy) {
+      List<ExtendedUrl> urls, String name, String useProxy, String browser) {
     this.collectorSteps = collectorSteps;
     this.comparatorSteps = getMap(comparatorSteps);
     this.urls = urls;
     this.name = name;
     this.useProxy = useProxy;
+    this.browser = browser;
   }
 
   private Map<String, List<ComparatorStep>> getMap(Set<ComparatorStep> comparatorSteps) {
@@ -105,4 +109,10 @@ public class TestRun implements Serializable {
     return useProxy;
   }
 
+  /**
+   * @return id of preferred browser.
+   */
+  public String getBrowser() {
+    return browser;
+  }
 }

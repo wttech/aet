@@ -48,8 +48,6 @@ public class CollectorMessageListenerImpl extends AbstractTaskMessageListener {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(CollectorMessageListenerImpl.class);
 
-  private static final String WEB_DRIVER_NAME = "webDriverName";
-
   @Property(name = LISTENER_NAME, label = "Collector name", description = "Name of collector. Used in logs only", value = "Collector")
   private String name;
 
@@ -58,9 +56,6 @@ public class CollectorMessageListenerImpl extends AbstractTaskMessageListener {
 
   @Property(name = PRODUCER_QUEUE_NAME, label = "Producer queue name", value = "AET.collectorResults")
   private String producerQueueName;
-
-  @Property(name = WEB_DRIVER_NAME, label = "Web Driver name", value = "ff")
-  private String webDriverName;
 
   @Reference
   private JmsConnection jmsConnection;
@@ -74,7 +69,6 @@ public class CollectorMessageListenerImpl extends AbstractTaskMessageListener {
   @Activate
   void activate(Map<String, String> properties) {
     super.doActivate(properties);
-    webDriverName = properties.get(WEB_DRIVER_NAME);
   }
 
   @Deactivate
@@ -99,12 +93,13 @@ public class CollectorMessageListenerImpl extends AbstractTaskMessageListener {
           name, collectorJobData.getUrls().size(), correlationId, requestMessageId);
       WebCommunicationWrapper webCommunicationWrapper = null;
       int collected = 0;
+      String preferredWebDriver = collectorJobData.getPreferredBrowserId();
       try {
         if (isProxyUsed(collectorJobData.getProxy())) {
           webCommunicationWrapper = this.webDriverProvider
-              .createWebDriverWithProxy(webDriverName, collectorJobData.getProxy());
+              .createWebDriverWithProxy(preferredWebDriver, collectorJobData.getProxy());
         } else {
-          webCommunicationWrapper = this.webDriverProvider.createWebDriver(webDriverName);
+          webCommunicationWrapper = this.webDriverProvider.createWebDriver(preferredWebDriver);
         }
         collected = runUrls(collectorJobData, requestMessageId, webCommunicationWrapper,
             correlationId);
@@ -115,6 +110,12 @@ public class CollectorMessageListenerImpl extends AbstractTaskMessageListener {
               "Couldn't process following url `%s` because of error: %s", url.getUrl(),
               e.getMessage());
           LOGGER.error(errorMessage, e);
+          // updates all steps with worker exception
+          for (final Step step : url.getSteps()) {
+            CollectorStepResult result = CollectorStepResult.newProcessingErrorResult(errorMessage);
+            step.setStepResult(result);
+          }
+          // updates feedback queue
           CollectorResultData collectorResultData = CollectorResultData.createErrorResult(
               url, ProcessingError.collectingError(errorMessage), requestMessageId,
               collectorJobData.getTestName());

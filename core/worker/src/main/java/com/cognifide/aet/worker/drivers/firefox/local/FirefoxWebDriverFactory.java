@@ -13,23 +13,25 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.worker.drivers.firefox;
+package com.cognifide.aet.worker.drivers.firefox.local;
 
 import static com.cognifide.aet.worker.drivers.WebDriverHelper.NAME;
 import static com.cognifide.aet.worker.drivers.WebDriverHelper.NAME_LABEL;
 import static com.cognifide.aet.worker.drivers.WebDriverHelper.PATH;
 
+import com.cognifide.aet.worker.drivers.firefox.FirefoxCommunicationWrapperImpl;
+import com.cognifide.aet.worker.drivers.firefox.FirefoxProfileBuilder;
 import com.cognifide.aet.job.api.collector.HttpRequestExecutorFactory;
 import com.cognifide.aet.job.api.collector.ProxyServerWrapper;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.worker.api.WebDriverFactory;
 import com.cognifide.aet.worker.exceptions.WorkerException;
 import java.io.File;
-import java.io.IOException;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
+import org.apache.felix.scr.annotations.ConfigurationPolicy;
 import org.apache.felix.scr.annotations.Properties;
 import org.apache.felix.scr.annotations.Property;
 import org.apache.felix.scr.annotations.Reference;
@@ -44,7 +46,10 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.osgi.framework.Constants;
 
 @Service
-@Component(immediate = false, description = "AET Firefox WebDriver Factory", label = "AET Firefox WebDriver Factory", metatype = true)
+@Component(
+    description = "AET Firefox WebDriver Factory",
+    label = "AET Firefox WebDriver Factory",
+    metatype = true)
 @Properties({@Property(name = Constants.SERVICE_VENDOR, value = "Cognifide Ltd")})
 public class FirefoxWebDriverFactory implements WebDriverFactory {
 
@@ -114,7 +119,7 @@ public class FirefoxWebDriverFactory implements WebDriverFactory {
     }
   }
 
-  private FirefoxProfile getFirefoxProfile() throws IOException {
+  private FirefoxProfile getFirefoxProfile() {
     final FirefoxProfile firefoxProfile = FirefoxProfileBuilder.newInstance()
         .withUnstableAndFastLoadStrategy()
         .withLogfilePath(logFilePath)
@@ -149,7 +154,6 @@ public class FirefoxWebDriverFactory implements WebDriverFactory {
     this.path = PropertiesUtil.toString(properties.get(PATH), DEFAULT_FIREFOX_BINARY_PATH);
     this.logFilePath = PropertiesUtil
         .toString(properties.get(LOG_FILE_PATH), DEFAULT_FIREFOX_ERROR_LOG_FILE_PATH);
-
   }
 
 }

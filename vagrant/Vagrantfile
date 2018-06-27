@@ -24,7 +24,7 @@
 ENV["GEM_PATH"] = nil
 ENV["GEM_HOME"] = nil
 
-AET_VERSION = '2.1.6-new-karaf'
+AET_VERSION = '2.1.6-alpha01'
 
 VAGRANTFILE_API_VERSION = '2'
 
@@ -51,6 +51,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.network 'forwarded_port', guest: 11199, host: 11199
   # Mongo DB
   config.vm.network 'forwarded_port', guest: 27017, host: 27017
+  # Selenium Grid hub
+  config.vm.network 'forwarded_port', guest: 4444, host: 4444
 
   config.vm.provider 'virtualbox' do |v|
     v.memory = 6144
@@ -105,7 +107,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       "recipe[aet::xvfb]",
       "recipe[aet::tomcat]",
 # commented for now as we want to release a version without Selenium Grid
-#      "recipe[aet::seleniumgrid_hub]",
+      "recipe[aet::seleniumgrid_hub]",
 #      "recipe[aet::seleniumgrid_node_ff]",
       "recipe[aet::karaf]",
       "recipe[aet::deploy_aet_for_karaf]",
