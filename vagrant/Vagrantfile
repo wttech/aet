@@ -98,22 +98,22 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     }
     chef.run_list = [
       "recipe[aet::_develop]",
-# commented for now as we want to release a version without Selenium Grid
-      "recipe[aet::seleniumgrid_hub]",
-#      "recipe[aet::seleniumgrid_node_ff]",
-      "recipe[aet::karaf]",
-      "recipe[aet::deploy_aet_for_karaf]",
-      "recipe[aet::postdeploy_restart]",
-      "recipe[aet::apache]",
-      "recipe[aet::deploy_reports]",
-      "recipe[aet::tomcat]",
-      "recipe[aet::deploy_sample_site]",
       "recipe[aet::display]",
+      "recipe[aet::apache]",
       "recipe[aet::mongo]",
       "recipe[aet::activemq]",
       "recipe[aet::browsermob]",
       "recipe[aet::firefox]",
       "recipe[aet::xvfb]",
+      "recipe[aet::tomcat]",
+# commented for now as we want to release a version without Selenium Grid
+      "recipe[aet::seleniumgrid_hub]",
+#      "recipe[aet::seleniumgrid_node_ff]",
+      "recipe[aet::karaf]",
+      "recipe[aet::deploy_aet_for_karaf]",
+      "recipe[aet::deploy_reports]",
+      "recipe[aet::deploy_sample_site]",
+      "recipe[aet::postdeploy_restart]",
       "recipe[aet::reboot]"
     ]
   end
