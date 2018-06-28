@@ -32,11 +32,11 @@ public class FirefoxProfileBuilder {
     firefoxProfile = new FirefoxProfile();
   }
 
-  static FirefoxProfileBuilder newInstance() {
+  public static FirefoxProfileBuilder newInstance() {
     return new FirefoxProfileBuilder();
   }
 
-  FirefoxProfileBuilder withJavaScriptErrorCollectorPlugin() {
+  public FirefoxProfileBuilder withJavaScriptErrorCollectorPlugin() {
     try {
       JavaScriptError.addExtension(firefoxProfile);
     } catch (IOException e) {
@@ -45,34 +45,34 @@ public class FirefoxProfileBuilder {
     return this;
   }
 
-  FirefoxProfileBuilder withUnstableAndFastLoadStrategy() {
+  public FirefoxProfileBuilder withUnstableAndFastLoadStrategy() {
     firefoxProfile.setPreference("webdriver.load.strategy", "unstable");
     return this;
   }
 
 
-  FirefoxProfileBuilder withLogfilePath(String logfilePath) {
+  public FirefoxProfileBuilder withLogfilePath(String logfilePath) {
     firefoxProfile.setPreference("webdriver.firefox.logfile", logfilePath);
     return this;
   }
 
-  FirefoxProfileBuilder withFlashSwitchedOff() {
+  public FirefoxProfileBuilder withFlashSwitchedOff() {
     firefoxProfile.setPreference("plugin.state.flash", 0);
     return this;
   }
 
-  FirefoxProfileBuilder withDevtoolsStorageEnabled() {
+  public FirefoxProfileBuilder withDevtoolsStorageEnabled() {
     firefoxProfile.setPreference("devtools.storage.enabled", true);
     return this;
   }
 
-  FirefoxProfileBuilder withAllCookiesAccepted() {
+  public FirefoxProfileBuilder withAllCookiesAccepted() {
     firefoxProfile.setPreference("network.cookie.cookieBehavior", 0);
     firefoxProfile.setPreference("network.cookie.alwaysAcceptSessionCookies", true);
     return this;
   }
 
-  FirefoxProfileBuilder withRandomPort() {
+  public FirefoxProfileBuilder withRandomPort() {
     firefoxProfile
         .setPreference(FirefoxProfile.PORT_PREFERENCE, new Random().nextInt(64510) + 1024);
     return this;
@@ -96,17 +96,17 @@ public class FirefoxProfileBuilder {
    * The possible settings are: 0 = default, 1 = aliased, 2 = GDI Classic, 3 = GDI Natural, 4 =
    * Natural, 5 = Natural Symmetric
    */
-  FirefoxProfileBuilder withForcedAliasing() {
+  public FirefoxProfileBuilder withForcedAliasing() {
     firefoxProfile.setPreference("gfx.font_rendering.cleartype_params.rendering_mode", 0);
     return this;
   }
 
-  FirefoxProfileBuilder withUpdateDisabled() {
+  public FirefoxProfileBuilder withUpdateDisabled() {
     firefoxProfile.setPreference("app.update.enabled", false);
     return this;
   }
 
-  FirefoxProfile build() {
+  public FirefoxProfile build() {
     return firefoxProfile;
   }
 }

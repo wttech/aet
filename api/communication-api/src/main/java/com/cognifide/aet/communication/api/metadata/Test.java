@@ -25,12 +25,14 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class Test implements Serializable, Commentable, Named {
 
-  private static final long serialVersionUID = -220660503633061512L;
+  private static final long serialVersionUID = -220660503633061510L;
 
   @NotBlank
   private final String name;
 
   private final String proxy;
+
+  private final String preferredBrowserId;
 
   private String comment;
 
@@ -38,9 +40,15 @@ public class Test implements Serializable, Commentable, Named {
   @NotNull(message = "Test must have at least one url")
   private final Set<Url> urls = new HashSet<>();
 
-  public Test(String name, String proxy) {
+  /**
+   * @param name - name of a test
+   * @param proxy - type of the proxy if it should be used
+   * @param preferredBrowserId - id of preferred browser or null if the default one should be used
+   */
+  public Test(String name, String proxy, String preferredBrowserId) {
     this.name = name;
     this.proxy = proxy;
+    this.preferredBrowserId = preferredBrowserId;
   }
 
   /**
@@ -69,6 +77,10 @@ public class Test implements Serializable, Commentable, Named {
 
   public String getProxy() {
     return proxy;
+  }
+
+  public String getPreferredBrowserId() {
+    return preferredBrowserId;
   }
 
   @Override

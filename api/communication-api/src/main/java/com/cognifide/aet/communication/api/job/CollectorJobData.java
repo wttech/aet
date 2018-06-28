@@ -24,11 +24,13 @@ import java.util.List;
  */
 public class CollectorJobData extends JobData {
 
-  private static final long serialVersionUID = -1868453529026678407L;
+  private static final long serialVersionUID = -1868453529026678404L;
 
   private final List<Url> urls;
 
   private final String proxy;
+
+  private final String preferredBrowserId;
 
   /**
    * @param company - company name.
@@ -37,13 +39,15 @@ public class CollectorJobData extends JobData {
    * @param testName - test name.
    * @param urls - list of urls for collector job.
    * @param proxy - used proxy name or null if none proxy is used
+   * @param preferredBrowserId - id of preferred browser or null if the default one should be used
    */
   public CollectorJobData(String company, String project, String suiteName, String testName,
       List<Url> urls,
-      String proxy) {
+      String proxy, String preferredBrowserId) {
     super(company, project, suiteName, testName);
     this.urls = urls;
     this.proxy = proxy;
+    this.preferredBrowserId = preferredBrowserId;
   }
 
   /**
@@ -55,5 +59,9 @@ public class CollectorJobData extends JobData {
 
   public String getProxy() {
     return proxy;
+  }
+
+  public String getPreferredBrowserId() {
+    return preferredBrowserId;
   }
 }
