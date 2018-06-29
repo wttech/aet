@@ -88,7 +88,6 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         }
       },
       "aet" => {
-        "base_link" => "https://www.kubiczak.pl/aet",
         "karaf" => {
           "java_max_mem" => "3072M",
           "enable_debug" => true
