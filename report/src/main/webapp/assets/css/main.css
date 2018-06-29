@@ -3857,13 +3857,13 @@ table { border-collapse: collapse; border-spacing: 0; }
 /* line 143, ../sass/_typography.scss */
 .name { font-style: italic; }
 
-/* line 61, ../../../../../../../../../../soft/programming/compilers-interpreters/Ruby233/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+/* line 61, C:/Users/Dende/AppData/Local/chefdk/gem/ruby/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]:-moz-placeholder { color: #85898e; }
-/* line 64, ../../../../../../../../../../soft/programming/compilers-interpreters/Ruby233/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+/* line 64, C:/Users/Dende/AppData/Local/chefdk/gem/ruby/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]::-moz-placeholder { color: #85898e; }
-/* line 67, ../../../../../../../../../../soft/programming/compilers-interpreters/Ruby233/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+/* line 67, C:/Users/Dende/AppData/Local/chefdk/gem/ruby/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]:-ms-input-placeholder { color: #85898e; }
-/* line 56, ../../../../../../../../../../soft/programming/compilers-interpreters/Ruby233/lib/ruby/gems/2.3.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
+/* line 56, C:/Users/Dende/AppData/Local/chefdk/gem/ruby/2.4.0/gems/compass-core-1.0.3/stylesheets/compass/css3/_user-interface.scss */
 input[type=text]::-webkit-input-placeholder { color: #85898e; }
 
 /* AET  Copyright (C) 2013 Cognifide Limited  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */
@@ -4154,134 +4154,134 @@ input[type=text]::-webkit-input-placeholder { color: #85898e; }
 /* line 27, ../sass/_test.scss */
 .tab-content-toolbar { -webkit-transition: left, 0.3s; -o-transition: left, 0.3s; transition: left, 0.3s; width: calc(100% + 50px); height: 47px; margin: 0 -25px 10px -25px; background: #f9f9f9; border: solid #dcdce5; border-width: 1px 0; z-index: 1; }
 /* line 37, ../sass/_test.scss */
-.tab-content-toolbar-header { font-family: "montserratlight", sans-serif; color: #77777c; font-size: 11px; display: inline-block; padding: 0 20px; line-height: 30px; border-right: solid 1px #dcdce5; margin-top: 5px; }
+.tab-content-toolbar-header { font-family: "montserratlight", sans-serif; color: #77777c; font-size: 11px; display: inline-block; padding: 0 20px; line-height: 31px; height: 31px; margin: 8px 0; vertical-align: middle; border-right: solid 1px #dcdce5; }
 
-/* line 49, ../sass/_test.scss */
-.checkboxes-inline { display: inline-block; margin: 0 0 20px 11px; }
-/* line 53, ../sass/_test.scss */
-.checkboxes-inline .checkbox { display: inline-block; margin-bottom: 20px; }
+/* line 51, ../sass/_test.scss */
+.checkboxes-inline { display: inline-block; margin: 0; height: 20px; vertical-align: middle; }
+/* line 57, ../sass/_test.scss */
+.checkboxes-inline .checkbox { display: inline-block; margin: 0; height: 20px; }
 
-/* line 59, ../sass/_test.scss */
+/* line 64, ../sass/_test.scss */
 .checkbox { position: relative; width: 150px; }
-/* line 63, ../sass/_test.scss */
-.checkbox label { cursor: pointer; position: absolute; width: 18px; height: 18px; left: 4px; top: 4px; background: #ffffff; border: solid 1px #000000; }
-/* line 73, ../sass/_test.scss */
-.checkbox label span { position: absolute; width: 150px; left: 30px; }
-/* line 79, ../sass/_test.scss */
+/* line 68, ../sass/_test.scss */
+.checkbox label { position: relative; cursor: pointer; width: 18px; height: 18px; background: #ffffff; border: solid 1px #000000; margin-left: 4px; }
+/* line 77, ../sass/_test.scss */
+.checkbox label span { position: absolute; width: 120px; left: 30px; }
+/* line 83, ../sass/_test.scss */
 .checkbox label:after { opacity: 0; content: ''; top: 2px; left: 3px; position: absolute; width: 14px; height: 14px; background: #0097fe; }
-/* line 91, ../sass/_test.scss */
+/* line 95, ../sass/_test.scss */
 .checkbox input[type=checkbox] { opacity: 0; }
-/* line 94, ../sass/_test.scss */
+/* line 98, ../sass/_test.scss */
 .checkbox input[type=checkbox]:checked + label:after { opacity: 1; }
 
 /* Nav tabs
 */
-/* line 105, ../sass/_test.scss */
+/* line 109, ../sass/_test.scss */
 .menu-expanded .tabs { left: 370px; width: calc(100% - 370px); padding-left: 0; }
 
-/* line 112, ../sass/_test.scss */
+/* line 116, ../sass/_test.scss */
 .tabs { -webkit-transition: left, 0.3s; -o-transition: left, 0.3s; transition: left, 0.3s; display: table; background: #ffffff; position: fixed; left: 20px; top: 124px; width: 100%; z-index: 5; }
 
-/* line 125, ../sass/_test.scss */
+/* line 129, ../sass/_test.scss */
 .menu-expanded .nav-tabs-wrapper { width: calc(100vw - 400px); max-width: none; padding-right: 100px; }
 
-/* line 132, ../sass/_test.scss */
+/* line 136, ../sass/_test.scss */
 .nav-tabs-wrapper { max-width: calc(100% - 100px); padding-right: 30px; overflow: auto; position: relative; }
 
-/* line 139, ../sass/_test.scss */
+/* line 143, ../sass/_test.scss */
 .navbar-controls { position: absolute; right: 20px; top: -9px; }
 
 /* Layout comparison
 */
-/* line 149, ../sass/_test.scss */
+/* line 153, ../sass/_test.scss */
 .layout-compare-item { position: relative; width: 50%; text-align: center; padding: 0 15px; }
-/* line 155, ../sass/_test.scss */
+/* line 159, ../sass/_test.scss */
 .layout-compare-item .mask-container { position: relative; }
-/* line 160, ../sass/_test.scss */
+/* line 164, ../sass/_test.scss */
 .layout-compare-item .mask-container:hover .mask { display: none !important; }
-/* line 166, ../sass/_test.scss */
+/* line 170, ../sass/_test.scss */
 .layout-compare-item .mask { position: absolute; top: 0; display: none; -webkit-filter: drop-shadow(5px 5px 5px #222); filter: drop-shadow(5px 5px 5px #222); }
-/* line 173, ../sass/_test.scss */
+/* line 177, ../sass/_test.scss */
 .layout-compare-item .mask.is-visible { display: block; }
-/* line 180, ../sass/_test.scss */
+/* line 184, ../sass/_test.scss */
 .layout-compare-description { padding: 10px 0; font-size: 20px; color: #85898e; }
 
 /* Source codes
 */
-/* line 190, ../sass/_test.scss */
+/* line 194, ../sass/_test.scss */
 .diff-report table { table-layout: fixed; }
-/* line 193, ../sass/_test.scss */
-.diff-report table thead { position: relative; display: block; }
 /* line 197, ../sass/_test.scss */
+.diff-report table thead { position: relative; display: block; }
+/* line 201, ../sass/_test.scss */
 .diff-report table tbody { white-space: nowrap; font-size: 11px; display: block; height: 500px; overflow: auto; }
-/* line 207, ../sass/_test.scss */
+/* line 211, ../sass/_test.scss */
 .diff-report table.table-w3c thead { border: 1px solid #ddd; }
-/* line 209, ../sass/_test.scss */
+/* line 213, ../sass/_test.scss */
 .diff-report table.table-w3c thead th { border-bottom: 0 none; }
-/* line 217, ../sass/_test.scss */
+/* line 221, ../sass/_test.scss */
 .diff-report table.table-w3c th.num, .diff-report table.table-w3c td.num { width: 50px; display: block; }
-/* line 223, ../sass/_test.scss */
-.diff-report table.table-w3c td.code { white-space: normal; }
 /* line 227, ../sass/_test.scss */
+.diff-report table.table-w3c td.code { white-space: normal; }
+/* line 231, ../sass/_test.scss */
 .diff-report table.table-w3c tbody { height: auto; font-size: 14px; }
-/* line 235, ../sass/_test.scss */
-.diff-report table th.num { min-width: 50px; }
 /* line 239, ../sass/_test.scss */
+.diff-report table th.num { min-width: 50px; }
+/* line 243, ../sass/_test.scss */
 .diff-report table th.code { width: 100%; }
-/* line 244, ../sass/_test.scss */
-.diff-report table td.code { min-width: 100px; white-space: pre-wrap; }
 /* line 248, ../sass/_test.scss */
+.diff-report table td.code { min-width: 100px; white-space: pre-wrap; }
+/* line 252, ../sass/_test.scss */
 .diff-report table td.code.code { width: 100%; }
-/* line 251, ../sass/_test.scss */
-.diff-report table td.code.code p { margin: 0; }
 /* line 255, ../sass/_test.scss */
+.diff-report table td.code.code p { margin: 0; }
+/* line 259, ../sass/_test.scss */
 .diff-report table td.code.code span, .diff-report table td.code.code small { white-space: normal; }
-/* line 261, ../sass/_test.scss */
+/* line 265, ../sass/_test.scss */
 .diff-report table td.code.num { min-width: 50px; }
 
-/* line 267, ../sass/_test.scss */
+/* line 271, ../sass/_test.scss */
 .w3c-error { white-space: nowrap; }
-/* line 270, ../sass/_test.scss */
+/* line 274, ../sass/_test.scss */
 .w3c-error span, .w3c-error mark { padding: 0; }
 
-/* line 278, ../sass/_test.scss */
-tr.no-change { background: #ffffff; }
 /* line 282, ../sass/_test.scss */
+tr.no-change { background: #ffffff; }
+/* line 286, ../sass/_test.scss */
 tr.insert, tr.info, tr.notice { background: #d9edf7; }
-/* line 288, ../sass/_test.scss */
-tr.change { background: #fcf8e3; }
 /* line 292, ../sass/_test.scss */
-tr.warn { background: #faf2cc; }
+tr.change { background: #fcf8e3; }
 /* line 296, ../sass/_test.scss */
+tr.warn { background: #faf2cc; }
+/* line 300, ../sass/_test.scss */
 tr.delete, tr.err, tr.error { background: #f2dede; }
-/* line 302, ../sass/_test.scss */
+/* line 306, ../sass/_test.scss */
 tr.divider-row { font-weight: 700; background-color: #f9f9f9; }
 
-/* line 310, ../sass/_test.scss */
-.tab-content .tab-pane { display: none; }
 /* line 314, ../sass/_test.scss */
+.tab-content .tab-pane { display: none; }
+/* line 318, ../sass/_test.scss */
 .tab-content .active { display: block; }
 
 /* performance table
 */
-/* line 323, ../sass/_test.scss */
+/* line 327, ../sass/_test.scss */
 .performance-table { margin-top: 0; }
-/* line 326, ../sass/_test.scss */
-.performance-table .nav-tabs { width: 400px; float: left; }
 /* line 330, ../sass/_test.scss */
+.performance-table .nav-tabs { width: 400px; float: left; }
+/* line 334, ../sass/_test.scss */
 .performance-table .nav-tabs li { display: block; float: none; }
 
-/* line 337, ../sass/_test.scss */
+/* line 341, ../sass/_test.scss */
 .tab-content-performance { margin-top: 0; }
 
-/* line 341, ../sass/_test.scss */
+/* line 345, ../sass/_test.scss */
 .links-list { margin-top: 10px; padding-top: 10px; border-top: solid 1px #dcdce5; }
-/* line 346, ../sass/_test.scss */
+/* line 350, ../sass/_test.scss */
 .links-list a { display: block; color: #77777c; }
 
-/* line 355, ../sass/_test.scss */
-.label-A { background-color: #5cb85c !important; }
 /* line 359, ../sass/_test.scss */
+.label-A { background-color: #5cb85c !important; }
+/* line 363, ../sass/_test.scss */
 .label-F { background-color: #d9534f !important; }
 
 /* AET  Copyright (C) 2013 Cognifide Limited  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at  http://www.apache.org/licenses/LICENSE-2.0  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License. */
@@ -4397,86 +4397,130 @@ ul li.warning a.nav-link, ul li.warning a.nav-link:focus, ul li.warning a.nav-li
 /* line 56, ../sass/_filterInfo.scss */
 .filterInfo-value { color: #85898e; }
 
-/* line 32, ../sass/main.scss */
+/* line 1, ../sass/_newComparison.scss */
+.layout-compare { position: relative; }
+
+/* line 5, ../sass/_newComparison.scss */
+.customMasks, .difs { position: absolute; top: 0; box-sizing: content-box; left: 50%; transform: translate(-50%, 0); }
+
+/* line 13, ../sass/_newComparison.scss */
+.try-new { display: inline-block; vertical-align: middle; }
+
+/* line 18, ../sass/_newComparison.scss */
+.customMask { box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.3) !important; /* required to overwrite * { box-shadow: none !important; } */ position: absolute; width: 48%; z-index: 1; pointer-events: none; box-sizing: content-box; }
+
+/* line 27, ../sass/_newComparison.scss */
+.maskBtop, .maskBbot { left: 52%; }
+
+/* line 31, ../sass/_newComparison.scss */
+.canvas-wrapper { max-width: 80%; margin: 0 auto; text-align: center; box-sizing: content-box; }
+
+/* line 38, ../sass/_newComparison.scss */
+.canvas-wrapper canvas { max-width: 48%; vertical-align: top; box-sizing: content-box; }
+
+/* line 44, ../sass/_newComparison.scss */
+.canvas-wrapper canvas + canvas { margin-left: 4%; }
+
+/* line 48, ../sass/_newComparison.scss */
+.difs canvas { width: 48%; position: absolute; top: 0; left: 0; background: rgba(0, 255, 255, 0.1); box-sizing: content-box; }
+
+/* line 57, ../sass/_newComparison.scss */
+.difs canvas.hover { background: transparent; animation: blink 0.6s infinite; }
+
+@keyframes blink { 0% { opacity: 0; }
+  49% { opacity: 0; }
+  50% { opacity: 1; } }
+/* line 68, ../sass/_newComparison.scss */
+.customLabel { display: none; position: absolute; right: 100%; left: auto; height: 20px; font: bold 16px/20px Arial; margin: -20px 4px 0; background: red; color: white; padding: 10px 20px 10px 15px; cursor: default; pointer-events: none; box-sizing: content-box; }
+/* line 83, ../sass/_newComparison.scss */
+.customLabel.labelB { left: 100%; right: auto; }
+
+/* line 89, ../sass/_newComparison.scss */
+.ruller { position: absolute; top: 50%; left: -4px; right: auto; width: 5px; background: red; transform: translate(0, -50%); min-height: 1px; box-sizing: content-box; }
+
+/* line 101, ../sass/_newComparison.scss */
+.labelA .ruller { left: auto; right: -4px; }
+
+/* line 33, ../sass/main.scss */
 html, body { height: 100%; }
 
-/* line 37, ../sass/main.scss */
+/* line 38, ../sass/main.scss */
 body { overflow-y: scroll; overflow-x: hidden; }
-/* line 40, ../sass/main.scss */
+/* line 41, ../sass/main.scss */
 body.modal-open { overflow-y: scroll; padding-right: 0 !important; }
 
-/* line 46, ../sass/main.scss */
+/* line 47, ../sass/main.scss */
 * { box-sizing: border-box; box-shadow: none !important; }
-/* line 50, ../sass/main.scss */
+/* line 51, ../sass/main.scss */
 *:hover, *:focus, *:active { outline: none; box-shadow: none; }
 
-/* line 56, ../sass/main.scss */
+/* line 57, ../sass/main.scss */
 a { -webkit-transition: color 0.3s; -o-transition: color 0.3s; transition: color 0.3s; }
-/* line 59, ../sass/main.scss */
+/* line 60, ../sass/main.scss */
 a:hover, a:focus, a:active { text-decoration: none; }
 
-/* line 64, ../sass/main.scss */
+/* line 65, ../sass/main.scss */
 body { color: #333333; font-family: "montserratregular", sans-serif; }
 
-/* line 69, ../sass/main.scss */
+/* line 70, ../sass/main.scss */
 .main { -webkit-transition: left 0.1s, width 0.1s; -o-transition: left 0.1s, width 0.1s; transition: left 0.1s, width 0.1s; position: relative; width: 100%; left: 0; }
-/* line 75, ../sass/main.scss */
+/* line 76, ../sass/main.scss */
 .menu-expanded .main { left: 350px; width: calc(100% - 350px); }
 
-/* line 81, ../sass/main.scss */
+/* line 82, ../sass/main.scss */
 .page-main { z-index: 1; width: 100%; float: left; padding: 0 25px; }
 
-/* line 88, ../sass/main.scss */
+/* line 89, ../sass/main.scss */
 .is-hidden { display: none !important; }
 
-/* line 92, ../sass/main.scss */
+/* line 93, ../sass/main.scss */
 .is-disabled { pointer-events: none; opacity: 0.5; cursor: not-allowed !important; }
 
-/* line 98, ../sass/main.scss */
+/* line 99, ../sass/main.scss */
 .screen-cover { background-repeat: no-repeat; background-position: center center; position: absolute; left: 0; width: 100%; opacity: 1; height: 100vh; }
-/* line 107, ../sass/main.scss */
+/* line 108, ../sass/main.scss */
 .screen-cover.js-loader-app { top: 0; height: 100%; z-index: 999; background-color: #2c333b; background-image: url(../img/tail-spin-light.svg); }
-/* line 115, ../sass/main.scss */
+/* line 116, ../sass/main.scss */
 .screen-cover.data-loading-error { top: 0; height: 100%; z-index: 999; background-color: #000000; }
-/* line 123, ../sass/main.scss */
+/* line 124, ../sass/main.scss */
 .menu-expanded .screen-cover.js-loader-content { width: calc(100vw - 365px); }
-/* line 128, ../sass/main.scss */
+/* line 129, ../sass/main.scss */
 .screen-cover h1 { color: #ffffff; text-align: center; }
-/* line 133, ../sass/main.scss */
+/* line 134, ../sass/main.scss */
 .screen-cover p { color: #ffffff; text-align: center; }
 
-/* line 140, ../sass/main.scss */
+/* line 141, ../sass/main.scss */
 .status { font-weight: bold; display: inline !important; }
-/* line 143, ../sass/main.scss */
+/* line 144, ../sass/main.scss */
 .status.failed { color: #bb5a5a !important; }
-/* line 147, ../sass/main.scss */
+/* line 148, ../sass/main.scss */
 .status.warning { color: #f0ad4e !important; }
-/* line 151, ../sass/main.scss */
+/* line 152, ../sass/main.scss */
 .status.rebased { color: #0097fe !important; }
-/* line 155, ../sass/main.scss */
+/* line 156, ../sass/main.scss */
 .status.passed { color: #6f9f00 !important; }
 
-/* line 160, ../sass/main.scss */
+/* line 161, ../sass/main.scss */
 .url-tile { text-align: center; word-break: break-all; }
-/* line 164, ../sass/main.scss */
+/* line 165, ../sass/main.scss */
 .url-tile.passed { color: #6f9f00; }
-/* line 168, ../sass/main.scss */
+/* line 169, ../sass/main.scss */
 .url-tile.rebased { color: #0097fe; }
-/* line 170, ../sass/main.scss */
+/* line 171, ../sass/main.scss */
 .url-tile.rebased span, .url-tile.rebased svg { color: #ffffff; }
-/* line 175, ../sass/main.scss */
+/* line 176, ../sass/main.scss */
 .url-tile.warning { color: #f0ad4e; }
-/* line 179, ../sass/main.scss */
+/* line 180, ../sass/main.scss */
 .url-tile.failed { color: #bb5a5a; }
-/* line 183, ../sass/main.scss */
+/* line 184, ../sass/main.scss */
 .url-tile .statistics { color: #77777c !important; }
-/* line 187, ../sass/main.scss */
+/* line 188, ../sass/main.scss */
 .url-tile .name { font-family: "montserratbold", sans-serif; font-size: 18px; }
 
-/* line 194, ../sass/main.scss */
+/* line 195, ../sass/main.scss */
 .fontawesome-link { cursor: pointer; display: inline; position: relative; }
 
-/* line 201, ../sass/main.scss */
+/* line 202, ../sass/main.scss */
 .popover { max-width: none; }
-/* line 204, ../sass/main.scss */
+/* line 205, ../sass/main.scss */
 .popover-title { font-weight: 700; }

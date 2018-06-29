@@ -25,6 +25,7 @@ define(['angularAMD',
   'jquery',
   'bootstrap',
   'snowfall',
+  'newComparison',
   // components
   'hidePopoversDirective',
   'keyboardShortcutsDirective',
