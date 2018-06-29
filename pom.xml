@@ -167,12 +167,6 @@
         <scope>provided</scope>
       </dependency>
       <dependency>
-        <groupId>com.google.inject</groupId>
-        <artifactId>guice</artifactId>
-        <version>3.0</version>
-        <scope>provided</scope>
-      </dependency>
-      <dependency>
         <groupId>org.apache.activemq</groupId>
         <artifactId>activemq-osgi</artifactId>
         <version>5.13.1</version>
@@ -351,12 +345,6 @@
         <scope>provided</scope>
       </dependency>
       <dependency>
-        <groupId>com.google.inject.extensions</groupId>
-        <artifactId>guice-assistedinject</artifactId>
-        <version>3.0</version>
-        <scope>provided</scope>
-      </dependency>
-      <dependency>
         <groupId>org.simpleframework</groupId>
         <artifactId>simple-xml</artifactId>
         <version>2.7.1</version>
@@ -510,12 +498,6 @@
         <groupId>xmlunit</groupId>
         <artifactId>xmlunit</artifactId>
         <version>1.2</version>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>com.google.guiceberry</groupId>
-        <artifactId>guiceberry</artifactId>
-        <version>3.1.0</version>
         <scope>test</scope>
       </dependency>
       <dependency>
