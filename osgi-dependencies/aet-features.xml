@@ -114,7 +114,7 @@
         <bundle>wrap:mvn:org.simpleframework/simple-xml/2.7.1</bundle>
 
         <!--GRID FS bundles-->
-        <bundle>mvn:org.mongodb/mongo-java-driver/3.2.2</bundle>
+        <bundle>mvn:org.mongodb/mongo-java-driver/3.8.0</bundle>
         <bundle>mvn:commons-beanutils/commons-beanutils/1.9.2</bundle>
         <!--GRID FS bundles-->
     </feature>

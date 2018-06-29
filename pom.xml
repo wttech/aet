@@ -285,7 +285,7 @@
       <dependency>
         <groupId>org.mongodb</groupId>
         <artifactId>mongo-java-driver</artifactId>
-        <version>3.2.2</version>
+        <version>3.8.0</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
