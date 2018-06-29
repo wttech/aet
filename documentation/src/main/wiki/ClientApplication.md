@@ -31,6 +31,7 @@ mvn aet:run -DtestSuite=FULL_PATH_TO_TEST_SUITE
 | --------- | ----------- | ------------- | --------- |
 | `testSuite` | The full path to the suite definition file (at least a file name with an extension, e.g. `testSuite.xml`).| suite.xml | no |
 | `endpointDomain` | the URL to the main AET domain | http://localhost:8181 | no |
+| `name` | Overrides the *name* parameter value from the test suite definition. | - | no |
 | `domain` | Overrides the *domain* parameter value from the test suite definition. | - | no |
 | `timeout` | Milliseconds to detect the timeout since the last status received from AET. This is useful to abort the test run if there is no activity for a long time. | 300000 (5 minutes) | no |
 | `pattern` | Id of suite that will be used as patterns source. Identical structure of pattern and current suites is assumed. | - | no |
@@ -53,6 +54,13 @@ If all URLs in your test suite point to a single domain, you can specify it so i
 ```
 mvn aet:run -DtestSuite=suite.xml -Ddomain=https://en.wikipedia.org
 ```
+
+
+If the same suite is being used to test multiple environments, you can specify the name correlated with the execution output. When the patterns *are not being shared* across multiple environments but the suite definition is the same, you may override the name, that is typically placed in the suite XML. For example:
+```
+mvn aet:run -DtestSuite=suite.xml -Dname=env-integration-suite
+```
+
 
 If you want the test run to fail if its run takes too much time, you can specify the timeout (in milliseconds) in the following way:
 ```
