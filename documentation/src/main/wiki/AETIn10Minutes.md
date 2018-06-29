@@ -8,19 +8,19 @@ Before start make sure that you have enough memory on your machine (8 GB is mini
 You need to download and install the following software:
    * [VirtualBox 5.1.30](https://www.virtualbox.org/wiki/Download_Old_Builds_5_1)
    * [Vagrant 1.9.2](https://releases.hashicorp.com/vagrant/)
-   * [ChefDK 1.1.16](https://downloads.chef.io/chef-dk/)
+   * [ChefDK 2.4.17](https://downloads.chef.io/chef-dk/)
    * [Maven](https://maven.apache.org/download.cgi) (at least version 3.0.4)
    * [JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
    * [Chrome browser](https://www.google.com/chrome/browser/desktop/) to view reports
 
 ### Set Up Vagrant
 
-Open a command prompt as the administrator and execute the following commands:
+Open a command prompt **as the administrator** and execute the following commands:
 * `vagrant plugin install vagrant-omnibus`
 * `vagrant plugin install vagrant-berkshelf`
 * `vagrant plugin install vagrant-hostmanager`
 
-Navigate to the `vagrant` module directory. Run `berks install` and then `vagrant up` to start the virtual machine. This process may take a few minutes.
+Clone the AET source code and navigate to the `vagrant` module directory. Run `berks install` and then `vagrant up` to start the virtual machine. This process may take a few minutes.
 
 ### Set Up the Test
 
@@ -72,7 +72,7 @@ Then create another file named `pom.xml` with the following content:
     <url>http://www.example.com</url>
 
     <properties>
-        <aet.version>2.1.2</aet.version>
+        <aet.version>2.1.5</aet.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 
@@ -114,7 +114,7 @@ mvn clean install -P upload
 ```
 
 #### Upload Vagrant Prequisities:
-In order to be able to deploy bundles to the Karaf instance define the location of the vagrant vm in your `setting.xml` file (`$USER_HOME/m2`):
+In order to be able to deploy bundles to the Karaf instance define the location of the vagrant vm in your `settings.xml` file (`$USER_HOME/.m2`):
 ```
 <server>
   <id>aet-vagrant-instance</id>
