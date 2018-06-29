@@ -34,12 +34,8 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <runSuite>**/CucumberSuite.java</runSuite>
+    <bobcat.version>1.4.0</bobcat.version>
 
-    <bobcat.version>1.2.1</bobcat.version>
-    <!-- there were some errors while trying to use version 1.2.4, do NOT upgrade -->
-    <cucumber.version>1.2.3</cucumber.version>
-
-    <!-- we are using newer version here as Bobcat needs JAVA 1.8 -->
     <source.java.version>1.8</source.java.version>
   </properties>
 
