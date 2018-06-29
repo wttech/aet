@@ -13,6 +13,7 @@ All notable changes to AET will be documented in this file.
 - [PR-260](https://github.com/Cognifide/aet/pull/260) Upgrade to Karaf 4.2.0
 - [PR-261](https://github.com/Cognifide/aet/pull/261) AET artifacts folders watched for new files
 - [PR-265](https://github.com/Cognifide/aet/pull/265) Runner simplification refactor
+- [PR-268](https://github.com/Cognifide/aet/pull/268) Bobcat upgrade to version 1.4.0
 
 ## Version 2.1.5
 
