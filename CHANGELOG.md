@@ -15,7 +15,9 @@ All notable changes to AET will be documented in this file.
 
 - [PR-260](https://github.com/Cognifide/aet/pull/260) Upgrade to Karaf 4.2.0
 - [PR-261](https://github.com/Cognifide/aet/pull/261) AET artifacts folders watched for new files
+- [PR-264](https://github.com/Cognifide/aet/pull/264) Few changes for Selenium grid support
 - [PR-265](https://github.com/Cognifide/aet/pull/265) Runner simplification refactor
+- [PR-267](https://github.com/Cognifide/aet/pull/267) Guice removed from project dependencies
 
 ## Version 2.1.5
 
