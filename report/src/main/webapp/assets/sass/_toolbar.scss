@@ -218,6 +218,17 @@
   }
 }
 
+.create-issue-button {
+  width: auto;
+  font-size: 24px;
+  line-height: 44px;
+  padding: 0 10px;
+
+  a {
+    color: $grayish;
+  }
+}
+
 .tab-content-toolbar {
 
   @media (max-width: 1300px) {
