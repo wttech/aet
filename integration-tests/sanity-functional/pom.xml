@@ -34,7 +34,6 @@
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
     <runSuite>**/CucumberSuite.java</runSuite>
-    <configuration.paths>src/main/config</configuration.paths>
 
     <bobcat.version>1.2.1</bobcat.version>
     <!-- there were some errors while trying to use version 1.2.4, do NOT upgrade -->
@@ -240,9 +239,6 @@
           <execution>
             <id>default-test</id>
             <configuration>
-              <systemPropertyVariables>
-                <configuration.paths>${configuration.paths}</configuration.paths>
-              </systemPropertyVariables>
               <includes>
                 <include>${runSuite}</include>
               </includes>
