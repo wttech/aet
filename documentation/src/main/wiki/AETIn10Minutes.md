@@ -20,7 +20,7 @@ Open a command prompt **as the administrator** and execute the following command
 * `vagrant plugin install vagrant-berkshelf`
 * `vagrant plugin install vagrant-hostmanager`
 
-Clone the AET source code and navigate to the `vagrant` module directory. Run `berks install` and then `vagrant up` to start the virtual machine. This process may take a few minutes.
+Download or clone (`git clone git@github.com:Cognifide/aet.git`) the AET source code and navigate to the `vagrant` module directory. Run `berks install` and then `vagrant up` to start the virtual machine. This process may take a few minutes.
 
 ### Set Up the Test
 
