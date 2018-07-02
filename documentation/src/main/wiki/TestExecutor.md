@@ -20,7 +20,9 @@ Base path for both endpoints:
 * **HTTP Method**: POST
 * **Parameters**:
     * `suite` - xml file containing the suite definition,
-    * `domain` - overrides domain specified in the suite xml file.
+    * `domain` - overrides domain specified in the suite xml file
+    * `pattern` - id of suite that will be used as patterns source
+    * `name` - overrides the *name* parameter value from the sute xml file
 * **Description**: Executes test suite provided as a parameter. The request's content type has to be `multipart/form-data`.
 
 ###### Response
