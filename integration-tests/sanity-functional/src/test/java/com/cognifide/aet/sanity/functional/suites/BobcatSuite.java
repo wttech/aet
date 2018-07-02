@@ -15,11 +15,15 @@
  */
 package com.cognifide.aet.sanity.functional.suites;
 
+import com.cognifide.aet.sanity.functional.GuiceModule;
 import com.cognifide.aet.sanity.functional.HomePageTilesTest;
+import com.cognifide.qa.bb.junit.Modules;
+import com.cognifide.qa.bb.junit.concurrent.ConcurrentSuite;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-@RunWith(Suite.class)
+@Modules(GuiceModule.class)
+@RunWith(ConcurrentSuite.class)
 @Suite.SuiteClasses({HomePageTilesTest.class})
 public class BobcatSuite {
 
