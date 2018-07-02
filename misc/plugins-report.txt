@@ -1,14 +1,11 @@
 
 The following plugin updates are available:
-  org.apache.felix:maven-bundle-plugin ................. 2.4.0 -> 3.2.0
-  org.apache.felix:maven-scr-plugin .................. 1.15.0 -> 1.22.0
-  org.codehaus.mojo:build-helper-maven-plugin ............ 1.11 -> 1.12
-  org.eclipse.jetty:jetty-maven-plugin ... 9.2.10.v20150310 -> 9.4.0.M0
+  org.eclipse.jetty:jetty-maven-plugin  9.2.10.v20150310 -> 9.4.11.v20180605
 
 
 Project defines minimum Maven version as: 3.1.0
 Plugins require minimum Maven version of: 3.1.0
-Note: the super-pom from Maven 3.3.9 defines some of the plugin
+Note: the super-pom from Maven 3.5.4 defines some of the plugin
       versions and may be influencing the plugins required minimum Maven
       version.
 
