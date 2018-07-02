@@ -38,6 +38,9 @@ public class RunTestSuiteMojo extends AbstractMojo {
   @Parameter(property = "endpointDomain", defaultValue = "http://localhost:8181")
   private String endpointDomain;
 
+  @Parameter(property = "name")
+  private String name;
+
   @Parameter(property = "domain")
   private String domain;
 
@@ -58,7 +61,7 @@ public class RunTestSuiteMojo extends AbstractMojo {
     validateConfiguration();
     try {
       TestSuiteRunner testSuiteRunner = new TestSuiteRunner(endpointDomain,
-          mavenProject.getBuild().getDirectory(), timeout, domain, pattern, xUnit);
+          mavenProject.getBuild().getDirectory(), timeout, name, domain, pattern, xUnit);
       testSuiteRunner.runTestSuite(testSuite);
 
     } catch (AETException e) {
