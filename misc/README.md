@@ -10,3 +10,10 @@ Used to store miscellaneous files, e.g.:
 
 - mongodb maintenance scripts
 - images
+
+### Versions report
+
+In order to generate current report for versions specified in top-level `pom.xml`
+execute following command in AET root module:
+
+    mvn clean validate -Pversions
