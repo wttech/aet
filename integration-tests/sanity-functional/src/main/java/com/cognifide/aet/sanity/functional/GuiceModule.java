@@ -23,6 +23,9 @@ public class GuiceModule extends AbstractModule {
 
   @Override
   protected void configure() {
+    if (System.getProperty("configuration.paths") == null) {
+      System.setProperty("configuration.paths", "src/main/resources/config/dev;src/main/resources/config/common");
+    }
     install(new CoreModule());
     install(new ReporterModule());
   }

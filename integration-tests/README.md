@@ -40,7 +40,14 @@ Bobcat tests for AET reports web application.
 Prerequisities:
 
 * AET instance running
-* sample test suite: `test-suite` executed against `sample-site` site.
-Report should be available at `report.url`
-(please configured it in `src/main/config/instance.properties` file).
+* Sample test suite: `test-suite` already executed against `sample-site` site.
+Functional tests expect the report at URL specified by `report.url` property.
+By default the URL is [http://aet-vagrant/report.html?company=aet&project=aet&suite=main](http://aet-vagrant/report.html?company=aet&project=aet&suite=main)
+It may be changed it in `.../config/dev/instance.properties` file.
+* Chrome browser installed
+* Selenium [Chromedriver] available at *D:/Selenium/chromedriver.exe*.
+This path can be changed at command-line with `-Dwebdriver.chrome.driver=<path>`
+or in `.../config/common/webdriver.properties` file.
 
+
+[Chromedriver]: https://sites.google.com/a/chromium.org/chromedriver/
