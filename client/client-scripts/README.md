@@ -17,10 +17,14 @@ AET Test executor
 
 Usage:
 
-	./aet.sh <endpoint> [<suite_file_name>] [-i | --interval <POLL_INTERVAL>]
+	./aet.sh <endpoint> [<suite_file_name>] [options]
 
 Options:
-	-i --interval <POLL_INTERVAL>  - Set interval in seconds for polling suite status. Default interval : 1 sec
+	-d --domain <DOMAIN>                 - Override domain attribute defined in suite file
+	-c --correlationId <CORRELATION_ID>  - Set id of patterns to run test against
+	-i --interval <POLL_INTERVAL>        - Set interval in seconds for polling suite status. Default interval : 1 sec
+	-w --waitForUnlock <TIMEOUT>         - Set timeout for the script to wait for unlocked suite. Default timeout: 0 sec
+	-v --verbose                         - Make it more descriptive
 ```
 
 ### Prerequisites
