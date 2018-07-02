@@ -10,10 +10,11 @@ AET Test executor
 
 Usage:
 
-	./aet.sh <endpoint> [<suite_file_name>] [-i | --interval <POLL_INTERVAL>]
+	./aet.sh <endpoint> [<suite_file_name>] [options]
 
 Options:
 	-d --domain <DOMAIN>                 - Override domain attribute defined in suite file
+	-n --name <SUITE_NAME>               - Override name attribute defined in suite file
 	-c --correlationId <CORRELATION_ID>  - Set id of patterns to run test against
 	-i --interval <POLL_INTERVAL>        - Set interval in seconds for polling suite status. Default interval : 1 sec
 	-w --waitForUnlock <TIMEOUT>         - Set timeout for the script to wait for unlocked suite. Default timeout: 0 sec
@@ -31,6 +32,7 @@ The shell script can be run with parameters which are described below:
 | `endpointDomain` | an AET domain which exposes the [[Test Executor API\|TestExecutor]] | - | yes |
 | `suite_file_name` | a full path to the suite definition file (at least a file name with an extension is required, e.g. `testSuite.xml`). | suite.xml | no |
 | `-d \| --domain <DOMAIN>` | overrides the _domain_ parameter value from the test suite definition. | - | no |
+| `-n \| --name <SUITE_NAME>` | overrides the _name_ parameter value from the test suite definition. | - | no |
 | `-c \| --correlationId <CORRELATION_ID>` | Id of suite that will be used as patterns source. Identical structure of pattern and current suites is assumed. | - | no |
 | `-i \| --interval <POLL_INTERVAL>` | an interval of polling the status of the test currently executed. (Unit: seconds) | 1 | no |
 | `-w \| --waitForUnlock <TIMEOUT>` | specify the time that the script will wait for the suite to be unlocked.  (Unit: seconds) | 0 | no |
