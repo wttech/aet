@@ -56,6 +56,6 @@ The Root element for the xml definition, each test suite definition consists of 
 | `name` | Name of the test suite. It should contain lowercase letters, digits and/or characters: `-`, `_` only. | yes |
 | `company` | Name of the company. It should contain lowercase letters, digits and/or characters: `-` only.| yes |
 | `project` | Name of the project. It should contain lowercase letters, digits and/or characters: `-` only.| yes |
-| `domain` | General domain name consistent for all urls considered. Every url link is built as a concatenation of the *domain* name and the *href* attribute of it. If the `domain` property is not set, then the `href` value in the `url` definition should contain a full valid url. See more in the [Urls](../Urls) section. | no |
+| `domain` | General domain name consistent for all urls considered. Every url link is built as a concatenation of the *domain* name and the *href* attribute of it. If the `domain` property is not set, then the `href` value in the `url` definition should contain a full valid url. See more in the [[Urls]] section. | no |
 
 The `suite` element contains one or more **[[test|SuiteStructure#test]]** elements.
