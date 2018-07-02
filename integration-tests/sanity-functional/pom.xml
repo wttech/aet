@@ -33,26 +33,14 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-    <runSuite>**/CucumberSuite.java</runSuite>
-    <configuration.paths>src/main/config</configuration.paths>
+    <runSuite>**/CucumberSuite.java,**/BobcatSuite.java</runSuite>
+    <bobcat.version>1.4.0</bobcat.version>
 
-    <bobcat.version>1.2.1</bobcat.version>
-    <!-- there were some errors while trying to use version 1.2.4, do NOT upgrade -->
-    <cucumber.version>1.2.3</cucumber.version>
-
-    <!-- we are using newer version here as Bobcat needs JAVA 1.8 -->
     <source.java.version>1.8</source.java.version>
   </properties>
 
   <dependencyManagement>
     <dependencies>
-      <!-- junit scope needs to be overwritten for steps definition -->
-      <dependency>
-        <groupId>junit</groupId>
-        <artifactId>junit</artifactId>
-        <version>4.11</version>
-        <scope>compile</scope>
-      </dependency>
       <!-- functional-tests (bobcat and cucumber need compile scope) -->
       <dependency>
         <groupId>com.cognifide.qa.bb</groupId>
@@ -70,19 +58,9 @@
         <version>${bobcat.version}</version>
       </dependency>
       <dependency>
-        <groupId>info.cukes</groupId>
-        <artifactId>cucumber-java</artifactId>
-        <version>${cucumber.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>info.cukes</groupId>
-        <artifactId>cucumber-junit</artifactId>
-        <version>${cucumber.version}</version>
-      </dependency>
-      <dependency>
-        <groupId>info.cukes</groupId>
-        <artifactId>cucumber-guice</artifactId>
-        <version>${cucumber.version}</version>
+        <groupId>com.cognifide.qa.bb</groupId>
+        <artifactId>bb-cumber</artifactId>
+        <version>${bobcat.version}</version>
       </dependency>
     </dependencies>
   </dependencyManagement>
@@ -100,19 +78,9 @@
       <groupId>com.cognifide.qa.bb</groupId>
       <artifactId>bb-reports</artifactId>
     </dependency>
-
-    <!-- cucumber -->
     <dependency>
-      <groupId>info.cukes</groupId>
-      <artifactId>cucumber-java</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>info.cukes</groupId>
-      <artifactId>cucumber-junit</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>info.cukes</groupId>
-      <artifactId>cucumber-guice</artifactId>
+      <groupId>com.cognifide.qa.bb</groupId>
+      <artifactId>bb-cumber</artifactId>
     </dependency>
   </dependencies>
 
@@ -240,9 +208,6 @@
           <execution>
             <id>default-test</id>
             <configuration>
-              <systemPropertyVariables>
-                <configuration.paths>${configuration.paths}</configuration.paths>
-              </systemPropertyVariables>
               <includes>
                 <include>${runSuite}</include>
               </includes>
