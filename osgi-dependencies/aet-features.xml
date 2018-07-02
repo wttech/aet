@@ -60,19 +60,6 @@
         <bundle>mvn:org.apache.felix/org.apache.felix.http.servlet-api/1.1.2</bundle>
     </feature>
 
-    <feature name="aet-guice" version="0.6.0" description="Bundles for Guice" install="auto">
-
-        <bundle>wrap:mvn:javax.inject/javax.inject/1</bundle>
-
-        <!-- required by guice-servlet -->
-        <bundle>mvn:org.apache.felix/org.apache.felix.http.servlet-api/1.1.2</bundle>
-
-        <bundle>mvn:com.google.inject/guice/3.0</bundle>
-        <bundle>mvn:com.google.inject.extensions/guice-assistedinject/3.0</bundle>
-        <bundle>mvn:com.google.inject.extensions/guice-servlet/3.0</bundle>
-    </feature>
-
-
     <feature name="aet-jackson" version="0.6.0" description="Bundles for Jackson" install="auto">
 
         <bundle>mvn:javax.ws.rs/javax.ws.rs-api/2.1</bundle>
