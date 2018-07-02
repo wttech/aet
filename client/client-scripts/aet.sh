@@ -21,6 +21,7 @@ POLL_INTERVAL=1
 UNLOCK_TIMEOUT=0
 SUITE_ENDPOINT="/suite"
 DOMAIN_BODY=""
+SUITE_NAME_BODY=""
 CORRELATION_ID_BODY=""
 function usage {
     echo
@@ -32,6 +33,7 @@ function usage {
     echo
     echo "Options:"
     echo -e "\t-d --domain <DOMAIN>                 - Override domain attribute defined in suite file"
+    echo -e "\t-n --name <SUITE_NAME>               - Override name attribute defined in suite file"
     echo -e "\t-c --correlationId <CORRELATION_ID>  - Set id of patterns to run test against."
     echo -e "\t-i --interval <POLL_INTERVAL>        - Set interval in seconds for polling suite status. Default interval : 1 sec."
     echo -e "\t-w --waitForUnlock <TIMEOUT>         - Set timeout for the script to wait for unlocked suite. Default timeout: 0 sec."
@@ -85,7 +87,7 @@ function process_locked_suite {
 
 # request /suite endpoint
 function start_suite {
-  run_response=$(curl -sw "%{http_code}" -F "suite=@$suite_file_name"$DOMAIN_BODY$CORRELATION_ID_BODY "$endpoint$SUITE_ENDPOINT")
+  run_response=$(curl -sw "%{http_code}" -F "suite=@$suite_file_name"$DOMAIN_BODY$SUITE_NAME_BODY$CORRELATION_ID_BODY "$endpoint$SUITE_ENDPOINT")
   extract_code_and_body "$run_response"
 
   if [ $code -eq 200 ]; then
@@ -119,6 +121,11 @@ while [[ $# -gt 0 ]]; do
             DOMAIN_BODY=" -F domain=$DOMAIN"
             shift 2
             ;;
+        -n | --name )
+            SUITE_NAME="$2"
+            SUITE_NAME_BODY=" -F name=$SUITE_NAME"
+            shift 2
+            ;;
         -c | --correlationId )
             CORRELATION_ID=$2
             CORRELATION_ID_BODY=" -F pattern=$CORRELATION_ID"
@@ -136,10 +143,11 @@ done
 
 if [[ $VERBOSE -eq 1 ]]; then
   echo -e "Test parameters:"
-  echo -e "\tAET endpoint:        $endpoint$SUITE_ENDPOINT"
-  echo -e "\tSuite:               $suite_file_name"
-  echo -e "\tOverridden domain:   ${DOMAIN-not set}"
-  echo -e "\tPattern id:          ${CORRELATION_ID-not set}"
+  echo -e "\tAET endpoint:          $endpoint$SUITE_ENDPOINT"
+  echo -e "\tSuite:                 $suite_file_name"
+  echo -e "\tOverridden domain:     ${DOMAIN-not set}"
+  echo -e "\tOverridden suite name: ${SUITE_NAME-not set}"
+  echo -e "\tPattern id:            ${CORRELATION_ID-not set}"
   echo ""
 fi
 
