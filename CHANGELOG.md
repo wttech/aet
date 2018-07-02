@@ -12,6 +12,7 @@ All notable changes to AET will be documented in this file.
 
 - [PR-271](https://github.com/Cognifide/aet/pull/271) Added possibility to override name parameter from the aet client
 - [PR-268](https://github.com/Cognifide/aet/pull/268) Bobcat upgrade to version 1.4.0
+- [PR-279](https://github.com/Cognifide/aet/pull/279) Upgrade for some of libraries used by AET
 
 ## Version 2.1.6
 
