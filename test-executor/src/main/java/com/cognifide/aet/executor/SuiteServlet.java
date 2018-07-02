@@ -53,6 +53,7 @@ public class SuiteServlet extends HttpServlet {
   private static final Logger LOGGER = LoggerFactory.getLogger(SuiteServlet.class);
   private static final String SERVLET_PATH = "/suite";
   private static final String SUITE_PARAM = "suite";
+  private static final String NAME_PARAM = "name";
   private static final String DOMAIN_PARAM = "domain";
   private static final String PATTERN_PARAM = "pattern";
 
@@ -74,12 +75,13 @@ public class SuiteServlet extends HttpServlet {
     if (ServletFileUpload.isMultipartContent(request)) {
       Map<String, String> requestData = getRequestData(request);
       final String suite = requestData.get(SUITE_PARAM);
+      final String name = requestData.get(NAME_PARAM);
       final String domain = requestData.get(DOMAIN_PARAM);
       final String pattern = requestData.get(PATTERN_PARAM);
 
       if (StringUtils.isNotBlank(suite)) {
         HttpSuiteExecutionResultWrapper resultWrapper = suiteExecutor
-            .execute(suite, domain, pattern);
+            .execute(suite, name, domain, pattern);
         final SuiteExecutionResult suiteExecutionResult = resultWrapper.getExecutionResult();
         Gson gson = new Gson();
 

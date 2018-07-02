@@ -130,14 +130,15 @@ public class SuiteExecutor {
    * patterns source
    * @return status of the suite execution
    */
-  HttpSuiteExecutionResultWrapper execute(String suiteString, String domain, String pattern) {
+  HttpSuiteExecutionResultWrapper execute(String suiteString, String name, String domain,
+      String pattern) {
     SuiteRunner suiteRunner = null;
     HttpSuiteExecutionResultWrapper result;
 
     TestSuiteParser xmlFileParser = new XmlTestSuiteParser();
     try {
       TestSuiteRun testSuiteRun = xmlFileParser.parse(suiteString);
-      testSuiteRun = overrideDomainIfDefined(testSuiteRun, domain);
+      testSuiteRun = overrideDomainOrNameIfDefined(testSuiteRun, name, domain);
       testSuiteRun.setPatternCorrelationId(pattern);
 
       String validationError = suiteValidator.validateTestSuiteRun(testSuiteRun);
@@ -204,11 +205,15 @@ public class SuiteExecutor {
     return result;
   }
 
-  private TestSuiteRun overrideDomainIfDefined(TestSuiteRun testSuiteRun, String domain) {
+  private TestSuiteRun overrideDomainOrNameIfDefined(TestSuiteRun testSuiteRun, String name,
+      String domain) {
     TestSuiteRun localTestSuiteRun = testSuiteRun;
-    if (StringUtils.isNotBlank(domain)) {
+    if (StringUtils.isNotBlank(name) || StringUtils.isNotBlank(domain)) {
       List<TestRun> tests = Lists.newArrayList(localTestSuiteRun.getTestRunMap().values());
-      localTestSuiteRun = new TestSuiteRun(localTestSuiteRun, domain, tests);
+      String overriddenName = StringUtils.defaultString(name, localTestSuiteRun.getName());
+      String overridenDomain = StringUtils.defaultString(domain, localTestSuiteRun.getDomain());
+      localTestSuiteRun = new TestSuiteRun(localTestSuiteRun, overriddenName, overridenDomain,
+          tests);
     }
     return localTestSuiteRun;
   }

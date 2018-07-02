@@ -64,8 +64,8 @@ public class TestSuiteRun implements Serializable {
     this.testRunMap = getMap(testRunList);
   }
 
-  public TestSuiteRun(TestSuiteRun testSuiteRun, String domain, List<TestRun> tests) {
-    this.name = testSuiteRun.getName();
+  public TestSuiteRun(TestSuiteRun testSuiteRun, String name, String domain, List<TestRun> tests) {
+    this.name = name;
     this.company = testSuiteRun.getCompany();
     this.project = testSuiteRun.getProject();
     this.domain = domain;
@@ -142,9 +142,11 @@ public class TestSuiteRun implements Serializable {
 
   @Override
   public String toString() {
-    return MoreObjects.toStringHelper(this).add("name", name).add("company", company)
-        .add("project", project)
-        .add("domain", domain).add("correlationId", correlationId)
+    return MoreObjects.toStringHelper(this)
+        .add("name", name) //
+        .add("company", company) //
+        .add("project", project) //
+        .add("domain", domain).add("correlationId", correlationId) //
         .add("version", version).toString();
   }
 
