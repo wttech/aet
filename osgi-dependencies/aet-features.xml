@@ -80,6 +80,10 @@
         <bundle>mvn:org.apache.sling/org.apache.sling.commons.osgi/2.2.2</bundle>
     </feature>
 
+    <feature name="aet-diff-match-patch" version="0.6.0" description="Diff, Match and Patch libraries for Plain Text" install="auto">
+        <bundle>wrap:mvn:com.googlecode.java-diff-utils/diffutils/1.3.0</bundle>
+    </feature>
+
     <feature name="aet-dependencies" version="0.6.0" description="Additional libraries needed by AET" install="auto">
 
         <bundle>wrap:mvn:org.apache.ant/ant/1.8.2</bundle>
@@ -100,7 +104,6 @@
         <bundle>wrap:mvn:org.reflections/reflections/0.9.8</bundle>
         <bundle>wrap:mvn:org.w3c.css/sac/1.3</bundle>
         <bundle>wrap:mvn:org.jsoup/jsoup/1.11.3</bundle>
-        <bundle>wrap:mvn:com.googlecode.java-diff-utils/diffutils/1.2.1</bundle>
         <bundle>wrap:mvn:org.apache.httpcomponents/fluent-hc/4.5.5</bundle>
         <bundle>mvn:org.apache.servicemix.bundles/org.apache.servicemix.bundles.quartz/2.3.0_2</bundle>
         <bundle>mvn:org.apache.camel/camel-core/2.21.1</bundle>
