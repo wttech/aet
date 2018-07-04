@@ -18,6 +18,7 @@ package com.cognifide.aet.runner;
 import java.util.Map;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
+import org.apache.felix.scr.annotations.ConfigurationPolicy;
 import org.apache.felix.scr.annotations.Property;
 import org.apache.felix.scr.annotations.Service;
 import org.apache.sling.commons.osgi.PropertiesUtil;
@@ -29,7 +30,7 @@ import org.slf4j.LoggerFactory;
  * between workers. This class contains all necessary configuration for the runner bundle.
  */
 @Service(RunnerConfiguration.class)
-@Component(metatype = true, description = "AET Runner Configuration", label = "AET Runner Configuration")
+@Component(metatype = true, description = "AET Runner Configuration", label = "AET Runner Configuration", policy = ConfigurationPolicy.REQUIRE)
 public class RunnerConfiguration {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(RunnerConfiguration.class);
