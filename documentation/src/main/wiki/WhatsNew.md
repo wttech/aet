@@ -1,13 +1,32 @@
+Here are notes that summarize the most important changes in AET from the user and admin perspective.
+To see the full list of changes, please refer to [CHANGELOG](https://github.com/Cognifide/aet/blob/master/CHANGELOG.md).
+
 ### `master` branch version (not released yet)
+#### Suite XML re-use option
+Added possibility to pass additional argument with suite XML file - `name`.
+Thanks to that you may re-use the same XML file to run different suites
+(e.g. have patterns collected separately for each environment but maintain only single suite XML file).
+
+### Version 2.1.6
+#### Karaf upgrade
+Karaf was upgraded to 4.2.0 version. Please remember to upgrade your Karaf instance if you upgrade to aet 2.1.6 or above.
+
+#### Selenium Grid
+Selenium Grid support is currently in beta test. You may use it already on your developer instances to check how it works.
+It enables working with Chrome (please remember that not all AET features are supported there yet!). See more details in [PR-264](https://github.com/Cognifide/aet/pull/264).
+
+### Version 2.1.5
+#### Selenium and Guava has been upgraded to current versions
+[Selenium](http://www.seleniumhq.org/download) has been upgraded to 3.8.1.
+[Guava](https://github.com/google/guava) has been upgraded to 23.6-jre. 
+We've kept compatibility with currently supported Firefox version - 38.6.0.
 
 #### Instructions updated for new cookbook version
 New Cookbook version 2.0.0 introduces changes in AET setup.
-[Linux and Windows Setup][LinuxAndWindowsSetup] instructions were updated to reflect those changes.
+[[Linux and Windows Setup|LinuxAndWindowsSetup]] instructions were updated to reflect those changes.
 
-#### Selenium and Guava has been upgraded to current versions
-[Selenium](http://www.seleniumhq.org/download) has been upgraded to 3.8.1. 
-[Guava](https://github.com/google/guava) has been upgraded to 23.6-jre. 
-We've kept compatibility with currently supported Firefox version - 38.6.0. 
+#### Report UX
+Multiple report UX fixes and improvements.
 
 ### Version 2.1.4
 #### Virtualbox version
