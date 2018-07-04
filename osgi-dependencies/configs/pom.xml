@@ -34,8 +34,8 @@
   <description>AET OSGI configurations</description>
 
   <properties>
-    <!-- property used for skipping configs uploads for non-vagrant environments -->
-    <skip.config.upload>false</skip.config.upload>
+    <!-- property used for skipping configs uploads for non-vagrant environments, override to `none` if you want to skip configs upload -->
+    <skip.config.upload.phase>install</skip.config.upload.phase>
   </properties>
 
   <build>
@@ -98,13 +98,12 @@
               </execution>
               <execution>
                 <id>upload-osgi-configs</id>
-                <phase>install</phase>
+                <phase>${skip.config.upload.phase}</phase>
                 <goals>
                   <goal>upload</goal>
                 </goals>
                 <configuration>
                   <!-- property used for skipping configs uploads for non-vagrant environments -->
-                  <skip>${skip.config.upload}</skip>
                   <fromDir>${project.basedir}/src/main/resources</fromDir>
                   <includes>**</includes>
                   <!--
