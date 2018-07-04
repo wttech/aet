@@ -120,9 +120,5 @@ In order to be able to deploy bundles to the Karaf instance define the location 
   <id>aet-vagrant-instance</id>
   <username>developer</username>
   <password>developer</password>
-  <configuration>
-    <sshExecutable>plink</sshExecutable>
-    <scpExecutable>pscp</scpExecutable>
-  </configuration>
 </server>
 ```
