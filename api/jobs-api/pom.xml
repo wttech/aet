@@ -51,10 +51,6 @@
 
     <!-- will be wrapped by Karaf, see aet-features.xml file -->
     <dependency>
-      <groupId>org.reflections</groupId>
-      <artifactId>reflections</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>fluent-hc</artifactId>
     </dependency>
