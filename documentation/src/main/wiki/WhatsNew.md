@@ -7,6 +7,10 @@ Added possibility to pass additional argument with suite XML file - `name`.
 Thanks to that you may re-use the same XML file to run different suites
 (e.g. have patterns collected separately for each environment but maintain only single suite XML file).
 
+#### Dependencies upgrade
+We have updated some of AET dependencies to the newer versions. If you are a developer and install `master` branch version on you AET instance
+please make sure to update your `settings.xml` file according to [[this guide|AETIn10Minutes#upload-vagrant-prequisities.
+
 ### Version 2.1.6
 #### Karaf upgrade
 Karaf was upgraded to 4.2.0 version. Please remember to upgrade your Karaf instance if you upgrade to aet 2.1.6 or above.
