@@ -157,19 +157,19 @@
       <dependency>
         <groupId>com.google.guava</groupId>
         <artifactId>guava</artifactId>
-        <version>23.6-jre</version>
+        <version>25.1-jre</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-lang3</artifactId>
-        <version>3.3.2</version>
+        <version>3.7</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
         <groupId>org.apache.activemq</groupId>
         <artifactId>activemq-osgi</artifactId>
-        <version>5.13.1</version>
+        <version>5.15.2</version>
         <scope>provided</scope>
       </dependency>
 
@@ -195,7 +195,7 @@
       <dependency>
         <groupId>org.apache.felix</groupId>
         <artifactId>org.apache.felix.configadmin</artifactId>
-        <version>1.6.0</version>
+        <version>1.8.16</version>
         <scope>provided</scope>
       </dependency>
 
@@ -237,7 +237,7 @@
       <dependency>
         <groupId>org.jboss.logging</groupId>
         <artifactId>jboss-logging</artifactId>
-        <version>3.1.0.GA</version>
+        <version>3.3.2.Final</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
@@ -249,43 +249,43 @@
       <dependency>
         <groupId>org.apache.servicemix.bundles</groupId>
         <artifactId>org.apache.servicemix.bundles.quartz</artifactId>
-        <version>2.1.7_1</version>
+        <version>2.3.0_2</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
         <groupId>org.apache.camel</groupId>
         <artifactId>camel-core</artifactId>
-        <version>2.17.0</version>
+        <version>2.21.1</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
         <groupId>joda-time</groupId>
         <artifactId>joda-time</artifactId>
-        <version>2.9.3</version>
+        <version>2.10</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
         <groupId>commons-codec</groupId>
         <artifactId>commons-codec</artifactId>
-        <version>1.8</version>
+        <version>1.11</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
         <groupId>commons-fileupload</groupId>
         <artifactId>commons-fileupload</artifactId>
-        <version>1.3.2</version>
+        <version>1.3.3</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
         <groupId>commons-io</groupId>
         <artifactId>commons-io</artifactId>
-        <version>2.4</version>
+        <version>2.6</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
         <groupId>org.mongodb</groupId>
         <artifactId>mongo-java-driver</artifactId>
-        <version>3.2.2</version>
+        <version>3.8.0</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
@@ -297,7 +297,7 @@
       <dependency>
         <groupId>org.json</groupId>
         <artifactId>json</artifactId>
-        <version>20160212</version>
+        <version>20180130</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
@@ -323,19 +323,19 @@
       <dependency>
         <groupId>org.apache.httpcomponents</groupId>
         <artifactId>fluent-hc</artifactId>
-        <version>4.3.4</version>
+        <version>4.5.5</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
         <groupId>com.google.code.gson</groupId>
         <artifactId>gson</artifactId>
-        <version>2.6.1</version>
+        <version>2.8.5</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
         <groupId>org.jsoup</groupId>
         <artifactId>jsoup</artifactId>
-        <version>1.8.1</version>
+        <version>1.11.3</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
@@ -491,7 +491,7 @@
       <dependency>
         <groupId>com.googlecode.zohhak</groupId>
         <artifactId>zohhak</artifactId>
-        <version>1.0.2</version>
+        <version>1.1.1</version>
         <scope>test</scope>
       </dependency>
       <dependency>
@@ -561,7 +561,7 @@
       <dependency>
         <groupId>com.google.code.findbugs</groupId>
         <artifactId>jsr305</artifactId>
-        <version>3.0.1</version>
+        <version>3.0.2</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
@@ -604,12 +604,12 @@
             <dependency>
               <groupId>org.codehaus.mojo</groupId>
               <artifactId>extra-enforcer-rules</artifactId>
-              <version>1.0-beta-4</version>
+              <version>1.0-beta-9</version>
             </dependency>
             <dependency>
               <groupId>com.github.ferstl</groupId>
               <artifactId>pedantic-pom-enforcers</artifactId>
-              <version>1.2.0</version>
+              <version>1.3.1</version>
             </dependency>
           </dependencies>
         </plugin>
@@ -746,6 +746,11 @@
                 <fromFile>
                   ${project.build.directory}/${project.build.finalName}.${finalName.extension}
                 </fromFile>
+                <!--
+                  on Karaf we want to have jar files without versions in filename
+                  see https://github.com/Cognifide/aet/issues/248
+                -->
+                <toFile>${project.groupId}.${project.artifactId}.${finalName.extension}</toFile>
                 <!--
                     please configure credentials for ${vm.serverId}
                     in your settings.xml file
