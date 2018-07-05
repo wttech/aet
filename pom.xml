@@ -741,6 +741,11 @@
                   ${project.build.directory}/${project.build.finalName}.${finalName.extension}
                 </fromFile>
                 <!--
+                  on Karaf we want to have jar files without versions in filename
+                  see https://github.com/Cognifide/aet/issues/248
+                -->
+                <toFile>${project.groupId}.${project.artifactId}.${finalName.extension}</toFile>
+                <!--
                     please configure credentials for ${vm.serverId}
                     in your settings.xml file
                 -->
