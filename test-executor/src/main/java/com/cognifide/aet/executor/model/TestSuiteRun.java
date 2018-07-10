@@ -45,6 +45,8 @@ public class TestSuiteRun implements Serializable {
 
   private String patternCorrelationId;
 
+  private String patternSuite;
+
   /**
    * Parameters: name, company, project are part of identifier of test suite.
    *
@@ -156,5 +158,13 @@ public class TestSuiteRun implements Serializable {
 
   public String getPatternCorrelationId() {
     return patternCorrelationId;
+  }
+
+  public String getPatternSuite() {
+    return patternSuite;
+  }
+
+  public void setPatternSuite(String patternSuite) {
+    this.patternSuite = patternSuite;
   }
 }
