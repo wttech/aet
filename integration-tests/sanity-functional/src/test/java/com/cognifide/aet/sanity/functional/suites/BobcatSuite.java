@@ -22,8 +22,7 @@ import com.cognifide.qa.bb.junit.concurrent.ConcurrentSuite;
 import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 
-@Modules(GuiceModule.class)
-@RunWith(ConcurrentSuite.class)
+@RunWith(Suite.class)
 @Suite.SuiteClasses({HomePageTilesTest.class})
 public class BobcatSuite {
 
