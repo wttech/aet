@@ -35,8 +35,9 @@
 
     <runSuite>**/CucumberSuite.java,**/BobcatSuite.java</runSuite>
     <bobcat.version>1.4.0</bobcat.version>
-
-    <source.java.version>1.8</source.java.version>
+    <cucumber.version>1.2.3</cucumber.version>
+    
+	<source.java.version>1.8</source.java.version>
   </properties>
 
   <dependencyManagement>
