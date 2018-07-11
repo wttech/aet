@@ -49,6 +49,15 @@ public class SuiteValidator {
   @Reference
   private MetadataDAO metadataDAO;
 
+  public SuiteValidator() {
+    // default constructor
+  }
+
+  // for unit tests
+  SuiteValidator(MetadataDAO metadataDAO) {
+    this.metadataDAO = metadataDAO;
+  }
+
   public String validateTestSuiteRun(TestSuiteRun testSuiteRun) {
     boolean patternFromSameProject = isPatternFromSameProject(testSuiteRun);
     if (!patternFromSameProject) {
@@ -60,8 +69,9 @@ public class SuiteValidator {
     }
     boolean patternValid = isPatternInDatabase(testSuiteRun);
     if (!patternValid) {
-      return String.format("Incorrect pattern: correlationId='%s', suiteName='%s'. Not found in database.",
-          testSuiteRun.getPatternCorrelationId(), testSuiteRun.getPatternSuite());
+      return String
+          .format("Incorrect pattern: correlationId='%s', suiteName='%s'. Not found in database.",
+              testSuiteRun.getPatternCorrelationId(), testSuiteRun.getPatternSuite());
     }
     for (TestRun testRun : testSuiteRun.getTestRunMap().values()) {
       if (hasScreenCollector(testRun) && !hasScreenComparator(testRun)) {
@@ -133,7 +143,8 @@ public class SuiteValidator {
           patternSuite = metadataDAO.getLatestRun(dbKey, patternSuiteName);
         }
       } catch (StorageException se) {
-        LOG.error("error while retrieving suite from mongo db: '{}', correlationId: '{}', suiteName: '{}'",
+        LOG.error(
+            "error while retrieving suite from mongo db: '{}', correlationId: '{}', suiteName: '{}'",
             dbKey, patternCorrelationId, patternSuiteName, se);
       }
       if (patternSuite != null) {

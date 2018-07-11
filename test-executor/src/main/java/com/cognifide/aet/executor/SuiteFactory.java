@@ -30,8 +30,6 @@ import com.cognifide.aet.executor.model.TestSuiteRun;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.SimpleDBKey;
 import com.cognifide.aet.vs.StorageException;
-import com.google.common.base.Function;
-import com.google.common.collect.FluentIterable;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -55,6 +53,15 @@ public class SuiteFactory {
 
   @Reference
   private MetadataDAO metadataDao;
+
+  public SuiteFactory() {
+    // default constructor
+  }
+
+  // for unit tests
+  SuiteFactory(MetadataDAO metadataDAO) {
+    this.metadataDao = metadataDAO;
+  }
 
   Suite suiteFromTestSuiteRun(TestSuiteRun testSuiteRun) {
     Suite suite = suiteFromTestRun(testSuiteRun);
