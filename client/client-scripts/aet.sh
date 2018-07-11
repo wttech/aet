@@ -23,6 +23,7 @@ SUITE_ENDPOINT="/suite"
 DOMAIN_BODY=""
 SUITE_NAME_BODY=""
 CORRELATION_ID_BODY=""
+PATTERN_SUITE_BODY=""
 function usage {
     echo
     echo "AET Test executor"
@@ -35,6 +36,7 @@ function usage {
     echo -e "\t-d --domain <DOMAIN>                 - Override domain attribute defined in suite file"
     echo -e "\t-n --name <SUITE_NAME>               - Override name attribute defined in suite file"
     echo -e "\t-c --correlationId <CORRELATION_ID>  - Set id of patterns to run test against."
+    echo -e "\t-p --patternSuite <SUITE_NAME>       - Set the suite name to run test against its latest pattern (only used if -c is not set)"
     echo -e "\t-i --interval <POLL_INTERVAL>        - Set interval in seconds for polling suite status. Default interval : 1 sec."
     echo -e "\t-w --waitForUnlock <TIMEOUT>         - Set timeout for the script to wait for unlocked suite. Default timeout: 0 sec."
     echo -e "\t-v --verbose                         - Make it more descriptive"
@@ -87,7 +89,7 @@ function process_locked_suite {
 
 # request /suite endpoint
 function start_suite {
-  run_response=$(curl -sw "%{http_code}" -F "suite=@$suite_file_name"$DOMAIN_BODY$SUITE_NAME_BODY$CORRELATION_ID_BODY "$endpoint$SUITE_ENDPOINT")
+  run_response=$(curl -sw "%{http_code}" -F "suite=@$suite_file_name"$DOMAIN_BODY$SUITE_NAME_BODY$CORRELATION_ID_BODY$PATTERN_SUITE_BODY "$endpoint$SUITE_ENDPOINT")
   extract_code_and_body "$run_response"
 
   if [ $code -eq 200 ]; then
@@ -131,6 +133,11 @@ while [[ $# -gt 0 ]]; do
             CORRELATION_ID_BODY=" -F pattern=$CORRELATION_ID"
             shift 2
             ;;
+        -p | --patternSuite )
+            PATTERN_SUITE=$2
+            PATTERN_SUITE_BODY=" -F patternSuite=$PATTERN_SUITE"
+            shift 2
+            ;;
         -v | --verbose )
             VERBOSE=1
             shift 1
@@ -148,6 +155,7 @@ if [[ $VERBOSE -eq 1 ]]; then
   echo -e "\tOverridden domain:     ${DOMAIN-not set}"
   echo -e "\tOverridden suite name: ${SUITE_NAME-not set}"
   echo -e "\tPattern id:            ${CORRELATION_ID-not set}"
+  echo -e "\tPattern suite:         ${PATTERN_SUITE-not set}"
   echo ""
 fi
 
