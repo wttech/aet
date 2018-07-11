@@ -69,7 +69,6 @@ There exists the special comparator property `collectorName` which is connected 
     <screen name="mobile"/>
 </collect>
 <compare>
-    <screen collectorName="desktop"/>
     <screen collectorName="mobile"/>
     <screen collectorName="tablet"/>
 </compare>
