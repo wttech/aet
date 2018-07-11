@@ -88,8 +88,11 @@ you may use different set of [[Modifiers|Modifiers]]:
 
 When you run `green` suite use [[following command|ClientApplication#parameters]] to use suite pattern from **master** suite execution.
 
+`mvn aet:run -DtestSuite=green.xml -DpatternSuite=master`
+
+This option will enforce AET to use patterns from latest version of `master` suite. Alternatively, if you want to use patterns from a specific version (i.e. correlation ID) of `master` suite, use:
+
 `mvn aet:run -DtestSuite=green.xml -Dpattern=company-project-master-1495191612345`
 
-This option will enforce AET to use patterns from specific version of `master` suite.
-**Remember that `master` suite must be run before running `green` suite with `patternCorrelationId` option.**
+**Remember that `master` suite must be run before running `green` suite with `pattern` or `patternSuite` option.**
  In other case, running `green` suite will be treated as running it for the first time.

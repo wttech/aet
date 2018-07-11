@@ -55,7 +55,8 @@ public class SuiteServlet extends HttpServlet {
   private static final String SUITE_PARAM = "suite";
   private static final String NAME_PARAM = "name";
   private static final String DOMAIN_PARAM = "domain";
-  private static final String PATTERN_PARAM = "pattern";
+  private static final String PATTERN_CORRELATION_ID_PARAM = "pattern";
+  private static final String PATTERN_SUITE_PARAM = "patternSuite";
 
 
   @Reference
@@ -71,17 +72,18 @@ public class SuiteServlet extends HttpServlet {
    */
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
-      throws ServletException, IOException {
+      throws IOException {
     if (ServletFileUpload.isMultipartContent(request)) {
       Map<String, String> requestData = getRequestData(request);
       final String suite = requestData.get(SUITE_PARAM);
       final String name = requestData.get(NAME_PARAM);
       final String domain = requestData.get(DOMAIN_PARAM);
-      final String pattern = requestData.get(PATTERN_PARAM);
+      final String patternCorrelationId = requestData.get(PATTERN_CORRELATION_ID_PARAM);
+      final String patternSuite = requestData.get(PATTERN_SUITE_PARAM);
 
       if (StringUtils.isNotBlank(suite)) {
         HttpSuiteExecutionResultWrapper resultWrapper = suiteExecutor
-            .execute(suite, name, domain, pattern);
+            .execute(suite, name, domain, patternCorrelationId, patternSuite);
         final SuiteExecutionResult suiteExecutionResult = resultWrapper.getExecutionResult();
         Gson gson = new Gson();
 

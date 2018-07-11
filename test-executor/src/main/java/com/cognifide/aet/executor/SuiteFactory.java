@@ -27,13 +27,41 @@ import com.cognifide.aet.executor.model.ExtendedUrl;
 import com.cognifide.aet.executor.model.ParametrizedStep;
 import com.cognifide.aet.executor.model.TestRun;
 import com.cognifide.aet.executor.model.TestSuiteRun;
-import com.google.common.base.Function;
-import com.google.common.collect.FluentIterable;
+import com.cognifide.aet.vs.MetadataDAO;
+import com.cognifide.aet.vs.SimpleDBKey;
+import com.cognifide.aet.vs.StorageException;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.felix.scr.annotations.Component;
+import org.apache.felix.scr.annotations.Reference;
+import org.apache.felix.scr.annotations.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-class SuiteFactory {
+
+@Service(SuiteFactory.class)
+@Component(
+    label = "AET Suite Factory",
+    description = "Creates a new Suite object from the test suite",
+    immediate = true
+)
+public class SuiteFactory {
+
+  private static final Logger LOG = LoggerFactory.getLogger(SuiteFactory.class);
+
+  @Reference
+  private MetadataDAO metadataDao;
+
+  public SuiteFactory() {
+    // default constructor
+  }
+
+  // for unit tests
+  SuiteFactory(MetadataDAO metadataDAO) {
+    this.metadataDao = metadataDAO;
+  }
 
   Suite suiteFromTestSuiteRun(TestSuiteRun testSuiteRun) {
     Suite suite = suiteFromTestRun(testSuiteRun);
@@ -96,9 +124,23 @@ class SuiteFactory {
     String company = testSuiteRun.getCompany();
     String project = testSuiteRun.getProject();
     String name = testSuiteRun.getName();
-    String patternCorrelationId = testSuiteRun.getPatternCorrelationId();
-
+    String patternCorrelationId = getPatternCorrelationId(testSuiteRun);
     return new Suite(correlationId, company, project, name, patternCorrelationId);
+  }
+
+  private String getPatternCorrelationId(TestSuiteRun testSuiteRun) {
+    String result = testSuiteRun.getPatternCorrelationId();
+    if (result == null && testSuiteRun.getPatternSuite() != null) {
+      SimpleDBKey dbKey = new SimpleDBKey(testSuiteRun.getCompany(), testSuiteRun.getProject());
+      try {
+        Suite patternSuite = metadataDao.getLatestRun(dbKey, testSuiteRun.getPatternSuite());
+        result = patternSuite != null ? patternSuite.getCorrelationId() : null;
+      } catch (StorageException e) {
+        LOG.error("Error while retrieving suite from mongo db: '{}', suiteName: '{}'",
+            dbKey, testSuiteRun.getPatternSuite(), e);
+      }
+    }
+    return result;
   }
 
   private boolean comparatorMatchesCollector(CollectorStep collectorStep,
@@ -108,14 +150,11 @@ class SuiteFactory {
   }
 
   private List<Operation> extractOperations(List<? extends ParametrizedStep> steps) {
-    return FluentIterable.from(steps).transform(new Function<ParametrizedStep, Operation>() {
-      @Override
-      public Operation apply(ParametrizedStep step) {
-        final Operation operation = new Operation(step.getName());
-        operation.addParameters(step.getParameters());
-        return operation;
-      }
-    }).toList();
+    return steps.stream().map(step -> {
+      final Operation operation = new Operation(step.getName());
+      operation.addParameters(step.getParameters());
+      return operation;
+    }).collect(Collectors.toList());
   }
 
 }

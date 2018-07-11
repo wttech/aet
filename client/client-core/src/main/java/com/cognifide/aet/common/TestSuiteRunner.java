@@ -37,12 +37,8 @@ public class TestSuiteRunner {
 
   private static final String DATE_FORMAT = "HH:mm:ss.SSS";
 
-  private static final ThreadLocal<DateFormat> DATE_FORMATTER = new ThreadLocal<DateFormat>() {
-    @Override
-    protected DateFormat initialValue() {
-      return new SimpleDateFormat(DATE_FORMAT);
-    }
-  };
+  private static final ThreadLocal<DateFormat> DATE_FORMATTER =
+      ThreadLocal.withInitial(() -> new SimpleDateFormat(DATE_FORMAT));
 
   private static final int STATUS_CHECK_INTERVAL_MILLIS = 1000;
 
@@ -64,12 +60,14 @@ public class TestSuiteRunner {
 
   private final String patternCorrelationId;
 
+  private final String patternSuite;
+
   private final boolean xUnit;
 
 
   public TestSuiteRunner(String endpointDomain, String buildDirectory, int timeout,
       String name, String domain,
-      String patternCorrelationId, boolean xUnit) {
+      String patternCorrelationId, String patternSuite, boolean xUnit) {
     this.redirectWriter = new RedirectWriter(buildDirectory);
     this.buildDirectory = buildDirectory;
     this.timeout = timeout;
@@ -77,6 +75,7 @@ public class TestSuiteRunner {
     this.name = name;
     this.domain = domain;
     this.patternCorrelationId = patternCorrelationId;
+    this.patternSuite = patternSuite;
     this.xUnit = xUnit;
     suiteExecutionResponseHandler = new JsonResponseHandler<>(SuiteExecutionResult.class);
     suiteStatusResponseHandler = new JsonResponseHandler<>(SuiteStatusResult.class);
@@ -139,6 +138,9 @@ public class TestSuiteRunner {
     }
     if (patternCorrelationId != null) {
       entityBuilder.addTextBody("pattern", patternCorrelationId);
+    }
+    if (patternSuite != null) {
+      entityBuilder.addTextBody("patternSuite", patternSuite);
     }
     HttpEntity entity = entityBuilder.build();
 

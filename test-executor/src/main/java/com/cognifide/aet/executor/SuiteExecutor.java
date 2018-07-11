@@ -29,6 +29,7 @@ import com.cognifide.aet.executor.xmlparser.api.TestSuiteParser;
 import com.cognifide.aet.executor.xmlparser.xml.XmlTestSuiteParser;
 import com.cognifide.aet.rest.LockService;
 import com.cognifide.aet.rest.helpers.ReportConfigurationManager;
+import com.cognifide.aet.vs.MetadataDAO;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.RemovalListener;
@@ -95,6 +96,9 @@ public class SuiteExecutor {
   @Reference
   private SuiteValidator suiteValidator;
 
+  @Reference
+  private SuiteFactory suiteFactory;
+
   private Cache<String, SuiteRunner> suiteRunnerCache;
 
   private Cache<String, Queue<SuiteStatusResult>> suiteStatusCache;
@@ -126,12 +130,14 @@ public class SuiteExecutor {
    *
    * @param suiteString - content of the test suite XML file
    * @param domain - overrides domain defined in the suite file
-   * @param pattern - optional pattern to set, this is a name of a suite that will be used as
-   * patterns source
+   * @param patternCorrelationId - optional pattern to set, this is a correlation ID of a suite
+   * that will be used as patterns source
+   * @param patternSuite - optional pattern to set, this is a name of a suite whose latest version
+   * will be used as patterns source. This parameter is ignored if patternCorrelationId is set
    * @return status of the suite execution
    */
   HttpSuiteExecutionResultWrapper execute(String suiteString, String name, String domain,
-      String pattern) {
+          String patternCorrelationId, String patternSuite) {
     SuiteRunner suiteRunner = null;
     HttpSuiteExecutionResultWrapper result;
 
@@ -139,11 +145,12 @@ public class SuiteExecutor {
     try {
       TestSuiteRun testSuiteRun = xmlFileParser.parse(suiteString);
       testSuiteRun = overrideDomainOrNameIfDefined(testSuiteRun, name, domain);
-      testSuiteRun.setPatternCorrelationId(pattern);
+      testSuiteRun.setPatternCorrelationId(patternCorrelationId);
+      testSuiteRun.setPatternSuite(patternSuite);
 
       String validationError = suiteValidator.validateTestSuiteRun(testSuiteRun);
       if (validationError == null) {
-        final Suite suite = new SuiteFactory().suiteFromTestSuiteRun(testSuiteRun);
+        final Suite suite = suiteFactory.suiteFromTestSuiteRun(testSuiteRun);
         suite.validate(Sets.newHashSet("version", "runTimestamp"));
 
         if (lockTestSuite(suite)) {

@@ -49,6 +49,15 @@ public class SuiteValidator {
   @Reference
   private MetadataDAO metadataDAO;
 
+  public SuiteValidator() {
+    // default constructor
+  }
+
+  // for unit tests
+  SuiteValidator(MetadataDAO metadataDAO) {
+    this.metadataDAO = metadataDAO;
+  }
+
   public String validateTestSuiteRun(TestSuiteRun testSuiteRun) {
     boolean patternFromSameProject = isPatternFromSameProject(testSuiteRun);
     if (!patternFromSameProject) {
@@ -60,8 +69,9 @@ public class SuiteValidator {
     }
     boolean patternValid = isPatternInDatabase(testSuiteRun);
     if (!patternValid) {
-      return String.format("Incorrect pattern: '%s'. Not found in database.",
-          testSuiteRun.getPatternCorrelationId());
+      return String
+          .format("Incorrect pattern: correlationId='%s', suiteName='%s'. Not found in database.",
+              testSuiteRun.getPatternCorrelationId(), testSuiteRun.getPatternSuite());
     }
     for (TestRun testRun : testSuiteRun.getTestRunMap().values()) {
       if (hasScreenCollector(testRun) && !hasScreenComparator(testRun)) {
@@ -81,7 +91,7 @@ public class SuiteValidator {
    * @return true if suite is OK
    */
   private boolean isPatternFromSameProject(TestSuiteRun testSuiteRun) {
-    boolean sameProject = false;
+    boolean sameProject;
     String pattern = testSuiteRun.getPatternCorrelationId();
     if (pattern == null) {
       // patterns will be taken from same suite automatically
@@ -121,15 +131,21 @@ public class SuiteValidator {
     boolean valid = false;
     SimpleDBKey dbKey = new SimpleDBKey(testSuiteRun.getCompany(), testSuiteRun.getProject());
     String patternCorrelationId = testSuiteRun.getPatternCorrelationId();
-    if (patternCorrelationId == null) {
+    String patternSuiteName = testSuiteRun.getPatternSuite();
+    if (patternCorrelationId == null && patternSuiteName == null) {
       valid = true;
     } else {
       Suite patternSuite = null;
       try {
-        patternSuite = metadataDAO.getSuite(dbKey, patternCorrelationId);
+        if (patternCorrelationId != null) {
+          patternSuite = metadataDAO.getSuite(dbKey, patternCorrelationId);
+        } else {
+          patternSuite = metadataDAO.getLatestRun(dbKey, patternSuiteName);
+        }
       } catch (StorageException se) {
-        LOG.error("error while retrieving suite from mongo db: '{}', correlationId: '{}'",
-            dbKey, patternCorrelationId, se);
+        LOG.error(
+            "error while retrieving suite from mongo db: '{}', correlationId: '{}', suiteName: '{}'",
+            dbKey, patternCorrelationId, patternSuiteName, se);
       }
       if (patternSuite != null) {
         valid = true;
