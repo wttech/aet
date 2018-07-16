@@ -19,8 +19,9 @@ Pages are written in a way that allows us to provide repeatable test results
 Even if someone would try to update the patterns.
 
 
-Sample site may be uploaded to AET vagrant and will be available at  
-[http://aet-vagrant:9090/sample-site/](http://aet-vagrant:9090/sample-site/)
+Sample site can be uploaded to AET vagrant by running `mvn clean install -Pupload` from the 
+`sample-site` directory level or from the root level of `aet` repository.
+By default the sample site will be available at [http://aet-vagrant:9090/sample-site/](http://aet-vagrant:9090/sample-site/)
 
 ### test-suite
 
@@ -57,6 +58,6 @@ It may be changed it in `.../config/dev/instance.properties` file.
 This path can be changed at command-line with `-Dwebdriver.chrome.driver=<path>`
 or in `.../config/common/webdriver.properties` file.
 
-To start the Bobcat tests, run `mvn clean test`
+To start the Bobcat tests, run `mvn clean test` from the `sanity-functional` directory level
 
 [Chromedriver]: https://sites.google.com/a/chromium.org/chromedriver/
