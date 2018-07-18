@@ -124,7 +124,8 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
         var currentTest,
             currentLocation = window.location.hash,
             $nextElement,
-            $firstElementInTest;
+            $firstElementInTest,
+            currentTab;
 
         if (!(ifRootPage(currentLocation, '/url/') || ifRootPage(
                 currentLocation, '/test/') || ifRootPage(currentLocation,
@@ -141,28 +142,32 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
             if (!_.isEmpty($(suiteContainer).nextAll(
                     '.aside-report:not(.is-hidden)').first().find(
                     '.test-name'))) {
+              currentTab = $('.nav-tabs > .nav-item').filter('.active').text().replace(/\s/g, '');
               testContainer.removeClass('is-active');
               currentItem.removeClass('is-active');
-              toggleNextTest(suiteContainer);
               $nextElement = suiteContainer.nextAll(
                   '.aside-report:not(.is-hidden)').first();
               $nextElement.addClass('is-expanded');
               $nextElement.children().first().addClass('is-active');
               scrollTo($nextElement.find('.is-active'));
+              toggleNextTestItem(suiteContainer);
+              userSettingsService.setLastTab(currentTab);
             }
-
           } else {
+            currentTab = $('.nav-tabs > .nav-item').filter('.active').text().replace(/\s/g, '');
+            userSettingsService.setLastTab(currentTab);
             nextUrl.click();
             scrollTo(nextUrl);
             $(testUrlSelector).not(nextUrl).removeClass('is-active');
+            clickOnTab();
           }
         } else {
-            currentTest = findCurrentTest(currentLocation.split('/').pop());
-            $firstElementInTest = currentTest.find('.url-name:not(.is-hidden)').find(
-                testUrlSelector).first();
-            currentTest.addClass('is-expanded');
-            $firstElementInTest.click();
-            scrollTo($firstElementInTest);
+          currentTest = findCurrentTest(currentLocation.split('/').pop());
+          $firstElementInTest = currentTest.find('.url-name:not(.is-hidden)').find(
+              testUrlSelector).first();
+          currentTest.addClass('is-expanded');
+          $firstElementInTest.click();
+          scrollTo($firstElementInTest);
         }
       }
 
@@ -170,7 +175,8 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
           testUrlSelector) {
         var previousTest,
             currentLocation = window.location.hash,
-            $previousElement;
+            $previousElement,
+            currentTab;
 
         if (!(ifRootPage(currentLocation, '/url/') || ifRootPage(
                 currentLocation, '/test/') || ifRootPage(currentLocation,
@@ -183,14 +189,26 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
               '.url-name:not(.is-hidden)').filter(':first').find(
               testUrlSelector);
           if (_.isEmpty(previousTest)) {
-            $previousElement = suiteContainer.find('.test-name');
-            scrollTo($previousElement);
-            $previousElement.click();
-            currentItem.parents('.url-name').removeClass('is-active');
-            suiteContainer.addClass('is-expanded');
+            if (!_.isEmpty($(suiteContainer).prevAll(
+                  '.aside-report:not(.is-hidden)').first()
+                  .find('.test-name'))) {
+              currentTab = $('.nav-tabs > .nav-item').filter('.active').text().replace(/\s/g, '');
+              testContainer.removeClass('is-active');
+              currentItem.removeClass('is-active');
+              $previousElement = suiteContainer.prevAll(
+                  '.aside-report:not(.is-hidden)').first();
+              $previousElement.addClass('is-expanded');
+              $previousElement.children().first().addClass('is-active');
+              scrollTo($previousElement.find('.is-active'));
+              togglePrevTestItem(suiteContainer);
+              userSettingsService.setLastTab(currentTab);
+            }
           } else {
+            currentTab = $('.nav-tabs > .nav-item').filter('.active').text().replace(/\s/g, '');
+            userSettingsService.setLastTab(currentTab);
             scrollTo(previousTest);
             previousTest.click();
+            clickOnTab();
           }
         } else {
           previousTest = findPreviousTest(currentLocation.split('/').pop());
@@ -208,12 +226,53 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
         }
       }
 
-      function toggleNextTest(currentTest) {
-        $(currentTest).nextAll('.aside-report:not(.is-hidden)')
-        .first()
-        .find('.test-name')
-        .click();
+      function toggleNextTestItem(currentTest) {
+        $(currentTest).nextAll(
+          '.aside-report:not(.is-hidden)')
+          .first()
+          .find('.test-url')
+          .first()
+          .click();     
       }
+
+      function togglePrevTestItem(currentTest) {
+        $(currentTest).prevAll(
+          '.aside-report:not(.is-hidden)')
+          .first()
+          .find('.test-url')
+          .last()
+          .click();
+      }
+
+      function clickOnTab() {
+        var currentTab = userSettingsService.getLastTab();
+        var nextTestTabs = $('.nav-tabs').children();
+        for(var i=0;i <nextTestTabs.length; i++) {
+          if($(nextTestTabs[i]).text().replace(/\s/g, '') === currentTab) {
+            $(nextTestTabs[i]).find('a').click();
+            currentTab = null;
+          }
+        }
+      }
+
+      var mutationObserver = new MutationObserver(callback);
+
+      function callback(mutList) {
+        var finished = false;
+        mutList.forEach(function(mut) {
+          if($(mut.target).hasClass('nav-tabs') && !finished) {
+            clickOnTab();
+            finished = true;
+          }
+        });
+      }
+
+      mutationObserver.observe(document, {
+        attributes: true,
+        characterData: true,
+        childList: true,
+        subtree: true,
+      });
 
       function ifRootPage(url, type) {
         return url.search(type) > 0;
