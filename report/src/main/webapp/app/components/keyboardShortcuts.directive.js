@@ -177,7 +177,6 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
             currentLocation = window.location.hash,
             $previousElement,
             currentTab;
-
         if (!(ifRootPage(currentLocation, '/url/') || ifRootPage(
                 currentLocation, '/test/') || ifRootPage(currentLocation,
                 '/report/'))) {
