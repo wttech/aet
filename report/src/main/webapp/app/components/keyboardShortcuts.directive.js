@@ -125,7 +125,7 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
             currentLocation = window.location.hash,
             $nextElement,
             $firstElementInTest,
-            currentTab;
+            currentTabLabel;
 
         if (!(ifRootPage(currentLocation, '/url/') || ifRootPage(
                 currentLocation, '/test/') || ifRootPage(currentLocation,
@@ -142,24 +142,19 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
             if (!_.isEmpty($(suiteContainer).nextAll(
                     '.aside-report:not(.is-hidden)').first().find(
                     '.test-name'))) {
-              currentTab = $('.nav-tabs > .nav-item').filter('.active').text().replace(/\s/g, '');
-              testContainer.removeClass('is-active');
-              currentItem.removeClass('is-active');
+                      currentTabLabel = $('.nav-tabs > .nav-item').filter('.active').text().replace(/\s/g, '');
               $nextElement = suiteContainer.nextAll(
-                  '.aside-report:not(.is-hidden)').first();
-              $nextElement.addClass('is-expanded');
-              $nextElement.children().first().addClass('is-active');
-              scrollTo($nextElement.find('.is-active'));
+                    '.aside-report:not(.is-hidden)').first();
+              handleStyling(testContainer, currentItem, $nextElement);
               toggleNextTestItem(suiteContainer);
-              userSettingsService.setLastTab(currentTab);
+              userSettingsService.setLastTab(currentTabLabel);
             }
           } else {
-            currentTab = $('.nav-tabs > .nav-item').filter('.active').text().replace(/\s/g, '');
-            userSettingsService.setLastTab(currentTab);
+            currentTabLabel = $('.nav-tabs > .nav-item').filter('.active').text().replace(/\s/g, '');
+            userSettingsService.setLastTab(currentTabLabel);
             nextUrl.click();
             scrollTo(nextUrl);
             $(testUrlSelector).not(nextUrl).removeClass('is-active');
-            clickOnTab();
           }
         } else {
           currentTest = findCurrentTest(currentLocation.split('/').pop());
@@ -176,7 +171,8 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
         var previousTest,
             currentLocation = window.location.hash,
             $previousElement,
-            currentTab;
+            currentTabLabel;
+
         if (!(ifRootPage(currentLocation, '/url/') || ifRootPage(
                 currentLocation, '/test/') || ifRootPage(currentLocation,
                 '/report/'))) {
@@ -191,23 +187,18 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
             if (!_.isEmpty($(suiteContainer).prevAll(
                   '.aside-report:not(.is-hidden)').first()
                   .find('.test-name'))) {
-              currentTab = $('.nav-tabs > .nav-item').filter('.active').text().replace(/\s/g, '');
-              testContainer.removeClass('is-active');
-              currentItem.removeClass('is-active');
+              currentTabLabel = $('.nav-tabs > .nav-item').filter('.active').text().replace(/\s/g, '');
               $previousElement = suiteContainer.prevAll(
-                  '.aside-report:not(.is-hidden)').first();
-              $previousElement.addClass('is-expanded');
-              $previousElement.children().first().addClass('is-active');
-              scrollTo($previousElement.find('.is-active'));
+                '.aside-report:not(.is-hidden)').first();
+              handleStyling(testContainer, currentItem, $previousElement);
               togglePrevTestItem(suiteContainer);
-              userSettingsService.setLastTab(currentTab);
+              userSettingsService.setLastTab(currentTabLabel);
             }
           } else {
-            currentTab = $('.nav-tabs > .nav-item').filter('.active').text().replace(/\s/g, '');
-            userSettingsService.setLastTab(currentTab);
+            currentTabLabel = $('.nav-tabs > .nav-item').filter('.active').text().replace(/\s/g, '');
+            userSettingsService.setLastTab(currentTabLabel);
             scrollTo(previousTest);
             previousTest.click();
-            clickOnTab();
           }
         } else {
           previousTest = findPreviousTest(currentLocation.split('/').pop());
@@ -225,13 +216,21 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
         }
       }
 
+      function handleStyling(testContainer, currentItem, $element) {
+        testContainer.removeClass('is-active');
+        currentItem.removeClass('is-active');
+        $element.addClass('is-expanded');
+        $element.children().first().addClass('is-active');
+        scrollTo($element.find('.is-active'));
+      }
+
       function toggleNextTestItem(currentTest) {
         $(currentTest).nextAll(
           '.aside-report:not(.is-hidden)')
           .first()
           .find('.test-url')
           .first()
-          .click();     
+          .click();
       }
 
       function togglePrevTestItem(currentTest) {
@@ -244,26 +243,28 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
       }
 
       function clickOnTab() {
-        var currentTab = userSettingsService.getLastTab();
-        var nextTestTabs = $('.nav-tabs').children();
-        for(var i=0;i <nextTestTabs.length; i++) {
-          if($(nextTestTabs[i]).text().replace(/\s/g, '') === currentTab) {
-            $(nextTestTabs[i]).find('a').click();
-            currentTab = null;
-          }
-        }
-      }
-
-      var mutationObserver = new MutationObserver(callback);
-
-      function callback(mutList) {
-        var finished = false;
-        mutList.forEach(function(mut) {
-          if($(mut.target).hasClass('nav-tabs') && !finished) {
-            clickOnTab();
-            finished = true;
+        var currentTabLabel = userSettingsService.getLastTab();
+        var $nextTestTabs = $('.nav-tabs').children();
+        $nextTestTabs.each(function() {
+          if($(this).text().replace(/\s/g, '') === currentTabLabel) {
+            $(this).find('a').click(); 
+            currentTabLabel = null;
           }
         });
+      }
+
+      //MutationObserver fires a callback every time something changes on the page
+      //and here it's used to click a tab before the page is actually rendered to get rid of flickering effect
+      var mutationObserver = new MutationObserver(callback);
+      
+      function callback(mutList) {
+        function findElement(element) {
+          if($(element.target).hasClass('nav-tabs')) {
+            clickOnTab();
+            return true;
+          }
+        }
+        mutList.find(findElement);     
       }
 
       mutationObserver.observe(document, {
