@@ -137,6 +137,7 @@ public class ChromeWebDriverFactory implements WebDriverFactory {
     ChromeOptions options = new ChromeOptions();
     options.addArguments("--disable-plugins");
     options.addArguments("--headless");   //  @PiotrWolynski add this
+    options.addArguments("--hide-scrollbars");
 
     capabilities.setCapability(ChromeOptions.CAPABILITY, options);
 

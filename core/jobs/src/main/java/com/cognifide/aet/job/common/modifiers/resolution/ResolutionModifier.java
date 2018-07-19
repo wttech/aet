@@ -29,6 +29,7 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriver.Window;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -81,13 +82,17 @@ public class ResolutionModifier implements CollectorJob {
   private void setResolution(WebDriver webDriver) {
     Window window = webDriver.manage().window();
     JavascriptExecutor js = (JavascriptExecutor) webDriver;
+    String browserName = ((RemoteWebDriver) webDriver).getCapabilities().getBrowserName().toLowerCase();
     int localHeight;
     if (height.isPresent()) {
       localHeight = height.get();
     } else {
-      js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
       localHeight = Integer
           .parseInt(js.executeScript("return document.body.scrollHeight").toString());
+    }
+    if(browserName.equals("chrome") && localHeight > 15000){
+      LOG.info("Height is over browser limit, changing height to 15000");
+      localHeight = 15000;
     }
     LOG.info("Setting resolution to  {}x{}  ", width, localHeight);
     window.setSize(new Dimension(width, localHeight));
