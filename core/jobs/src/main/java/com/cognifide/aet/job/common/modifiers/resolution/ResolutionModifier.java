@@ -89,10 +89,10 @@ public class ResolutionModifier implements CollectorJob {
     } else {
       localHeight = Integer
           .parseInt(js.executeScript("return document.body.scrollHeight").toString());
-    }
-    if(browserName.equals("chrome") && localHeight > 15000){
-      LOG.info("Height is over browser limit, changing height to 15000");
-      localHeight = 15000;
+      if(browserName.equals("chrome") && localHeight > MAX_SIZE){
+          LOG.info("Height is over browser limit, changing height to " + MAX_SIZE);
+          localHeight = MAX_SIZE;
+      }
     }
     LOG.info("Setting resolution to  {}x{}  ", width, localHeight);
     window.setSize(new Dimension(width, localHeight));
