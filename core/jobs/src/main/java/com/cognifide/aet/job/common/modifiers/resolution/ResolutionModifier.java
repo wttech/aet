@@ -23,12 +23,14 @@ import com.cognifide.aet.job.api.exceptions.ProcessingException;
 
 import java.util.Map;
 import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.math.NumberUtils;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriver.Window;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -85,12 +87,15 @@ public class ResolutionModifier implements CollectorJob {
     if (height.isPresent()) {
       localHeight = height.get();
     } else {
-      js.executeScript("window.scrollTo(0, document.body.scrollHeight);");
-      localHeight = Integer
-          .parseInt(js.executeScript("return document.body.scrollHeight").toString());
+      String browserName = ((RemoteWebDriver) webDriver).getCapabilities().getBrowserName().toLowerCase();
+      window.setSize(new Dimension(width, 300)); //Pre-run with correct width
+      localHeight = Integer.parseInt(js.executeScript("return document.body.scrollHeight").toString());
+      if(browserName.equals("chrome") && localHeight > MAX_SIZE){
+        LOG.info("Height is over browser limit, changing height to " + MAX_SIZE);
+        localHeight = MAX_SIZE;
+      }
     }
     LOG.info("Setting resolution to  {}x{}  ", width, localHeight);
     window.setSize(new Dimension(width, localHeight));
   }
-
 }
