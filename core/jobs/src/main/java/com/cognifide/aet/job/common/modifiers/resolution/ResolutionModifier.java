@@ -82,11 +82,11 @@ public class ResolutionModifier implements CollectorJob {
   private void setResolution(WebDriver webDriver) {
     Window window = webDriver.manage().window();
     JavascriptExecutor js = (JavascriptExecutor) webDriver;
-    String browserName = ((RemoteWebDriver) webDriver).getCapabilities().getBrowserName().toLowerCase();
     int localHeight;
     if (height.isPresent()) {
       localHeight = height.get();
     } else {
+      String browserName = ((RemoteWebDriver) webDriver).getCapabilities().getBrowserName().toLowerCase();
       localHeight = Integer
           .parseInt(js.executeScript("return document.body.scrollHeight").toString());
       if(browserName.equals("chrome") && localHeight > MAX_SIZE){
