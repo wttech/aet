@@ -121,11 +121,11 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
 
       function traverseTreeDown(currentItem, testContainer, suiteContainer,
           testUrlSelector) {
-        var currentTest,
-            currentLocation = window.location.hash,
-            $nextElement,
-            $firstElementInTest,
-            currentTabLabel;
+        var currentTest;
+        var currentLocation = window.location.hash;
+        var $nextElement;
+        var $firstElementInTest;
+        var currentTabLabel;
 
         if (!(ifRootPage(currentLocation, '/url/') || ifRootPage(
                 currentLocation, '/test/') || ifRootPage(currentLocation,
@@ -142,7 +142,7 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
             if (!_.isEmpty($(suiteContainer).nextAll(
                     '.aside-report:not(.is-hidden)').first().find(
                     '.test-name'))) {
-                      currentTabLabel = $('.nav-tabs > .nav-item').filter('.active').text().replace(/\s/g, '');
+              currentTabLabel = $('.nav-tabs > .nav-item').filter('.active').text().replace(/\s/g, '');
               $nextElement = suiteContainer.nextAll(
                     '.aside-report:not(.is-hidden)').first();
               handleStyling(testContainer, currentItem, $nextElement);
@@ -168,10 +168,10 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
 
       function traverseTreeUp(currentItem, testContainer, suiteContainer,
           testUrlSelector) {
-        var previousTest,
-            currentLocation = window.location.hash,
-            $previousElement,
-            currentTabLabel;
+        var previousTest;
+        var currentLocation = window.location.hash;
+        var $previousElement;
+        var currentTabLabel;
 
         if (!(ifRootPage(currentLocation, '/url/') || ifRootPage(
                 currentLocation, '/test/') || ifRootPage(currentLocation,
@@ -268,8 +268,6 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
       }
 
       mutationObserver.observe(document, {
-        attributes: true,
-        characterData: true,
         childList: true,
         subtree: true,
       });
