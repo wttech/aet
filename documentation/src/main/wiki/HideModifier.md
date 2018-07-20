@@ -6,7 +6,8 @@ Module name: **hide**
 
 | ! Important information |
 |:----------------------- |
-| In order to use this modifier it must be declared after the open module in the definition of the test suite XML. |
+| *In order to use this modifier it must be declared after the open module in the definition of the test suite XML.
+*In order to use this modifier with Resolution Modifier it must be declared before the Resolution Modifier.|
 
 ##### Parameters
 
