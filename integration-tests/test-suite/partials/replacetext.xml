@@ -24,6 +24,7 @@
     <test name="S-replaceText">
         <collect>
             <open/>
+            <resolution width="1500" />
             <replaceText xpath="//*[@id='demo1']" value="xpath replaced !"/>
             <replaceText css=".replaceMe" value="css replaced !"/>
             <replaceText css="#demo3" attributeName="value" value="No Numbers Here !"/>

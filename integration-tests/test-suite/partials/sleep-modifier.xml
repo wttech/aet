@@ -24,6 +24,7 @@
 	<test name="S-modifier-Sleep">
 		<collect>
 			<open />
+			<resolution width="1500" />
 			<sleep duration="6000" />
 			<screen />
 		</collect>
@@ -37,6 +38,7 @@
 	<test name="F-modifier-Sleep">
 		<collect>
 			<open />
+			<resolution width="1500" />
 			<sleep duration="1000" />
 			<screen />
 		</collect>
