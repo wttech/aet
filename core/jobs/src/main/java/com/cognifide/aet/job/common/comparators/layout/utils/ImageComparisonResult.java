@@ -15,7 +15,9 @@
  */
 package com.cognifide.aet.job.common.comparators.layout.utils;
 
+
 import java.awt.image.BufferedImage;
+import java.util.Optional;
 
 public class ImageComparisonResult {
 
