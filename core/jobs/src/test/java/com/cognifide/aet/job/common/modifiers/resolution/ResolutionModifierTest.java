@@ -138,7 +138,7 @@ public class ResolutionModifierTest {
     when(params.get(WIDTH_PARAM)).thenReturn("" + CUSTOM_WIDTH);
 
     when(capabilities.getBrowserName()).thenReturn("chrome");
-    when(webDriver.executeScript("return document.body.scrollHeight")).thenReturn(Long.parseLong( "" + CHROME_LIMIT + 5000));
+    when(webDriver.executeScript("return document.body.scrollHeight")).thenReturn(Long.parseLong( CHROME_LIMIT + 5000 + ""));
 
     tested.setParameters(params);
     tested.collect();
