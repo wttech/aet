@@ -129,6 +129,7 @@ public class ChromeWebDriverFactory implements WebDriverFactory {
   private DesiredCapabilities setupCapabilities() {
     final DesiredCapabilities capabilities = DesiredCapabilities.chrome();
     capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
+    capabilities.setCapability(CapabilityType.PAGE_LOAD_STRATEGY, "none");
 
     final LoggingPreferences loggingPreferences = new LoggingPreferences();
     loggingPreferences.enable(LogType.BROWSER, Level.ALL);
