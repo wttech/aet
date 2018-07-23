@@ -16,6 +16,7 @@
 package com.cognifide.aet.job.common.comparators.layout;
 
 import com.cognifide.aet.communication.api.metadata.ComparatorStepResult;
+import com.cognifide.aet.job.api.ParametersValidator;
 import com.cognifide.aet.job.api.comparator.ComparatorJob;
 import com.cognifide.aet.job.api.comparator.ComparatorProperties;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
@@ -29,9 +30,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
+import java.util.Optional;
 import javax.imageio.ImageIO;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 
 public class LayoutComparator implements ComparatorJob {
 
@@ -41,13 +44,23 @@ public class LayoutComparator implements ComparatorJob {
 
   public static final String CONTENT_TYPE = "image/png";
 
+  public static final String PRECENTAGE_TRESHOLD_PARAM = "percentageTreshold";
+
+  public static final String PIXEL_TRESHOLD_PARAM = "pixelTreshold";
+
   private final ComparatorProperties properties;
 
   private final ArtifactsDAO artifactsDAO;
 
+  private Optional<Integer> pixelTreshold;
+
+  private Optional<Double> percentageTreshold;
+
   LayoutComparator(ComparatorProperties comparatorProperties, ArtifactsDAO artifactsDAO) {
     this.properties = comparatorProperties;
     this.artifactsDAO = artifactsDAO;
+    this.percentageTreshold = Optional.empty();
+    this.pixelTreshold = Optional.empty();
   }
 
   @Override
@@ -67,6 +80,7 @@ public class LayoutComparator implements ComparatorJob {
         BufferedImage collectedImg = ImageIO.read(collectedArtifact);
         imageComparisonResult = ImageComparison.compare(patternImg, collectedImg);
         stepResult = saveArtifacts(imageComparisonResult);
+
       } catch (IOException e) {
         throw new ProcessingException("Error while obtaining artifacts!", e);
       }
@@ -84,6 +98,8 @@ public class LayoutComparator implements ComparatorJob {
   private ComparatorStepResult saveArtifacts(ImageComparisonResult imageComparisonResult)
       throws ProcessingException {
     final ComparatorStepResult result;
+    imageComparisonResult.setPixelTreshold(this.pixelTreshold);
+    imageComparisonResult.setPercentageTreshold(this.percentageTreshold);
     if (imageComparisonResult.isMatch()) {
       result = getPassedStepResult();
     } else {
@@ -127,7 +143,17 @@ public class LayoutComparator implements ComparatorJob {
 
   @Override
   public void setParameters(Map<String, String> params) throws ParametersException {
-    // no parameters needed
+    if (params.containsKey(PRECENTAGE_TRESHOLD_PARAM)) {
+      percentageTreshold = Optional.of(NumberUtils.toDouble(params.get(PRECENTAGE_TRESHOLD_PARAM)));
+      ParametersValidator
+          .checkRange(percentageTreshold.get().intValue(), 0, 100,
+              "Wrong percentage treshol value");
+    }
+    if (params.containsKey(PIXEL_TRESHOLD_PARAM)) {
+      pixelTreshold = Optional.of(NumberUtils.toInt(params.get(PIXEL_TRESHOLD_PARAM)));
+      ParametersValidator.checkParameter(pixelTreshold.get() >= 0,
+          "Pixel treshold should be greater than 0");
+    }
   }
 
 }

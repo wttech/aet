@@ -2889,7 +2889,11 @@ Resource name: screen
 
 ##### Parameters
 
-No parameters
+| Parameter | Value | Description | Mandatory |
+| --------- | ----- | ----------- | --------- |
+| `pixelTreshold` | int (bigger than 0) | The value to set the error threshold in pixels | no |
+| `percentageTreshold` | double (0 to 100) | The value to set the error threshold in percentages | no |
+
 
 ##### Example Usage
 
