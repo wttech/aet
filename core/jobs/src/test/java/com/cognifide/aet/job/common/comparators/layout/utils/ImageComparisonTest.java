@@ -22,6 +22,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Optional;
 import javax.imageio.ImageIO;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.io.output.ByteArrayOutputStream;
@@ -114,6 +115,48 @@ public class ImageComparisonTest {
       assertThat(imageComparisonResult.getHeightDifference(), is(100));
       assertThat(imageComparisonResult.getWidthDifference(), is(20));
       assertThat(imageComparisonResult.getPixelDifferenceCount(), is(14399));
+
+      maskStream = imageToStream(imageComparisonResult.getResultImage());
+      expectedMaskStream = getClass()
+          .getResourceAsStream("/mock/LayoutComparator/canvasSizeDiff/mask.png");
+      assertThat(IOUtils.contentEquals(maskStream, expectedMaskStream), is(true));
+    } finally {
+      closeInputStreams(sampleStream, patternStream, maskStream, expectedMaskStream);
+    }
+  }
+
+  @Test
+  public void testTreshold() throws Exception {
+    InputStream sampleStream = null;
+    InputStream patternStream = null;
+    InputStream maskStream = null;
+    InputStream expectedMaskStream = null;
+    try {
+      sampleStream = getClass()
+          .getResourceAsStream("/mock/LayoutComparator/canvasSizeDiff/collected.png");
+      patternStream = getClass()
+          .getResourceAsStream("/mock/LayoutComparator/canvasSizeDiff/pattern.png");
+
+      BufferedImage sample = ImageIO.read(sampleStream);
+      BufferedImage pattern = ImageIO.read(patternStream);
+
+      ImageComparisonResult imageComparisonResult = ImageComparison.compare(pattern, sample);
+
+      imageComparisonResult.setPixelTreshold(Optional.of(14398));
+      assertThat(imageComparisonResult.isMatch(), is(false));
+
+      imageComparisonResult.setPixelTreshold(Optional.of(14399));
+      assertThat(imageComparisonResult.isMatch(), is(true));
+
+      imageComparisonResult.setPixelTreshold(Optional.empty());
+      imageComparisonResult.setPercentageTreshold(Optional.of(59.9));
+      assertThat(imageComparisonResult.isMatch(), is(false));
+
+      imageComparisonResult.setPercentageTreshold(Optional.of(60.0));
+      assertThat(imageComparisonResult.isMatch(), is(true));
+
+      imageComparisonResult.setPixelTreshold(Optional.of(14398));
+      assertThat(imageComparisonResult.isMatch(), is(false));
 
       maskStream = imageToStream(imageComparisonResult.getResultImage());
       expectedMaskStream = getClass()

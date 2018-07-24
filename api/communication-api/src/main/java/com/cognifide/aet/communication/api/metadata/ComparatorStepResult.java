@@ -51,6 +51,7 @@ public class ComparatorStepResult extends StepResult {
     FAILED,
     WARNING,
     REBASED,
-    PROCESSING_ERROR
+    PROCESSING_ERROR,
+    CONDITIONAL,
   }
 }

@@ -16,6 +16,7 @@
 package com.cognifide.aet.job.common.comparators.layout;
 
 import com.cognifide.aet.communication.api.metadata.ComparatorStepResult;
+import com.cognifide.aet.job.api.ParametersValidator;
 import com.cognifide.aet.job.api.comparator.ComparatorJob;
 import com.cognifide.aet.job.api.comparator.ComparatorProperties;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
@@ -29,9 +30,11 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Map;
+import java.util.Optional;
 import javax.imageio.ImageIO;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 
 public class LayoutComparator implements ComparatorJob {
 
@@ -41,13 +44,23 @@ public class LayoutComparator implements ComparatorJob {
 
   public static final String CONTENT_TYPE = "image/png";
 
+  public static final String PRECENTAGE_TRESHOLD_PARAM = "percentageTreshold";
+
+  public static final String PIXEL_TRESHOLD_PARAM = "pixelTreshold";
+
   private final ComparatorProperties properties;
 
   private final ArtifactsDAO artifactsDAO;
 
+  private Optional<Integer> pixelTreshold;
+
+  private Optional<Double> percentageTreshold;
+
   LayoutComparator(ComparatorProperties comparatorProperties, ArtifactsDAO artifactsDAO) {
     this.properties = comparatorProperties;
     this.artifactsDAO = artifactsDAO;
+    this.percentageTreshold = Optional.empty();
+    this.pixelTreshold = Optional.empty();
   }
 
   @Override
@@ -67,6 +80,7 @@ public class LayoutComparator implements ComparatorJob {
         BufferedImage collectedImg = ImageIO.read(collectedArtifact);
         imageComparisonResult = ImageComparison.compare(patternImg, collectedImg);
         stepResult = saveArtifacts(imageComparisonResult);
+
       } catch (IOException e) {
         throw new ProcessingException("Error while obtaining artifacts!", e);
       }
@@ -84,8 +98,15 @@ public class LayoutComparator implements ComparatorJob {
   private ComparatorStepResult saveArtifacts(ImageComparisonResult imageComparisonResult)
       throws ProcessingException {
     final ComparatorStepResult result;
+    imageComparisonResult.setPixelTreshold(this.pixelTreshold);
+    imageComparisonResult.setPercentageTreshold(this.percentageTreshold);
     if (imageComparisonResult.isMatch()) {
-      result = getPassedStepResult();
+      if (imageComparisonResult.isConditional()) {
+        result = getConditionalResult();
+        addPixelDifferenceDataToRestult(result, imageComparisonResult);
+      } else {
+        result = getPassedStepResult();
+      }
     } else {
       InputStream mask = null;
       try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
@@ -94,18 +115,8 @@ public class LayoutComparator implements ComparatorJob {
         String maskArtifactId = artifactsDAO.saveArtifact(properties, mask, CONTENT_TYPE);
 
         result = new ComparatorStepResult(maskArtifactId, ComparatorStepResult.Status.FAILED, true);
-
-        result.addData("heightDifference",
-            Integer.toString(imageComparisonResult.getHeightDifference()));
-        result.addData("widthDifference",
-            Integer.toString(imageComparisonResult.getWidthDifference()));
-        result.addData("pixelDifference",
-            Integer.toString(imageComparisonResult.getPixelDifferenceCount()));
-        result.addData("patternTimestamp", Long.toString(
-            artifactsDAO.getArtifactUploadDate(properties, properties.getPatternId()).getTime()));
-        result.addData("collectTimestamp", Long.toString(
-            artifactsDAO.getArtifactUploadDate(properties, properties.getCollectedId())
-                .getTime()));
+        addPixelDifferenceDataToRestult(result, imageComparisonResult);
+        addTimestampToResult(result);
       } catch (Exception e) {
         throw new ProcessingException(e.getMessage(), e);
       } finally {
@@ -116,18 +127,52 @@ public class LayoutComparator implements ComparatorJob {
     return result;
   }
 
-  private ComparatorStepResult getPassedStepResult() {
-    ComparatorStepResult result = new ComparatorStepResult(null, ComparatorStepResult.Status.PASSED,
-        false);
+  private void addPixelDifferenceDataToRestult(ComparatorStepResult result,
+      ImageComparisonResult imageComparisonResult) {
+    result.addData("heightDifference",
+        Integer.toString(imageComparisonResult.getHeightDifference()));
+    result.addData("widthDifference",
+        Integer.toString(imageComparisonResult.getWidthDifference()));
+    result.addData("pixelDifference",
+        Integer.toString(imageComparisonResult.getPixelDifferenceCount()));
+    result.addData("percentagePixelDifference",
+        Double.toString(imageComparisonResult.getPercentagePixelDifference()));
+  }
+
+  private void addTimestampToResult(ComparatorStepResult result) {
     result.addData("patternTimestamp", Long.toString(
         artifactsDAO.getArtifactUploadDate(properties, properties.getPatternId()).getTime()));
     result.addData("collectTimestamp", Long.toString(System.currentTimeMillis()));
+  }
+
+  private ComparatorStepResult getConditionalResult() {
+    ComparatorStepResult result = new ComparatorStepResult(null,
+        ComparatorStepResult.Status.CONDITIONAL,
+        false);
+    addTimestampToResult(result);
+    return result;
+  }
+
+  private ComparatorStepResult getPassedStepResult() {
+    ComparatorStepResult result = new ComparatorStepResult(null, ComparatorStepResult.Status.PASSED,
+        false);
+    addTimestampToResult(result);
     return result;
   }
 
   @Override
   public void setParameters(Map<String, String> params) throws ParametersException {
-    // no parameters needed
+    if (params.containsKey(PRECENTAGE_TRESHOLD_PARAM)) {
+      percentageTreshold = Optional.of(NumberUtils.toDouble(params.get(PRECENTAGE_TRESHOLD_PARAM)));
+      ParametersValidator
+          .checkRange(percentageTreshold.get().intValue(), 0, 100,
+              "Wrong percentage treshol value");
+    }
+    if (params.containsKey(PIXEL_TRESHOLD_PARAM)) {
+      pixelTreshold = Optional.of(NumberUtils.toInt(params.get(PIXEL_TRESHOLD_PARAM)));
+      ParametersValidator.checkParameter(pixelTreshold.get() >= 0,
+          "Pixel treshold should be greater than 0");
+    }
   }
 
 }
