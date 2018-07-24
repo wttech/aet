@@ -101,7 +101,12 @@ public class LayoutComparator implements ComparatorJob {
     imageComparisonResult.setPixelTreshold(this.pixelTreshold);
     imageComparisonResult.setPercentageTreshold(this.percentageTreshold);
     if (imageComparisonResult.isMatch()) {
-      result = getPassedStepResult();
+      if (imageComparisonResult.isConditional()) {
+        result = getConditionalResult();
+        addPixelDifferenceDataToRestult(result, imageComparisonResult);
+      } else {
+        result = getPassedStepResult();
+      }
     } else {
       InputStream mask = null;
       try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
@@ -110,18 +115,8 @@ public class LayoutComparator implements ComparatorJob {
         String maskArtifactId = artifactsDAO.saveArtifact(properties, mask, CONTENT_TYPE);
 
         result = new ComparatorStepResult(maskArtifactId, ComparatorStepResult.Status.FAILED, true);
-
-        result.addData("heightDifference",
-            Integer.toString(imageComparisonResult.getHeightDifference()));
-        result.addData("widthDifference",
-            Integer.toString(imageComparisonResult.getWidthDifference()));
-        result.addData("pixelDifference",
-            Integer.toString(imageComparisonResult.getPixelDifferenceCount()));
-        result.addData("patternTimestamp", Long.toString(
-            artifactsDAO.getArtifactUploadDate(properties, properties.getPatternId()).getTime()));
-        result.addData("collectTimestamp", Long.toString(
-            artifactsDAO.getArtifactUploadDate(properties, properties.getCollectedId())
-                .getTime()));
+        addPixelDifferenceDataToRestult(result, imageComparisonResult);
+        addTimestampToResult(result);
       } catch (Exception e) {
         throw new ProcessingException(e.getMessage(), e);
       } finally {
@@ -132,12 +127,36 @@ public class LayoutComparator implements ComparatorJob {
     return result;
   }
 
-  private ComparatorStepResult getPassedStepResult() {
-    ComparatorStepResult result = new ComparatorStepResult(null, ComparatorStepResult.Status.PASSED,
-        false);
+  private void addPixelDifferenceDataToRestult(ComparatorStepResult result,
+      ImageComparisonResult imageComparisonResult) {
+    result.addData("heightDifference",
+        Integer.toString(imageComparisonResult.getHeightDifference()));
+    result.addData("widthDifference",
+        Integer.toString(imageComparisonResult.getWidthDifference()));
+    result.addData("pixelDifference",
+        Integer.toString(imageComparisonResult.getPixelDifferenceCount()));
+    result.addData("percentagePixelDifference",
+        Double.toString(imageComparisonResult.getPercentagePixelDifference()));
+  }
+
+  private void addTimestampToResult(ComparatorStepResult result) {
     result.addData("patternTimestamp", Long.toString(
         artifactsDAO.getArtifactUploadDate(properties, properties.getPatternId()).getTime()));
     result.addData("collectTimestamp", Long.toString(System.currentTimeMillis()));
+  }
+
+  private ComparatorStepResult getConditionalResult() {
+    ComparatorStepResult result = new ComparatorStepResult(null,
+        ComparatorStepResult.Status.CONDITIONAL,
+        false);
+    addTimestampToResult(result);
+    return result;
+  }
+
+  private ComparatorStepResult getPassedStepResult() {
+    ComparatorStepResult result = new ComparatorStepResult(null, ComparatorStepResult.Status.PASSED,
+        false);
+    addTimestampToResult(result);
     return result;
   }
 

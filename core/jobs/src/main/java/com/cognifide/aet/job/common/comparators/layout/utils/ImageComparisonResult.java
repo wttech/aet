@@ -29,6 +29,10 @@ public class ImageComparisonResult {
 
   private int widthDifference;
 
+  private double percentagePixelDifference;
+
+  private boolean conditional;
+
   private BufferedImage resultImage;
 
   private Optional<Integer> pixelTreshold;
@@ -48,11 +52,16 @@ public class ImageComparisonResult {
     this.pixelCount = resultImage.getHeight() * resultImage.getWidth();
     this.percentageTreshold = Optional.empty();
     this.pixelTreshold = Optional.empty();
+    this.conditional = false;
+    this.percentagePixelDifference = 100 * this.pixelDifferenceCount / (double) this.pixelCount;
   }
 
   public boolean isMatch() {
     if (this.pixelTreshold.isPresent() || this.percentageTreshold.isPresent()) {
-      return isAcceptablePixelChange() && isAcceptablePercentageChange();
+      if (isAcceptablePixelChange() && isAcceptablePercentageChange()) {
+        this.conditional = true;
+        return true;
+      }
     }
     return isNoChange();
   }
@@ -68,7 +77,8 @@ public class ImageComparisonResult {
 
   private boolean isAcceptablePercentageChange() {
     return this.percentageTreshold
-        .map(aDouble -> 100 * this.pixelDifferenceCount / (double)this.pixelCount <= aDouble).orElse(true);
+        .map(aDouble -> this.percentagePixelDifference <= aDouble)
+        .orElse(true);
   }
 
   public int getPixelDifferenceCount() {
@@ -87,12 +97,20 @@ public class ImageComparisonResult {
     return resultImage;
   }
 
+  public double getPercentagePixelDifference() {
+    return percentagePixelDifference;
+  }
+
   public void setPixelTreshold(Optional<Integer> pixelTreshold) {
     this.pixelTreshold = pixelTreshold;
   }
 
   public void setPercentageTreshold(Optional<Double> percentageTreshold) {
     this.percentageTreshold = percentageTreshold;
+  }
+
+  public boolean isConditional() {
+    return conditional;
   }
 
 }
