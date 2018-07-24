@@ -15,10 +15,6 @@
  */
 package com.cognifide.aet.worker.drivers.firefox.local;
 
-import static com.cognifide.aet.worker.drivers.WebDriverHelper.NAME;
-import static com.cognifide.aet.worker.drivers.WebDriverHelper.NAME_LABEL;
-import static com.cognifide.aet.worker.drivers.WebDriverHelper.PATH;
-
 import com.cognifide.aet.worker.drivers.firefox.FirefoxCommunicationWrapperImpl;
 import com.cognifide.aet.worker.drivers.firefox.FirefoxProfileBuilder;
 import com.cognifide.aet.job.api.collector.HttpRequestExecutorFactory;
@@ -26,24 +22,28 @@ import com.cognifide.aet.job.api.collector.ProxyServerWrapper;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.worker.api.WebDriverFactory;
 import com.cognifide.aet.worker.exceptions.WorkerException;
-import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
+
+import org.apache.commons.lang3.StringUtils;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.ConfigurationPolicy;
 import org.apache.felix.scr.annotations.Properties;
 import org.apache.felix.scr.annotations.Property;
 import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.Service;
-import org.apache.sling.commons.osgi.PropertiesUtil;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.firefox.FirefoxProfile;
 import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.osgi.framework.Constants;
+
+import static com.cognifide.aet.worker.drivers.WebDriverHelper.*;
 
 @Service
 @Component(
@@ -52,20 +52,37 @@ import org.osgi.framework.Constants;
     metatype = true)
 @Properties({@Property(name = Constants.SERVICE_VENDOR, value = "Cognifide Ltd")})
 public class FirefoxWebDriverFactory implements WebDriverFactory {
+    private static final String DEFAULT_BROWSER_NAME = "firefox";
 
-  private static final String DEFAULT_FIREFOX_BINARY_PATH = "/usr/bin/firefox";
+    @Reference
+    private HttpRequestExecutorFactory requestExecutorFactory;
+
+    @Property(name = NAME,
+            label = NAME_LABEL,
+            description = NAME_DESC,
+            value = DEFAULT_BROWSER_NAME)
+    private String name;
+
+    @Property(name = SELENIUM_GRID_URL,
+            label = SELENIUM_GRID_URL_LABEL,
+            description = "Url to selenium grid hub. When null local Chrome driver will be used. Local Chrome driver does not work on Linux",
+            value = DEFAULT_SELENIUM_GRID_URL)
+    private String seleniumGridUrl;
+
+    @Activate
+    public void activate(Map<String, String> properties) {
+        this.name = getProp(properties, NAME, DEFAULT_BROWSER_NAME);
+        this.seleniumGridUrl = getProp(properties, SELENIUM_GRID_URL, DEFAULT_SELENIUM_GRID_URL);
+    }
+
+
+    private static final String DEFAULT_FIREFOX_BINARY_PATH = "/usr/bin/firefox";
 
   private static final String DEFAULT_FIREFOX_ERROR_LOG_FILE_PATH = "/opt/aet/firefox/log/stderr.log";
 
   private static final String LOG_FILE_PATH = "logFilePath";
 
   private static final String DEFAULT_FF_NAME = "ff";
-
-  @Reference
-  private HttpRequestExecutorFactory requestExecutorFactory;
-
-  @Property(name = NAME, label = NAME_LABEL, value = DEFAULT_FF_NAME)
-  private String name;
 
   @Property(name = PATH, label = "Custom path to Firefox binary", value = DEFAULT_FIREFOX_BINARY_PATH)
   private String path;
@@ -86,7 +103,7 @@ public class FirefoxWebDriverFactory implements WebDriverFactory {
       proxyServer.setCaptureContent(true);
       proxyServer.setCaptureHeaders(true);
 
-      DesiredCapabilities capabilities = new DesiredCapabilities();
+      DesiredCapabilities capabilities = DesiredCapabilities.firefox();
       capabilities.setCapability(CapabilityType.PROXY, proxy);
       capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS, true);
 
@@ -106,7 +123,7 @@ public class FirefoxWebDriverFactory implements WebDriverFactory {
   @Override
   public WebCommunicationWrapper createWebDriver() throws WorkerException {
     try {
-      DesiredCapabilities capabilities = new DesiredCapabilities();
+      DesiredCapabilities capabilities = DesiredCapabilities.firefox();
 
       FirefoxProfile fp = getFirefoxProfile();
       setCommonCapabilities(capabilities, fp);
@@ -122,38 +139,27 @@ public class FirefoxWebDriverFactory implements WebDriverFactory {
   private FirefoxProfile getFirefoxProfile() {
     final FirefoxProfile firefoxProfile = FirefoxProfileBuilder.newInstance()
         .withUnstableAndFastLoadStrategy()
-        .withLogfilePath(logFilePath)
         .withFlashSwitchedOff()
         .withForcedAliasing()
         .withJavaScriptErrorCollectorPlugin()
         .withDevtoolsStorageEnabled()
         .withAllCookiesAccepted()
-        .withRandomPort()
         .withUpdateDisabled()
         .build();
-    System.setProperty("webdriver.firefox.logfile", logFilePath);
     System.setProperty("webdriver.load.strategy", "unstable");
     return firefoxProfile;
   }
 
   private void setCommonCapabilities(DesiredCapabilities capabilities, FirefoxProfile fp) {
     capabilities.setCapability(FirefoxDriver.PROFILE, fp);
-    capabilities.setCapability("marionette", false);
-    capabilities.setCapability("firefox_binary", new File(path).getAbsolutePath());
+
   }
 
-  private WebDriver getFirefoxDriver(DesiredCapabilities capabilities) {
-    WebDriver driver = new FirefoxDriver(capabilities);
-    driver.manage().timeouts().pageLoadTimeout(5L, TimeUnit.MINUTES);
-    return driver;
+  private WebDriver getFirefoxDriver(DesiredCapabilities capabilities)
+      throws MalformedURLException {
+    WebDriver driver = StringUtils.isNotBlank(seleniumGridUrl) ? new RemoteWebDriver(
+              new URL(seleniumGridUrl), capabilities) : new FirefoxDriver(capabilities);
+      driver.manage().timeouts().pageLoadTimeout(5L, TimeUnit.MINUTES);
+      return driver;
   }
-
-  @Activate
-  public void activate(Map<String, String> properties) {
-    this.name = PropertiesUtil.toString(properties.get(NAME), DEFAULT_FF_NAME);
-    this.path = PropertiesUtil.toString(properties.get(PATH), DEFAULT_FIREFOX_BINARY_PATH);
-    this.logFilePath = PropertiesUtil
-        .toString(properties.get(LOG_FILE_PATH), DEFAULT_FIREFOX_ERROR_LOG_FILE_PATH);
-  }
-
 }
