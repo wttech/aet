@@ -41,7 +41,7 @@
 			<open />
 			<resolution width="1500" />
 			<!-- needed for initial timestamp rendering on Vagrant -->
-			<sleep duration="1000" />
+			<sleep duration="100" />
 			<screen />
 		</collect>
 		<compare>

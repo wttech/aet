@@ -40,7 +40,7 @@
 		<collect>
 			<open />
 			<resolution width="1500" />
-			<wait-for-element-to-be-visible css="#test-element" timeout="1000"/>
+			<wait-for-element-to-be-visible css="#test-element" timeout="100"/>
 			<screen />
 		</collect>
 		<compare>
