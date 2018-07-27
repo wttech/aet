@@ -40,7 +40,7 @@
 		<collect>
 			<open />
             <resolution width="1500" />
-			<wait-for-image-completion css="#image-to-wait-for" timeout = "1000"/>
+			<wait-for-image-completion css="#image-to-wait-for" timeout = "100"/>
 			<screen />
 		</collect>
 		<compare>

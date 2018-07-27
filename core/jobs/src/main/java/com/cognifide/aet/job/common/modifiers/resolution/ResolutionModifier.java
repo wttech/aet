@@ -23,7 +23,6 @@ import com.cognifide.aet.job.api.exceptions.ProcessingException;
 
 import java.util.Map;
 import java.util.Optional;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.lang3.math.NumberUtils;
 import org.openqa.selenium.Dimension;
@@ -44,7 +43,13 @@ public class ResolutionModifier implements CollectorJob {
 
   private static final String HEIGHT_PARAM = "height";
 
+  private static final String BROWSER_NAME_CHROME = "chrome";
+
+  private static final String JAVASCRIPT_GET_BODY_HEIGHT = "return document.body.scrollHeight";
+
   private static final int MAX_SIZE = 15000;
+
+  private static final int INITIAL_HEIGHT = 300;
 
   private final WebDriver webDriver;
 
@@ -87,10 +92,12 @@ public class ResolutionModifier implements CollectorJob {
     if (height.isPresent()) {
       localHeight = height.get();
     } else {
-      String browserName = ((RemoteWebDriver) webDriver).getCapabilities().getBrowserName().toLowerCase();
-      window.setSize(new Dimension(width, 300)); //Pre-run with correct width
-      localHeight = Integer.parseInt(js.executeScript("return document.body.scrollHeight").toString());
-      if(browserName.equals("chrome") && localHeight > MAX_SIZE){
+      String browserName = ((RemoteWebDriver) webDriver).getCapabilities().getBrowserName()
+          .toLowerCase();
+      window.setSize(new Dimension(width, INITIAL_HEIGHT)); //Pre-run with correct width
+      localHeight = Integer
+          .parseInt(js.executeScript(JAVASCRIPT_GET_BODY_HEIGHT).toString());
+      if (browserName.equals(BROWSER_NAME_CHROME) && localHeight > MAX_SIZE) {
         LOG.info("Height is over browser limit, changing height to " + MAX_SIZE);
         localHeight = MAX_SIZE;
       }
