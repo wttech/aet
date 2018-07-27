@@ -142,7 +142,7 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
             if (!_.isEmpty($(suiteContainer).nextAll(
                     '.aside-report:not(.is-hidden)').first().find(
                     '.test-name'))) {
-              currentTabLabel = $('.nav-tabs > .nav-item').filter('.active').text().replace(/\s/g, '');
+              currentTabLabel = getCurrentTabLabel();
               $nextElement = suiteContainer.nextAll(
                     '.aside-report:not(.is-hidden)').first();
               handleStyling(testContainer, currentItem, $nextElement);
@@ -150,7 +150,7 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
               userSettingsService.setLastTab(currentTabLabel);
             }
           } else {
-            currentTabLabel = $('.nav-tabs > .nav-item').filter('.active').text().replace(/\s/g, '');
+            currentTabLabel = getCurrentTabLabel();
             userSettingsService.setLastTab(currentTabLabel);
             nextUrl.click();
             scrollTo(nextUrl);
@@ -187,7 +187,7 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
             if (!_.isEmpty($(suiteContainer).prevAll(
                   '.aside-report:not(.is-hidden)').first()
                   .find('.test-name'))) {
-              currentTabLabel = $('.nav-tabs > .nav-item').filter('.active').text().replace(/\s/g, '');
+              currentTabLabel = getCurrentTabLabel();
               $previousElement = suiteContainer.prevAll(
                 '.aside-report:not(.is-hidden)').first();
               handleStyling(testContainer, currentItem, $previousElement);
@@ -195,7 +195,7 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
               userSettingsService.setLastTab(currentTabLabel);
             }
           } else {
-            currentTabLabel = $('.nav-tabs > .nav-item').filter('.active').text().replace(/\s/g, '');
+            currentTabLabel = getCurrentTabLabel();
             userSettingsService.setLastTab(currentTabLabel);
             scrollTo(previousTest);
             previousTest.click();
@@ -240,6 +240,10 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
           .find('.test-url')
           .last()
           .click();
+      }
+
+      function getCurrentTabLabel() {
+        return $('.nav-tabs > .nav-item').filter('.active').text().replace(/\s/g, '');
       }
 
       function clickOnTab() {
