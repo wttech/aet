@@ -50,6 +50,17 @@
     <span class="preformatted">test:</span><span>{{toolbarBottom.model.testGroupName}}</span>
     </h5>
   </div>
+  <div class="toolbar-generate-raport">
+    <a ng-click="generatePDF()">
+        <div class="raport-button"
+        data-toggle="popover"
+        data-trigger="hover"
+        data-content="Click to generate a PDF report"
+        aet-generate-pdf-report>
+        Generate PDF
+    </div>
+    </a>
+  </div>
   <div class="toolbar-blocks">
     <div class="toolbar-btns is-absolute">
 

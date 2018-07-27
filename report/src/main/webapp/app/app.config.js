@@ -26,6 +26,10 @@ require.config({
     'angularAMD': '../assets/libs/angularAMD/angularAMD',
     'lodash': '../assets/libs/lodash/dist/lodash',
     'angular-bootstrap': '../assets/libs/angular-bootstrap/ui-bootstrap-tpls',
+    'pdfkit': '../assets/libs/pdfkit/pdfkit',
+    'filesaver': '../assets/libs/filesaver/FileSaver',
+    'canvas2pdf': '../assets/libs/canvas2pdf/canvas2pdf',
+    'blob-stream': '../assets/libs/blob-stream/blob-stream',
     'snowfall': '../assets/js/snowfall/snowfall.min',
     // **************** AET custom ********************
     //components
@@ -34,6 +38,7 @@ require.config({
     'urlSearchFilter': 'components/urlSearch.filter',
     'urlStatusFilter': 'components/urlStatus.filter',
     'keyboardShortcutsDirective': 'components/keyboardShortcuts.directive',
+    'generatePDFDirective': 'components/generatePDF.directive',
     'hidePopoversDirective': 'components/hidePopovers.directive',
     'winterEdition': 'themes/winterEdition.directive',
     //services
@@ -88,9 +93,22 @@ require.config({
     lodash: {
       exports: '_'
     },
+    // 'pdfkit': {
+    //   exports: 'pdfkit',
+    // },
+    // 'blob-stream': {
+    //   exports: 'blob-stream',
+    // },
+    // 'fileSaver': {
+    //   exports: 'fileSaver',
+    // },
+    // 'canvas2pdf': {
+    //   deps: ['pdfkit', 'blob-stream'],
+    //   exports: 'canvas2pdf',
+    // },
     'angular-bootstrap': ['angular'],
     'angular-ui-router': ['angular'],
-    'angularAMD': ['angular']
+    'angularAMD': ['angular'],
   },
   deps: ['app.module'],
   waitSeconds: 0
