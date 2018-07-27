@@ -29,7 +29,6 @@ import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriver.Window;
-import org.openqa.selenium.remote.RemoteWebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,8 +41,6 @@ public class ResolutionModifier implements CollectorJob {
   private static final String WIDTH_PARAM = "width";
 
   private static final String HEIGHT_PARAM = "height";
-
-  private static final String BROWSER_NAME_CHROME = "chrome";
 
   private static final String JAVASCRIPT_GET_BODY_HEIGHT = "return document.body.scrollHeight";
 
@@ -92,12 +89,10 @@ public class ResolutionModifier implements CollectorJob {
     if (height.isPresent()) {
       localHeight = height.get();
     } else {
-      String browserName = ((RemoteWebDriver) webDriver).getCapabilities().getBrowserName()
-          .toLowerCase();
-      window.setSize(new Dimension(width, INITIAL_HEIGHT)); //Pre-run with correct width
+      window.setSize(new Dimension(width, INITIAL_HEIGHT));
       localHeight = Integer
           .parseInt(js.executeScript(JAVASCRIPT_GET_BODY_HEIGHT).toString());
-      if (browserName.equals(BROWSER_NAME_CHROME) && localHeight > MAX_SIZE) {
+      if (localHeight > MAX_SIZE) {
         LOG.info("Height is over browser limit, changing height to " + MAX_SIZE);
         localHeight = MAX_SIZE;
       }

@@ -41,6 +41,8 @@ public class ResolutionModifierTest {
 
   private static final String NOT_A_NUMBER = "NaN";
 
+  private static final String JAVASCRIPT_GET_BODY_HEIGHT = "return document.body.scrollHeight";
+
   private static final int WINDOW_WIDTH = 1024;
 
   private static final int WINDOW_HEIGHT = 768;
@@ -49,7 +51,7 @@ public class ResolutionModifierTest {
 
   private static final int CUSTOM_HEIGHT = 600;
 
-  private static final int CHROME_LIMIT = 15000;
+  private static final int BROWSER_HEIGHT_LIMIT = 15000;
 
   @Mock
   private RemoteWebDriver webDriver;
@@ -136,21 +138,37 @@ public class ResolutionModifierTest {
     tested.setParameters(params);
   }
 
-  @Test
-  public void collectTest_setOnlyWidth() throws ParametersException, ProcessingException {
+  private void setUp_setOnlyWidth(){
     when(params.containsKey(WIDTH_PARAM)).thenReturn(true);
     when(params.containsKey(HEIGHT_PARAM)).thenReturn(false);
     when(params.get(WIDTH_PARAM)).thenReturn("" + CUSTOM_WIDTH);
+  }
 
-    when(capabilities.getBrowserName()).thenReturn("chrome");
-    when(webDriver.executeScript("return document.body.scrollHeight"))
-        .thenReturn(CHROME_LIMIT + 5000L);
+  @Test
+  public void collectTest_setOnlyWidth() throws ParametersException, ProcessingException {
+    setUp_setOnlyWidth();
+    when(webDriver.executeScript(JAVASCRIPT_GET_BODY_HEIGHT))
+        .thenReturn(CUSTOM_HEIGHT);
 
     tested.setParameters(params);
     tested.collect();
 
     verify(windowDimension, never()).getWidth();
     verify(windowDimension, never()).getHeight();
-    verify(window, atLeastOnce()).setSize(new Dimension(CUSTOM_WIDTH, CHROME_LIMIT));
+    verify(window, atLeastOnce()).setSize(new Dimension(CUSTOM_WIDTH, CUSTOM_HEIGHT));
+  }
+
+  @Test
+  public void collectTest_setOnlyWidth_reachedBrowserHeightLimit() throws ParametersException, ProcessingException {
+    setUp_setOnlyWidth();
+    when(webDriver.executeScript(JAVASCRIPT_GET_BODY_HEIGHT))
+        .thenReturn(BROWSER_HEIGHT_LIMIT + 5000L);
+
+    tested.setParameters(params);
+    tested.collect();
+
+    verify(windowDimension, never()).getWidth();
+    verify(windowDimension, never()).getHeight();
+    verify(window, atLeastOnce()).setSize(new Dimension(CUSTOM_WIDTH, BROWSER_HEIGHT_LIMIT));
   }
 }
