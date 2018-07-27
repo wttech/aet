@@ -28,6 +28,7 @@ define(['angularAMD',
   // components
   'hidePopoversDirective',
   'keyboardShortcutsDirective',
+  'compareScreensDirective',
   'testSearchFilter',
   'testStatusFilter',
   'urlSearchFilter',
