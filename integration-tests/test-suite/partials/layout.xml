@@ -82,9 +82,9 @@
 	<test name="S-comparator-Layout-Hide-leaveBlankSpace-false">
 		<collect>
 			<open />
-			<resolution width="1500" />
 			<sleep duration="3000" />
 			<hide xpath="//*[@class='space']" leaveBlankSpace="false" />
+            <resolution width="1500" />
 			<screen />
 		</collect>
 		<compare>
