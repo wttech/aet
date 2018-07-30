@@ -44,7 +44,7 @@ define(['angularAMD'], function (angularAMD) {
         console.warn('Can\'t find wrapper');
         return;
       } else if (wrapper.classList.contains(initedClass)) {
-        console.warn('Beta already inited');
+        console.warn('Screen comparison already has already been initialized');
         return;
       } else {
         wrapper.classList.add(initedClass);
@@ -134,21 +134,21 @@ define(['angularAMD'], function (angularAMD) {
 
       loadImage(img.imgB, imgSize.imgSizeB, canvas.canvasB, context.contextB, simple.simpleB, function (returnedSimple, returnedImgSize) {
         simple.simpleB = returnedSimple;
-        imgSize.imgSizeB = returnedImgSize; // get rid of the callback here and move it outside of that func
-        arrangeMasks(mask, difs, canvas, arrangeTimeout, callbackFunction);
+        imgSize.imgSizeB = returnedImgSize;
+        arrangeMasks(mask, difs, canvas, arrangeTimeout, arrangeMaskCallback);
       });
 
-      function callbackFunction(params) {
-        mask.maskSize = params;
+      function arrangeMaskCallback(maskSize) {
+        mask.maskSize = maskSize;
         onImagesReady(mask, imgSize, simple, label, ruler, invertedGroups, difs, wrapper);
-        processLines(cursor, simple,  group, groups);
+        processLines(cursor, simple, group, groups);
         invertGroups(simple, groups, invertedGroups);
         drawDifferences(difs, imgSize, invertedGroups, simple, context);
       }
-      
+
       canvas.canvasWrapper.appendChild(canvas.canvasA);
       canvas.canvasWrapper.appendChild(canvas.canvasB);
-      };
+    };
 
     function drawDifferences(difs, imgSize, invertedGroups, simple, context) {
       var maxHeight = Math.max(imgSize.imgSizeA.height, imgSize.imgSizeB.height);
@@ -422,7 +422,7 @@ define(['angularAMD'], function (angularAMD) {
         invertedGroups.invertedGroupsA.push(firstGroup);
       }
       if (simple.simpleA[groups[0][0]].match > 0) {
-        var firstGroup = [];
+        firstGroup = [];
         for (var i = 0; i < simpleA[groups[0][0]].match; i++) {
           firstGroup.push(i);
         }
@@ -533,30 +533,30 @@ define(['angularAMD'], function (angularAMD) {
       var indexFromA = groupA[0];
       var indexToA = groupA[groupA.length - 1];
 
-        if (typeof invertedGroups.invertedGroupsB[index] !== 'undefined' && invertedGroups.invertedGroupsB[index].length > 0) {
-          var groupB = invertedGroups.invertedGroupsB[index];
-          var indexFromB = groupB[0];
-          var indexToB = groupB[groupB.length - 1];
-          return {
-            aFrom: simple.simpleA[indexFromA].offset,
-            aTo: simple.simpleA[indexToA].offset + simple.simpleA[indexToA].size,
-            bFrom: simple.simpleB[indexFromB].offset,
-            bTo: simple.simpleB[indexToB].offset + simple.simpleB[indexToB].size
-          };
-        } else {
-          var bPosition = 0;
-          if (simple.simpleA[indexFromA - 1]) {
-            bPosition = simple.simpleB[simple.simpleA[indexFromA - 1].match].offset + simple.simpleB[simple.simpleA[indexFromA - 1].match].size;
-          } else if (simple.simpleA[indexToA + 1]) {
-            bPosition = simple.simpleB[simple.simpleA[indexToA + 1].match].offset;
-          }
-          return {
-            aFrom: simple.simpleA[indexFromA].offset,
-            aTo: simple.simpleA[indexToA].offset + simple.simpleA[indexToA].size,
-            bFrom: bPosition,
-            bTo: bPosition
-          };
+      if (typeof invertedGroups.invertedGroupsB[index] !== 'undefined' && invertedGroups.invertedGroupsB[index].length > 0) {
+        var groupB = invertedGroups.invertedGroupsB[index];
+        var indexFromB = groupB[0];
+        var indexToB = groupB[groupB.length - 1];
+        return {
+          aFrom: simple.simpleA[indexFromA].offset,
+          aTo: simple.simpleA[indexToA].offset + simple.simpleA[indexToA].size,
+          bFrom: simple.simpleB[indexFromB].offset,
+          bTo: simple.simpleB[indexToB].offset + simple.simpleB[indexToB].size
+        };
+      } else {
+        var bPosition = 0;
+        if (simple.simpleA[indexFromA - 1]) {
+          bPosition = simple.simpleB[simple.simpleA[indexFromA - 1].match].offset + simple.simpleB[simple.simpleA[indexFromA - 1].match].size;
+        } else if (simple.simpleA[indexToA + 1]) {
+          bPosition = simple.simpleB[simple.simpleA[indexToA + 1].match].offset;
         }
+        return {
+          aFrom: simple.simpleA[indexFromA].offset,
+          aTo: simple.simpleA[indexToA].offset + simple.simpleA[indexToA].size,
+          bFrom: bPosition,
+          bTo: bPosition
+        };
+      }
     }
 
     function showAllDifs(wrapper) {
