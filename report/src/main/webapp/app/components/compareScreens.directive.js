@@ -33,7 +33,7 @@ define(['angularAMD'], function (angularAMD) {
 
       var tab = document.querySelector('.test-tabs > .tab-content > .tab-pane.ng-scope.active');
       var wrapper = tab.querySelector('.page-main .layout-compare');
-      var initedClass = 'beta-active';
+      var initedClass = 'screen-comparison-active';
       var arrangeTimeout;
 
       function prepareMarkup(wrapper) {
@@ -49,6 +49,14 @@ define(['angularAMD'], function (angularAMD) {
       } else {
         wrapper.classList.add(initedClass);
       }
+
+      var button = document.querySelector(".try-new");
+      button.classList.add('button-disabled');
+
+      var infoMsg = document.createElement("div");
+      infoMsg.innerHTML = "<div class='info-msg'>Advanced screen comparison in progress - please wait</div>";
+      var tabContent = document.querySelector(".tab-content");
+      tabContent.appendChild(infoMsg);
 
       var items = wrapper.querySelectorAll('.layout-compare-item .img-responsive:not(.mask)');
 
@@ -127,6 +135,8 @@ define(['angularAMD'], function (angularAMD) {
       var groups = [];
       var group = [];
 
+      
+
       loadImage(img.imgA, imgSize.imgSizeA, canvas.canvasA, context.contextA, simple.simpleA, function (returnedSimple, returnedImgSize) {
         simple.simpleA = returnedSimple;
         imgSize.imgSizeA = returnedImgSize;
@@ -135,6 +145,8 @@ define(['angularAMD'], function (angularAMD) {
       loadImage(img.imgB, imgSize.imgSizeB, canvas.canvasB, context.contextB, simple.simpleB, function (returnedSimple, returnedImgSize) {
         simple.simpleB = returnedSimple;
         imgSize.imgSizeB = returnedImgSize;
+        button.classList.remove('button-disabled');
+        tabContent.removeChild(infoMsg);
         arrangeMasks(mask, difs, canvas, arrangeTimeout, arrangeMaskCallback);
       });
 
@@ -148,6 +160,9 @@ define(['angularAMD'], function (angularAMD) {
 
       canvas.canvasWrapper.appendChild(canvas.canvasA);
       canvas.canvasWrapper.appendChild(canvas.canvasB);
+
+
+
     };
 
     function drawDifferences(difs, imgSize, invertedGroups, simple, context) {
