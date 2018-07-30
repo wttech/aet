@@ -96,9 +96,9 @@
         <bundle>wrap:mvn:org.hamcrest/hamcrest-core/1.3</bundle>
         <bundle>wrap:mvn:net.sourceforge.htmlunit/htmlunit/2.13</bundle>
         <bundle>wrap:mvn:net.sourceforge.htmlunit/htmlunit-core-js/2.13</bundle>
-        <bundle>wrap:mvn:org.apache.httpcomponents/httpclient/4.3.3</bundle>
-        <bundle>wrap:mvn:org.apache.httpcomponents/httpcore/4.3.2</bundle>
-        <bundle>wrap:mvn:org.apache.httpcomponents/httpmime/4.3.3</bundle>
+        <bundle>wrap:mvn:org.apache.httpcomponents/httpclient/4.4</bundle>
+        <bundle>wrap:mvn:org.apache.httpcomponents/httpcore/4.4</bundle>
+        <bundle>wrap:mvn:org.apache.httpcomponents/httpmime/4.4</bundle>
         <bundle>wrap:mvn:net.jcip/jcip-annotations/1.0</bundle>
         <bundle>wrap:mvn:net.sf.jopt-simple/jopt-simple/3.2</bundle>
         <bundle>wrap:mvn:org.w3c.css/sac/1.3</bundle>

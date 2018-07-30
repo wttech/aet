@@ -16,6 +16,7 @@ All notable changes to AET will be documented in this file.
 - [PR-279](https://github.com/Cognifide/aet/pull/279) Upgrade for some of libraries used by AET
 - [PR-281](https://github.com/Cognifide/aet/pull/281) No version in Bundle names (simpler deployment)
 - [PR-286](https://github.com/Cognifide/aet/pull/286) Shared Patterns - use latest patterns of given suite name ([#121](https://github.com/Cognifide/aet/issues/121))
+- [PR-291](https://github.com/Cognifide/aet/pull/291) Updated nu.validator version from 15.6.29 to 17.11.1
 
 ## Version 2.1.6
 
