@@ -15,6 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
+
 .try-new {
   display: inline-block;
   vertical-align: middle;
@@ -23,29 +24,30 @@
   }
 }
 
-.button-disabled { 
-  background-color:$gray_disabled;
+.button-disabled {
+  background-color: $gray_disabled;
 }
 
 .info-msg {
-  display:block;
+  display: block;
   position: relative;
-  width:100%;
-  left:50%;
+  width: 100%;
+  left: 50%;
   text-align: center;
-  padding:50px 0;
-  transform:translate(-50%, -50%);
-  color:$text_color;
-  border:1px solid $grayish;
-  border-radius:5px;
-  background-color: rgba(0,0,0,0.25);
+  padding: 50px 0;
+  transform: translate(-50%, -50%);
+  color: $text_color;
+  border: 1px solid $grayish;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.25);
   box-shadow: 0 0 50px rgba(0, 0, 0, 0.3) !important;
-  font-size:18px;
-  font-weight:bold;
+  font-size: 18px;
+  font-weight: bold;
 }
 
 .layout-compare {
   position: relative;
+
   .customMasks {
     position: absolute;
     top: 0;
@@ -56,6 +58,7 @@
     .maskBbot {
       left: 52%;
     }
+
     .customMask {
       box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.3) !important;
       /* required to overwrite * { box-shadow: none !important; } */
@@ -65,16 +68,18 @@
       pointer-events: none;
       box-sizing: content-box;
     }
+
     .customLabel {
       display: none;
       position: absolute;
       right: 100%;
       left: auto;
       height: 20px;
-      font: bold 16px/20px Arial;
+      font-size:16px;
+      font-weight:bold;
       margin: -20px 4px 0;
-      background: red;
-      color: white;
+      background: $red;
+      color: $white;
       padding: 10px 20px 10px 15px;
       cursor: default;
       pointer-events: none;
@@ -84,28 +89,32 @@
         right: auto;
       }
     }
+
     .labelA .ruler {
       left: auto;
       right: -4px;
     }
+
     .ruler {
       position: absolute;
       top: 50%;
       left: -4px;
       right: auto;
       width: 5px;
-      background: red;
+      background: $red;
       transform: translate(0, -50%);
       min-height: 1px;
       box-sizing: content-box;
     }
   }
+
   .difs {
     position: absolute;
     top: 0;
     box-sizing: content-box;
     left: 50%;
     transform: translate(-50%, 0);
+
     canvas {
       width: 48%;
       position: absolute;
@@ -113,6 +122,7 @@
       left: 0;
       background: rgba(0, 255, 255, 0.1);
       box-sizing: content-box;
+
       &.hover {
         background: transparent;
         animation: blink 0.6s infinite;
@@ -124,11 +134,13 @@
     margin: 0 auto;
     text-align: center;
     box-sizing: content-box;
+
     canvas {
       max-width: 48%;
       vertical-align: top;
       box-sizing: content-box;
-      &+canvas {
+
+      +canvas {
         margin-left: 4%;
       }
     }

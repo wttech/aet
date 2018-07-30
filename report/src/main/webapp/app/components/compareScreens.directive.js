@@ -19,7 +19,6 @@ define(['angularAMD'], function (angularAMD) {
   'use strict';
   angularAMD.directive('aetCompareScreens', compareScreensDirective);
 
-
   function compareScreensDirective() {
     return {
       restrict: 'A',
@@ -28,13 +27,11 @@ define(['angularAMD'], function (angularAMD) {
   }
 
   function linkFunc(scope) {
-
     scope.advancedScreenComparison = function () {
-
       var tab = document.querySelector('.test-tabs > .tab-content > .tab-pane.ng-scope.active');
       var wrapper = tab.querySelector('.page-main .layout-compare');
       var initedClass = 'screen-comparison-active';
-      var arrangeTimeout;
+      var arrangeTimeout = 0;
 
       function prepareMarkup(wrapper) {
         wrapper.innerHTML = '</div><div class="difs"></div><div class="customMasks"><div class="customMask maskAtop"></div><div class="customMask maskAbot"></div><div class="customMask maskBtop"></div><div class="customMask maskBbot"></div><div class="customLabel labelA"><div class="ruler"></div><div class="text"></div></div><div class="customLabel labelB"><div class="ruler"></div><div class="text"></div></div></div><div class="canvas-wrapper"></div>';
@@ -50,12 +47,12 @@ define(['angularAMD'], function (angularAMD) {
         wrapper.classList.add(initedClass);
       }
 
-      var button = document.querySelector(".try-new");
+      var button = document.querySelector('.try-new');
       button.classList.add('button-disabled');
 
-      var infoMsg = document.createElement("div");
-      infoMsg.innerHTML = "<div class='info-msg'>Advanced screen comparison in progress - please wait</div>";
-      var tabContent = document.querySelector(".tab-content");
+      var infoMsg = document.createElement('div');
+      infoMsg.innerHTML = '<div class="info-msg">Advanced screen comparison in progress - please wait</div>';
+      var tabContent = document.querySelector('.tab-content');
       tabContent.appendChild(infoMsg);
 
       var items = wrapper.querySelectorAll('.layout-compare-item .img-responsive:not(.mask)');
@@ -135,8 +132,6 @@ define(['angularAMD'], function (angularAMD) {
       var groups = [];
       var group = [];
 
-      
-
       loadImage(img.imgA, imgSize.imgSizeA, canvas.canvasA, context.contextA, simple.simpleA, function (returnedSimple, returnedImgSize) {
         simple.simpleA = returnedSimple;
         imgSize.imgSizeA = returnedImgSize;
@@ -160,14 +155,12 @@ define(['angularAMD'], function (angularAMD) {
 
       canvas.canvasWrapper.appendChild(canvas.canvasA);
       canvas.canvasWrapper.appendChild(canvas.canvasB);
-
-
-
     };
 
     function drawDifferences(difs, imgSize, invertedGroups, simple, context) {
       var maxHeight = Math.max(imgSize.imgSizeA.height, imgSize.imgSizeB.height);
       var proc = 100 / maxHeight;
+      var newDiffBLeft = '52%';
 
       for (var i = 0; i < invertedGroups.invertedGroupsA.length; i++) {
         var newDifferenceA = document.createElement('canvas');
@@ -182,7 +175,7 @@ define(['angularAMD'], function (angularAMD) {
           newDifferenceA.width = newDifferenceB.width = newDifferenceContextA.width = newDifferenceContextB.width = imgSize.imgSizeA.width;
           newDifferenceA.height = newDifferenceContextA.height = heightA;
           newDifferenceB.height = newDifferenceContextB.height = heightB;
-          newDifferenceB.style.left = '52%';
+          newDifferenceB.style.left = newDiffBLeft;
 
           difs.main.appendChild(newDifferenceA);
           difs.main.appendChild(newDifferenceB);
@@ -218,22 +211,22 @@ define(['angularAMD'], function (angularAMD) {
       for (var index = 0; index < firstImgData.data.length; index += 4) {
         if (typeof secondImgData.data[index] !== 'undefined') {
           if (firstImgData.data[index] !== secondImgData.data[index] || firstImgData.data[index + 1] !== secondImgData.data[index + 1] || firstImgData.data[index + 2] !== secondImgData.data[index + 2]) {
-            firstImgData = dataToRGB(firstImgData, index, 255, 0, 0, 127);
+            firstImgData = dataToRGB(firstImgData, index, [255, 0, 0, 127]);
           } else {
-            firstImgData = dataToRGB(firstImgData, index, 0, 0, 0, 0);
+            firstImgData = dataToRGB(firstImgData, index, [0, 0, 0, 0]);
           }
         } else {
-          firstImgData = dataToRGB(firstImgData, index, 255, 0, 0, 127);
+          firstImgData = dataToRGB(firstImgData, index, [255, 0, 0, 127]);
         }
       }
       return firstImgData;
     }
 
-    function dataToRGB(imgData, index, red, green, blue, alpha) {
-      imgData.data[index] = red;
-      imgData.data[index + 1] = green;
-      imgData.data[index + 2] = blue;
-      imgData.data[index + 3] = alpha;
+    function dataToRGB(imgData, index, colors) {
+      imgData.data[index] = colors[0];
+      imgData.data[index + 1] = colors[1];
+      imgData.data[index + 2] = colors[2];
+      imgData.data[index + 3] = colors[3];
       return imgData;
     }
 
@@ -431,15 +424,15 @@ define(['angularAMD'], function (angularAMD) {
       var firstGroup = [];
       var secondGroup = [];
       if (groups[0][0] > 0) {
-        for (var i = 0; i < groups[0][0]; i++) {
-          firstGroup.push(i);
+        for (var a = 0; a < groups[0][0]; a++) {
+          firstGroup.push(a);
         }
         invertedGroups.invertedGroupsA.push(firstGroup);
       }
       if (simple.simpleA[groups[0][0]].match > 0) {
         firstGroup = [];
-        for (var i = 0; i < simpleA[groups[0][0]].match; i++) {
-          firstGroup.push(i);
+        for (var b = 0; b < simpleA[groups[0][0]].match; b++) {
+          firstGroup.push(b);
         }
         invertedGroups.invertedGroupsB.push(firstGroup);
       }
@@ -463,8 +456,8 @@ define(['angularAMD'], function (angularAMD) {
           newGroupA.push(j);
         }
 
-        for (var j = firstGroupLastElementB + 1; j < secondGroupFirstElementB; j++) {
-          newGroupB.push(j);
+        for (var k = firstGroupLastElementB + 1; k < secondGroupFirstElementB; k++) {
+          newGroupB.push(k);
         }
 
         invertedGroups.invertedGroupsA.push(newGroupA);
@@ -512,16 +505,16 @@ define(['angularAMD'], function (angularAMD) {
     function getInvertedGroupByElement(index, isA, invertedGroups) {
       if (isA) {
         for (var i = 0; i < invertedGroups.invertedGroupsA.length; i++) {
-          var group = invertedGroups.invertedGroupsA[i];
-          if (group.indexOf(index) !== -1) {
+          var groupA = invertedGroups.invertedGroupsA[i];
+          if (groupA.indexOf(index) !== -1) {
             return i;
           }
         }
       } else {
-        for (var i = 0; i < invertedGroups.invertedGroupsB.length; i++) {
-          var group = invertedGroups.invertedGroupsB[i];
-          if (group.indexOf(index) !== -1) {
-            return i;
+        for (var j = 0; j < invertedGroups.invertedGroupsB.length; j++) {
+          var groupB = invertedGroups.invertedGroupsB[j];
+          if (groupB.indexOf(index) !== -1) {
+            return j;
           }
         }
       }
@@ -581,9 +574,10 @@ define(['angularAMD'], function (angularAMD) {
       }
     }
 
-    function selectGroup(index, isA, difs, ruler, wrapper) {
-      ruler.rulerA.style.display = 'block';
-      ruler.rulerB.style.display = 'block';
+    function selectGroup(index, isA, difs, wrapper) {
+      document.querySelectorAll('.customLabel').forEach(function(element) {
+        element.style.display = 'block';
+      });
       showAllDifs(wrapper);
       if (isA) {
         if (difs.difsA[index]) {
@@ -596,12 +590,11 @@ define(['angularAMD'], function (angularAMD) {
       }
     }
 
-    function deselectGroups(label, ruler, wrapper) {
-      label.labelA.style.display = 'none';
-      label.labelB.style.display = 'none';
-      ruler.rulerA.style.display = 'none';
-      ruler.rulerB.style.display = 'none';
-      showAllDifs(wrapper);
+    function deselectGroups(wrapper) {
+     document.querySelectorAll('.customLabel').forEach(function(element) {
+       element.style.display = 'none';
+     });
+     showAllDifs(wrapper);
     }
 
     function getAbsoluteOffset(element) {
@@ -641,14 +634,14 @@ define(['angularAMD'], function (angularAMD) {
             var sizes = getGroupsSizes(selectedGroup, invertedGroups, simple);
             lightMask(sizes.aFrom, sizes.aTo, imgSize, mask.maskA, mask.maskSize, label.labelA, ruler.rulerA);
             lightMask(sizes.aFrom, sizes.aTo, imgSize, mask.maskB, mask.maskSize, label.labelB, ruler.rulerB);
-            selectGroup(selectedGroup, isA, difs, ruler, wrapper);
+            selectGroup(selectedGroup, isA, difs, wrapper);
           }
         }
       };
       mask.customMask.onmouseleave = function () {
         lightMask(0, imgSize.imgSizeA.height, imgSize, mask.maskA, mask.maskSize, label.labelA, ruler.rulerA);
         lightMask(0, imgSize.imgSizeB.height, imgSize, mask.maskB, mask.maskSize, label.labelB, ruler.rulerB);
-        deselectGroups(label, ruler, wrapper);
+        deselectGroups(wrapper);
       };
     }
   }
