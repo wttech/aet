@@ -22,6 +22,7 @@ import static com.cognifide.aet.job.common.datafilters.accessibilityfilter.Acces
 import static com.cognifide.aet.job.common.datafilters.accessibilityfilter.AccessibilityFilter.PARAM_MARKUP_CSS_SELECTOR;
 import static com.cognifide.aet.job.common.datafilters.accessibilityfilter.AccessibilityFilter.PARAM_PRINCIPLE;
 import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -142,6 +143,8 @@ public class AccessibilityFilterTest {
     accessibilityFilter.modifyData(issues);
     if (exclude) {
       verify(issue).exclude();
+    } else {
+      verify(issue, never()).exclude();
     }
   }
 }
