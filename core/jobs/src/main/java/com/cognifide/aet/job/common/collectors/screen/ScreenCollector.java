@@ -28,11 +28,15 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import javax.imageio.ImageIO;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
@@ -56,10 +60,15 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
 
   private final CollectorProperties properties;
 
+  private Optional<String> excludeHandler;
+
+  private String[] excludeElements;
+
   ScreenCollector(CollectorProperties properties, WebDriver webDriver, ArtifactsDAO artifactsDAO) {
     this.properties = properties;
     this.webDriver = webDriver;
     this.artifactsDAO = artifactsDAO;
+    this.excludeHandler = Optional.empty();
   }
 
   @Override
@@ -72,7 +81,36 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
     } else {
       try (final InputStream screenshotStream = new ByteArrayInputStream(screenshot)) {
         String resultId = artifactsDAO.saveArtifact(properties, screenshotStream, CONTENT_TYPE);
-        stepResult = CollectorStepResult.newCollectedResult(resultId);
+
+        if (excludeElements != null) {
+          List<WebElement> webElements = new LinkedList<>();
+          String pageSource = webDriver.getPageSource();
+          for (String element : excludeElements) {
+            if (!pageSource.contains(element.substring(1))) {
+              throw new ParametersException(
+                  "Element \"" + element + "\" not found in page source");
+            }
+            if (element.charAt(0) == '.') {
+              webElements.addAll(webDriver.findElements(By.id(element)));
+            } else {
+              webElements.addAll(webDriver.findElements(By.className(element.substring(1))));
+            }
+          }
+
+          List<java.awt.Point> points = new LinkedList<>();
+          List<java.awt.Dimension> dimensions = new LinkedList<>();
+          for (WebElement webElement : webElements) {
+            java.awt.Point point = new java.awt.Point(webElement.getLocation().x,
+                webElement.getLocation().y);
+            points.add(point);
+            java.awt.Dimension dimension = new java.awt.Dimension(webElement.getSize().width,
+                webElement.getSize().height);
+            dimensions.add(dimension);
+          }
+          stepResult = CollectorStepResult.newCollectedResult(resultId, points, dimensions);
+        } else {
+          stepResult = CollectorStepResult.newCollectedResult(resultId);
+        }
       } catch (Exception e) {
         throw new ProcessingException(e.getMessage(), e);
       }
@@ -97,7 +135,11 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
         .isNotBlank(params.get(CSS_PARAM))) {
       setElementParams(params);
     }
+    if (params.containsKey("exclude-elements")) {
+      excludeElements = params.get("exclude-elements").replace(" ", "").split(",");
+    }
   }
+
 
   private byte[] takeScreenshot() throws ProcessingException {
     try {
@@ -105,6 +147,7 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
         SeleniumWaitHelper
             .waitForElementToBePresent(webDriver, getLocator(), getTimeoutInSeconds());
         return getImagePart(getFullPageScreenshot(), webDriver.findElement(getLocator()));
+
       } else {
         return getFullPageScreenshot();
       }

@@ -23,11 +23,16 @@ import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.job.common.comparators.layout.utils.ImageComparison;
 import com.cognifide.aet.job.common.comparators.layout.utils.ImageComparisonResult;
 import com.cognifide.aet.vs.ArtifactsDAO;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics;
+import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.List;
 import java.util.Map;
 import javax.imageio.ImageIO;
 import org.apache.commons.io.IOUtils;
@@ -50,6 +55,15 @@ public class LayoutComparator implements ComparatorJob {
     this.artifactsDAO = artifactsDAO;
   }
 
+  private void hideElementsInImg(BufferedImage img, List<Point> points, List<Dimension> dimensions){
+    Graphics graphics = img.getGraphics();
+    for(int i = 0; i < points.size(); i++) {
+      graphics.setColor(Color.CYAN);
+      graphics.fillRect(points.get(i).x,points.get(i).y, dimensions.get(i).width, dimensions.get(i).height * 7);
+      graphics.dispose();
+    }
+  }
+
   @Override
   public ComparatorStepResult compare() throws ProcessingException {
 
@@ -65,6 +79,14 @@ public class LayoutComparator implements ComparatorJob {
 
         BufferedImage patternImg = ImageIO.read(patternArtifact);
         BufferedImage collectedImg = ImageIO.read(collectedArtifact);
+
+        List<Point> points = properties.getPoints();
+        List<Dimension> dimensions = properties.getDimensions();
+        if(points != null && dimensions != null) {
+          hideElementsInImg(patternImg, points, dimensions);
+          hideElementsInImg(collectedImg, points, dimensions);
+        }
+
         imageComparisonResult = ImageComparison.compare(patternImg, collectedImg);
         stepResult = saveArtifacts(imageComparisonResult);
       } catch (IOException e) {

@@ -18,6 +18,8 @@ package com.cognifide.aet.communication.api.metadata;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
+import java.awt.Dimension;
+import java.awt.Point;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,12 +36,28 @@ public abstract class StepResult implements Serializable {
   @Pattern(regexp = "^[0-9a-fA-F]{24}$", message = "Invalid objectID")
   private final String artifactId;
 
+  private final List<Point> elementsPoints;
+  private final List<Dimension> elementsDimensions;
+
+  private final String pageSource;
+
   private List<String> errors = new ArrayList<>();
 
   private Map<String, String> data = new HashMap<>();
 
-  public StepResult(String artifactId) {
+  public StepResult(String artifactId, List<Point> elementsPoints, List<Dimension> elementsDimensions, String pageSource) {
     this.artifactId = artifactId;
+    this.elementsPoints = elementsPoints;
+    this.elementsDimensions = elementsDimensions;
+    this.pageSource = pageSource;
+  }
+
+  public StepResult(String artifactId, List<Point> elementsPoints, List<Dimension> elementsDimensions) {
+    this(artifactId, elementsPoints, elementsDimensions, null);
+  }
+
+  public StepResult(String artifactId) {
+    this(artifactId, null, null);
   }
 
   public String getArtifactId() {
@@ -50,6 +68,18 @@ public abstract class StepResult implements Serializable {
 
   public Map<String, String> getData() {
     return ImmutableMap.copyOf(data);
+  }
+
+  public List<Point> getElementsPoints() {
+    return elementsPoints;
+  }
+
+  public List<Dimension> getElementsDimensions() {
+    return elementsDimensions;
+  }
+
+  public String getPageSource() {
+    return pageSource;
   }
 
   public String addData(String key, String value) {
@@ -73,6 +103,8 @@ public abstract class StepResult implements Serializable {
         .add("artifactId", getArtifactId())
         .add("errors", getErrors())
         .add("data", getData())
+        .add("elementsPoints", getElementsPoints())
+        .add("elementsDimensions", getElementsDimensions())
         .toString();
   }
 }

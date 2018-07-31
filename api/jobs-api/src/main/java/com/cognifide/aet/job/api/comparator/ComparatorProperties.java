@@ -17,6 +17,9 @@ package com.cognifide.aet.job.api.comparator;
 
 import com.cognifide.aet.job.api.StepProperties;
 import com.google.common.base.MoreObjects;
+import java.awt.Dimension;
+import java.awt.Point;
+import java.util.List;
 
 public class ComparatorProperties extends StepProperties {
 
@@ -24,16 +27,46 @@ public class ComparatorProperties extends StepProperties {
 
   private final String collectedId;
 
+  private final List<Point> points;
+
+  private final List<Dimension> dimensions;
+
+  private final String pageSource;
+
   public ComparatorProperties(String company, String project, String patternId,
-      String collectedId) {
+      String collectedId, List<Point> points, List<Dimension> dimensions, String pageSource) {
     super(company, project, patternId);
     this.collectedId = collectedId;
+    this.points = points;
+    this.dimensions = dimensions;
+    this.pageSource = pageSource;
+  }
+
+  public ComparatorProperties(String company, String project, String patternId,
+      String collectedId, List<Point> points, List<Dimension> dimensions) {
+    this(company, project, patternId, collectedId, points, dimensions, null);
+  }
+
+  public ComparatorProperties(String company, String project, String patternId,
+      String collectedId) {
+    this(company, project, patternId, collectedId, null, null);
   }
 
   public String getCollectedId() {
     return collectedId;
   }
 
+  public List<Point> getPoints() {
+    return points;
+  }
+
+  public List<Dimension> getDimensions() {
+    return dimensions;
+  }
+
+  public String getPageSource() {
+    return pageSource;
+  }
 
   @Override
   public String toString() {
