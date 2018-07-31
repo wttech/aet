@@ -1,5 +1,7 @@
 #### Status Codes Data Filters
 
+Data filters will be apply only for codes contained in the `filterange`. If the `filterRange` isn't provided, default range will be used.
+
 ##### Exclude Filter
 
 Exclude Filter removes from reports Status Codes results that match specified parameters.  

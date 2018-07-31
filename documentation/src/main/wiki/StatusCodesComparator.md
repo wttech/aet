@@ -12,9 +12,10 @@ Resource name: status-codes
 
 | Parameter | Value | Example | Description | Mandatory |
 | --------- | ----- | ------- | ----------- | --------- |
-| `filterRange` | x,y | 400,500 | Defines range of status codes that should be processed | yes, if `filterCodes` is not present |
-| `filterCodes` | x,y,z | 400,401,404 | List of status codes that should be processed | yes, if `filterRange` is not present |
+| `filterRange` | x,y (default: `400,600`) | 400,500 | Defines range of status codes that should be processed | no |
+| `filterCodes` | x,y,z | 400,401,404 | List of status codes that should be processed | no |
 | `showExcluded` | boolean (default: `true`) | true | Flag that says if excluded codes (see [[Status Codes Data Filters | StatusCodesDataFilters]]) should be displayed in report. By default set to `true`. | no |
+If you provide `filterRange` and `filterCodes`, it will be used as logical sum. It means that `filterRange="400,500"` `filterCodes=501,502` is equivalent to `filterRange="400,502"` but for `filterRange="300,400"` `filterCodes=404` all codes between `401-403` won`t be checked.
 
 ##### Example Usage
 
