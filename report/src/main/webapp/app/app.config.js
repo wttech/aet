@@ -26,10 +26,10 @@ require.config({
     'angularAMD': '../assets/libs/angularAMD/angularAMD',
     'lodash': '../assets/libs/lodash/dist/lodash',
     'angular-bootstrap': '../assets/libs/angular-bootstrap/ui-bootstrap-tpls',
-    'pdfkit': '../assets/libs/pdfkit/pdfkit',
-    'filesaver': '../assets/libs/filesaver/FileSaver',
-    'canvas2pdf': '../assets/libs/canvas2pdf/canvas2pdf',
-    'blob-stream': '../assets/libs/blob-stream/blob-stream',
+    'pdfkit': '../assets/libs/pdfkit/pdfkit-0.7.1',
+    'filesaver': '../assets/libs/filesaver/index',
+    'canvas2pdf': '../assets/libs/canvas2pdf/index',
+    'blob-stream': '../assets/libs/pdfkit/blob-stream-v0.1.3',
     'snowfall': '../assets/js/snowfall/snowfall.min',
     // **************** AET custom ********************
     //components

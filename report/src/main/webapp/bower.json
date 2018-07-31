@@ -11,7 +11,10 @@
     "angular-ui-router": "^0.2.18",
     "angular-bootstrap": "^1.1.0",
     "angularAMD": "^0.2.1",
-    "lodash": "^4.11.0"
+    "lodash": "^4.11.0",
+    "FileSaver": "https://cdn.rawgit.com/eligrey/FileSaver.js/5733e40e5af936eb3f48554cf6a8a7075d71d18a/FileSaver.js",
+    "canvas2pdf": "https://raw.githubusercontent.com/joshua-gould/canvas2pdf/master/src/canvas2pdf.js",
+    "pdfkit": "^0.7.1"
   },
   "resolutions": {
     "angular": "1.5.5"
