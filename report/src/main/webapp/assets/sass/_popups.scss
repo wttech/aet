@@ -60,7 +60,7 @@
 
   p {
     text-align: left;
-    @include ellipsis();
+    @extend .ellipsis;
     max-width: 86%;
   }
 }
