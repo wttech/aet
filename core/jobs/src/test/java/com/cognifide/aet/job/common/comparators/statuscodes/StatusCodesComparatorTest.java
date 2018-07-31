@@ -96,7 +96,7 @@ public class StatusCodesComparatorTest extends AbstractComparatorTest {
   @Test
   public void compareTest() throws ProcessingException {
     result = tested.compare();
-    assertEquals(ComparatorStepResult.Status.FAILED, result.getStatus());
+    assertEquals(ComparatorStepResult.Status.PASSED, result.getStatus());
   }
 
   @Test
@@ -105,7 +105,7 @@ public class StatusCodesComparatorTest extends AbstractComparatorTest {
     when(params.containsKey(PARAM_FILTER_RANGE)).thenReturn(true);
     when(params.get(PARAM_FILTER_RANGE)).thenReturn(FILTER_RANGE);
     result = tested.compare();
-    assertEquals(ComparatorStepResult.Status.FAILED, result.getStatus());
+    assertEquals(ComparatorStepResult.Status.PASSED, result.getStatus());
   }
 
   @Test
@@ -115,7 +115,7 @@ public class StatusCodesComparatorTest extends AbstractComparatorTest {
     when(params.get(PARAM_FILTER_CODES)).thenReturn(FILTER_CODES_MULTIPLE);
 
     result = tested.compare();
-    assertEquals(ComparatorStepResult.Status.FAILED, result.getStatus());
+    assertEquals(ComparatorStepResult.Status.PASSED, result.getStatus());
   }
 
   @Test
