@@ -20,10 +20,7 @@ import com.cognifide.aet.job.api.ParametersValidator;
 import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
-
 import java.util.Map;
-import java.util.Optional;
-
 import org.apache.commons.lang3.math.NumberUtils;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
@@ -48,11 +45,13 @@ public class ResolutionModifier implements CollectorJob {
 
   private static final int INITIAL_HEIGHT = 300;
 
+  private static final int HEIGHT_NOT_DEFINED = 0;
+
   private final WebDriver webDriver;
 
   private int width;
 
-  private Optional<Integer> height;
+  private int height;
 
   public ResolutionModifier(WebDriver webDriver) {
     this.webDriver = webDriver;
@@ -71,11 +70,9 @@ public class ResolutionModifier implements CollectorJob {
       width = NumberUtils.toInt(params.get(WIDTH_PARAM));
       ParametersValidator.checkRange(width, 1, MAX_SIZE, "Width should be greater than 0");
       if (params.containsKey(HEIGHT_PARAM)) {
-        height = Optional.of(NumberUtils.toInt(params.get(HEIGHT_PARAM)));
+        height = NumberUtils.toInt(params.get(HEIGHT_PARAM));
         ParametersValidator
-            .checkRange(height.get(), 1, MAX_SIZE, "Height should be greater than 0");
-      } else {
-        height = Optional.empty();
+            .checkRange(height, 1, MAX_SIZE, "Height should be greater than 0");
       }
     } else {
       throw new ParametersException("You have to specify width, height parameter is optional");
@@ -84,20 +81,17 @@ public class ResolutionModifier implements CollectorJob {
 
   private void setResolution(WebDriver webDriver) {
     Window window = webDriver.manage().window();
-    JavascriptExecutor js = (JavascriptExecutor) webDriver;
-    int localHeight;
-    if (height.isPresent()) {
-      localHeight = height.get();
-    } else {
+    if (height == HEIGHT_NOT_DEFINED) {
       window.setSize(new Dimension(width, INITIAL_HEIGHT));
-      localHeight = Integer
+      JavascriptExecutor js = (JavascriptExecutor) webDriver;
+      height = Integer
           .parseInt(js.executeScript(JAVASCRIPT_GET_BODY_HEIGHT).toString());
-      if (localHeight > MAX_SIZE) {
-        LOG.info("Height is over browser limit, changing height to " + MAX_SIZE);
-        localHeight = MAX_SIZE;
+      if (height > MAX_SIZE) {
+        LOG.warn("Height is over browser limit, changing height to " + MAX_SIZE);
+        height = MAX_SIZE;
       }
     }
-    LOG.info("Setting resolution to  {}x{}  ", width, localHeight);
-    window.setSize(new Dimension(width, localHeight));
+    LOG.info("Setting resolution to  {}x{}  ", width, height);
+    window.setSize(new Dimension(width, height));
   }
 }
