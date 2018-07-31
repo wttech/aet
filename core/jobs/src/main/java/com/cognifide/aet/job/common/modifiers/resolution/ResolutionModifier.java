@@ -87,7 +87,7 @@ public class ResolutionModifier implements CollectorJob {
       height = Integer
           .parseInt(js.executeScript(JAVASCRIPT_GET_BODY_HEIGHT).toString());
       if (height > MAX_SIZE) {
-        LOG.warn("Height is over browser limit, changing height to " + MAX_SIZE);
+        LOG.warn("Height is over browser limit, changing height to {}", MAX_SIZE);
         height = MAX_SIZE;
       }
     }
