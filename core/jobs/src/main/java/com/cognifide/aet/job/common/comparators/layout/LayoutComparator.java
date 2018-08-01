@@ -65,13 +65,15 @@ public class LayoutComparator implements ComparatorJob {
     this.artifactsDAO = artifactsDAO;
   }
 
-  private void hideElementsInImg(BufferedImage img, List<Point> points, List<Dimension> dimensions){
+  private void hideElementsInImg(BufferedImage img, List<Point> points,
+      List<Dimension> dimensions) {
     Graphics graphics = img.getGraphics();
-    for(int i = 0; i < points.size(); i++) {
+    for (int i = 0; i < points.size(); i++) {
       graphics.setColor(Color.CYAN);
-      graphics.fillRect(points.get(i).x,points.get(i).y, dimensions.get(i).width, dimensions.get(i).height * 7);
-      graphics.dispose();
+      graphics.fillRect(points.get(i).x, points.get(i).y, dimensions.get(i).width,
+          dimensions.get(i).height * 7);
     }
+    graphics.dispose();
   }
 
   @Override
@@ -90,11 +92,15 @@ public class LayoutComparator implements ComparatorJob {
         BufferedImage patternImg = ImageIO.read(patternArtifact);
         BufferedImage collectedImg = ImageIO.read(collectedArtifact);
 
-        List<Point> points = properties.getPoints();
-        List<Dimension> dimensions = properties.getDimensions();
-        if(points != null && dimensions != null) {
-          hideElementsInImg(patternImg, points, dimensions);
-          hideElementsInImg(collectedImg, points, dimensions);
+        if (properties.getPayload() != null) {
+          List<Point> points = properties.getPayload().getPoints();
+          List<Dimension> dimensions = properties.getPayload().getDimensions();
+          if (points != null && dimensions != null) {
+            hideElementsInImg(patternImg, points, dimensions);
+            hideElementsInImg(collectedImg, points, dimensions);
+          } else {
+            // TODO
+          }
         }
 
         imageComparisonResult = ImageComparison.compare(patternImg, collectedImg);

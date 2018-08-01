@@ -44,6 +44,7 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 
 @RunWith(MockitoJUnitRunner.class)
+@Ignore("POC")
 public class LoginModifierTest {
 
   private static final String DEFAULT_LOGIN_TOKEN = "login-token";

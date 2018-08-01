@@ -15,9 +15,7 @@
  */
 package com.cognifide.aet.communication.api.metadata;
 
-import java.awt.Dimension;
-import java.awt.Point;
-import java.util.List;
+import com.cognifide.aet.communication.api.Payload;
 
 public class CollectorStepResult extends StepResult {
 
@@ -25,29 +23,21 @@ public class CollectorStepResult extends StepResult {
 
   private final Status status;
 
-  private CollectorStepResult(String artifactId, List<Point> elementsPoints, List<Dimension> elementsDimensions, String pageSource, Status status) {
-    super(artifactId, elementsPoints, elementsDimensions, pageSource);
+  private CollectorStepResult(String artifactId, Payload payload, Status status) {
+    super(artifactId, payload);
     this.status = status;
   }
 
-  private CollectorStepResult(String artifactId, List<Point> elementsPoints, List<Dimension> elementsDimensions, Status status) {
-    this(artifactId, elementsPoints, elementsDimensions, null, status);
-  }
-
   private CollectorStepResult(String artifactId, Status status) {
-    this(artifactId, null, null, status);
+    this(artifactId, null, status);
   }
 
   public static CollectorStepResult newPageOpen() {
     return new CollectorStepResult(null, Status.PAGE_OPENED);
   }
 
-  public static CollectorStepResult newCollectedResult(String artifactId, List<Point> elementsPoints, List<Dimension> elementsDimensions, String pageSource) {
-    return new CollectorStepResult(artifactId, elementsPoints, elementsDimensions, pageSource, Status.COLLECTED);
-  }
-
-  public static CollectorStepResult newCollectedResult(String artifactId, List<Point> elementsPoints, List<Dimension> elementsDimensions) {
-    return new CollectorStepResult(artifactId, elementsPoints, elementsDimensions, Status.COLLECTED);
+  public static CollectorStepResult newCollectedResult(String artifactId, Payload payload) {
+    return new CollectorStepResult(artifactId, payload, Status.COLLECTED);
   }
 
   public static CollectorStepResult newCollectedResult(String artifactId) {

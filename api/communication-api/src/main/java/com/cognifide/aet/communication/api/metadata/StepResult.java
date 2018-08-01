@@ -15,11 +15,10 @@
  */
 package com.cognifide.aet.communication.api.metadata;
 
+import com.cognifide.aet.communication.api.Payload;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
-import java.awt.Dimension;
-import java.awt.Point;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,30 +33,22 @@ public abstract class StepResult implements Serializable {
   private static final long serialVersionUID = 7758484589529051815L;
 
   @Pattern(regexp = "^[0-9a-fA-F]{24}$", message = "Invalid objectID")
+
   private final String artifactId;
 
-  private final List<Point> elementsPoints;
-  private final List<Dimension> elementsDimensions;
-
-  private final String pageSource;
+  private final Payload payload;
 
   private List<String> errors = new ArrayList<>();
 
   private Map<String, String> data = new HashMap<>();
 
-  public StepResult(String artifactId, List<Point> elementsPoints, List<Dimension> elementsDimensions, String pageSource) {
+  public StepResult(String artifactId, Payload payload) {
     this.artifactId = artifactId;
-    this.elementsPoints = elementsPoints;
-    this.elementsDimensions = elementsDimensions;
-    this.pageSource = pageSource;
-  }
-
-  public StepResult(String artifactId, List<Point> elementsPoints, List<Dimension> elementsDimensions) {
-    this(artifactId, elementsPoints, elementsDimensions, null);
+    this.payload = payload;
   }
 
   public StepResult(String artifactId) {
-    this(artifactId, null, null);
+    this(artifactId, null);
   }
 
   public String getArtifactId() {
@@ -70,17 +61,6 @@ public abstract class StepResult implements Serializable {
     return ImmutableMap.copyOf(data);
   }
 
-  public List<Point> getElementsPoints() {
-    return elementsPoints;
-  }
-
-  public List<Dimension> getElementsDimensions() {
-    return elementsDimensions;
-  }
-
-  public String getPageSource() {
-    return pageSource;
-  }
 
   public String addData(String key, String value) {
     return data.put(key, value);
@@ -96,6 +76,10 @@ public abstract class StepResult implements Serializable {
     return errors != null ? ImmutableList.copyOf(errors) : Collections.<String>emptyList();
   }
 
+  public Payload getPayload() {
+    return payload;
+  }
+
   @Override
   public String toString() {
     return MoreObjects.toStringHelper(this)
@@ -103,8 +87,6 @@ public abstract class StepResult implements Serializable {
         .add("artifactId", getArtifactId())
         .add("errors", getErrors())
         .add("data", getData())
-        .add("elementsPoints", getElementsPoints())
-        .add("elementsDimensions", getElementsDimensions())
         .toString();
   }
 }
