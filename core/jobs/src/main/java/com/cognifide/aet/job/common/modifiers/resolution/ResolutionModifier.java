@@ -72,7 +72,7 @@ public class ResolutionModifier implements CollectorJob {
       if (params.containsKey(HEIGHT_PARAM)) {
         height = NumberUtils.toInt(params.get(HEIGHT_PARAM));
         ParametersValidator
-            .checkRange(height, 1, MAX_SIZE, "Height should be greater than 0");
+            .checkRange(height, 1, MAX_SIZE, "Height should be greater than 0 and smaller than " + MAX_SIZE);
       }
     } else {
       throw new ParametersException("You have to specify width, height parameter is optional");
