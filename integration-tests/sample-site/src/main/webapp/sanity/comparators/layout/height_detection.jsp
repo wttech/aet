@@ -23,7 +23,7 @@
 String timestamp = Long.toString(System.currentTimeMillis());
 %>
 <%@ include file="/includes/bodyContent.jsp" %>
-<div class="space" />
+<div class="space">
     <%@ include file="dynamic_content.jsp" %>
 </div>
 <%@ include file="/includes/footer.jsp" %>
