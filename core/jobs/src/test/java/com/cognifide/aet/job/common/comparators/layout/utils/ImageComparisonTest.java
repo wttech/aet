@@ -45,7 +45,7 @@ public class ImageComparisonTest {
       // when
       ImageComparisonResult imageComparisonResult = ImageComparison.compare(pattern, sample);
       // then
-      assertThat(imageComparisonResult.isMatch(), is(true));
+      assertThat(imageComparisonResult.getPercentagePixelDifference(), is(0.0));
       assertThat(imageComparisonResult.getHeightDifference(), is(0));
       assertThat(imageComparisonResult.getWidthDifference(), is(0));
       assertThat(imageComparisonResult.getPixelDifferenceCount(), is(0));
@@ -76,7 +76,7 @@ public class ImageComparisonTest {
       // when
       ImageComparisonResult imageComparisonResult = ImageComparison.compare(pattern, sample);
       // then
-      assertThat(imageComparisonResult.isMatch(), is(false));
+      assertThat(imageComparisonResult.getPercentagePixelDifference(), is(0.7435369480668039));
       assertThat(imageComparisonResult.getHeightDifference(), is(0));
       assertThat(imageComparisonResult.getWidthDifference(), is(0));
       assertThat(imageComparisonResult.getPixelDifferenceCount(), is(15600));
@@ -110,7 +110,7 @@ public class ImageComparisonTest {
       // when
       ImageComparisonResult imageComparisonResult = ImageComparison.compare(pattern, sample);
       // then
-      assertThat(imageComparisonResult.isMatch(), is(false));
+      assertThat(imageComparisonResult.getPercentagePixelDifference(), is(59.99583333333333));
       assertThat(imageComparisonResult.getHeightDifference(), is(100));
       assertThat(imageComparisonResult.getWidthDifference(), is(20));
       assertThat(imageComparisonResult.getPixelDifferenceCount(), is(14399));
