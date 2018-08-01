@@ -10,7 +10,12 @@ Resource name: screen
 
 ##### Parameters
 
-No parameters
+| Parameter | Value | Description | Mandatory |
+| --------- | ----- | ----------- | --------- |
+| `pixelThreshold` | int (equal or greater than 0) | The value to set the error threshold in pixels e.g if difference between photos is smaller or equal to `pixelThreshold`, the test will pass. In case of difference is bigger than `pixelThreshold`, the test will fail. | no |
+| `percentageThreshold` | double (between 0 and 100) | It works as `pixelThreshold` but values are in percentages | no |
+
+When you provide `pixelThreshold` and `percentageThreshold` test will pass only if pixel difference is smaller or equal than `pixelThreshold` and percentage difference is smaller or equal than `percentageThreshold`.
 
 ##### Example Usage
 
