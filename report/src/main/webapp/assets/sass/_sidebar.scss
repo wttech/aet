@@ -104,6 +104,10 @@
         color: $rebased;
       }
 
+      &.conditionallyPassed {
+        color: $conditionallyPassed;
+      }
+
       &.is-hidden {
         + .urls-list {
           display: none;
@@ -166,7 +170,7 @@
           color: inherit;
           text-align: left;
           padding-left: 10px;
-          @extend .ellipsis;
+          @include ellipsis();
           -webkit-font-smoothing: antialiased;
         }
 
@@ -192,6 +196,10 @@
 
         &.rebased {
           color: $rebased;
+        }
+
+        &.conditionallyPassed {
+          color: $conditionallyPassed;
         }
       }
     }
