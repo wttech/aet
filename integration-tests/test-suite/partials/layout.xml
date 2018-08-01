@@ -67,7 +67,7 @@
 	<test name="F-comparator-Layout-Hide-space">
 		<collect>
 			<open />
-            <resolution width="1500" />
+			<resolution width="1500" />
 			<sleep duration="3000" />
 			<hide xpath="//*[@class='space']" />
 			<screen />
@@ -84,7 +84,7 @@
 			<open />
 			<sleep duration="3000" />
 			<hide xpath="//*[@class='space']" leaveBlankSpace="false" />
-            <resolution width="1500" />
+			<resolution width="1500" />
 			<screen />
 		</collect>
 		<compare>
@@ -150,6 +150,36 @@
 		</compare>
 		<urls>
 			<url href="comparators/layout/success.jsp" />
+		</urls>
+	</test>
+
+	<test name="F-comparator-Layout-Auto-Height-Detection-with-dynamic-content-at-bottom">
+		<collect>
+			<open />
+			<resolution width="767" />
+			<sleep duration="3000" />
+			<screen />
+		</collect>
+		<compare>
+			<screen comparator="layout" />
+		</compare>
+		<urls>
+			<url href="comparators/layout/height_detection.jsp" />
+		</urls>
+	</test>
+
+	<test name="S-comparator-Layout-Fixed-Height">
+		<collect>
+			<open />
+			<resolution width="767" height="400"/>
+			<sleep duration="3000" />
+			<screen />
+		</collect>
+		<compare>
+			<screen comparator="layout" />
+		</compare>
+		<urls>
+			<url href="comparators/layout/height_detection.jsp" />
 		</urls>
 	</test>
 	<!-- Layout-Comparator END -->
