@@ -24,7 +24,7 @@
 	<test name="S-modifier-Wait-For-Image-Completion">
 		<collect>
 			<open />
-			<resolution width="1500" />
+			<resolution width="1500" height="800"/>
 			<wait-for-image-completion xpath="//img[@id = 'image-to-wait-for']" timeout = "15000"/>
 			<screen />
 		</collect>
@@ -39,8 +39,8 @@
 	<test name="F-modifier-Wait-For-Image-Completion-not-visible">
 		<collect>
 			<open />
-            <resolution width="1500" />
-			<wait-for-image-completion css="#image-to-wait-for" timeout = "100"/>
+			<resolution width="1500" />
+			<wait-for-image-completion css="#image-to-wait-for" timeout="100"/>
 			<screen />
 		</collect>
 		<compare>
@@ -54,7 +54,7 @@
 	<test name="S-modifier-Wait-For-Image-Completion-slow-image">
 		<collect>
 			<open />
-            <resolution width="1500" />
+			<resolution width="1500" />
 			<!-- image is served with additional latency -->
 			<wait-for-image-completion css="#image-to-wait-for" timeout = "7000"/>
 			<screen />
@@ -67,11 +67,12 @@
 		</urls>
 	</test>
 
-	<test name="F-modifier-Wait-For-Image-Completion-slow-image">
+	<!-- Should pass because Chrome waits for images in the <open> phase -->
+	<test name="S-modifier-Wait-For-Image-Completion-slow-image-short-timeout">
 		<collect>
 			<open />
 			<!-- image is served with additional latency -->
-			<wait-for-image-completion xpath="//img[@id = 'image-to-wait-for']" timeout = "3000"/>
+			<wait-for-image-completion xpath="//img[@id = 'image-to-wait-for']" timeout = "1"/>
 			<screen />
 		</collect>
 		<compare>

@@ -25,7 +25,7 @@
 		<collect>
 			<open />
 			<resolution width="1500" />
-			<sleep duration="6000" />
+			<sleep duration="10000" />
 			<screen />
 		</collect>
 		<compare>
