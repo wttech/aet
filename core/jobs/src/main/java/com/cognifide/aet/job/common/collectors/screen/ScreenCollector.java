@@ -15,8 +15,10 @@
  */
 package com.cognifide.aet.job.common.collectors.screen;
 
-import com.cognifide.aet.communication.api.Payload;
 import com.cognifide.aet.communication.api.metadata.CollectorStepResult;
+import com.cognifide.aet.communication.api.metadata.Payload;
+import com.cognifide.aet.communication.api.metadata.exclude.Element;
+import com.cognifide.aet.communication.api.metadata.exclude.Exclude;
 import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
@@ -80,15 +82,14 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
     return webElements;
   }
 
-  private void setPointsListAndDimensionListFromWebElements(List<java.awt.Point> points,
-      List<java.awt.Dimension> dimensions, List<WebElement> webElements) {
+  private void setPointsListAndDimensionListFromWebElements(List<Element> elements,
+      List<WebElement> webElements) {
     for (WebElement webElement : webElements) {
       java.awt.Point point = new java.awt.Point(webElement.getLocation().x,
           webElement.getLocation().y);
-      points.add(point);
       java.awt.Dimension dimension = new java.awt.Dimension(webElement.getSize().width,
           webElement.getSize().height);
-      dimensions.add(dimension);
+      elements.add(new Element(point, dimension));
     }
   }
 
@@ -105,13 +106,12 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
 
         if (excludeElements != null) {
           List<WebElement> webElements = getWebElements();
+          List<Element> excludeElementsPos = new LinkedList<>();
 
-          List<java.awt.Point> points = new LinkedList<>();
-          List<java.awt.Dimension> dimensions = new LinkedList<>();
+          setPointsListAndDimensionListFromWebElements(excludeElementsPos, webElements);
 
-          setPointsListAndDimensionListFromWebElements(points, dimensions, webElements);
-
-          Payload payload = new Payload(points, dimensions, null);
+          Payload payload = new Payload();
+          payload.setExclude(new Exclude(excludeElementsPos));
           stepResult = CollectorStepResult.newCollectedResult(resultId, payload);
         } else {
           stepResult = CollectorStepResult.newCollectedResult(resultId);

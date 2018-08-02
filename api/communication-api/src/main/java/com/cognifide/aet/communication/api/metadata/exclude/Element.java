@@ -13,30 +13,29 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.communication.api;
+package com.cognifide.aet.communication.api.metadata.exclude;
 
 import java.awt.Dimension;
 import java.awt.Point;
 import java.io.Serializable;
-import java.util.List;
 
-public class Payload implements Serializable {
-  private static final long serialVersionUID = 4722236598237687647L;
+public class Element implements Serializable {
+  private static final long serialVersionUID = 692282363549228800L;
 
-  private final List<Point> points;
+  private final Point point;
 
-  private final List<Dimension> dimensions;
+  private final Dimension dimension;
 
-  public Payload(List<Point> points, List<Dimension> dimensions, String pageSource) {
-    this.points = points;
-    this.dimensions = dimensions;
+  public Element(Point point, Dimension dimension) {
+    this.point = point;
+    this.dimension = dimension;
   }
 
-  public List<Point> getPoints() {
-    return points;
+  public Point getPoint() {
+    return point;
   }
 
-  public List<Dimension> getDimensions() {
-    return dimensions;
+  public Dimension getDimension() {
+    return dimension;
   }
 }

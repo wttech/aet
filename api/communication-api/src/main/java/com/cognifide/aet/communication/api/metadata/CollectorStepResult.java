@@ -15,8 +15,6 @@
  */
 package com.cognifide.aet.communication.api.metadata;
 
-import com.cognifide.aet.communication.api.Payload;
-
 public class CollectorStepResult extends StepResult {
 
   private static final long serialVersionUID = 8349142369865375088L;

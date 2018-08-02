@@ -17,6 +17,7 @@ package com.cognifide.aet.job.common.comparators.layout;
 
 import com.cognifide.aet.communication.api.metadata.ComparatorStepResult;
 import com.cognifide.aet.communication.api.metadata.ComparatorStepResult.Status;
+import com.cognifide.aet.communication.api.metadata.exclude.Element;
 import com.cognifide.aet.job.api.ParametersValidator;
 import com.cognifide.aet.job.api.comparator.ComparatorJob;
 import com.cognifide.aet.job.api.comparator.ComparatorProperties;
@@ -26,9 +27,7 @@ import com.cognifide.aet.job.common.comparators.layout.utils.ImageComparison;
 import com.cognifide.aet.job.common.comparators.layout.utils.ImageComparisonResult;
 import com.cognifide.aet.vs.ArtifactsDAO;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Graphics;
-import java.awt.Point;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
@@ -36,7 +35,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
-import java.util.Optional;
 import javax.imageio.ImageIO;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -64,18 +62,18 @@ public class LayoutComparator implements ComparatorJob {
   private boolean excludeFunctionIsOn = false;
 
   private boolean excludeElementsNotFound = false;
+
   LayoutComparator(ComparatorProperties comparatorProperties, ArtifactsDAO artifactsDAO) {
     this.properties = comparatorProperties;
     this.artifactsDAO = artifactsDAO;
   }
 
-  private void hideElementsInImg(BufferedImage img, List<Point> points,
-      List<Dimension> dimensions) {
+  private void hideElementsInImg(BufferedImage img, List<Element> elements) {
     Graphics graphics = img.getGraphics();
-    for (int i = 0; i < points.size(); i++) {
+    for (int i = 0; i < elements.size(); i++) {
       graphics.setColor(Color.CYAN);
-      graphics.fillRect(points.get(i).x, points.get(i).y, dimensions.get(i).width,
-          dimensions.get(i).height * 7);
+      graphics.fillRect(elements.get(i).getPoint().x, elements.get(i).getPoint().y, elements.get(i).getDimension().width,
+          elements.get(i).getDimension().height);
     }
     graphics.dispose();
   }
@@ -97,11 +95,9 @@ public class LayoutComparator implements ComparatorJob {
 
         if (properties.getPayload() != null) {
           excludeFunctionIsOn = true;
-          List<Point> points = properties.getPayload().getPoints();
-          List<Dimension> dimensions = properties.getPayload().getDimensions();
-          if (points.size() > 0 && dimensions.size() > 0) {
-            hideElementsInImg(patternImg, points, dimensions);
-            hideElementsInImg(collectedImg, points, dimensions);
+          if (properties.getPayload().getExclude().getElements().size() > 0) {
+            hideElementsInImg(patternImg, properties.getPayload().getExclude().getElements());
+            hideElementsInImg(collectedImg, properties.getPayload().getExclude().getElements());
           } else {
             excludeElementsNotFound = true;
           }

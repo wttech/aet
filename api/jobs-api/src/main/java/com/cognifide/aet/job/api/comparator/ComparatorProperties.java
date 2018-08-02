@@ -15,7 +15,7 @@
  */
 package com.cognifide.aet.job.api.comparator;
 
-import com.cognifide.aet.communication.api.Payload;
+import com.cognifide.aet.communication.api.metadata.Payload;
 import com.cognifide.aet.job.api.StepProperties;
 import com.google.common.base.MoreObjects;
 

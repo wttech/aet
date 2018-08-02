@@ -15,7 +15,6 @@
  */
 package com.cognifide.aet.communication.api.metadata;
 
-import com.cognifide.aet.communication.api.Payload;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableMap;
