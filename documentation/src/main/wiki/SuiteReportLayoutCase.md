@@ -34,7 +34,7 @@ Test case's result is marked as successful when there is no difference between v
 
 ##### Conditionally passed
 
-Test case's result is marked as conditionally passed when there is difference between view and pattern (see screenshot below) but the difference is below threshold - here `pixelThreshold="5"`. The test is pass so you can't accept it, therefore "Accept test case" button isn't available and the test has green color (but with different icon to be perceptible) but images are different so you can see a mask.
+Test case's result is marked as conditionally passed when there is difference between view and pattern (see screenshot below) but the difference is below threshold - here `percentageThreshold="5"`. The test is pass so you can't accept it, therefore "Accept test case" button isn't available and the test has green color (but with different icon to be perceptible) but images are different so you can see a mask.
 
 ![Layout conditionally passed](assets/suiteReport/layout-conditionally-passed.png)
 
