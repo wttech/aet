@@ -42,6 +42,7 @@ import org.apache.felix.scr.annotations.Properties;
 import org.apache.felix.scr.annotations.Property;
 import org.apache.felix.scr.annotations.Reference;
 import org.apache.felix.scr.annotations.Service;
+import org.apache.sling.commons.osgi.PropertiesUtil;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -64,6 +65,10 @@ public class ChromeWebDriverFactory implements WebDriverFactory {
 
   private static final String DEFAULT_BROWSER_NAME = "chrome";
 
+  private static final String HEADLESS_MODE = "headless";
+
+  private static final boolean DEFAULT_HEADLESS_MODE = true;
+
   @Reference
   private HttpRequestExecutorFactory requestExecutorFactory;
 
@@ -79,10 +84,17 @@ public class ChromeWebDriverFactory implements WebDriverFactory {
       value = DEFAULT_SELENIUM_GRID_URL)
   private String seleniumGridUrl;
 
+  @Property(name = HEADLESS_MODE,
+      label = "Headless",
+      description = "Open Chrome in headless mode",
+      boolValue = DEFAULT_HEADLESS_MODE)
+  private boolean headlessMode;
+
   @Activate
   public void activate(Map<String, String> properties) {
     this.name = getProp(properties, NAME, DEFAULT_BROWSER_NAME);
     this.seleniumGridUrl = getProp(properties, SELENIUM_GRID_URL, DEFAULT_SELENIUM_GRID_URL);
+    this.headlessMode = PropertiesUtil.toBoolean(properties.get(HEADLESS_MODE), DEFAULT_HEADLESS_MODE);
   }
 
   @Override
@@ -136,9 +148,11 @@ public class ChromeWebDriverFactory implements WebDriverFactory {
 
     ChromeOptions options = new ChromeOptions();
     options.addArguments("--disable-plugins");
-    options.addArguments("--headless");
     options.addArguments("--hide-scrollbars");
     options.setAcceptInsecureCerts(true);
+    if (headlessMode) {
+      options.addArguments("--headless");
+    }
 
     capabilities.setCapability(ChromeOptions.CAPABILITY, options);
 
