@@ -85,7 +85,7 @@ public class LayoutComparator implements ComparatorJob {
   @Override
   public ComparatorStepResult compare() throws ProcessingException {
     final ComparatorStepResult stepResult;
-    
+
     ImageComparisonResult imageComparisonResult;
     if (areInputsIdentical(artifactsDAO, properties)) {
       stepResult = getPassedStepResult();
@@ -130,36 +130,31 @@ public class LayoutComparator implements ComparatorJob {
   private ComparatorStepResult saveArtifacts(ImageComparisonResult imageComparisonResult)
       throws ProcessingException {
     final ComparatorStepResult result;
-    if (isMaskWithoutDifference(imageComparisonResult)) {
-      if(excludeFunctionIsOn){
-        result = new ComparatorStepResult(null, Status.CONDITIONALLY_PASSED, true);
-      } else {
+    InputStream mask = null;
+    try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
+      ImageIO.write(imageComparisonResult.getResultImage(), "png", baos);
+      mask = new ByteArrayInputStream(baos.toByteArray());
+      String maskArtifactId = artifactsDAO.saveArtifact(properties, mask, CONTENT_TYPE);
+
+      if (isMaskWithoutDifference(imageComparisonResult) && !excludeFunctionIsOn) {
         result = getPassedStepResult();
+      } else if (hasMaskThresholdWithAcceptableDifference(imageComparisonResult)
+          || isMaskWithoutDifference(imageComparisonResult)) {
+        result = new ComparatorStepResult(maskArtifactId, Status.CONDITIONALLY_PASSED, true);
+      } else {
+        result = new ComparatorStepResult(maskArtifactId, Status.FAILED, true);
       }
-    } else {
-      InputStream mask = null;
-      try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
-        ImageIO.write(imageComparisonResult.getResultImage(), "png", baos);
-        mask = new ByteArrayInputStream(baos.toByteArray());
-        String maskArtifactId = artifactsDAO.saveArtifact(properties, mask, CONTENT_TYPE);
 
-        if (hasMaskThresholdWithAcceptableDifference(imageComparisonResult)) {
-          result = new ComparatorStepResult(maskArtifactId, Status.CONDITIONALLY_PASSED, true);
-        } else {
-          result = new ComparatorStepResult(maskArtifactId, Status.FAILED, true);
-        }
-
-        if (excludeElementsNotFound) {
-          addExcludeMessageToResult(result, "Elements to exclude are not found on page");
-        }
-
-        addPixelDifferenceDataToResult(result, imageComparisonResult);
-        addTimestampToResult(result);
-      } catch (Exception e) {
-        throw new ProcessingException(e.getMessage(), e);
-      } finally {
-        IOUtils.closeQuietly(mask);
+      if (excludeElementsNotFound) {
+        addExcludeMessageToResult(result, "Elements to exclude are not found on page");
       }
+
+      addPixelDifferenceDataToResult(result, imageComparisonResult);
+      addTimestampToResult(result);
+    } catch (Exception e) {
+      throw new ProcessingException(e.getMessage(), e);
+    } finally {
+      IOUtils.closeQuietly(mask);
     }
 
     return result;
