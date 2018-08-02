@@ -32,6 +32,11 @@ define(['angularAMD'], function (angularAMD) {
       var wrapper = tab.querySelector('.page-main .layout-compare');
       var initedClass = 'screen-comparison-active';
       var arrangeTimeout = 0;
+      var infoMsg = document.createElement('div');
+      var button = document.querySelector('.advanced-screen-comparison');
+      var tabContent = document.querySelector('.tab-content');
+      var items = wrapper.querySelectorAll('.layout-compare-item .img-responsive:not(.mask)');
+
 
       function prepareMarkup(wrapper) {
         wrapper.innerHTML = '</div><div class="difs"></div><div class="customMasks"><div class="customMask maskAtop"></div><div class="customMask maskAbot"></div><div class="customMask maskBtop"></div><div class="customMask maskBbot"></div><div class="customLabel labelA"><div class="ruler"></div><div class="text"></div></div><div class="customLabel labelB"><div class="ruler"></div><div class="text"></div></div></div><div class="canvas-wrapper"></div>';
@@ -45,20 +50,6 @@ define(['angularAMD'], function (angularAMD) {
         return;
       } else {
         wrapper.classList.add(initedClass);
-      }
-
-      var button = document.querySelector('.try-new');
-      button.classList.add('button-disabled');
-
-      var infoMsg = document.createElement('div');
-      infoMsg.innerHTML = '<div class="info-msg">Advanced screen comparison in progress - please wait</div>';
-      var tabContent = document.querySelector('.tab-content');
-      tabContent.appendChild(infoMsg);
-
-      var items = wrapper.querySelectorAll('.layout-compare-item .img-responsive:not(.mask)');
-
-      if (items.length !== 2) {
-        return;
       }
 
       prepareMarkup(wrapper);
@@ -107,7 +98,7 @@ define(['angularAMD'], function (angularAMD) {
         imgSizeB: null,
       };
 
-      var simple = {
+      var simplifiedImage = {
         simpleA: null,
         simpleB: null,
       };
@@ -129,16 +120,18 @@ define(['angularAMD'], function (angularAMD) {
         invertedGroupsB: [],
       };
 
-      var groups = [];
-      var group = [];
+      var differenceGroups = [];
+      var differenceGroup = [];
 
-      loadImage(img.imgA, imgSize.imgSizeA, canvas.canvasA, context.contextA, simple.simpleA, function (returnedSimple, returnedImgSize) {
-        simple.simpleA = returnedSimple;
+      markComparisonStarted(infoMsg, button, tabContent, items);
+
+      loadImage(img.imgA, imgSize.imgSizeA, canvas.canvasA, context.contextA, simplifiedImage.simpleA, function (returnedSimple, returnedImgSize) {
+        simplifiedImage.simpleA = returnedSimple;
         imgSize.imgSizeA = returnedImgSize;
       });
 
-      loadImage(img.imgB, imgSize.imgSizeB, canvas.canvasB, context.contextB, simple.simpleB, function (returnedSimple, returnedImgSize) {
-        simple.simpleB = returnedSimple;
+      loadImage(img.imgB, imgSize.imgSizeB, canvas.canvasB, context.contextB, simplifiedImage.simpleB, function (returnedSimple, returnedImgSize) {
+        simplifiedImage.simpleB = returnedSimple;
         imgSize.imgSizeB = returnedImgSize;
         button.classList.remove('button-disabled');
         tabContent.removeChild(infoMsg);
@@ -147,17 +140,29 @@ define(['angularAMD'], function (angularAMD) {
 
       function arrangeMaskCallback(maskSize) {
         mask.maskSize = maskSize;
-        onImagesReady(mask, imgSize, simple, label, ruler, invertedGroups, difs, wrapper);
-        processLines(cursor, simple, group, groups);
-        invertGroups(simple, groups, invertedGroups);
-        drawDifferences(difs, imgSize, invertedGroups, simple, context);
+        onImagesReady(mask, imgSize, simplifiedImage, label, ruler, invertedGroups, difs, wrapper);
+        processLines(cursor, simplifiedImage, differenceGroup, differenceGroups);
+        invertGroups(simplifiedImage, differenceGroups, invertedGroups);
+        drawDifferences(difs, imgSize, invertedGroups, simplifiedImage, context);
       }
 
       canvas.canvasWrapper.appendChild(canvas.canvasA);
       canvas.canvasWrapper.appendChild(canvas.canvasB);
     };
+    
 
-    function drawDifferences(difs, imgSize, invertedGroups, simple, context) {
+    function markComparisonStarted(infoMsg, button, tabContent, items) {
+      button.classList.add('button-disabled');
+      infoMsg.innerHTML = '<div class="info-msg">Advanced screen comparison in progress - please wait</div>';
+      tabContent = document.querySelector('.tab-content');
+      tabContent.appendChild(infoMsg);
+
+      if (items.length !== 2) {
+        return;
+      }
+    }
+
+    function drawDifferences(difs, imgSize, invertedGroups, simplifiedImage, context) {
       var maxHeight = Math.max(imgSize.imgSizeA.height, imgSize.imgSizeB.height);
       var proc = 100 / maxHeight;
       var newDiffBLeft = '52%';
@@ -167,7 +172,7 @@ define(['angularAMD'], function (angularAMD) {
         var newDifferenceContextA = newDifferenceA.getContext('2d');
         var newDifferenceB = document.createElement('canvas');
         var newDifferenceContextB = newDifferenceB.getContext('2d');
-        var sizes = getGroupsSizes(i, invertedGroups, simple);
+        var sizes = getGroupsSizes(i, invertedGroups, simplifiedImage);
         if (sizes) {
           var heightA = sizes.aTo - sizes.aFrom;
           var heightB = sizes.bTo - sizes.bFrom;
@@ -230,7 +235,7 @@ define(['angularAMD'], function (angularAMD) {
       return imgData;
     }
 
-    function loadImage(url, imgSize, canvas, context, simple, callbackOnSuccess) {
+    function loadImage(url, imgSize, canvas, context, simplifiedImage, callbackOnSuccess) {
       var image = new Image();
       image.setAttribute('crossOrigin', '');
       image.src = url;
@@ -243,8 +248,8 @@ define(['angularAMD'], function (angularAMD) {
         canvas.width = context.width = imgSize.width;
         canvas.height = context.height = imgSize.height;
         context.drawImage(image, 0, 0);
-        simple = simplifyImage(context.getImageData(0, 0, imgSize.width, imgSize.height));
-        callbackOnSuccess(simple, imgSize);
+        simplifiedImage = simplifyImage(context.getImageData(0, 0, imgSize.width, imgSize.height));
+        callbackOnSuccess(simplifiedImage, imgSize);
       };
 
       image.onerror = function () {
@@ -337,19 +342,19 @@ define(['angularAMD'], function (angularAMD) {
       simplifiedList.push(newElement);
     }
 
-    function processLines(cursor, simple, group, groups) {
-      if (cursor.cursorA === (simple.simpleA.length - 1)) {
+    function processLines(cursor, simplifiedImage, differenceGroup, differenceGroups) {
+      if (cursor.cursorA === (simplifiedImage.simpleA.length - 1)) {
         pushGroups();
         return;
-      } else if (cursor.cursorB === (simple.simpleB.length - 1)) {
+      } else if (cursor.cursorB === (simplifiedImage.simpleB.length - 1)) {
         cursor.cursorB = cursor.cursorBstart;
         cursor.cursorA++;
         pushGroups();
       } else {
         var lastBlockMatchA;
         var lastBlockMatchB;
-        if (simple.simpleA[cursor.cursorA].type === simple.simpleB[cursor.cursorB].type) {
-          if (simple.simpleA[cursor.cursorA].type === 'space') {
+        if (simplifiedImage.simpleA[cursor.cursorA].type === simplifiedImage.simpleB[cursor.cursorB].type) {
+          if (simplifiedImage.simpleA[cursor.cursorA].type === 'space') {
             handleSpaceLineProcessing();
           } else {
             handleBlockLineProcessing();
@@ -358,12 +363,12 @@ define(['angularAMD'], function (angularAMD) {
           cursor.cursorB++;
         }
       }
-      processLines(cursor, simple, group, groups);
+      processLines(cursor, simplifiedImage, differenceGroup, differenceGroups);
 
       function handleSpaceLineProcessing() {
-        if (simple.simpleA[cursor.cursorA].color === simple.simpleB[cursor.cursorB].color) {
-          if (simple.simpleA[cursor.cursorA].size === simple.simpleB[cursor.cursorB].size) {
-            if (simple.simpleA[cursor.cursorA].match !== cursor.cursorB) {
+        if (simplifiedImage.simpleA[cursor.cursorA].color === simplifiedImage.simpleB[cursor.cursorB].color) {
+          if (simplifiedImage.simpleA[cursor.cursorA].size === simplifiedImage.simpleB[cursor.cursorB].size) {
+            if (simplifiedImage.simpleA[cursor.cursorA].match !== cursor.cursorB) {
               changeCursor('space');
             } else {
               cursor.cursorB = cursor.cursorBstart;
@@ -381,9 +386,9 @@ define(['angularAMD'], function (angularAMD) {
       }
 
       function handleBlockLineProcessing() {
-        if (simple.simpleA[cursor.cursorA].size === simple.simpleB[cursor.cursorB].size) {
-          if (simple.simpleA[cursor.cursorA].content.join(',') === simple.simpleB[cursor.cursorB].content.join(',')) {
-            if (simple.simpleA[cursor.cursorA].match !== cursor.cursorB) {
+        if (simplifiedImage.simpleA[cursor.cursorA].size === simplifiedImage.simpleB[cursor.cursorB].size) {
+          if (simplifiedImage.simpleA[cursor.cursorA].content.join(',') === simplifiedImage.simpleB[cursor.cursorB].content.join(',')) {
+            if (simplifiedImage.simpleA[cursor.cursorA].match !== cursor.cursorB) {
               changeCursor('block');
             } else {
               cursor.cursorB++;
@@ -397,41 +402,41 @@ define(['angularAMD'], function (angularAMD) {
       }
 
       function changeCursor(lineType) {
-        simple.simpleA[cursor.cursorA].match = cursor.cursorB;
-        simple.simpleB[cursor.cursorB].match = cursor.cursorA;
+        simplifiedImage.simpleA[cursor.cursorA].match = cursor.cursorB;
+        simplifiedImage.simpleB[cursor.cursorB].match = cursor.cursorA;
         if (lineType === 'space') {
           lastBlockMatchA = cursor.cursorA;
           lastBlockMatchB = cursor.cursorB;
         }
-        group.push(cursor.cursorA);
+        differenceGroup.push(cursor.cursorA);
         cursor.cursorB++;
         cursor.cursorBstart = cursor.cursorB;
         cursor.cursorA++;
       }
 
       function pushGroups() {
-        if (group.length) {
-          groups.push(group.slice());
-          group = [];
+        if (differenceGroup.length) {
+          differenceGroups.push(differenceGroup.slice());
+          differenceGroup = [];
         }
       }
     }
 
-    function invertGroups(simple, groups, invertedGroups) {
-      var lastGroup = groups[groups.length - 1];
+    function invertGroups(simplifiedImage, differenceGroups, invertedGroups) {
+      var lastGroup = differenceGroups[differenceGroups.length - 1];
       var lastElementA = lastGroup[lastGroup.length - 1];
       var lastElementB = lastElementA.match;
       var firstGroup = [];
       var secondGroup = [];
-      if (groups[0][0] > 0) {
-        for (var a = 0; a < groups[0][0]; a++) {
+      if (differenceGroups[0][0] > 0) {
+        for (var a = 0; a < differenceGroups[0][0]; a++) {
           firstGroup.push(a);
         }
         invertedGroups.invertedGroupsA.push(firstGroup);
       }
-      if (simple.simpleA[groups[0][0]].match > 0) {
+      if (simplifiedImage.simpleA[differenceGroups[0][0]].match > 0) {
         firstGroup = [];
-        for (var b = 0; b < simpleA[groups[0][0]].match; b++) {
+        for (var b = 0; b < simpleA[differenceGroups[0][0]].match; b++) {
           firstGroup.push(b);
         }
         invertedGroups.invertedGroupsB.push(firstGroup);
@@ -439,15 +444,15 @@ define(['angularAMD'], function (angularAMD) {
 
       firstGroup = [];
 
-      for (var i = 0; i < (groups.length - 1); i++) {
-        firstGroup = groups[i];
-        secondGroup = groups[i + 1];
+      for (var i = 0; i < (differenceGroups.length - 1); i++) {
+        firstGroup = differenceGroups[i];
+        secondGroup = differenceGroups[i + 1];
 
         var firstGroupLastElementA = firstGroup[firstGroup.length - 1];
         var secondGroupFirstElementA = secondGroup[0];
 
-        var firstGroupLastElementB = simple.simpleA[firstGroupLastElementA].match;
-        var secondGroupFirstElementB = simple.simpleA[secondGroupFirstElementA].match;
+        var firstGroupLastElementB = simplifiedImage.simpleA[firstGroupLastElementA].match;
+        var secondGroupFirstElementB = simplifiedImage.simpleA[secondGroupFirstElementA].match;
 
         var newGroupA = [];
         var newGroupB = [];
@@ -464,8 +469,8 @@ define(['angularAMD'], function (angularAMD) {
         invertedGroups.invertedGroupsB.push(newGroupB);
       }
 
-      pushGroupsIntoInverted(lastElementA, simple.simpleA);
-      pushGroupsIntoInverted(lastElementB, simple.simpleB);
+      pushGroupsIntoInverted(lastElementA, simplifiedImage.simpleA);
+      pushGroupsIntoInverted(lastElementB, simplifiedImage.simpleB);
 
       function pushGroupsIntoInverted(lastElement, simpleParam) {
         if (lastElement < simpleParam.length) {
@@ -536,7 +541,7 @@ define(['angularAMD'], function (angularAMD) {
       labelParam.style.display = 'block';
     }
 
-    function getGroupsSizes(index, invertedGroups, simple) {
+    function getGroupsSizes(index, invertedGroups, simplifiedImage) {
       var groupA = invertedGroups.invertedGroupsA[index];
       var indexFromA = groupA[0];
       var indexToA = groupA[groupA.length - 1];
@@ -546,21 +551,21 @@ define(['angularAMD'], function (angularAMD) {
         var indexFromB = groupB[0];
         var indexToB = groupB[groupB.length - 1];
         return {
-          aFrom: simple.simpleA[indexFromA].offset,
-          aTo: simple.simpleA[indexToA].offset + simple.simpleA[indexToA].size,
-          bFrom: simple.simpleB[indexFromB].offset,
-          bTo: simple.simpleB[indexToB].offset + simple.simpleB[indexToB].size
+          aFrom: simplifiedImage.simpleA[indexFromA].offset,
+          aTo: simplifiedImage.simpleA[indexToA].offset + simplifiedImage.simpleA[indexToA].size,
+          bFrom: simplifiedImage.simpleB[indexFromB].offset,
+          bTo: simplifiedImage.simpleB[indexToB].offset + simplifiedImage.simpleB[indexToB].size
         };
       } else {
         var bPosition = 0;
-        if (simple.simpleA[indexFromA - 1]) {
-          bPosition = simple.simpleB[simple.simpleA[indexFromA - 1].match].offset + simple.simpleB[simple.simpleA[indexFromA - 1].match].size;
-        } else if (simple.simpleA[indexToA + 1]) {
-          bPosition = simple.simpleB[simple.simpleA[indexToA + 1].match].offset;
+        if (simplifiedImage.simpleA[indexFromA - 1]) {
+          bPosition = simplifiedImage.simpleB[simplifiedImage.simpleA[indexFromA - 1].match].offset + simplifiedImage.simpleB[simplifiedImage.simpleA[indexFromA - 1].match].size;
+        } else if (simplifiedImage.simpleA[indexToA + 1]) {
+          bPosition = simplifiedImage.simpleB[simplifiedImage.simpleA[indexToA + 1].match].offset;
         }
         return {
-          aFrom: simple.simpleA[indexFromA].offset,
-          aTo: simple.simpleA[indexToA].offset + simple.simpleA[indexToA].size,
+          aFrom: simplifiedImage.simpleA[indexFromA].offset,
+          aTo: simplifiedImage.simpleA[indexToA].offset + simplifiedImage.simpleA[indexToA].size,
           bFrom: bPosition,
           bTo: bPosition
         };
@@ -612,7 +617,7 @@ define(['angularAMD'], function (angularAMD) {
       return offset;
     }
 
-    function onImagesReady(mask, imgSize, simple, label, ruler, invertedGroups, difs, wrapper) {
+    function onImagesReady(mask, imgSize, simplifiedImage, label, ruler, invertedGroups, difs, wrapper) {
       mask.customMask.onmousemove = function (e) {
         var masksOffset = getAbsoluteOffset(mask.customMask);
         var relativePosition = {
@@ -623,15 +628,15 @@ define(['angularAMD'], function (angularAMD) {
         var ratio = Math.max(imgSize.imgSizeA.height, imgSize.imgSizeB.height) / mask.maskSize.height;
         var element;
         if (isA) {
-          element = getElementByPosition(simple.simpleA, (relativePosition.y + window.pageYOffset) * ratio);
+          element = getElementByPosition(simplifiedImage.simpleA, (relativePosition.y + window.pageYOffset) * ratio);
         } else {
-          element = getElementByPosition(simple.simpleB, (relativePosition.y + window.pageYOffset) * ratio);
+          element = getElementByPosition(simplifiedImage.simpleB, (relativePosition.y + window.pageYOffset) * ratio);
         }
 
         if (element !== undefined) {
           var selectedGroup = getInvertedGroupByElement(element, isA, invertedGroups);
           if (selectedGroup >= 0 && typeof selectedGroup != 'undefined') {
-            var sizes = getGroupsSizes(selectedGroup, invertedGroups, simple);
+            var sizes = getGroupsSizes(selectedGroup, invertedGroups, simplifiedImage);
             lightMask(sizes.aFrom, sizes.aTo, imgSize, mask.maskA, mask.maskSize, label.labelA, ruler.rulerA);
             lightMask(sizes.aFrom, sizes.aTo, imgSize, mask.maskB, mask.maskSize, label.labelB, ruler.rulerB);
             selectGroup(selectedGroup, isA, difs, wrapper);

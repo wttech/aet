@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 
-.try-new {
+.advanced-screen-comparison {
   display: inline-block;
   vertical-align: middle;
   a {
@@ -78,7 +78,7 @@
       font-size:16px;
       font-weight:bold;
       margin: -20px 4px 0;
-      background: $red;
+      background: red;
       color: $white;
       padding: 10px 20px 10px 15px;
       cursor: default;
@@ -101,7 +101,7 @@
       left: -4px;
       right: auto;
       width: 5px;
-      background: $red;
+      background: red;
       transform: translate(0, -50%);
       min-height: 1px;
       box-sizing: content-box;
