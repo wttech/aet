@@ -325,7 +325,7 @@
 		</urls>
 	</test>
 
-	<test name="F-comparator-Layout-Exclude-id">
+	<test name="S-comparator-Layout-Exclude-id-css">
 		<collect>
 			<open/>
 			<resolution width="767" height="300"/>
