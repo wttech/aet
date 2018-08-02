@@ -40,7 +40,6 @@ import java.util.Optional;
 import javax.imageio.ImageIO;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.math.NumberUtils;
 
 public class LayoutComparator implements ComparatorJob {
 
@@ -58,14 +57,13 @@ public class LayoutComparator implements ComparatorJob {
 
   private final ArtifactsDAO artifactsDAO;
 
-  private Optional<Integer> pixelThreshold = Optional.empty();
+  private Integer pixelThreshold;
 
-  private Optional<Double> percentageThreshold = Optional.empty();
+  private Double percentageThreshold;
 
   private boolean excludeFunctionIsOn = false;
 
   private boolean excludeElementsNotFound = false;
-
   LayoutComparator(ComparatorProperties comparatorProperties, ArtifactsDAO artifactsDAO) {
     this.properties = comparatorProperties;
     this.artifactsDAO = artifactsDAO;
@@ -85,7 +83,6 @@ public class LayoutComparator implements ComparatorJob {
   @Override
   public ComparatorStepResult compare() throws ProcessingException {
     final ComparatorStepResult stepResult;
-
     ImageComparisonResult imageComparisonResult;
     if (areInputsIdentical(artifactsDAO, properties)) {
       stepResult = getPassedStepResult();
@@ -161,31 +158,30 @@ public class LayoutComparator implements ComparatorJob {
   }
 
   boolean hasMaskThresholdWithAcceptableDifference(ImageComparisonResult mask) {
-    if (pixelThreshold.isPresent() && percentageThreshold.isPresent()) {
+    if (pixelThreshold != null && percentageThreshold != null) {
       return isAcceptablePixelChange(mask) && this.isAcceptablePercentageChange(mask);
-    } else if (pixelThreshold.isPresent()) {
+    } else if (pixelThreshold != null) {
       return isAcceptablePixelChange(mask);
-    } else if (percentageThreshold.isPresent()) {
+    } else if (percentageThreshold != null) {
       return isAcceptablePercentageChange(mask);
     }
     return false;
   }
 
-
-  public void setPixelThreshold(Optional<Integer> pixelThreshold) {
+  public void setPixelThreshold(Integer pixelThreshold) {
     this.pixelThreshold = pixelThreshold;
   }
 
-  public void setPercentageThreshold(Optional<Double> percentageThreshold) {
+  public void setPercentageThreshold(Double percentageThreshold) {
     this.percentageThreshold = percentageThreshold;
   }
 
   private boolean isAcceptablePixelChange(ImageComparisonResult mask) {
-    return mask.getPixelDifferenceCount() <= this.pixelThreshold.get();
+    return mask.getPixelDifferenceCount() <= this.pixelThreshold;
   }
 
   private boolean isAcceptablePercentageChange(ImageComparisonResult mask) {
-    return mask.getPercentagePixelDifference() <= this.percentageThreshold.get();
+    return mask.getPercentagePixelDifference() <= this.percentageThreshold;
   }
 
   private boolean isMaskWithoutDifference(ImageComparisonResult mask) {
@@ -225,16 +221,15 @@ public class LayoutComparator implements ComparatorJob {
   @Override
   public void setParameters(Map<String, String> params) throws ParametersException {
     if (params.containsKey(PERCENTAGE_THRESHOLD_PARAM)) {
-      setPercentageThreshold(
-          Optional.of(NumberUtils.toDouble(params.get(PERCENTAGE_THRESHOLD_PARAM))));
+      setPercentageThreshold(Double.valueOf(params.get(PERCENTAGE_THRESHOLD_PARAM)));
       ParametersValidator
-          .checkRange(percentageThreshold.get().intValue(), 0, 100,
-              "Wrong percentage threshold value");
+          .checkRange(percentageThreshold.intValue(), 0, 100,
+              "Percentage threshold should be a decimal value between 0 and 100");
     }
     if (params.containsKey(PIXEL_THRESHOLD_PARAM)) {
-      setPixelThreshold(Optional.of(NumberUtils.toInt(params.get(PIXEL_THRESHOLD_PARAM))));
-      ParametersValidator.checkParameter(pixelThreshold.get() >= 0,
-          "Pixel threshold should be greater than 0");
+      setPixelThreshold(Integer.valueOf(params.get(PIXEL_THRESHOLD_PARAM)));
+      ParametersValidator.checkParameter(pixelThreshold >= 0,
+          "Pixel threshold should be greater or equal to 0");
     }
   }
 
