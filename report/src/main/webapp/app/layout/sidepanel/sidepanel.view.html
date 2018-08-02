@@ -116,7 +116,8 @@
             data-trigger="hover" data-container="body">{{sidepanel.testsStats.warning}}</span> /
       <span class="status passed" data-toggle="popover" data-content="Passed tests"
             data-trigger="hover" data-container="body">
-        {{sidepanel.testsStats.passed}} ({{sidepanel.testsStats.conditionallyPassed}})</span> /
+        {{sidepanel.testsStats.passed + sidepanel.testsStats.conditionallyPassed}}
+        ({{sidepanel.testsStats.conditionallyPassed}})</span> /
       <span class="status rebased" data-toggle="popover" data-content="Accepted tests"
             data-trigger="hover" data-container="body">{{sidepanel.testsStats.rebased}}</span> )
     </div>
