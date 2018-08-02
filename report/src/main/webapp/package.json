@@ -1,6 +1,6 @@
 {
   "name": "aet",
-  "version": "2.1.16",
+  "version": "2.1.6",
   "description": "aet",
   "main": "index.js",
   "scripts": {
@@ -39,8 +39,8 @@
     "jshint": "^2.9.5",
     "jshint-stylish": "^2.2.1",
     "jshint-stylish-summary": "^0.1.2",
+    "jshint-summary": "^0.4.0",
     "vinyl-buffer": "^1.0.1",
-    "vinyl-source-stream": "^2.0.0",
-    "jshint-summary": "^0.4.0"
+    "vinyl-source-stream": "^2.0.0"
   }
 }
