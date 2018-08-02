@@ -293,7 +293,6 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
 
         function conditionallyPassed() {
           decoratedObject.total++;
-          decoratedObject.passed++;
           decoratedObject.conditionallyPassed++;
           if (decoratedParentReference && decoratedParentReference.conditionallyPassed) {
             decoratedParentReference.conditionallyPassed();
