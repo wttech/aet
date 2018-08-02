@@ -36,9 +36,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import javax.imageio.ImageIO;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 
 public class LayoutComparator implements ComparatorJob {
 
@@ -56,9 +58,11 @@ public class LayoutComparator implements ComparatorJob {
 
   private final ArtifactsDAO artifactsDAO;
 
-  private Integer pixelThreshold;
+  private Optional<Integer> pixelThreshold = Optional.empty();
 
-  private Double percentageThreshold;
+  private Optional<Double> percentageThreshold = Optional.empty();
+
+  private boolean excludeFunctionIsOn = false;
 
   LayoutComparator(ComparatorProperties comparatorProperties, ArtifactsDAO artifactsDAO) {
     this.properties = comparatorProperties;
@@ -93,6 +97,7 @@ public class LayoutComparator implements ComparatorJob {
         BufferedImage collectedImg = ImageIO.read(collectedArtifact);
 
         if (properties.getPayload() != null) {
+          excludeFunctionIsOn = true;
           List<Point> points = properties.getPayload().getPoints();
           List<Dimension> dimensions = properties.getPayload().getDimensions();
           if (points != null && dimensions != null) {
@@ -123,7 +128,7 @@ public class LayoutComparator implements ComparatorJob {
   private ComparatorStepResult saveArtifacts(ImageComparisonResult imageComparisonResult)
       throws ProcessingException {
     final ComparatorStepResult result;
-    if (isMaskWithoutDifference(imageComparisonResult)) {
+    if (isMaskWithoutDifference(imageComparisonResult) && !excludeFunctionIsOn) {
       result = getPassedStepResult();
     } else {
       InputStream mask = null;
@@ -150,31 +155,31 @@ public class LayoutComparator implements ComparatorJob {
   }
 
   boolean hasMaskThresholdWithAcceptableDifference(ImageComparisonResult mask) {
-    if (pixelThreshold != null && percentageThreshold != null) {
+    if (pixelThreshold.isPresent() && percentageThreshold.isPresent()) {
       return isAcceptablePixelChange(mask) && this.isAcceptablePercentageChange(mask);
-    } else if (pixelThreshold != null) {
+    } else if (pixelThreshold.isPresent()) {
       return isAcceptablePixelChange(mask);
-    } else if (percentageThreshold != null) {
+    } else if (percentageThreshold.isPresent()) {
       return isAcceptablePercentageChange(mask);
     }
     return false;
   }
 
 
-  public void setPixelThreshold(Integer pixelThreshold) {
+  public void setPixelThreshold(Optional<Integer> pixelThreshold) {
     this.pixelThreshold = pixelThreshold;
   }
 
-  public void setPercentageThreshold(Double percentageThreshold) {
+  public void setPercentageThreshold(Optional<Double> percentageThreshold) {
     this.percentageThreshold = percentageThreshold;
   }
 
   private boolean isAcceptablePixelChange(ImageComparisonResult mask) {
-    return mask.getPixelDifferenceCount() <= this.pixelThreshold;
+    return mask.getPixelDifferenceCount() <= this.pixelThreshold.get();
   }
 
   private boolean isAcceptablePercentageChange(ImageComparisonResult mask) {
-    return mask.getPercentagePixelDifference() <= this.percentageThreshold;
+    return mask.getPercentagePixelDifference() <= this.percentageThreshold.get();
   }
 
   private boolean isMaskWithoutDifference(ImageComparisonResult mask) {
@@ -210,15 +215,16 @@ public class LayoutComparator implements ComparatorJob {
   @Override
   public void setParameters(Map<String, String> params) throws ParametersException {
     if (params.containsKey(PERCENTAGE_THRESHOLD_PARAM)) {
-      setPercentageThreshold(Double.valueOf(params.get(PERCENTAGE_THRESHOLD_PARAM)));
+      setPercentageThreshold(
+          Optional.of(NumberUtils.toDouble(params.get(PERCENTAGE_THRESHOLD_PARAM))));
       ParametersValidator
-          .checkRange(percentageThreshold.intValue(), 0, 100,
-              "Percentage threshold should be a decimal value between 0 and 100");
+          .checkRange(percentageThreshold.get().intValue(), 0, 100,
+              "Wrong percentage threshold value");
     }
     if (params.containsKey(PIXEL_THRESHOLD_PARAM)) {
-      setPixelThreshold(Integer.valueOf(params.get(PIXEL_THRESHOLD_PARAM)));
-      ParametersValidator.checkParameter(pixelThreshold >= 0,
-          "Pixel threshold should be greater or equal to 0");
+      setPixelThreshold(Optional.of(NumberUtils.toInt(params.get(PIXEL_THRESHOLD_PARAM))));
+      ParametersValidator.checkParameter(pixelThreshold.get() >= 0,
+          "Pixel threshold should be greater than 0");
     }
   }
 

@@ -73,7 +73,11 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
   private List<WebElement> getWebElements() throws ProcessingException {
     List<WebElement> webElements = new LinkedList<>();
     for (String element : excludeElements) {
-      webElements.addAll(webDriver.findElements(By.cssSelector(element)));
+      if (element.charAt(0) == '.') {
+        webElements.addAll(webDriver.findElements(By.id(element.substring(1))));
+      } else {
+        webElements.addAll(webDriver.findElements(By.className(element.substring(1))));
+      }
     }
 
     return webElements;
