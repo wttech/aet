@@ -64,6 +64,8 @@ public class LayoutComparator implements ComparatorJob {
 
   private boolean excludeFunctionIsOn = false;
 
+  private boolean excludeElementsNotFound = false;
+
   LayoutComparator(ComparatorProperties comparatorProperties, ArtifactsDAO artifactsDAO) {
     this.properties = comparatorProperties;
     this.artifactsDAO = artifactsDAO;
@@ -82,8 +84,8 @@ public class LayoutComparator implements ComparatorJob {
 
   @Override
   public ComparatorStepResult compare() throws ProcessingException {
-
     final ComparatorStepResult stepResult;
+    
     ImageComparisonResult imageComparisonResult;
     if (areInputsIdentical(artifactsDAO, properties)) {
       stepResult = getPassedStepResult();
@@ -100,11 +102,11 @@ public class LayoutComparator implements ComparatorJob {
           excludeFunctionIsOn = true;
           List<Point> points = properties.getPayload().getPoints();
           List<Dimension> dimensions = properties.getPayload().getDimensions();
-          if (points != null && dimensions != null) {
+          if (points.size() > 0 && dimensions.size() > 0) {
             hideElementsInImg(patternImg, points, dimensions);
             hideElementsInImg(collectedImg, points, dimensions);
           } else {
-            // TODO
+            excludeElementsNotFound = true;
           }
         }
 
@@ -128,8 +130,12 @@ public class LayoutComparator implements ComparatorJob {
   private ComparatorStepResult saveArtifacts(ImageComparisonResult imageComparisonResult)
       throws ProcessingException {
     final ComparatorStepResult result;
-    if (isMaskWithoutDifference(imageComparisonResult) && !excludeFunctionIsOn) {
-      result = getPassedStepResult();
+    if (isMaskWithoutDifference(imageComparisonResult)) {
+      if(excludeFunctionIsOn){
+        result = new ComparatorStepResult(null, Status.CONDITIONALLY_PASSED, true);
+      } else {
+        result = getPassedStepResult();
+      }
     } else {
       InputStream mask = null;
       try (ByteArrayOutputStream baos = new ByteArrayOutputStream()) {
@@ -142,6 +148,11 @@ public class LayoutComparator implements ComparatorJob {
         } else {
           result = new ComparatorStepResult(maskArtifactId, Status.FAILED, true);
         }
+
+        if (excludeElementsNotFound) {
+          addExcludeMessageToResult(result, "Elements to exclude are not found on page");
+        }
+
         addPixelDifferenceDataToResult(result, imageComparisonResult);
         addTimestampToResult(result);
       } catch (Exception e) {
@@ -197,6 +208,10 @@ public class LayoutComparator implements ComparatorJob {
         Integer.toString(imageComparisonResult.getPixelDifferenceCount()));
     result.addData("percentagePixelDifference",
         Double.toString(imageComparisonResult.getPercentagePixelDifference()));
+  }
+
+  private void addExcludeMessageToResult(ComparatorStepResult result, String message) {
+    result.addData("excludeMessage", message);
   }
 
   private void addTimestampToResult(ComparatorStepResult result) {

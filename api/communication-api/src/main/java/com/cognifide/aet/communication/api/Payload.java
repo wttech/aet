@@ -24,13 +24,12 @@ public class Payload implements Serializable {
   private static final long serialVersionUID = 4722236598237687647L;
 
   private final List<Point> points;
+
   private final List<Dimension> dimensions;
-  private final String pageSource;
 
   public Payload(List<Point> points, List<Dimension> dimensions, String pageSource) {
     this.points = points;
     this.dimensions = dimensions;
-    this.pageSource = pageSource;
   }
 
   public List<Point> getPoints() {
@@ -39,9 +38,5 @@ public class Payload implements Serializable {
 
   public List<Dimension> getDimensions() {
     return dimensions;
-  }
-
-  public String getPageSource() {
-    return pageSource;
   }
 }

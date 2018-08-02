@@ -85,7 +85,6 @@ define(['angularAMD',
         name: 'regular',
         statusClasses: {
           passed: 'fa-check',
-          conditionallyPassed: 'fa-check-circle',
           failed: 'fa-times',
           warning: 'fa-exclamation-triangle',
           rebased: 'fa-cloud-upload-alt',
