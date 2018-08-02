@@ -2,6 +2,14 @@ Here are notes that summarize the most important changes in AET from the user an
 To see the full list of changes, please refer to [CHANGELOG](https://github.com/Cognifide/aet/blob/master/CHANGELOG.md).
 
 ### `master` branch version (not released yet)
+
+#### Upgrade for our virtualization tool set
+We now use newest versions of VirtualBox, Vagrant and Chef, for AET instance setup:
+
+* [VirtualBox 5.2.16](https://www.virtualbox.org/wiki/Downloads)
+* [Vagrant 2.1.2](https://releases.hashicorp.com/vagrant/)
+* [ChefDK 3.1.0](https://downloads.chef.io/chefdk/stable)
+
 #### Suite XML re-use option
 Added possibility to pass additional argument with suite XML file - `name`.
 Thanks to that you may re-use the same XML file to run different suites
