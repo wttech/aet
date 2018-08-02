@@ -28,13 +28,17 @@ define(['angularAMD', 'localStorageService'], function (angularAMD) {
           isScreenshotMaskVisible: isScreenshotMaskVisible,
           toggleScreenshotMask: toggleScreenshotMask,
           isFullSourceVisible: isFullSourceVisible,
-          toggleFullSource: toggleFullSource
+          toggleFullSource: toggleFullSource,
+          setLastTab: setLastTab,
+          getLastTab: getLastTab,
         },
         SCREENSHOT_MASK_STORAGE_KEY = 'aet:settings.visibility.screenshotMask',
         FULL_SOURCE_MASK_STORAGE_KEY = 'aet:settings.visibility.fullSource',
+        USER_TAB_MASK_STORAGE_KEY = 'aet:settings.raport.lastTab',
         settings = {
           screenshotMaskVisible: true,
-          fullSourceMaskVisible: false
+          fullSourceMaskVisible: false,
+          lastUserTab: null,
         };
 
     setupService();
@@ -45,6 +49,8 @@ define(['angularAMD', 'localStorageService'], function (angularAMD) {
           true);
       settings.fullSourceMaskVisible = getSetting(FULL_SOURCE_MASK_STORAGE_KEY,
           false);
+      settings.lastUserTab = getSetting(USER_TAB_MASK_STORAGE_KEY,
+          null);  
     }
 
     function isScreenshotMaskVisible() {
@@ -65,6 +71,14 @@ define(['angularAMD', 'localStorageService'], function (angularAMD) {
       settings.fullSourceMaskVisible = toggleSetting(
           FULL_SOURCE_MASK_STORAGE_KEY);
       return settings.fullSourceMaskVisible;
+    }
+
+    function setLastTab(val) {
+      settings.userTab = val;
+    }
+
+    function getLastTab() {
+      return settings.userTab;
     }
 
     /***************************************
