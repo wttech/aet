@@ -18,6 +18,8 @@ All notable changes to AET will be documented in this file.
 - [PR-286](https://github.com/Cognifide/aet/pull/286) Shared Patterns - use latest patterns of given suite name ([#121](https://github.com/Cognifide/aet/issues/121))
 - [PR-291](https://github.com/Cognifide/aet/pull/291) Updated nu.validator version from 15.6.29 to 17.11.1
 - [PR-298](https://github.com/Cognifide/aet/pull/298) Filtering accessibility errors by markup CSS ([#214](https://github.com/Cognifide/aet/issues/214))
+- [PR-301](https://github.com/Cognifide/aet/pull/301) New versions of virtualization tools used with new AET cookbook
+
 
 ## Version 2.1.6
 
