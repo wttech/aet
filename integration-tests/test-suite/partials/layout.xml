@@ -265,12 +265,72 @@
 		</urls>
 	</test>
 
-	<test name="S-comparator-Layout-Exclude">
+	<test name="S-comparator-Layout-Exclude-id">
 		<collect>
 			<open/>
 			<resolution width="767" height="300"/>
 			<sleep duration="3000"/>
 			<screen exclude-elements="#demo1,#demo2" />
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp"/>
+		</urls>
+	</test>
+
+	<test name="S-comparator-Layout-Exclude-css">
+		<collect>
+			<open/>
+			<resolution width="767" height="300"/>
+			<sleep duration="3000"/>
+			<screen exclude-elements=".dynamic1,.dynamic2" />
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp"/>
+		</urls>
+	</test>
+
+	<test name="F-comparator-Layout-Exclude-id">
+		<collect>
+			<open/>
+			<resolution width="767" height="300"/>
+			<sleep duration="3000"/>
+			<screen exclude-elements="#demo2" />
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp"/>
+		</urls>
+	</test>
+
+	<test name="F-comparator-Layout-Exclude-css">
+		<collect>
+			<open/>
+			<resolution width="767" height="300"/>
+			<sleep duration="3000"/>
+			<screen exclude-elements=".dynamic2" />
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp"/>
+		</urls>
+	</test>
+
+	<test name="F-comparator-Layout-Exclude-id">
+		<collect>
+			<open/>
+			<resolution width="767" height="300"/>
+			<sleep duration="3000"/>
+			<screen exclude-elements=".dynamic1,#demo2" />
 		</collect>
 		<compare>
 			<screen comparator="layout"/>

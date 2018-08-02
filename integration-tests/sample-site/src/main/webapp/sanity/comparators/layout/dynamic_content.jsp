@@ -20,5 +20,5 @@
 <%
 Long millis = System.currentTimeMillis();
 %>
-<p id="demo1">DYNAMIC CONTENT 1: <%=millis%></p>
-<p id="demo2">DYNAMIC CONTENT 2: <%=2*millis%></p>
+<p id="demo1" class=".dynamic1">DYNAMIC CONTENT 1: <%=millis%></p>
+<p id="demo2" class=".dynamic2">DYNAMIC CONTENT 2: <%=2*millis%></p>
