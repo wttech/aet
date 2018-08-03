@@ -127,13 +127,15 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
         .isNotBlank(params.get(CSS_PARAM))) {
       setElementParams(params);
     }
-    if (StringUtils.isNotBlank(params.get(EXCLUDE_ELEMENT_PARAM))) {
-      namesOfExcludeElements = params.get("exclude-elements");
-    } else {
-      throw new ParametersException("Elements to exclude are not specified in suite");
+    if(params.containsKey(EXCLUDE_ELEMENT_PARAM)) {
+      if (StringUtils.isNotBlank(params.get(EXCLUDE_ELEMENT_PARAM))) {
+        namesOfExcludeElements = params.get("exclude-elements");
+      } else {
+        throw new ParametersException("Elements to exclude are not specified in suite");
+      }
     }
   }
-  
+
   private byte[] takeScreenshot() throws ProcessingException {
     try {
       if (isSelectorPresent()) {
