@@ -136,6 +136,9 @@ public class ChromeWebDriverFactory implements WebDriverFactory {
 
     ChromeOptions options = new ChromeOptions();
     options.addArguments("--disable-plugins");
+    options.addArguments("--headless");
+    options.addArguments("--hide-scrollbars");
+    options.setAcceptInsecureCerts(true);
 
     capabilities.setCapability(ChromeOptions.CAPABILITY, options);
 

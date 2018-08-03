@@ -24,6 +24,7 @@
 	<test name="S-modifier-Sleep">
 		<collect>
 			<open />
+			<resolution width="1500" />
 			<sleep duration="6000" />
 			<screen />
 		</collect>
@@ -34,10 +35,12 @@
 			<url href="modifiers/sleep/success.jsp" />
 		</urls>
 	</test>
+	<!-- Should fail because sleep is shorter than the time before the timestamp panel disappears -->
 	<test name="F-modifier-Sleep">
 		<collect>
 			<open />
-			<sleep duration="1000" />
+			<resolution width="1500" />
+			<sleep duration="100" />
 			<screen />
 		</collect>
 		<compare>

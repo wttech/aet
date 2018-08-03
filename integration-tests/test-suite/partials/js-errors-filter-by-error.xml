@@ -45,8 +45,8 @@
 		</collect>
 		<compare>
 			<js-errors>
-				<js-errors-filter error="ReferenceError: nonExistingJsFunction is not defined" />
-				<js-errors-filter error="ReferenceError: nonExistingVariable is not defined" />
+				<js-errors-filter error="Uncaught ReferenceError: nonExistingJsFunction is not defined" />
+				<js-errors-filter error="Uncaught ReferenceError: nonExistingVariable is not defined" />
 			</js-errors>
 		</compare>
 		<urls>
@@ -63,8 +63,8 @@
 		</collect>
 		<compare>
 			<js-errors>
-				<js-errors-filter error="ReferenceError: nonExistingJsFunction is not defined" />
-				<js-errors-filter error="ReferenceError: nonExistingVariable is not defined" />
+				<js-errors-filter error="Uncaught ReferenceError: nonExistingJsFunction is not defined" />
+				<js-errors-filter error="Uncaught ReferenceError: nonExistingVariable is not defined" />
 			</js-errors>
 		</compare>
 		<urls>

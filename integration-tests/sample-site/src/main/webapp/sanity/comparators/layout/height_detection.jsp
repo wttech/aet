@@ -17,15 +17,13 @@
     limitations under the License.
 
 --%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ include file="/includes/header.jsp" %>
 <%
-    java.text.SimpleDateFormat dt = new java.text.SimpleDateFormat("EEEdMMMyyyyHHmmssSSSZ",java.util.Locale.ENGLISH);
-    java.util.Date date = new java.util.Date();
-    Cookie dynamicCookieValue = new Cookie("DynamicSampleCookieName",dt.format(date));
-    Cookie dynamicCookieName = new Cookie(dt.format(date),"staticCookieValue");
-    dynamicCookieValue.setMaxAge(60*60*24);
-    // expire cookie after 60 second in order to have it cleared for next run
-    dynamicCookieName.setMaxAge(60);
-    response.addCookie( dynamicCookieValue );
-    response.addCookie( dynamicCookieName );
+String timestamp = Long.toString(System.currentTimeMillis());
 %>
-<%@ include file="/includes/basePage.jsp" %>
+<%@ include file="/includes/bodyContent.jsp" %>
+<div class="space">
+    <%@ include file="dynamic_content.jsp" %>
+</div>
+<%@ include file="/includes/footer.jsp" %>

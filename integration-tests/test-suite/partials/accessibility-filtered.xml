@@ -94,7 +94,7 @@
 				<accessibility-filter principle="WCAG2A.Principle1.Guideline1_3.1_3_1.F68" />
 				<accessibility-filter line="252" />
 				<accessibility-filter column="6" />
-				<accessibility-filter line="317" column="50" />
+				<accessibility-filter line="299" column="50" />
 			</accessibility>
 		</compare>
 		<urls>
