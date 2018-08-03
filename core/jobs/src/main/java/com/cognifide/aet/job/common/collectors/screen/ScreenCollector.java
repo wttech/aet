@@ -133,8 +133,7 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
       throw new ParametersException("Elements to exclude are not specified in suite");
     }
   }
-
-
+  
   private byte[] takeScreenshot() throws ProcessingException {
     try {
       if (isSelectorPresent()) {

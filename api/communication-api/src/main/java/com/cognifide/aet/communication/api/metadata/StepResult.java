@@ -60,7 +60,6 @@ public abstract class StepResult implements Serializable {
     return ImmutableMap.copyOf(data);
   }
 
-
   public String addData(String key, String value) {
     return data.put(key, value);
   }
