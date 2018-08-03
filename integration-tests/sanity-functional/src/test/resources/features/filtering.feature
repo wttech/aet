@@ -25,8 +25,8 @@ Feature: Tests Results Filtering
    Scenario: Filtering Tests Results: accessibility
     Given I have opened sample tests report page
     When I search for tests containing "accessibility"
-    Then There are 15 tiles visible
-    And Statistics text contains "15 ( 7 / 3 / 5 / 0 )"
+    Then There are 16 tiles visible
+    And Statistics text contains "16 ( 8 / 3 / 5 / 0 )"
 
    Scenario: Filtering Tests Results: cookie
     Given I have opened sample tests report page
