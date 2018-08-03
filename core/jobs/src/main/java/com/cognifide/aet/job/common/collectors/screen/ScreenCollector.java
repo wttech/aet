@@ -142,7 +142,6 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
         SeleniumWaitHelper
             .waitForElementToBePresent(webDriver, getLocator(), getTimeoutInSeconds());
         return getImagePart(getFullPageScreenshot(), webDriver.findElement(getLocator()));
-
       } else {
         return getFullPageScreenshot();
       }
