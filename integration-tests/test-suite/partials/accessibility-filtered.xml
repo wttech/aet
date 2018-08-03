@@ -82,6 +82,21 @@
 		</urls>
 	</test>
 
+	<test name="F-comparator-accessibility-with-standard-wcag2a-filtered-only-by-markup-css">
+		<collect>
+			<open />
+			<accessibility standard="WCAG2A" />
+		</collect>
+		<compare>
+			<accessibility>
+				<accessibility-filter markupCss=".form-control" />
+			</accessibility>
+		</compare>
+		<urls>
+			<url href="comparators/accessibility/failed.jsp" />
+		</urls>
+	</test>
+
 	<test name="S-comparator-accessibility-with-standard-wcag2a-filtered-all">
 		<collect>
 			<open />
