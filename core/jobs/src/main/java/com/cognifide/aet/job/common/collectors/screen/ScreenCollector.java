@@ -54,8 +54,6 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
 
   private static final String CONTENT_TYPE = "image/png";
 
-  private static final String EXCLUDE_ELEMENT_PARAM = "exclude-elements";
-
   private static final String PNG_FORMAT = "png";
 
   private final WebDriver webDriver;
@@ -64,20 +62,12 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
 
   private final CollectorProperties properties;
 
-  private String[] namesOfExcludeElements;
+  private String namesOfExcludeElements;
 
   ScreenCollector(CollectorProperties properties, WebDriver webDriver, ArtifactsDAO artifactsDAO) {
     this.properties = properties;
     this.webDriver = webDriver;
     this.artifactsDAO = artifactsDAO;
-  }
-
-  private List<WebElement> getWebElements() {
-    List<WebElement> webElements = new LinkedList<>();
-    for (String element : namesOfExcludeElements) {
-      webElements.addAll(webDriver.findElements(By.cssSelector(element)));
-    }
-    return webElements;
   }
 
   private List<Element> getExcludeElementsFromWebElements(
@@ -105,7 +95,8 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
         String resultId = artifactsDAO.saveArtifact(properties, screenshotStream, CONTENT_TYPE);
 
         if (namesOfExcludeElements != null) {
-          List<Element> excludeElements = getExcludeElementsFromWebElements(getWebElements());
+          List<Element> excludeElements = getExcludeElementsFromWebElements(
+              webDriver.findElements(By.cssSelector(namesOfExcludeElements)));
           Payload payload = new Payload();
           payload.setExclude(new Exclude(excludeElements));
           stepResult = CollectorStepResult.newCollectedResult(resultId, payload);
@@ -136,11 +127,10 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
         .isNotBlank(params.get(CSS_PARAM))) {
       setElementParams(params);
     }
-    if (params.containsKey(EXCLUDE_ELEMENT_PARAM)) {
-      if (params.get(EXCLUDE_ELEMENT_PARAM).equals("")) {
-        throw new ParametersException("Elements to exclude are not specified in suite");
-      }
-      namesOfExcludeElements = params.get("exclude-elements").replace(" ", "").split(",");
+    if (StringUtils.isNotBlank(params.get(EXCLUDE_ELEMENT_PARAM))) {
+      namesOfExcludeElements = params.get("exclude-elements");
+    } else {
+      throw new ParametersException("Elements to exclude are not specified in suite");
     }
   }
 
