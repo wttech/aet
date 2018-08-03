@@ -126,7 +126,7 @@
 	<test name="S-comparator-Layout-Partial-By-CSS">
 		<collect>
 			<open />
-			<resolution width="1500" height="1500" />
+			<resolution width="200" height="300" />
 			<sleep duration="3000" />
 			<screen css="img" />
 		</collect>
@@ -141,7 +141,7 @@
 	<test name="S-comparator-Layout-Partial-By-XPATH">
 		<collect>
 			<open />
-			<resolution width="1500" height="1500" />
+			<resolution width="200" height="300" />
 			<sleep duration="3000" />
 			<screen xpath="//*[@id='banner']/div/div[1]/h1" />
 		</collect>
@@ -150,6 +150,118 @@
 		</compare>
 		<urls>
 			<url href="comparators/layout/success.jsp" />
+		</urls>
+	</test>
+
+	<test name="F-comparator-Layout-pixel-threshold">
+		<collect>
+			<open />
+			<sleep duration="3000" />
+			<screen />
+		</collect>
+		<compare>
+			<screen pixelThreshold="1" comparator="layout" />
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp" />
+		</urls>
+	</test>
+
+	<test name="S-comparator-Layout-pixel-threshold">
+		<collect>
+			<open />
+			<sleep duration="3000" />
+			<screen />
+		</collect>
+		<compare>
+			<screen pixelThreshold="2500" comparator="layout" />
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp" />
+		</urls>
+	</test>
+
+	<test name="F-comparator-Layout-percentage-threshold">
+		<collect>
+			<open />
+			<sleep duration="3000" />
+			<screen />
+		</collect>
+		<compare>
+			<screen percentageThreshold="0.001" comparator="layout" />
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp" />
+		</urls>
+	</test>
+
+	<test name="S-comparator-Layout-percentage-threshold">
+		<collect>
+			<open />
+			<sleep duration="3000" />
+			<screen />
+		</collect>
+		<compare>
+			<screen percentageThreshold="0.5" comparator="layout" />
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp" />
+		</urls>
+	</test>
+
+	<test name="F-comparator-Layout-small-pixel-threshold-big-percentage-threshold">
+		<collect>
+			<open />
+			<sleep duration="3000" />
+			<screen />
+		</collect>
+		<compare>
+			<screen pixelThreshold="1" percentageThreshold="0.5" comparator="layout" />
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp" />
+		</urls>
+	</test>
+
+	<test name="F-comparator-Layout-big-pixel-threshold-small-percentage-threshold">
+		<collect>
+			<open />
+			<sleep duration="3000" />
+			<screen />
+		</collect>
+		<compare>
+			<screen pixelThreshold="2500" percentageThreshold="0.001" comparator="layout" />
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp" />
+		</urls>
+	</test>
+
+	<test name="F-comparator-Layout-small-pixel-threshold-small-percentage-threshold">
+		<collect>
+			<open />
+			<sleep duration="3000" />
+			<screen />
+		</collect>
+		<compare>
+			<screen pixelThreshold="1000" percentageThreshold="0.001" comparator="layout" />
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp" />
+		</urls>
+	</test>
+
+	<test name="S-comparator-Layout-big-pixel-threshold-and-big-percentage-threshold">
+		<collect>
+			<open />
+			<sleep duration="3000" />
+			<screen />
+		</collect>
+		<compare>
+			<screen pixelThreshold="2500" percentageThreshold="0.5" comparator="layout" />
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp" />
 		</urls>
 	</test>
 
