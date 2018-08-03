@@ -70,10 +70,10 @@ public class LayoutComparator implements ComparatorJob {
 
   private void hideElementsInImg(BufferedImage img, List<Element> elements) {
     Graphics graphics = img.getGraphics();
-    for (int i = 0; i < elements.size(); i++) {
+    for(Element element : elements) {
       graphics.setColor(Color.CYAN);
-      graphics.fillRect(elements.get(i).getPoint().x, elements.get(i).getPoint().y, elements.get(i).getDimension().width,
-          elements.get(i).getDimension().height);
+      graphics.fillRect(element.getPoint().x, element.getPoint().y, element.getDimension().width,
+          element.getDimension().height);
     }
     graphics.dispose();
   }
@@ -105,7 +105,6 @@ public class LayoutComparator implements ComparatorJob {
 
         imageComparisonResult = ImageComparison.compare(patternImg, collectedImg);
         stepResult = saveArtifacts(imageComparisonResult);
-
       } catch (IOException e) {
         throw new ProcessingException("Error while obtaining artifacts!", e);
       }
