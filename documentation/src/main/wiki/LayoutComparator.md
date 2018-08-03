@@ -14,7 +14,6 @@ Resource name: screen
 | --------- | ----- | ----------- | --------- |
 | `pixelThreshold` | int (equal or greater than 0) | The value to set the error threshold in pixels e.g if difference between photos is smaller or equal to `pixelThreshold`, the test will pass. In case of difference is bigger than `pixelThreshold`, the test will fail. | no |
 | `percentageThreshold` | double (between 0 and 100) | It works as `pixelThreshold` but values are in percentages | no |
-| `exclude-elements` | id or css selectors to elements separated by commas | If you provide elements in exclude-elements, they won't be checked by layout comparator, the difference won't be included for `pixelThreshold` and `percentageThreshold` and you won't see the difference on the mask. | no |
 
 When you provide `pixelThreshold` and `percentageThreshold` test will pass only if pixel difference is smaller or equal than `pixelThreshold` and percentage difference is smaller or equal than `percentageThreshold`.
 
