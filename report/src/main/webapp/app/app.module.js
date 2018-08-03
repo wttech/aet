@@ -20,11 +20,11 @@
 define(['angularAMD',
   // **** LIBRARIES ****
   'lodash',
+  'pdfkit',
   'angular-bootstrap',
   'angular-ui-router',
   'jquery',
   'bootstrap',
-  'pdfkit',
   'filesaver',
   'canvas2pdf',
   'blob-stream',
@@ -68,9 +68,11 @@ define(['angularAMD',
   'filterInformationDirective',
   // modals
   'noteModalController',
-  'unsavedChangesModalController'], function (angularAMD, _) {
+  'unsavedChangesModalController'], function (angularAMD, _, pdfkit) {
 
   var app = angular.module('app', ['ui.router', 'ui.bootstrap']);
+  window.PDFDocument = pdfkit; // jshint ignore:line
+  // we have to export global PDFDocument because canvas2pdf needs it globally
 
   app.run([
     '$rootScope',

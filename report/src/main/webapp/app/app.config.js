@@ -93,19 +93,6 @@ require.config({
     lodash: {
       exports: '_'
     },
-    // 'pdfkit': {
-    //   exports: 'pdfkit',
-    // },
-    // 'blob-stream': {
-    //   exports: 'blob-stream',
-    // },
-    // 'fileSaver': {
-    //   exports: 'fileSaver',
-    // },
-    // 'canvas2pdf': {
-    //   deps: ['pdfkit', 'blob-stream'],
-    //   exports: 'canvas2pdf',
-    // },
     'angular-bootstrap': ['angular'],
     'angular-ui-router': ['angular'],
     'angularAMD': ['angular'],

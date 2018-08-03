@@ -17,7 +17,7 @@
  */
 
 
-define(['angularAMD', 'metadataService'], function (angularAMD) {
+define(['angularAMD', 'blob-stream', 'canvas2pdf', 'metadataService'], function (angularAMD, blobStream, canvas2pdf) {
   'use strict';
   angularAMD.directive('aetGeneratePdfReport', ['metadataService', generatePDFDirective]);
 
@@ -29,14 +29,7 @@ define(['angularAMD', 'metadataService'], function (angularAMD) {
     };
 
     function linkFunc(scope) {
-
-      // var pdfkit = require('pdfkit');
-      // var canvas2pdf = require('canvas2pdf');
-      // var blobStream = require('blob-stream'); 
-      // I've tried loading these like that but it gives me a "PDFDocument is not defined" error
-      // not sure if thats the proper way, please let me know
-
-     scope.generatePDF = function () {
+       scope.generatePDF = function () {
         var testsStatistics = metadataService.getTestStatistics();
         var testsByCategories = [];     
         for (var i = 0; i < testsStatistics.length; i++) {
