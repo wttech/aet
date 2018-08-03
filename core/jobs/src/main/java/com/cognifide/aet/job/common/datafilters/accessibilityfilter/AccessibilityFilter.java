@@ -23,20 +23,25 @@ import com.cognifide.aet.job.common.utils.ParamsHelper;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Pattern;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.select.Elements;
 
 public class AccessibilityFilter extends AbstractDataModifierJob<List<AccessibilityIssue>> {
 
   public static final String NAME = "accessibility-filter";
 
-  private static final String PARAM_PRINCIPLE = "principle";
+  static final String PARAM_PRINCIPLE = "principle";
 
-  private static final String PARAM_LINE = "line";
+  static final String PARAM_LINE = "line";
 
-  private static final String PARAM_COLUMN = "column";
+  static final String PARAM_COLUMN = "column";
 
-  private static final String PARAM_ERROR = "error";
+  static final String PARAM_ERROR = "error";
 
-  private static final String PARAM_ERROR_PATTERN = "errorPattern";
+  static final String PARAM_ERROR_PATTERN = "errorPattern";
+
+  static final String PARAM_MARKUP_CSS_SELECTOR = "markupCss";
 
   private Pattern errorMessagePattern;
 
@@ -46,6 +51,8 @@ public class AccessibilityFilter extends AbstractDataModifierJob<List<Accessibil
 
   private Integer column;
 
+  private String markupCssSelector;
+
   @Override
   public void setParameters(Map<String, String> params) throws ParametersException {
     errorMessagePattern = ParamsHelper
@@ -53,7 +60,10 @@ public class AccessibilityFilter extends AbstractDataModifierJob<List<Accessibil
     principle = ParamsHelper.getParamAsString(PARAM_PRINCIPLE, params);
     line = ParamsHelper.getParamAsInteger(PARAM_LINE, params);
     column = ParamsHelper.getParamAsInteger(PARAM_COLUMN, params);
-    ParamsHelper.atLeastOneIsProvided(principle, errorMessagePattern, line, column);
+    markupCssSelector = ParamsHelper.getParamAsString(PARAM_MARKUP_CSS_SELECTOR, params);
+
+    ParamsHelper
+        .atLeastOneIsProvided(principle, errorMessagePattern, line, column, markupCssSelector);
   }
 
   @Override
@@ -63,7 +73,8 @@ public class AccessibilityFilter extends AbstractDataModifierJob<List<Accessibil
       if (ParamsHelper.equalOrNotSet(principle, issue.getCode())
           && ParamsHelper.matches(errorMessagePattern, issue.getMessage())
           && ParamsHelper.equalOrNotSet(line, issue.getLineNumber())
-          && ParamsHelper.equalOrNotSet(column, issue.getColumnNumber())) {
+          && ParamsHelper.equalOrNotSet(column, issue.getColumnNumber())
+          && matchesCssSelector(issue.getElementString())) {
         issue.exclude();
       }
     }
@@ -76,6 +87,16 @@ public class AccessibilityFilter extends AbstractDataModifierJob<List<Accessibil
         + PARAM_ERROR_PATTERN + ": " + errorMessagePattern + " " + PARAM_LINE + ": " + line + " "
         + PARAM_COLUMN + ": "
         + column;
+  }
+
+  private boolean matchesCssSelector(String markupFragment) {
+    boolean result = true;
+    if (markupCssSelector != null) {
+      Document markup = Jsoup.parse(markupFragment);
+      Elements elements = markup.select(markupCssSelector);
+      result = !elements.isEmpty();
+    }
+    return result;
   }
 
 }
