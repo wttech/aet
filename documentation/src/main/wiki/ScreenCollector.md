@@ -17,7 +17,7 @@ Module name: **screen**
 | --------- | ----- | ----------- | --------- |
 | `xpath` | xpath_to_element | Xpath to element(s) | optional (either xpath or css) |
 | `css` | css_selector_to_element | css selector to element(s)| optional (either xpath or css) |
-| `exclude-elements` | id or css selectors to elements separated by commas | If you provide elements in exclude-elements, they won't be checked by layout comparator, the difference won't be included for `pixelThreshold` and `percentageThreshold` and you won't see the difference on the mask. | no |
+| `exclude-elements` | css_selector_to_element | If you provide elements in exclude-elements, they won't be checked by layout comparator, the difference won't be included for `pixelThreshold` and `percentageThreshold` and you won't see the difference on the mask. | no |
 | `timeout` | 1000ms | The timeout for the element to appear, in milliseconds. The max value of this parameter is 15000 milliseconds (15 seconds). | no (default will be used) this parameter applies only in conjunction with xpath or css param |
 
 
