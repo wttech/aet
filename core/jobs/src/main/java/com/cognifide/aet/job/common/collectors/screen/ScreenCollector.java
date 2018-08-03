@@ -64,9 +64,7 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
 
   private final CollectorProperties properties;
 
-  private String[] excludeElements;
-
-  private String test;
+  private String[] namesOfExcludeElements;
 
   ScreenCollector(CollectorProperties properties, WebDriver webDriver, ArtifactsDAO artifactsDAO) {
     this.properties = properties;
@@ -74,23 +72,25 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
     this.artifactsDAO = artifactsDAO;
   }
 
-  private List<WebElement> getWebElements() throws ProcessingException {
+  private List<WebElement> getWebElements() {
     List<WebElement> webElements = new LinkedList<>();
-    for (String element : excludeElements) {
+    for (String element : namesOfExcludeElements) {
       webElements.addAll(webDriver.findElements(By.cssSelector(element)));
     }
     return webElements;
   }
 
-  private void setPointsListAndDimensionListFromWebElements(List<Element> elements,
+  private List<Element> getExcludeElementsFromWebElements(
       List<WebElement> webElements) {
+    List<Element> excludeElements = new LinkedList<>();
     for (WebElement webElement : webElements) {
       java.awt.Point point = new java.awt.Point(webElement.getLocation().x,
           webElement.getLocation().y);
       java.awt.Dimension dimension = new java.awt.Dimension(webElement.getSize().width,
           webElement.getSize().height);
-      elements.add(new Element(point, dimension));
+      excludeElements.add(new Element(point, dimension));
     }
+    return excludeElements;
   }
 
   @Override
@@ -104,14 +104,10 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
       try (final InputStream screenshotStream = new ByteArrayInputStream(screenshot)) {
         String resultId = artifactsDAO.saveArtifact(properties, screenshotStream, CONTENT_TYPE);
 
-        if (excludeElements != null) {
-          List<WebElement> webElements = getWebElements();
-          List<Element> excludeElementsPos = new LinkedList<>();
-
-          setPointsListAndDimensionListFromWebElements(excludeElementsPos, webElements);
-
+        if (namesOfExcludeElements != null) {
+          List<Element> excludeElements = getExcludeElementsFromWebElements(getWebElements());
           Payload payload = new Payload();
-          payload.setExclude(new Exclude(excludeElementsPos));
+          payload.setExclude(new Exclude(excludeElements));
           stepResult = CollectorStepResult.newCollectedResult(resultId, payload);
         } else {
           stepResult = CollectorStepResult.newCollectedResult(resultId);
@@ -144,7 +140,7 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
       if (params.get(EXCLUDE_ELEMENT_PARAM).equals("")) {
         throw new ParametersException("Elements to exclude are not specified in suite");
       }
-      excludeElements = params.get("exclude-elements").replace(" ", "").split(",");
+      namesOfExcludeElements = params.get("exclude-elements").replace(" ", "").split(",");
     }
   }
 
