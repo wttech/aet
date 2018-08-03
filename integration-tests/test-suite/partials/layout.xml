@@ -343,7 +343,7 @@
 	<test name="S-comparator-Layout-Exclude-Elements-with-Percentage-Treshold">
 		<collect>
 			<open/>
-			<resolution width="767"/>
+			<resolution width="767" height="3200"/>
 			<sleep duration="3000"/>
 			<screen exclude-elements="#demo1,#demo2"/>
 		</collect>
@@ -358,7 +358,7 @@
 	<test name="F-comparator-Layout-Exclude-Elements-with-Percentage-Treshold">
 		<collect>
 			<open/>
-			<resolution width="767"/>
+			<resolution width="767" height="3200"/>
 			<sleep duration="3000"/>
 			<screen exclude-elements="unnamed" percentageThreshold="10"/>
 		</collect>
@@ -373,7 +373,7 @@
 	<test name="F-comparator-Layout-Exclude-Elements">
 		<collect>
 			<open/>
-			<resolution width="767"/>
+			<resolution width="767" height="300"/>
 			<sleep duration="3000"/>
 			<screen exclude-elements="unnamed" />
 		</collect>
