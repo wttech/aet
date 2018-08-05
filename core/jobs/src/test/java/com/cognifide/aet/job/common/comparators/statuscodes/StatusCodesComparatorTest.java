@@ -20,7 +20,6 @@ import static org.mockito.Mockito.when;
 
 import com.cognifide.aet.communication.api.metadata.ComparatorStepResult;
 import com.cognifide.aet.job.api.comparator.ComparatorProperties;
-import com.cognifide.aet.job.api.datafilter.DataFilterJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.job.common.ArtifactDAOMock;
@@ -83,9 +82,7 @@ public class StatusCodesComparatorTest extends AbstractComparatorTest {
     artifactDaoMock = new ArtifactDAOMock(StatusCodesComparator.class);
     comparatorProperties = new ComparatorProperties(TEST_COMPANY, TEST_PROJECT, null,
         "expected-data-200-result.json");
-    tested = new StatusCodesComparator(artifactDaoMock, comparatorProperties,
-        new ArrayList<DataFilterJob>());
-    artifactDaoMock = new ArtifactDAOMock(SourceComparator.class);
+    tested = new StatusCodesComparator(artifactDaoMock, comparatorProperties, new ArrayList<>());
     initStatusCodes();
     when(dataResult.getStatusCodes()).thenReturn(statusCodes);
 
@@ -202,8 +199,10 @@ public class StatusCodesComparatorTest extends AbstractComparatorTest {
   }
 
   private void initStatusCodes() {
-    statusCodes = new StatusCodesBuilder().add(404, 303, 500, 501, 302, 200, 400, 201)
-        .add(404, "http://www.example.com/image.png").build();
+    statusCodes = new StatusCodesBuilder()
+        .add(404, 303, 500, 501, 302, 200, 400, 201)
+        .add(404, "http://www.example.com/image.png")
+        .build();
   }
 
   private static class StatusCodesBuilder {
@@ -216,13 +215,6 @@ public class StatusCodesComparatorTest extends AbstractComparatorTest {
       this.codes = Lists.newArrayList();
     }
 
-    public StatusCodesBuilder add(int code) {
-      codes.add(new StatusCode(code, DEFAULT_URL));
-      return this;
-    }
-
-    ;
-
     public StatusCodesBuilder add(Integer... httpCodes) {
       for (Integer httpCode : httpCodes) {
         codes.add(new StatusCode(httpCode, DEFAULT_URL));
@@ -230,20 +222,13 @@ public class StatusCodesComparatorTest extends AbstractComparatorTest {
       return this;
     }
 
-    ;
-
     public StatusCodesBuilder add(int code, String url) {
       codes.add(new StatusCode(code, url));
       return this;
     }
 
-    ;
-
     public List<StatusCode> build() {
       return codes;
     }
-
-    ;
-
   }
 }

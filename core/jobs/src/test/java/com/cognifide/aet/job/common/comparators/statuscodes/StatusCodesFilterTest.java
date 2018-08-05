@@ -103,7 +103,7 @@ public class StatusCodesFilterTest {
   }
 
   @TestWith({"100;200;201,100,200,5", "400;401;499,100,400,12"})
-  public void testFilter_boundsWithfilterCodes(String filterCodesParam, int lowerBound,
+  public void testFilter_boundsWithFilterCodes(String filterCodesParam, int lowerBound,
       int upperBound,
       int expectedSize) {
     tested = getTested(lowerBound, upperBound, prepareFilterCodes(filterCodesParam));
