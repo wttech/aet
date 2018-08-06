@@ -2,12 +2,12 @@
   "statusCodes": [
     {
       "code": 404,
-      "url": "http://192.168.123.100:9090/sample-site/sanity/comparators/statuscodes/noneexistingPage404.jsp",
+      "url": "http://aet-vagrant/sample-site/sanity/comparators/statuscodes/noneexistingPage404.jsp",
       "excluded": false
     },
     {
       "code": 0,
-      "url": "http://192.168.123.100:9090/favicon.ico",
+      "url": "http://aet-vagrant/favicon.ico",
       "excluded": false
     },
     {
@@ -29,12 +29,12 @@
   "filteredStatusCodes": [
     {
       "code": 404,
-      "url": "http://192.168.123.100:9090/sample-site/sanity/comparators/statuscodes/noneexistingPage404.jsp",
+      "url": "http://aet-vagrant/sample-site/sanity/comparators/statuscodes/noneexistingPage404.jsp",
       "excluded": false
     },
     {
       "code": 0,
-      "url": "http://192.168.123.100:9090/favicon.ico",
+      "url": "http://aet-vagrant/favicon.ico",
       "excluded": false
     },
     {

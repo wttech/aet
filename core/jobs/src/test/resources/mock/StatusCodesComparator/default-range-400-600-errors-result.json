@@ -2,7 +2,7 @@
   "statusCodes": [
     {
       "code": 400,
-      "url": "http://192.168.123.100:9090/sample-site/sanity/comparators/statuscodes/noneexistingPage404.jsp",
+      "url": "http://aet-vagrant/sample-site/sanity/comparators/statuscodes/noneexistingPage404.jsp",
       "excluded": false
     },
     {
@@ -14,7 +14,7 @@
   "filteredStatusCodes": [
     {
       "code": 400,
-      "url": "http://192.168.123.100:9090/sample-site/sanity/comparators/statuscodes/noneexistingPage404.jsp",
+      "url": "http://aet-vagrant/sample-site/sanity/comparators/statuscodes/noneexistingPage404.jsp",
       "excluded": false
     },
     {
