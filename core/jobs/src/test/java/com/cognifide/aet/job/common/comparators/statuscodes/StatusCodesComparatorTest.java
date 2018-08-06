@@ -70,9 +70,6 @@ public class StatusCodesComparatorTest extends AbstractComparatorTest {
   private Map<String, String> params;
 
   @Mock
-  private StatusCodesCollectorResult dataResult;
-
-  @Mock
   private ComparatorProperties comparatorProperties;
 
   private List<StatusCode> statusCodes;
@@ -84,7 +81,6 @@ public class StatusCodesComparatorTest extends AbstractComparatorTest {
         "expected-data-200-result.json");
     tested = new StatusCodesComparator(artifactDaoMock, comparatorProperties, new ArrayList<>());
     initStatusCodes();
-    when(dataResult.getStatusCodes()).thenReturn(statusCodes);
 
     when(params.containsKey(PARAM_FILTER_RANGE)).thenReturn(false);
     when(params.containsKey(PARAM_FILTER_CODES)).thenReturn(false);
