@@ -68,7 +68,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     aet.local
   )
 
-  config.omnibus.chef_version = '14.2.0'
+  config.omnibus.chef_version = '14.3.37'
   config.berkshelf.enabled = true
 
   config.vm.provision :chef_solo do |chef|
