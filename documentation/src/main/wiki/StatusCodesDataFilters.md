@@ -1,6 +1,6 @@
 #### Status Codes Data Filters
 
-Data filters will be apply only for codes contained in the `filterange`. If the `filterRange` isn't provided, default range will be used.
+Data filters will be apply only for codes contained in the `filterRange`. If the `filterRange` isn't provided, default range will be used.
 
 ##### Exclude Filter
 
