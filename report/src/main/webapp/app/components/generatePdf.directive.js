@@ -15,8 +15,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-
 define(['angularAMD', 'blob-stream', 'canvas2pdf', 'metadataService'], function (angularAMD, blobStream, canvas2pdf) {
   'use strict';
   angularAMD.directive('aetGeneratePdfReport', ['metadataService', generatePDFDirective]);
@@ -29,9 +27,9 @@ define(['angularAMD', 'blob-stream', 'canvas2pdf', 'metadataService'], function 
     };
 
     function linkFunc(scope) {
-       scope.generatePDF = function () {
+      scope.generatePDF = function () {
         var testsStatistics = metadataService.getTestStatistics();
-        var testsByCategories = [];     
+        var testsByCategories = [];
         for (var i = 0; i < testsStatistics.length; i++) {
           if (!hasCategoryProperty(testsByCategories, testsStatistics[i])) {
             switch (testsStatistics[i].result) {
@@ -138,7 +136,7 @@ define(['angularAMD', 'blob-stream', 'canvas2pdf', 'metadataService'], function 
             startingX: 100,
             startingY: 430,
             width: 400,
-            height:180,
+            height: 180,
             chartName: 'Tests Statistics - Total: ' + 0,
             maxValue: 0,
             numOfYAxisPoints: 0,
@@ -176,7 +174,7 @@ define(['angularAMD', 'blob-stream', 'canvas2pdf', 'metadataService'], function 
             startingX: 100,
             startingY: 210,
             width: 400,
-            height:180,
+            height: 180,
             totalTests: 0,
             chartName: '',
             maxValue: 0,
@@ -194,12 +192,10 @@ define(['angularAMD', 'blob-stream', 'canvas2pdf', 'metadataService'], function 
 
         tests.parameters.totalTests = parseInt(tests.stats.failed) + parseInt(tests.stats.warning) + parseInt(tests.stats.passed) + parseInt(tests.stats.rebased);
         urls.parameters.totalTests = parseInt(urls.stats.failed) + parseInt(urls.stats.warning) + parseInt(urls.stats.passed) + parseInt(urls.stats.rebased);
-
-        tests.parameters.chartName ='Tests Statistics - Total: ' + tests.parameters.totalTests;
-        urls.parameters.chartName ='URLs Statistics - Total: ' + urls.parameters.totalTests;
+        tests.parameters.chartName = 'Tests Statistics - Total: ' + tests.parameters.totalTests;
+        urls.parameters.chartName = 'URLs Statistics - Total: ' + urls.parameters.totalTests;
 
         var ctx = new canvas2pdf.PdfContext(blobStream());
-
         generateDocumentHeader(ctx);
         generateChart(ctx, tests);
         generateChart(ctx, urls);
@@ -212,7 +208,6 @@ define(['angularAMD', 'blob-stream', 'canvas2pdf', 'metadataService'], function 
           saveAs(blob, 'AET-Report-' + suiteID + '.pdf', true);
         });
         ctx.end();
-
       };
 
       function generateChart(ctx, chart) {
@@ -221,7 +216,7 @@ define(['angularAMD', 'blob-stream', 'canvas2pdf', 'metadataService'], function 
         var arrowLenght = 7;
         drawLine(ctx, chart.parameters.startingX, chart.parameters.offsetY + chart.parameters.startingY + chart.parameters.height, chart.parameters.startingX + chart.parameters.width, chart.parameters.offsetY + chart.parameters.startingY + chart.parameters.height);
         drawLine(ctx, chart.parameters.startingX, chart.parameters.offsetY + chart.parameters.startingY + chart.parameters.height, chart.parameters.startingX, chart.parameters.offsetY + chart.parameters.startingY);
-        drawLine(ctx, chart.parameters.startingX + arrowHeight, chart.parameters.offsetY + chart.parameters.startingY + arrowLenght, chart.parameters.startingX,chart.parameters.offsetY +  chart.parameters.startingY);
+        drawLine(ctx, chart.parameters.startingX + arrowHeight, chart.parameters.offsetY + chart.parameters.startingY + arrowLenght, chart.parameters.startingX, chart.parameters.offsetY + chart.parameters.startingY);
         drawLine(ctx, chart.parameters.startingX - arrowHeight, chart.parameters.offsetY + chart.parameters.startingY + arrowLenght, chart.parameters.startingX, chart.parameters.offsetY + chart.parameters.startingY);
         drawLine(ctx, chart.parameters.startingX + chart.parameters.width - arrowLenght, chart.parameters.offsetY + chart.parameters.startingY + chart.parameters.height - arrowHeight, chart.parameters.startingX + chart.parameters.width, chart.parameters.offsetY + chart.parameters.startingY + chart.parameters.height);
         drawLine(ctx, chart.parameters.startingX + chart.parameters.width - arrowLenght, chart.parameters.offsetY + chart.parameters.startingY + chart.parameters.height + arrowHeight, chart.parameters.startingX + chart.parameters.width, chart.parameters.offsetY + chart.parameters.startingY + chart.parameters.height);
@@ -279,7 +274,6 @@ define(['angularAMD', 'blob-stream', 'canvas2pdf', 'metadataService'], function 
         for (var i = 0; i < chart.parameters.axisValues.length; i++) {
           sumOfValues += +values[i];
         }
-
         chart.parameters.columnHeight = values[columnNumber] / sumOfValues * chart.parameters.rowHeight * 4;
         ctx.fillStyle = colors[columnNumber];
         ctx.fillRect(columnNumber * chart.parameters.columnStartingPoint + (chart.parameters.startingX + chart.parameters.columnMargin), chart.parameters.offsetY + chart.parameters.startingY + chart.parameters.height - chart.parameters.columnHeight - 1, chart.parameters.columnWidth, chart.parameters.columnHeight);
@@ -300,7 +294,6 @@ define(['angularAMD', 'blob-stream', 'canvas2pdf', 'metadataService'], function 
         ctx.font = '10px Helvetica';
         ctx.fillStyle = 'black';
         ctx.textAlign = 'center';
-
         if (chart.parameters.columnHeight > 0) {
           ctx.fillText(values[columnNumber].toString(), columnNumber * chart.parameters.columnStartingPoint + (chart.parameters.startingX + chart.parameters.columnMargin + (chart.parameters.columnWidth / 2)), chart.parameters.offsetY + chart.parameters.startingY + chart.parameters.height - chart.parameters.columnHeight - 10);
         }
@@ -336,12 +329,12 @@ define(['angularAMD', 'blob-stream', 'canvas2pdf', 'metadataService'], function 
               warning: 'Warning',
               passed: 'Passed',
               rebased: 'Rebased',
-            },        
+            },
             parameters: {
               startingX: 100,
               startingY: 100,
               width: 400,
-              height:180,
+              height: 180,
               totalTests: 0,
               chartName: '',
               maxValue: 0,
@@ -367,9 +360,8 @@ define(['angularAMD', 'blob-stream', 'canvas2pdf', 'metadataService'], function 
             }
           }
 
-          test.parameters.totalTests = parseInt(test.stats.failed) + parseInt(test.stats.warning) + parseInt(test.stats.passed) + parseInt(test.stats.rebased);  
+          test.parameters.totalTests = parseInt(test.stats.failed) + parseInt(test.stats.warning) + parseInt(test.stats.passed) + parseInt(test.stats.rebased);
           test.parameters.chartName = testsByCategories[i].category + ' - Total: ' + test.parameters.totalTests;
-
           generateChart(ctx, test);
         }
       }
@@ -409,8 +401,8 @@ define(['angularAMD', 'blob-stream', 'canvas2pdf', 'metadataService'], function 
       }
 
       function findIndex(obj1, obj2) {
-        for(var i=0; i<obj1.length; i++) {
-          if(obj1[i].category === obj2) {
+        for (var i = 0; i < obj1.length; i++) {
+          if (obj1[i].category === obj2) {
             return i;
           }
         }

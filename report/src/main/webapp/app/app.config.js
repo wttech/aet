@@ -95,7 +95,7 @@ require.config({
     },
     'angular-bootstrap': ['angular'],
     'angular-ui-router': ['angular'],
-    'angularAMD': ['angular'],
+    'angularAMD': ['angular']
   },
   deps: ['app.module'],
   waitSeconds: 0
