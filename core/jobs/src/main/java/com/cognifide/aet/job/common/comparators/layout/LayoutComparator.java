@@ -70,7 +70,7 @@ public class LayoutComparator implements ComparatorJob {
 
   private void hideElementsInImg(BufferedImage img, List<Element> elements) {
     Graphics graphics = img.getGraphics();
-    for(Element element : elements) {
+    for (Element element : elements) {
       graphics.setColor(Color.CYAN);
       graphics.fillRect(element.getPoint().x, element.getPoint().y, element.getDimension().width,
           element.getDimension().height);
@@ -128,7 +128,7 @@ public class LayoutComparator implements ComparatorJob {
       mask = new ByteArrayInputStream(baos.toByteArray());
       String maskArtifactId = artifactsDAO.saveArtifact(properties, mask, CONTENT_TYPE);
 
-      if (isMaskWithoutDifference(imageComparisonResult) && !excludeFunctionIsOn) {
+      if (!excludeFunctionIsOn && isMaskWithoutDifference(imageComparisonResult)) {
         result = getPassedStepResult();
       } else if (hasMaskThresholdWithAcceptableDifference(imageComparisonResult)
           || isMaskWithoutDifference(imageComparisonResult)) {
