@@ -38,8 +38,6 @@ atlassian-ide-plugin.xml
 /report/src/main/webapp/assets/libs
 # auto-generated css file
 /report/src/main/webapp/assets/css
-# auto-generated package-lock file
-/report/src/main/webapp/package-lock.json
 
 ### AET sanity tests
 /integration-tests/test-suite/suite.xml
