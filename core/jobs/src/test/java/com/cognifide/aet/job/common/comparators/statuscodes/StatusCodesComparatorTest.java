@@ -19,17 +19,13 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 import com.cognifide.aet.communication.api.metadata.ComparatorStepResult;
+import com.cognifide.aet.communication.api.metadata.ComparatorStepResult.Status;
 import com.cognifide.aet.job.api.comparator.ComparatorProperties;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.job.common.ArtifactDAOMock;
-import com.cognifide.aet.job.common.collectors.statuscodes.StatusCode;
-import com.cognifide.aet.job.common.collectors.statuscodes.StatusCodesCollectorResult;
 import com.cognifide.aet.job.common.comparators.AbstractComparatorTest;
-import com.cognifide.aet.job.common.comparators.source.SourceComparator;
-import com.google.common.collect.Lists;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
@@ -64,6 +60,12 @@ public class StatusCodesComparatorTest extends AbstractComparatorTest {
 
   private static final String FILTER_CODES_MULTIPLE_NAN = "NaN,NaN,NaN,NaN";
 
+  private static final String FILTER_CODES_ONLY_SUCCESS = "200";
+
+  private static final String FILTER_RANGE_REMOVE_DEFAULT_RANGE = "1,1";
+
+  private static final String FILTER_CODES_EXCLUDED = "500";
+
   private StatusCodesComparator tested;
 
   @Mock
@@ -72,47 +74,185 @@ public class StatusCodesComparatorTest extends AbstractComparatorTest {
   @Mock
   private ComparatorProperties comparatorProperties;
 
-  private List<StatusCode> statusCodes;
-
   @Before
   public void setUp() {
     artifactDaoMock = new ArtifactDAOMock(StatusCodesComparator.class);
-    comparatorProperties = new ComparatorProperties(TEST_COMPANY, TEST_PROJECT, null,
-        "expected-data-200-result.json");
-    tested = new StatusCodesComparator(artifactDaoMock, comparatorProperties, new ArrayList<>());
-    initStatusCodes();
-
     when(params.containsKey(PARAM_FILTER_RANGE)).thenReturn(false);
     when(params.containsKey(PARAM_FILTER_CODES)).thenReturn(false);
   }
 
   @Test
-  public void compareTest() throws ProcessingException {
+  public void compareTest_expectPassed() throws ProcessingException {
+    tested = createNewStatusCodesComparator("expected-data-200-result.json");
+
     result = tested.compare();
     assertEquals(ComparatorStepResult.Status.PASSED, result.getStatus());
   }
 
   @Test
-  public void compareTest_filterRange() throws ProcessingException {
-    // filter only by range
+  public void compareTest_expectFailed() throws ProcessingException, ParametersException {
+    tested = createNewStatusCodesComparator("expected-data-200-result.json");
+
+    when(params.containsKey(PARAM_FILTER_CODES)).thenReturn(true);
+    when(params.get(PARAM_FILTER_CODES)).thenReturn(FILTER_CODES_ONLY_SUCCESS);
+    tested.setParameters(params);
+
+    result = tested.compare();
+    assertEquals(ComparatorStepResult.Status.FAILED, result.getStatus());
+  }
+
+  @Test
+  public void compareTest_filterRange_expectPassed()
+      throws ProcessingException, ParametersException {
+    tested = createNewStatusCodesComparator("not-existing-page-404-result.json");
+
+    when(params.containsKey(PARAM_FILTER_RANGE)).thenReturn(true);
+    when(params.get(PARAM_FILTER_RANGE)).thenReturn(FILTER_RANGE_REMOVE_DEFAULT_RANGE);
+    tested.setParameters(params);
+
+    result = tested.compare();
+    assertEquals(ComparatorStepResult.Status.PASSED, result.getStatus());
+  }
+
+  @Test
+  public void compareTest_filterRange_expectFailed()
+      throws ProcessingException, ParametersException {
+    tested = createNewStatusCodesComparator("not-existing-page-404-result.json");
+
     when(params.containsKey(PARAM_FILTER_RANGE)).thenReturn(true);
     when(params.get(PARAM_FILTER_RANGE)).thenReturn(FILTER_RANGE);
+    tested.setParameters(params);
+
+    result = tested.compare();
+    assertEquals(ComparatorStepResult.Status.FAILED, result.getStatus());
+  }
+
+  @Test
+  public void compareTest_filterCodes_expectPassed()
+      throws ProcessingException, ParametersException {
+    tested = createNewStatusCodesComparator("not-existing-page-404-result.json");
+
+    when(params.containsKey(PARAM_FILTER_CODES)).thenReturn(true);
+    when(params.get(PARAM_FILTER_CODES)).thenReturn(FILTER_CODES_ONLY_SUCCESS);
+    when(params.containsKey(PARAM_FILTER_RANGE)).thenReturn(true);
+    when(params.get(PARAM_FILTER_RANGE)).thenReturn(FILTER_RANGE_REMOVE_DEFAULT_RANGE);
+    tested.setParameters(params);
+
     result = tested.compare();
     assertEquals(ComparatorStepResult.Status.PASSED, result.getStatus());
   }
 
   @Test
-  public void compareTest_filterCodes() throws ProcessingException {
-    // filter only by codes
+  public void compareTest_filterCodes_expectFailed()
+      throws ProcessingException, ParametersException {
+    tested = createNewStatusCodesComparator("not-existing-page-404-result.json");
+
     when(params.containsKey(PARAM_FILTER_CODES)).thenReturn(true);
     when(params.get(PARAM_FILTER_CODES)).thenReturn(FILTER_CODES_MULTIPLE);
+    when(params.containsKey(PARAM_FILTER_RANGE)).thenReturn(true);
+    when(params.get(PARAM_FILTER_RANGE)).thenReturn(FILTER_RANGE_REMOVE_DEFAULT_RANGE);
+    tested.setParameters(params);
+
+    result = tested.compare();
+    assertEquals(ComparatorStepResult.Status.FAILED, result.getStatus());
+  }
+
+  @Test
+  public void compareTest_filterCodesMultipleCodes_expectFailed()
+      throws ProcessingException, ParametersException {
+    tested = createNewStatusCodesComparator("not-existing-page-404-result.json");
+
+    when(params.containsKey(PARAM_FILTER_CODES)).thenReturn(true);
+    when(params.get(PARAM_FILTER_CODES)).thenReturn(FILTER_CODES_MULTIPLE);
+    when(params.containsKey(PARAM_FILTER_RANGE)).thenReturn(true);
+    when(params.get(PARAM_FILTER_RANGE)).thenReturn(FILTER_RANGE_REMOVE_DEFAULT_RANGE);
+    tested.setParameters(params);
+
+    result = tested.compare();
+    assertEquals(ComparatorStepResult.Status.FAILED, result.getStatus());
+  }
+
+  @Test
+  public void compareTest_filterCodesAndFilterRange_expectFailed()
+      throws ParametersException, ProcessingException {
+    tested = createNewStatusCodesComparator("a-lot-of-errors-with-exclude-result.json");
+
+    when(params.containsKey(PARAM_FILTER_RANGE)).thenReturn(true);
+
+    when(params.get(PARAM_FILTER_RANGE)).thenReturn(FILTER_RANGE);
+    tested.setParameters(params);
+
+    result = tested.compare();
+    assertEquals(ComparatorStepResult.Status.FAILED, result.getStatus());
+
+    when(params.containsKey(PARAM_FILTER_CODES)).thenReturn(true);
+    when(params.get(PARAM_FILTER_CODES)).thenReturn(FILTER_CODES_MULTIPLE);
+    when(params.get(PARAM_FILTER_RANGE)).thenReturn(FILTER_RANGE_REMOVE_DEFAULT_RANGE);
+    tested.setParameters(params);
+
+    result = tested.compare();
+    assertEquals(ComparatorStepResult.Status.FAILED, result.getStatus());
+
+    when(params.get(PARAM_FILTER_CODES)).thenReturn(FILTER_CODES_MULTIPLE);
+    when(params.get(PARAM_FILTER_RANGE)).thenReturn(FILTER_RANGE);
+    tested.setParameters(params);
+
+    result = tested.compare();
+    assertEquals(ComparatorStepResult.Status.FAILED, result.getStatus());
+  }
+
+  @Test
+  public void compareTest_filterCodesAndFilterRange_expectPassed()
+      throws ParametersException, ProcessingException {
+    tested = createNewStatusCodesComparator("a-lot-of-errors-with-exclude-result.json");
+
+    when(params.containsKey(PARAM_FILTER_CODES)).thenReturn(true);
+    when(params.containsKey(PARAM_FILTER_RANGE)).thenReturn(true);
+
+    when(params.get(PARAM_FILTER_CODES)).thenReturn(FILTER_CODES_SINGLE);
+    when(params.get(PARAM_FILTER_RANGE)).thenReturn(FILTER_RANGE_REMOVE_DEFAULT_RANGE);
+    tested.setParameters(params);
+
+    result = tested.compare();
+    assertEquals(Status.PASSED, result.getStatus());
+  }
+
+  @Test
+  public void compareTest_testExclude_expectPassed()
+      throws ParametersException, ProcessingException {
+    tested = createNewStatusCodesComparator("a-lot-of-errors-with-exclude-result.json");
+
+    when(params.containsKey(PARAM_FILTER_CODES)).thenReturn(true);
+    when(params.get(PARAM_FILTER_CODES)).thenReturn(FILTER_CODES_EXCLUDED);
+    when(params.containsKey(PARAM_FILTER_RANGE)).thenReturn(true);
+    when(params.get(PARAM_FILTER_RANGE)).thenReturn(FILTER_RANGE_REMOVE_DEFAULT_RANGE);
+
+    tested.setParameters(params);
 
     result = tested.compare();
     assertEquals(ComparatorStepResult.Status.PASSED, result.getStatus());
+  }
+
+  @Test
+  public void compareTest_defaultRange_expectPassed() throws ProcessingException {
+    tested = createNewStatusCodesComparator("default-range-399-601-errors-result.json");
+
+    result = tested.compare();
+    assertEquals(ComparatorStepResult.Status.PASSED, result.getStatus());
+  }
+
+  @Test
+  public void compareTest_defaultRange_expectFailed() throws ProcessingException {
+    tested = createNewStatusCodesComparator("default-range-400-600-errors-result.json");
+
+    result = tested.compare();
+    assertEquals(ComparatorStepResult.Status.FAILED, result.getStatus());
   }
 
   @Test
   public void setParameters() throws ParametersException {
+    tested = createNewStatusCodesComparator("expected-data-200-result.json");
+
     when(params.containsKey(PARAM_FILTER_RANGE)).thenReturn(true);
     when(params.get(PARAM_FILTER_RANGE)).thenReturn(FILTER_RANGE);
     when(params.containsKey(PARAM_FILTER_CODES)).thenReturn(true);
@@ -124,6 +264,8 @@ public class StatusCodesComparatorTest extends AbstractComparatorTest {
 
   @Test
   public void setParameters_filterRange() throws ParametersException {
+    tested = createNewStatusCodesComparator("expected-data-200-result.json");
+
     when(params.containsKey(PARAM_FILTER_RANGE)).thenReturn(true);
     when(params.get(PARAM_FILTER_RANGE)).thenReturn(FILTER_RANGE);
 
@@ -133,6 +275,8 @@ public class StatusCodesComparatorTest extends AbstractComparatorTest {
 
   @Test(expected = ParametersException.class)
   public void setParameters_filterRangeInvalid() throws ParametersException {
+    tested = createNewStatusCodesComparator("expected-data-200-result.json");
+
     when(params.containsKey(PARAM_FILTER_RANGE)).thenReturn(true);
     when(params.get(PARAM_FILTER_RANGE)).thenReturn(FILTER_RANGE_INVALID);
 
@@ -142,6 +286,8 @@ public class StatusCodesComparatorTest extends AbstractComparatorTest {
 
   @Test(expected = ParametersException.class)
   public void setParameters_filterRangeNotANumber() throws ParametersException {
+    tested = createNewStatusCodesComparator("expected-data-200-result.json");
+
     when(params.containsKey(PARAM_FILTER_RANGE)).thenReturn(true);
     when(params.get(PARAM_FILTER_RANGE)).thenReturn(FILTER_RANGE_NAN);
 
@@ -151,6 +297,8 @@ public class StatusCodesComparatorTest extends AbstractComparatorTest {
 
   @Test(expected = ParametersException.class)
   public void setParameters_filterRangeUpperBoundLessThanLowerBound() throws ParametersException {
+    tested = createNewStatusCodesComparator("expected-data-200-result.json");
+
     when(params.containsKey(PARAM_FILTER_RANGE)).thenReturn(true);
     when(params.get(PARAM_FILTER_RANGE)).thenReturn(FILTER_RANGE_UPPER_LESS_THAN_LOWER);
 
@@ -160,6 +308,8 @@ public class StatusCodesComparatorTest extends AbstractComparatorTest {
 
   @Test
   public void setParameters_filterCodes() throws ParametersException {
+    tested = createNewStatusCodesComparator("expected-data-200-result.json");
+
     when(params.containsKey(PARAM_FILTER_CODES)).thenReturn(true);
     when(params.get(PARAM_FILTER_CODES)).thenReturn(FILTER_CODES_SINGLE);
 
@@ -169,6 +319,8 @@ public class StatusCodesComparatorTest extends AbstractComparatorTest {
 
   @Test
   public void setParameters_filterCodesMultipleValues() throws ParametersException {
+    tested = createNewStatusCodesComparator("expected-data-200-result.json");
+
     when(params.containsKey(PARAM_FILTER_CODES)).thenReturn(true);
     when(params.get(PARAM_FILTER_CODES)).thenReturn(FILTER_CODES_MULTIPLE);
 
@@ -178,6 +330,8 @@ public class StatusCodesComparatorTest extends AbstractComparatorTest {
 
   @Test(expected = ParametersException.class)
   public void setParameters_filterCodesNotANumber() throws ParametersException {
+    tested = createNewStatusCodesComparator("expected-data-200-result.json");
+
     when(params.containsKey(PARAM_FILTER_CODES)).thenReturn(true);
     when(params.get(PARAM_FILTER_CODES)).thenReturn(FILTER_CODES_SINGLE_NAN);
 
@@ -187,6 +341,8 @@ public class StatusCodesComparatorTest extends AbstractComparatorTest {
 
   @Test(expected = ParametersException.class)
   public void setParameters_filterCodesMultipleValuesNotANumber() throws ParametersException {
+    tested = createNewStatusCodesComparator("expected-data-200-result.json");
+
     when(params.containsKey(PARAM_FILTER_CODES)).thenReturn(true);
     when(params.get(PARAM_FILTER_CODES)).thenReturn(FILTER_CODES_MULTIPLE_NAN);
 
@@ -194,37 +350,10 @@ public class StatusCodesComparatorTest extends AbstractComparatorTest {
     tested.setParameters(params);
   }
 
-  private void initStatusCodes() {
-    statusCodes = new StatusCodesBuilder()
-        .add(404, 303, 500, 501, 302, 200, 400, 201)
-        .add(404, "http://www.example.com/image.png")
-        .build();
+  private StatusCodesComparator createNewStatusCodesComparator(String pathToJson) {
+    comparatorProperties = new ComparatorProperties(TEST_COMPANY, TEST_PROJECT, null,
+        pathToJson);
+    return new StatusCodesComparator(artifactDaoMock, comparatorProperties, new ArrayList<>());
   }
 
-  private static class StatusCodesBuilder {
-
-    private static final String DEFAULT_URL = "http://www.example.com";
-
-    private final List<StatusCode> codes;
-
-    private StatusCodesBuilder() {
-      this.codes = Lists.newArrayList();
-    }
-
-    public StatusCodesBuilder add(Integer... httpCodes) {
-      for (Integer httpCode : httpCodes) {
-        codes.add(new StatusCode(httpCode, DEFAULT_URL));
-      }
-      return this;
-    }
-
-    public StatusCodesBuilder add(int code, String url) {
-      codes.add(new StatusCode(code, url));
-      return this;
-    }
-
-    public List<StatusCode> build() {
-      return codes;
-    }
-  }
 }
