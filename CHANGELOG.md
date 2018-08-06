@@ -10,6 +10,7 @@ All notable changes to AET will be documented in this file.
 ## Unreleased
 **List of changes that are finished but not yet released in any final version.**
 
+- [PR-300](https://github.com/Cognifide/aet/pull/300) Added creating indexes for collection
 - [PR-289](https://github.com/Cognifide/aet/pull/289) User now stays on the same tab while navigating between URLs
 - [PR-271](https://github.com/Cognifide/aet/pull/271) Added possibility to override name parameter from the aet client
 - [PR-268](https://github.com/Cognifide/aet/pull/268) Bobcat upgrade to version 1.4.0
