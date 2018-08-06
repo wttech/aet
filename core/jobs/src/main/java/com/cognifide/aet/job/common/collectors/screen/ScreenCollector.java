@@ -97,9 +97,8 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
         if (namesOfExcludeElements != null) {
           List<Element> excludeElements = getExcludeElementsFromWebElements(
               webDriver.findElements(By.cssSelector(namesOfExcludeElements)));
-          Payload payload = new Payload();
-          payload.setExclude(new Exclude(excludeElements));
-          stepResult = CollectorStepResult.newCollectedResult(resultId, payload);
+          stepResult = CollectorStepResult
+              .newCollectedResult(resultId, new Payload((new Exclude(excludeElements))));
         } else {
           stepResult = CollectorStepResult.newCollectedResult(resultId);
         }
@@ -127,9 +126,9 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
         .isNotBlank(params.get(CSS_PARAM))) {
       setElementParams(params);
     }
-    if(params.containsKey(EXCLUDE_ELEMENT_PARAM)) {
+    if (params.containsKey(EXCLUDE_ELEMENT_PARAM)) {
       if (StringUtils.isNotBlank(params.get(EXCLUDE_ELEMENT_PARAM))) {
-        namesOfExcludeElements = params.get("exclude-elements");
+        namesOfExcludeElements = params.get(EXCLUDE_ELEMENT_PARAM);
       } else {
         throw new ParametersException("Elements to exclude are not specified in suite");
       }

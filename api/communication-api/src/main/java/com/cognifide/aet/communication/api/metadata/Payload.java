@@ -17,12 +17,14 @@ package com.cognifide.aet.communication.api.metadata;
 
 import com.cognifide.aet.communication.api.metadata.exclude.Exclude;
 import java.io.Serializable;
+
 public class Payload implements Serializable {
-  private static final long serialVersionUID = 4722236598237687647L;
 
-  private Exclude exclude;
+  private static final long serialVersionUID = -4218060468970419297L;
 
-  public void setExclude(Exclude exclude) {
+  private final Exclude exclude;
+
+  public Payload(Exclude exclude) {
     this.exclude = exclude;
   }
 
