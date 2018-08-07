@@ -62,7 +62,7 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
 
   private final CollectorProperties properties;
 
-  private String namesOfExcludeElements;
+  private String excludeCssSelector;
 
   ScreenCollector(CollectorProperties properties, WebDriver webDriver, ArtifactsDAO artifactsDAO) {
     this.properties = properties;
@@ -94,9 +94,9 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
       try (final InputStream screenshotStream = new ByteArrayInputStream(screenshot)) {
         String resultId = artifactsDAO.saveArtifact(properties, screenshotStream, CONTENT_TYPE);
 
-        if (namesOfExcludeElements != null) {
+        if (excludeCssSelector != null) {
           List<Element> excludeElements = getExcludeElementsFromWebElements(
-              webDriver.findElements(By.cssSelector(namesOfExcludeElements)));
+              webDriver.findElements(By.cssSelector(excludeCssSelector)));
           stepResult = CollectorStepResult
               .newCollectedResult(resultId, new Payload((new Exclude(excludeElements))));
         } else {
@@ -128,7 +128,7 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
     }
     if (params.containsKey(EXCLUDE_ELEMENT_PARAM)) {
       if (StringUtils.isNotBlank(params.get(EXCLUDE_ELEMENT_PARAM))) {
-        namesOfExcludeElements = params.get(EXCLUDE_ELEMENT_PARAM);
+        excludeCssSelector = params.get(EXCLUDE_ELEMENT_PARAM);
       } else {
         throw new ParametersException("Elements to exclude are not specified in suite");
       }
