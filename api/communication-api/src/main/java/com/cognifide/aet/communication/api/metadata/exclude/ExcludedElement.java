@@ -19,14 +19,14 @@ import java.awt.Dimension;
 import java.awt.Point;
 import java.io.Serializable;
 
-public class Element implements Serializable {
+public class ExcludedElement implements Serializable {
   private static final long serialVersionUID = 692282363549228800L;
 
   private final Point point;
 
   private final Dimension dimension;
 
-  public Element(Point point, Dimension dimension) {
+  public ExcludedElement(Point point, Dimension dimension) {
     this.point = point;
     this.dimension = dimension;
   }

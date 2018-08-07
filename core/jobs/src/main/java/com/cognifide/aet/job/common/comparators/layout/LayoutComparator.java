@@ -17,7 +17,7 @@ package com.cognifide.aet.job.common.comparators.layout;
 
 import com.cognifide.aet.communication.api.metadata.ComparatorStepResult;
 import com.cognifide.aet.communication.api.metadata.ComparatorStepResult.Status;
-import com.cognifide.aet.communication.api.metadata.exclude.Element;
+import com.cognifide.aet.communication.api.metadata.exclude.ExcludedElement;
 import com.cognifide.aet.job.api.ParametersValidator;
 import com.cognifide.aet.job.api.comparator.ComparatorJob;
 import com.cognifide.aet.job.api.comparator.ComparatorProperties;
@@ -68,12 +68,12 @@ public class LayoutComparator implements ComparatorJob {
     this.artifactsDAO = artifactsDAO;
   }
 
-  private void hideElementsInImg(BufferedImage img, List<Element> elements) {
+  private void hideElementsInImg(BufferedImage img, List<ExcludedElement> excludedElements) {
     Graphics graphics = img.getGraphics();
-    for (Element element : elements) {
+    for (ExcludedElement excludedElement : excludedElements) {
       graphics.setColor(Color.CYAN);
-      graphics.fillRect(element.getPoint().x, element.getPoint().y, element.getDimension().width,
-          element.getDimension().height);
+      graphics.fillRect(excludedElement.getPoint().x, excludedElement.getPoint().y, excludedElement.getDimension().width,
+          excludedElement.getDimension().height);
     }
     graphics.dispose();
   }
@@ -95,9 +95,9 @@ public class LayoutComparator implements ComparatorJob {
 
         if (properties.getPayload() != null) {
           excludeFunctionIsOn = true;
-          if (properties.getPayload().getExclude().getElements().size() > 0) {
-            hideElementsInImg(patternImg, properties.getPayload().getExclude().getElements());
-            hideElementsInImg(collectedImg, properties.getPayload().getExclude().getElements());
+          if (properties.getPayload().getExclude().getExcludedElements().size() > 0) {
+            hideElementsInImg(patternImg, properties.getPayload().getExclude().getExcludedElements());
+            hideElementsInImg(collectedImg, properties.getPayload().getExclude().getExcludedElements());
           } else {
             excludeElementsNotFound = true;
           }

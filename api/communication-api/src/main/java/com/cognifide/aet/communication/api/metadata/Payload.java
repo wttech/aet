@@ -15,20 +15,20 @@
  */
 package com.cognifide.aet.communication.api.metadata;
 
-import com.cognifide.aet.communication.api.metadata.exclude.Exclude;
+import com.cognifide.aet.communication.api.metadata.exclude.LayoutExclude;
 import java.io.Serializable;
 
 public class Payload implements Serializable {
 
   private static final long serialVersionUID = -4218060468970419297L;
 
-  private final Exclude exclude;
+  private final LayoutExclude exclude;
 
-  public Payload(Exclude exclude) {
+  public Payload(LayoutExclude exclude) {
     this.exclude = exclude;
   }
 
-  public Exclude getExclude() {
+  public LayoutExclude getExclude() {
     return exclude;
   }
 }

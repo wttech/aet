@@ -17,8 +17,8 @@ package com.cognifide.aet.job.common.collectors.screen;
 
 import com.cognifide.aet.communication.api.metadata.CollectorStepResult;
 import com.cognifide.aet.communication.api.metadata.Payload;
-import com.cognifide.aet.communication.api.metadata.exclude.Element;
-import com.cognifide.aet.communication.api.metadata.exclude.Exclude;
+import com.cognifide.aet.communication.api.metadata.exclude.ExcludedElement;
+import com.cognifide.aet.communication.api.metadata.exclude.LayoutExclude;
 import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
@@ -70,17 +70,17 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
     this.artifactsDAO = artifactsDAO;
   }
 
-  private List<Element> getExcludeElementsFromWebElements(
+  private List<ExcludedElement> getExcludeElementsFromWebElements(
       List<WebElement> webElements) {
-    List<Element> excludeElements = new LinkedList<>();
+    List<ExcludedElement> excludeExcludedElements = new LinkedList<>();
     for (WebElement webElement : webElements) {
       java.awt.Point point = new java.awt.Point(webElement.getLocation().x,
           webElement.getLocation().y);
       java.awt.Dimension dimension = new java.awt.Dimension(webElement.getSize().width,
           webElement.getSize().height);
-      excludeElements.add(new Element(point, dimension));
+      excludeExcludedElements.add(new ExcludedElement(point, dimension));
     }
-    return excludeElements;
+    return excludeExcludedElements;
   }
 
   @Override
@@ -95,10 +95,10 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
         String resultId = artifactsDAO.saveArtifact(properties, screenshotStream, CONTENT_TYPE);
 
         if (excludeCssSelector != null) {
-          List<Element> excludeElements = getExcludeElementsFromWebElements(
+          List<ExcludedElement> excludeExcludedElements = getExcludeElementsFromWebElements(
               webDriver.findElements(By.cssSelector(excludeCssSelector)));
           stepResult = CollectorStepResult
-              .newCollectedResult(resultId, new Payload((new Exclude(excludeElements))));
+              .newCollectedResult(resultId, new Payload((new LayoutExclude(excludeExcludedElements))));
         } else {
           stepResult = CollectorStepResult.newCollectedResult(resultId);
         }
