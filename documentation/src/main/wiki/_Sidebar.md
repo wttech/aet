@@ -84,6 +84,7 @@
 * [[What's new|WhatsNew]]
     * [[Migrate AET suite|AetSuiteMigration]]
 * [[FAQ|FAQ]]
+* [[Troubleshooting|Troubleshooting]]
 * Releases
     * [[AET 2.0.0|Documentation-2.0.0]]
     * [[AET 2.1.0|Documentation-2.1.0]]
