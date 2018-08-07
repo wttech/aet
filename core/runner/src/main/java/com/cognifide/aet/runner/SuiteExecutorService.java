@@ -16,7 +16,6 @@
 package com.cognifide.aet.runner;
 
 import com.cognifide.aet.communication.api.metadata.Suite;
-import com.cognifide.aet.runner.configuration.SuiteExecutorServiceConf;
 import com.cognifide.aet.runner.processing.SuiteExecutionFactory;
 import com.cognifide.aet.runner.processing.SuiteExecutionTask;
 import com.cognifide.aet.runner.processing.data.SuiteDataService;
@@ -26,7 +25,6 @@ import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -35,13 +33,11 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.metatype.annotations.Designate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
 @Component(service = SuiteExecutorService.class, immediate = true, name = "Runner Suite Executor Service")
-@Designate(ocd = SuiteExecutorServiceConf.class)
 public class SuiteExecutorService {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SuiteExecutorService.class);
@@ -51,8 +47,6 @@ public class SuiteExecutorService {
   private ExecutorService callbackExecutor;
 
   private Set<String> scheduledSuites;
-
-  private SuiteExecutorServiceConf config;
 
   @Reference
   private RunnerConfiguration runnerConfiguration;
@@ -64,8 +58,7 @@ public class SuiteExecutorService {
   private SuiteExecutionFactory suiteExecutionFactory;
 
   @Activate
-  public void activate(SuiteExecutorServiceConf config) {
-    this.config = config;
+  public void activate() {
     LOGGER.debug("Activating SuiteExecutorService");
     executor = MoreExecutors.listeningDecorator(
         Executors.newFixedThreadPool(runnerConfiguration.getMaxConcurrentSuitesCount()));

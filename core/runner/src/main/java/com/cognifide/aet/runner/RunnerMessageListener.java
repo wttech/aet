@@ -21,9 +21,7 @@ import com.cognifide.aet.communication.api.messages.TaskMessage;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.queues.JmsUtils;
-import com.cognifide.aet.runner.configuration.RunnerMessageListenerConf;
 import com.cognifide.aet.runner.scheduler.CollectorJobSchedulerService;
-import java.util.Map;
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -35,7 +33,6 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.metatype.annotations.Designate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,7 +40,6 @@ import org.slf4j.LoggerFactory;
  * Listens to incoming runner queue messages. When message received, schedules suite processing.
  */
 @Component(immediate = true, name = "Runner Messages Listener")
-@Designate(ocd = RunnerMessageListenerConf.class)
 public class RunnerMessageListener implements MessageListener {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(RunnerMessageListener.class);
@@ -60,8 +56,6 @@ public class RunnerMessageListener implements MessageListener {
 
   private Session session;
 
-  private RunnerMessageListenerConf config;
-
   @Reference
   private JmsConnection jmsConnection;
 
@@ -75,9 +69,7 @@ public class RunnerMessageListener implements MessageListener {
   private CollectorJobSchedulerService collectorJobSchedulerService;
 
   @Activate
-  public void activate(RunnerMessageListenerConf config) {
-    this.config = config;
-
+  public void activate() {
     LOGGER.debug("Activating RunnerMessageListener");
     try {
       session = jmsConnection.getJmsSession();

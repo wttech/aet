@@ -17,28 +17,17 @@ package com.cognifide.aet.runner.processing.data;
 
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
-import com.cognifide.aet.runner.processing.data.configuration.SuiteDataServiceConf;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.SimpleDBKey;
 import com.cognifide.aet.vs.StorageException;
-import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.metatype.annotations.Designate;
 
 @Component(service = SuiteDataService.class, name = "Internal Runner service for Suite data operations")
-@Designate(ocd = SuiteDataServiceConf.class)
 public class SuiteDataService {
-
-  private SuiteDataServiceConf config;
 
   @Reference
   private MetadataDAO metadataDAO;
-
-  @Activate
-  public void activate(SuiteDataServiceConf config){
-    this.config = config;
-  }
 
   /**
    * @param currentRun - current suite run
