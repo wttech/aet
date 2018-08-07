@@ -29,14 +29,12 @@ import com.cognifide.aet.worker.api.CollectorDispatcher;
 import com.cognifide.aet.worker.api.JobRegistry;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.Service;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Service
-@Component(immediate = true, label = "AET Collector Dispatcher", description = "Collector Dispatcher")
+@Component(immediate = true, name = "AET Collector Dispatcher")
 public class CollectorDispatcherImpl implements CollectorDispatcher {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(CollectorDispatcherImpl.class);
