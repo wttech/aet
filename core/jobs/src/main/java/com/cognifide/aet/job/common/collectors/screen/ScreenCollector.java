@@ -31,7 +31,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import javax.imageio.ImageIO;
@@ -72,7 +72,7 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
 
   private List<ExcludedElement> getExcludeElementsFromWebElements(
       List<WebElement> webElements) {
-    List<ExcludedElement> excludeExcludedElements = new LinkedList<>();
+    List<ExcludedElement> excludeExcludedElements = new ArrayList<>(webElements.size());
     for (WebElement webElement : webElements) {
       java.awt.Point point = new java.awt.Point(webElement.getLocation().x,
           webElement.getLocation().y);
