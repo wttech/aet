@@ -90,10 +90,6 @@ public class MessagesManager {
     return AET_QUEUE_DOMAIN + name;
   }
 
-  protected String getJmxUrl() {
-    return config.jmxUrl();
-  }
-
   protected Set<ObjectName> getAetQueuesObjects(MBeanServerConnection connection)
       throws AETException {
     ObjectName[] queues;
