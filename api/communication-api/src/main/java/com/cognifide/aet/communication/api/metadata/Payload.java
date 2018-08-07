@@ -22,13 +22,13 @@ public class Payload implements Serializable {
 
   private static final long serialVersionUID = -4218060468970419297L;
 
-  private final LayoutExclude exclude;
+  private final LayoutExclude layoutExclude;
 
-  public Payload(LayoutExclude exclude) {
-    this.exclude = exclude;
+  public Payload(LayoutExclude layoutExclude) {
+    this.layoutExclude = layoutExclude;
   }
 
-  public LayoutExclude getExclude() {
-    return exclude;
+  public LayoutExclude getLayoutExclude() {
+    return layoutExclude;
   }
 }

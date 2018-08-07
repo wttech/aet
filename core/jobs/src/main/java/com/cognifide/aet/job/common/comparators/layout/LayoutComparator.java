@@ -17,6 +17,7 @@ package com.cognifide.aet.job.common.comparators.layout;
 
 import com.cognifide.aet.communication.api.metadata.ComparatorStepResult;
 import com.cognifide.aet.communication.api.metadata.ComparatorStepResult.Status;
+import com.cognifide.aet.communication.api.metadata.Payload;
 import com.cognifide.aet.communication.api.metadata.exclude.ExcludedElement;
 import com.cognifide.aet.job.api.ParametersValidator;
 import com.cognifide.aet.job.api.comparator.ComparatorJob;
@@ -35,7 +36,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import javax.imageio.ImageIO;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 
@@ -59,9 +62,9 @@ public class LayoutComparator implements ComparatorJob {
 
   private Double percentageThreshold;
 
-  private boolean excludeFunctionIsOn = false;
+  private boolean excludeFunctionIsOn;
 
-  private boolean excludeElementsNotFound = false;
+  private boolean excludeElementsNotFound;
 
   LayoutComparator(ComparatorProperties comparatorProperties, ArtifactsDAO artifactsDAO) {
     this.properties = comparatorProperties;
@@ -72,7 +75,8 @@ public class LayoutComparator implements ComparatorJob {
     Graphics graphics = img.getGraphics();
     for (ExcludedElement excludedElement : excludedElements) {
       graphics.setColor(Color.CYAN);
-      graphics.fillRect(excludedElement.getPoint().x, excludedElement.getPoint().y, excludedElement.getDimension().width,
+      graphics.fillRect(excludedElement.getPoint().x, excludedElement.getPoint().y,
+          excludedElement.getDimension().width,
           excludedElement.getDimension().height);
     }
     graphics.dispose();
@@ -93,15 +97,18 @@ public class LayoutComparator implements ComparatorJob {
         BufferedImage patternImg = ImageIO.read(patternArtifact);
         BufferedImage collectedImg = ImageIO.read(collectedArtifact);
 
-        if (properties.getPayload() != null) {
-          excludeFunctionIsOn = true;
-          if (properties.getPayload().getExclude().getExcludedElements().size() > 0) {
-            hideElementsInImg(patternImg, properties.getPayload().getExclude().getExcludedElements());
-            hideElementsInImg(collectedImg, properties.getPayload().getExclude().getExcludedElements());
-          } else {
-            excludeElementsNotFound = true;
-          }
-        }
+        Optional.ofNullable(properties.getPayload())
+            .map(Payload::getLayoutExclude)
+            .ifPresent(exclude -> {
+              excludeFunctionIsOn = true;
+              List<ExcludedElement> excludedElements = exclude.getExcludedElements();
+              if (!CollectionUtils.isEmpty(excludedElements)) {
+                hideElementsInImg(patternImg, excludedElements);
+                hideElementsInImg(collectedImg, excludedElements);
+              } else {
+                excludeElementsNotFound = true;
+              }
+            });
 
         imageComparisonResult = ImageComparison.compare(patternImg, collectedImg);
         stepResult = saveArtifacts(imageComparisonResult);
