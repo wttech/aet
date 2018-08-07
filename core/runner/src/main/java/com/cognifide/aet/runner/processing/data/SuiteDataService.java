@@ -23,7 +23,7 @@ import com.cognifide.aet.vs.StorageException;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-@Component(service = SuiteDataService.class, name = "Internal Runner service for Suite data operations")
+@Component(service = SuiteDataService.class)
 public class SuiteDataService {
 
   @Reference

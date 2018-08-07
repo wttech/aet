@@ -32,7 +32,7 @@ import org.osgi.service.metatype.annotations.Designate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Component(service = MessagesManager.class, immediate = true, name = "AET Messages Manager")
+@Component(service = MessagesManager.class, immediate = true)
 @Designate(ocd = MessagesManagerConf.class)
 public class MessagesManager {
 

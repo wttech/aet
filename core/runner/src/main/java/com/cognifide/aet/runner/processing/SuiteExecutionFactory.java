@@ -28,7 +28,7 @@ import javax.jms.JMSException;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-@Component(service = SuiteExecutionFactory.class, name = "Suite Execution Factory")
+@Component(service = SuiteExecutionFactory.class)
 public class SuiteExecutionFactory {
 
   @Reference

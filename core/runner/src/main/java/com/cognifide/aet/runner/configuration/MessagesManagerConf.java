@@ -19,7 +19,7 @@ import org.osgi.service.metatype.annotations.AttributeDefinition;
 import org.osgi.service.metatype.annotations.AttributeType;
 import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 
-@ObjectClassDefinition(name = "Messages Manager configuration", description = "Service configuration")
+@ObjectClassDefinition(name = "Messages Manager Configuration", description = "Service Configuration")
 public @interface MessagesManagerConf {
 
   String DEFAULT_JMX_URL = "service:jmx:rmi:///jndi/rmi://localhost:11199/jmxrmi";

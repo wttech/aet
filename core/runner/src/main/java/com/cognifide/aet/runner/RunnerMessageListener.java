@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
 /**
  * Listens to incoming runner queue messages. When message received, schedules suite processing.
  */
-@Component(immediate = true, name = "Runner Messages Listener")
+@Component(immediate = true)
 public class RunnerMessageListener implements MessageListener {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(RunnerMessageListener.class);

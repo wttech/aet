@@ -37,7 +37,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 
-@Component(service = SuiteExecutorService.class, immediate = true, name = "Runner Suite Executor Service")
+@Component(service = SuiteExecutorService.class, immediate = true)
 public class SuiteExecutorService {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SuiteExecutorService.class);
