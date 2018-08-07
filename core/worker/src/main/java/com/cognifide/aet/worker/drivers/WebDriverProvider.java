@@ -34,6 +34,7 @@ import org.slf4j.LoggerFactory;
  * @author lukasz.wieczorek
  */
 @Component(
+    service = WebDriverProvider.class,
     property = {"name = " + Constants.SERVICE_VENDOR, "value = Cognifide Ltd"},
     immediate = true
 )
