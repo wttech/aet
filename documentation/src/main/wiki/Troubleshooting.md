@@ -26,12 +26,15 @@ To clear bundles cache, stop Karaf, remove following directories from `$KARAF_HO
 
 ### Messages serialization issue
 Make sure that no unfinished tasks are available on
-the ActiveMQ (you may check it using console `<active-mq-host>:8161/admin/queues.jsp`).
-Column `Number Of Pending Messages` should display `0` in all `AET.` queues.
+the ActiveMQ. You may check it using console `http://<active-mq-host>:8161/admin/queues.jsp` (default credentials are `admin/admin`).
+Column `Number Of Pending Messages` should display `0` in all `AET` queues.
 If there is a positive number of messages pending, use `Purge` option.
 Run tests again.
 
 ## MongoDB
+
+### Check if Mongo is running
+Navigate to `http://<mongo-db-host>:27017` with your browser. Mongo is OK if you see message about trying to access Mongo with HTTP protocol.
 
 ### Make sure that you have indexed `metadata` collection in the project db.
 Manually created databases require manually created indexes. To create
@@ -44,7 +47,7 @@ in your MongoDB database. You may update all existing databases at once using
 ### Failed to load report data
 When you see the alert `Failed to load report data!` it may mean several things.
 First one is a problem with connectivity between report app and AET Web Services.
-Open browser developer's console and check the status of a request `<aet-web-api-endpoint>/api/metadata?...`.
+Open browser developer's console and check the status of a request to `<aet-web-api-endpoint>/api/metadata?...`.
 Make sure that your report instance is not trying to do Cross-Origin
 resource call which is blocked by most of popular browsers.
 Configuration of an endpoint for AET reports can be found in
