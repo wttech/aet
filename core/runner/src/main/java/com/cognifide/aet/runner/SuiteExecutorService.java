@@ -16,6 +16,7 @@
 package com.cognifide.aet.runner;
 
 import com.cognifide.aet.communication.api.metadata.Suite;
+import com.cognifide.aet.runner.configuration.SuiteExecutorServiceConf;
 import com.cognifide.aet.runner.processing.SuiteExecutionFactory;
 import com.cognifide.aet.runner.processing.SuiteExecutionTask;
 import com.cognifide.aet.runner.processing.data.SuiteDataService;
@@ -30,23 +31,28 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import javax.jms.Destination;
-import org.apache.felix.scr.annotations.Activate;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Deactivate;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.Service;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.metatype.annotations.Designate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Service(SuiteExecutorService.class)
-@Component(immediate = true, description = "Runner Suite Executor Service", label = "Runner Suite Executor Service")
+
+@Component(service = SuiteExecutorService.class, immediate = true, name = "Runner Suite Executor Service")
+@Designate(ocd = SuiteExecutorServiceConf.class)
 public class SuiteExecutorService {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SuiteExecutorService.class);
 
   private ListeningExecutorService executor;
+
   private ExecutorService callbackExecutor;
+
   private Set<String> scheduledSuites;
+
+  private SuiteExecutorServiceConf config;
 
   @Reference
   private RunnerConfiguration runnerConfiguration;
@@ -58,7 +64,8 @@ public class SuiteExecutorService {
   private SuiteExecutionFactory suiteExecutionFactory;
 
   @Activate
-  public void activate(Map<String, String> properties) {
+  public void activate(SuiteExecutorServiceConf config) {
+    this.config = config;
     LOGGER.debug("Activating SuiteExecutorService");
     executor = MoreExecutors.listeningDecorator(
         Executors.newFixedThreadPool(runnerConfiguration.getMaxConcurrentSuitesCount()));

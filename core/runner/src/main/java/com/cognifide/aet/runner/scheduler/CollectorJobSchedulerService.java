@@ -18,37 +18,44 @@ package com.cognifide.aet.runner.scheduler;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.runner.MessagesManager;
 import com.cognifide.aet.runner.RunnerConfiguration;
+import com.cognifide.aet.runner.scheduler.configuration.CollectorJobSchedulerServiceConf;
 import java.util.Map;
 import java.util.Queue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import javax.jms.JMSException;
-import org.apache.felix.scr.annotations.Activate;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Deactivate;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.Service;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.metatype.annotations.Designate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Service(CollectorJobSchedulerService.class)
-@Component(description = "Collector Job Scheduler Service", label = "Collector Job Scheduler Service")
+@Component(service = CollectorJobSchedulerService.class, name = "Collector Job Scheduler Service")
+@Designate(ocd = CollectorJobSchedulerServiceConf.class)
 public class CollectorJobSchedulerService {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(CollectorJobSchedulerService.class);
 
+  private CollectorJobSchedulerServiceConf config;
+
   @Reference
   private JmsConnection jmsConnection;
+
   @Reference
   private MessagesManager messagesManager;
+
   @Reference
   private RunnerConfiguration runnerConfiguration;
 
   private CollectorJobScheduler collectorJobScheduler;
+
   private Future<?> collectorJobSchedulerFeature;
 
   @Activate
-  public void activate(Map<String, String> properties) throws JMSException {
+  public void activate(CollectorJobSchedulerServiceConf config) throws JMSException {
+    this.config = config;
     LOGGER.debug("Activating CollectorJobSchedulerService");
     collectorJobScheduler = new CollectorJobScheduler(jmsConnection,
         runnerConfiguration.getMaxMessagesInCollectorQueue(), messagesManager);

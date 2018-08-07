@@ -18,6 +18,7 @@ package com.cognifide.aet.runner.processing;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.runner.MessagesManager;
 import com.cognifide.aet.runner.RunnerConfiguration;
+import com.cognifide.aet.runner.processing.configuration.SuiteExecutionFactoryConf;
 import com.cognifide.aet.runner.processing.data.SuiteIndexWrapper;
 import com.cognifide.aet.runner.processing.steps.CollectDispatcher;
 import com.cognifide.aet.runner.processing.steps.CollectionResultsRouter;
@@ -25,13 +26,16 @@ import com.cognifide.aet.runner.processing.steps.ComparisonResultsRouter;
 import com.cognifide.aet.runner.scheduler.CollectorJobSchedulerService;
 import javax.jms.Destination;
 import javax.jms.JMSException;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.Service;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.metatype.annotations.Designate;
 
-@Service(SuiteExecutionFactory.class)
-@Component(description = "Suite Execution Factory", label = "Suite Execution Factory")
+@Component(service = SuiteExecutionFactory.class, name = "Suite Execution Factory")
+@Designate(ocd = SuiteExecutionFactoryConf.class)
 public class SuiteExecutionFactory {
+
+  private SuiteExecutionFactoryConf config;
 
   @Reference
   private RunnerConfiguration runnerConfiguration;
@@ -44,6 +48,11 @@ public class SuiteExecutionFactory {
 
   @Reference
   private JmsConnection jmsConnection;
+
+  @Activate
+  public void activate(SuiteExecutionFactoryConf config){
+    this.config = config;
+  }
 
   CollectDispatcher newCollectDispatcher(TimeoutWatch timeoutWatch,
       SuiteIndexWrapper suite)
