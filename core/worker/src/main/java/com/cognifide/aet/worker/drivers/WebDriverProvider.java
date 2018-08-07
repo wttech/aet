@@ -23,45 +23,45 @@ import com.cognifide.aet.worker.exceptions.WorkerException;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Maps;
 import java.util.Map;
-import org.apache.felix.scr.annotations.Activate;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Properties;
-import org.apache.felix.scr.annotations.Property;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.ReferenceCardinality;
-import org.apache.felix.scr.annotations.ReferencePolicy;
-import org.apache.felix.scr.annotations.Service;
+
 import org.osgi.framework.Constants;
+import org.osgi.service.component.annotations.*;
+import org.osgi.service.metatype.annotations.Designate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * @author lukasz.wieczorek
  */
-@Service(WebDriverProvider.class)
-@Component(label = "AET WebDriver Provider", description = "AET WebDriver Provider", immediate = true, metatype = true)
-@Properties({@Property(name = Constants.SERVICE_VENDOR, value = "Cognifide Ltd")})
+@Component(
+    property = {"name = " + Constants.SERVICE_VENDOR, "value = Cognifide Ltd"},
+    immediate = true
+)
+@Designate(ocd = WebDriverProviderConf.class)
 public class WebDriverProvider {
 
   private static final Logger LOG = LoggerFactory.getLogger(WebDriverProvider.class);
 
-  private static final String DEFAULT_WEB_DRIVER_NAME = "defaultWebDriverName";
+  private WebDriverProviderConf webDriverProviderConf;
 
-  @Property(name = DEFAULT_WEB_DRIVER_NAME, label = "Default Web Driver name", value = "ff")
-  private String defaultWebDriverName;
-
-  @Reference(referenceInterface = WebDriverFactory.class, policy = ReferencePolicy.DYNAMIC, cardinality = ReferenceCardinality.OPTIONAL_MULTIPLE, bind = "bindWebDriverFactory", unbind = "unbindWebDriverFactory")
+  @Reference(
+      service = WebDriverFactory.class,
+      policy = ReferencePolicy.DYNAMIC,
+      cardinality = ReferenceCardinality.MULTIPLE,
+      bind = "bindWebDriverFactory",
+      unbind = "unbindWebDriverFactory")
   private final Map<String, WebDriverFactory> collectorFactories = Maps.newConcurrentMap();
 
   @Reference
   private ProxyServerProvider proxyServerProvider;
 
   @Activate
-  void activate(Map<String, String> properties) {
-    defaultWebDriverName = properties.get(DEFAULT_WEB_DRIVER_NAME);
+  void activate(WebDriverProviderConf webDriverProviderConf) {
+    this.webDriverProviderConf = webDriverProviderConf;
   }
 
-  public WebCommunicationWrapper createWebDriverWithProxy(String preferredWebDriver, String proxyName)
+  public WebCommunicationWrapper createWebDriverWithProxy(String preferredWebDriver,
+      String proxyName)
       throws WorkerException {
     WebDriverFactory webDriverFactory = findWebDriverFactory(preferredWebDriver);
     try {
@@ -94,11 +94,13 @@ public class WebDriverProvider {
    */
   private WebDriverFactory findWebDriverFactory(String preferredWebDriver) throws WorkerException {
     final WebDriverFactory webDriverFactory;
-    String id = preferredWebDriver == null ? defaultWebDriverName : preferredWebDriver;
+    String id = preferredWebDriver == null ?
+        webDriverProviderConf.defaultWebDriverName() : preferredWebDriver;
     webDriverFactory = collectorFactories.get(id);
     if (webDriverFactory == null) {
       String webDrivers = Joiner.on(", ").join(collectorFactories.keySet());
-      String errorMessage = String.format("Undefined WebDriver: '%s'. Available: %s", id, webDrivers);
+      String errorMessage = String
+          .format("Undefined WebDriver: '%s'. Available: %s", id, webDrivers);
       throw new WorkerException(errorMessage);
     }
     return webDriverFactory;
