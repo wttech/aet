@@ -25,7 +25,11 @@ import com.google.common.collect.Maps;
 import java.util.Map;
 
 import org.osgi.framework.Constants;
-import org.osgi.service.component.annotations.*;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
 import org.osgi.service.metatype.annotations.Designate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -61,8 +65,7 @@ public class WebDriverProvider {
     this.webDriverProviderConf = webDriverProviderConf;
   }
 
-  public WebCommunicationWrapper createWebDriverWithProxy(String preferredWebDriver,
-      String proxyName)
+  public WebCommunicationWrapper createWebDriverWithProxy(String preferredWebDriver, String proxyName)
       throws WorkerException {
     WebDriverFactory webDriverFactory = findWebDriverFactory(preferredWebDriver);
     try {
@@ -100,8 +103,7 @@ public class WebDriverProvider {
     webDriverFactory = collectorFactories.get(id);
     if (webDriverFactory == null) {
       String webDrivers = Joiner.on(", ").join(collectorFactories.keySet());
-      String errorMessage = String
-          .format("Undefined WebDriver: '%s'. Available: %s", id, webDrivers);
+      String errorMessage = String.format("Undefined WebDriver: '%s'. Available: %s", id, webDrivers);
       throw new WorkerException(errorMessage);
     }
     return webDriverFactory;
