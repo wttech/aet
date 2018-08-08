@@ -45,9 +45,6 @@ public class ExternalSnippetHttpClient {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(ExternalSnippetHttpClient.class);
 
-  private static final long DEFAULT_CONNECTION_TTL = 60L;
-  private static final int DEFAULT_MAX_CONCURRENT_CONNECTIONS = 50;
-
   private CloseableHttpClient httpClient;
 
   private ExternalSnippetHttpClientConf config;
