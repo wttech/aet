@@ -102,14 +102,12 @@
   &-generate-raport {
 
     display:flex;
-    align-items: center;
     justify-content: center;
 
     .raport-button {
-      background-color: $rebased_bg;
       padding:10px 15px;
-      font-weight: bold;
-      color:$text_color;
+      color:$white;
+      margin-top:16px;
 
       &:hover {
         cursor:pointer;

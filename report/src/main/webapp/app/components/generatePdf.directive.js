@@ -151,7 +151,7 @@ define(['angularAMD', 'blob-stream', 'canvas2pdf', 'metadataService'], function 
           }
         };
 
-        var urls = {
+        var cases = {
           stats: {
             failed: $('.toolbar-blocks>.toolbar-block:nth-child(2)>.failed')[0].innerHTML,
             warning: $('.toolbar-blocks>.toolbar-block:nth-child(2)>.warning').text(),
@@ -191,14 +191,14 @@ define(['angularAMD', 'blob-stream', 'canvas2pdf', 'metadataService'], function 
         };
 
         tests.parameters.totalTests = parseInt(tests.stats.failed) + parseInt(tests.stats.warning) + parseInt(tests.stats.passed) + parseInt(tests.stats.rebased);
-        urls.parameters.totalTests = parseInt(urls.stats.failed) + parseInt(urls.stats.warning) + parseInt(urls.stats.passed) + parseInt(urls.stats.rebased);
+        cases.parameters.totalTests = parseInt(cases.stats.failed) + parseInt(cases.stats.warning) + parseInt(cases.stats.passed) + parseInt(cases.stats.rebased);
         tests.parameters.chartName = 'Tests Statistics - Total: ' + tests.parameters.totalTests;
-        urls.parameters.chartName = 'URLs Statistics - Total: ' + urls.parameters.totalTests;
+        cases.parameters.chartName = 'Cases Statistics - Total: ' + cases.parameters.totalTests;
 
         var ctx = new canvas2pdf.PdfContext(blobStream());
         generateDocumentHeader(ctx);
         generateChart(ctx, tests);
-        generateChart(ctx, urls);
+        generateChart(ctx, cases);
         ctx.doc.addPage();
         generateChartsForTests(ctx, testsByCategories);
 
