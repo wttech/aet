@@ -82,7 +82,6 @@
     * [[Database Structure|DatabaseStructure]]
     * [[Logs|Logs]]
 * [[What's new|WhatsNew]]
-    * [[Migrate AET suite|AetSuiteMigration]]
 * [[FAQ|FAQ]]
 * [[Troubleshooting|Troubleshooting]]
 * Releases

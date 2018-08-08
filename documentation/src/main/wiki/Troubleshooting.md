@@ -17,10 +17,15 @@ or create a Pull Request with change to [this file](https://github.com/Cognifide
 ### Karaf can't find some dependencies or configurations - clearing the cache
 This may help in multiple situations, e.g. new version of AET was deployed
 or Karaf can't find some dependencies or configurations.
-To clear bundles cache, stop Karaf, remove following directories from `$KARAF_HOME/data` and start Karaf:
-- `cache`
-- `generated-bundles`
-- `tmp`
+To clear bundles cache, stop Karaf, clear `$KARAF_HOME/data` and start Karaf.
+If you want to backup existing logs, copy `$KARAF_HOME/data/logs`
+to backup location before clearing `$KARAF_HOME/data`.
+Example command to clear the cache (without logs backup):
+```
+sudo service karaf stop
+sudo rm -fr /opt/aet/karaf/current/data/*
+sudo service karaf start
+```
 
 ## ActiveMQ
 
