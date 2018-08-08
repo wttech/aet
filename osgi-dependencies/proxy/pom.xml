@@ -78,12 +78,7 @@
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>httpclient</artifactId>
     </dependency>
-
-    <dependency>
-      <groupId>org.apache.felix</groupId>
-      <artifactId>org.apache.felix.scr.annotations</artifactId>
-    </dependency>
-
+    
     <!-- This dependency will be embedded -->
     <dependency>
       <groupId>com.github.detro</groupId>
