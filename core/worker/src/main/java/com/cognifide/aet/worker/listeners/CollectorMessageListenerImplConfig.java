@@ -19,7 +19,7 @@ import org.osgi.service.metatype.annotations.AttributeDefinition;
 import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 
 @ObjectClassDefinition(name = "AET Collector Message Listener")
-public @interface CollectorMessageListenerImplConf {
+public @interface CollectorMessageListenerImplConfig {
 
   String LISTENER_NAME_LABEL = "Collector name";
   String LISTENER_NAME_DESC = "Name of collector. Used in logs only";

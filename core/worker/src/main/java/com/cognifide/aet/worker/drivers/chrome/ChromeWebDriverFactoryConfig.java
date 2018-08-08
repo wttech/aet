@@ -21,7 +21,7 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 import static com.cognifide.aet.worker.drivers.WebDriverHelper.*;
 
 @ObjectClassDefinition(name = "AET Chrome WebDriver Factory", description = "AET Chrome WebDriver Factory")
-public @interface ChromeWebDriverFactoryConf {
+public @interface ChromeWebDriverFactoryConfig {
 
   String DEFAULT_BROWSER_NAME = "chrome";
 

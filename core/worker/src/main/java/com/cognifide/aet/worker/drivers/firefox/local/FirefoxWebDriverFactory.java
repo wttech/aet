@@ -42,17 +42,17 @@ import org.osgi.service.metatype.annotations.Designate;
 @Component(
     property = {"name = " + Constants.SERVICE_VENDOR, "value = Cognifide Ltd"}
 )
-@Designate(ocd = FirefoxWebDriverFactoryConf.class)
+@Designate(ocd = FirefoxWebDriverFactoryConfig.class)
 public class FirefoxWebDriverFactory implements WebDriverFactory {
 
   @Reference
   private HttpRequestExecutorFactory requestExecutorFactory;
 
-  private FirefoxWebDriverFactoryConf firefoxWebDriverFactoryConf;
+  private FirefoxWebDriverFactoryConfig firefoxWebDriverFactoryConfig;
 
   @Override
   public String getName() {
-    return firefoxWebDriverFactoryConf.name();
+    return firefoxWebDriverFactoryConfig.name();
   }
 
   @Override
@@ -99,7 +99,7 @@ public class FirefoxWebDriverFactory implements WebDriverFactory {
   private FirefoxProfile getFirefoxProfile() {
     final FirefoxProfile firefoxProfile = FirefoxProfileBuilder.newInstance()
         .withUnstableAndFastLoadStrategy()
-        .withLogfilePath(firefoxWebDriverFactoryConf.logFilePath())
+        .withLogfilePath(firefoxWebDriverFactoryConfig.logFilePath())
         .withFlashSwitchedOff()
         .withForcedAliasing()
         .withJavaScriptErrorCollectorPlugin()
@@ -108,7 +108,7 @@ public class FirefoxWebDriverFactory implements WebDriverFactory {
         .withRandomPort()
         .withUpdateDisabled()
         .build();
-    System.setProperty("webdriver.firefox.logfile", firefoxWebDriverFactoryConf.logFilePath());
+    System.setProperty("webdriver.firefox.logfile", firefoxWebDriverFactoryConfig.logFilePath());
     System.setProperty("webdriver.load.strategy", "unstable");
     return firefoxProfile;
   }
@@ -116,7 +116,7 @@ public class FirefoxWebDriverFactory implements WebDriverFactory {
   private void setCommonCapabilities(DesiredCapabilities capabilities, FirefoxProfile fp) {
     capabilities.setCapability(FirefoxDriver.PROFILE, fp);
     capabilities.setCapability("marionette", false);
-    capabilities.setCapability("firefox_binary", new File(firefoxWebDriverFactoryConf.path()).getAbsolutePath());
+    capabilities.setCapability("firefox_binary", new File(firefoxWebDriverFactoryConfig.path()).getAbsolutePath());
   }
 
   private WebDriver getFirefoxDriver(DesiredCapabilities capabilities) {
@@ -126,8 +126,8 @@ public class FirefoxWebDriverFactory implements WebDriverFactory {
   }
 
   @Activate
-  public void activate(FirefoxWebDriverFactoryConf firefoxWebDriverFactoryConf) {
-    this.firefoxWebDriverFactoryConf = firefoxWebDriverFactoryConf;
+  public void activate(FirefoxWebDriverFactoryConfig firefoxWebDriverFactoryConfig) {
+    this.firefoxWebDriverFactoryConfig = firefoxWebDriverFactoryConfig;
   }
 
 }

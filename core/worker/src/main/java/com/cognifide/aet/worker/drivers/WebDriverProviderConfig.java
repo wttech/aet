@@ -19,7 +19,7 @@ import org.osgi.service.metatype.annotations.AttributeDefinition;
 import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 
 @ObjectClassDefinition(name = "AET WebDriver Provider", description = "AET WebDriver Provider")
-public @interface WebDriverProviderConf {
+public @interface WebDriverProviderConfig {
 
   String DEFAULT_WEB_DRIVER_NAME_LABEL = "Default Web Driver name";
 

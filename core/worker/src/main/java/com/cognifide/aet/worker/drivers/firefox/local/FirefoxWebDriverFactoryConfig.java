@@ -23,7 +23,7 @@ import static com.cognifide.aet.worker.drivers.WebDriverHelper.NAME_LABEL;
 import static com.cognifide.aet.worker.drivers.WebDriverHelper.PATH_LABEL;
 
 @ObjectClassDefinition(name = "AET Firefox WebDriver Factory", description = "AET Firefox WebDriver Factory")
-public @interface FirefoxWebDriverFactoryConf {
+public @interface FirefoxWebDriverFactoryConfig {
 
   String DEFAULT_FF_NAME = "ff";
 

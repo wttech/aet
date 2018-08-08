@@ -42,12 +42,12 @@ import org.slf4j.LoggerFactory;
     property = {"name = " + Constants.SERVICE_VENDOR, "value = Cognifide Ltd"},
     immediate = true
 )
-@Designate(ocd = WebDriverProviderConf.class)
+@Designate(ocd = WebDriverProviderConfig.class)
 public class WebDriverProvider {
 
   private static final Logger LOG = LoggerFactory.getLogger(WebDriverProvider.class);
 
-  private WebDriverProviderConf webDriverProviderConf;
+  private WebDriverProviderConfig webDriverProviderConfig;
 
   @Reference(
       service = WebDriverFactory.class,
@@ -61,8 +61,8 @@ public class WebDriverProvider {
   private ProxyServerProvider proxyServerProvider;
 
   @Activate
-  void activate(WebDriverProviderConf webDriverProviderConf) {
-    this.webDriverProviderConf = webDriverProviderConf;
+  void activate(WebDriverProviderConfig webDriverProviderConfig) {
+    this.webDriverProviderConfig = webDriverProviderConfig;
   }
 
   public WebCommunicationWrapper createWebDriverWithProxy(String preferredWebDriver, String proxyName)
@@ -99,7 +99,7 @@ public class WebDriverProvider {
   private WebDriverFactory findWebDriverFactory(String preferredWebDriver) throws WorkerException {
     final WebDriverFactory webDriverFactory;
     String id = preferredWebDriver == null ?
-        webDriverProviderConf.defaultWebDriverName() : preferredWebDriver;
+        webDriverProviderConfig.defaultWebDriverName() : preferredWebDriver;
     webDriverFactory = collectorFactories.get(id);
     if (webDriverFactory == null) {
       String webDrivers = Joiner.on(", ").join(collectorFactories.keySet());

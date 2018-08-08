@@ -48,17 +48,17 @@ import org.osgi.service.metatype.annotations.Designate;
     configurationPolicy = ConfigurationPolicy.REQUIRE,
     property = {"name = " + Constants.SERVICE_VENDOR, "value = Cognifide Ltd"}
 )
-@Designate(ocd = ChromeWebDriverFactoryConf.class)
+@Designate(ocd = ChromeWebDriverFactoryConfig.class)
 public class ChromeWebDriverFactory implements WebDriverFactory {
 
   @Reference
   private HttpRequestExecutorFactory requestExecutorFactory;
 
-  private ChromeWebDriverFactoryConf chromeWebDriverFactoryConf;
+  private ChromeWebDriverFactoryConfig chromeWebDriverFactoryConfig;
 
   @Activate
-  public void activate(ChromeWebDriverFactoryConf chromeWebDriverFactoryConf) {
-    this.chromeWebDriverFactoryConf = chromeWebDriverFactoryConf;
+  public void activate(ChromeWebDriverFactoryConfig chromeWebDriverFactoryConfig) {
+    this.chromeWebDriverFactoryConfig = chromeWebDriverFactoryConfig;
   }
 
   @Override
@@ -80,7 +80,7 @@ public class ChromeWebDriverFactory implements WebDriverFactory {
 
   @Override
   public String getName() {
-    return chromeWebDriverFactoryConf.name();
+    return chromeWebDriverFactoryConfig.name();
   }
 
   private WebCommunicationWrapper createWebDriver(DesiredCapabilities capabilities,
@@ -97,8 +97,8 @@ public class ChromeWebDriverFactory implements WebDriverFactory {
   private WebDriver getChromeDriver(DesiredCapabilities capabilities)
       throws MalformedURLException {
     WebDriver driver =
-        StringUtils.isNotBlank(chromeWebDriverFactoryConf.seleniumGridUrl()) ?
-            new RemoteWebDriver(new URL(chromeWebDriverFactoryConf.seleniumGridUrl()), capabilities)
+        StringUtils.isNotBlank(chromeWebDriverFactoryConfig.seleniumGridUrl()) ?
+            new RemoteWebDriver(new URL(chromeWebDriverFactoryConfig.seleniumGridUrl()), capabilities)
             : new ChromeDriver(capabilities);
     driver.manage().timeouts().pageLoadTimeout(5L, TimeUnit.MINUTES);
     return driver;

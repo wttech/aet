@@ -42,7 +42,7 @@ import org.slf4j.LoggerFactory;
 @Component(
     service = CollectorMessageListenerImpl.class,
     immediate = true)
-@Designate(ocd = CollectorMessageListenerImplConf.class, factory = true)
+@Designate(ocd = CollectorMessageListenerImplConfig.class, factory = true)
 public class CollectorMessageListenerImpl extends AbstractTaskMessageListener {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(CollectorMessageListenerImpl.class);
@@ -56,12 +56,12 @@ public class CollectorMessageListenerImpl extends AbstractTaskMessageListener {
   @Reference
   private WebDriverProvider webDriverProvider;
 
-  private CollectorMessageListenerImplConf collectorMessageListenerImplConf;
+  private CollectorMessageListenerImplConfig collectorMessageListenerImplConfig;
 
   @Activate
-  void activate(CollectorMessageListenerImplConf conf) {
-    this.collectorMessageListenerImplConf = conf;
-    super.doActivate(conf.consumerQueueName(), conf.producerQueueName(), conf.pf());
+  void activate(CollectorMessageListenerImplConfig config) {
+    this.collectorMessageListenerImplConfig = config;
+    super.doActivate(config.consumerQueueName(), config.producerQueueName(), config.pf());
   }
 
   @Deactivate
@@ -83,7 +83,7 @@ public class CollectorMessageListenerImpl extends AbstractTaskMessageListener {
         && requestMessageId != null) {
       LOGGER.info(
           "CollectorJobData [{}] message arrived with {} urls. CorrelationId: {} RequestMessageId: {}",
-          collectorMessageListenerImplConf.name(), collectorJobData.getUrls().size(), correlationId,
+          collectorMessageListenerImplConfig.name(), collectorJobData.getUrls().size(), correlationId,
           requestMessageId);
       WebCommunicationWrapper webCommunicationWrapper = null;
       int collected = 0;

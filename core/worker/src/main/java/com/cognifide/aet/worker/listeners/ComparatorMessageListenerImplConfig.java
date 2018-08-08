@@ -19,7 +19,7 @@ import org.osgi.service.metatype.annotations.AttributeDefinition;
 import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 
 @ObjectClassDefinition(name = "AET Comparator Message Listener")
-public @interface ComparatorMessageListenerImplConf {
+public @interface ComparatorMessageListenerImplConfig {
 
   String LISTENER_NAME_LABEL = "Comparator name";
   String LISTENER_NAME_DESC = "Name of comparator. Used in logs only";

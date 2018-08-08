@@ -31,7 +31,6 @@ import javax.jms.Message;
 import org.apache.commons.lang3.StringUtils;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.metatype.annotations.Designate;
@@ -41,7 +40,7 @@ import org.slf4j.LoggerFactory;
 @Component(
     service = ComparatorMessageListenerImpl.class,
     immediate = true)
-@Designate(ocd = ComparatorMessageListenerImplConf.class, factory = true)
+@Designate(ocd = ComparatorMessageListenerImplConfig.class, factory = true)
 public class ComparatorMessageListenerImpl extends AbstractTaskMessageListener {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(ComparatorMessageListenerImpl.class);
@@ -52,12 +51,12 @@ public class ComparatorMessageListenerImpl extends AbstractTaskMessageListener {
   @Reference
   private ComparatorDispatcher dispatcher;
 
-  private ComparatorMessageListenerImplConf comparatorMessageListenerImplConf;
+  private ComparatorMessageListenerImplConfig comparatorMessageListenerImplConfig;
 
   @Activate
-  void activate(ComparatorMessageListenerImplConf conf) {
-    this.comparatorMessageListenerImplConf = conf;
-    super.doActivate(conf.consumerQueueName(), conf.producerQueueName(), conf.pf());
+  void activate(ComparatorMessageListenerImplConfig config) {
+    this.comparatorMessageListenerImplConfig = config;
+    super.doActivate(config.consumerQueueName(), config.producerQueueName(), config.pf());
   }
 
   @Deactivate
