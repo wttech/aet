@@ -27,7 +27,7 @@ require.config({
     'lodash': '../assets/libs/lodash/dist/lodash',
     'angular-bootstrap': '../assets/libs/angular-bootstrap/ui-bootstrap-tpls',
     'pdfkit': '../assets/libs/pdfkit/pdfkit-0.7.1',
-    'filesaver': '../assets/libs/filesaver/index',
+    'filesaver': '../assets/libs/FileSaver/index',
     'canvas2pdf': '../assets/libs/canvas2pdf/index',
     'blob-stream': '../assets/libs/pdfkit/blob-stream-v0.1.3',
     'snowfall': '../assets/js/snowfall/snowfall.min',
@@ -38,7 +38,7 @@ require.config({
     'urlSearchFilter': 'components/urlSearch.filter',
     'urlStatusFilter': 'components/urlStatus.filter',
     'keyboardShortcutsDirective': 'components/keyboardShortcuts.directive',
-    'generatePDFDirective': 'components/generatePDF.directive',
+    'generatePDFDirective': 'components/generatePdf.directive',
     'hidePopoversDirective': 'components/hidePopovers.directive',
     'winterEdition': 'themes/winterEdition.directive',
     //services
