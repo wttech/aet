@@ -130,6 +130,7 @@
         </executions>
       </plugin>
       <!-- overwrites configuration from parent pom to disable SCR plugin -->
+      <!-- ToDo: remove me when all felix dependencies are removed -->
       <plugin>
         <groupId>org.apache.felix</groupId>
         <artifactId>maven-scr-plugin</artifactId>
