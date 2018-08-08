@@ -27,6 +27,7 @@ require.config({
     'lodash': '../assets/libs/lodash/dist/lodash',
     'angular-bootstrap': '../assets/libs/angular-bootstrap/ui-bootstrap-tpls',
     'snowfall': '../assets/js/snowfall/snowfall.min',
+    'newComparison': '../assets/js/newComparison/newComparison',
     // **************** AET custom ********************
     //components
     'testSearchFilter': 'components/testSearch.filter',
