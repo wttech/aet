@@ -18,7 +18,8 @@ package com.cognifide.aet.worker.drivers.chrome;
 import org.osgi.service.metatype.annotations.AttributeDefinition;
 import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 
-import static com.cognifide.aet.worker.drivers.WebDriverHelper.*;
+import static com.cognifide.aet.worker.drivers.WebDriverHelper.NAME_LABEL;
+import static com.cognifide.aet.worker.drivers.WebDriverHelper.NAME_DESC;
 
 @ObjectClassDefinition(name = "AET Chrome WebDriver Factory", description = "AET Chrome WebDriver Factory")
 public @interface ChromeWebDriverFactoryConfig {
