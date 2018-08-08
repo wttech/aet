@@ -91,10 +91,6 @@
       <artifactId>diffutils</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.apache.sling</groupId>
-      <artifactId>org.apache.sling.commons.osgi</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>fluent-hc</artifactId>
     </dependency>
@@ -106,11 +102,6 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.felix</groupId>
-      <artifactId>org.apache.felix.scr.annotations</artifactId>
     </dependency>
 
     <!-- test dependencies -->
@@ -175,6 +166,18 @@
 
   <build>
     <plugins>
+      <!-- overwrites configuration from parent pom to disable SCR plugin -->
+      <!-- ToDo: remove me when all felix dependencies are removed -->
+      <plugin>
+        <groupId>org.apache.felix</groupId>
+        <artifactId>maven-scr-plugin</artifactId>
+        <executions>
+          <execution>
+            <id>generate-scr-descriptor</id>
+            <phase>none</phase>
+          </execution>
+        </executions>
+      </plugin>
       <plugin>
         <groupId>org.apache.rat</groupId>
         <artifactId>apache-rat-plugin</artifactId>
