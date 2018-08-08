@@ -25,6 +25,10 @@ public @interface ChromeWebDriverFactoryConfig {
 
   String DEFAULT_BROWSER_NAME = "chrome";
 
+  String SELENIUM_GRID_URL_LABEL = "Selenium grid URL";
+  String SELENIUM_GRID_URL_DESC = "Url to selenium grid hub. When null local Chrome driver will be used. Local Chrome driver does not work on Linux";
+  String DEFAULT_SELENIUM_GRID_URL = "http://localhost:4444/wd/hub";
+
   @AttributeDefinition(
       name = NAME_LABEL,
       description = NAME_DESC,
@@ -32,8 +36,8 @@ public @interface ChromeWebDriverFactoryConfig {
   String name();
 
   @AttributeDefinition(
-      name = SELENIUM_GRID_URL_LABEL,
-      description = SELENIUM_GRID_URL_DESC,
-      defaultValue = DEFAULT_SELENIUM_GRID_URL)
+      name = ChromeWebDriverFactoryConfig.SELENIUM_GRID_URL_LABEL,
+      description = ChromeWebDriverFactoryConfig.SELENIUM_GRID_URL_DESC,
+      defaultValue = ChromeWebDriverFactoryConfig.DEFAULT_SELENIUM_GRID_URL)
   String seleniumGridUrl();
 }

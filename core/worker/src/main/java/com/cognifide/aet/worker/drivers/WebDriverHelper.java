@@ -31,16 +31,6 @@ public final class WebDriverHelper {
 
   public static final String NAME_DESC = "Driver name that will be used by other services like Screenshot Collectors";
 
-  public static final String PATH_LABEL = "Custom path to Firefox binary";
-
-  public static final String LOG_FILE_PATH_LABEL = "Path to firefox error log";
-
-  public static final String SELENIUM_GRID_URL_LABEL = "Selenium grid URL";
-
-  public static final String SELENIUM_GRID_URL_DESC = "Url to selenium grid hub. When null local Chrome driver will be used. Local Chrome driver does not work on Linux";
-
-  public static final String DEFAULT_SELENIUM_GRID_URL = "http://localhost:4444/wd/hub";
-
   private WebDriverHelper() {
     // restrict instantiation
   }

@@ -18,17 +18,17 @@ package com.cognifide.aet.worker.drivers.firefox.local;
 import org.osgi.service.metatype.annotations.AttributeDefinition;
 import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 
-import static com.cognifide.aet.worker.drivers.WebDriverHelper.LOG_FILE_PATH_LABEL;
 import static com.cognifide.aet.worker.drivers.WebDriverHelper.NAME_LABEL;
-import static com.cognifide.aet.worker.drivers.WebDriverHelper.PATH_LABEL;
 
 @ObjectClassDefinition(name = "AET Firefox WebDriver Factory", description = "AET Firefox WebDriver Factory")
 public @interface FirefoxWebDriverFactoryConfig {
 
+  String PATH_LABEL = "Custom path to Firefox binary";
   String DEFAULT_FF_NAME = "ff";
 
   String DEFAULT_FIREFOX_BINARY_PATH = "/usr/bin/firefox";
 
+  String LOG_FILE_PATH_LABEL = "Path to firefox error log";
   String DEFAULT_FIREFOX_ERROR_LOG_FILE_PATH = "/opt/aet/firefox/log/stderr.log";
 
   @AttributeDefinition(name = NAME_LABEL, defaultValue = DEFAULT_FF_NAME)
