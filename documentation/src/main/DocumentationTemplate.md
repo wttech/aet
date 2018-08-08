@@ -162,4 +162,4 @@
 
 #include "wiki/FAQ.md"
 
-#include "wiki/AetSuiteMigration.md"
+#include "wiki/Troubleshooting.md"
