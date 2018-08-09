@@ -22,19 +22,22 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 @ObjectClassDefinition(name = "AET MongoDB Client", description = "AET MongoDB Client")
 public @interface MongoDBClientConf {
 
-  String MONGO_URI = "MongoURI";
+  String MONGO_URI_PROPERTY_NAME = "MongoURI";
+
+  String MONGO_URI_PROPERTY_DESCRIPTION = "mongodb://[username:password@]host1[:port1][,host2[:port2],"
+      + "...[,hostN[:portN]]][/[database][?options]]";
 
   String DEFAULT_MONGODB_URI = "mongodb://localhost";
 
-  String ALLOW_AUTO_CREATE = "AllowAutoCreate";
+  String ALLOW_AUTO_CREATE_PROPERTY_NAME = "Allow automatic creation of DB";
+
+  String ALLOW_AUTO_CREATE_PROPERTY_DESCRIPTION = "Allows automatic creation of DB if set to true";
 
   boolean DEFAULT_AUTOCREATE_VALUE = false;
 
-  @AttributeDefinition(name = MONGO_URI, description =
-      "mongodb://[username:password@]host1[:port1][,host2[:port2],"
-          + "...[,hostN[:portN]]][/[database][?options]]", type = AttributeType.STRING)
+  @AttributeDefinition(name = MONGO_URI_PROPERTY_NAME, description = MONGO_URI_PROPERTY_DESCRIPTION, type = AttributeType.STRING)
   String MongoURI() default DEFAULT_MONGODB_URI;
 
-  @AttributeDefinition(name = ALLOW_AUTO_CREATE, description = "Allows automatic creation of DB if set to true", type = AttributeType.BOOLEAN)
+  @AttributeDefinition(name = ALLOW_AUTO_CREATE_PROPERTY_NAME, description = ALLOW_AUTO_CREATE_PROPERTY_DESCRIPTION, type = AttributeType.BOOLEAN)
   boolean AllowAutoCreate() default DEFAULT_AUTOCREATE_VALUE;
 }
