@@ -21,11 +21,9 @@ import com.cognifide.aet.job.api.datafilter.DataFilterJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import java.util.Map;
 import java.util.Set;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Service;
+import org.osgi.service.component.annotations.Component;
 
 @Component
-@Service
 public class JsErrorsFilterFactory implements DataFilterFactory {
 
   @Override
