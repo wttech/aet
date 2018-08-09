@@ -32,8 +32,21 @@
 		</compare>
 		<urls>
 			<url href="comparators/statuscodes/failed.jsp"/>
-			<url href="comparators/statuscodes/success.jsp"/>
 			<url href="comparators/statuscodes/noneexistingPage.jsp"/>
+		</urls>
+	</test>
+
+	<test name="F-comparator-StatusCodes-200-success" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes filterCodes="200" showExcluded="true"/>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/success.jsp"/>
 		</urls>
 	</test>
 
@@ -255,7 +268,7 @@
 			<sleep duration="3000"/>
 		</collect>
 		<compare>
-			<status-codes showExcluded="true">
+			<status-codes filterCodes="200,404" showExcluded="true">
 				<exclude url="/sample-site/NonExistingResourceFile.png"/>
 			</status-codes>
 		</compare>
@@ -304,7 +317,7 @@
 			<sleep duration="3000"/>
 		</collect>
 		<compare>
-			<status-codes showExcluded="true">
+			<status-codes filterCodes="200" showExcluded="true">
 				<include pattern="^.*css$"/>
 			</status-codes>
 		</compare>

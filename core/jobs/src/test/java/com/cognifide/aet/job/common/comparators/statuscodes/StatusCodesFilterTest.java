@@ -93,7 +93,7 @@ public class StatusCodesFilterTest {
     assertThat(result.size(), is(expectedSize));
   }
 
-  @TestWith({"100;200;201,3", "400;401;499,3", "404,3"})
+  @TestWith({"100;200;201,18", "400;401;499,18", "404,18"})
   public void testFilter_filterCodes(String filterCodesParam, int expectedSize) {
     tested = getTested(0, 600, prepareFilterCodes(filterCodesParam));
 
@@ -102,8 +102,8 @@ public class StatusCodesFilterTest {
     assertThat(result.size(), is(expectedSize));
   }
 
-  @TestWith({"100;200;201,100,200,2", "400;401;499,100,400,1"})
-  public void testFilter_boundsWithfilterCodes(String filterCodesParam, int lowerBound,
+  @TestWith({"100;200;201,100,200,5", "400;401;499,100,400,12"})
+  public void testFilter_boundsWithFilterCodes(String filterCodesParam, int lowerBound,
       int upperBound,
       int expectedSize) {
     tested = getTested(lowerBound, upperBound, prepareFilterCodes(filterCodesParam));

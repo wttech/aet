@@ -19,6 +19,7 @@ import com.cognifide.aet.vs.metadata.MetadataDAOMongoDBImpl;
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -33,6 +34,9 @@ import org.apache.felix.scr.annotations.Deactivate;
 import org.apache.felix.scr.annotations.Property;
 import org.apache.felix.scr.annotations.Service;
 import org.apache.sling.commons.osgi.PropertiesUtil;
+import org.bson.BsonDocument;
+import org.bson.BsonInt32;
+import org.bson.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -199,6 +203,15 @@ public class MongoDBClient {
     } else if (allowAutoCreate && autoCreate) {
       database = mongoClient.getDatabase(lowerCaseDbName);
       database.createCollection(MetadataDAOMongoDBImpl.METADATA_COLLECTION_NAME);
+      MongoCollection<Document> collection = database
+          .getCollection(MetadataDAOMongoDBImpl.METADATA_COLLECTION_NAME);
+      collection.createIndex(new BsonDocument().append("version", new BsonInt32(-1)));
+      collection.createIndex(new BsonDocument()
+          .append("correlationId", new BsonInt32(1))
+          .append("version", new BsonInt32(-1)));
+      collection.createIndex(new BsonDocument()
+          .append("name", new BsonInt32(1))
+          .append("version", new BsonInt32(-1)));
     }
     return database;
   }

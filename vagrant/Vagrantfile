@@ -81,8 +81,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         "jdk" => {
           "8" => {
             "x86_64" => {
-              "url" => "http://download.oracle.com/otn-pub/java/jdk/8u172-b11/a58eab1ec242421181065cdc37240b08/jdk-8u172-linux-x64.tar.gz",
-              "checksum" => "28a00b9400b6913563553e09e8024c286b506d8523334c93ddec6c9ec7e9d346"
+              "url" => "http://download.oracle.com/otn-pub/java/jdk/8u181-b13/96a7b8442fe848ef90c96a2fad6ed6d1/jdk-8u181-linux-x64.tar.gz",
+              "checksum" => "1845567095bfbfebd42ed0d09397939796d05456290fb20a83c476ba09f991d3"
             }
           }
         }
