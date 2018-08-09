@@ -34,19 +34,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.Service;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-@Service(SuiteFactory.class)
-@Component(
-    label = "AET Suite Factory",
-    description = "Creates a new Suite object from the test suite",
-    immediate = true
-)
+@Component(service = SuiteFactory.class, immediate = true)
 public class SuiteFactory {
 
   private static final Logger LOG = LoggerFactory.getLogger(SuiteFactory.class);
