@@ -1,0 +1,58 @@
+{
+  "statusCodes": [
+    {
+      "code": 404,
+      "url": "http://aet-vagrant/sample-site/sanity/comparators/statuscodes/noneexistingPage404.jsp",
+      "excluded": false
+    },
+    {
+      "code": 0,
+      "url": "http://aet-vagrant/favicon.ico",
+      "excluded": false
+    },
+    {
+      "code": 303,
+      "url": "https://www.google.com/",
+      "excluded": false
+    },
+    {
+      "code": 500,
+      "url": "https://www.wikipedia.org/",
+      "excluded": true
+    },
+    {
+      "code": 200,
+      "url": "",
+      "excluded": false
+    }
+  ],
+  "filteredStatusCodes": [
+    {
+      "code": 404,
+      "url": "http://aet-vagrant/sample-site/sanity/comparators/statuscodes/noneexistingPage404.jsp",
+      "excluded": false
+    },
+    {
+      "code": 0,
+      "url": "http://aet-vagrant/favicon.ico",
+      "excluded": false
+    },
+    {
+      "code": 303,
+      "url": "https://www.google.com/",
+      "excluded": false
+    },
+    {
+      "code": 200,
+      "url": "www.wikipedia.org",
+      "excluded": false
+    }
+  ],
+  "excludedStatusCodes": [
+    {
+      "code": 500,
+      "url": "https://www.wikipedia.org/",
+      "excluded": true
+    }
+  ]
+}

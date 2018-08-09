@@ -1,0 +1,27 @@
+{
+  "statusCodes": [
+    {
+      "code": 400,
+      "url": "http://aet-vagrant/sample-site/sanity/comparators/statuscodes/noneexistingPage404.jsp",
+      "excluded": false
+    },
+    {
+      "code": 600,
+      "url": "https://www.google.com/",
+      "excluded": false
+    }
+  ],
+  "filteredStatusCodes": [
+    {
+      "code": 400,
+      "url": "http://aet-vagrant/sample-site/sanity/comparators/statuscodes/noneexistingPage404.jsp",
+      "excluded": false
+    },
+    {
+      "code": 600,
+      "url": "https://www.google.com/",
+      "excluded": false
+    }
+  ],
+  "excludedStatusCodes": []
+}
