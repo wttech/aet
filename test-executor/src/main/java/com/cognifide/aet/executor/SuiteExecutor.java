@@ -21,6 +21,7 @@ import com.cognifide.aet.communication.api.execution.SuiteStatusResult;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
+import com.cognifide.aet.executor.configuration.SuiteExecutorConf;
 import com.cognifide.aet.executor.http.HttpSuiteExecutionResultWrapper;
 import com.cognifide.aet.executor.model.TestRun;
 import com.cognifide.aet.executor.model.TestSuiteRun;
@@ -29,7 +30,6 @@ import com.cognifide.aet.executor.xmlparser.api.TestSuiteParser;
 import com.cognifide.aet.executor.xmlparser.xml.XmlTestSuiteParser;
 import com.cognifide.aet.rest.LockService;
 import com.cognifide.aet.rest.helpers.ReportConfigurationManager;
-import com.cognifide.aet.vs.MetadataDAO;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.RemovalListener;
@@ -44,13 +44,12 @@ import java.util.concurrent.TimeUnit;
 import javax.jms.JMSException;
 import javax.jms.Session;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.felix.scr.annotations.Activate;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Property;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.Service;
 import org.apache.http.HttpStatus;
 import org.apache.sling.commons.osgi.PropertiesUtil;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.metatype.annotations.Designate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -59,9 +58,8 @@ import org.slf4j.LoggerFactory;
  * It creates the {@link SuiteRunner} and {@link SuiteStatusResult} queue for each test suite run
  * and keeps those items in cache.
  */
-@Service(SuiteExecutor.class)
-@Component(label = "AET Suite Executor", description = "Executes received test suite", immediate = true,
-    metatype = true)
+@Component(service = SuiteExecutor.class, immediate = true)
+@Designate(ocd = SuiteExecutorConf.class)
 public class SuiteExecutor {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SuiteExecutor.class);
@@ -72,17 +70,11 @@ public class SuiteExecutor {
 
   private static final String XUNIT_REPORT_URL_FORMAT = "%s/xunit?company=%s&project=%s&correlationId=%s";
 
-  private static final String MESSAGE_RECEIVE_TIMEOUT_PROPERTY_NAME = "messageReceiveTimeout";
-
   private static final String LOCKED_SUITE_MESSAGE = "Suite is currently locked. Please try again later.";
 
   private static final long CACHE_EXPIRATION_TIMEOUT = 20000L;
 
-  private static final long DEFAULT_MESSAGE_RECEIVE_TIMEOUT = 300000L;
-
-  @Property(name = MESSAGE_RECEIVE_TIMEOUT_PROPERTY_NAME, label = "ActiveMQ message receive timeout",
-      description = "ActiveMQ message receive timeout", longValue = DEFAULT_MESSAGE_RECEIVE_TIMEOUT)
-  private Long messageReceiveTimeout;
+  private SuiteExecutorConf config;
 
   @Reference
   private JmsConnection jmsConnection;
@@ -108,9 +100,8 @@ public class SuiteExecutor {
   private SuiteStatusHandler suiteStatusHandler;
 
   @Activate
-  public void activate(Map<String, Object> properties) {
-    messageReceiveTimeout = PropertiesUtil.toLong(
-        properties.get(MESSAGE_RECEIVE_TIMEOUT_PROPERTY_NAME), DEFAULT_MESSAGE_RECEIVE_TIMEOUT);
+  public void activate(SuiteExecutorConf config) {
+    this.config = config;
 
     suiteRunnerCache = CacheBuilder.newBuilder()
         .expireAfterAccess(CACHE_EXPIRATION_TIMEOUT, TimeUnit.MILLISECONDS)
@@ -235,7 +226,7 @@ public class SuiteExecutor {
   private SuiteRunner createSuiteRunner(Suite suite) throws JMSException {
     Session session = jmsConnection.getJmsSession();
     SuiteRunner suiteRunner = new SuiteRunner(session, cacheUpdater,
-        suiteStatusHandler, suite, RUNNER_IN_QUEUE, messageReceiveTimeout);
+        suiteStatusHandler, suite, RUNNER_IN_QUEUE, config.messageReceiveTimeout());
     suiteRunnerCache.put(suite.getCorrelationId(), suiteRunner);
     suiteStatusCache.put(suite.getCorrelationId(), new ConcurrentLinkedQueue<SuiteStatusResult>());
     return suiteRunner;
