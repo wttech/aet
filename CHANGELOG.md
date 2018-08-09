@@ -10,6 +10,9 @@ All notable changes to AET will be documented in this file.
 ## Unreleased
 **List of changes that are finished but not yet released in any final version.**
 
+- [PR-314](https://github.com/Cognifide/aet/pull/314) Updated osgi annotation in jobs
+- [PR-313](https://github.com/Cognifide/aet/pull/313) Update osgi annotations in validation
+- [PR-308](https://github.com/Cognifide/aet/pull/308) Update annotations in test executor
 - [PR-300](https://github.com/Cognifide/aet/pull/300) Added creating indexes for collection
 - [PR-289](https://github.com/Cognifide/aet/pull/289) User now stays on the same tab while navigating between URLs
 - [PR-271](https://github.com/Cognifide/aet/pull/271) Added possibility to override name parameter from the aet client
