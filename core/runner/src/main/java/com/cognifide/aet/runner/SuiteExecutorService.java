@@ -25,27 +25,27 @@ import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
-import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import javax.jms.Destination;
-import org.apache.felix.scr.annotations.Activate;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Deactivate;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.Service;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Service(SuiteExecutorService.class)
-@Component(immediate = true, description = "Runner Suite Executor Service", label = "Runner Suite Executor Service")
+
+@Component(service = SuiteExecutorService.class, immediate = true)
 public class SuiteExecutorService {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SuiteExecutorService.class);
 
   private ListeningExecutorService executor;
+
   private ExecutorService callbackExecutor;
+
   private Set<String> scheduledSuites;
 
   @Reference
@@ -58,7 +58,7 @@ public class SuiteExecutorService {
   private SuiteExecutionFactory suiteExecutionFactory;
 
   @Activate
-  public void activate(Map<String, String> properties) {
+  public void activate() {
     LOGGER.debug("Activating SuiteExecutorService");
     executor = MoreExecutors.listeningDecorator(
         Executors.newFixedThreadPool(runnerConfiguration.getMaxConcurrentSuitesCount()));
