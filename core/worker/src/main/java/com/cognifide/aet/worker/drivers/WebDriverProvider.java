@@ -47,7 +47,7 @@ public class WebDriverProvider {
 
   private static final Logger LOG = LoggerFactory.getLogger(WebDriverProvider.class);
 
-  private WebDriverProviderConfig webDriverProviderConfig;
+  private WebDriverProviderConfig config;
 
   @Reference(
       service = WebDriverFactory.class,
@@ -61,8 +61,8 @@ public class WebDriverProvider {
   private ProxyServerProvider proxyServerProvider;
 
   @Activate
-  void activate(WebDriverProviderConfig webDriverProviderConfig) {
-    this.webDriverProviderConfig = webDriverProviderConfig;
+  void activate(WebDriverProviderConfig config) {
+    this.config = config;
   }
 
   public WebCommunicationWrapper createWebDriverWithProxy(String preferredWebDriver, String proxyName)
@@ -99,7 +99,7 @@ public class WebDriverProvider {
   private WebDriverFactory findWebDriverFactory(String preferredWebDriver) throws WorkerException {
     final WebDriverFactory webDriverFactory;
     String id = preferredWebDriver == null ?
-        webDriverProviderConfig.defaultWebDriverName() : preferredWebDriver;
+        config.defaultWebDriverName() : preferredWebDriver;
     webDriverFactory = collectorFactories.get(id);
     if (webDriverFactory == null) {
       String webDrivers = Joiner.on(", ").join(collectorFactories.keySet());

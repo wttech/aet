@@ -48,11 +48,11 @@ public class FirefoxWebDriverFactory implements WebDriverFactory {
   @Reference
   private HttpRequestExecutorFactory requestExecutorFactory;
 
-  private FirefoxWebDriverFactoryConfig firefoxWebDriverFactoryConfig;
+  private FirefoxWebDriverFactoryConfig config;
 
   @Override
   public String getName() {
-    return firefoxWebDriverFactoryConfig.name();
+    return config.name();
   }
 
   @Override
@@ -99,7 +99,7 @@ public class FirefoxWebDriverFactory implements WebDriverFactory {
   private FirefoxProfile getFirefoxProfile() {
     final FirefoxProfile firefoxProfile = FirefoxProfileBuilder.newInstance()
         .withUnstableAndFastLoadStrategy()
-        .withLogfilePath(firefoxWebDriverFactoryConfig.logFilePath())
+        .withLogfilePath(config.logFilePath())
         .withFlashSwitchedOff()
         .withForcedAliasing()
         .withJavaScriptErrorCollectorPlugin()
@@ -108,7 +108,7 @@ public class FirefoxWebDriverFactory implements WebDriverFactory {
         .withRandomPort()
         .withUpdateDisabled()
         .build();
-    System.setProperty("webdriver.firefox.logfile", firefoxWebDriverFactoryConfig.logFilePath());
+    System.setProperty("webdriver.firefox.logfile", config.logFilePath());
     System.setProperty("webdriver.load.strategy", "unstable");
     return firefoxProfile;
   }
@@ -116,7 +116,7 @@ public class FirefoxWebDriverFactory implements WebDriverFactory {
   private void setCommonCapabilities(DesiredCapabilities capabilities, FirefoxProfile fp) {
     capabilities.setCapability(FirefoxDriver.PROFILE, fp);
     capabilities.setCapability("marionette", false);
-    capabilities.setCapability("firefox_binary", new File(firefoxWebDriverFactoryConfig.path()).getAbsolutePath());
+    capabilities.setCapability("firefox_binary", new File(config.path()).getAbsolutePath());
   }
 
   private WebDriver getFirefoxDriver(DesiredCapabilities capabilities) {
@@ -126,8 +126,8 @@ public class FirefoxWebDriverFactory implements WebDriverFactory {
   }
 
   @Activate
-  public void activate(FirefoxWebDriverFactoryConfig firefoxWebDriverFactoryConfig) {
-    this.firefoxWebDriverFactoryConfig = firefoxWebDriverFactoryConfig;
+  public void activate(FirefoxWebDriverFactoryConfig config) {
+    this.config = config;
   }
 
 }

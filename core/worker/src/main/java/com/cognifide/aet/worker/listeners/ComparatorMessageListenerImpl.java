@@ -51,11 +51,11 @@ public class ComparatorMessageListenerImpl extends AbstractTaskMessageListener {
   @Reference
   private ComparatorDispatcher dispatcher;
 
-  private ComparatorMessageListenerImplConfig comparatorMessageListenerImplConfig;
+  private ComparatorMessageListenerImplConfig config;
 
   @Activate
   void activate(ComparatorMessageListenerImplConfig config) {
-    this.comparatorMessageListenerImplConfig = config;
+    this.config = config;
     super.doActivate(config.consumerQueueName(), config.producerQueueName(), config.pf());
   }
 

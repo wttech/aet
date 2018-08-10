@@ -56,11 +56,11 @@ public class CollectorMessageListenerImpl extends AbstractTaskMessageListener {
   @Reference
   private WebDriverProvider webDriverProvider;
 
-  private CollectorMessageListenerImplConfig collectorMessageListenerImplConfig;
+  private CollectorMessageListenerImplConfig config;
 
   @Activate
   void activate(CollectorMessageListenerImplConfig config) {
-    this.collectorMessageListenerImplConfig = config;
+    this.config = config;
     super.doActivate(config.consumerQueueName(), config.producerQueueName(), config.pf());
   }
 
@@ -83,7 +83,7 @@ public class CollectorMessageListenerImpl extends AbstractTaskMessageListener {
         && requestMessageId != null) {
       LOGGER.info(
           "CollectorJobData [{}] message arrived with {} urls. CorrelationId: {} RequestMessageId: {}",
-          collectorMessageListenerImplConfig.name(), collectorJobData.getUrls().size(), correlationId,
+          config.name(), collectorJobData.getUrls().size(), correlationId,
           requestMessageId);
       WebCommunicationWrapper webCommunicationWrapper = null;
       int collected = 0;

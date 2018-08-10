@@ -54,11 +54,11 @@ public class ChromeWebDriverFactory implements WebDriverFactory {
   @Reference
   private HttpRequestExecutorFactory requestExecutorFactory;
 
-  private ChromeWebDriverFactoryConfig chromeWebDriverFactoryConfig;
+  private ChromeWebDriverFactoryConfig config;
 
   @Activate
-  public void activate(ChromeWebDriverFactoryConfig chromeWebDriverFactoryConfig) {
-    this.chromeWebDriverFactoryConfig = chromeWebDriverFactoryConfig;
+  public void activate(ChromeWebDriverFactoryConfig config) {
+    this.config = config;
   }
 
   @Override
@@ -80,7 +80,7 @@ public class ChromeWebDriverFactory implements WebDriverFactory {
 
   @Override
   public String getName() {
-    return chromeWebDriverFactoryConfig.name();
+    return config.name();
   }
 
   private WebCommunicationWrapper createWebDriver(DesiredCapabilities capabilities,
@@ -97,8 +97,8 @@ public class ChromeWebDriverFactory implements WebDriverFactory {
   private WebDriver getChromeDriver(DesiredCapabilities capabilities)
       throws MalformedURLException {
     WebDriver driver =
-        StringUtils.isNotBlank(chromeWebDriverFactoryConfig.seleniumGridUrl()) ?
-            new RemoteWebDriver(new URL(chromeWebDriverFactoryConfig.seleniumGridUrl()), capabilities)
+        StringUtils.isNotBlank(config.seleniumGridUrl()) ?
+            new RemoteWebDriver(new URL(config.seleniumGridUrl()), capabilities)
             : new ChromeDriver(capabilities);
     driver.manage().timeouts().pageLoadTimeout(5L, TimeUnit.MINUTES);
     return driver;
