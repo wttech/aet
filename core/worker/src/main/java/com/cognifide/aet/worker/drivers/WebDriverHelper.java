@@ -18,8 +18,6 @@ package com.cognifide.aet.worker.drivers;
 import com.cognifide.aet.job.api.collector.ProxyServerWrapper;
 import com.cognifide.aet.worker.exceptions.WorkerException;
 import java.net.UnknownHostException;
-import java.util.Map;
-import org.apache.sling.commons.osgi.PropertiesUtil;
 import org.openqa.selenium.Proxy;
 
 /**
