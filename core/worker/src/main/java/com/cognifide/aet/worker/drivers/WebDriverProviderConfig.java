@@ -15,15 +15,14 @@
  */
 package com.cognifide.aet.worker.drivers;
 
-import com.cognifide.aet.job.api.collector.HttpRequestExecutor;
-import com.cognifide.aet.job.api.collector.HttpRequestExecutorFactory;
-import org.osgi.service.component.annotations.Component;
+import org.osgi.service.metatype.annotations.AttributeDefinition;
+import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 
-@Component
-public class HttpRequestExecutorFactoryImpl implements HttpRequestExecutorFactory {
+@ObjectClassDefinition(name = "AET WebDriver Provider", description = "AET WebDriver Provider")
+public @interface WebDriverProviderConfig {
 
-  @Override
-  public HttpRequestExecutor createInstance() {
-    return new TrustedHttpRequestExecutor();
-  }
+  String DEFAULT_WEB_DRIVER_NAME_LABEL = "Default Web Driver name";
+
+  @AttributeDefinition(name = DEFAULT_WEB_DRIVER_NAME_LABEL, defaultValue = "ff")
+  String defaultWebDriverName();
 }

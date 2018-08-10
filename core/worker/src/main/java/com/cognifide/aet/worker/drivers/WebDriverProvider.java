@@ -23,42 +23,46 @@ import com.cognifide.aet.worker.exceptions.WorkerException;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Maps;
 import java.util.Map;
-import org.apache.felix.scr.annotations.Activate;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Properties;
-import org.apache.felix.scr.annotations.Property;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.ReferenceCardinality;
-import org.apache.felix.scr.annotations.ReferencePolicy;
-import org.apache.felix.scr.annotations.Service;
+
 import org.osgi.framework.Constants;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
+import org.osgi.service.metatype.annotations.Designate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * @author lukasz.wieczorek
  */
-@Service(WebDriverProvider.class)
-@Component(label = "AET WebDriver Provider", description = "AET WebDriver Provider", immediate = true, metatype = true)
-@Properties({@Property(name = Constants.SERVICE_VENDOR, value = "Cognifide Ltd")})
+@Component(
+    service = WebDriverProvider.class,
+    property = {"name = " + Constants.SERVICE_VENDOR, "value = Cognifide Ltd"},
+    immediate = true
+)
+@Designate(ocd = WebDriverProviderConfig.class)
 public class WebDriverProvider {
 
   private static final Logger LOG = LoggerFactory.getLogger(WebDriverProvider.class);
 
-  private static final String DEFAULT_WEB_DRIVER_NAME = "defaultWebDriverName";
+  private WebDriverProviderConfig config;
 
-  @Property(name = DEFAULT_WEB_DRIVER_NAME, label = "Default Web Driver name", value = "ff")
-  private String defaultWebDriverName;
-
-  @Reference(referenceInterface = WebDriverFactory.class, policy = ReferencePolicy.DYNAMIC, cardinality = ReferenceCardinality.OPTIONAL_MULTIPLE, bind = "bindWebDriverFactory", unbind = "unbindWebDriverFactory")
+  @Reference(
+      service = WebDriverFactory.class,
+      policy = ReferencePolicy.DYNAMIC,
+      cardinality = ReferenceCardinality.MULTIPLE,
+      bind = "bindWebDriverFactory",
+      unbind = "unbindWebDriverFactory")
   private final Map<String, WebDriverFactory> collectorFactories = Maps.newConcurrentMap();
 
   @Reference
   private ProxyServerProvider proxyServerProvider;
 
   @Activate
-  void activate(Map<String, String> properties) {
-    defaultWebDriverName = properties.get(DEFAULT_WEB_DRIVER_NAME);
+  void activate(WebDriverProviderConfig config) {
+    this.config = config;
   }
 
   public WebCommunicationWrapper createWebDriverWithProxy(String preferredWebDriver, String proxyName)
@@ -94,7 +98,8 @@ public class WebDriverProvider {
    */
   private WebDriverFactory findWebDriverFactory(String preferredWebDriver) throws WorkerException {
     final WebDriverFactory webDriverFactory;
-    String id = preferredWebDriver == null ? defaultWebDriverName : preferredWebDriver;
+    String id = preferredWebDriver == null ?
+        config.defaultWebDriverName() : preferredWebDriver;
     webDriverFactory = collectorFactories.get(id);
     if (webDriverFactory == null) {
       String webDrivers = Joiner.on(", ").join(collectorFactories.keySet());
