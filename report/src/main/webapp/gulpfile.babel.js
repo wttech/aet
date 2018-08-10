@@ -34,7 +34,7 @@ import bower            from 'gulp-bower';
 
 
 
-gulp.task("parseSCSS", () => {
+gulp.task("parseSCSS", ["installLibs"], () => {
     gulp.src('./assets/sass/*.scss')
     .pipe(sourceMaps.init())
     .pipe(sass())
@@ -60,7 +60,7 @@ gulp.task('parseJS', () => {
         .pipe(browserSync.reload({stream:true}));
 });
 
-gulp.task('lintJS', ["installLibs"], function() {
+gulp.task('lintJS', function() {
     return gulp.src('./app/**/*.js')
         .pipe(jshint('.jshintrc'))
         .pipe(jshint.reporter('jshint-summary', {
