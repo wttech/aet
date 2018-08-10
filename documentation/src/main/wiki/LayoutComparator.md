@@ -30,7 +30,7 @@ When you provide `pixelThreshold` and `percentageThreshold` test will pass only 
         </collect>
         <compare>
             ...
-            <screen comparator="layout" />
+            <screen comparator="layout" pixelThreshold="2500" percentageThreshold="0.5" />
             ...
         </compare>
         <urls>
