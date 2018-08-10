@@ -30,7 +30,7 @@ import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Component(service = JmsConnection.class, immediate = true)
+@Component(immediate = true)
 public class DefaultJmsConnection implements JmsConnection {
 
   private static final boolean SESSION_TRANSACTION_DEFAULT_SETTING = false;
