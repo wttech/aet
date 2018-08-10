@@ -35,10 +35,6 @@ public final class WebDriverHelper {
     // restrict instantiation
   }
 
-  public static String getProp(Map<String, String> properties, String name, String defaultValue) {
-    return PropertiesUtil.toString(properties.get(name), defaultValue);
-  }
-
   public static Proxy setupProxy(ProxyServerWrapper proxyServer) throws WorkerException {
     proxyServer.setCaptureContent(true);
     proxyServer.setCaptureHeaders(true);
