@@ -55,8 +55,8 @@ Feature: Tests Results Filtering
   Scenario: Filtering Tests Results: status-codes
     Given I have opened sample tests report page
     When I search for tests containing "status"
-    Then There are 20 tiles visible
-    And Statistics text contains "20 ( 8 / 0 / 12 (0) / 0 )"
+    Then There are 21 tiles visible
+    And Statistics text contains "21 ( 9 / 0 / 12 (0) / 0 )"
 
   Scenario: Filtering Tests Results: w3c-html5
     Given I have opened sample tests report page

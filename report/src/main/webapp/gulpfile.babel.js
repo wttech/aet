@@ -34,7 +34,7 @@ import bower            from 'gulp-bower';
 
 
 
-gulp.task("parseSCSS", () => {
+gulp.task("parseSCSS", ["installLibs"], () => {
     gulp.src('./assets/sass/*.scss')
     .pipe(sourceMaps.init())
     .pipe(sass())
