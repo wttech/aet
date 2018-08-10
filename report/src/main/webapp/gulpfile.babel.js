@@ -60,7 +60,7 @@ gulp.task('parseJS', () => {
         .pipe(browserSync.reload({stream:true}));
 });
 
-gulp.task('lintJS', function() {
+gulp.task('lintJS', ["installLibs"], function() {
     return gulp.src('./app/**/*.js')
         .pipe(jshint('.jshintrc'))
         .pipe(jshint.reporter('jshint-summary', {
