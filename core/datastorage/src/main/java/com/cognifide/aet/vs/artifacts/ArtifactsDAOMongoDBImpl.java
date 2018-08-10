@@ -32,16 +32,14 @@ import java.nio.charset.StandardCharsets;
 import java.util.Date;
 import java.util.Set;
 import org.apache.commons.io.IOUtils;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.Service;
 import org.bson.Document;
 import org.bson.types.ObjectId;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Service
-@Component(label = "AET Artifacts DAO implementation for MongoDB", immediate = true)
+@Component(immediate = true)
 public class ArtifactsDAOMongoDBImpl implements ArtifactsDAO {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(ArtifactsDAOMongoDBImpl.class);
