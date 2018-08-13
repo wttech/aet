@@ -1,0 +1,27 @@
+{
+  "statusCodes": [
+    {
+      "code": 399,
+      "url": "http://aet-vagrant/sample-site/sanity/comparators/statuscodes/noneexistingPage404.jsp",
+      "excluded": false
+    },
+    {
+      "code": 601,
+      "url": "https://www.google.com/",
+      "excluded": false
+    }
+  ],
+  "filteredStatusCodes": [
+    {
+      "code": 399,
+      "url": "http://aet-vagrant/sample-site/sanity/comparators/statuscodes/noneexistingPage404.jsp",
+      "excluded": false
+    },
+    {
+      "code": 601,
+      "url": "https://www.google.com/",
+      "excluded": false
+    }
+  ],
+  "excludedStatusCodes": []
+}

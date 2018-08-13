@@ -42,19 +42,22 @@ class StatusCodesFilter {
 
     @Override
     public boolean apply(StatusCode statusCode) {
-      if (statusCode.getCode() < lowerBound) {
-        return false;
-      }
-      if (statusCode.getCode() > upperBound) {
-        return false;
-      }
-      if (!filterCodes.isEmpty() && !filterCodes.contains(statusCode.getCode())) {
-        return false;
-      }
+
       if (statusCode.getCode() < 0) {
         return false;
       }
-      return true;
+      if (isCodeInRange(statusCode) || isCodeInFilterCodes(statusCode)) {
+        return true;
+      }
+      return false;
+    }
+
+    private boolean isCodeInFilterCodes(StatusCode statusCode) {
+      return !filterCodes.isEmpty() && filterCodes.contains(statusCode.getCode());
+    }
+
+    private boolean isCodeInRange(StatusCode statusCode) {
+      return statusCode.getCode() >= lowerBound && statusCode.getCode() <= upperBound;
     }
   }
 }

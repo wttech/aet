@@ -1,0 +1,22 @@
+{
+  "statusCodes": [
+    {
+      "code": 404,
+      "url": "http://aet-vagrant/sample-site/sanity/comparators/statuscodes/noneexistingPage404.jsp",
+      "excluded": false
+    },
+    {
+      "code": 0,
+      "url": "http://aet-vagrant/favicon.ico",
+      "excluded": false
+    }
+  ],
+  "filteredStatusCodes": [
+    {
+      "code": 404,
+      "url": "http://aet-vagrant/sample-site/sanity/comparators/statuscodes/noneexistingPage404.jsp",
+      "excluded": false
+    }
+  ],
+  "excludedStatusCodes": []
+}
