@@ -95,10 +95,6 @@
       <groupId>org.mongodb</groupId>
       <artifactId>mongo-java-driver</artifactId>
     </dependency>
-    <dependency>
-      <groupId>org.apache.sling</groupId>
-      <artifactId>org.apache.sling.commons.osgi</artifactId>
-    </dependency>
 
     <dependency>
       <groupId>junit</groupId>
@@ -130,18 +126,6 @@
                 </Export-Package>
               </instructions>
             </configuration>
-          </execution>
-        </executions>
-      </plugin>
-      <!-- overwrites configuration from parent pom to disable SCR plugin -->
-      <!-- ToDo: remove me when all felix dependencies are removed -->
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-scr-plugin</artifactId>
-        <executions>
-          <execution>
-            <id>generate-scr-descriptor</id>
-            <phase>none</phase>
           </execution>
         </executions>
       </plugin>
