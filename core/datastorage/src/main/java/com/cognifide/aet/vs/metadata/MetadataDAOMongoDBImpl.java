@@ -143,6 +143,21 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
     }).toList();
   }
 
+  public List<String> listCorrelationIds(DBKey dbKey, String name) throws StorageException{
+    MongoCollection<Document> metadata = getMetadataCollection(dbKey);
+    LOGGER.debug("Fetching all correlationIds for suite: `{}` , company: `{}`, project: `{}`.", name, dbKey.getCompany(),
+        dbKey.getProject());
+
+    final FindIterable<Document> found = metadata
+        .find(Filters.eq("name", name))
+        .sort(Sorts.descending(SUITE_VERSION_PARAM_NAME));
+
+    return FluentIterable.from(found).transform(new Function<Document, String>() {
+      @Override
+      public String apply(Document result){return result.getString("correlationId");}
+    }).toList();
+  }
+
   @Override
   public boolean removeSuite(DBKey dbKey, String correlationId, Long version)
       throws StorageException {
