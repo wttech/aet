@@ -28,8 +28,7 @@
     <repository>mvn:org.apache.activemq/activemq-karaf/5.15.2/xml/features</repository>
     <repository>mvn:org.apache.cxf.karaf/apache-cxf/3.2.0/xml/features</repository>
 
-    <feature name="aet-scr-and-war" version="0.6.0" description="SCR and war for AET" install="auto">
-        <feature>scr</feature>
+    <feature name="aet-war" version="0.6.0" description="SCR and war for AET" install="auto">
         <feature>war</feature>
     </feature>
 
