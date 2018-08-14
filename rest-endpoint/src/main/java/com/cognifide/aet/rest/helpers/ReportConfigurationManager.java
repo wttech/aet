@@ -35,8 +35,8 @@ public class ReportConfigurationManager {
 
   @Property(name = REPORT_DOMAIN_PROPERTY_NAME, label = "Report application domain",
       description = "Report application domain that is printed at the end of processing suite. "
-          + "If not provided here, env variable REPORT_DOMAIN will be used instead or value will fallback to the default."
-      , value = DEFAULT_REPORT_DOMAIN)
+          + "If not provided here, env variable REPORT_DOMAIN will be used instead or value will "
+          + "fallback to the default: " + DEFAULT_REPORT_DOMAIN)
   private String reportDomain;
 
   @Activate
