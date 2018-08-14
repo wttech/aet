@@ -101,9 +101,22 @@ be available on the Karaf instance that AET are running at.
         </dependency>
 
         <dependency>
-            <groupId>org.apache.felix</groupId>
-            <artifactId>org.apache.felix.scr.annotations</artifactId>
-            <version>${felix.version}</version>
+          <groupId>org.osgi</groupId>
+          <artifactId>org.osgi.service.component.annotations</artifactId>
+          <version>1.3.0</version>
+          <scope>provided</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.osgi</groupId>
+          <artifactId>org.osgi.annotation</artifactId>
+          <version>6.0.0</version>
+          <scope>provided</scope>
+        </dependency>
+        <dependency>
+          <groupId>org.osgi</groupId>
+          <artifactId>org.osgi.service.metatype.annotations</artifactId>
+          <version>1.3.0</version>
+          <scope>provided</scope>
         </dependency>
 
         <dependency>
