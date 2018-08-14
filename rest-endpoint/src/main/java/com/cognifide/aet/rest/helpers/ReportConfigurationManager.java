@@ -21,7 +21,6 @@ import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Property;
 import org.apache.felix.scr.annotations.Service;
-import org.apache.sling.commons.osgi.PropertiesUtil;
 
 @Service(ReportConfigurationManager.class)
 @Component(metatype = true, description = "AET Report Application Configuration",
@@ -35,14 +34,16 @@ public class ReportConfigurationManager {
   private static final String REPORT_DOMAIN_ENV = "REPORT_DOMAIN";
 
   @Property(name = REPORT_DOMAIN_PROPERTY_NAME, label = "Report application domain",
-      description = "Report application domain", value = DEFAULT_REPORT_DOMAIN)
+      description = "Report application domain that is printed at the end of processing suite. "
+          + "If not provided here, env variable REPORT_DOMAIN will be used instead or value will fallback to the default."
+      , value = DEFAULT_REPORT_DOMAIN)
   private String reportDomain;
 
   @Activate
   public void activate(Map<String, String> properties) {
-    reportDomain = Optional.ofNullable(System.getenv(REPORT_DOMAIN_ENV))
-        .orElse(PropertiesUtil
-            .toString(properties.get(REPORT_DOMAIN_PROPERTY_NAME), DEFAULT_REPORT_DOMAIN));
+    reportDomain = Optional.ofNullable(properties.get(REPORT_DOMAIN_PROPERTY_NAME))
+        .orElseGet(() -> Optional.ofNullable(System.getenv(REPORT_DOMAIN_ENV))
+            .orElse(DEFAULT_REPORT_DOMAIN));
   }
 
   public String getReportDomain() {
