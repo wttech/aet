@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <meta charset="utf-8">
+  <title>AET Suite's History</title>
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="shortcut icon" href="assets/img/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="assets/img/favicon.ico" type="image/x-icon">
+  <script defer src="assets/icons/fontawesome-all.js"></script>
+</head>
+<body>
+<div ng-app="historyApp" ng-controller="historyController">
+  <p>{{fullSuiteName}}</p>
+  <li ng-repeat="correlationId in correlationIds track by $index">
+      <a href="{{correlationId}}">{{correlationId[3]}}</a>
+  </li>
+</div>
+</body>
+<script>
+var correlationIds;
+
+function buildApiPath($location){
+  var params = $location.search();
+  return "http://aet-vagrant" + "/api" + "/history" +
+    "company=" + params[0] + "&" +
+    "project=" + params[1] + "&" +
+    "suite=" + params[2];
+}
+
+function historyController($scope, $http, $location) {
+  $scope.data = "test";
+  return $http({
+            method: 'GET',
+            url: buildApiPath($location),
+            headers: {
+              'Content-Type': 'text/plain'
+            }
+          }).then(function (response) {
+            $scope.data = response.data;
+            correlationIds = response.data;
+            for(var i = 0; i < correlationIds.length; i++){
+              correlationIds[i] = correlationIds[i].split('-');
+            }
+            $scope.correlationIds = correlationIds;
+          });
+};
+var app = angular.module("historyApp", []).controller("historyController",['$scope','$http', '$location', historyController]);
+</script>
+</html>
