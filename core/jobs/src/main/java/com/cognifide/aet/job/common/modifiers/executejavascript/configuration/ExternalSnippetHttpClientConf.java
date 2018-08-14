@@ -19,7 +19,7 @@ import org.osgi.service.metatype.annotations.AttributeDefinition;
 import org.osgi.service.metatype.annotations.AttributeType;
 import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 
-@ObjectClassDefinition()
+@ObjectClassDefinition(name = "External Snippet Http Client Configuration")
 public @interface ExternalSnippetHttpClientConf {
 
   long DEFAULT_CONNECTION_TTL = 60L;
@@ -27,12 +27,14 @@ public @interface ExternalSnippetHttpClientConf {
   int DEFAULT_MAX_CONCURRENT_CONNECTIONS = 50;
 
   @AttributeDefinition(
-      name = "Time in seconds that defines maximum life span of persistent connections regardless of their expiration setting",
+      name = "Connection TTL",
+      description = "Time in seconds that defines maximum life span of persistent connections regardless of their expiration setting",
       type = AttributeType.LONG)
   long connectionTtl() default DEFAULT_CONNECTION_TTL;
 
   @AttributeDefinition(
-      name = "The maximal number of concurrent connections this service can provide. Connections over this limit are rejected.",
+      name = "Maximum Concurrent Connections",
+      description = "The maximal number of concurrent connections this service can provide. Connections over this limit are rejected.",
       type = AttributeType.INTEGER)
   int maxConcurrentConnections() default DEFAULT_MAX_CONCURRENT_CONNECTIONS;
 
