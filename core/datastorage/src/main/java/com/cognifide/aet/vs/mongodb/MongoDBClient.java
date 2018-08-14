@@ -60,8 +60,8 @@ public class MongoDBClient {
 
   @Activate
   public void activate(MongoDBClientConf config) {
-    this.mongoUri = config.MongoURI();
-    this.allowAutoCreate = config.AllowAutoCreate();
+    this.mongoUri = config.mongoURI();
+    this.allowAutoCreate = config.allowAutoCreate();
     try {
       setupMongoDBConnection();
     } catch (Exception e) {
