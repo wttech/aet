@@ -18,6 +18,7 @@ package com.cognifide.aet.sanity.functional;
 public enum TestStatus {
 
   SUCCESS("passed"),
+  CONDITIONALLY_PASSED("conditionallyPassed"),
   WARN("warning"),
   FAIL("failed"),
   REBASED("rebased");
