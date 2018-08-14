@@ -13,7 +13,7 @@ With the update osgi annotations to 6.0.0 version we had to change a little bit 
 
 1. Open `aet\osgi-dependencies\configs\src\main\resources`
 
-2. You have to do it a certain way:
+2. You have to do it in a certain way:
 
 |File name|Way to change variable names|
 |---|---|
