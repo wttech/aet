@@ -104,6 +104,10 @@
         color: $rebased;
       }
 
+      &.conditionallyPassed {
+        color: $conditionallyPassed;
+      }
+
       &.is-hidden {
         + .urls-list {
           display: none;
@@ -192,6 +196,10 @@
 
         &.rebased {
           color: $rebased;
+        }
+
+        &.conditionallyPassed {
+          color: $conditionallyPassed;
         }
       }
     }

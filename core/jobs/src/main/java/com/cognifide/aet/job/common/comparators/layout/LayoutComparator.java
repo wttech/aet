@@ -16,6 +16,8 @@
 package com.cognifide.aet.job.common.comparators.layout;
 
 import com.cognifide.aet.communication.api.metadata.ComparatorStepResult;
+import com.cognifide.aet.communication.api.metadata.ComparatorStepResult.Status;
+import com.cognifide.aet.job.api.ParametersValidator;
 import com.cognifide.aet.job.api.comparator.ComparatorJob;
 import com.cognifide.aet.job.api.comparator.ComparatorProperties;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
@@ -41,9 +43,17 @@ public class LayoutComparator implements ComparatorJob {
 
   public static final String CONTENT_TYPE = "image/png";
 
+  public static final String PERCENTAGE_THRESHOLD_PARAM = "percentageThreshold";
+
+  public static final String PIXEL_THRESHOLD_PARAM = "pixelThreshold";
+
   private final ComparatorProperties properties;
 
   private final ArtifactsDAO artifactsDAO;
+
+  private Integer pixelThreshold;
+
+  private Double percentageThreshold;
 
   LayoutComparator(ComparatorProperties comparatorProperties, ArtifactsDAO artifactsDAO) {
     this.properties = comparatorProperties;
@@ -67,6 +77,7 @@ public class LayoutComparator implements ComparatorJob {
         BufferedImage collectedImg = ImageIO.read(collectedArtifact);
         imageComparisonResult = ImageComparison.compare(patternImg, collectedImg);
         stepResult = saveArtifacts(imageComparisonResult);
+
       } catch (IOException e) {
         throw new ProcessingException("Error while obtaining artifacts!", e);
       }
@@ -84,7 +95,7 @@ public class LayoutComparator implements ComparatorJob {
   private ComparatorStepResult saveArtifacts(ImageComparisonResult imageComparisonResult)
       throws ProcessingException {
     final ComparatorStepResult result;
-    if (imageComparisonResult.isMatch()) {
+    if (isMaskWithoutDifference(imageComparisonResult)) {
       result = getPassedStepResult();
     } else {
       InputStream mask = null;
@@ -93,19 +104,13 @@ public class LayoutComparator implements ComparatorJob {
         mask = new ByteArrayInputStream(baos.toByteArray());
         String maskArtifactId = artifactsDAO.saveArtifact(properties, mask, CONTENT_TYPE);
 
-        result = new ComparatorStepResult(maskArtifactId, ComparatorStepResult.Status.FAILED, true);
-
-        result.addData("heightDifference",
-            Integer.toString(imageComparisonResult.getHeightDifference()));
-        result.addData("widthDifference",
-            Integer.toString(imageComparisonResult.getWidthDifference()));
-        result.addData("pixelDifference",
-            Integer.toString(imageComparisonResult.getPixelDifferenceCount()));
-        result.addData("patternTimestamp", Long.toString(
-            artifactsDAO.getArtifactUploadDate(properties, properties.getPatternId()).getTime()));
-        result.addData("collectTimestamp", Long.toString(
-            artifactsDAO.getArtifactUploadDate(properties, properties.getCollectedId())
-                .getTime()));
+        if (hasMaskThresholdWithAcceptableDifference(imageComparisonResult)) {
+          result = new ComparatorStepResult(maskArtifactId, Status.CONDITIONALLY_PASSED, true);
+        } else {
+          result = new ComparatorStepResult(maskArtifactId, Status.FAILED, true);
+        }
+        addPixelDifferenceDataToResult(result, imageComparisonResult);
+        addTimestampToResult(result);
       } catch (Exception e) {
         throw new ProcessingException(e.getMessage(), e);
       } finally {
@@ -116,18 +121,77 @@ public class LayoutComparator implements ComparatorJob {
     return result;
   }
 
-  private ComparatorStepResult getPassedStepResult() {
-    ComparatorStepResult result = new ComparatorStepResult(null, ComparatorStepResult.Status.PASSED,
-        false);
+  boolean hasMaskThresholdWithAcceptableDifference(ImageComparisonResult mask) {
+    if (pixelThreshold != null && percentageThreshold != null) {
+      return isAcceptablePixelChange(mask) && this.isAcceptablePercentageChange(mask);
+    } else if (pixelThreshold != null) {
+      return isAcceptablePixelChange(mask);
+    } else if (percentageThreshold != null) {
+      return isAcceptablePercentageChange(mask);
+    }
+    return false;
+  }
+
+
+  public void setPixelThreshold(Integer pixelThreshold) {
+    this.pixelThreshold = pixelThreshold;
+  }
+
+  public void setPercentageThreshold(Double percentageThreshold) {
+    this.percentageThreshold = percentageThreshold;
+  }
+
+  private boolean isAcceptablePixelChange(ImageComparisonResult mask) {
+    return mask.getPixelDifferenceCount() <= this.pixelThreshold;
+  }
+
+  private boolean isAcceptablePercentageChange(ImageComparisonResult mask) {
+    return mask.getPercentagePixelDifference() <= this.percentageThreshold;
+  }
+
+  private boolean isMaskWithoutDifference(ImageComparisonResult mask) {
+    return mask.getHeightDifference() == 0 && mask.getWidthDifference() == 0
+        && mask.getPixelDifferenceCount() == 0;
+  }
+
+  private void addPixelDifferenceDataToResult(ComparatorStepResult result,
+      ImageComparisonResult imageComparisonResult) {
+    result.addData("heightDifference",
+        Integer.toString(imageComparisonResult.getHeightDifference()));
+    result.addData("widthDifference",
+        Integer.toString(imageComparisonResult.getWidthDifference()));
+    result.addData("pixelDifference",
+        Integer.toString(imageComparisonResult.getPixelDifferenceCount()));
+    result.addData("percentagePixelDifference",
+        Double.toString(imageComparisonResult.getPercentagePixelDifference()));
+  }
+
+  private void addTimestampToResult(ComparatorStepResult result) {
     result.addData("patternTimestamp", Long.toString(
         artifactsDAO.getArtifactUploadDate(properties, properties.getPatternId()).getTime()));
     result.addData("collectTimestamp", Long.toString(System.currentTimeMillis()));
+  }
+
+  private ComparatorStepResult getPassedStepResult() {
+    ComparatorStepResult result = new ComparatorStepResult(null, ComparatorStepResult.Status.PASSED,
+        false);
+    addTimestampToResult(result);
     return result;
   }
 
   @Override
   public void setParameters(Map<String, String> params) throws ParametersException {
-    // no parameters needed
+    if (params.containsKey(PERCENTAGE_THRESHOLD_PARAM)) {
+      setPercentageThreshold(Double.valueOf(params.get(PERCENTAGE_THRESHOLD_PARAM)));
+      ParametersValidator
+          .checkRange(percentageThreshold.intValue(), 0, 100,
+              "Percentage threshold should be a decimal value between 0 and 100");
+    }
+    if (params.containsKey(PIXEL_THRESHOLD_PARAM)) {
+      setPixelThreshold(Integer.valueOf(params.get(PIXEL_THRESHOLD_PARAM)));
+      ParametersValidator.checkParameter(pixelThreshold >= 0,
+          "Pixel threshold should be greater or equal to 0");
+    }
   }
 
 }

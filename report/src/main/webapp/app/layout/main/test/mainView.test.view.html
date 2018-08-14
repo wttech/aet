@@ -27,10 +27,10 @@
           <div class="inner">
             <div ng-class="url.getStatus()">
               <div class="test-count test-count-dashboard">
-                <div ng-if="url.getStatus() != 'rebased'">
+                <div ng-if="url.getStatus() != 'rebased' && url.getStatus() != 'conditionallyPassed'" class="fontawesome">
                   <i class="fas {{theme.statusClasses[url.getStatus()]}}"></i>
                 </div>
-                <div ng-if="url.getStatus() == 'rebased'">
+                <div ng-if="url.getStatus() == 'rebased' || url.getStatus() == 'conditionallyPassed'" class="fontawesome">
                   <i class="fas {{theme.statusClasses[url.getStatus()]}}"></i>
                 </div>
                 <div class="tile-stats">
@@ -41,6 +41,8 @@
                         data-trigger="hover" data-container="body">{{url.warning}}</span> /
                   <span class="status passed" data-toggle="popover" data-content="Passed cases"
                         data-trigger="hover" data-container="body">{{url.passed}}</span> /
+                        <span class="status conditionallyPassed" data-toggle="popover" data-content="Conditionally passed cases"
+                        data-trigger="hover" data-container="body">{{url.conditionallyPassed}}</span> /
                   <span class="status rebased" data-toggle="popover" data-content="Accepted cases"
                         data-trigger="hover" data-container="body">{{url.rebased}}</span>
                 </div>
