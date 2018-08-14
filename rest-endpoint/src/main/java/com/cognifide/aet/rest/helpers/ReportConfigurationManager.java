@@ -16,6 +16,7 @@
 package com.cognifide.aet.rest.helpers;
 
 import java.util.Map;
+import java.util.Optional;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Property;
@@ -31,14 +32,17 @@ public class ReportConfigurationManager {
 
   private static final String DEFAULT_REPORT_DOMAIN = "http://aet-vagrant";
 
+  private static final String REPORT_DOMAIN_ENV = "REPORT_DOMAIN";
+
   @Property(name = REPORT_DOMAIN_PROPERTY_NAME, label = "Report application domain",
       description = "Report application domain", value = DEFAULT_REPORT_DOMAIN)
   private String reportDomain;
 
   @Activate
   public void activate(Map<String, String> properties) {
-    reportDomain = PropertiesUtil
-        .toString(properties.get(REPORT_DOMAIN_PROPERTY_NAME), DEFAULT_REPORT_DOMAIN);
+    reportDomain = Optional.ofNullable(System.getenv(REPORT_DOMAIN_ENV))
+        .orElse(PropertiesUtil
+            .toString(properties.get(REPORT_DOMAIN_PROPERTY_NAME), DEFAULT_REPORT_DOMAIN));
   }
 
   public String getReportDomain() {
