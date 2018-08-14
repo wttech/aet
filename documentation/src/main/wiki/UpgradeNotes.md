@@ -7,13 +7,13 @@ You may see all changes in the [Changelog](https://github.com/Cognifide/aet/blob
 
 ## Unreleased
 
-[PR-number](link) Pull request's name
+### [PR-326](https://github.com/Cognifide/aet/pull/326) Upgrade OSGI annotations to 6.0.0 version
 
 With the update osgi annotations to 6.0.0 version we had to change a little bit variable names. Currently, your config could has old names and you have to update them. Please follow instruction below:
 
-Open `aet\osgi-dependencies\configs\src\main\resources`
+1. Open `aet\osgi-dependencies\configs\src\main\resources`
 
-In all files in this directory change variable names in way presented below:
+2. In all files in this directory change variable names in way presented below:
 ```
 MongoURI -> mongoURI
 AllowAutoCreate -> allowAutoCreate
