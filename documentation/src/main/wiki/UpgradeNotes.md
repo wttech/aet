@@ -13,13 +13,13 @@ With the update osgi annotations to 6.0.0 version we had to change a little bit 
 
 1. Open `aet\osgi-dependencies\configs\src\main\resources`
 
-2. In all files in this directory change variable names in way presented below:
-```
-MongoURI -> mongoURI
-AllowAutoCreate -> allowAutoCreate
-report-domain -> reportDomain
-jxm-url -> jxmUrl
-```
+2. You have to change it as follows:
+
+|File name|Way to change variable names|
+|---|---|
+|`com.cognifide.aet.rest.helpers.ReportConfigurationManager.cfg`|`report-domain -> reportDomain`|
+|`com.cognifide.aet.runner.MessagesManager.cfg`|`jxm-url -> jxmUrl`|
+|`com.cognifide.aet.vs.mongodb.MongoDBClient.cfg`|`MongoURI -> mongoURI` <br> `AllowAutoCreate -> allowAutoCreate`|
 
 For example in `com.cognifide.aet.vs.mongodb.MongoDBClient.cfg`:
 ```
