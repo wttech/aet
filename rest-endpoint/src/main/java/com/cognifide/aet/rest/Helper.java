@@ -36,6 +36,7 @@ public final class Helper {
   public static final String PROJECT_PARAM = "project";
   public static final String CORRELATION_ID_PARAM = "correlationId";
   public static final String SUITE_PARAM = "suite";
+  public static final String VERSION_PARAM = "version";
   public static final String ID_PARAM = "id";
   public static final String REPORT_PART_PATH_DEFAULT_PAGE = "index.html";
 

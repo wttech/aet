@@ -53,6 +53,8 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
 
   public static final String METADATA_COLLECTION_NAME = "metadata";
 
+  private static final String SUITE_PARAM_NAME = "name";
+
   private static final String SUITE_VERSION_PARAM_NAME = "version";
 
   private static final String CORRELATION_ID_PARAM_NAME = "correlationId";
@@ -112,6 +114,18 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
   }
 
   @Override
+  public Suite getSuite(DBKey dbKey, String name, String version) throws StorageException {
+    MongoCollection<Document> metadata = getMetadataCollection(dbKey);
+
+    LOGGER.debug("Fetching suite with name: {}, version: {}", name, version);
+
+    final FindIterable<Document> found = metadata
+        .find(Filters.and(Filters.eq(SUITE_PARAM_NAME, name), Filters.eq(SUITE_VERSION_PARAM_NAME, Integer.parseInt(version))));
+    final Document result = found.first();
+    return new DocumentConverter(result).toSuite();
+  }
+
+  @Override
   public Suite getLatestRun(DBKey dbKey, String name) throws StorageException {
     MongoCollection<Document> metadata = getMetadataCollection(dbKey);
     LOGGER.debug("Fetching latest suite run for company: `{}`, project: `{}`, name `{}`.",
@@ -143,13 +157,13 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
     }).toList();
   }
 
-  public List<String> listCorrelationIds(DBKey dbKey, String name) throws StorageException{
+  public List<String> listSuiteVersions(DBKey dbKey, String name) throws StorageException{
     MongoCollection<Document> metadata = getMetadataCollection(dbKey);
-    LOGGER.debug("Fetching all correlationIds for suite: `{}` , company: `{}`, project: `{}`.", name, dbKey.getCompany(),
+    LOGGER.debug("Fetching all versions for suite: `{}` , company: `{}`, project: `{}`.", name, dbKey.getCompany(),
         dbKey.getProject());
 
     final FindIterable<Document> found = metadata
-        .find(Filters.eq("name", name))
+        .find(Filters.eq(SUITE_PARAM_NAME, name))
         .sort(Sorts.descending(SUITE_VERSION_PARAM_NAME));
 
     return FluentIterable.from(found).transform(new Function<Document, String>() {

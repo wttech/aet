@@ -52,10 +52,10 @@ public class HistoryServlet extends BasicDataServlet{
       throws IOException {
     String suiteName = req.getParameter(Helper.SUITE_PARAM);
     resp.setCharacterEncoding("UTF-8");
-    List<String> correlationIds = null;
+    List<String> suitVersions = null;
     try {
       if (isValidName(suiteName)) {
-        correlationIds = metadataDAO.listCorrelationIds(dbKey, suiteName);
+        suitVersions = metadataDAO.listSuiteVersions(dbKey, suiteName);
       }
     } catch (StorageException e) {
       LOGGER.error("Failed to get suite's history", e);
@@ -64,9 +64,9 @@ public class HistoryServlet extends BasicDataServlet{
       return;
     }
 
-    if (correlationIds != null && correlationIds.size() > 0) {
-      JsonElement correlationIdsJson = PRETTY_PRINT_GSON.toJsonTree(correlationIds);
-      String result = PRETTY_PRINT_GSON.toJson(correlationIdsJson.getAsJsonArray());
+    if (suitVersions != null && suitVersions.size() > 0) {
+      JsonElement suiteVersionsJson = PRETTY_PRINT_GSON.toJsonTree(suitVersions);
+      String result = PRETTY_PRINT_GSON.toJson(suiteVersionsJson.getAsJsonArray());
       resp.setContentType("application/json");
       resp.getWriter().write(result);
     } else {
