@@ -606,6 +606,11 @@ be available on the Karaf instance that AET are running at.
                 <groupId>org.apache.felix</groupId>
                 <artifactId>maven-bundle-plugin</artifactId>
             </plugin>
+            <plugin>
+                <!-- scr annotations - e.g. for generating OSGi component descriptors -->
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-scr-plugin</artifactId>
+            </plugin>
         </plugins>
 
         <pluginManagement>
