@@ -124,7 +124,7 @@
     }
 
     span {
-      @include ellipsis();
+      @extend .ellipsis;
       color: inherit;
       font-family: $font_light;
       font-size: 15px;
@@ -144,7 +144,7 @@
     &.is-expanded {
 
       svg.rotate-svg {
-        @include transform(rotate(90deg));
+        transform: rotate(90deg);
       }
     }
 
@@ -170,7 +170,7 @@
           color: inherit;
           text-align: left;
           padding-left: 10px;
-          @include ellipsis();
+          @extend .ellipsis;
           -webkit-font-smoothing: antialiased;
         }
 

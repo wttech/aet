@@ -58,8 +58,8 @@
     <div class="layout-compare-item pull-left" ng-if="case.status == 'FAILED' || case.status == 'CONDITIONALLY_PASSED'">
       <p class="layout-compare-description">Collected
         <span class="label label-info">{{case.comparator.stepResult.data.collectTimestamp | date:'yyyy-MM-dd HH:mm'}}</span><br>
-        <span ng-if="case.comparator.stepResult.data.percentagePixelDifference">Difference: {{case.comparator.stepResult.data.percentagePixelDifference | number: 2}}%</span>
-        <span ng-if="case.comparator.stepResult.data.percentagePixelDifference === undefined" class="label-spacer"></span>
+        <span>Difference: {{case.comparator.stepResult.data.percentagePixelDifference | number: 2}}%,
+          {{case.comparator.stepResult.data.pixelDifference}}px</span>
       </p>
 
       <div class="mask-container">

@@ -40,6 +40,8 @@ public class StatusCodesComparator implements ComparatorJob {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(StatusCodesComparator.class);
 
+  private static final int DEFAULT_FILTER_RANGE_LOWER_BOUND = 400;
+
   private static final int DEFAULT_FILTER_RANGE_UPPER_BOUND = 600;
 
   public static final String COMPARATOR_TYPE = "status-codes";
@@ -53,6 +55,7 @@ public class StatusCodesComparator implements ComparatorJob {
   private static final String PARAM_DELIMITER = ",";
 
   private static final String PARAM_SHOW_EXCLUDED = "showExcluded";
+
   private static final Type RESULT_TYPE = new TypeToken<StatusCodesCollectorResult>() {
   }.getType();
 
@@ -60,7 +63,7 @@ public class StatusCodesComparator implements ComparatorJob {
 
   private final ComparatorProperties properties;
 
-  private int filterRangeLowerBound;
+  private int filterRangeLowerBound = DEFAULT_FILTER_RANGE_LOWER_BOUND;
 
   private int filterRangeUpperBound = DEFAULT_FILTER_RANGE_UPPER_BOUND;
 
