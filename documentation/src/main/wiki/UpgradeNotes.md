@@ -9,9 +9,9 @@ You may see all changes in the [Changelog](https://github.com/Cognifide/aet/blob
 
 ### [PR-326](https://github.com/Cognifide/aet/pull/326) Upgrade OSGI annotations to 6.0.0 version
 
-With the update osgi annotations to 6.0.0 version we had to change a little bit variable names. Currently, your config could has old names and you have to update them. Please follow instruction below:
+With the OSGI annotations update to 6.0.0 version we had to change a little bit variable names. Currently, your config could have old names and you have to update them. Please follow instruction below:
 
-1. Open `aet\osgi-dependencies\configs\src\main\resources`
+1. Open `/opt/aet/karaf/aet_configs/current`
 
 2. You have to do it in a certain way:
 
