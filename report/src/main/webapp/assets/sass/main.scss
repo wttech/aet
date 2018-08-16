@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-@import "../../node_modules/bootstrap-sass/assets/stylesheets/_bootstrap.scss";
+@import "../../assets/libs/bootstrap-sass-twbs/assets/stylesheets/_bootstrap.scss";
 @import "normalize";
 @import "variables";
 @import "typography";
@@ -154,6 +154,10 @@ body {
 	&.passed {
 		color: $passed !important;
 	}
+
+	&.conditionallyPassed {
+		color: $conditionallyPassed !important;
+	}
 }
 
 .url-tile {
@@ -177,6 +181,10 @@ body {
 
 	&.failed {
 		color: $failed;
+	}
+
+	&.conditionallyPassed {
+		color: $conditionallyPassed;
 	}
 
 	.statistics {

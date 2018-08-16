@@ -15,13 +15,6 @@
  */
 package com.cognifide.aet.worker.drivers.chrome;
 
-import static com.cognifide.aet.worker.drivers.WebDriverHelper.DEFAULT_SELENIUM_GRID_URL;
-import static com.cognifide.aet.worker.drivers.WebDriverHelper.NAME;
-import static com.cognifide.aet.worker.drivers.WebDriverHelper.NAME_DESC;
-import static com.cognifide.aet.worker.drivers.WebDriverHelper.NAME_LABEL;
-import static com.cognifide.aet.worker.drivers.WebDriverHelper.SELENIUM_GRID_URL;
-import static com.cognifide.aet.worker.drivers.WebDriverHelper.SELENIUM_GRID_URL_LABEL;
-import static com.cognifide.aet.worker.drivers.WebDriverHelper.getProp;
 import static com.cognifide.aet.worker.drivers.WebDriverHelper.setupProxy;
 
 import com.cognifide.aet.job.api.collector.HttpRequestExecutorFactory;
@@ -31,17 +24,9 @@ import com.cognifide.aet.worker.api.WebDriverFactory;
 import com.cognifide.aet.worker.exceptions.WorkerException;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.logging.Level;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.felix.scr.annotations.Activate;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.ConfigurationPolicy;
-import org.apache.felix.scr.annotations.Properties;
-import org.apache.felix.scr.annotations.Property;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.Service;
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -52,37 +37,28 @@ import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.remote.RemoteWebDriver;
 import org.osgi.framework.Constants;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.ConfigurationPolicy;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.metatype.annotations.Designate;
 
-@Service
+
 @Component(
-    policy = ConfigurationPolicy.REQUIRE,
-    description = "AET Chrome WebDriver Factory",
-    label = "AET Chrome WebDriver Factory",
-    metatype = true)
-@Properties({@Property(name = Constants.SERVICE_VENDOR, value = "Cognifide Ltd")})
+    configurationPolicy = ConfigurationPolicy.REQUIRE,
+    property = {"name = " + Constants.SERVICE_VENDOR, "value = Cognifide Ltd"}
+)
+@Designate(ocd = ChromeWebDriverFactoryConfig.class)
 public class ChromeWebDriverFactory implements WebDriverFactory {
-
-  private static final String DEFAULT_BROWSER_NAME = "chrome";
 
   @Reference
   private HttpRequestExecutorFactory requestExecutorFactory;
 
-  @Property(name = NAME,
-      label = NAME_LABEL,
-      description = NAME_DESC,
-      value = DEFAULT_BROWSER_NAME)
-  private String name;
-
-  @Property(name = SELENIUM_GRID_URL,
-      label = SELENIUM_GRID_URL_LABEL,
-      description = "Url to selenium grid hub. When null local Chrome driver will be used. Local Chrome driver does not work on Linux",
-      value = DEFAULT_SELENIUM_GRID_URL)
-  private String seleniumGridUrl;
+  private ChromeWebDriverFactoryConfig config;
 
   @Activate
-  public void activate(Map<String, String> properties) {
-    this.name = getProp(properties, NAME, DEFAULT_BROWSER_NAME);
-    this.seleniumGridUrl = getProp(properties, SELENIUM_GRID_URL, DEFAULT_SELENIUM_GRID_URL);
+  public void activate(ChromeWebDriverFactoryConfig config) {
+    this.config = config;
   }
 
   @Override
@@ -104,7 +80,7 @@ public class ChromeWebDriverFactory implements WebDriverFactory {
 
   @Override
   public String getName() {
-    return name;
+    return config.name();
   }
 
   private WebCommunicationWrapper createWebDriver(DesiredCapabilities capabilities,
@@ -120,8 +96,10 @@ public class ChromeWebDriverFactory implements WebDriverFactory {
 
   private WebDriver getChromeDriver(DesiredCapabilities capabilities)
       throws MalformedURLException {
-    WebDriver driver = StringUtils.isNotBlank(seleniumGridUrl) ? new RemoteWebDriver(
-        new URL(seleniumGridUrl), capabilities) : new ChromeDriver(capabilities);
+    WebDriver driver =
+        StringUtils.isNotBlank(config.seleniumGridUrl()) ?
+            new RemoteWebDriver(new URL(config.seleniumGridUrl()), capabilities)
+            : new ChromeDriver(capabilities);
     driver.manage().timeouts().pageLoadTimeout(5L, TimeUnit.MINUTES);
     return driver;
   }

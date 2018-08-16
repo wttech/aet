@@ -22,19 +22,16 @@ import com.google.common.collect.ImmutableMap;
 import java.io.Serializable;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-import org.apache.felix.scr.annotations.Activate;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Deactivate;
-import org.apache.felix.scr.annotations.Service;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-@Service(LockService.class)
-@Component(label = "LockService", description = "Provides lock service", immediate = true)
+@Component(service = LockService.class, immediate = true)
 public class LockService implements Serializable {
 
-  private static final long serialVersionUID = 101244102266582495L;
+  private static final long serialVersionUID = -2029917823742862618L;
 
   private static final Logger LOGGER = LoggerFactory.getLogger(LockService.class);
 

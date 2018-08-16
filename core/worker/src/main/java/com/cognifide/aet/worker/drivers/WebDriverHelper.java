@@ -18,8 +18,6 @@ package com.cognifide.aet.worker.drivers;
 import com.cognifide.aet.job.api.collector.ProxyServerWrapper;
 import com.cognifide.aet.worker.exceptions.WorkerException;
 import java.net.UnknownHostException;
-import java.util.Map;
-import org.apache.sling.commons.osgi.PropertiesUtil;
 import org.openqa.selenium.Proxy;
 
 /**
@@ -27,30 +25,12 @@ import org.openqa.selenium.Proxy;
  */
 public final class WebDriverHelper {
 
-  public static final String NAME = "name";
-
   public static final String NAME_LABEL = "Name";
 
   public static final String NAME_DESC = "Driver name that will be used by other services like Screenshot Collectors";
 
-  public static final String PATH = "path";
-
-  public static final String PATH_LABEL = "Path";
-
-  public static final String PATH_DESC = "Custom path to driver binary";
-
-  public static final String SELENIUM_GRID_URL = "seleniumGridUrl";
-
-  public static final String SELENIUM_GRID_URL_LABEL = "Selenium grid URL";
-
-  public static final String DEFAULT_SELENIUM_GRID_URL = "http://localhost:4444/wd/hub";
-
   private WebDriverHelper() {
     // restrict instantiation
-  }
-
-  public static String getProp(Map<String, String> properties, String name, String defaultValue) {
-    return PropertiesUtil.toString(properties.get(name), defaultValue);
   }
 
   public static Proxy setupProxy(ProxyServerWrapper proxyServer) throws WorkerException {

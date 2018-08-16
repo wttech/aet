@@ -114,6 +114,15 @@
       }
     }
 
+    &.conditionallyPassed {
+      background: $passed_bg;
+      border-top: solid 10px $passed;
+
+      span, svg {
+        color: $conditionallyPassed;
+      }
+    }
+
     &:hover {
       .test-icons {
         z-index: 2;
@@ -286,6 +295,13 @@ ul {
     a.nav-link:focus,
     a.nav-link:hover {
       color: $warning;
+    }
+  }
+  li.conditionallyPassed {
+    a.nav-link,
+    a.nav-link:focus,
+    a.nav-link:hover {
+      color: $conditionallyPassed;
     }
   }
 }

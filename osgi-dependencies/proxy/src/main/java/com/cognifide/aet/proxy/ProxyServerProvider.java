@@ -19,22 +19,21 @@ import com.cognifide.aet.job.api.collector.ProxyServerWrapper;
 import com.cognifide.aet.job.api.exceptions.ProxyException;
 import com.google.common.collect.Maps;
 import java.util.Map;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Properties;
-import org.apache.felix.scr.annotations.Property;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.ReferenceCardinality;
-import org.apache.felix.scr.annotations.ReferencePolicy;
-import org.apache.felix.scr.annotations.Service;
 import org.osgi.framework.Constants;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
 
-@Service(ProxyServerProvider.class)
-@Component(immediate = true, label = "AET Proxy Server Provider", description = "AET Proxy Server Provider")
-@Properties({@Property(name = Constants.SERVICE_VENDOR, value = "Cognifide Ltd")})
+@Component(
+    service = ProxyServerProvider.class,
+    immediate = true,
+    property = {"name = " + Constants.SERVICE_VENDOR, "value = Cognifide Ltd"}
+)
 public class ProxyServerProvider {
 
-  @Reference(referenceInterface = ProxyManager.class, policy = ReferencePolicy.DYNAMIC,
-      cardinality = ReferenceCardinality.OPTIONAL_MULTIPLE, bind = "bindProxyManager",
+  @Reference(service = ProxyManager.class, policy = ReferencePolicy.DYNAMIC,
+      cardinality = ReferenceCardinality.MULTIPLE, bind = "bindProxyManager",
       unbind = "unbindProxyManager")
   private final Map<String, ProxyManager> collectorManagers = Maps.newConcurrentMap();
 
