@@ -47,7 +47,7 @@ public class WebDriverProvider {
 
   private static final String DEFAULT_WEB_DRIVER_NAME = "defaultWebDriverName";
 
-  @Property(name = DEFAULT_WEB_DRIVER_NAME, label = "Default Web Driver name", value = "ff")
+  @Property(name = DEFAULT_WEB_DRIVER_NAME, label = "Default Web Driver name", value = "chrome")
   private String defaultWebDriverName;
 
   @Reference(referenceInterface = WebDriverFactory.class, policy = ReferencePolicy.DYNAMIC, cardinality = ReferenceCardinality.OPTIONAL_MULTIPLE, bind = "bindWebDriverFactory", unbind = "unbindWebDriverFactory")

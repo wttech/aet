@@ -55,7 +55,6 @@ import org.osgi.framework.Constants;
 
 @Service
 @Component(
-    policy = ConfigurationPolicy.REQUIRE,
     description = "AET Chrome WebDriver Factory",
     label = "AET Chrome WebDriver Factory",
     metatype = true)
