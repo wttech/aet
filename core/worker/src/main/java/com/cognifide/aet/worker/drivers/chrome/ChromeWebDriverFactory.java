@@ -21,6 +21,7 @@ import com.cognifide.aet.job.api.collector.HttpRequestExecutorFactory;
 import com.cognifide.aet.job.api.collector.ProxyServerWrapper;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.worker.api.WebDriverFactory;
+import com.cognifide.aet.worker.drivers.chrome.configuration.ChromeWebDriverFactoryConf;
 import com.cognifide.aet.worker.exceptions.WorkerException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -48,16 +49,16 @@ import org.osgi.service.metatype.annotations.Designate;
     configurationPolicy = ConfigurationPolicy.REQUIRE,
     property = {"name = " + Constants.SERVICE_VENDOR, "value = Cognifide Ltd"}
 )
-@Designate(ocd = ChromeWebDriverFactoryConfig.class)
+@Designate(ocd = ChromeWebDriverFactoryConf.class)
 public class ChromeWebDriverFactory implements WebDriverFactory {
 
   @Reference
   private HttpRequestExecutorFactory requestExecutorFactory;
 
-  private ChromeWebDriverFactoryConfig config;
+  private ChromeWebDriverFactoryConf config;
 
   @Activate
-  public void activate(ChromeWebDriverFactoryConfig config) {
+  public void activate(ChromeWebDriverFactoryConf config) {
     this.config = config;
   }
 

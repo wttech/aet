@@ -21,11 +21,10 @@ import com.cognifide.aet.job.api.collector.HttpRequestExecutorFactory;
 import com.cognifide.aet.job.api.collector.ProxyServerWrapper;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.worker.api.WebDriverFactory;
+import com.cognifide.aet.worker.drivers.firefox.local.configuration.FirefoxWebDriverFactoryConf;
 import com.cognifide.aet.worker.exceptions.WorkerException;
-
 import java.io.File;
 import java.util.concurrent.TimeUnit;
-
 import org.openqa.selenium.Proxy;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
@@ -42,13 +41,13 @@ import org.osgi.service.metatype.annotations.Designate;
 @Component(
     property = {"name = " + Constants.SERVICE_VENDOR, "value = Cognifide Ltd"}
 )
-@Designate(ocd = FirefoxWebDriverFactoryConfig.class)
+@Designate(ocd = FirefoxWebDriverFactoryConf.class)
 public class FirefoxWebDriverFactory implements WebDriverFactory {
 
   @Reference
   private HttpRequestExecutorFactory requestExecutorFactory;
 
-  private FirefoxWebDriverFactoryConfig config;
+  private FirefoxWebDriverFactoryConf config;
 
   @Override
   public String getName() {
@@ -126,7 +125,7 @@ public class FirefoxWebDriverFactory implements WebDriverFactory {
   }
 
   @Activate
-  public void activate(FirefoxWebDriverFactoryConfig config) {
+  public void activate(FirefoxWebDriverFactoryConf config) {
     this.config = config;
   }
 

@@ -19,11 +19,11 @@ import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ProxyException;
 import com.cognifide.aet.proxy.ProxyServerProvider;
 import com.cognifide.aet.worker.api.WebDriverFactory;
+import com.cognifide.aet.worker.drivers.configuration.WebDriverProviderConf;
 import com.cognifide.aet.worker.exceptions.WorkerException;
 import com.google.common.base.Joiner;
 import com.google.common.collect.Maps;
 import java.util.Map;
-
 import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -42,12 +42,12 @@ import org.slf4j.LoggerFactory;
     property = {"name = " + Constants.SERVICE_VENDOR, "value = Cognifide Ltd"},
     immediate = true
 )
-@Designate(ocd = WebDriverProviderConfig.class)
+@Designate(ocd = WebDriverProviderConf.class)
 public class WebDriverProvider {
 
   private static final Logger LOG = LoggerFactory.getLogger(WebDriverProvider.class);
 
-  private WebDriverProviderConfig config;
+  private WebDriverProviderConf config;
 
   @Reference(
       service = WebDriverFactory.class,
@@ -61,7 +61,7 @@ public class WebDriverProvider {
   private ProxyServerProvider proxyServerProvider;
 
   @Activate
-  void activate(WebDriverProviderConfig config) {
+  void activate(WebDriverProviderConf config) {
     this.config = config;
   }
 

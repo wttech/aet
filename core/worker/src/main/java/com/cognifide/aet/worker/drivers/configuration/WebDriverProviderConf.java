@@ -13,13 +13,13 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.worker.drivers;
+package com.cognifide.aet.worker.drivers.configuration;
 
 import org.osgi.service.metatype.annotations.AttributeDefinition;
 import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 
 @ObjectClassDefinition(name = "AET WebDriver Provider", description = "AET WebDriver Provider")
-public @interface WebDriverProviderConfig {
+public @interface WebDriverProviderConf {
 
   String DEFAULT_WEB_DRIVER_NAME_LABEL = "Default Web Driver name";
 

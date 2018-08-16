@@ -13,7 +13,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.worker.drivers.chrome;
+package com.cognifide.aet.worker.drivers.chrome.configuration;
 
 import org.osgi.service.metatype.annotations.AttributeDefinition;
 import org.osgi.service.metatype.annotations.ObjectClassDefinition;
@@ -22,7 +22,7 @@ import static com.cognifide.aet.worker.drivers.WebDriverHelper.NAME_LABEL;
 import static com.cognifide.aet.worker.drivers.WebDriverHelper.NAME_DESC;
 
 @ObjectClassDefinition(name = "AET Chrome WebDriver Factory", description = "AET Chrome WebDriver Factory")
-public @interface ChromeWebDriverFactoryConfig {
+public @interface ChromeWebDriverFactoryConf {
 
   String DEFAULT_BROWSER_NAME = "chrome";
 
@@ -37,8 +37,8 @@ public @interface ChromeWebDriverFactoryConfig {
   String name();
 
   @AttributeDefinition(
-      name = ChromeWebDriverFactoryConfig.SELENIUM_GRID_URL_LABEL,
-      description = ChromeWebDriverFactoryConfig.SELENIUM_GRID_URL_DESC,
-      defaultValue = ChromeWebDriverFactoryConfig.DEFAULT_SELENIUM_GRID_URL)
+      name = ChromeWebDriverFactoryConf.SELENIUM_GRID_URL_LABEL,
+      description = ChromeWebDriverFactoryConf.SELENIUM_GRID_URL_DESC,
+      defaultValue = ChromeWebDriverFactoryConf.DEFAULT_SELENIUM_GRID_URL)
   String seleniumGridUrl();
 }
