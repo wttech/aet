@@ -27,7 +27,7 @@ define([], function () {
     vm.saveAllChanges = saveAllChanges;
     vm.discardAllChanges = discardAllChanges;
 
-    $scope.historyPath = "history.html?" + window.location.search.split("?")[1];
+    $scope.historyPath = 'history.html?' + window.location.search.split('?')[1];
     $rootScope.$on('metadata:changed', updateNavigationTree);
     $rootScope.$on('filter:applied', updateTestsStats);
     $scope.$watch('sidepanel.tests', function() {

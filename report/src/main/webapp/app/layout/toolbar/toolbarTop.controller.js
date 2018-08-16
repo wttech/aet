@@ -17,18 +17,21 @@
  */
 define([], function () {
   'use strict';
-  return ['$rootScope', 'suiteInfoService', 'metadataAccessService',
-    ToolbarTopController];
+  return ['$rootScope', '$http', 'suiteInfoService', 'metadataAccessService',
+    ToolbarTopController
+  ];
 
-  function ToolbarTopController($rootScope, suiteInfoService,
-      metadataAccessService) {
+  function ToolbarTopController($rootScope, $http, suiteInfoService,
+    metadataAccessService) {
     var vm = this;
 
     $rootScope.$on('metadata:changed', updateToolbar);
-    $('[data-toggle="popover"]').popover({
+    $("[data-toggle='popover']").popover({
       placement: 'bottom'
     });
 
+    var suiteHeaders;
+    getSuiteHistory(suiteHeaders, $rootScope, $http);
     updateToolbar();
 
     /***************************************
@@ -36,17 +39,73 @@ define([], function () {
      ***************************************/
 
     function updateToolbar() {
+      document.getElementsByClassName('suite-history-container')[0].style.display = 'none';
+      document.getElementsByClassName('overlay')[0].style.display = 'none';
+      vm.showSuiteHistory = function () {
+        if (isSuiteHistoryVisible()) {
+          document.getElementsByClassName('suite-history-container')[0].style.display = 'none';
+          document.getElementsByClassName('overlay')[0].style.display = 'none';
+        } else {
+          document.getElementsByClassName('suite-history-container')[0].style.display = 'block';
+          document.getElementsByClassName('overlay')[0].style.display = 'block';
+        }
+      };
       vm.suiteInfo = suiteInfoService.getInfo();
       vm.suiteStatistics = metadataAccessService.getSuite();
       if (vm.suiteStatistics.patternCorrelationId) {
         vm.pattern = {
           name: vm.suiteStatistics.patternCorrelationId,
           url: 'report.html?company=' + vm.suiteStatistics.company +
-          '&project=' + vm.suiteStatistics.project +
-          '&correlationId=' + vm.suiteStatistics.patternCorrelationId
+            '&project=' + vm.suiteStatistics.project +
+            '&correlationId=' + vm.suiteStatistics.patternCorrelationId
         };
       }
     }
 
+    function buildApiPath($allParametersList) {
+      return 'http://aet-vagrant' + '/api' + '/history' + '?' +
+        $allParametersList[0] + '&' +
+        $allParametersList[1] + '&' +
+        $allParametersList[2];
+    }
+
+    function getSuiteHistory(suiteHeaders, $rootScope, $http) {
+      $rootScope.data = 'test';
+      var cUrl = new URL(window.location.href);
+      var company = cUrl.searchParams.get('company');
+      var project = cUrl.searchParams.get('project');
+      var suite = cUrl.searchParams.get('suite');
+      var allParametersList = ['company=' + company, 'project=' + project, 'suite=' + suite];
+      return $http({
+        method: 'GET',
+        url: buildApiPath(allParametersList),
+        headers: {
+          'Content-Type': 'text/plain'
+        }
+      }).then(function (response) {
+        $rootScope.data = response.data;
+        suiteHeaders = response.data;
+        for (var i = 0; i < suiteHeaders.length; i++) {
+          suiteHeaders[i] = suiteHeaders[i].split('-');
+          suiteHeaders[i][4] = suiteHeaders.length - i;
+        }
+        $rootScope.suiteHeaders = suiteHeaders;
+        $rootScope.reportPath = window.location.search;
+      }, function errorCallback(response) {
+        $rootScope.fullSuiteName = response.data['message'];
+      });
+    }
+
+    function isSuiteHistoryVisible() {
+      if (typeof document.getElementsByClassName('suite-history-container')[0] !== 'undefined') {
+        if (document.getElementsByClassName('suite-history-container')[0].style.display === 'block') {
+          return true;
+        } else {
+          return false;
+        }
+      } else {
+        return false;
+      }
+    }
   }
 });
