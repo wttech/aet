@@ -118,6 +118,7 @@ public class CleanerScheduler {
 
     final ImmutableMap<String, Object> jobData = ImmutableMap.<String, Object>builder()
         .put(CleanerJob.KEY_ROUTE_BUILDER, metadataCleanerRouteBuilder)
+        .put(CleanerJob.KEY_KEEP_N_VERSIONS, config.keepNVersions())
         .put(CleanerJob.KEY_REMOVE_OLDER_THAN, config.removeOlderThan())
         .put(CleanerJob.KEY_COMPANY_FILTER, config.companyName())
         .put(CleanerJob.KEY_PROJECT_FILTER, config.projectName())
