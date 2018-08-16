@@ -24,15 +24,15 @@ public @interface RunnerConfigurationConf {
 
   int DEFAULT_TASK_RUN_FAILURE_TIMEOUT_SECONDS = 120;
 
-  String PARAM_FAILURE_TIMEOUT = "ft";
+  String PARAM_FAILURE_TIMEOUT = "Failure timeout";
 
-  String PARAM_MESSAGE_TTL = "mttl";
+  String PARAM_MESSAGE_TTL = "Message TTL";
 
-  String PARAM_URL_PACKAGE_SIZE = "urlPackageSize";
+  String PARAM_URL_PACKAGE_SIZE = "Url package size";
 
-  String PARAM_MAX_MESSAGES_IN_COLLECTOR_QUEUE = "maxMessagesInCollectorQueue";
+  String PARAM_MAX_MESSAGES_IN_COLLECTOR_QUEUE = "Max messages in collector queue";
 
-  String PARAM_MAX_CONCURRENT_SUITES_PROCESSED_COUNT = "maxConcurrentSuitesCount";
+  String PARAM_MAX_CONCURRENT_SUITES_PROCESSED_COUNT = "Max concurrent suites count";
 
   int DEFAULT_MAX_CONCURRENT_SUITES_PROCESSED_COUNT = 5;
 
