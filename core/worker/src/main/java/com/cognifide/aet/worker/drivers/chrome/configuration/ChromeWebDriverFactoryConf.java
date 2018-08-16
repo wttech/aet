@@ -18,17 +18,15 @@ package com.cognifide.aet.worker.drivers.chrome.configuration;
 import org.osgi.service.metatype.annotations.AttributeDefinition;
 import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 
+import static com.cognifide.aet.worker.drivers.WebDriverHelper.DEFAULT_SELENIUM_GRID_URL;
 import static com.cognifide.aet.worker.drivers.WebDriverHelper.NAME_LABEL;
 import static com.cognifide.aet.worker.drivers.WebDriverHelper.NAME_DESC;
+import static com.cognifide.aet.worker.drivers.WebDriverHelper.SELENIUM_GRID_URL_LABEL;
 
 @ObjectClassDefinition(name = "AET Chrome WebDriver Factory", description = "AET Chrome WebDriver Factory")
 public @interface ChromeWebDriverFactoryConf {
 
   String DEFAULT_BROWSER_NAME = "chrome";
-
-  String SELENIUM_GRID_URL_LABEL = "Selenium grid URL";
-  String SELENIUM_GRID_URL_DESC = "Url to selenium grid hub. When null local Chrome driver will be used. Local Chrome driver does not work on Linux";
-  String DEFAULT_SELENIUM_GRID_URL = "http://localhost:4444/wd/hub";
 
   @AttributeDefinition(
       name = NAME_LABEL,
@@ -37,8 +35,8 @@ public @interface ChromeWebDriverFactoryConf {
   String name();
 
   @AttributeDefinition(
-      name = ChromeWebDriverFactoryConf.SELENIUM_GRID_URL_LABEL,
-      description = ChromeWebDriverFactoryConf.SELENIUM_GRID_URL_DESC,
-      defaultValue = ChromeWebDriverFactoryConf.DEFAULT_SELENIUM_GRID_URL)
+      name = SELENIUM_GRID_URL_LABEL,
+      description = SELENIUM_GRID_URL_LABEL,
+      defaultValue = DEFAULT_SELENIUM_GRID_URL)
   String seleniumGridUrl();
 }
