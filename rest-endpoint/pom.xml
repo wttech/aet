@@ -35,6 +35,18 @@
 
   <dependencies>
     <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>org.osgi.service.component.annotations</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>org.osgi.annotation</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>org.osgi.service.metatype.annotations</artifactId>
+    </dependency>
+    <dependency>
       <groupId>com.cognifide.aet</groupId>
       <artifactId>communication-api</artifactId>
     </dependency>
@@ -101,6 +113,7 @@
             <id>generate-scr-scrdescriptor</id>
             <goals>
               <goal>scr</goal>
+
             </goals>
           </execution>
         </executions>
