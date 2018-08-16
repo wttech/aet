@@ -40,7 +40,7 @@ import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Component(name = "AET Comparator Dispatcher", immediate = true)
+@Component(immediate = true)
 public class ComparatorDispatcherImpl implements ComparatorDispatcher {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(ComparatorDispatcherImpl.class);

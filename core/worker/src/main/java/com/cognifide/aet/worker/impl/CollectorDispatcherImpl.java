@@ -34,7 +34,7 @@ import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Component(immediate = true, name = "AET Collector Dispatcher")
+@Component(immediate = true)
 public class CollectorDispatcherImpl implements CollectorDispatcher {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(CollectorDispatcherImpl.class);
