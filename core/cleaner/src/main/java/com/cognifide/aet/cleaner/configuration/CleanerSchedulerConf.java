@@ -22,17 +22,17 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 @ObjectClassDefinition(name = "AET Cleaning Scheduler Service", description = "AET Cleaning Scheduler Service")
 public @interface CleanerSchedulerConf {
 
-  String COMPANY_NAME = "companyName";
+  String COMPANY_NAME = "Company Name";
 
-  String PROJECT_NAME = "projectName";
+  String PROJECT_NAME = "Project Name";
 
-  String REMOVE_OLDER_THAN = "removeOlderThan";
+  String REMOVE_OLDER_THAN = "Remove artifacts older than";
 
-  String KEEP_N_VERSIONS = "keepNVersions";
+  String KEEP_N_VERSIONS = "Last versions to keep";
 
-  String SCHEDULE_CRON = "schedule";
+  String SCHEDULE_CRON = "Schedule";
 
-  String DRY_RUN = "dryRun";
+  String DRY_RUN = "Dry run";
 
   long DEFAULT_REMOVE_OLDER_THAN_PARAM = 10L;
 
