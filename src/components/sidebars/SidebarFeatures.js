@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import SearchFeatures from "../../containers/search/SearchFeatures";
-import Features from "./Features";
+import { createFeatureList } from "../../functions/createFeatureList";
 
 class SidebarFeatures extends Component {
 
@@ -8,7 +8,7 @@ class SidebarFeatures extends Component {
     return (
       <div className="sidebar-features">
         <SearchFeatures/>
-        <Features/>
+        {createFeatureList()}
       </div>
     )
   }

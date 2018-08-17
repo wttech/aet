@@ -24,17 +24,19 @@ class AddURLBlock extends Component {
 
   handleInputChange(value) {
     this.setState({
+      ...this.state,
       urlValue: value
     });
   }
 
   handleUrlAdded() {
-    if(this.state.urlValue.length > 1) {
+    if(this.state.urlValue.length > 0) {
       this.props.addUrlToTest(this.state.urlValue);
       this.setState({
+        ...this.state,
         urlValue: ""
       });
-      this.props.toggleUrlInput()
+      this.props.toggleUrlInput();
     }
   }
 

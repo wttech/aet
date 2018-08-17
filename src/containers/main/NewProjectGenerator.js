@@ -22,27 +22,9 @@ class NewProjectGenerator extends Component {
   }
 
   handleChange(inputValue, inputType) {
-    switch(inputType){
-      case "company": {
-        this.setState({company: inputValue});
-        break;
-      }   
-      case "project": {
-        this.setState({project: inputValue});
-        break;
-      }
-      case "suite": {
-        this.setState({suite: inputValue});
-        break;
-      }
-      case "domain": {
-        this.setState({domain: inputValue});
-        break;
-      }
-      default: {
-        console.error("Couldn't read proper value of input " + inputType + " in NewProjectGenerator container.");
-      }
-    }
+    this.setState({
+      [inputType]: inputValue
+    });
   }
 
   handleNewProject(ev) {

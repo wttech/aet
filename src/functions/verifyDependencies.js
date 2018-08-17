@@ -29,16 +29,13 @@ function handleNotFoundDependency(testID, depType, index) {
 }
 
 function handleFoundDependency(testID, depID, index) {
-  document.querySelectorAll("#" + testID + "-" + index).forEach((block) => {
+  const tests = document.querySelectorAll("#" + testID + "-" + index);
+  const deps = document.querySelectorAll("#" + depID + "-" + index);
+  const blocksArray = [...tests, ...deps];
+  blocksArray.forEach((block) => {
     block.classList.remove("block-error");
     block.classList.remove("block-warning");
     block.classList.add("block-valid");
-  });
-
-  document.querySelectorAll("#" + depID + "-" + index).forEach((block) => {
-    block.classList.add("block-valid");
-    block.classList.remove("block-error");
-    block.classList.remove("block-warning");
   });
 }
 

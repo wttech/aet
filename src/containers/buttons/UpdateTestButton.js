@@ -16,15 +16,9 @@ class UpdateTest extends Component {
   }
 
   render () {
-    if(this.props.testName.name) {
       return (
-        <div className="update-test test-button" onClick={() => this.updateTest()}>UPDATE TEST</div>
+        <div className={"update-test test-button "  + (this.props.testName.name ? null : "btn-disabled")} onClick={() => this.updateTest()}>UPDATE TEST</div>
       )
-    } else {
-      return (
-        <div className="update-test test-button btn-disabled">UPDATE TEST</div>
-      )
-    }
   }
 }
 

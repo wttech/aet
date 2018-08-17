@@ -13,28 +13,11 @@ class AddTest extends Component {
       this.props.initTestName();
     }
   }
-  
-  checkIfTestAlreadyExists(testName) {
-    let exists = false;
-    document.querySelectorAll(".tests-container>.test-item>.test-name").forEach((test) => {
-      if(testName.name === test.innerHTML) {
-        exists = true;
-      }
-    });
-    return exists;
-  }
 
   render () {
-    if(this.props.test.length > 0 && this.props.urls.length > 0) {
-      return (
-        <div className="add-test test-button" onClick={() => this.addTestToProject()}>ADD TEST</div>
-      )
-    } else {
-      return (
-        <div className="add-test test-button btn-disabled">ADD TEST</div>
-      )
-    }
-
+    return (
+      <div className={"add-test test-button " + (this.props.test.length && this.props.urls.length ? null : "btn-disabled") } onClick={() => this.addTestToProject()}>ADD TEST</div>
+    )
   }
 }
 

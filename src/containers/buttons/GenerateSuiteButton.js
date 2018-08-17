@@ -14,15 +14,13 @@ class GenerateSuiteButton extends Component {
     suiteElement.att('company', this.props.project[0].company);
     suiteElement.att('domain', this.props.project[0].domain);
     suiteElement.att('project', this.props.project[0].project);
-    if(projectTests) {
-      if(Object.values(projectTests).length > 0) {
-        Object.values(projectTests).forEach((testItem) => {
-          const testElement = suiteElement.ele("test", {name: testItem.name.name})
-          this.generateCollectorsGroup(testElement, testItem);
-          this.generateComparatorsGroup(testElement, testItem);
-          this.generateUrls(testElement, testItem);
-        });
-      }
+    if(Object.values(projectTests).length > 0) {
+      Object.values(projectTests).forEach((testItem) => {
+        const testElement = suiteElement.ele("test", {name: testItem.name.name})
+        this.generateCollectorsGroup(testElement, testItem);
+        this.generateComparatorsGroup(testElement, testItem);
+        this.generateUrls(testElement, testItem);
+      });
     }
     const xml = suiteElement.end({pretty: true});
     var file = new File([xml], "suite.xml", {type: "application/xml;charset=utf-8"});
@@ -79,11 +77,7 @@ class GenerateSuiteButton extends Component {
   }
 
   checkIfParamExists(param) {
-    if(param !== null && typeof param !== "undefined") {
-      return true;
-    } else {
-      return false;
-    }
+    return param !== null && typeof param !== "undefined" ? true : false
   }
 
   generateFilters(testElement, groupItem) {

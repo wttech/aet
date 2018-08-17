@@ -13,15 +13,9 @@ class ClearTest extends Component {
   }
 
   render () {
-    if(this.props.test.length > 0) {
-      return (
-        <div className="clear-test test-button" onClick={() => this.clearTest()}>CLEAR TEST</div>
-      )
-    } else {
-      return (
-        <div className="clear-test test-button btn-disabled">CLEAR TEST</div>
-      )
-    }
+    return (
+      <div className={"clear-test test-button "  + (this.props.test.length ? null : "btn-disabled")} onClick={() => this.clearTest()}>CLEAR TEST</div>
+    )
   }
 }
 

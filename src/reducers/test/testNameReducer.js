@@ -11,17 +11,9 @@ export default function (state = {}, action = null) {
     }
 
     case "TEST_NAME_CLEARED": {
-      let newState;
-      if(action.payload === true) {
-        newState = {
-          name: "",
-          isVisible: false
-        }
-      } else {
-        newState = {
-          name: state.name,
-          isVisible: false
-        }
+      const newState = {
+        name: (action.payload === true ? "" : state.name),
+        isVisible: false
       }
       return newState;
     }
@@ -34,16 +26,9 @@ export default function (state = {}, action = null) {
           isVisible: true
         }
       } else {
-        if(typeof state.name !== "undefined") {
-          newState = {
-            name: state.name,
-            isVisible: true
-          }
-        } else {
-          newState = {
-            name: "",
-            isVisible: true
-          }
+        newState = {
+          name: (typeof state.name === "undefined" ? "" : state.name),
+          isVisible: true
         }
       }
       return newState;
