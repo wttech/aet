@@ -20,7 +20,8 @@ import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.StorageException;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonElement;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.List;
@@ -36,7 +37,7 @@ import org.slf4j.LoggerFactory;
 
 @Service
 @Component(label = "HistoryServlet", description = "Returns Suite's History", immediate = true)
-public class HistoryServlet extends BasicDataServlet{
+public class HistoryServlet extends BasicDataServlet {
 
   private static final long serialVersionUID = 1774115103933538112L;
 
@@ -52,7 +53,7 @@ public class HistoryServlet extends BasicDataServlet{
       throws IOException {
     String suiteName = req.getParameter(Helper.SUITE_PARAM);
     resp.setCharacterEncoding("UTF-8");
-    List<String> suitVersions = null;
+    List<List<String>> suitVersions = null;
     try {
       if (isValidName(suiteName)) {
         suitVersions = metadataDAO.listSuiteVersions(dbKey, suiteName);
@@ -65,8 +66,15 @@ public class HistoryServlet extends BasicDataServlet{
     }
 
     if (suitVersions != null && suitVersions.size() > 0) {
-      JsonElement suiteVersionsJson = PRETTY_PRINT_GSON.toJsonTree(suitVersions);
-      String result = PRETTY_PRINT_GSON.toJson(suiteVersionsJson.getAsJsonArray());
+      JsonArray jsonArray = suitVersions
+          .stream()
+          .map(suitVersion -> {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("correlationId", suitVersion.get(0));
+            jsonObject.addProperty("version", Integer.parseInt(suitVersion.get(1)));
+            return jsonObject;
+          }).collect(JsonArray::new, JsonArray::add, JsonArray::add);
+      String result = PRETTY_PRINT_GSON.toJson(jsonArray);
       resp.setContentType("application/json");
       resp.getWriter().write(result);
     } else {
@@ -77,12 +85,12 @@ public class HistoryServlet extends BasicDataServlet{
   }
 
   @Activate
-  public void start(){
+  public void start() {
     register(Helper.getHistoryPath());
   }
 
   @Deactivate
-  public void stop(){
+  public void stop() {
     unregister(Helper.getHistoryPath());
   }
 }

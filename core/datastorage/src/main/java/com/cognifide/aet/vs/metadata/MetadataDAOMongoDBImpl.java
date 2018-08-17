@@ -25,7 +25,6 @@ import com.cognifide.aet.vs.mongodb.MongoDBClient;
 import com.google.common.base.Function;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Collections2;
-import com.google.common.collect.FluentIterable;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -33,8 +32,11 @@ import com.mongodb.client.model.Filters;
 import com.mongodb.client.model.Sorts;
 import com.mongodb.client.result.DeleteResult;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.felix.scr.annotations.Component;
 import org.apache.felix.scr.annotations.Reference;
@@ -120,7 +122,8 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
     LOGGER.debug("Fetching suite with name: {}, version: {}", name, version);
 
     final FindIterable<Document> found = metadata
-        .find(Filters.and(Filters.eq(SUITE_PARAM_NAME, name), Filters.eq(SUITE_VERSION_PARAM_NAME, Integer.parseInt(version))));
+        .find(Filters.and(Filters.eq(SUITE_PARAM_NAME, name),
+            Filters.eq(SUITE_VERSION_PARAM_NAME, Integer.parseInt(version))));
     final Document result = found.first();
     return new DocumentConverter(result).toSuite();
   }
@@ -149,27 +152,25 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
         .find()
         .sort(Sorts.descending(SUITE_VERSION_PARAM_NAME));
 
-    return FluentIterable.from(found).transform(new Function<Document, Suite>() {
-      @Override
-      public Suite apply(Document result) {
-        return new DocumentConverter(result).toSuite();
-      }
-    }).toList();
+    return StreamSupport.stream(found.spliterator(), false)
+        .map((Function<Document, Suite>) document -> new DocumentConverter(document).toSuite())
+        .collect(Collectors.toList());
   }
 
-  public List<String> listSuiteVersions(DBKey dbKey, String name) throws StorageException{
+  public List<List<String>> listSuiteVersions(DBKey dbKey, String name) throws StorageException {
     MongoCollection<Document> metadata = getMetadataCollection(dbKey);
-    LOGGER.debug("Fetching all versions for suite: `{}` , company: `{}`, project: `{}`.", name, dbKey.getCompany(),
+    LOGGER.debug("Fetching all versions of suite: `{}` , company: `{}`, project: `{}`.", name,
+        dbKey.getCompany(),
         dbKey.getProject());
 
     final FindIterable<Document> found = metadata
         .find(Filters.eq(SUITE_PARAM_NAME, name))
         .sort(Sorts.descending(SUITE_VERSION_PARAM_NAME));
 
-    return FluentIterable.from(found).transform(new Function<Document, String>() {
-      @Override
-      public String apply(Document result){return result.getString("correlationId");}
-    }).toList();
+    return StreamSupport.stream(found.spliterator(), false)
+        .map((Function<Document, List<String>>) document -> Arrays
+            .asList(document.getString("correlationId"), String.valueOf(document.getInteger("version"))))
+        .collect(Collectors.toList());
   }
 
   @Override
