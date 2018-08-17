@@ -1,0 +1,91 @@
+.search-bar {
+  width: 220px;
+  padding: 5px;
+  height: 30px;
+  display: block;
+  margin: 30px auto;
+  background-color: $gray_extralight;
+
+  &>input {
+    width: 90%;
+    margin-left: 2%;
+    height: 30px;
+    font-size: 20px;
+  }
+}
+
+.sidebar-features {
+  width: 400px;
+  background-color: $aside_background;
+  height: 100vh;
+  overflow: hidden;
+
+  .features-container {
+    width: 95%;
+    height: 92%;
+    margin: 0 auto;
+    color: $white;
+    overflow: scroll;
+
+    .feature {
+      margin: 30px auto;
+      position: relative;
+
+      .arrow-before-title {
+        position: absolute;
+        font-size: 26px;
+        top: -3px;
+        left: 20px;
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+          cursor: pointer;
+          color: darken($white, 20%);
+        }
+      }
+
+      .feature-title {
+        font-size: 22px;
+        font-weight: bold;
+        margin-left: 40px;
+
+        &:hover {
+          cursor: pointer;
+          color: darken($white, 20%);
+        }
+      }
+
+      .list-of-features {
+        margin: 15px 20px;
+        transition: all 0.4s ease-in-out;
+        overflow: hidden;
+        max-height: 700px;
+        height: auto;
+
+        &>li {
+          position: relative;
+          color: $gray;
+          margin: 10px auto;
+          padding: 10px 0;
+          text-align: center;
+          background-color: $gray_extralight;
+          transition: all 0.3s ease-in-out;
+          font-weight: 700;
+
+          &:hover {
+            cursor: pointer;
+            background-color: darken($gray_extralight, 20%);
+          }
+          
+          .icon-right {
+            position: absolute;
+            right: 20px;
+            top: 10px;
+            font-size: 20px;
+            display: block;
+          }
+        }
+      }
+    }
+  }
+}

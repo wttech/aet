@@ -1,0 +1,36 @@
+.test-name-container {
+  position: fixed;
+  width: 450px;
+  left: 52%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 99999;
+  padding: 30px 50px;
+  box-shadow: 3px 3px 5px 2px $shadow;
+  background-color: lighten($gray, 10%);
+  .test-name-input {
+    width: 90%;
+    margin: 0 auto;
+    height: 24px;
+    font-size: 18px;
+    padding: 7px 15px;
+    text-align: center;
+    background-color: $white;
+  }
+  .test-name-add-test {
+    text-align: center;
+    background-color: $white;
+    width: 150px;
+    margin-top: 20px;
+    font-weight: bold;
+    padding: 7px 3px;
+    position: relative;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: all 0.3s ease-in-out;
+    &:hover {
+      cursor: pointer;
+      background-color: darken($white, 20%);
+    }
+  }
+}

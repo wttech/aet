@@ -1,0 +1,75 @@
+.sidebar-tests {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 300px;
+  background-color: $aside_background;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  height: 100vh;
+
+  .generate-suite-btn {
+    width: 90%;
+    padding: 7px 3px;
+    text-align: center;
+    margin: 0 auto;
+    background-color: $white;
+    color: $text_color;
+    font-weight: bold;
+    position: relative;
+    bottom: 1%;
+    margin-left: 5%;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      cursor: pointer;
+      background-color: darken($white, 25%);
+    }
+  }
+
+  .tests-container {
+    width: 90%;
+    margin: 20px auto;
+    color: $white;
+
+    .tests-main {
+      font-weight: bold;
+      font-size: 22px;
+      margin-left: 10px;
+    }
+
+    .test-item {
+      width: 90%;
+      margin: 25px auto;
+
+      .test-name {
+        width: 100%;
+        padding: 10px 3px;
+        background-color: $white;
+        color: $text_color;
+        font-weight: bold;
+        font-size: 18px;
+        text-align: center;
+        transition: all 0.2s ease-in-out;
+
+        &:hover {
+          cursor: pointer;
+          background-color: darken($white, 20%);
+        }
+      }
+
+      .test-list {
+        float: right;
+        width: 90%;
+        margin: 5px auto;
+        
+        .test-list-item {
+          width: 120px;
+          padding: 4px 0px;
+          list-style-type: disc;
+          margin-top: 3px;
+        }
+      }
+    }
+  }
+}

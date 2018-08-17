@@ -1,0 +1,53 @@
+.new-project-form {
+  position: relative;
+  top:50%;
+  transform:translateY(-50%);
+  width:60%;
+  height:500px;
+  margin:0 auto;
+  background-color: lighten($gray,10%);
+  display:block;
+
+  form {
+    color:white;
+
+    .input-container {
+      input {
+        float:left;
+        width:90%;
+        margin:0 4%;
+        background-color:white;
+        height:45px;
+        padding-left:15px;
+      }
+  
+      .submit-button {
+        color:$text_color;
+        width:100px;
+        margin-top:25px;
+        float:right;
+        text-align:center;
+        font-size:16px;
+        transition:all 0.4s ease-in-out;
+        padding: 0;
+  
+        &:hover {
+          cursor:pointer;
+          background-color: darken($white, 20%);
+        }
+      }
+  
+      label {
+        float:left;
+        width:90%;
+        margin:0 5%;
+        margin-top:15px;
+  
+        &:first-of-type {
+          margin-top:30px;
+        }
+      }
+    }
+  }
+
+}

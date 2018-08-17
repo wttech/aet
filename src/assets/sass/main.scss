@@ -1,0 +1,23 @@
+@import "variables";
+@import "sidebarFeatures";
+@import "sidebarTests";
+@import "normalize";
+@import "tests";
+@import "projectGenerator";
+@import "optionsBox";
+@import "editBox";
+@import "projectInfo";
+@import "testName";
+@import "testButtons";
+
+*:focus {
+  outline: none;
+}
+
+.suite-generator {
+  overflow: hidden;
+  scroll-behavior: smooth;
+  background-color: $gray;
+  display: grid;
+  grid-template-columns: 400px 1fr 300px;
+}
