@@ -169,7 +169,8 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
 
     return StreamSupport.stream(found.spliterator(), false)
         .map((Function<Document, List<String>>) document -> Arrays
-            .asList(document.getString("correlationId"), String.valueOf(document.getInteger("version"))))
+            .asList(document.getString(CORRELATION_ID_PARAM_NAME),
+                String.valueOf(document.getInteger(SUITE_VERSION_PARAM_NAME))))
         .collect(Collectors.toList());
   }
 
