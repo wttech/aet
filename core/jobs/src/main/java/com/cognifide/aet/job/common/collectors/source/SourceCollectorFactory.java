@@ -47,7 +47,7 @@ public class SourceCollectorFactory implements CollectorFactory {
       WebCommunicationWrapper webCommunicationWrapper)
       throws ParametersException {
     return new SourceCollector(artifactsDAO, properties,
-        webCommunicationWrapper.getHttpRequestExecutor(), config.timeoutValue());
+        webCommunicationWrapper.getHttpRequestExecutor(), config.sourceCollectorTimeoutValue());
   }
 
   @Activate

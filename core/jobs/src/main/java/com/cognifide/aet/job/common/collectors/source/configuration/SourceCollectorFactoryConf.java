@@ -30,6 +30,6 @@ public @interface SourceCollectorFactoryConf {
       name = SOURCE_COLLECTOR_TIMEOUT_VALUE,
       description =  "Timeout value for source collector [ms]",
       type = AttributeType.INTEGER)
-  int timeoutValue() default  DEFAULT_TIMEOUT;
+  int sourceCollectorTimeoutValue() default  DEFAULT_TIMEOUT;
 
 }
