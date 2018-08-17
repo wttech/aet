@@ -40,14 +40,11 @@ define([], function () {
 
     function updateToolbar() {
       document.getElementsByClassName('suite-history-container')[0].style.display = 'none';
-      document.getElementsByClassName('overlay')[0].style.display = 'none';
       vm.showSuiteHistory = function () {
         if (isSuiteHistoryVisible()) {
           document.getElementsByClassName('suite-history-container')[0].style.display = 'none';
-          document.getElementsByClassName('overlay')[0].style.display = 'none';
         } else {
           document.getElementsByClassName('suite-history-container')[0].style.display = 'block';
-          document.getElementsByClassName('overlay')[0].style.display = 'block';
         }
       };
       vm.suiteInfo = suiteInfoService.getInfo();
