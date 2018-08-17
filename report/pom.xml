@@ -203,7 +203,6 @@
                       - assembly/assembly-descriptor-zip.xml
                   -->
                   <includes>
-                    history.html,
                     report.html,
                     app/**,
                     assets/**,
