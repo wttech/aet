@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.metatype.annotations.Designate;
 
-@Component(service = CollectorFactory.class)
+@Component
 @Designate(ocd = SourceCollectorFactoryConf.class)
 public class SourceCollectorFactory implements CollectorFactory {
 
