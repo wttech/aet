@@ -72,6 +72,10 @@ define([], function () {
       var company = cUrl.searchParams.get('company');
       var project = cUrl.searchParams.get('project');
       var suite = cUrl.searchParams.get('suite');
+      if (suite === null) {
+        var correlationId = cUrl.searchParams.get('correlationId');
+        suite = correlationId.split('-')[2];
+      }
       var allParametersList = ['company=' + company, 'project=' + project, 'suite=' + suite];
       return $http({
         method: 'GET',
@@ -83,11 +87,39 @@ define([], function () {
         $rootScope.data = response.data;
         suiteHeaders = response.data;
         for (var i = 0; i < suiteHeaders.length; i++) {
-          suiteHeaders[i] = suiteHeaders[i].split('-');
-          suiteHeaders[i][4] = suiteHeaders.length - i;
+          var version = suiteHeaders[i].version;
+          var company = suiteHeaders[i].correlationId.split("-")[0];
+          var project = suiteHeaders[i].correlationId.split("-")[1];
+          var suite = suiteHeaders[i].correlationId.split("-")[2];
+          var correlationId = suiteHeaders[i].correlationId.split("-")[3];
+          suiteHeaders[i] = {
+            company: company,
+            project: project,
+            suite: suite,
+            version: version,
+            correlationId: correlationId,
+            selectedVersion: null,
+            isRebased: false,
+          }
+          if (typeof suiteHeaders[i - 1] !== "undefined") {
+            if (suiteHeaders[i].correlationId === suiteHeaders[i - 1].correlationId) {
+              suiteHeaders[i - 1].isRebased = true;
+            }
+          }
+          suiteHeaders[i].selectedVersion = document.querySelector('.suite-name-container>.preformatted').innerHTML;
         }
         $rootScope.suiteHeaders = suiteHeaders;
-        $rootScope.reportPath = window.location.search;
+        var reportPath = window.location.href;
+        var reportUrl = new URL(reportPath);
+        var currentVersion = reportUrl.searchParams.get('version');
+
+        if (currentVersion === null) {
+          $rootScope.reportPath = location.protocol + "//" + location.host + location.pathname + window.location.search;
+        } else {
+          reportPath = window.location.search.split('&');
+          reportPath = reportPath[0] + "&" + reportPath[1] + "&" + reportPath[2];
+          $rootScope.reportPath = location.protocol + "//" + location.host + location.pathname + reportPath;
+        }
       }, function errorCallback(response) {
         $rootScope.fullSuiteName = response.data['message'];
       });

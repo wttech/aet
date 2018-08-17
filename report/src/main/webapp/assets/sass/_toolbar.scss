@@ -245,13 +245,13 @@
 .suite-history-container {
   position: absolute;
   left:22%;
-  top:120px;
+  top:160px;
   width:670px;
   padding-bottom:10px;
   border:1px solid $border-color;
   background-color: #fff;
   background: $gray_light;
-  box-shadow: 5px 5px 4px 2px rgba(0,0,0,0.25) !important;
+  box-shadow: 0px 0px 7px 7px rgba(0,0,0,0.25) !important;
   display: block;
 
   .suite-history-top-bar {
@@ -296,9 +296,28 @@
     margin:0 auto;
     padding:12px 0;
     float: left;
+    color: $history;
 
-    &>a:hover {
-      color: $blue;
+    &:hover {
+      color: darken($history, 20%);
+    }
+
+    .suite-history-rebased-bold {
+      font-weight: bold;
+      color: $historyRebased;
+  
+      &:hover {
+        cursor: default;
+      }
+    }
+  
+    .suite-history-bold {
+      font-weight: bold;
+      color: darken($history, 20%);
+  
+      &:hover {
+        cursor: default;
+      }
     }
 
     .suite-history-arrow {
@@ -306,6 +325,10 @@
       color: $grayish;
       font-size:18px;
     }
+  }
+
+  .suite-history-rebased {
+    color: $historyRebased;
   }
 }
 
