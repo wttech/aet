@@ -14,22 +14,16 @@ class TestsList extends Component {
     listOfTests = {...listOfTests}.tests;
     if (listOfTests) {
       return Object.values(listOfTests).map((test, index) => {
-        if(this.props.searchTests.length > 0) {
-          if(test.name.name.includes(this.props.searchTests)) {
-            return (
-              <div key={index} className="test-item" onClick={() => this.handleTestLoading(test)}>
-                <h2 className="test-name">{test.name.name}</h2>
-              </div> 
-            )
-          } else {
-            return null;
-          }
-        } else {
+        let searchValue = null;
+        Object.keys(this.props.searchTests).length ? searchValue = this.props.searchTests : searchValue = "";
+        if(test.name.name.includes(searchValue)) {
           return (
             <div key={index} className="test-item" onClick={() => this.handleTestLoading(test)}>
               <h2 className="test-name">{test.name.name}</h2>
             </div> 
           )
+        } else {
+          return null;
         }
       });
     }
