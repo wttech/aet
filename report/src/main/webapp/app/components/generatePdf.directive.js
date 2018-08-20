@@ -113,6 +113,32 @@ define(['angularAMD', 'blob-stream', 'canvas2pdf', 'metadataService'], function 
           }
         }
 
+        var casesFailed = 0;
+        var casesPassed = 0;
+        var casesWarning = 0;
+        var casesRebased = 0;
+
+        testsByCategories.forEach(function(cat) {
+          casesFailed += cat.failed;
+          casesPassed += cat.passed;
+          casesWarning += cat.warning;
+          casesRebased += cat.rebased;
+        })
+
+        var testColors = {
+          failed: '#bb5a5a',
+          warning: '#f0ad4e',
+          passed: '#6f9f00',
+          rebased: '#0097fe',
+        };
+
+        var testLabels = {
+          failed: 'Failed',
+          warning: 'Warning',
+          passed: 'Passed',
+          rebased: 'Rebased',
+        };
+
         var tests = {
           stats: {
             failed: $('.pull-right>.failed').text(),
@@ -120,18 +146,8 @@ define(['angularAMD', 'blob-stream', 'canvas2pdf', 'metadataService'], function 
             passed: $('.pull-right>.passed').text(),
             rebased: $('.pull-right>.rebased').text(),
           },
-          colors: {
-            failed: '#bb5a5a',
-            warning: '#f0ad4e',
-            passed: '#6f9f00',
-            rebased: '#0097fe',
-          },
-          labels: {
-            failed: 'Failed',
-            warning: 'Warning',
-            passed: 'Passed',
-            rebased: 'Rebased',
-          },
+          colors: testColors,
+          labels: testLabels,
           parameters: {
             startingX: 100,
             startingY: 430,
@@ -153,23 +169,13 @@ define(['angularAMD', 'blob-stream', 'canvas2pdf', 'metadataService'], function 
 
         var cases = {
           stats: {
-            failed: $('.toolbar-blocks>.toolbar-block:nth-child(2)>.failed')[0].innerHTML,
-            warning: $('.toolbar-blocks>.toolbar-block:nth-child(2)>.warning').text(),
-            passed: $('.toolbar-blocks>.toolbar-block:nth-child(2)>.passed').text(),
-            rebased: $('.toolbar-blocks>.toolbar-block:nth-child(2)>.rebased')[0].innerHTML,
+            failed: casesFailed,
+            warning: casesWarning,
+            passed: casesPassed,
+            rebased: casesRebased,
           },
-          colors: {
-            failed: '#bb5a5a',
-            warning: '#f0ad4e',
-            passed: '#6f9f00',
-            rebased: '#0097fe',
-          },
-          labels: {
-            failed: 'Failed',
-            warning: 'Warning',
-            passed: 'Passed',
-            rebased: 'Rebased',
-          },
+          colors: testColors,
+          labels: testLabels,
           parameters: {
             startingX: 100,
             startingY: 210,
@@ -200,7 +206,7 @@ define(['angularAMD', 'blob-stream', 'canvas2pdf', 'metadataService'], function 
         generateChart(ctx, tests);
         generateChart(ctx, cases);
         ctx.doc.addPage();
-        generateChartsForTests(ctx, testsByCategories);
+        generateChartsForTests(ctx, testsByCategories, testColors, testLabels);
 
         ctx.stream.on('finish', function () {
           var suiteID = $('.toolbar-blocks>.toolbar-block:first-child>span').text().trim();
@@ -309,7 +315,7 @@ define(['angularAMD', 'blob-stream', 'canvas2pdf', 'metadataService'], function 
         ctx.stroke();
       }
 
-      function generateChartsForTests(ctx, testsByCategories) {
+      function generateChartsForTests(ctx, testsByCategories, testColors, testLabels) {
         for (var i = 0; i < testsByCategories.length; i++) {
           var test = {
             stats: {
@@ -318,18 +324,8 @@ define(['angularAMD', 'blob-stream', 'canvas2pdf', 'metadataService'], function 
               passed: testsByCategories[i].passed,
               rebased: testsByCategories[i].rebased,
             },
-            colors: {
-              failed: '#bb5a5a',
-              warning: '#f0ad4e',
-              passed: '#6f9f00',
-              rebased: '#0097fe',
-            },
-            labels: {
-              failed: 'Failed',
-              warning: 'Warning',
-              passed: 'Passed',
-              rebased: 'Rebased',
-            },
+            colors: testColors,
+            labels: testLabels,
             parameters: {
               startingX: 100,
               startingY: 100,
