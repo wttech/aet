@@ -18,13 +18,13 @@
 define([], function () {
   'use strict';
   return ['$scope', '$rootScope', '$uibModal', '$stateParams',
-    'patternsService', 'metadataAccessService', 'notesService',
-    'viewModeService', 'suiteInfoService',
+    '$http', 'patternsService', 'metadataAccessService',
+    'notesService', 'viewModeService', 'suiteInfoService',
     ToolbarBottomController];
 
   function ToolbarBottomController($scope, $rootScope, $uibModal, $stateParams,
-      patternsService, metadataAccessService, notesService, viewModeService,
-      suiteInfoService) {
+      $http, patternsService, metadataAccessService, notesService,
+      viewModeService, suiteInfoService) {
     var vm = this;
 
     // disables accept button if compared against another suite patterns
@@ -35,6 +35,7 @@ define([], function () {
     vm.showRevertButton = patternsMarkedForUpdateMayBeReverted;
     vm.displayCommentModal = displayCommentModal;
     vm.scrollSidepanel = scrollSidepanel;
+    vm.displayAlert = displayAlert;
 
     $rootScope.$on('metadata:changed', updateToolbar);
     $scope.$watch('viewMode', function() {
@@ -132,6 +133,24 @@ define([], function () {
             $reportGroup.addClass('is-expanded');
             performScroll($currentElement);
         }
+    }
+
+    function displayAlert(){
+        alert("Rerun in progress...");
+        var suiteInfo = suiteInfoService.getInfo();
+        var payload = new FormData();
+        payload.append("company",suiteInfo.company);
+        payload.append("project",suiteInfo.project);
+        payload.append("suite",suiteInfo.name);
+        payload.append("test",vm.model.name);
+        var config = { headers:{'Content-Type':undefined} };
+        const url='http://aet-vagrant:8181/suite-rerun';
+        $http.post(url,payload,config).then(function successCallback(response) {
+             //console.log(response.data);  #ToDo
+             console.log("Test to rerun accepted...");
+           }, function errorCallback(response) {
+             console.log(response.statusText);
+          });
     }
 
     function performScroll (element) {
