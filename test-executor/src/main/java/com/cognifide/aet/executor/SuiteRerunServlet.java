@@ -68,6 +68,8 @@ public class SuiteRerunServlet extends HttpServlet {
 
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
+
+    addCors(response);
     String correlationId = request.getParameter(Helper.CORRELATION_ID_PARAM);
     String suiteName = request.getParameter(Helper.SUITE_PARAM);
     String testName = request.getParameter(Helper.TEST_RERUN_PARAM);
@@ -128,6 +130,21 @@ public class SuiteRerunServlet extends HttpServlet {
       response.setCharacterEncoding(CharEncoding.UTF_8);
       response.getWriter().write(responseBody);
     }
+  }
+  
+  @Override
+  protected void doOptions(HttpServletRequest req, HttpServletResponse resp)
+      throws ServletException, IOException {
+    resp.setHeader("Access-Control-Allow-Origin", "*");
+    resp.setHeader("Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept");
+    resp.setHeader("Access-Control-Allow-Methods", "POST");
+  }
+  private void addCors(HttpServletResponse response) {
+    response.setHeader("Access-Control-Allow-Origin", "*");
+    response.setHeader("Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept");
+    response.setHeader("Access-Control-Allow-Methods", "POST");
   }
 
   @Activate
