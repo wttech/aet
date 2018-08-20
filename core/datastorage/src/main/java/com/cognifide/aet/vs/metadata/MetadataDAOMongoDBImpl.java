@@ -23,7 +23,6 @@ import com.cognifide.aet.vs.SimpleDBKey;
 import com.cognifide.aet.vs.StorageException;
 import com.cognifide.aet.vs.SuiteVersion;
 import com.cognifide.aet.vs.mongodb.MongoDBClient;
-import com.google.common.base.Function;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Collections2;
 import com.mongodb.client.FindIterable;
@@ -153,7 +152,7 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
         .sort(Sorts.descending(SUITE_VERSION_PARAM_NAME));
 
     return StreamSupport.stream(found.spliterator(), false)
-        .map((Function<Document, Suite>) document -> new DocumentConverter(document).toSuite())
+        .map(document -> new DocumentConverter(document).toSuite())
         .collect(Collectors.toList());
   }
 
@@ -168,7 +167,7 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
         .sort(Sorts.descending(SUITE_VERSION_PARAM_NAME));
 
     return StreamSupport.stream(found.spliterator(), false)
-        .map((Function<Document, SuiteVersion>) document -> new SuiteVersion(
+        .map(document -> new SuiteVersion(
             document.getString(CORRELATION_ID_PARAM_NAME),
             document.getInteger(SUITE_VERSION_PARAM_NAME)))
         .collect(Collectors.toList());
