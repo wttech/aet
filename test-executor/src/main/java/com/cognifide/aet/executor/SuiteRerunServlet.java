@@ -1,20 +1,40 @@
+/**
+ * AET
+ *
+ * Copyright (C) 2013 Cognifide Limited
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
+ */
 package com.cognifide.aet.executor;
 
+import static com.cognifide.aet.rest.BasicDataServlet.isValidCorrelationId;
+import static com.cognifide.aet.rest.BasicDataServlet.isValidName;
+import static com.cognifide.aet.rest.BasicDataServlet.responseAsJson;
+
+import com.cognifide.aet.communication.api.execution.SuiteExecutionResult;
+import com.cognifide.aet.communication.api.metadata.Suite;
+import com.cognifide.aet.communication.api.metadata.Test;
+import com.cognifide.aet.communication.api.metadata.ValidatorException;
+import com.cognifide.aet.executor.http.HttpSuiteExecutionResultWrapper;
+import com.cognifide.aet.rest.Helper;
+import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.MetadataDAO;
-import com.cognifide.aet.vs.SimpleDBKey;
+import com.cognifide.aet.vs.StorageException;
+import com.google.gson.Gson;
 import java.io.IOException;
-import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
+import java.net.HttpURLConnection;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.fileupload.FileItemIterator;
-import org.apache.commons.fileupload.FileItemStream;
-import org.apache.commons.fileupload.FileUploadException;
-import org.apache.commons.fileupload.servlet.ServletFileUpload;
-import org.apache.commons.fileupload.util.Streams;
 import org.apache.commons.lang3.CharEncoding;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
@@ -28,19 +48,12 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Service
-@Component(label = "SuiteRerunServlet", description = "Executes received test", immediate = true)
+@Component(label = "Suite Rerun Servlet", description = "Executes received test suite", immediate = true)
 public class SuiteRerunServlet extends HttpServlet {
-
-  private static final long serialVersionUID = -4708227978736783811L;
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SuiteRerunServlet.class);
   private static final String SERVLET_PATH = "/suite-rerun";
-  private static final String SUITE_PARAM = "suite";
-  private static final String NAME_PARAM = "name";
-  private static final String TEST_PARAM = "rerun";
-  private static final String COMPANY_PARAM = "company";
-  private static final String PROJECT_PARAM = "project";
-  private static final String VERSION_PARAM = "version";
+  private static final long serialVersionUID = 6317770911546678642L;
 
   @Reference
   private HttpService httpService;
@@ -49,48 +62,77 @@ public class SuiteRerunServlet extends HttpServlet {
   private SuiteExecutor suiteExecutor;
 
   @Reference
-  private MetadataDAO metadataDAO;
+  private transient MetadataDAO metadataDAO;
 
+  private static final Gson GSON = new Gson();
 
+  /**
+   * Starts processing of the test suite defined in the XML file provided in post body. Overrides
+   * domain specified in the suite file if one has been provided in post body. Returns JSON defined
+   * by {@link SuiteExecutionResult}. The request's content type must be 'multipart/form-data'.
+   */
+  @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
-    //ToDo
-    if (ServletFileUpload.isMultipartContent(request)) {
-      Map<String, String> requestData = getRequestData(request);
-      final String suite = requestData.get(SUITE_PARAM);
-      final String company = requestData.get(COMPANY_PARAM);
-      final String project = requestData.get(PROJECT_PARAM);
-      final String version = requestData.get(VERSION_PARAM);
+    String correlationId = request.getParameter(Helper.CORRELATION_ID_PARAM);
+    String suiteName = request.getParameter(Helper.SUITE_PARAM);
+    String testName = request.getParameter(Helper.TEST_RERUN_PARAM);
 
-      SimpleDBKey simpleDBKey = new SimpleDBKey(company, project);
-      try{
-        metadataDAO.listSuites(simpleDBKey)
-      }catch(Exception e){
-        // ToDo
+    Suite suite;
+
+    DBKey dbKey;
+    try {
+      dbKey = Helper.getDBKeyFromRequest(request);
+    } catch (ValidatorException e) {
+      LOGGER.error("Validation problem!", e);
+      response.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
+      return;
+    }
+
+    try {
+      if (isValidCorrelationId(correlationId)) {
+        suite = metadataDAO.getSuite(dbKey, correlationId);
+      } else if (isValidName(suiteName)) {
+        suite = metadataDAO.getLatestRun(dbKey, suiteName);
+      } else {
+        response.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
+        response.getWriter()
+            .write(responseAsJson(GSON,
+                "Neither valid correlationId or suite param was specified."));
+        return;
       }
+    } catch (StorageException e) {
+      LOGGER.error("Failed to get suite", e);
+      response.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
+      response.getWriter().write(responseAsJson(GSON, "Failed to get suite: %s", e.getMessage()));
+      return;
+    }
 
-//      if (StringUtils.isNotBlank(suite)) {
-//        HttpSuiteExecutionResultWrapper resultWrapper = suiteExecutor
-//            .execute(suite, name, domain, null, null);
-//        final SuiteExecutionResult suiteExecutionResult = resultWrapper.getExecutionResult();
-//        Gson gson = new Gson();
-//
-//        String responseBody = gson.toJson(suiteExecutionResult);
-//
-//        if (resultWrapper.hasError()) {
-//          response.sendError(resultWrapper.getStatusCode(),
-//              suiteExecutionResult.getErrorMessage());
-//        } else {
-//          response.setStatus(HttpStatus.SC_OK);
-//          response.setContentType("application/json");
-//          response.setCharacterEncoding(CharEncoding.UTF_8);
-//          response.getWriter().write(responseBody);
-//        }
-//      } else {
-//        response.sendError(HttpStatus.SC_BAD_REQUEST, "Request does not contain the test suite");
-//      }
+    Test testToRerun = suite.getTest(testName);
+    suite.removeAllTests();
+    suite.addTest(testToRerun);
+
+    HttpSuiteExecutionResultWrapper resultWrapper = null;
+
+    try {
+      resultWrapper = suiteExecutor.executeSuite(suite);
+    } catch (javax.jms.JMSException e) {
+      e.printStackTrace();
+    }
+
+    final SuiteExecutionResult suiteExecutionResult = resultWrapper.getExecutionResult();
+    Gson gson = new Gson();
+
+    String responseBody = gson.toJson(suiteExecutionResult);
+
+    if (resultWrapper.hasError()) {
+      response.sendError(resultWrapper.getStatusCode(),
+          suiteExecutionResult.getErrorMessage());
     } else {
-      response.sendError(HttpStatus.SC_BAD_REQUEST, "Request content is incorrect");
+      response.setStatus(HttpStatus.SC_OK);
+      response.setContentType("application/json");
+      response.setCharacterEncoding(CharEncoding.UTF_8);
+      response.getWriter().write(responseBody);
     }
   }
 
@@ -109,22 +151,4 @@ public class SuiteRerunServlet extends HttpServlet {
     httpService = null;
   }
 
-  private Map<String, String> getRequestData(HttpServletRequest request) {
-    Map<String, String> requestData = new HashMap<>();
-
-    ServletFileUpload upload = new ServletFileUpload();
-    try {
-      FileItemIterator itemIterator = upload.getItemIterator(request);
-      while (itemIterator.hasNext()) {
-        FileItemStream item = itemIterator.next();
-        InputStream itemStream = item.openStream();
-        String value = Streams.asString(itemStream, CharEncoding.UTF_8);
-        requestData.put(item.getFieldName(), value);
-      }
-    } catch (FileUploadException | IOException e) {
-      LOGGER.error("Failed to process request", e);
-    }
-
-    return requestData;
-  }
 }

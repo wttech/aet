@@ -130,6 +130,18 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
     return tests;
   }
 
+  public Test getTest(String testName){
+    for (Test test: this.tests) {
+      if(test.getName().equals(testName)){
+        return test;
+      }
+    }
+    return null;
+  }
+
+  public void removeAllTests(){
+    tests.clear();
+  }
   public boolean addTest(Test test) {
     return tests.add(test);
   }

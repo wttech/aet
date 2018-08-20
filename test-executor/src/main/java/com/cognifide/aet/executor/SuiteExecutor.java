@@ -19,6 +19,7 @@ import com.cognifide.aet.communication.api.execution.ProcessingStatus;
 import com.cognifide.aet.communication.api.execution.SuiteExecutionResult;
 import com.cognifide.aet.communication.api.execution.SuiteStatusResult;
 import com.cognifide.aet.communication.api.metadata.Suite;
+import com.cognifide.aet.communication.api.metadata.Test;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.executor.http.HttpSuiteExecutionResultWrapper;
@@ -29,7 +30,6 @@ import com.cognifide.aet.executor.xmlparser.api.TestSuiteParser;
 import com.cognifide.aet.executor.xmlparser.xml.XmlTestSuiteParser;
 import com.cognifide.aet.rest.LockService;
 import com.cognifide.aet.rest.helpers.ReportConfigurationManager;
-import com.cognifide.aet.vs.MetadataDAO;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.RemovalListener;
@@ -125,6 +125,7 @@ public class SuiteExecutor {
     suiteStatusHandler = new SuiteStatusHandler(suiteStatusCache);
   }
 
+
   /**
    * Executes the test suite provided as a parameter.
    *
@@ -138,7 +139,6 @@ public class SuiteExecutor {
    */
   HttpSuiteExecutionResultWrapper execute(String suiteString, String name, String domain,
           String patternCorrelationId, String patternSuite) {
-    SuiteRunner suiteRunner = null;
     HttpSuiteExecutionResultWrapper result;
 
     TestSuiteParser xmlFileParser = new XmlTestSuiteParser();
@@ -150,24 +150,10 @@ public class SuiteExecutor {
 
       String validationError = suiteValidator.validateTestSuiteRun(testSuiteRun);
       if (validationError == null) {
-        final Suite suite = suiteFactory.suiteFromTestSuiteRun(testSuiteRun);
+        Suite suite = suiteFactory.suiteFromTestSuiteRun(testSuiteRun);
         suite.validate(Sets.newHashSet("version", "runTimestamp"));
 
-        if (lockTestSuite(suite)) {
-          suiteRunner = createSuiteRunner(suite);
-          suiteRunner.runSuite();
-
-          String statusUrl = getStatusUrl(suite);
-          String htmlReportUrl = getReportUrl(HTML_REPORT_URL_FORMAT,
-              reportConfigurationManager.getReportDomain(), suite);
-          String xunitReportUrl = getReportUrl(XUNIT_REPORT_URL_FORMAT, StringUtils.EMPTY, suite);
-          result = HttpSuiteExecutionResultWrapper.wrap(
-              SuiteExecutionResult.createSuccessResult(suite.getCorrelationId(), statusUrl,
-                  htmlReportUrl, xunitReportUrl));
-        } else {
-          result = HttpSuiteExecutionResultWrapper.wrapError(
-              SuiteExecutionResult.createErrorResult(LOCKED_SUITE_MESSAGE), HttpStatus.SC_LOCKED);
-        }
+        result = executeSuite(suite);
       } else {
         result = HttpSuiteExecutionResultWrapper
             .wrapError(SuiteExecutionResult.createErrorResult(validationError),
@@ -184,12 +170,28 @@ public class SuiteExecutor {
       result = HttpSuiteExecutionResultWrapper
           .wrapError(SuiteExecutionResult.createErrorResult(e.getMessage()),
               HttpStatus.SC_INTERNAL_SERVER_ERROR);
-      if (suiteRunner != null) {
-        suiteRunner.close();
-      }
     }
 
     return result;
+  }
+
+  public HttpSuiteExecutionResultWrapper executeSuite(Suite suite) throws JMSException {
+    SuiteRunner suiteRunner = null;
+    if (lockTestSuite(suite)) {
+      suiteRunner = createSuiteRunner(suite);
+      suiteRunner.runSuite();
+
+      String statusUrl = getStatusUrl(suite);
+      String htmlReportUrl = getReportUrl(HTML_REPORT_URL_FORMAT,
+          reportConfigurationManager.getReportDomain(), suite);
+      String xunitReportUrl = getReportUrl(XUNIT_REPORT_URL_FORMAT, StringUtils.EMPTY, suite);
+      return HttpSuiteExecutionResultWrapper.wrap(
+          SuiteExecutionResult.createSuccessResult(suite.getCorrelationId(), statusUrl,
+              htmlReportUrl, xunitReportUrl));
+    } else {
+      return HttpSuiteExecutionResultWrapper.wrapError(
+          SuiteExecutionResult.createErrorResult(LOCKED_SUITE_MESSAGE), HttpStatus.SC_LOCKED);
+    }
   }
 
   /**

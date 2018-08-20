@@ -33,13 +33,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Component
-abstract class BasicDataServlet extends HttpServlet {
+public abstract class BasicDataServlet extends HttpServlet {
 
   private static final long serialVersionUID = -6301708910829830328L;
 
   private static final Logger LOGGER = LoggerFactory.getLogger(BasicDataServlet.class);
 
-  private static final Gson GSON = new Gson();
+  protected static final Gson GSON = new Gson();
 
   @Reference
   private transient HttpService httpService;
@@ -66,7 +66,7 @@ abstract class BasicDataServlet extends HttpServlet {
     } catch (ValidatorException e) {
       LOGGER.error("Validation problem!", e);
       resp.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
-      resp.getWriter().write(responseAsJson("There were validation errors when parsing suite: %s",
+      resp.getWriter().write(responseAsJson(GSON,"There were validation errors when parsing suite: %s",
           e.getAllViolationMessages()));
       return;
     }
@@ -89,11 +89,11 @@ abstract class BasicDataServlet extends HttpServlet {
   }
 
 
-  boolean isValidName(String suiteName) {
+  public static boolean isValidName(String suiteName) {
     return ValidatorProvider.getValidator().validateValue(Suite.class, "name", suiteName).isEmpty();
   }
 
-  boolean isValidCorrelationId(String correlationId) {
+  public static boolean isValidCorrelationId(String correlationId) {
     return ValidatorProvider.getValidator()
         .validateValue(Suite.class, "correlationId", correlationId).isEmpty();
   }
@@ -101,7 +101,7 @@ abstract class BasicDataServlet extends HttpServlet {
   protected abstract void process(DBKey dbKey, HttpServletRequest req, HttpServletResponse resp)
       throws IOException;
 
-  protected String responseAsJson(String format, Object... args) {
+  public static String responseAsJson(Gson GSON, String format, Object... args) {
     return GSON.toJson(new ErrorMessage(format, args));
   }
 
