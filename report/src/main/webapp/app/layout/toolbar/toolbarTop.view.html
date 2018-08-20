@@ -49,7 +49,12 @@
             data-trigger="hover" data-container="body">{{toolbarTop.suiteStatistics.warning}}</span>
       /
       <span class="status passed" data-toggle="popover" data-content="Passed cases"
-            data-trigger="hover" data-container="body">{{toolbarTop.suiteStatistics.passed}}</span>
+            data-trigger="hover" data-container="body">
+        {{toolbarTop.suiteStatistics.passed}}
+      </span>
+      <span class="status conditionallyPassed" data-toggle="popover" data-content="Conditionally passed cases"
+      data-trigger="hover" data-container="body"> ({{toolbarTop.suiteStatistics.conditionallyPassed}})
+      </span>
       /
       <span class="status rebased" data-toggle="popover" data-content="Accepted cases"
             data-trigger="hover" data-container="body">{{toolbarTop.suiteStatistics.rebased}}</span>&nbsp;)
