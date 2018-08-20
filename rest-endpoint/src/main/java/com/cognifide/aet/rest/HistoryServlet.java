@@ -18,10 +18,9 @@ package com.cognifide.aet.rest;
 import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.StorageException;
+import com.cognifide.aet.vs.SuitVersion;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import java.util.List;
@@ -53,7 +52,7 @@ public class HistoryServlet extends BasicDataServlet {
       throws IOException {
     String suiteName = req.getParameter(Helper.SUITE_PARAM);
     resp.setCharacterEncoding("UTF-8");
-    List<List<String>> suitVersions = null;
+    List<SuitVersion> suitVersions = null;
     try {
       if (isValidName(suiteName)) {
         suitVersions = metadataDAO.listSuiteVersions(dbKey, suiteName);
@@ -66,15 +65,7 @@ public class HistoryServlet extends BasicDataServlet {
     }
 
     if (suitVersions != null && suitVersions.size() > 0) {
-      JsonArray jsonArray = suitVersions
-          .stream()
-          .map(suitVersion -> {
-            JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("correlationId", suitVersion.get(0));
-            jsonObject.addProperty("version", Integer.parseInt(suitVersion.get(1)));
-            return jsonObject;
-          }).collect(JsonArray::new, JsonArray::add, JsonArray::add);
-      String result = PRETTY_PRINT_GSON.toJson(jsonArray);
+      String result = PRETTY_PRINT_GSON.toJson(suitVersions);
       resp.setContentType("application/json");
       resp.getWriter().write(result);
     } else {
