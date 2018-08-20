@@ -74,7 +74,7 @@ public interface MetadataDAO extends Serializable {
    * @param name - name of suite
    * @return List of suite's correlationsIds & versions that were found in database.
    */
-  List<SuitVersion> listSuiteVersions(DBKey dbKey, String name) throws StorageException;
+  List<SuiteVersion> listSuiteVersions(DBKey dbKey, String name) throws StorageException;
 
   /**
    * Removes suite from .metadata collection.

@@ -21,7 +21,7 @@ import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.SimpleDBKey;
 import com.cognifide.aet.vs.StorageException;
-import com.cognifide.aet.vs.SuitVersion;
+import com.cognifide.aet.vs.SuiteVersion;
 import com.cognifide.aet.vs.mongodb.MongoDBClient;
 import com.google.common.base.Function;
 import com.google.common.base.Predicates;
@@ -157,7 +157,7 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
         .collect(Collectors.toList());
   }
 
-  public List<SuitVersion> listSuiteVersions(DBKey dbKey, String name) throws StorageException {
+  public List<SuiteVersion> listSuiteVersions(DBKey dbKey, String name) throws StorageException {
     MongoCollection<Document> metadata = getMetadataCollection(dbKey);
     LOGGER.debug("Fetching all versions of suite: `{}` , company: `{}`, project: `{}`.", name,
         dbKey.getCompany(),
@@ -168,7 +168,7 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
         .sort(Sorts.descending(SUITE_VERSION_PARAM_NAME));
 
     return StreamSupport.stream(found.spliterator(), false)
-        .map((Function<Document, SuitVersion>) document -> new SuitVersion(
+        .map((Function<Document, SuiteVersion>) document -> new SuiteVersion(
             document.getString(CORRELATION_ID_PARAM_NAME),
             document.getInteger(SUITE_VERSION_PARAM_NAME)))
         .collect(Collectors.toList());

@@ -18,7 +18,7 @@ package com.cognifide.aet.rest;
 import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.StorageException;
-import com.cognifide.aet.vs.SuitVersion;
+import com.cognifide.aet.vs.SuiteVersion;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.IOException;
@@ -52,10 +52,10 @@ public class HistoryServlet extends BasicDataServlet {
       throws IOException {
     String suiteName = req.getParameter(Helper.SUITE_PARAM);
     resp.setCharacterEncoding("UTF-8");
-    List<SuitVersion> suitVersions = null;
+    List<SuiteVersion> suiteVersions = null;
     try {
       if (isValidName(suiteName)) {
-        suitVersions = metadataDAO.listSuiteVersions(dbKey, suiteName);
+        suiteVersions = metadataDAO.listSuiteVersions(dbKey, suiteName);
       }
     } catch (StorageException e) {
       LOGGER.error("Failed to get suite's history", e);
@@ -64,8 +64,8 @@ public class HistoryServlet extends BasicDataServlet {
       return;
     }
 
-    if (suitVersions != null && suitVersions.size() > 0) {
-      String result = PRETTY_PRINT_GSON.toJson(suitVersions);
+    if (suiteVersions.size() > 0) {
+      String result = PRETTY_PRINT_GSON.toJson(suiteVersions);
       resp.setContentType("application/json");
       resp.getWriter().write(result);
     } else {

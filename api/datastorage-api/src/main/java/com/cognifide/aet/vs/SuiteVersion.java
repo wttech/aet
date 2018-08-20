@@ -15,12 +15,12 @@
  */
 package com.cognifide.aet.vs;
 
-public class SuitVersion {
+public class SuiteVersion {
   private final String correlationId;
 
   private final Integer version;
 
-  public SuitVersion(String correlationId, Integer version) {
+  public SuiteVersion(String correlationId, Integer version) {
     this.correlationId = correlationId;
     this.version = version;
   }
