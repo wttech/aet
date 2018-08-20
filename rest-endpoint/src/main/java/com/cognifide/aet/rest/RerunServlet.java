@@ -18,22 +18,42 @@ package com.cognifide.aet.rest;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.StorageException;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.net.HttpURLConnection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.osgi.service.component.annotations.Component;
+import org.apache.felix.scr.annotations.Activate;
+import org.apache.felix.scr.annotations.Component;
+import org.apache.felix.scr.annotations.Deactivate;
+import org.apache.felix.scr.annotations.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Component(service = BasicDataServlet.class, immediate = true)
+@Service
+@Component(label = "Rerun Servlet", immediate = true)
 public class RerunServlet extends BasicDataServlet {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(RerunServlet.class);
+  private static final Gson PRETTY_PRINT_GSON = new GsonBuilder().setPrettyPrinting().create();
 
   @Override
   protected void process(DBKey dbKey, HttpServletRequest request, HttpServletResponse response)
       throws IOException {
+    String result = PRETTY_PRINT_GSON.toJson("dupa");
+    response.setContentType("application/json");
+    response.getWriter().write(result);
 
+  }
+
+  @Activate
+  public void start(){
+    register(Helper.getRerunPath());
+  }
+
+  @Deactivate
+  public void stop(){
+    unregister(Helper.getRerunPath());
   }
 }

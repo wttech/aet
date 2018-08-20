@@ -25,6 +25,7 @@ public final class Helper {
   static final String REST_PREFIX = "/api";
   static final String ARTIFACT_PART_PATH = "artifact";
   static final String METADATA_PART_PATH = "metadata";
+  static final String RERUN_PART_PATH = "rerun";
   static final String REPORT_PART_PATH = "/report";
   static final String CONFIGS_PART_PATH = "/configs";
   static final String LOCK_PART_PATH = "/lock";
@@ -68,6 +69,10 @@ public final class Helper {
 
   public static String getReportPathDefaultPage() {
     return REPORT_PART_PATH + PATH_SEPARATOR + REPORT_PART_PATH_DEFAULT_PAGE;
+  }
+
+  public static String getRerunPath(){
+    return REST_PREFIX + PATH_SEPARATOR + RERUN_PART_PATH;
   }
 
   public static DBKey getDBKeyFromRequest(HttpServletRequest req) throws ValidatorException {
