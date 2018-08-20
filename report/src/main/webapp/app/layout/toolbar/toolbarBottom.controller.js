@@ -142,6 +142,7 @@ define([], function () {
         payload.append("company",suiteInfo.company);
         payload.append("project",suiteInfo.project);
         payload.append("suite",suiteInfo.name);
+        payload.append("test",vm.model.name);
         var config = { headers:{'Content-Type':undefined} };
         const url='http://aet-vagrant:8181/suite-rerun';
         $http.post(url,payload,config).then(function successCallback(response) {
