@@ -1,7 +1,23 @@
+/*
+ * AET
+ *
+ * Copyright (C) 2013 Cognifide Limited
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package com.cognifide.aet.executor;
 
-import com.cognifide.aet.vs.MetadataDAO;
-import com.cognifide.aet.vs.SimpleDBKey;
+import com.google.gson.JsonObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -36,11 +52,9 @@ public class SuiteRerunServlet extends HttpServlet {
   private static final Logger LOGGER = LoggerFactory.getLogger(SuiteRerunServlet.class);
   private static final String SERVLET_PATH = "/suite-rerun";
   private static final String SUITE_PARAM = "suite";
-  private static final String NAME_PARAM = "name";
-  private static final String TEST_PARAM = "rerun";
+  private static final String TEST_PARAM = "test";
   private static final String COMPANY_PARAM = "company";
   private static final String PROJECT_PARAM = "project";
-  private static final String VERSION_PARAM = "version";
 
   @Reference
   private HttpService httpService;
@@ -48,50 +62,44 @@ public class SuiteRerunServlet extends HttpServlet {
   @Reference
   private SuiteExecutor suiteExecutor;
 
-  @Reference
-  private MetadataDAO metadataDAO;
-
 
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
-    //ToDo
-    if (ServletFileUpload.isMultipartContent(request)) {
-      Map<String, String> requestData = getRequestData(request);
-      final String suite = requestData.get(SUITE_PARAM);
-      final String company = requestData.get(COMPANY_PARAM);
-      final String project = requestData.get(PROJECT_PARAM);
-      final String version = requestData.get(VERSION_PARAM);
+    addCors(response);
+    Map<String, String> requestData = getRequestData(request);
+    final String suite = requestData.get(SUITE_PARAM);
+    final String company = requestData.get(COMPANY_PARAM);
+    final String project = requestData.get(PROJECT_PARAM);
+    final String test = requestData.get(TEST_PARAM);
 
-      SimpleDBKey simpleDBKey = new SimpleDBKey(company, project);
-      try{
-        metadataDAO.listSuites(simpleDBKey)
-      }catch(Exception e){
-        // ToDo
-      }
-
-//      if (StringUtils.isNotBlank(suite)) {
-//        HttpSuiteExecutionResultWrapper resultWrapper = suiteExecutor
-//            .execute(suite, name, domain, null, null);
-//        final SuiteExecutionResult suiteExecutionResult = resultWrapper.getExecutionResult();
-//        Gson gson = new Gson();
-//
-//        String responseBody = gson.toJson(suiteExecutionResult);
-//
-//        if (resultWrapper.hasError()) {
-//          response.sendError(resultWrapper.getStatusCode(),
-//              suiteExecutionResult.getErrorMessage());
-//        } else {
-//          response.setStatus(HttpStatus.SC_OK);
-//          response.setContentType("application/json");
-//          response.setCharacterEncoding(CharEncoding.UTF_8);
-//          response.getWriter().write(responseBody);
-//        }
-//      } else {
-//        response.sendError(HttpStatus.SC_BAD_REQUEST, "Request does not contain the test suite");
-//      }
-    } else {
-      response.sendError(HttpStatus.SC_BAD_REQUEST, "Request content is incorrect");
+    try {
+      response.setStatus(HttpStatus.SC_OK);
+      response.setContentType("application/json");
+      response.setCharacterEncoding(CharEncoding.UTF_8);
+      JsonObject jo = new JsonObject();
+      jo.addProperty("message", "ok");
+      jo.addProperty("test",test);
+      response.getWriter().write(jo.toString());
+    } catch (Exception e) {
+      response.sendError(HttpStatus.SC_BAD_REQUEST,
+          "No suite found for name " + suite + ", project " + project + ", company " + company);
     }
+  }
+
+  @Override
+  protected void doOptions(HttpServletRequest req, HttpServletResponse resp)
+      throws ServletException, IOException {
+    resp.setHeader("Access-Control-Allow-Origin", "*");
+    resp.setHeader("Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept");
+    resp.setHeader("Access-Control-Allow-Methods", "POST");
+  }
+
+  private void addCors(HttpServletResponse response) {
+    response.setHeader("Access-Control-Allow-Origin", "*");
+    response.setHeader("Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept");
+    response.setHeader("Access-Control-Allow-Methods", "POST");
   }
 
   @Activate

@@ -73,6 +73,7 @@ public class SuiteServlet extends HttpServlet {
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
+    addCors(response);
     if (ServletFileUpload.isMultipartContent(request)) {
       Map<String, String> requestData = getRequestData(request);
       final String suite = requestData.get(SUITE_PARAM);
@@ -104,6 +105,20 @@ public class SuiteServlet extends HttpServlet {
     } else {
       response.sendError(HttpStatus.SC_BAD_REQUEST, "Request content is incorrect");
     }
+  }
+
+  @Override
+  protected void doOptions(HttpServletRequest req, HttpServletResponse resp)
+      throws ServletException, IOException {
+    resp.setHeader("Access-Control-Allow-Origin", "*");
+    resp.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    resp.setHeader("Access-Control-Allow-Methods", "POST");
+  }
+
+  private void addCors(HttpServletResponse response){
+    response.setHeader("Access-Control-Allow-Origin", "*");
+    response.setHeader("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    response.setHeader("Access-Control-Allow-Methods", "POST");
   }
 
   @Activate

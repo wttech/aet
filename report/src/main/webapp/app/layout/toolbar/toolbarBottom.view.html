@@ -28,8 +28,16 @@
            data-ng-click="toolbarBottom.scrollSidepanel(false)">
             <i class="fas fa-crosshairs fa-sm"></i>
         </div>
+      <div ng-if="toolbarBottom.viewMode != 'url'"class="fontawesome-link"
+           data-toggle="popover"
+           data-content="Rerun current test"
+           data-trigger="hover"
+           data-container="body"
+           data-ng-click="toolbarBottom.displayAlert()">
+        <i class="far fa-play-circle fa-sm"></i>
+      </div>
         <span class="preformatted">{{toolbarBottom.viewMode}}:</span>
-        <span ng-if="toolbarBottom.viewMode != 'url'">{{toolbarBottom.model.name}}</span>
+      <span ng-if="toolbarBottom.viewMode != 'url'">{{toolbarBottom.model.name}}</button></span>
         <a ng-if="toolbarBottom.viewMode == 'url'"
             href="{{toolbarBottom.model.domain + toolbarBottom.model.url}}" target="_blank"
             data-toggle="popover"
