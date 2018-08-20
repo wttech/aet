@@ -35,7 +35,7 @@ define([], function () {
     vm.showRevertButton = patternsMarkedForUpdateMayBeReverted;
     vm.displayCommentModal = displayCommentModal;
     vm.scrollSidepanel = scrollSidepanel;
-    vm.displayAlert = displayAlert;
+    vm.rerunTest = rerunTest;
 
     $rootScope.$on('metadata:changed', updateToolbar);
     $scope.$watch('viewMode', function() {
@@ -135,17 +135,24 @@ define([], function () {
         }
     }
 
-    function displayAlert(){
+    function rerunSuite(){
+      //ToDo
+    }
+
+    function rerunTest(){
         alert("Rerun in progress...");
         var suiteInfo = suiteInfoService.getInfo();
-        var payload = new FormData();
-        payload.append("company",suiteInfo.company);
-        payload.append("project",suiteInfo.project);
-        payload.append("suite",suiteInfo.name);
-        payload.append("test",vm.model.name);
-        var config = { headers:{'Content-Type':undefined} };
-        const url='http://aet-vagrant:8181/suite-rerun';
-        $http.post(url,payload,config).then(function successCallback(response) {
+//        var payload = new FormData();
+//        payload.append("company",suiteInfo.company);
+//        payload.append("project",suiteInfo.project);
+//        payload.append("suite",suiteInfo.name);
+//        payload.append("test",vm.model.name);
+
+        var rerunParams = "company=" + suiteInfo.company + "&" + "project=" + suiteInfo.project + "&" +
+           "suite=" + suiteInfo.name + "&" + "test=" + vm.model.name;
+        //var config = { headers:{'Content-Type':undefined} };
+        const url='http://aet-vagrant:8181/suite-rerun?' + rerunParams;
+        $http.post(url,{}).then(function successCallback(response) {
              //console.log(response.data);  #ToDo
              console.log("Test to rerun accepted...");
            }, function errorCallback(response) {
