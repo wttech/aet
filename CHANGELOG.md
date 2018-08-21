@@ -10,6 +10,7 @@ All notable changes to AET will be documented in this file.
 ## Unreleased
 **List of changes that are finished but not yet released in any final version.**
 
+- [PR-327](https://github.com/Cognifide/aet/pull/327) Default web driver changed from Firefox to Chrome
 - [PR-294](https://github.com/Cognifide/aet/pull/294) Added support for full page screenshot in chrome
 - [PR-293](https://github.com/Cognifide/aet/pull/293) Added error treshold in pixels and percentages for screen comparator
 - [PR-300](https://github.com/Cognifide/aet/pull/300) Added creating indexes for collection
