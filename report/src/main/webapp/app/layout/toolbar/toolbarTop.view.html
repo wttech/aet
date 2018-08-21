@@ -74,6 +74,11 @@
       <span class="preformatted" data-toggle="popover" data-content="Suite version"
             data-trigger="hover" data-container="body">v{{toolbarTop.suiteInfo.version}}</span>
       </div>
+      <span ng-if="toolbarTop.suiteInfo.version !== suiteHeaders[0].version"
+            style="vertical-align:middle" data-toggle="popover"
+            data-content="Go to latest version" data-trigger="hover">
+        <a href="{{reportPath}}&version={{suiteHeaders[0].version}}"><i class="fas fa-angle-double-up set-initial-font-size"></i></a>
+      </span>
     </div>
     <div class="toolbar-block">
             <span data-toggle="popover" data-content="Last modified" data-trigger="hover">
