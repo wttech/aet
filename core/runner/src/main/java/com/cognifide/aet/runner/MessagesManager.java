@@ -16,9 +16,9 @@
 package com.cognifide.aet.runner;
 
 import com.cognifide.aet.communication.api.exceptions.AETException;
+import com.cognifide.aet.runner.configuration.MessagesManagerConf;
 import java.io.IOException;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.Set;
 import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
@@ -26,21 +26,15 @@ import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.felix.scr.annotations.Activate;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Property;
-import org.apache.felix.scr.annotations.Service;
-import org.apache.sling.commons.osgi.PropertiesUtil;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.metatype.annotations.Designate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Service(MessagesManager.class)
-@Component(immediate = true, metatype = true, description = "AET Messages Manager", label = "AET Messages Manager")
+@Component(service = MessagesManager.class, immediate = true)
+@Designate(ocd = MessagesManagerConf.class)
 public class MessagesManager {
-
-  private static final String JMX_URL_PROPERTY_NAME = "jxm-url";
-
-  private static final String DEFAULT_JMX_URL = "service:jmx:rmi:///jndi/rmi://localhost:11199/jmxrmi";
 
   private static final String REMOVE_OPERATION_NAME = "removeMatchingMessages";
 
@@ -58,12 +52,11 @@ public class MessagesManager {
 
   static final String DESTINATION_NAME_PROPERTY = "destinationName";
 
-  @Property(name = JMX_URL_PROPERTY_NAME, label = "ActiveMQ JMX endpoint URL", description = "ActiveMQ JMX endpoint URL", value = DEFAULT_JMX_URL)
-  private String jmxUrl;
+  private MessagesManagerConf config;
 
   @Activate
-  public void activate(Map properties) {
-    jmxUrl = PropertiesUtil.toString(properties.get(JMX_URL_PROPERTY_NAME), DEFAULT_JMX_URL);
+  public void activate(MessagesManagerConf config) {
+    this.config = config;
   }
 
   /**
@@ -76,7 +69,7 @@ public class MessagesManager {
     Object[] removeSelector = {JMS_CORRELATION_ID + "='" + correlationID + "'"};
     String[] signature = {STRING_SIGNATURE};
 
-    try (JMXConnector jmxc = getJmxConnection(jmxUrl)) {
+    try (JMXConnector jmxc = getJmxConnection(config.jmxUrl())) {
       MBeanServerConnection connection = jmxc.getMBeanServerConnection();
       for (ObjectName queue : getAetQueuesObjects(connection)) {
         String queueName = queue.getKeyProperty(DESTINATION_NAME_PROPERTY);
@@ -95,10 +88,6 @@ public class MessagesManager {
       throw new IllegalArgumentException("Queue name can't be null or empty string!");
     }
     return AET_QUEUE_DOMAIN + name;
-  }
-
-  protected String getJmxUrl() {
-    return jmxUrl;
   }
 
   protected Set<ObjectName> getAetQueuesObjects(MBeanServerConnection connection)

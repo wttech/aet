@@ -26,12 +26,10 @@ import com.cognifide.aet.cleaner.processors.StartMetadataCleanupProcessor;
 import com.cognifide.aet.cleaner.processors.SuitesRemovePredicateProcessor;
 import com.cognifide.aet.communication.api.exceptions.AETException;
 import org.apache.camel.builder.RouteBuilder;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.Service;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
-@Service(MetadataCleanerRouteBuilder.class)
-@Component(label = "AET Metadata Cleaner Route Builder")
+@Component(service = MetadataCleanerRouteBuilder.class)
 public class MetadataCleanerRouteBuilder extends RouteBuilder {
 
   private static final String ERROR_ENDPOINT = "seda:Error";
