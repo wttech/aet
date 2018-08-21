@@ -28,7 +28,7 @@ java.util.Date date = new java.util.Date();
 	</div>
 </div>
 <script>
-	setTimeout(function(){ document.getElementById("date-panel").style.display = 'none'; }, 3000);
+	setTimeout(function(){ document.getElementById("date-panel").style.display = 'none'; }, 10000);
 </script>
 <%@ include file="/includes/bodyContent.jsp" %>
 <%@ include file="/includes/footer.jsp" %>

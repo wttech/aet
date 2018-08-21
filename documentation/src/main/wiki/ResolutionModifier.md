@@ -1,10 +1,10 @@
 #### Resolution Modifier
 
-Resolution Modifier is responsible for changing browser screen size. Affects [[Screen Collector | ScreenCollector]] results.  
+Resolution Modifier is responsible for changing browser screen size. Affects [[Screen Collector | ScreenCollector]] results.
 
 | ! Note |
 |:------ |
-| Please note that final resoulution of screenshots may be different when scrollbar is dispayed. <br/><br/> Default  width of Firefox's Scrollbar is equal to 33px.  (so when you want to grab viewport of size 1024, then set width parameter to 1057px) |
+| Firefox: Please note that final resoulution of screenshots may be different when scrollbar is dispayed. <br/><br/> Default  width of Firefox's Scrollbar is equal to 33px.  (so when you want to grab viewport of size 1024, then set width parameter to 1057px) |
 
 Module name: **resolution**
 
@@ -12,12 +12,12 @@ Module name: **resolution**
 
 | Parameter | Value | Description | Mandatory |
 | --------- | ----- | ----------- | --------- |
-| `width` | int (1 to 100000) | Window width | no |
-| `height` | int (1 to 100000) | Window height | no |
+| `width` | int (1 to 15000) | Window width | yes |
+| `height` | int (1 to 15000) | Window height | no |
 
-| ! Important information |
-|:----------------------- |
-| You cannot maximize the window and specify the dimension at the same time. If you specify height param you have to also specify width param and vice versa. |
+| Note |
+|:------ |
+| When height is not specified then it's computed by JavaScript. <br/> **If the resolution is specified without height parameter it should be specified after [`open`](https://github.com/Cognifide/aet/wiki/Open)**. |
 
 ##### Example Usage
 
