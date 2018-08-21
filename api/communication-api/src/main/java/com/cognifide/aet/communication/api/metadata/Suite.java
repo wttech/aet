@@ -52,8 +52,13 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
   private static final Type SUITE_TYPE = new TypeToken<Suite>() {
   }.getType();
 
+  public void setCorrelationId(String correlationId) {
+    this.correlationId = correlationId;
+  }
+
   @NotBlank
-  private final String correlationId;
+  private String correlationId;
+
 
   @NotBlank
   @Size(max = 30)

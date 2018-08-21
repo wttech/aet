@@ -35,6 +35,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.crypto.Data;
 import org.apache.commons.lang3.CharEncoding;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
@@ -107,6 +108,7 @@ public class SuiteRerunServlet extends HttpServlet {
     Test testToRerun = suite.getTest(testName);
     suite.removeAllTests();
     suite.addTest(testToRerun);
+    suite.setCorrelationId(String.valueOf(System.currentTimeMillis()));
 
     HttpSuiteExecutionResultWrapper resultWrapper = null;
 
@@ -131,20 +133,18 @@ public class SuiteRerunServlet extends HttpServlet {
       response.getWriter().write(responseBody);
     }
   }
-  
+
   @Override
   protected void doOptions(HttpServletRequest req, HttpServletResponse resp)
       throws ServletException, IOException {
-    resp.setHeader("Access-Control-Allow-Origin", "*");
-    resp.setHeader("Access-Control-Allow-Headers",
-        "Origin, X-Requested-With, Content-Type, Accept");
-    resp.setHeader("Access-Control-Allow-Methods", "POST");
+    addCors(resp);
   }
+
   private void addCors(HttpServletResponse response) {
-    response.setHeader("Access-Control-Allow-Origin", "*");
-    response.setHeader("Access-Control-Allow-Headers",
-        "Origin, X-Requested-With, Content-Type, Accept");
-    response.setHeader("Access-Control-Allow-Methods", "POST");
+      response.setHeader("Access-Control-Allow-Origin", "*");
+      response.setHeader("Access-Control-Allow-Headers",
+          "Origin, X-Requested-With, Content-Type, Accept");
+      response.setHeader("Access-Control-Allow-Methods", "POST");
   }
 
   @Activate
