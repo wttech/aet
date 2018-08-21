@@ -22,12 +22,10 @@ import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.vs.ArtifactsDAO;
 import java.util.Map;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.Service;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
-@Component(description = "AET Screen Collector Factory", label = "AET Screen Collector Factory")
-@Service
+@Component
 public class ScreenCollectorFactory implements CollectorFactory {
 
   @Reference

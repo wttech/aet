@@ -16,6 +16,7 @@
 package com.cognifide.aet.vs.mongodb;
 
 import com.cognifide.aet.vs.metadata.MetadataDAOMongoDBImpl;
+import com.cognifide.aet.vs.mongodb.configuration.MongoDBClientConf;
 import com.mongodb.DB;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
@@ -25,45 +26,30 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Map;
 import java.util.Set;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.felix.scr.annotations.Activate;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Deactivate;
-import org.apache.felix.scr.annotations.Property;
-import org.apache.felix.scr.annotations.Service;
-import org.apache.sling.commons.osgi.PropertiesUtil;
 import org.bson.BsonDocument;
 import org.bson.BsonInt32;
 import org.bson.Document;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.metatype.annotations.Designate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Service(MongoDBClient.class)
-@Component(immediate = true, metatype = true, label = "AET MongoDB Client", description = "AET MongoDB Client")
+@Component(service = MongoDBClient.class, immediate = true)
+@Designate(ocd = MongoDBClientConf.class)
 public class MongoDBClient {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(MongoDBClient.class);
 
-  private static final String MONGO_URI = "MongoURI";
-
-  private static final String DEFAULT_MONGODB_URI = "mongodb://localhost";
-
   private static final int MAX_DB_NAME_LENGTH = 64;
-
-  private static final boolean DEFAULT_AUTOCREATE_VALUE = false;
 
   public static final String DB_NAME_SEPARATOR = "_";
 
-  @Property(name = MONGO_URI, label = "MongoURI", description =
-      "mongodb://[username:password@]host1[:port1][,host2[:port2],"
-          + "...[,hostN[:portN]]][/[database][?options]]", value = DEFAULT_MONGODB_URI)
   private String mongoUri;
 
-  private static final String ALLOW_AUTO_CREATE = "AllowAutoCreate";
-
-  @Property(name = ALLOW_AUTO_CREATE, label = "Allow automatic creation of DB", description = "Allows automatic creation of DB if set to true", boolValue = DEFAULT_AUTOCREATE_VALUE)
   private Boolean allowAutoCreate;
 
   private MongoClient mongoClient;
@@ -73,8 +59,9 @@ public class MongoDBClient {
   }
 
   @Activate
-  public void activate(Map properties) {
-    setupProperties(properties);
+  public void activate(MongoDBClientConf config) {
+    this.mongoUri = config.mongoURI();
+    this.allowAutoCreate = config.allowAutoCreate();
     try {
       setupMongoDBConnection();
     } catch (Exception e) {
@@ -116,13 +103,7 @@ public class MongoDBClient {
 
     return companies;
   }
-
-  private void setupProperties(Map properties) {
-    this.mongoUri = PropertiesUtil.toString(properties.get(MONGO_URI), DEFAULT_MONGODB_URI);
-    this.allowAutoCreate = PropertiesUtil.toBoolean(properties.get(ALLOW_AUTO_CREATE),
-        DEFAULT_AUTOCREATE_VALUE);
-  }
-
+  
   private void setupMongoDBConnection() throws UnknownHostException {
     mongoClient = new MongoClient(new MongoClientURI(mongoUri));
     testConnection();

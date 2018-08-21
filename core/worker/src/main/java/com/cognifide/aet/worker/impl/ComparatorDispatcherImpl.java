@@ -35,14 +35,12 @@ import java.util.List;
 import javax.annotation.Nullable;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.exception.ExceptionUtils;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.Service;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Service
-@Component(label = "AET Comparator Dispatcher", description = "Comparator Dispatcher", immediate = true)
+@Component(immediate = true)
 public class ComparatorDispatcherImpl implements ComparatorDispatcher {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(ComparatorDispatcherImpl.class);
