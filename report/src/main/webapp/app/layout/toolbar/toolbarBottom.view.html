@@ -28,12 +28,12 @@
            data-ng-click="toolbarBottom.scrollSidepanel(false)">
             <i class="fas fa-crosshairs fa-sm"></i>
         </div>
-      <div ng-if="toolbarBottom.viewMode != 'url'"class="fontawesome-link"
+      <div ng-if="toolbarBottom.viewMode != 'url' && toolbarBottom.viewMode != 'suite'"class="fontawesome-link"
            data-toggle="popover"
            data-content="Rerun current test"
            data-trigger="hover"
            data-container="body"
-           data-ng-click="toolbarBottom.displayAlert()">
+           data-ng-click="toolbarBottom.rerunTest()">
         <i class="far fa-play-circle fa-sm"></i>
       </div>
         <span class="preformatted">{{toolbarBottom.viewMode}}:</span>
