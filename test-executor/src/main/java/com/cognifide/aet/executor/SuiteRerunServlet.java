@@ -73,6 +73,10 @@ public class SuiteRerunServlet extends HttpServlet {
 
   private static final Gson GSON = new Gson();
 
+  private SuiteExecutionResult suiteExecutionResult;
+
+  private HttpSuiteExecutionResultWrapper resultWrapper = null;
+
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
 
@@ -81,81 +85,78 @@ public class SuiteRerunServlet extends HttpServlet {
     String suiteName = request.getParameter(Helper.SUITE_PARAM);
     String testName = request.getParameter(Helper.TEST_RERUN_PARAM);
 
-    Suite suite;
-
+    Suite suite = null;
     DBKey dbKey;
+
     try {
       dbKey = Helper.getDBKeyFromRequest(request);
-    } catch (ValidatorException e) {
+      suite = getSuiteFromMetadata(dbKey, correlationId, suiteName);
+    } catch (ValidatorException | StorageException e) {
       LOGGER.error("Validation problem!", e);
       response.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
       return;
     }
 
-    try {
-      if (isValidCorrelationId(correlationId)) {
-        suite = metadataDAO.getSuite(dbKey, correlationId);
-      } else if (isValidName(suiteName)) {
-        suite = metadataDAO.getLatestRun(dbKey, suiteName);
-      } else {
-        response.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
-        response.getWriter()
-            .write(responseAsJson(GSON,
-                "Neither valid correlationId or suite param was specified."));
-        return;
-      }
-    } catch (StorageException e) {
-      LOGGER.error("Failed to get suite", e);
-      response.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
-      response.getWriter().write(responseAsJson(GSON, "Failed to get suite: %s", e.getMessage()));
-      return;
-    }
-
-    Test testToRerun = suite.getTest(testName);
-    suite.removeAllTests();
-    suite.addTest(testToRerun);
-    suite.setCorrelationId(
-        generateCorrelationId(suite.getCompany(), suite.getProject(), suite.getName()));
-    for (Test test : suite.getTests()) {
-      for (Url url : test.getUrls()) {
-        url.setCollectionStats(null);
-        for (Step step : url.getSteps()) {
-          step.setStepResult(null);
-
-          //step.setStatistics(new Statistics());
-          if(step.getComparators() == null) continue;
-          for (Comparator comparator : step.getComparators()) {
-            comparator.setStepResult(null);
-            comparator.setFilters(new ArrayList<>());
-           // comparator.addFilter(new Operation());
-   //         comparator.setStatistics(null);
-          }
-        }
-      }
-    }
-    HttpSuiteExecutionResultWrapper resultWrapper = null;
+    prepareSuiteToRerun(suite, testName);
 
     try {
       resultWrapper = suiteExecutor.executeSuite(suite);
-    } catch (javax.jms.JMSException e) {
-      e.printStackTrace();
-    } catch (ValidatorException e) {
+      createResponse(resultWrapper, response);
+    } catch (javax.jms.JMSException | ValidatorException e) {
       e.printStackTrace();
     }
+  }
 
-    final SuiteExecutionResult suiteExecutionResult = resultWrapper.getExecutionResult();
-    Gson gson = new Gson();
-
-    String responseBody = gson.toJson(suiteExecutionResult);
+  private void createResponse(HttpSuiteExecutionResultWrapper resultWrapper,
+      HttpServletResponse response) throws IOException {
+    suiteExecutionResult = resultWrapper.getExecutionResult();
+    String responseBody = GSON.toJson(suiteExecutionResult);
 
     if (resultWrapper.hasError()) {
-      response.sendError(resultWrapper.getStatusCode(),
-          suiteExecutionResult.getErrorMessage());
+      response.sendError(resultWrapper.getStatusCode(), suiteExecutionResult.getErrorMessage());
     } else {
       response.setStatus(HttpStatus.SC_OK);
       response.setContentType("application/json");
       response.setCharacterEncoding(CharEncoding.UTF_8);
       response.getWriter().write(responseBody);
+    }
+  }
+
+  private void prepareSuiteToRerun(Suite suite, String testName) {
+    Test testToRerun = suite.getTest(testName);
+    suite.removeAllTests();
+    suite.addTest(testToRerun);
+    suite.setCorrelationId(
+        generateCorrelationId(suite.getCompany(), suite.getProject(), suite.getName()));
+    cleanDataFromSuite(suite);
+  }
+
+  private void cleanDataFromSuite(Suite suite) {
+    for (Test test : suite.getTests()) {
+      for (Url url : test.getUrls()) {
+        url.setCollectionStats(null);
+        for (Step step : url.getSteps()) {
+          step.setStepResult(null);
+          if (step.getComparators() == null) {
+            continue;
+          }
+          for (Comparator comparator : step.getComparators()) {
+            comparator.setStepResult(null);
+            comparator.setFilters(new ArrayList<>());
+          }
+        }
+      }
+    }
+  }
+
+  private Suite getSuiteFromMetadata(DBKey dbKey, String correlationId, String suiteName)
+      throws StorageException {
+    if (isValidCorrelationId(correlationId)) {
+      return metadataDAO.getSuite(dbKey, correlationId);
+    } else if (isValidName(suiteName)) {
+      return metadataDAO.getLatestRun(dbKey, suiteName);
+    } else {
+      return null;
     }
   }
 
