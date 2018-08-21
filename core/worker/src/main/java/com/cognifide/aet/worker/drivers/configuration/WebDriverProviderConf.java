@@ -23,6 +23,6 @@ public @interface WebDriverProviderConf {
 
   String DEFAULT_WEB_DRIVER_NAME_LABEL = "Default Web Driver name";
 
-  @AttributeDefinition(name = DEFAULT_WEB_DRIVER_NAME_LABEL, defaultValue = "chrome")
-  String defaultWebDriverName();
+  @AttributeDefinition(name = DEFAULT_WEB_DRIVER_NAME_LABEL)
+  String defaultWebDriverName() default "chrome";
 }

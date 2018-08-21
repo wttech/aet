@@ -33,12 +33,12 @@ public @interface FirefoxWebDriverFactoryConf {
 
   String DEFAULT_FIREFOX_ERROR_LOG_FILE_PATH = "/opt/aet/firefox/log/stderr.log";
 
-  @AttributeDefinition(name = NAME_LABEL, defaultValue = DEFAULT_FF_NAME)
-  String name();
+  @AttributeDefinition(name = NAME_LABEL)
+  String name() default DEFAULT_FF_NAME;
 
-  @AttributeDefinition(name = PATH_LABEL, defaultValue = DEFAULT_FIREFOX_BINARY_PATH)
-  String path();
+  @AttributeDefinition(name = PATH_LABEL)
+  String path() default DEFAULT_FIREFOX_BINARY_PATH;
 
-  @AttributeDefinition(name = LOG_FILE_PATH_LABEL, defaultValue = DEFAULT_FIREFOX_ERROR_LOG_FILE_PATH)
-  String logFilePath();
+  @AttributeDefinition(name = LOG_FILE_PATH_LABEL)
+  String logFilePath() default DEFAULT_FIREFOX_ERROR_LOG_FILE_PATH;
 }

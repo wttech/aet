@@ -39,7 +39,7 @@ import org.osgi.service.metatype.annotations.Designate;
 
 
 @Component(
-    property = {"name = " + Constants.SERVICE_VENDOR, "value = Cognifide Ltd"}
+    property = {Constants.SERVICE_VENDOR + "=Cognifide Ltd"}
 )
 @Designate(ocd = FirefoxWebDriverFactoryConf.class)
 public class FirefoxWebDriverFactory implements WebDriverFactory {

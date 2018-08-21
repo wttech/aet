@@ -40,14 +40,12 @@ import org.openqa.selenium.remote.RemoteWebDriver;
 import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.ConfigurationPolicy;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.metatype.annotations.Designate;
 
 
 @Component(
-    configurationPolicy = ConfigurationPolicy.REQUIRE,
-    property = {"name = " + Constants.SERVICE_VENDOR, "value = Cognifide Ltd"}
+    property = {Constants.SERVICE_VENDOR + "=Cognifide Ltd"}
 )
 @Designate(ocd = ChromeWebDriverFactoryConf.class)
 public class ChromeWebDriverFactory implements WebDriverFactory {
