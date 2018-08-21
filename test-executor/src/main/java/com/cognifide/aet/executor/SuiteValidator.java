@@ -26,18 +26,12 @@ import com.cognifide.aet.vs.StorageException;
 import com.google.common.base.Joiner;
 import java.util.List;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.Service;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Service(SuiteValidator.class)
-@Component(
-    label = "AET Suite Validator",
-    description = "Validates received test suite",
-    immediate = true
-)
+@Component(service = SuiteValidator.class, immediate = true)
 public class SuiteValidator {
 
   private static final Logger LOG = LoggerFactory.getLogger(SuiteValidator.class);

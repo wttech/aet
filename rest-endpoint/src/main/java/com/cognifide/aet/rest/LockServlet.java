@@ -24,21 +24,18 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.felix.scr.annotations.Activate;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Deactivate;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.Service;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.http.HttpService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-
-@Service
-@Component(label = "LocksServlet", description = "Provides lock services for clients", immediate = true)
+@Component(immediate = true)
 public class LockServlet extends HttpServlet {
 
-  private static final long serialVersionUID = 101244102274582495L;
+  private static final long serialVersionUID = 638302620021335857L;
 
   private static final Logger LOGGER = LoggerFactory.getLogger(LockServlet.class);
 

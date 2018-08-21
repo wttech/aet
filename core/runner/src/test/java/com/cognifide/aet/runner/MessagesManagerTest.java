@@ -24,18 +24,22 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.cognifide.aet.communication.api.exceptions.AETException;
-import java.util.Collections;
+import com.cognifide.aet.runner.configuration.MessagesManagerConf;
 import javax.management.MBeanServerConnection;
 import javax.management.ObjectName;
 import javax.management.remote.JMXConnector;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Matchers;
+import org.mockito.Mock;
 import org.mockito.Mockito;
-import org.powermock.modules.junit4.PowerMockRunner;
+import org.mockito.runners.MockitoJUnitRunner;
 
-@RunWith(PowerMockRunner.class)
+@RunWith(MockitoJUnitRunner.class)
 public class MessagesManagerTest {
+
+  @Mock
+  private MessagesManagerConf config;
 
   @Test(expected = IllegalArgumentException.class)
   public void createFullQueueName_whenNameIsNull_expectException() throws Exception {
@@ -51,21 +55,6 @@ public class MessagesManagerTest {
   public void createFullQueueName_expectFullName() throws Exception {
     String fullQueueName = MessagesManager.createFullQueueName("test");
     assertThat(fullQueueName, is("AET.test"));
-  }
-
-  @Test
-  public void activate_whenUrlNotSet_expectDefaultJmxUrlSetup() throws Exception {
-    MessagesManager messagesManager = new MessagesManager();
-    messagesManager.activate(Collections.emptyMap());
-    assertThat(messagesManager.getJmxUrl(),
-        is("service:jmx:rmi:///jndi/rmi://localhost:11199/jmxrmi"));
-  }
-
-  @Test
-  public void activate_whenUrlSet_expectProvidedJmxUrlSetup() throws Exception {
-    MessagesManager messagesManager = new MessagesManager();
-    messagesManager.activate(Collections.singletonMap("jxm-url", "localhost:111999"));
-    assertThat(messagesManager.getJmxUrl(), is("localhost:111999"));
   }
 
   @Test
@@ -90,7 +79,7 @@ public class MessagesManagerTest {
         org.mockito.Matchers.<Object[]>any(), org.mockito.Matchers.<String[]>any()))
         .thenReturn(10);
 
-    messagesManager.activate(Collections.emptyMap());
+    messagesManager.activate(config);
     messagesManager.remove("correlation-company-correlation-12345");
 
     verify(mockedConnection, times(1)).invoke(objectName, "removeMatchingMessages",

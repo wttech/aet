@@ -25,7 +25,7 @@
     </div>
 </div>
 <script>
-    setTimeout(function(){ document.getElementById("test-element").style.display = ''; }, 4000);
+    setTimeout(function(){ document.getElementById("test-element").style.display = ''; }, 11000);
 </script>
 
 <%
