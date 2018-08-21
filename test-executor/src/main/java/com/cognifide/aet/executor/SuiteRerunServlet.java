@@ -21,11 +21,15 @@ import static com.cognifide.aet.rest.BasicDataServlet.isValidName;
 import static com.cognifide.aet.rest.BasicDataServlet.responseAsJson;
 
 import com.cognifide.aet.communication.api.execution.SuiteExecutionResult;
+import com.cognifide.aet.communication.api.metadata.Comparator;
+import com.cognifide.aet.communication.api.metadata.Operation;
+import com.cognifide.aet.communication.api.metadata.Statistics;
+import com.cognifide.aet.communication.api.metadata.Step;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.Test;
+import com.cognifide.aet.communication.api.metadata.Url;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.executor.http.HttpSuiteExecutionResultWrapper;
-import com.cognifide.aet.executor.model.CorrelationIdGenerator;
 import com.cognifide.aet.rest.Helper;
 import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.MetadataDAO;
@@ -33,11 +37,11 @@ import com.cognifide.aet.vs.StorageException;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.net.HttpURLConnection;
+import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.xml.crypto.Data;
 import org.apache.commons.lang3.CharEncoding;
 import org.apache.felix.scr.annotations.Activate;
 import org.apache.felix.scr.annotations.Component;
@@ -110,13 +114,32 @@ public class SuiteRerunServlet extends HttpServlet {
     Test testToRerun = suite.getTest(testName);
     suite.removeAllTests();
     suite.addTest(testToRerun);
-    suite.setCorrelationId(generateCorrelationId(suite.getCompany(),suite.getProject(),suite.getName()));
+    suite.setCorrelationId(
+        generateCorrelationId(suite.getCompany(), suite.getProject(), suite.getName()));
+    for (Test test : suite.getTests()) {
+      for (Url url : test.getUrls()) {
+        url.setCollectionStats(null);
+        for (Step step : url.getSteps()) {
+          step.setStepResult(null);
 
+          //step.setStatistics(new Statistics());
+          if(step.getComparators() == null) continue;
+          for (Comparator comparator : step.getComparators()) {
+            comparator.setStepResult(null);
+            comparator.setFilters(new ArrayList<>());
+           // comparator.addFilter(new Operation());
+   //         comparator.setStatistics(null);
+          }
+        }
+      }
+    }
     HttpSuiteExecutionResultWrapper resultWrapper = null;
 
     try {
       resultWrapper = suiteExecutor.executeSuite(suite);
     } catch (javax.jms.JMSException e) {
+      e.printStackTrace();
+    } catch (ValidatorException e) {
       e.printStackTrace();
     }
 
@@ -143,10 +166,10 @@ public class SuiteRerunServlet extends HttpServlet {
   }
 
   private void addCors(HttpServletResponse response) {
-      response.setHeader("Access-Control-Allow-Origin", "*");
-      response.setHeader("Access-Control-Allow-Headers",
-          "Origin, X-Requested-With, Content-Type, Accept");
-      response.setHeader("Access-Control-Allow-Methods", "POST");
+    response.setHeader("Access-Control-Allow-Origin", "*");
+    response.setHeader("Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept");
+    response.setHeader("Access-Control-Allow-Methods", "POST");
   }
 
   @Activate

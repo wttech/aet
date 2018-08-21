@@ -152,8 +152,6 @@ public class SuiteExecutor {
       String validationError = suiteValidator.validateTestSuiteRun(testSuiteRun);
       if (validationError == null) {
         Suite suite = suiteFactory.suiteFromTestSuiteRun(testSuiteRun);
-        suite.validate(Sets.newHashSet("version", "runTimestamp"));
-
         result = executeSuite(suite);
       } else {
         result = HttpSuiteExecutionResultWrapper
@@ -180,7 +178,9 @@ public class SuiteExecutor {
     return result;
   }
 
-  public HttpSuiteExecutionResultWrapper executeSuite(Suite suite) throws JMSException {
+  public HttpSuiteExecutionResultWrapper executeSuite(Suite suite)
+      throws JMSException, ValidatorException {
+    suite.validate(Sets.newHashSet("version", "runTimestamp"));
     if (lockTestSuite(suite)) {
       suiteRunner = createSuiteRunner(suite);
       suiteRunner.runSuite();

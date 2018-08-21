@@ -30,9 +30,13 @@ public class Comparator extends Operation implements Commentable, Named {
 
   private ComparatorStepResult stepResult;
 
-  private final List<Operation> filters = new ArrayList<>();
+  private List<Operation> filters = new ArrayList<>();
 
   private String comment;
+
+  public void setFilters(List<Operation> filters) {
+    this.filters = filters;
+  }
 
   private Statistics statistics;
 
