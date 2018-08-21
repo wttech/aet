@@ -126,8 +126,7 @@ public class SuiteRerunServlet extends HttpServlet {
     Test testToRerun = suite.getTest(testName);
     suite.removeAllTests();
     suite.addTest(testToRerun);
-    suite.setCorrelationId(
-        generateCorrelationId(suite.getCompany(), suite.getProject(), suite.getName()));
+    suite.setRerunned(true);
     cleanDataFromSuite(suite);
   }
 

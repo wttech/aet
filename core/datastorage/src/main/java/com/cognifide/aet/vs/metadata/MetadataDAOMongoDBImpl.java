@@ -126,6 +126,20 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
   }
 
   @Override
+  public Suite overrideOneTestInSuite(Suite rerunnedSuite, String testName)
+      throws StorageException, ValidatorException {
+    SimpleDBKey dbKey = new SimpleDBKey(rerunnedSuite.getCompany(),rerunnedSuite.getProject() );
+    dbKey.validate(null);
+    Suite suite = getSuite(dbKey, rerunnedSuite.getCorrelationId());
+    removeSuite(dbKey, suite.getCorrelationId(), suite.getVersion());
+    suite.removeTest(testName);
+    suite.addTest(rerunnedSuite.getTest(testName));
+    suite.setRerunned(true);
+    saveSuite(suite);
+    return suite;
+  }
+
+  @Override
   public List<Suite> listSuites(DBKey dbKey) throws StorageException {
     MongoCollection<Document> metadata = getMetadataCollection(dbKey);
     LOGGER.debug("Fetching all suites for company: `{}`, project: `{}`.", dbKey.getCompany(),

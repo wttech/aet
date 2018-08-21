@@ -52,6 +52,10 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
   private static final Type SUITE_TYPE = new TypeToken<Suite>() {
   }.getType();
 
+  public boolean isRerunned() {
+    return isRerunned;
+  }
+
   public void setCorrelationId(String correlationId) {
     this.correlationId = correlationId;
   }
@@ -85,6 +89,12 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
   private String comment;
 
   private Statistics statistics;
+
+  public void setRerunned(boolean rerunned) {
+    isRerunned = rerunned;
+  }
+
+  private boolean isRerunned = false;
 
   @NotNull
   @Valid
@@ -147,6 +157,11 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
   public void removeAllTests(){
     tests.clear();
   }
+
+  public void removeTest(String testName){
+    tests.remove(getTest(testName));
+  }
+
   public boolean addTest(Test test) {
     return tests.add(test);
   }

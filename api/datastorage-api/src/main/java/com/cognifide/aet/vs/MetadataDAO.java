@@ -55,6 +55,9 @@ public interface MetadataDAO extends Serializable {
    */
   Suite getLatestRun(DBKey dbKey, String name) throws StorageException;
 
+  Suite overrideOneTestInSuite(Suite suite, String testName)
+      throws StorageException, ValidatorException;
+
   /**
    * @param dbKey - key with project and company name
    * @return List of suites that were found in database.
