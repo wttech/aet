@@ -107,6 +107,8 @@ public class SuiteExecutor {
 
   private SuiteStatusHandler suiteStatusHandler;
 
+  private SuiteRunner suiteRunner;
+
   @Activate
   public void activate(Map<String, Object> properties) {
     messageReceiveTimeout = PropertiesUtil.toLong(
@@ -140,7 +142,6 @@ public class SuiteExecutor {
   HttpSuiteExecutionResultWrapper execute(String suiteString, String name, String domain,
           String patternCorrelationId, String patternSuite) {
     HttpSuiteExecutionResultWrapper result;
-
     TestSuiteParser xmlFileParser = new XmlTestSuiteParser();
     try {
       TestSuiteRun testSuiteRun = xmlFileParser.parse(suiteString);
@@ -158,6 +159,7 @@ public class SuiteExecutor {
         result = HttpSuiteExecutionResultWrapper
             .wrapError(SuiteExecutionResult.createErrorResult(validationError),
                 HttpStatus.SC_BAD_REQUEST);
+
       }
     } catch (ParseException | ValidatorException e) {
       LOGGER.error("Failed to run test suite", e);
@@ -170,13 +172,15 @@ public class SuiteExecutor {
       result = HttpSuiteExecutionResultWrapper
           .wrapError(SuiteExecutionResult.createErrorResult(e.getMessage()),
               HttpStatus.SC_INTERNAL_SERVER_ERROR);
+      if (suiteRunner != null){
+        suiteRunner.close();
+      }
     }
 
     return result;
   }
 
   public HttpSuiteExecutionResultWrapper executeSuite(Suite suite) throws JMSException {
-    SuiteRunner suiteRunner = null;
     if (lockTestSuite(suite)) {
       suiteRunner = createSuiteRunner(suite);
       suiteRunner.runSuite();

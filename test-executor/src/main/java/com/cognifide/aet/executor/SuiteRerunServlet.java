@@ -15,6 +15,7 @@
  */
 package com.cognifide.aet.executor;
 
+import static com.cognifide.aet.executor.model.CorrelationIdGenerator.generateCorrelationId;
 import static com.cognifide.aet.rest.BasicDataServlet.isValidCorrelationId;
 import static com.cognifide.aet.rest.BasicDataServlet.isValidName;
 import static com.cognifide.aet.rest.BasicDataServlet.responseAsJson;
@@ -24,6 +25,7 @@ import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.Test;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.executor.http.HttpSuiteExecutionResultWrapper;
+import com.cognifide.aet.executor.model.CorrelationIdGenerator;
 import com.cognifide.aet.rest.Helper;
 import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.MetadataDAO;
@@ -108,7 +110,7 @@ public class SuiteRerunServlet extends HttpServlet {
     Test testToRerun = suite.getTest(testName);
     suite.removeAllTests();
     suite.addTest(testToRerun);
-    suite.setCorrelationId(String.valueOf(System.currentTimeMillis()));
+    suite.setCorrelationId(generateCorrelationId(suite.getCompany(),suite.getProject(),suite.getName()));
 
     HttpSuiteExecutionResultWrapper resultWrapper = null;
 
