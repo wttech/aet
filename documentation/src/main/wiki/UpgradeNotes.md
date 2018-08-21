@@ -11,9 +11,7 @@ You may see all changes in the [Changelog](https://github.com/Cognifide/aet/blob
 
 With the OSGI annotations update to 6.0.0 version we had to change a little bit variable names. Currently, your config could have old names and you have to update them. Please follow instruction below:
 
-Open `/opt/aet/karaf/aet_configs/current`
-
-Modify following OSGi config files (by default they should be located in /opt/aet/karaf/aet_configs/current):
+Modify following OSGi config files (by default they should be located in `/opt/aet/karaf/aet_configs/current`):
 
 |File name|Way to change variable names|
 |---|---|
