@@ -32,7 +32,7 @@ public @interface DefaultJmsConnectionConf {
       name = "brokerUrl",
       description = "URL of the broker, no trailing '/', see http://activemq.apache.org/uri-protocols.html",
       type = AttributeType.STRING)
-  String brokerURL() default DEFAULT_BROKER_URL_PARAM;
+  String url() default DEFAULT_BROKER_URL_PARAM;
 
   @AttributeDefinition(
       name = "username",
