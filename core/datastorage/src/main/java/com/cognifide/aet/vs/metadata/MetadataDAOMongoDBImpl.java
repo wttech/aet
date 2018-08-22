@@ -126,17 +126,29 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
   }
 
   @Override
-  public Suite overrideOneTestInSuite(Suite rerunnedSuite, String testName)
-      throws StorageException, ValidatorException {
-    SimpleDBKey dbKey = new SimpleDBKey(rerunnedSuite.getCompany(),rerunnedSuite.getProject() );
-    dbKey.validate(null);
-    Suite suite = getSuite(dbKey, rerunnedSuite.getCorrelationId());
-    removeSuite(dbKey, suite.getCorrelationId(), suite.getVersion());
-    suite.removeTest(testName);
-    suite.addTest(rerunnedSuite.getTest(testName));
-    suite.setRerunned(true);
-    saveSuite(suite);
-    return suite;
+  public Suite overrideOneTestInSuite(Suite suiteWithOneTest, String testName)
+      throws StorageException {
+    SimpleDBKey dbKey = new SimpleDBKey(suiteWithOneTest.getCompany(),suiteWithOneTest.getProject());
+    Suite oldSuite = getSuite(dbKey, suiteWithOneTest.getCorrelationId());
+    Suite newSuite = createNewSuiteWithReplacedTest(dbKey, suiteWithOneTest, testName);
+    return replaceSuite(oldSuite, newSuite);
+  }
+
+  private Suite createNewSuiteWithReplacedTest(DBKey dbKey, Suite suiteWithOneTest, String testName)
+      throws StorageException {
+    Suite newSuite = getSuite(dbKey, suiteWithOneTest.getCorrelationId());
+    newSuite.removeTest(testName);
+    newSuite.addTest(suiteWithOneTest.getTest(testName));
+    newSuite.setRerunned(true);
+    return newSuite;
+  }
+
+  @Override
+  public Suite replaceSuite(Suite oldSuite, Suite newSuite) throws StorageException {
+    MongoCollection<Document> metadata = getMetadataCollection(new SimpleDBKey(oldSuite));
+    LOGGER.debug("Replacing suite {} in  metadata collection.", oldSuite);
+    metadata.findOneAndReplace(Document.parse(oldSuite.toJson()),Document.parse(newSuite.toJson()));
+    return  newSuite;
   }
 
   @Override
