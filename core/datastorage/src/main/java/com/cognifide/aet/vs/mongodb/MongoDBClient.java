@@ -26,6 +26,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Optional;
 import java.util.Set;
 import org.apache.commons.lang3.StringUtils;
 import org.bson.BsonDocument;
@@ -104,13 +105,11 @@ public class MongoDBClient {
   }
 
   protected void setupConfiguration(MongoDBClientConf config) {
-    if (StringUtils.isNoneBlank(config.mongoURI())) {
-      this.mongoUri = config.mongoURI();
-    } else {
-      this.mongoUri = StringUtils.defaultString(
-          System.getenv(MongoDBClientConf.MONGODB_URI_ENV), MongoDBClientConf.DEFAULT_MONGODB_URI);
-    }
-    this.allowAutoCreate = config.allowAutoCreate();
+    mongoUri = Optional.of(config.mongoURI())
+        .filter(StringUtils::isNotBlank)
+        .orElseGet(() -> Optional.ofNullable(System.getenv(MongoDBClientConf.MONGODB_URI_ENV))
+            .orElse(MongoDBClientConf.DEFAULT_MONGODB_URI));
+    allowAutoCreate = config.allowAutoCreate();
   }
 
   private void setupMongoDBConnection() throws UnknownHostException {
