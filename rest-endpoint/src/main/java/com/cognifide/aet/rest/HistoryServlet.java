@@ -26,16 +26,15 @@ import java.net.HttpURLConnection;
 import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.felix.scr.annotations.Activate;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Deactivate;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.Service;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.http.HttpService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Service
-@Component(label = "HistoryServlet", description = "Returns Suite's History", immediate = true)
+@Component(immediate = true)
 public class HistoryServlet extends BasicDataServlet {
 
   private static final long serialVersionUID = 1774115103933538112L;
@@ -46,6 +45,9 @@ public class HistoryServlet extends BasicDataServlet {
 
   @Reference
   private MetadataDAO metadataDAO;
+
+  @Reference
+  private HttpService httpService;
 
   @Override
   protected void process(DBKey dbKey, HttpServletRequest req, HttpServletResponse resp)
@@ -85,5 +87,15 @@ public class HistoryServlet extends BasicDataServlet {
   @Deactivate
   public void stop() {
     unregister(Helper.getHistoryPath());
+  }
+
+  @Override
+  protected HttpService getHttpService() {
+    return this.httpService;
+  }
+
+  @Override
+  protected void setHttpService(HttpService httpService) {
+    this.httpService = httpService;
   }
 }
