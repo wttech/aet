@@ -19,7 +19,6 @@ import com.cognifide.aet.communication.api.execution.ProcessingStatus;
 import com.cognifide.aet.communication.api.execution.SuiteExecutionResult;
 import com.cognifide.aet.communication.api.execution.SuiteStatusResult;
 import com.cognifide.aet.communication.api.metadata.Suite;
-import com.cognifide.aet.communication.api.metadata.Test;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.executor.http.HttpSuiteExecutionResultWrapper;
@@ -151,20 +150,18 @@ public class SuiteExecutor {
 
       String validationError = suiteValidator.validateTestSuiteRun(testSuiteRun);
       if (validationError == null) {
-        Suite suite = suiteFactory.suiteFromTestSuiteRun(testSuiteRun);
+        final Suite suite = suiteFactory.suiteFromTestSuiteRun(testSuiteRun);
         result = executeSuite(suite);
       } else {
         result = HttpSuiteExecutionResultWrapper
             .wrapError(SuiteExecutionResult.createErrorResult(validationError),
                 HttpStatus.SC_BAD_REQUEST);
-
       }
     } catch (ParseException | ValidatorException e) {
       LOGGER.error("Failed to run test suite", e);
       result = HttpSuiteExecutionResultWrapper
           .wrapError(SuiteExecutionResult.createErrorResult(e.getMessage()),
               HttpStatus.SC_BAD_REQUEST);
-
     } catch (JMSException e) {
       LOGGER.error("Fatal error", e);
       result = HttpSuiteExecutionResultWrapper
@@ -178,7 +175,7 @@ public class SuiteExecutor {
     return result;
   }
 
-  public HttpSuiteExecutionResultWrapper executeSuite(Suite suite)
+  HttpSuiteExecutionResultWrapper executeSuite(Suite suite)
       throws JMSException, ValidatorException {
     suite.validate(Sets.newHashSet("version", "runTimestamp"));
     if (lockTestSuite(suite)) {

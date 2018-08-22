@@ -15,29 +15,15 @@
  */
 package com.cognifide.aet.executor;
 
-import static com.cognifide.aet.executor.model.CorrelationIdGenerator.generateCorrelationId;
-import static com.cognifide.aet.rest.BasicDataServlet.isValidCorrelationId;
-import static com.cognifide.aet.rest.BasicDataServlet.isValidName;
-import static com.cognifide.aet.rest.BasicDataServlet.responseAsJson;
-
 import com.cognifide.aet.communication.api.execution.SuiteExecutionResult;
-import com.cognifide.aet.communication.api.metadata.Comparator;
-import com.cognifide.aet.communication.api.metadata.Operation;
-import com.cognifide.aet.communication.api.metadata.Statistics;
-import com.cognifide.aet.communication.api.metadata.Step;
 import com.cognifide.aet.communication.api.metadata.Suite;
-import com.cognifide.aet.communication.api.metadata.Test;
-import com.cognifide.aet.communication.api.metadata.Url;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.executor.http.HttpSuiteExecutionResultWrapper;
 import com.cognifide.aet.rest.Helper;
-import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.MetadataDAO;
-import com.cognifide.aet.vs.StorageException;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.net.HttpURLConnection;
-import java.util.ArrayList;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -86,18 +72,15 @@ public class SuiteRerunServlet extends HttpServlet {
     String testName = request.getParameter(Helper.TEST_RERUN_PARAM);
 
     Suite suite = null;
-    DBKey dbKey;
 
     try {
-      dbKey = Helper.getDBKeyFromRequest(request);
-      suite = getSuiteFromMetadata(dbKey, correlationId, suiteName);
-    } catch (ValidatorException | StorageException e) {
+      suite = SuiteRerun
+          .getAndPrepareSuite(Helper.getDBKeyFromRequest(request), correlationId, suiteName,
+              testName);
+    } catch (ValidatorException e) {
       LOGGER.error("Validation problem!", e);
       response.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
-      return;
     }
-
-    prepareSuiteToRerun(suite, testName);
 
     try {
       resultWrapper = suiteExecutor.executeSuite(suite);
@@ -119,43 +102,6 @@ public class SuiteRerunServlet extends HttpServlet {
       response.setContentType("application/json");
       response.setCharacterEncoding(CharEncoding.UTF_8);
       response.getWriter().write(responseBody);
-    }
-  }
-
-  private void prepareSuiteToRerun(Suite suite, String testName) {
-    Test testToRerun = suite.getTest(testName);
-    suite.removeAllTests();
-    suite.addTest(testToRerun);
-    suite.setRerunned(true);
-    cleanDataFromSuite(suite);
-  }
-
-  private void cleanDataFromSuite(Suite suite) {
-    for (Test test : suite.getTests()) {
-      for (Url url : test.getUrls()) {
-        url.setCollectionStats(null);
-        for (Step step : url.getSteps()) {
-          step.setStepResult(null);
-          if (step.getComparators() == null) {
-            continue;
-          }
-          for (Comparator comparator : step.getComparators()) {
-            comparator.setStepResult(null);
-            comparator.setFilters(new ArrayList<>());
-          }
-        }
-      }
-    }
-  }
-
-  private Suite getSuiteFromMetadata(DBKey dbKey, String correlationId, String suiteName)
-      throws StorageException {
-    if (isValidCorrelationId(correlationId)) {
-      return metadataDAO.getSuite(dbKey, correlationId);
-    } else if (isValidName(suiteName)) {
-      return metadataDAO.getLatestRun(dbKey, suiteName);
-    } else {
-      return null;
     }
   }
 
