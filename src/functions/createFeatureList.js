@@ -1,7 +1,7 @@
 import React from 'react';
 import FeaturesList from "../containers/sidebars/FeaturesList";
 
-export const createFeatureList = () => {
+export const CreateFeatureList = () => {
   return (
     <div className="features-container">
     <FeaturesList type="collectors"/>

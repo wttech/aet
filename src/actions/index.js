@@ -157,3 +157,23 @@ export const deleteTestFromProject = (name) => ({
   type: "TEST_DELETED",
   payload: name
 });
+
+export const toggleComparatorsList = () => ({
+  type: "COMPARATORS_LIST_TOGGLE",
+  payload: null
+});
+
+export const toggleCollectorsList = () => ({
+  type: "COLLECTORS_LIST_TOGGLE",
+  payload: null
+});
+
+export const toggleUrlsList = () => ({
+  type: "URLS_LIST_TOGGLE",
+  payload: null
+});
+
+export const initLists = () => ({
+  type: "INIT_LISTS",
+  payload: null,
+})

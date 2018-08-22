@@ -7,9 +7,9 @@ export default function (state = {}, action = null) {
       const itemID = action.payload.itemID
       const parentItem = action.payload.parentItem;
       let newState = null;
-      if(state.isOptionsBoxVisible === false) {
+      if(state.isVisible === false) {
         newState = {
-          isOptionsBoxVisible: true,
+          isVisible: true,
           optionsBoxItem: item,
           optionsBoxItemID: itemID,
           optionsBoxParentItem: parentItem,
@@ -17,14 +17,14 @@ export default function (state = {}, action = null) {
       } else {
         if(state.optionsBoxItemID === itemID) {
           newState = {
-            isOptionsBoxVisible: false,
+            isVisible: false,
             optionsBoxItem: null,
             optionsBoxItemID: null,
             optionsBoxParentItem: null,
           }
         } else {
           newState = {
-            isOptionsBoxVisible: true,
+            isVisible: true,
             optionsBoxItem: item,
             optionsBoxItemID: itemID,
             optionsBoxParentItem: parentItem,
@@ -36,7 +36,7 @@ export default function (state = {}, action = null) {
 
     case "OPTIONS_BOX_HIDDEN": {
       const newState = {
-        isOptionsBoxVisible: false,
+        isVisible: false,
         optionsBoxItem: null,
         optionsBoxItemID: null,
         optionsBoxParentItem: null,

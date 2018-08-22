@@ -12,7 +12,7 @@ const loadListOfItems = (array, searchString) => {
         )
       }
       return false;
-    })
+    });
 }
 
 export default loadListOfItems;

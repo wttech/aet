@@ -14,27 +14,13 @@ class FeaturesList extends Component {
 
     this.state = {
       componentClass: 'feature ' + this.props.type,
-      };
-  }
-
-  getListToLoad() {
-    switch(this.props.type.toLowerCase()) {
-      case 'collectors': {
-        return listOfCollectors;
+      data: {
+        "collectors": listOfCollectors,
+        "comparators": listOfComparators,
+        "modifiers": listOfModifiers,
+        "data-filters": listOfDataFilters,
       }
-      case 'comparators': {
-        return listOfComparators;
-      }
-      case 'modifiers': {
-        return listOfModifiers;
-      }
-      case 'data-filters': {
-        return listOfDataFilters;
-      }
-      default: {
-        console.error("Couldn't load a proper list for the " + this.props.type + " component.");
-      }
-    }
+    };
   }
 
   render () {
@@ -45,7 +31,7 @@ class FeaturesList extends Component {
           <h3 className="feature-title">{this.props.type.toUpperCase()}: </h3>
         </div>
         <ul className="list-of-features">
-          {loadAndDisplayItems(this.getListToLoad(), this.props.searchFeatures[0])}
+          {loadAndDisplayItems(this.state.data[this.props.type], this.props.searchFeatures[0])}
         </ul>
       </div>
     )
@@ -55,7 +41,7 @@ class FeaturesList extends Component {
 function mapStateToProps(state)
 {
   return {
-      searchFeatures: state.searchFeatures
+    searchFeatures: state.searchFeatures
   }
 }
 

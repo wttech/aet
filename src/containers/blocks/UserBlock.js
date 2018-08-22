@@ -48,19 +48,6 @@ class UserBlockContainer extends Component {
                 <DropContainer dropTo={"comparators"} />
               </div>
               )
-            } else if(type === "modifiers") {
-              return (
-                <div className={elemClass}  key={elemID}>
-                  <div 
-                  className="block custom nested" 
-                  onClick={(ev) => this.toggleOptionsBox(ev, test, elemID)}
-                  key={elemID} 
-                  id={elemID}>
-                  <span>{test.type}</span>
-                  </div>
-                  <DropContainer dropTo={"modifiers"} />
-                </div>
-              )
             } else {
               return (
                 <div className={elemClass}  key={elemID}>
@@ -71,10 +58,10 @@ class UserBlockContainer extends Component {
                   id={elemID}>
                   <span>{test.type}</span>
                   </div>
-                  <DropContainer dropTo={"collectors"} />
+                  <DropContainer dropTo={(type === "modifiers" ? "modifiers" : "collectors")} />
                 </div>
               )
-            }
+            } 
           } else {
             return null;
           }
@@ -85,28 +72,26 @@ class UserBlockContainer extends Component {
   }
 
   generateListOfFilters(test, parentIndex) {
-    if(test.filters !== null) {
-      return test.filters.map((filter, index) => {
-        if(filter.dropTo === generateID(test)) {
-          const filterID = generateID(filter) + "-" + index + "-" + parentIndex;
-          return (
-            <div 
-            key={index}
-            id={filterID}
-            onClick={(ev) => this.toggleOptionsBox(ev, filter, filterID, test)}
-            className="block nested-twice filter-block">
-            {filter.type} Filter
-            </div>
-          )
-        }  
-        return null;
-      });
-    }
+    return (test.filters !== null && test.filters.map((filter, index) => {
+      if(filter.dropTo === generateID(test)) {
+        const filterID = generateID(filter) + "-" + index + "-" + parentIndex;
+        return (
+          <div 
+          key={index}
+          id={filterID}
+          onClick={(ev) => this.toggleOptionsBox(ev, filter, filterID, test)}
+          className="block nested-twice filter-block">
+          {filter.type} Filter
+          </div>
+        )
+      }  
+      return null;
+    }));
   }
 
   render() {
     return (
-    <div className={this.props.type + "-list"}>
+    <div className={`${this.props.type}-list ${this.props.staticBlocks[this.props.type] ? ("list-expanded") : ('list-hidden')}`}>
       {this.generateListOfUserBlocks(this.props.type)}
     </div>
     )
@@ -116,7 +101,8 @@ class UserBlockContainer extends Component {
 function mapStateToProps(state) {
   return {
     test: state.test,
-    optionsBox: state.optionsBox
+    optionsBox: state.optionsBox,
+    staticBlocks: state.staticBlocks,
   }
 }
 

@@ -16,15 +16,15 @@ export default function (state = {}, action = null) {
       }
       let newState = null;
       let offset = 0;
+      let compOffset = 0;
       document.querySelectorAll(".empty").forEach((drop, index) => {
         if(drop === action.payload.dropContainer) {
           if(Object.keys(state).length !== 0 ) {
             state.forEach((test) => {
-              if(test.dropTo === "Modifiers") {
-                offset++;
-              }
+              test.dropTo === "Modifiers" ? offset++ : null;
+              testObject.dropTo === "Comparators" ? compOffset = 1 : compOffset = 0;
             });
-            newState = [...state.slice(0, index - 1 - offset), testObject, ...state.slice(index - 1 - offset)];
+            newState = [...state.slice(0, index - 1 - offset - compOffset), testObject, ...state.slice(index - 1 - offset - compOffset)];
           } else {
             newState = [...state, testObject];
           }

@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import StaticBlock from "../../components/blocks/StaticBlock";
+import StaticBlock from "../../containers/blocks/StaticBlock";
 import DropContainer from "../../containers/blocks/DropBlock";
 import UserBlocksContainer from "../../containers/blocks/UserBlock";
 import verifyDependencies from "../../functions/verifyDependencies";
@@ -61,15 +61,15 @@ class NewTestGenerator extends Component {
 
   handleKeyboardShortcuts(ev) {
     if(ev.key === "Enter") {
-      if(typeof document.getElementsByClassName("edit-box")[0] !== "undefined") {
+      if(this.props.editBox.isVisible) {
         this.props.hideEditBox(); 
-      } else if(typeof document.getElementsByClassName("block test-name-container")[0] !== "undefined") {
+      } else if(this.props.testName.isVisible) {
         this.handleNewTest();
       }   
     } else if(ev.key === "Escape") {
-      if(typeof document.getElementsByClassName("edit-box")[0] !== "undefined") {
+      if(this.props.editBox.isVisible) {
         this.props.hideEditBox(); 
-      } else if(typeof document.getElementsByClassName("block test-name-container")[0] !== "undefined") {
+      } else if(this.props.testName.isVisible) {
         this.props.hideTestNameInput(true);
         document.querySelectorAll(".block").forEach((block) => {
           block.classList.remove("block-hidden");
@@ -81,8 +81,8 @@ class NewTestGenerator extends Component {
   render () {
     return (
       <div className="test-container" onClick={(ev) => this.hideBoxes(ev)} tabIndex="0" onKeyUp={(ev) => this.handleKeyboardShortcuts(ev)}>
-        {this.props.optionsBox.isOptionsBoxVisible === true ? <OptionsBox /> : null}
-        {this.props.editBox.isEditBoxVisible === true ? <EditBox /> : null}
+        {this.props.optionsBox.isVisible ? <OptionsBox /> : null}
+        {this.props.editBox.isVisible ? <EditBox /> : null}
         {this.props.testName.isVisible ? <TestNameBlock /> : null}
         <ProjectInfo />
         <div className="tests-wrapper">

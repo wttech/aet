@@ -5,7 +5,7 @@ export default function (state = {}, action = null) {
     case "EDIT_BOX_HIDDEN":
       {
         const newState = {
-          isEditBoxVisible: false,
+          isVisible: false,
           editBoxItem: null,
           editBoxItemID: null,
         }
@@ -17,22 +17,22 @@ export default function (state = {}, action = null) {
         const parentItem = action.payload.item;
         const parentID = action.payload.itemID;
         let newState = null;
-        if (state.isEditBoxVisible === false) {
+        if (state.isVisible === false) {
           newState = {
-            isEditBoxVisible: true,
+            isVisible: true,
             editBoxItem: parentItem,
             editBoxItemID: parentID,
           }
         } else {
           if (state.editBoxItemID === parentID) {
             newState = {
-              isEditBoxVisible: false,
+              isVisible: false,
               editBoxItem: null,
               editBoxItemID: null,
             }
           } else {
             newState = {
-              isEditBoxVisible: true,
+              isVisible: true,
               editBoxItem: parentItem,
               editBoxItemID: parentID,
             }

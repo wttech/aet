@@ -6,13 +6,17 @@ const verifyDependencies = (tests) => {
       const deps = test.deps;
       const blocks = document.querySelectorAll("*[id^=" + deps + "]");
       if(blocks.length > 0) {
+        let testID = generateID(test);
         if(test.type === "Source W3CHTML5") {
-          handleFoundDependency("source-comparators", deps, index)
-        } else {
-          handleFoundDependency(generateID(test), deps, index)
-        }
+          testID = "source-comparators";
+        } 
+        handleFoundDependency(testID, deps, index)
       } else {
-        handleNotFoundDependency(generateID(test), test.depType, index);
+        let testID = generateID(test);
+        if(test.type === "Source W3CHTML5") {
+          testID = "source-comparators";
+        } 
+        handleNotFoundDependency(testID, test.depType, index);
       }
     });
   }

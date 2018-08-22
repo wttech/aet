@@ -17,10 +17,6 @@ class NewProjectGenerator extends Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
-  componentDidMount() {
-    document.getElementsByClassName("test-container")[0].style.overflow = "hidden";
-  }
-
   handleChange(inputValue, inputType) {
     this.setState({
       [inputType]: inputValue
@@ -67,14 +63,14 @@ class NewProjectGenerator extends Component {
 
 function mapStateToProps(state)
 {
-    return {
-        project: state.project,
-    }
+  return {
+    project: state.project,
+  }
 }
 
 function matchDispatchToProps(dispatch)
 {
-    return bindActionCreators({createNewProject}, dispatch);
+  return bindActionCreators({createNewProject}, dispatch);
 }
 
 export default connect(mapStateToProps, matchDispatchToProps)(NewProjectGenerator)

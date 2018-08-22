@@ -7,24 +7,12 @@ class DeleteTest extends Component {
 
   deleteTest() {
    if(this.props.test.length > 0 && this.props.testName.name) {
-    if(this.checkIfTestAlreadyExists(this.props.testName)) {
-      this.props.deleteTestFromProject(this.props.testName);
-      this.props.clearTests();
-      this.props.hideUrlInput();
-      this.props.clearUrlsList();
-      this.props.hideTestNameInput(true);
-    }
+    this.props.deleteTestFromProject(this.props.testName);
+    this.props.clearTests();
+    this.props.hideUrlInput();
+    this.props.clearUrlsList();
+    this.props.hideTestNameInput(true);
    }
-  }
-
-  checkIfTestAlreadyExists(testName) {
-    let exists = false;
-    document.querySelectorAll(".tests-container>.test-item>.test-name").forEach((test) => {
-      if(testName.name === test.innerHTML) {
-        exists = true;
-      }
-    });
-    return exists;
   }
 
   render () {

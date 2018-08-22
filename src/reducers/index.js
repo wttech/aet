@@ -8,6 +8,7 @@ import editBox from "./popups/editBoxReducer";
 import urls from "./urls/urlsReducer";
 import urlInput from "./urls/urlInputReducer";
 import testName from "./test/testNameReducer";
+import staticBlocks from "./blocks/staticBlocksReducer";
 
 const reducer = combineReducers(
   {
@@ -20,6 +21,7 @@ const reducer = combineReducers(
     urls: urls,
     urlInput: urlInput,
     testName: testName,
+    staticBlocks: staticBlocks,
   }
 )
 

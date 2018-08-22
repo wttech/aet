@@ -16,7 +16,7 @@ class DropContainer extends Component {
   }
 
   render() {
-    const dropContainerID = this.props.dropTo + "-empty"
+    const dropContainerID = `${this.props.dropTo}-empty`
     return (
       <div 
         className="block nested empty" 

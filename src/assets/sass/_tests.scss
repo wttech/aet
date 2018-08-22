@@ -23,6 +23,26 @@
         overflow: hidden;
       }
 
+      .list-expanded {
+        height: 100%;
+      }
+
+      .list-hidden {
+        height: 0;
+      }
+
+      .arrow-expanded {
+        transform: rotate(0deg);
+        position: absolute;
+        right: 15px;
+      }
+
+      .arrow-hidden {
+        transform: rotate(90deg);
+        position: absolute;
+        right: 15px;
+      }
+
       .block {
         width: 300px;
         background-color: $gray_light;
@@ -32,8 +52,9 @@
         transition: all 0.3s ease-in-out;
         box-sizing: border-box;
 
-        .block-arrow {
+        .arrow-block {
           position: absolute;
+          top:7px;
           right: 15px;
         }
       }
@@ -282,7 +303,7 @@
       }
 
       .data-filter-valid {
-        background-color: $blockFilter;
+        background-color: #838fff;
       }
 
       .filter-droppable {

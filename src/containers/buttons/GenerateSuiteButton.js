@@ -10,10 +10,10 @@ class GenerateSuiteButton extends Component {
   handleSuiteGenerating() {
     const projectTests = this.props.project[0].tests;
     const suiteElement = xmlbuilder.create('suite', {encoding: "utf-8"});
-    suiteElement.att('name', this.props.project[0].suite);
-    suiteElement.att('company', this.props.project[0].company);
-    suiteElement.att('domain', this.props.project[0].domain);
-    suiteElement.att('project', this.props.project[0].project);
+    suiteElement.att('name', this.props.project[0].suite)
+      .att('company', this.props.project[0].company)
+      .att('domain', this.props.project[0].domain)
+      .att('project', this.props.project[0].project);
     if(Object.values(projectTests).length > 0) {
       Object.values(projectTests).forEach((testItem) => {
         const testElement = suiteElement.ele("test", {name: testItem.name.name})
@@ -65,7 +65,7 @@ class GenerateSuiteButton extends Component {
         } else {
           if(this.checkIfParamExists(param.current)) {
             groupItem.att(param.tag, param.current);
-          } else if(!this.checkIfParamExists(param.current) && this.checkIfParamExists(param.default)) {
+          } else if(this.checkIfParamExists(param.default)) {
             groupItem.att(param.tag, param.default);
           } else if(!this.checkIfParamExists(param.current) && !this.checkIfParamExists(param.default)) {
             console.error("Mandatory parameter " + param.tag + " is missing!");
@@ -99,27 +99,24 @@ class GenerateSuiteButton extends Component {
   }
 
   checkIfTestsExist() {
-    if(typeof this.props.project[0] !== "undefined") {
-      if(typeof this.props.project[0].tests !== "undefined" && this.props.project[0].tests !== null) {
-        if(Object.values(this.props.project[0].tests).length > 0) {
-          return true;
-        } 
-      }
+    if(typeof this.props.project[0] !== "undefined"
+    && typeof this.props.project[0].tests !== "undefined"
+    && this.props.project[0].tests !== null
+    ) {
+        return true;
     }
     return false;
   }
 
 
   render () {
-    if(this.checkIfTestsExist()) {
-      return (
+    return this.checkIfTestsExist() ? (
+      (
         <div className="generate-suite-btn" onClick={() => this.handleSuiteGenerating()}>
             GENERATE SUITE
         </div>
       )
-    } else {
-      return null;
-    }
+    ) : null 
   }
 }
 
