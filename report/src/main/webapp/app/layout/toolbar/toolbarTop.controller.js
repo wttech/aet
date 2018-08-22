@@ -66,6 +66,28 @@ define([], function () {
         $allParametersList[2];
     }
 
+    function getPreviousVersion(suiteHeaders) {
+      for (var i = 0; i < suiteHeaders.length; i++) {
+        if(suiteHeaders[i].version === vm.suiteInfo.version) {
+          if(i + 1 < suiteHeaders.length) {
+            vm.previousVersion = suiteHeaders[i + 1].version;
+            break;
+          }
+        }
+      }
+    }
+
+    function getNextVersion(suiteHeaders) {
+      for (var i = 0; i < suiteHeaders.length; i++) {
+        if(suiteHeaders[i].version === vm.suiteInfo.version) {
+          if(i - 1 > 0) {
+            vm.nextVersion = suiteHeaders[i - 1].version;
+            break;
+          }
+        }
+      }
+    }
+
     function getSuiteHistory(suiteHeaders, $rootScope, $http) {
       $rootScope.data = 'test';
       var cUrl = new URL(window.location.href);
@@ -112,7 +134,8 @@ define([], function () {
         var reportPath = window.location.href;
         var reportUrl = new URL(reportPath);
         var currentVersion = reportUrl.searchParams.get('version');
-
+        getPreviousVersion(suiteHeaders);
+        getNextVersion(suiteHeaders);
         if (currentVersion === null) {
           $rootScope.reportPath = location.protocol + "//" + location.host + location.pathname + window.location.search;
         } else {

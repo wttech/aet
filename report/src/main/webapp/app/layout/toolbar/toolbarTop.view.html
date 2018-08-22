@@ -68,16 +68,26 @@
       Project: <span class="name">{{toolbarTop.suiteInfo.project}}</span>
     </div>
     <div class="toolbar-block">
+      <span ng-if="toolbarTop.previousVersion"
+            style="vertical-align:middle" data-toggle="popover"
+            data-content="Go to previous version" data-trigger="hover">
+        <a href="{{reportPath}}&version={{toolbarTop.previousVersion}}"><i class="fas fa-chevron-left set-initial-font-size"></i></a>
+      </span>
       Suite: 
       <div class="suite-name-container" data-ng-click="toolbarTop.showSuiteHistory()">
       <span class="name">{{toolbarTop.suiteInfo.name}}</span>
       <span class="preformatted" data-toggle="popover" data-content="Suite version"
             data-trigger="hover" data-container="body">v{{toolbarTop.suiteInfo.version}}</span>
       </div>
+      <span ng-if="toolbarTop.nextVersion"
+            style="vertical-align:middle" data-toggle="popover"
+            data-content="Go to next version" data-trigger="hover">
+        <a href="{{reportPath}}&version={{toolbarTop.nextVersion}}"><i class="fas fa-chevron-right set-initial-font-size"></i></a>
+      </span>
       <span ng-if="toolbarTop.suiteInfo.version !== suiteHeaders[0].version"
             style="vertical-align:middle" data-toggle="popover"
             data-content="Go to latest version" data-trigger="hover">
-        <a href="{{reportPath}}&version={{suiteHeaders[0].version}}"><i class="fas fa-angle-double-up set-initial-font-size"></i></a>
+        <a href="{{reportPath}}&version={{suiteHeaders[0].version}}"><i class="fas fa-step-forward set-initial-font-size"></i></a>
       </span>
     </div>
     <div class="toolbar-block">
