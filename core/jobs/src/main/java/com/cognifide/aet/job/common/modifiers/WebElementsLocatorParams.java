@@ -29,6 +29,8 @@ abstract public class WebElementsLocatorParams {
 
   protected static final String CSS_PARAM = "css";
 
+  protected static final String EXCLUDE_ELEMENT_PARAM = "exclude-elements";
+
   private static final long TIMEOUT_SECONDS_MAX_VALUE = 15L;
 
   private static final long TIMEOUT_SECONDS_DEFAULT_VALUE = 1L;

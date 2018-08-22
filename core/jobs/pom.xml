@@ -36,6 +36,18 @@
   <dependencies>
     <!-- project -->
     <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>org.osgi.service.component.annotations</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>org.osgi.annotation</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>org.osgi.service.metatype.annotations</artifactId>
+    </dependency>
+    <dependency>
       <groupId>com.cognifide.aet</groupId>
       <artifactId>communication-api</artifactId>
     </dependency>
@@ -79,10 +91,6 @@
       <artifactId>diffutils</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.apache.sling</groupId>
-      <artifactId>org.apache.sling.commons.osgi</artifactId>
-    </dependency>
-    <dependency>
       <groupId>org.apache.httpcomponents</groupId>
       <artifactId>fluent-hc</artifactId>
     </dependency>
@@ -94,11 +102,6 @@
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
-    </dependency>
-
-    <dependency>
-      <groupId>org.apache.felix</groupId>
-      <artifactId>org.apache.felix.scr.annotations</artifactId>
     </dependency>
 
     <!-- test dependencies -->

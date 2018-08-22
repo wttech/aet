@@ -26,17 +26,15 @@ import com.google.common.collect.ImmutableList;
 import java.util.Collection;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.Service;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
  * Query for all databases and passes them to split.
  */
-@Service(StartMetadataCleanupProcessor.class)
-@Component
+@Component(service = StartMetadataCleanupProcessor.class)
 public class StartMetadataCleanupProcessor implements Processor {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(StartMetadataCleanupProcessor.class);

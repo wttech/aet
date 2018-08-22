@@ -37,15 +37,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.Service;
 import org.bson.Document;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Service
-@Component(label = "AET Metadata DAO implementation for MongoDB", immediate = true)
+@Component(immediate = true)
 public class MetadataDAOMongoDBImpl implements MetadataDAO {
 
   private static final long serialVersionUID = 3031952772776598636L;
