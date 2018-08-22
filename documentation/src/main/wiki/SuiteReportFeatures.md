@@ -45,6 +45,18 @@ Moreover, every URL has information to which test group it belongs.
 
 ![Find example](assets/suiteReport/find-in-sidepanel-example.png)
 
+#### Browsing suite's history
+It is possible to view current suite's history by clicking current suite's name and version in the top toolbar. User can also navigate through versions by clicking next/previous arrow next to suite's version. 
+
+![Suite history](assets/suiteReport/suite-history.png)
+
+Clicking the suite's name in the top toolbar will show a popup in which the user can see every suite's version that is still available in the database. User can also directly go to the newest version of the suite by clicking 
+
+Bold version means that this version is the same as the version that's currently being viewed.
+Blue version means that it is a rebased version of previous suite - this is also shown by the timestamps which are identical for original and rebased suite versions.
+
+![Suite history popup](assets/suiteReport/suite-history-popup.png)
+
 #### Navigation via keyboard shortcuts
 * press **q** to expand/collapse all items
 * press **e** to expand/collapse all error items
