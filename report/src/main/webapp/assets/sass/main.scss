@@ -154,6 +154,10 @@ body {
 	&.passed {
 		color: $passed !important;
 	}
+
+	&.conditionallyPassed {
+		color: $conditionallyPassed !important;
+	}
 }
 
 .url-tile {
@@ -177,6 +181,10 @@ body {
 
 	&.failed {
 		color: $failed;
+	}
+
+	&.conditionallyPassed {
+		color: $conditionallyPassed;
 	}
 
 	.statistics {

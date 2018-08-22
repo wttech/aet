@@ -15,35 +15,27 @@
  */
 package com.cognifide.aet.rest.helpers;
 
-import java.util.Map;
+import com.cognifide.aet.rest.helpers.configuration.ReportConfigurationManagerConf;
 import java.util.Optional;
-import org.apache.felix.scr.annotations.Activate;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Property;
-import org.apache.felix.scr.annotations.Service;
+import org.apache.commons.lang3.StringUtils;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.metatype.annotations.Designate;
 
-@Service(ReportConfigurationManager.class)
-@Component(metatype = true, description = "AET Report Application Configuration",
-    label = "AET Report Application Configuration")
+@Component(service = ReportConfigurationManager.class)
+@Designate(ocd = ReportConfigurationManagerConf.class)
 public class ReportConfigurationManager {
-
-  private static final String REPORT_DOMAIN_PROPERTY_NAME = "report-domain";
-
-  private static final String DEFAULT_REPORT_DOMAIN = "http://aet-vagrant";
 
   private static final String REPORT_DOMAIN_ENV = "REPORT_DOMAIN";
 
-  @Property(name = REPORT_DOMAIN_PROPERTY_NAME, label = "Report application domain",
-      description = "Report application domain that is printed at the end of processing suite. "
-          + "If not provided here, env variable REPORT_DOMAIN will be used instead or value will "
-          + "fallback to the default: " + DEFAULT_REPORT_DOMAIN)
   private String reportDomain;
 
   @Activate
-  public void activate(Map<String, String> properties) {
-    reportDomain = Optional.ofNullable(properties.get(REPORT_DOMAIN_PROPERTY_NAME))
+  public void activate(ReportConfigurationManagerConf config) {
+    reportDomain = Optional.of(config.reportDomain())
+        .filter(StringUtils::isNotBlank)
         .orElseGet(() -> Optional.ofNullable(System.getenv(REPORT_DOMAIN_ENV))
-            .orElse(DEFAULT_REPORT_DOMAIN));
+            .orElse(ReportConfigurationManagerConf.DEFAULT_REPORT_DOMAIN));
   }
 
   public String getReportDomain() {

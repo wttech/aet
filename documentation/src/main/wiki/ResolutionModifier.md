@@ -16,7 +16,8 @@ Module name: **resolution**
 | `height` | int (1 to 15000) | Window height | no |
 
 | Note |
-| When height is not specified then it's computed by JavaScript. <br/> If the resolution is specified without height parameter it should be specified after [`open`](https://github.com/Cognifide/aet/wiki/Open). |
+|:------ |
+| When height is not specified then it's computed by JavaScript. <br/> **If the resolution is specified without height parameter it should be specified after [`open`](https://github.com/Cognifide/aet/wiki/Open)**. |
 
 ##### Example Usage
 

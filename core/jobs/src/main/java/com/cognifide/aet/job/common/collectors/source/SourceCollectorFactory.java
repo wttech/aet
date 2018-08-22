@@ -20,25 +20,19 @@ import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
+import com.cognifide.aet.job.common.collectors.source.configuration.SourceCollectorFactoryConf;
 import com.cognifide.aet.vs.ArtifactsDAO;
 import java.util.Map;
-import org.apache.felix.scr.annotations.Activate;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Property;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.Service;
-import org.apache.sling.commons.osgi.PropertiesUtil;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.metatype.annotations.Designate;
 
-@Component(metatype = true, description = "AET Source Collector Factory", label = "AET Source Collector Factory")
-@Service
+@Component
+@Designate(ocd = SourceCollectorFactoryConf.class)
 public class SourceCollectorFactory implements CollectorFactory {
 
-  private static final String SOURCE_COLLECTOR_TIMEOUT_VALUE = "sourceCollectorTimeoutValue";
-
-  private static final int DEFAULT_TIMEOUT = 20000;
-
-  @Property(name = SOURCE_COLLECTOR_TIMEOUT_VALUE, label = "Timeout value for source collector [ms]", intValue = DEFAULT_TIMEOUT, description = "Timeout value for source collector [ms]")
-  private int timeoutValue;
+  SourceCollectorFactoryConf config;
 
   @Reference
   private ArtifactsDAO artifactsDAO;
@@ -53,13 +47,12 @@ public class SourceCollectorFactory implements CollectorFactory {
       WebCommunicationWrapper webCommunicationWrapper)
       throws ParametersException {
     return new SourceCollector(artifactsDAO, properties,
-        webCommunicationWrapper.getHttpRequestExecutor(), timeoutValue);
+        webCommunicationWrapper.getHttpRequestExecutor(), config.sourceCollectorTimeoutValue());
   }
 
   @Activate
-  public void activate(Map properties) {
-    timeoutValue = PropertiesUtil
-        .toInteger(properties.get(SOURCE_COLLECTOR_TIMEOUT_VALUE), DEFAULT_TIMEOUT);
+  public void activate(SourceCollectorFactoryConf config) {
+    this.config = config;
   }
 
 }

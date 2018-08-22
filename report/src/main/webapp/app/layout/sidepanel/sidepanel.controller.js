@@ -68,6 +68,7 @@ define([], function () {
     function updateNavigationTree() {
       vm.testsStats = {
         total: 0,
+        conditionallyPassed: 0,
         failed: 0,
         warning: 0,
         passed: 0,
@@ -83,6 +84,7 @@ define([], function () {
       refreshTestsStatsValue('warning');
       refreshTestsStatsValue('passed');
       refreshTestsStatsValue('rebased');
+      refreshTestsStatsValue('conditionallyPassed');
       $scope.$apply();
     }
 

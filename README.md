@@ -90,14 +90,6 @@ Please refer to the [Setup Guide](https://github.com/Cognifide/aet/wiki/BasicSet
 For bugs, questions and discussions please use the [Github Issues](https://github.com/Cognifide/aet/issues).
 Please notice we use [ZenHub](https://www.zenhub.com/) extension to manage issues.
 
-## Roadmap
-
-- [Selenium Grid](https://github.com/Cognifide/aet/issues/8)
-- [Microservices Architecture](https://github.com/Cognifide/aet/issues/7)
-- [Developer Guide](https://github.com/Cognifide/aet/issues/10)
-- [Report UX improvements](https://github.com/Cognifide/aet/issues/9)
-- [More browsers support](https://github.com/Cognifide/aet/issues/8)
-
 ## Documentation
 * [AET Wiki](https://github.com/Cognifide/aet/wiki)
 
