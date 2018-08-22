@@ -26,7 +26,6 @@ import com.cognifide.aet.vs.StorageException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Optional;
-import org.apache.felix.scr.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -34,17 +33,14 @@ public class SuiteRerun {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SuiteRerun.class);
 
-  @Reference
-  private static MetadataDAO metadataDAO;
-
   private SuiteRerun() {
   }
 
-  public static Suite getAndPrepareSuite(DBKey dbKey, String correlationId, String suiteName,
+  public static Suite getAndPrepareSuite(MetadataDAO metadataDAO, DBKey dbKey, String correlationId, String suiteName,
       String testName) {
     Suite suite = null;
     try {
-      suite = getSuiteFromMetadata(dbKey, correlationId, suiteName);
+      suite = getSuiteFromMetadata(metadataDAO, dbKey, correlationId, suiteName);
     } catch (StorageException e) {
       LOGGER.error("Read metadata from DB problem!", e);
     }
@@ -52,7 +48,7 @@ public class SuiteRerun {
     return suite;
   }
 
-  private static Suite getSuiteFromMetadata(DBKey dbKey, String correlationId, String suiteName)
+  private static Suite getSuiteFromMetadata(MetadataDAO metadataDAO, DBKey dbKey, String correlationId, String suiteName)
       throws StorageException {
     if (isValidCorrelationId(correlationId)) {
       return metadataDAO.getSuite(dbKey, correlationId);
