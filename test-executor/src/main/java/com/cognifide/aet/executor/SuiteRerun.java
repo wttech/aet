@@ -26,8 +26,7 @@ import com.cognifide.aet.vs.StorageException;
 import java.util.ArrayList;
 import java.util.Objects;
 import java.util.Optional;
-import javax.annotation.Nullable;
-import jdk.nashorn.internal.ir.annotations.Reference;
+import org.apache.felix.scr.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -42,7 +41,7 @@ public class SuiteRerun {
   }
 
   public static Suite getAndPrepareSuite(DBKey dbKey, String correlationId, String suiteName,
-      @Nullable String testName) {
+      String testName) {
     Suite suite = null;
     try {
       suite = getSuiteFromMetadata(dbKey, correlationId, suiteName);
@@ -64,7 +63,7 @@ public class SuiteRerun {
     }
   }
 
-  private static void prepareSuiteToRerun(@Nullable Suite suite, @Nullable String testName) {
+  private static void prepareSuiteToRerun(Suite suite, String testName) {
     Optional.ofNullable(suite)
         .ifPresent(s -> s.setRerunned(true));
     Optional.ofNullable(testName)
