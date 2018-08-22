@@ -78,9 +78,9 @@ public class MetadataServlet extends BasicDataServlet {
       if (isValidCorrelationId(correlationId)) {
         suite = metadataDAO.getSuite(dbKey, correlationId);
       } else if (isValidName(suiteName)) {
-        if(isValidVersion(suiteVersion)){
+        if (isValidVersion(suiteVersion)) {
           suite = metadataDAO.getSuite(dbKey, suiteName, suiteVersion);
-        }else {
+        } else {
           suite = metadataDAO.getLatestRun(dbKey, suiteName);
         }
       } else {
