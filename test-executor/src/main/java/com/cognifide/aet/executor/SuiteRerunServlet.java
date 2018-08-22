@@ -75,7 +75,7 @@ public class SuiteRerunServlet extends HttpServlet {
 
     try {
       suite = SuiteRerun
-          .getAndPrepareSuite(Helper.getDBKeyFromRequest(request), correlationId, suiteName,
+          .getAndPrepareSuite(metadataDAO, Helper.getDBKeyFromRequest(request), correlationId, suiteName,
               testName);
       if(suite != null) {
         try {

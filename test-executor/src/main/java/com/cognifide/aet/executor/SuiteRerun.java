@@ -78,12 +78,13 @@ public class SuiteRerun {
           url.getSteps()
               .forEach(step -> {
                 step.setStepResult(null);
-                step.getComparators().stream()
-                    .filter(Objects::nonNull)
-                    .forEach(comparator -> {
-                      comparator.setStepResult(null);
-                      comparator.setFilters(new ArrayList<>());
-                    });
+                if(step.getComparators() != null){
+                  step.getComparators().stream()
+                      .forEach(comparator -> {
+                        comparator.setStepResult(null);
+                        comparator.setFilters(new ArrayList<>());
+                      });
+                }
               });
         });
   }
