@@ -56,7 +56,7 @@ Base api path:
 * **URL**: `/api/history`
 * **HTTP Method**: GET
 * **Parameters**: `company`, `project`, `suite`
-* **Example**: http://aet.example.com/api/history??company=cognifide&project=example&suite=mysimplesuite
+* **Example**: http://aet.example.com/api/history?company=cognifide&project=example&suite=mysimplesuite
 * **Description**: Returns all found correlationIds and versions by suite name
 
 --------
