@@ -60,8 +60,7 @@ public class MongoDBClient {
 
   @Activate
   public void activate(MongoDBClientConf config) {
-    this.mongoUri = config.mongoURI();
-    this.allowAutoCreate = config.allowAutoCreate();
+    setupConfiguration(config);
     try {
       setupMongoDBConnection();
     } catch (Exception e) {
@@ -103,7 +102,17 @@ public class MongoDBClient {
 
     return companies;
   }
-  
+
+  protected void setupConfiguration(MongoDBClientConf config) {
+    if (StringUtils.isNoneBlank(config.mongoURI())) {
+      this.mongoUri = config.mongoURI();
+    } else {
+      this.mongoUri = StringUtils.defaultString(
+          System.getenv(MongoDBClientConf.MONGODB_URI_ENV), MongoDBClientConf.DEFAULT_MONGODB_URI);
+    }
+    this.allowAutoCreate = config.allowAutoCreate();
+  }
+
   private void setupMongoDBConnection() throws UnknownHostException {
     mongoClient = new MongoClient(new MongoClientURI(mongoUri));
     testConnection();
@@ -251,5 +260,9 @@ public class MongoDBClient {
 
   public static String getProjectNameFromDbName(String dbName) {
     return StringUtils.substringAfter(dbName, DB_NAME_SEPARATOR);
+  }
+
+  protected String getMongoUri() {
+    return mongoUri;
   }
 }
