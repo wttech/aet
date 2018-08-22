@@ -30,13 +30,11 @@ public @interface ChromeWebDriverFactoryConf {
 
   @AttributeDefinition(
       name = NAME_LABEL,
-      description = NAME_DESC,
-      defaultValue = DEFAULT_BROWSER_NAME)
-  String name();
+      description = NAME_DESC)
+  String name() default DEFAULT_BROWSER_NAME;
 
   @AttributeDefinition(
       name = SELENIUM_GRID_URL_LABEL,
-      description = SELENIUM_GRID_URL_LABEL,
-      defaultValue = DEFAULT_SELENIUM_GRID_URL)
-  String seleniumGridUrl();
+      description = SELENIUM_GRID_URL_LABEL)
+  String seleniumGridUrl() default DEFAULT_SELENIUM_GRID_URL;
 }

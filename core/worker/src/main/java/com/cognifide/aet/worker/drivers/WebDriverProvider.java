@@ -39,7 +39,7 @@ import org.slf4j.LoggerFactory;
  */
 @Component(
     service = WebDriverProvider.class,
-    property = {"name = " + Constants.SERVICE_VENDOR, "value = Cognifide Ltd"},
+    property = {Constants.SERVICE_VENDOR + "=Cognifide Ltd"},
     immediate = true
 )
 @Designate(ocd = WebDriverProviderConf.class)

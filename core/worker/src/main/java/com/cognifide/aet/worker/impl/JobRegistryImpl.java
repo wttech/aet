@@ -31,7 +31,7 @@ import org.slf4j.LoggerFactory;
 
 @Component(
     immediate = true,
-    property = {"name = " + Constants.SERVICE_VENDOR, "value = Cognifide Ltd"}
+    property = {Constants.SERVICE_VENDOR + "=Cognifide Ltd"}
 )
 public class JobRegistryImpl implements JobRegistry {
 

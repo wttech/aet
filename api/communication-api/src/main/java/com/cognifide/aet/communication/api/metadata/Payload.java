@@ -13,16 +13,22 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.worker.drivers.configuration;
+package com.cognifide.aet.communication.api.metadata;
 
-import org.osgi.service.metatype.annotations.AttributeDefinition;
-import org.osgi.service.metatype.annotations.ObjectClassDefinition;
+import com.cognifide.aet.communication.api.metadata.exclude.LayoutExclude;
+import java.io.Serializable;
 
-@ObjectClassDefinition(name = "AET WebDriver Provider", description = "AET WebDriver Provider")
-public @interface WebDriverProviderConf {
+public class Payload implements Serializable {
 
-  String DEFAULT_WEB_DRIVER_NAME_LABEL = "Default Web Driver name";
+  private static final long serialVersionUID = -4218060468970419297L;
 
-  @AttributeDefinition(name = DEFAULT_WEB_DRIVER_NAME_LABEL)
-  String defaultWebDriverName() default "chrome";
+  private final LayoutExclude layoutExclude;
+
+  public Payload(LayoutExclude layoutExclude) {
+    this.layoutExclude = layoutExclude;
+  }
+
+  public LayoutExclude getLayoutExclude() {
+    return layoutExclude;
+  }
 }

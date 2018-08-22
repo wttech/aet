@@ -37,23 +37,19 @@ public @interface CollectorMessageListenerImplConfig {
 
   @AttributeDefinition(
       name = LISTENER_NAME_LABEL,
-      description = LISTENER_NAME_DESC,
-      defaultValue = LISTENER_NAME_DEFAULT_VALUE)
-  String name();
+      description = LISTENER_NAME_DESC)
+  String name() default LISTENER_NAME_DEFAULT_VALUE;
 
   @AttributeDefinition(
-      name = CONSUMER_QUEUE_NAME_LABEL,
-      defaultValue = CONSUMER_QUEUE_NAME_DEFAULT_VALUE)
-  String consumerQueueName();
+      name = CONSUMER_QUEUE_NAME_LABEL)
+  String consumerQueueName() default CONSUMER_QUEUE_NAME_DEFAULT_VALUE;
 
   @AttributeDefinition(
-      name = PRODUCER_QUEUE_NAME_LABEL,
-      defaultValue = PRODUCER_QUEUE_NAME_DEFAULT_VALUE)
-  String producerQueueName();
+      name = PRODUCER_QUEUE_NAME_LABEL)
+  String producerQueueName() default PRODUCER_QUEUE_NAME_DEFAULT_VALUE;
 
   @AttributeDefinition(
       name = PREFETCH_SIZE_LABEL,
-      description = PREFETCH_SIZE_DESC,
-      defaultValue = PREFETCH_SIZE_DEFAULT_VALUE)
-  String pf();
+      description = PREFETCH_SIZE_DESC)
+  String pf() default PREFETCH_SIZE_DEFAULT_VALUE;
 }

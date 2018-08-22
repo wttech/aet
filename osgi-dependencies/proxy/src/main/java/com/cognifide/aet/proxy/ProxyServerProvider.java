@@ -28,7 +28,7 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 @Component(
     service = ProxyServerProvider.class,
     immediate = true,
-    property = {"name = " + Constants.SERVICE_VENDOR, "value = Cognifide Ltd"}
+    property = {Constants.SERVICE_VENDOR + "=Cognifide Ltd"}
 )
 public class ProxyServerProvider {
 
