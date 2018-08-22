@@ -29,17 +29,25 @@ import org.apache.commons.lang3.StringUtils;
 
 public abstract class StepResult implements Serializable {
 
-  private static final long serialVersionUID = 7758484589529051815L;
+  private static final long serialVersionUID = 7757386595499766654L;
 
   @Pattern(regexp = "^[0-9a-fA-F]{24}$", message = "Invalid objectID")
+
   private final String artifactId;
+
+  private final Payload payload;
 
   private List<String> errors = new ArrayList<>();
 
   private Map<String, String> data = new HashMap<>();
 
-  public StepResult(String artifactId) {
+  public StepResult(String artifactId, Payload payload) {
     this.artifactId = artifactId;
+    this.payload = payload;
+  }
+
+  public StepResult(String artifactId) {
+    this(artifactId, null);
   }
 
   public String getArtifactId() {
@@ -64,6 +72,10 @@ public abstract class StepResult implements Serializable {
 
   public List<String> getErrors() {
     return errors != null ? ImmutableList.copyOf(errors) : Collections.<String>emptyList();
+  }
+
+  public Payload getPayload() {
+    return payload;
   }
 
   @Override
