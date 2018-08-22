@@ -77,16 +77,17 @@ public class SuiteRerunServlet extends HttpServlet {
       suite = SuiteRerun
           .getAndPrepareSuite(Helper.getDBKeyFromRequest(request), correlationId, suiteName,
               testName);
+      if(suite != null) {
+        try {
+          resultWrapper = suiteExecutor.executeSuite(suite);
+          createResponse(resultWrapper, response);
+        } catch (javax.jms.JMSException | ValidatorException e) {
+          e.printStackTrace();
+        }
+      }
     } catch (ValidatorException e) {
       LOGGER.error("Validation problem!", e);
       response.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
-    }
-
-    try {
-      resultWrapper = suiteExecutor.executeSuite(suite);
-      createResponse(resultWrapper, response);
-    } catch (javax.jms.JMSException | ValidatorException e) {
-      e.printStackTrace();
     }
   }
 
