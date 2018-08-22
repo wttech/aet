@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<suite name="example" company="example" project="example">
+  <test name="changing-background">
+    <collect>
+      <open/>
+      <wait-for-page-loaded />
+      <sleep duration="1000"/>
+      <change-background  color="blue" />
+      <resolution width="1280" height="1024"/>
+      <sleep duration="2000"/>
+      <screen  name="desktop"/>
+    </collect>
+    <compare>
+      <screen comparator="layout"/>
+    </compare>
+    <urls>
+      <url href="https://www.google.pl"/>
+    </urls>
+  </test>
+</suite>

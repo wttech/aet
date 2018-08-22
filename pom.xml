@@ -76,6 +76,7 @@
     <module>documentation</module>
     <module>integration-tests/sample-site</module>
     <module>integration-tests/test-suite</module>
+    <module>nowy</module>
     <module>osgi-dependencies</module>
     <module>report</module>
     <module>rest-endpoint</module>
