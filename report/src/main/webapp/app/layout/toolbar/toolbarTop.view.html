@@ -101,31 +101,5 @@
     <div class="toolbar-block fontawesome-link" data-toggle="modal" data-target="#helpModal">
       <i class="fas fa-question-circle fa-lg"></i>
     </div>
-    <div class="suite-history-container">
-      <div class="suite-history-top-bar">
-          <h3 class="suite-history-title">Suite's History</h3>
-        <div class="suite-history-top-bar-close" ng-click="toolbarTop.showSuiteHistory()">
-            <i class="far fa-window-close"></i>
-        </div>
-      </div>
-        <div ng-repeat="suiteHeader in suiteHeaders track by $index">
-          <a href="{{reportPath}}&version={{suiteHeader.version}}" ng-if="suiteHeader.isRebased">
-            <div class="suite-history-item suite-history-rebased" ng-if="suiteHeader.selectedVersion === 'v' + suiteHeader.version">
-              <i class="fas fa-angle-right suite-history-arrow"></i><span class="suite-history-rebased-bold">v{{suiteHeader.version}} | {{suiteHeader.correlationId | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
-            </div>
-            <div class="suite-history-item suite-history-rebased" ng-if="suiteHeader.selectedVersion !== 'v' + suiteHeader.version">
-              <i class="fas fa-angle-right suite-history-arrow"></i>v{{suiteHeader.version}} | {{suiteHeader.correlationId | date: 'yyyy-MM-dd HH:mm:ss'}}
-            </div>
-          </a>
-          <a href="{{reportPath}}&version={{suiteHeader.version}}" ng-if="!suiteHeader.isRebased">
-            <div class="suite-history-item" ng-if="suiteHeader.selectedVersion === 'v' + suiteHeader.version">
-              <i class="fas fa-angle-right suite-history-arrow"></i><span class="suite-history-bold">v{{suiteHeader.version}} | {{suiteHeader.correlationId | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
-            </div>
-            <div class="suite-history-item" ng-if="suiteHeader.selectedVersion !== 'v' + suiteHeader.version">
-              <i class="fas fa-angle-right suite-history-arrow"></i>v{{suiteHeader.version}} | {{suiteHeader.correlationId | date: 'yyyy-MM-dd HH:mm:ss'}}
-            </div>
-          </a>
-        </div>
-      </div>
   </div>
 </div>
