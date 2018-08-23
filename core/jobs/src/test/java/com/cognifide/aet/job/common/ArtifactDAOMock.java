@@ -113,6 +113,12 @@ public class ArtifactDAOMock implements ArtifactsDAO {
     //do nothing here
   }
 
+  //<TODO Write tests for it>
+  @Override
+  public Set<String> getArtifactsId(DBKey dbKey) {
+    return null;
+  }
+
   /**
    * workaround to get data for verification
    *

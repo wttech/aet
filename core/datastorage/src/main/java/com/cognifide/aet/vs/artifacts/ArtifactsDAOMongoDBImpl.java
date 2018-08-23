@@ -15,6 +15,9 @@
  */
 package com.cognifide.aet.vs.artifacts;
 
+import static com.mongodb.client.model.Projections.fields;
+import static com.mongodb.client.model.Projections.include;
+
 import com.cognifide.aet.vs.Artifact;
 import com.cognifide.aet.vs.ArtifactsDAO;
 import com.cognifide.aet.vs.DBKey;
@@ -30,6 +33,7 @@ import java.io.InputStream;
 import java.lang.reflect.Type;
 import java.nio.charset.StandardCharsets;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.Set;
 import org.apache.commons.io.IOUtils;
 import org.bson.Document;
@@ -102,6 +106,22 @@ public class ArtifactsDAOMongoDBImpl implements ArtifactsDAO {
     }
     return artifact;
   }
+
+  @Override
+  public Set<String> getArtifactsId(DBKey dbKey) {
+    final String dbName = MongoDBClient.getDbName(dbKey.getCompany(), dbKey.getProject());
+    Set<String> artifactsId = new HashSet<>();
+    FindIterable<Document> findIterable =
+        client.getDatabase(dbName)
+            .getCollection(ARTIFACTS_COLLECTION_NAME + FILES_COLLECTION_SUFFIX)
+            .find().projection(fields(include("_id")));
+
+    for (Document document : findIterable) {
+      artifactsId.add(document.get("_id").toString());
+    }
+    return artifactsId;
+  }
+
 
   @Override
   public String getArtifactAsString(DBKey dbKey, String objectID) throws IOException {

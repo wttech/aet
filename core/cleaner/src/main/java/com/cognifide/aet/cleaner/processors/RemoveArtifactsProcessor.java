@@ -19,6 +19,11 @@ import com.cognifide.aet.cleaner.context.CleanerContext;
 import com.cognifide.aet.cleaner.processors.exchange.ReferencedArtifactsMessageBody;
 import com.cognifide.aet.vs.ArtifactsDAO;
 import com.google.common.collect.Sets;
+import com.google.common.collect.Sets.SetView;
+import java.util.ArrayList;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.osgi.service.component.annotations.Component;
@@ -41,10 +46,12 @@ public class RemoveArtifactsProcessor implements Processor {
         .getHeader(CleanerContext.KEY_NAME, CleanerContext.class);
     final ReferencedArtifactsMessageBody messageBody = exchange.getIn()
         .getBody(ReferencedArtifactsMessageBody.class);
-
-    final Sets.SetView<String> artifactsToRemove =
+    Set<String> artifactsToRemove = artifactsDAO.getArtifactsId(messageBody.getDbKey());
+    artifactsToRemove.removeAll(messageBody.getArtifactsToKeep());
+    final Sets.SetView<String> wadwada =
         Sets.difference(messageBody.getArtifactsToRemove(), messageBody.getArtifactsToKeep());
 
+    LOGGER.debug("{}", wadwada.size());
     LOGGER.debug("Artifacts that will be removed: {}", artifactsToRemove);
     if (!cleanerContext.isDryRun()) {
       LOGGER.info("{} unreferenced artifacts will be removed from {} after cleaning suite `{}`",
@@ -57,4 +64,5 @@ public class RemoveArtifactsProcessor implements Processor {
           artifactsToRemove.size(), messageBody.getDbKey(), messageBody.getData());
     }
   }
+
 }
