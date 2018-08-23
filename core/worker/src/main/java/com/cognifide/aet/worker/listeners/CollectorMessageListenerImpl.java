@@ -28,34 +28,24 @@ import com.cognifide.aet.queues.JmsUtils;
 import com.cognifide.aet.worker.api.CollectorDispatcher;
 import com.cognifide.aet.worker.drivers.WebDriverProvider;
 import com.cognifide.aet.worker.exceptions.WorkerException;
-import java.util.Map;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.felix.scr.annotations.Activate;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.ConfigurationPolicy;
-import org.apache.felix.scr.annotations.Deactivate;
-import org.apache.felix.scr.annotations.Property;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.Service;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.metatype.annotations.Designate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Service
-@Component(immediate = true, metatype = true, label = "AET Collector Message Listener", policy = ConfigurationPolicy.REQUIRE, configurationFactory = true)
+@Component(
+    service = CollectorMessageListenerImpl.class,
+    immediate = true)
+@Designate(ocd = CollectorMessageListenerImplConfig.class, factory = true)
 public class CollectorMessageListenerImpl extends AbstractTaskMessageListener {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(CollectorMessageListenerImpl.class);
-
-  @Property(name = LISTENER_NAME, label = "Collector name", description = "Name of collector. Used in logs only", value = "Collector")
-  private String name;
-
-  @Property(name = CONSUMER_QUEUE_NAME, label = "Consumer queue name", value = "AET.collectorJobs")
-  private String consumerQueueName;
-
-  @Property(name = PRODUCER_QUEUE_NAME, label = "Producer queue name", value = "AET.collectorResults")
-  private String producerQueueName;
 
   @Reference
   private JmsConnection jmsConnection;
@@ -66,9 +56,12 @@ public class CollectorMessageListenerImpl extends AbstractTaskMessageListener {
   @Reference
   private WebDriverProvider webDriverProvider;
 
+  private CollectorMessageListenerImplConfig config;
+
   @Activate
-  void activate(Map<String, String> properties) {
-    super.doActivate(properties);
+  void activate(CollectorMessageListenerImplConfig config) {
+    this.config = config;
+    super.doActivate(config.consumerQueueName(), config.producerQueueName(), config.pf());
   }
 
   @Deactivate
@@ -90,7 +83,8 @@ public class CollectorMessageListenerImpl extends AbstractTaskMessageListener {
         && requestMessageId != null) {
       LOGGER.info(
           "CollectorJobData [{}] message arrived with {} urls. CorrelationId: {} RequestMessageId: {}",
-          name, collectorJobData.getUrls().size(), correlationId, requestMessageId);
+          config.name(), collectorJobData.getUrls().size(), correlationId,
+          requestMessageId);
       WebCommunicationWrapper webCommunicationWrapper = null;
       int collected = 0;
       String preferredWebDriver = collectorJobData.getPreferredBrowserId();
@@ -179,21 +173,6 @@ public class CollectorMessageListenerImpl extends AbstractTaskMessageListener {
         }
       }
     }
-  }
-
-  @Override
-  protected void setName(String name) {
-    this.name = name;
-  }
-
-  @Override
-  protected void setConsumerQueueName(String consumerQueueName) {
-    this.consumerQueueName = consumerQueueName;
-  }
-
-  @Override
-  protected void setProducerQueueName(String producerQueueName) {
-    this.producerQueueName = producerQueueName;
   }
 
   @Override

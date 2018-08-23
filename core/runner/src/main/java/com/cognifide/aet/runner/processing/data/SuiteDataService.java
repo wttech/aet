@@ -20,12 +20,10 @@ import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.SimpleDBKey;
 import com.cognifide.aet.vs.StorageException;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.Service;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
-@Service(SuiteDataService.class)
-@Component(label = "Internal Runner service for Suite data operations")
+@Component(service = SuiteDataService.class)
 public class SuiteDataService {
 
   @Reference
@@ -51,7 +49,8 @@ public class SuiteDataService {
 
   public Suite saveSuite(final Suite suite) throws ValidatorException, StorageException {
     if (suite.isRerunned()) {
-      return metadataDAO.overrideOneTestInSuite(suite, suite.getTests().get(0).getName());
+      String firstTestName = suite.getTests().get(0).getName();
+      return metadataDAO.overrideOneTestInSuite(suite, firstTestName);
     } else {
       return metadataDAO.saveSuite(suite);
     }

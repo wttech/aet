@@ -21,11 +21,10 @@ import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.SimpleDBKey;
 import com.cognifide.aet.vs.StorageException;
+import com.cognifide.aet.vs.SuiteVersion;
 import com.cognifide.aet.vs.mongodb.MongoDBClient;
-import com.google.common.base.Function;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Collections2;
-import com.google.common.collect.FluentIterable;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -35,16 +34,16 @@ import com.mongodb.client.result.DeleteResult;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.Service;
 import org.bson.Document;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Service
-@Component(label = "AET Metadata DAO implementation for MongoDB", immediate = true)
+@Component(immediate = true)
 public class MetadataDAOMongoDBImpl implements MetadataDAO {
 
   private static final long serialVersionUID = 3031952772776598636L;
@@ -52,6 +51,8 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
   private static final Logger LOGGER = LoggerFactory.getLogger(MetadataDAOMongoDBImpl.class);
 
   public static final String METADATA_COLLECTION_NAME = "metadata";
+
+  private static final String SUITE_PARAM_NAME = "name";
 
   private static final String SUITE_VERSION_PARAM_NAME = "version";
 
@@ -112,6 +113,19 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
   }
 
   @Override
+  public Suite getSuite(DBKey dbKey, String name, String version) throws StorageException {
+    MongoCollection<Document> metadata = getMetadataCollection(dbKey);
+
+    LOGGER.debug("Fetching suite with name: {}, version: {}", name, version);
+
+    final FindIterable<Document> found = metadata
+        .find(Filters.and(Filters.eq(SUITE_PARAM_NAME, name),
+            Filters.eq(SUITE_VERSION_PARAM_NAME, Integer.parseInt(version))));
+    final Document result = found.first();
+    return new DocumentConverter(result).toSuite();
+  }
+
+  @Override
   public Suite getLatestRun(DBKey dbKey, String name) throws StorageException {
     MongoCollection<Document> metadata = getMetadataCollection(dbKey);
     LOGGER.debug("Fetching latest suite run for company: `{}`, project: `{}`, name `{}`.",
@@ -126,17 +140,29 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
   }
 
   @Override
-  public Suite overrideOneTestInSuite(Suite rerunnedSuite, String testName)
-      throws StorageException, ValidatorException {
-    SimpleDBKey dbKey = new SimpleDBKey(rerunnedSuite.getCompany(),rerunnedSuite.getProject() );
-    dbKey.validate(null);
-    Suite suite = getSuite(dbKey, rerunnedSuite.getCorrelationId());
-    removeSuite(dbKey, suite.getCorrelationId(), suite.getVersion());
-    suite.removeTest(testName);
-    suite.addTest(rerunnedSuite.getTest(testName));
-    suite.setRerunned(true);
-    saveSuite(suite);
-    return suite;
+  public Suite overrideOneTestInSuite(Suite suiteWithOneTest, String testName)
+      throws StorageException {
+    SimpleDBKey dbKey = new SimpleDBKey(suiteWithOneTest.getCompany(),suiteWithOneTest.getProject());
+    Suite oldSuite = getSuite(dbKey, suiteWithOneTest.getCorrelationId());
+    Suite newSuite = createNewSuiteWithReplacedTest(dbKey, suiteWithOneTest, testName);
+    return replaceSuite(oldSuite, newSuite);
+  }
+
+  private Suite createNewSuiteWithReplacedTest(DBKey dbKey, Suite suiteWithOneTest, String testName)
+      throws StorageException {
+    Suite newSuite = getSuite(dbKey, suiteWithOneTest.getCorrelationId());
+    newSuite.removeTest(testName);
+    newSuite.addTest(suiteWithOneTest.getTest(testName));
+    newSuite.setRerunned(true);
+    return newSuite;
+  }
+
+  @Override
+  public Suite replaceSuite(Suite oldSuite, Suite newSuite) throws StorageException {
+    MongoCollection<Document> metadata = getMetadataCollection(new SimpleDBKey(oldSuite));
+    LOGGER.debug("Replacing suite {} in  metadata collection.", oldSuite);
+    metadata.findOneAndReplace(Document.parse(oldSuite.toJson()),Document.parse(newSuite.toJson()));
+    return newSuite;
   }
 
   @Override
@@ -149,12 +175,26 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
         .find()
         .sort(Sorts.descending(SUITE_VERSION_PARAM_NAME));
 
-    return FluentIterable.from(found).transform(new Function<Document, Suite>() {
-      @Override
-      public Suite apply(Document result) {
-        return new DocumentConverter(result).toSuite();
-      }
-    }).toList();
+    return StreamSupport.stream(found.spliterator(), false)
+        .map(document -> new DocumentConverter(document).toSuite())
+        .collect(Collectors.toList());
+  }
+
+  public List<SuiteVersion> listSuiteVersions(DBKey dbKey, String name) throws StorageException {
+    MongoCollection<Document> metadata = getMetadataCollection(dbKey);
+    LOGGER.debug("Fetching all versions of suite: `{}` , company: `{}`, project: `{}`.", name,
+        dbKey.getCompany(),
+        dbKey.getProject());
+
+    final FindIterable<Document> found = metadata
+        .find(Filters.eq(SUITE_PARAM_NAME, name))
+        .sort(Sorts.descending(SUITE_VERSION_PARAM_NAME));
+
+    return StreamSupport.stream(found.spliterator(), false)
+        .map(document -> new SuiteVersion(
+            document.getString(CORRELATION_ID_PARAM_NAME),
+            document.getInteger(SUITE_VERSION_PARAM_NAME)))
+        .collect(Collectors.toList());
   }
 
   @Override

@@ -21,13 +21,21 @@ public class CollectorStepResult extends StepResult {
 
   private final Status status;
 
-  private CollectorStepResult(String artifactId, Status status) {
-    super(artifactId);
+  private CollectorStepResult(String artifactId, Payload payload, Status status) {
+    super(artifactId, payload);
     this.status = status;
+  }
+
+  private CollectorStepResult(String artifactId, Status status) {
+    this(artifactId, null, status);
   }
 
   public static CollectorStepResult newPageOpen() {
     return new CollectorStepResult(null, Status.PAGE_OPENED);
+  }
+
+  public static CollectorStepResult newCollectedResult(String artifactId, Payload payload) {
+    return new CollectorStepResult(artifactId, payload, Status.COLLECTED);
   }
 
   public static CollectorStepResult newCollectedResult(String artifactId) {

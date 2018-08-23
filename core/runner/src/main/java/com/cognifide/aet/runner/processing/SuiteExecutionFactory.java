@@ -25,12 +25,10 @@ import com.cognifide.aet.runner.processing.steps.ComparisonResultsRouter;
 import com.cognifide.aet.runner.scheduler.CollectorJobSchedulerService;
 import javax.jms.Destination;
 import javax.jms.JMSException;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.Service;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
-@Service(SuiteExecutionFactory.class)
-@Component(description = "Suite Execution Factory", label = "Suite Execution Factory")
+@Component(service = SuiteExecutionFactory.class)
 public class SuiteExecutionFactory {
 
   @Reference

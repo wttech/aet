@@ -17,11 +17,12 @@
  */
 define([], function () {
   'use strict';
-  return ['$rootScope', 'suiteInfoService', 'metadataAccessService',
-    ToolbarTopController];
+  return ['$rootScope', '$uibModal', 'suiteInfoService', 'metadataAccessService', 'historyService',
+    ToolbarTopController
+  ];
 
-  function ToolbarTopController($rootScope, suiteInfoService,
-      metadataAccessService) {
+  function ToolbarTopController($rootScope, $uibModal, suiteInfoService,
+    metadataAccessService, historyService) {
     var vm = this;
 
     $rootScope.$on('metadata:changed', updateToolbar);
@@ -29,24 +30,56 @@ define([], function () {
       placement: 'bottom'
     });
 
-    updateToolbar();
+    historyService.fetchHistory(suiteInfoService.getInfo().version, function() {
+      var currentVersion = suiteInfoService.getInfo().version;
+      getPreviousVersion(currentVersion);
+      getNextVersion(currentVersion);
+      updateToolbar();
+    });
 
     /***************************************
      ***********  Private methods  *********
      ***************************************/
 
     function updateToolbar() {
+      vm.showSuiteHistory = function () {
+        displayHistoryModal();
+      };
       vm.suiteInfo = suiteInfoService.getInfo();
       vm.suiteStatistics = metadataAccessService.getSuite();
       if (vm.suiteStatistics.patternCorrelationId) {
         vm.pattern = {
           name: vm.suiteStatistics.patternCorrelationId,
           url: 'report.html?company=' + vm.suiteStatistics.company +
-          '&project=' + vm.suiteStatistics.project +
-          '&correlationId=' + vm.suiteStatistics.patternCorrelationId
+            '&project=' + vm.suiteStatistics.project +
+            '&correlationId=' + vm.suiteStatistics.patternCorrelationId
         };
       }
     }
 
+    function getPreviousVersion(currentVersion) {
+      vm.previousVersion = historyService.getPreviousVersion(currentVersion);
+    }
+
+    function getNextVersion(currentVersion) {
+      vm.nextVersion = historyService.getNextVersion(currentVersion);
+    }
+
+    function displayHistoryModal() {
+      $uibModal.open({
+        animation: true,
+        templateUrl: 'app/layout/modal/history/historyModal.view.html',
+        controller: 'historyModalController',
+        controllerAs: 'historyModal',
+        resolve: {
+          model: function () {
+            return vm.model;
+          },
+          viewMode: function () {
+            return vm.viewMode;
+          },
+        }
+      });
+    }
   }
 });

@@ -43,6 +43,12 @@ define(['angularAMD', 'endpointConfiguration', 'requestParametersService'],
                 '?company=' + requestParams.company +
                 '&project=' + requestParams.project +
                 '&correlationId=' + requestParams.correlationId;
+          } else if (requestParams.version) {
+            url = endpoint.getUrl + 'metadata' +
+                '?company=' + requestParams.company +
+                '&project=' + requestParams.project +
+                '&suite=' + requestParams.suite +
+                '&version=' + requestParams.version;
           }
           else {
             url = endpoint.getUrl + 'metadata' +

@@ -24,17 +24,19 @@ import java.net.HttpURLConnection;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
-import org.apache.felix.scr.annotations.Activate;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Deactivate;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.Service;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.http.HttpService;
 
-@Service
-@Component(label = "ArtifactDataContent", description = "Data Storage information service", immediate = true)
+@Component(immediate = true)
 public class ArtifactServlet extends BasicDataServlet {
 
-  private static final long serialVersionUID = 1867870883439947956L;
+  private static final long serialVersionUID = -8115349502567690275L;
+
+  @Reference
+  private transient HttpService httpService;
 
   @Reference
   private ArtifactsDAO artifactsDAO;
@@ -58,6 +60,16 @@ public class ArtifactServlet extends BasicDataServlet {
       resp.getWriter().write(
           responseAsJson(GSON, "Unable to get artifact with id : %s form %s", id, dbKey.toString()));
     }
+  }
+
+  @Override
+  protected HttpService getHttpService() {
+    return httpService;
+  }
+
+  @Override
+  protected void setHttpService(HttpService httpService) {
+    this.httpService = httpService;
   }
 
   @Activate

@@ -26,23 +26,17 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Reference;
 import org.osgi.service.http.HttpService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Component
 public abstract class BasicDataServlet extends HttpServlet {
 
-  private static final long serialVersionUID = -6301708910829830328L;
+  private static final long serialVersionUID = -5819760668750910009L;
 
   private static final Logger LOGGER = LoggerFactory.getLogger(BasicDataServlet.class);
 
   protected static final Gson GSON = new Gson();
-
-  @Reference
-  private transient HttpService httpService;
 
   /***
    * Returns JSON representation of Suite based correlationId or suite name
@@ -77,20 +71,32 @@ public abstract class BasicDataServlet extends HttpServlet {
   void register(String servletPath) {
     LOGGER.debug("Registering servlet at ", servletPath);
     try {
-      httpService.registerServlet(servletPath, this, null, null);
+      getHttpService().registerServlet(servletPath, this, null, null);
     } catch (Exception e) {
       LOGGER.error("Failed to register servlet at ", servletPath, e);
     }
   }
 
   void unregister(String servletPath) {
-    httpService.unregister(servletPath);
-    httpService = null;
+    getHttpService().unregister(servletPath);
+    setHttpService(null);
   }
-
 
   public static boolean isValidName(String suiteName) {
     return ValidatorProvider.getValidator().validateValue(Suite.class, "name", suiteName).isEmpty();
+  }
+
+  boolean isValidVersion(String version) {
+    boolean valid = false;
+    if (version != null) {
+      try {
+        Integer.parseInt(version);
+        valid = true;
+      } catch (NumberFormatException ex) {
+        // Ok, continue
+      }
+    }
+    return valid;
   }
 
   public static boolean isValidCorrelationId(String correlationId) {
@@ -104,6 +110,10 @@ public abstract class BasicDataServlet extends HttpServlet {
   public static String responseAsJson(Gson GSON, String format, Object... args) {
     return GSON.toJson(new ErrorMessage(format, args));
   }
+
+  protected abstract HttpService getHttpService();
+
+  protected abstract void setHttpService(HttpService httpService);
 
   private static class ErrorMessage {
 

@@ -23,8 +23,8 @@
     Cookie dynamicCookieValue = new Cookie("DynamicSampleCookieName",dt.format(date));
     Cookie dynamicCookieName = new Cookie(dt.format(date),"staticCookieValue");
     dynamicCookieValue.setMaxAge(60*60*24);
-    // expire cookie after 1 second in order to have it cleared for next run
-    dynamicCookieName.setMaxAge(10);
+    // expire cookie after 60 second in order to have it cleared for next run
+    dynamicCookieName.setMaxAge(60);
     response.addCookie( dynamicCookieValue );
     response.addCookie( dynamicCookieName );
 %>

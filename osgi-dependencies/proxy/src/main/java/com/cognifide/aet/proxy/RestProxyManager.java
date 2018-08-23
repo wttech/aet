@@ -16,60 +16,32 @@
 package com.cognifide.aet.proxy;
 
 import com.cognifide.aet.job.api.exceptions.ProxyException;
+import com.cognifide.aet.proxy.configuration.RestProxyManagerConf;
 import com.github.detro.browsermobproxyclient.BMPCProxy;
 import com.github.detro.browsermobproxyclient.exceptions.BMPCUnableToConnectException;
 import com.github.detro.browsermobproxyclient.manager.BMPCDefaultManager;
 import com.google.common.collect.Sets;
-import java.util.Map;
 import java.util.Set;
-import org.apache.felix.scr.annotations.Activate;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Deactivate;
-import org.apache.felix.scr.annotations.Property;
-import org.apache.felix.scr.annotations.Service;
-import org.apache.sling.commons.osgi.PropertiesUtil;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.metatype.annotations.Designate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Service
-@Component(immediate = true, metatype = true, description = "AET REST Proxy Manager", label = "AET REST Proxy Manager")
+@Component(immediate = true)
+@Designate(ocd = RestProxyManagerConf.class)
 public class RestProxyManager implements ProxyManager {
 
   public static final String CREATE_PROXY_EXCEPTION_FORMAT = "Unable to create proxy! Reached max attempts: %d";
 
   private static final String NAME = "rest";
 
-  private static final String SERVER_PROPERTY_NAME = "server";
-
-  private static final String PORT_PROPERTY_NAME = "port";
-
-  private static final String MAX_ATTEMPTS_PROPERTY_NAME = "maxAttempts";
-
-  private static final String ATTEMPTS_INTERVAL_PROPERTY_NAME = "attemptsInterval";
-
-  private static final String DEFAULT_SERVER = "localhost";
-
-  private static final int DEFAULT_PORT = 9272;
-
-  private static final int DEFAULT_MAX_ATTEMPTS = 3;
-
-  private static final int DEFAULT_ATTEMPTS_INTERVAL = 50;
-
   private static final Logger LOG = LoggerFactory.getLogger(RestProxyManager.class);
 
   private final Set<RestProxyServer> proxies = Sets.newHashSet();
 
-  @Property(name = SERVER_PROPERTY_NAME, label = "Server", description = "BrowserMob server address", value = DEFAULT_SERVER)
-  private String server;
-
-  @Property(name = PORT_PROPERTY_NAME, label = "Port", description = "BrowserMob API port", intValue = 8080)
-  private int port;
-
-  @Property(name = MAX_ATTEMPTS_PROPERTY_NAME, label = "Max attempts", description = "Maximum number of attempts that will be performed to create single proxy", intValue = 3)
-  private int maxAttempts;
-
-  @Property(name = ATTEMPTS_INTERVAL_PROPERTY_NAME, label = "Attempts interval", description = "Wait interval for failed Attempts", intValue = 50)
-  private int attemptsInterval;
+  private RestProxyManagerConf config;
 
   private BMPCDefaultManager manager;
 
@@ -79,13 +51,8 @@ public class RestProxyManager implements ProxyManager {
   }
 
   @Activate
-  public void activate(Map<String, ?> properties) {
-    port = PropertiesUtil.toInteger(properties.get(PORT_PROPERTY_NAME), DEFAULT_PORT);
-    server = PropertiesUtil.toString(properties.get(SERVER_PROPERTY_NAME), DEFAULT_SERVER);
-    maxAttempts = PropertiesUtil
-        .toInteger(properties.get(MAX_ATTEMPTS_PROPERTY_NAME), DEFAULT_MAX_ATTEMPTS);
-    attemptsInterval = PropertiesUtil
-        .toInteger(properties.get(ATTEMPTS_INTERVAL_PROPERTY_NAME), DEFAULT_ATTEMPTS_INTERVAL);
+  public void activate(RestProxyManagerConf config) {
+    this.config = config;
   }
 
   @Deactivate
@@ -99,7 +66,7 @@ public class RestProxyManager implements ProxyManager {
   public RestProxyServer createProxy() throws ProxyException {
     RestProxyServer proxy;
     if (manager == null) {
-      manager = new BMPCDefaultManager(server, port);
+      manager = new BMPCDefaultManager(config.server(), config.port());
     }
     proxy = new RestProxyServer(getBmpcProxy(), this);
     proxies.add(proxy);
@@ -114,13 +81,15 @@ public class RestProxyManager implements ProxyManager {
       try {
         bmpcProxy = manager.createProxy();
       } catch (BMPCUnableToConnectException e) {
-        if (++attempt >= maxAttempts) {
-          throw new ProxyException(String.format(CREATE_PROXY_EXCEPTION_FORMAT, maxAttempts), e);
+        if (++attempt >= config.maxAttempts()) {
+          throw new ProxyException(
+              String.format(CREATE_PROXY_EXCEPTION_FORMAT, config.maxAttempts()), e);
         }
 
-        LOG.warn(String.format("Failed to create Proxy attempt %d/%d", attempt, maxAttempts));
+        LOG.warn(
+            String.format("Failed to create Proxy attempt %d/%d", attempt, config.maxAttempts()));
         try {
-          Thread.sleep(attemptsInterval);
+          Thread.sleep(config.attemptsInterval());
         } catch (InterruptedException e1) {
           Thread.currentThread().interrupt();
         }
@@ -135,11 +104,11 @@ public class RestProxyManager implements ProxyManager {
   }
 
   public String getServer() {
-    return server;
+    return config.server();
   }
 
   public int getPort() {
-    return port;
+    return config.port();
   }
 
 }
