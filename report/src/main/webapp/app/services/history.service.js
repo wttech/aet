@@ -123,7 +123,7 @@ define(['angularAMD', 'endpointConfiguration'], function (angularAMD) {
           reportPath = reportPath[0] + '&' + reportPath[1] + '&' + reportPath[2];
           $rootScope.reportPath = location.protocol + '//' + location.host + location.pathname + reportPath;
         }
-        if(reportUrl.searchParams.get("correlationId")) {
+        if(reportUrl.searchParams.get('correlationId')) {
           reportPath = '?' + allParametersList[0] + '&' + allParametersList[1] + '&' + allParametersList[2];
           $rootScope.reportPath = location.protocol + '//' + location.host + location.pathname + reportPath;
         }
