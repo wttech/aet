@@ -12,6 +12,7 @@ export default function (state = {}, action = null) {
         group: action.payload.item.group,
         wiki: action.payload.item.wiki,
         tag: action.payload.item.tag,
+        proxy: action.payload.item.proxy,
         filters: null,
       }
       let newState = null;

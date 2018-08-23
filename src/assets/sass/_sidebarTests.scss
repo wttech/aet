@@ -8,17 +8,19 @@
   overflow-x: hidden;
   height: 100vh;
 
-  .generate-suite-btn {
+  .sidebar-btn {
+    display: block;
     width: 90%;
     padding: 7px 3px;
     text-align: center;
-    margin: 0 auto;
     background-color: $white;
     color: $text_color;
     font-weight: bold;
     position: relative;
     bottom: 1%;
     margin-left: 5%;
+    margin-top: 5px;
+    margin-bottom: 15px;
     transition: all 0.2s ease-in-out;
 
     &:hover {

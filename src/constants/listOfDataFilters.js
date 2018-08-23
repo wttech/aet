@@ -54,6 +54,7 @@ const listOfDataFilters =
     dropTo: "accessibility-comparators",
     depType: null,
     group: "DataFilters",
+    proxy: "false",
     wiki: "https://github.com/Cognifide/aet/wiki/AccessibilityDataFilter",
   },
   {
@@ -83,6 +84,7 @@ const listOfDataFilters =
     dropTo: "source-comparators",
     depType: null,
     group: "DataFilters",
+    proxy: "false",
     wiki: "https://github.com/Cognifide/aet/wiki/ExtractElementDataFilter",
   },
   {
@@ -130,6 +132,7 @@ const listOfDataFilters =
     dropTo: "jserrors-comparators",
     depType: null,
     group: "DataFilters",
+    proxy: "false",
     wiki: "https://github.com/Cognifide/aet/wiki/JSErrorsDataFilter",
   },
   {
@@ -159,6 +162,7 @@ const listOfDataFilters =
     dropTo: "source-comparators",
     depType: null,
     group: "DataFilters",
+    proxy: "false",
     wiki: "https://github.com/Cognifide/aet/wiki/RemoveLinesDataFilter",
   },
   {
@@ -178,6 +182,7 @@ const listOfDataFilters =
     dropTo: "source-comparators",
     depType: null,
     group: "DataFilters",
+    proxy: "false",
     wiki: "https://github.com/Cognifide/aet/wiki/RemoveNodesDataFilter",
   },
   {
@@ -216,11 +221,12 @@ const listOfDataFilters =
     dropTo: "source-comparators",
     depType: null,
     group: "DataFilters",
+    proxy: "false",
     wiki: "https://github.com/Cognifide/aet/wiki/RemoveRegexDataFilter",
   },
   {
-    type: 'Status Codes',
-    tag: "status-codes",
+    type: 'Exclude',
+    tag: "exclude",
     parameters: {
       url: {
         name: "URL",
@@ -245,6 +251,37 @@ const listOfDataFilters =
     dropTo: "statuscodes-comparators",
     depType: null,
     group: "DataFilters",
+    proxy: "false",
+    wiki: "https://github.com/Cognifide/aet/wiki/StatusCodesDataFilters",
+  },
+  {
+    type: 'Include',
+    tag: "include",
+    parameters: {
+      url: {
+        name: "URL",
+        tag: "url",
+        values: null,
+        default: null,
+        isMandatory: false,
+        description: "Exact url to be removed from results. At least one parameter is required.",
+        current: null,
+      },
+      pattern: {
+        name: "Pattern",
+        tag: "pattern",
+        values: null,
+        default: null,
+        isMandatory: false,
+        description: "Regex pattern that urls should match to be removed from results. At least one parameter is required.",
+        current: null, 
+      },
+    },
+    deps: "StatusCodes",
+    dropTo: "statuscodes-comparators",
+    depType: null,
+    group: "DataFilters",
+    proxy: "false",
     wiki: "https://github.com/Cognifide/aet/wiki/StatusCodesDataFilters",
   },
   {
@@ -292,6 +329,7 @@ const listOfDataFilters =
     dropTo: "source-comparators",
     depType: null,
     group: "DataFilters",
+    proxy: "false",
     wiki: "https://github.com/Cognifide/aet/wiki/W3CHTML5IssuesFilter",
   },
 ];

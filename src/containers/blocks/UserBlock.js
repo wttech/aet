@@ -72,19 +72,22 @@ class UserBlockContainer extends Component {
   }
 
   generateListOfFilters(test, parentIndex) {
-    return (test.filters !== null && test.filters.map((filter, index) => {
-      if(filter.dropTo === generateID(test)) {
-        const filterID = generateID(filter) + "-" + index + "-" + parentIndex;
-        return (
-          <div 
-          key={index}
-          id={filterID}
-          onClick={(ev) => this.toggleOptionsBox(ev, filter, filterID, test)}
-          className="block nested-twice filter-block">
-          {filter.type} Filter
-          </div>
-        )
-      }  
+
+    return (test.filters !== null && Object.values(test.filters).map((filter, index) => {
+      if(filter !== null) {
+        if(filter.dropTo === generateID(test)) {
+          const filterID = generateID(filter) + "-" + index + "-" + parentIndex;
+          return (
+            <div 
+            key={index}
+            id={filterID}
+            onClick={(ev) => this.toggleOptionsBox(ev, filter, filterID, test)}
+            className="block nested-twice filter-block">
+            {filter.type} Filter
+            </div>
+          )
+        }  
+      }
       return null;
     }));
   }

@@ -18,6 +18,7 @@ const listOfCollectors =
     depType: "Warning",
     dropTo: "Collectors",
     group: "Collectors",
+    proxy: "false",
     wiki: "https://github.com/Cognifide/aet/wiki/AccessibilityCollector",
   },
   {
@@ -28,6 +29,7 @@ const listOfCollectors =
     depType: "Warning",
     dropTo: "Collectors",
     group: "Collectors",
+    proxy: "true",
     wiki: "https://github.com/Cognifide/aet/wiki/ClientSidePerformanceComparator",
   },
   {
@@ -38,6 +40,7 @@ const listOfCollectors =
     depType: "Warning",
     dropTo: "Collectors",
     group: "Collectors",
+    proxy: "false",
     wiki: "https://github.com/Cognifide/aet/wiki/CookieCollector",
   },
   {
@@ -48,6 +51,7 @@ const listOfCollectors =
     depType: "Warning",
     dropTo: "Collectors",
     group: "Collectors",
+    proxy: "false",
     wiki: "https://github.com/Cognifide/aet/wiki/JSErrorsCollector",
   },
   {
@@ -95,6 +99,7 @@ const listOfCollectors =
     depType: "Warning",
     dropTo: "Collectors",
     group: "Collectors",
+    proxy: "false",
     wiki: "https://github.com/Cognifide/aet/wiki/ScreenCollector",
   },
   {
@@ -105,6 +110,7 @@ const listOfCollectors =
     depType: "Warning",
     dropTo: "Collectors",
     group: "Collectors",
+    proxy: "false",
     wiki: "https://github.com/Cognifide/aet/wiki/SourceCollector",
   },
   {
@@ -115,6 +121,7 @@ const listOfCollectors =
     depType: "Warning",
     dropTo: "Collectors",
     group: "Collectors",
+    proxy: "true",
     wiki: "https://github.com/Cognifide/aet/wiki/StatusCodesCollector",
   },
 ];

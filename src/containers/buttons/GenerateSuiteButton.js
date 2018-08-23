@@ -6,7 +6,6 @@ import {saveAs} from "file-saver";
 
 
 class GenerateSuiteButton extends Component {
-
   handleSuiteGenerating() {
     const projectTests = this.props.project[0].tests;
     const suiteElement = xmlbuilder.create('suite', {encoding: "utf-8"});
@@ -16,7 +15,13 @@ class GenerateSuiteButton extends Component {
       .att('project', this.props.project[0].project);
     if(Object.values(projectTests).length > 0) {
       Object.values(projectTests).forEach((testItem) => {
-        const testElement = suiteElement.ele("test", {name: testItem.name.name})
+        const isProxyRequired = this.checkForProxy(testItem);
+        let testElement = null;
+        if(isProxyRequired) {
+          testElement = suiteElement.ele("test", {name: testItem.name.name, useProxy: "rest"})
+        } else {
+          testElement = suiteElement.ele("test", {name: testItem.name.name})
+        }      
         this.generateCollectorsGroup(testElement, testItem);
         this.generateComparatorsGroup(testElement, testItem);
         this.generateUrls(testElement, testItem);
@@ -82,7 +87,7 @@ class GenerateSuiteButton extends Component {
 
   generateFilters(testElement, groupItem) {
     if(testElement.filters !== null) {
-      testElement.filters.forEach((filter) => {
+      Object.values(testElement.filters).forEach((filter) => {
         const filterItem = groupItem.ele(filter.tag);
         this.generateParameters(filter, filterItem);
       });
@@ -96,6 +101,16 @@ class GenerateSuiteButton extends Component {
           urls.ele("url", {href: url});
       });
     }
+  }
+
+  checkForProxy(testItem) {
+    let isProxyRequired = false;
+    Object.values(testItem.tests).forEach((test) => {
+      if(test.proxy === "true") {
+        isProxyRequired = true;
+      }
+    });
+    return isProxyRequired;
   }
 
   checkIfTestsExist() {
@@ -112,7 +127,7 @@ class GenerateSuiteButton extends Component {
   render () {
     return this.checkIfTestsExist() ? (
       (
-        <div className="generate-suite-btn" onClick={() => this.handleSuiteGenerating()}>
+        <div className="sidebar-btn" onClick={() => this.handleSuiteGenerating()}>
             GENERATE SUITE
         </div>
       )

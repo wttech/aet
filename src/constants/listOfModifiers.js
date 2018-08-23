@@ -35,6 +35,7 @@ const listOfModifiers =
     deps: null,
     dropTo: "Collectors",
     group: "Modifiers",
+    proxy: "false",
     wiki: "https://github.com/Cognifide/aet/wiki/ClickModifier",
   },
   {
@@ -90,11 +91,12 @@ const listOfModifiers =
     deps: null,
     dropTo: "Collectors",
     group: "Modifiers",
+    proxy: "false",
     wiki: "https://github.com/Cognifide/aet/wiki/ReplaceTextModifier",
   },
   {
     type: 'Cookie',
-    tag: "cookie",
+    tag: "modify-cookie",
     parameters: {
       action: {
         name: "Action",
@@ -145,6 +147,7 @@ const listOfModifiers =
     deps: null,
     dropTo: "Modifiers",
     group: "Modifiers",
+    proxy: "false",
     wiki: "https://github.com/Cognifide/aet/wiki/CookieModifier",
   },
   {
@@ -173,6 +176,7 @@ const listOfModifiers =
     deps: null,
     dropTo: "Modifiers",
     group: "Modifiers",
+    proxy: "true",
     wiki: "https://github.com/Cognifide/aet/wiki/HeaderModifier",
   },
   {
@@ -219,6 +223,7 @@ const listOfModifiers =
     deps: null,
     dropTo: "Collectors",
     group: "Modifiers",
+    proxy: "false",
     wiki: "https://github.com/Cognifide/aet/wiki/HideModifier",
   },
   {
@@ -319,6 +324,7 @@ const listOfModifiers =
     deps: null,
     dropTo: "Modifiers",
     group: "Modifiers",
+    proxy: "false",
     wiki: "https://github.com/Cognifide/aet/wiki/LoginModifier",
   },
   {
@@ -347,6 +353,7 @@ const listOfModifiers =
     deps: null,
     dropTo: "Collectors",
     group: "Modifiers",
+    proxy: "false",
     wiki: "https://github.com/Cognifide/aet/wiki/ResolutionModifier",
   },
   {
@@ -366,6 +373,7 @@ const listOfModifiers =
     deps: null,
     dropTo: "Collectors",
     group: "Modifiers",
+    proxy: "false",
     wiki: "https://github.com/Cognifide/aet/wiki/SleepModifier",
   },
   {
@@ -375,6 +383,7 @@ const listOfModifiers =
     deps: null,
     dropTo: "Collectors",
     group: "Modifiers",
+    proxy: "false",
     wiki: "https://github.com/Cognifide/aet/wiki/WaitForPageLoadedModifier",
   },
   {
@@ -421,6 +430,7 @@ const listOfModifiers =
     deps: null,
     dropTo: "Collectors",
     group: "Modifiers",
+    proxy: "false",
     wiki: "https://github.com/Cognifide/aet/wiki/ExecuteJavaScriptModifier",
   },
   {
@@ -458,6 +468,7 @@ const listOfModifiers =
     deps: null,
     dropTo: "Collectors",
     group: "Modifiers",
+    proxy: "false",
     wiki: "https://github.com/Cognifide/aet/wiki/WaitForElementToBeVisibleModifier",
   },
   {
@@ -495,6 +506,7 @@ const listOfModifiers =
     deps: null,
     dropTo: "Collectors",
     group: "Modifiers",
+    proxy: "false",
     wiki: "https://github.com/Cognifide/aet/wiki/WaitForImageCompletionModifier",
   },
 ];

@@ -36,6 +36,7 @@ const listOfComparators =
     depType: "Error",
     dropTo: "Comparators",
     group: "Comparators",
+    proxy: "false",
     wiki: "https://github.com/Cognifide/aet/wiki/AccessibilityComparator",
   },
   {
@@ -46,6 +47,7 @@ const listOfComparators =
     depType: "Error",
     dropTo: "Comparators",
     group: "Comparators",
+    proxy: "false",
     wiki: "https://github.com/Cognifide/aet/wiki/ClientSidePerformanceComparator",
   },
   {
@@ -93,6 +95,7 @@ const listOfComparators =
     depType: "Error",
     dropTo: "Comparators",
     group: "Comparators",
+    proxy: "false",
     wiki: "https://github.com/Cognifide/aet/wiki/CookieComparator",
   },
   {
@@ -103,6 +106,7 @@ const listOfComparators =
     depType: "Error",
     dropTo: "Comparators",
     group: "Comparators",
+    proxy: "false",
     wiki: "https://github.com/Cognifide/aet/wiki/JSErrorsComparator",
   },
   {
@@ -123,6 +127,7 @@ const listOfComparators =
     depType: "Error",
     dropTo: "Comparators",
     group: "Comparators",
+    proxy: "false",
     wiki: "https://github.com/Cognifide/aet/wiki/LayoutComparator",
   },
   {
@@ -150,6 +155,7 @@ const listOfComparators =
     depType: "Error",
     dropTo: "Comparators",
     group: "Comparators",
+    proxy: "false",
     wiki: "https://github.com/Cognifide/aet/wiki/SourceComparator",
   },
   {
@@ -187,6 +193,7 @@ const listOfComparators =
     depType: "Error",
     dropTo: "Comparators",
     group: "Comparators",
+    proxy: "false",
     wiki: "https://github.com/Cognifide/aet/wiki/StatusCodesComparator",
   },
   {
@@ -215,6 +222,7 @@ const listOfComparators =
     depType: "Error",
     dropTo: "Comparators",
     group: "Comparators",
+    proxy: "false",
     wiki: "https://github.com/Cognifide/aet/wiki/W3CHTML5Comparator",
   },
 ];

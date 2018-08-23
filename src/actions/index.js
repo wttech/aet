@@ -84,7 +84,7 @@ export const addTestToProject = (tests, urls, name) => ({
   payload: {
     tests: tests,
     urls: urls,
-    name: name
+    name: name,
   }
 });
 
@@ -176,4 +176,9 @@ export const toggleUrlsList = () => ({
 export const initLists = () => ({
   type: "INIT_LISTS",
   payload: null,
-})
+});
+
+export const setLoadedFileAsCurrentProject = (projectTree) => ({
+  type: "SUITE_FILE_LOADED",
+  payload: projectTree
+});

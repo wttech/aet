@@ -18,6 +18,18 @@ export default function (state = {}, action = null) {
       return [newState];
     }
 
+    case "SUITE_FILE_LOADED": {
+      const newState = [
+        action.payload
+      ];
+      localStorage.setItem("project", action.payload.project);
+      localStorage.setItem("company", action.payload.company);
+      localStorage.setItem("suite", action.payload.suite);
+      localStorage.setItem("domain", action.payload.domain);
+      localStorage.setItem("tests", JSON.stringify({...action.payload.tests}));
+      return newState;
+    }
+
     case "NEW_TEST_ADDED": {
       let newState = [...state];
       newState = newState.pop();
