@@ -15,14 +15,14 @@
   * See the License for the specific language governing permissions and
   * limitations under the License.
   */
-define(['angularAMD', 'endpointConfiguration'], function (angularAMD) {
+define(['angularAMD', 'endpointConfiguration', 'suiteInfoService'], function (angularAMD) {
   'use strict';
   angularAMD.factory('historyService', historyService);
 
   /**
    * Service responsible for fetching suite's history
    */
-  function historyService($rootScope, $http, endpointConfiguration) {
+  function historyService($rootScope, $http, endpointConfiguration, suiteInfoService) {
     var suiteHeaders;
     $rootScope.endpointUrl = endpointConfiguration.getEndpoint().getUrl;
     var service = {
@@ -35,7 +35,7 @@ define(['angularAMD', 'endpointConfiguration'], function (angularAMD) {
 
     function fetchHistory(currentVersion, fetchCallback) {
       $rootScope.selectedVersion = currentVersion;
-      getSuiteHistory(suiteHeaders, $rootScope, $http, function () {
+      getSuiteHistory(suiteHeaders, suiteInfoService, $rootScope, $http, function () {
         fetchCallback();
       });
     }
@@ -71,15 +71,15 @@ define(['angularAMD', 'endpointConfiguration'], function (angularAMD) {
       return nextVersion;
     }
 
-    function getSuiteHistory(suiteHeaders, $rootScope, $http, historyCallback) {
+    function getSuiteHistory(suiteHeaders, suiteInfoService, $rootScope, $http, historyCallback) {
       $rootScope.data = 'test';
       var cUrl = new URL(window.location.href);
       var company = cUrl.searchParams.get('company');
       var project = cUrl.searchParams.get('project');
       var suite = cUrl.searchParams.get('suite');
       if (suite === null) {
-        var correlationId = cUrl.searchParams.get('correlationId');
-        suite = correlationId.split('-')[2];
+        var suiteInfo = suiteInfoService.getInfo();
+        suite = suiteInfo.name;
       }
       var allParametersList = ['company=' + company, 'project=' + project, 'suite=' + suite];
       return $http({
@@ -93,16 +93,16 @@ define(['angularAMD', 'endpointConfiguration'], function (angularAMD) {
         suiteHeaders = response.data;
         for (var i = 0; i < suiteHeaders.length; i++) {
           var version = suiteHeaders[i].version;
-          var company = suiteHeaders[i].correlationId.split('-')[0];
-          var project = suiteHeaders[i].correlationId.split('-')[1];
-          var suite = suiteHeaders[i].correlationId.split('-')[2];
-          var correlationId = suiteHeaders[i].correlationId.split('-')[3];
+          var company = company;
+          var project = project;
+          var suite = suite;
+          var timestamp = suiteHeaders[i].correlationId.split('-')[3];
           suiteHeaders[i] = {
             company: company,
             project: project,
             suite: suite,
             version: version,
-            correlationId: correlationId,
+            correlationId: timestamp,
             selectedVersion: null,
             isRebased: false,
           };
