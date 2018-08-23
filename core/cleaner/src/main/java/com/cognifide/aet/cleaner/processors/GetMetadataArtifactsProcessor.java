@@ -82,7 +82,6 @@ public class GetMetadataArtifactsProcessor implements Processor {
     } else {
       body.setArtifactsToKeep(metatadaArtifacts);
     }
-    body.setArtifacts(metatadaArtifacts);
 
     exchange.getOut().setBody(body);
     exchange.getOut().setHeader(CleanerContext.KEY_NAME, cleanerContext);

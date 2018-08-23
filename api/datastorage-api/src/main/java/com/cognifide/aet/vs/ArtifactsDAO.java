@@ -108,5 +108,7 @@ public interface ArtifactsDAO extends Serializable {
    */
   void removeArtifacts(DBKey dbKey, Set<String> artifactsToRemove);
 
+  //<TODO Description and tests>
   Set<String> getArtifactsId(DBKey dbKey);
+
 }

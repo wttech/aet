@@ -28,8 +28,6 @@ public class ReferencedArtifactsMessageBody extends MessageBody<String> {
 
   private Set<String> artifactsToKeep;
 
-  private Set<String> artifacts;
-
   public ReferencedArtifactsMessageBody(String data, DBKey dbKey) {
     super(data, dbKey);
   }
@@ -67,13 +65,4 @@ public class ReferencedArtifactsMessageBody extends MessageBody<String> {
     }
     artifactsToKeep.addAll(body.getArtifactsToKeep());
   }
-
-  public void setArtifacts(Set<String> metatadaArtifacts) {
-    this.artifacts = metatadaArtifacts;
-  }
-
-  public Set<String> getArtifacts() {
-    return artifacts;
-  }
-
 }

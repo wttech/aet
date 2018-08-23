@@ -48,10 +48,7 @@ public class RemoveArtifactsProcessor implements Processor {
         .getBody(ReferencedArtifactsMessageBody.class);
     Set<String> artifactsToRemove = artifactsDAO.getArtifactsId(messageBody.getDbKey());
     artifactsToRemove.removeAll(messageBody.getArtifactsToKeep());
-    final Sets.SetView<String> wadwada =
-        Sets.difference(messageBody.getArtifactsToRemove(), messageBody.getArtifactsToKeep());
 
-    LOGGER.debug("{}", wadwada.size());
     LOGGER.debug("Artifacts that will be removed: {}", artifactsToRemove);
     if (!cleanerContext.isDryRun()) {
       LOGGER.info("{} unreferenced artifacts will be removed from {} after cleaning suite `{}`",
@@ -64,5 +61,4 @@ public class RemoveArtifactsProcessor implements Processor {
           artifactsToRemove.size(), messageBody.getDbKey(), messageBody.getData());
     }
   }
-
 }
