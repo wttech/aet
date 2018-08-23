@@ -38,7 +38,7 @@ public @interface MongoDBClientConf {
   boolean DEFAULT_AUTOCREATE_VALUE = false;
 
   @AttributeDefinition(name = MONGO_URI_PROPERTY_NAME, description = MONGO_URI_PROPERTY_DESCRIPTION, type = AttributeType.STRING)
-  String mongoURI();
+  String mongoURI() default "";
 
   @AttributeDefinition(name = ALLOW_AUTO_CREATE_PROPERTY_NAME, description = ALLOW_AUTO_CREATE_PROPERTY_DESCRIPTION, type = AttributeType.BOOLEAN)
   boolean allowAutoCreate() default DEFAULT_AUTOCREATE_VALUE;

@@ -105,7 +105,7 @@ public class MongoDBClient {
   }
 
   protected void setupConfiguration(MongoDBClientConf config) {
-    mongoUri = Optional.of(config.mongoURI())
+    mongoUri = Optional.ofNullable(config.mongoURI())
         .filter(StringUtils::isNotBlank)
         .orElseGet(() -> Optional.ofNullable(System.getenv(MongoDBClientConf.MONGODB_URI_ENV))
             .orElse(MongoDBClientConf.DEFAULT_MONGODB_URI));
