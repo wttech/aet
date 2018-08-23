@@ -7,7 +7,20 @@ You may see all changes in the [Changelog](https://github.com/Cognifide/aet/blob
 
 ## Unreleased
 
-### [PR-326](https://github.com/Cognifide/aet/pull/326) Upgrade OSGI annotations to 6.0.0 version
+### Users
+
+#### Suite update guide
+
+Changes related to Chrome web driver migration (from old Firefox version):
+* The [Screen Collector|ScreenCollector] now can only takes a screenshot of whole viewport size set by the [Resolution Modifier|ResolutionModifier]. 
+If you want to take a partial screenshot (specified by xpath/css selector), then the whole element must be visible in the current viewport. 
+Please see latest [Screen Collector|ScreenCollector] and [Resolution Modifier|ResolutionModifier] documentation in the wiki for details.
+* The [Open|Open] may take more time to complete now, because it waits for all images to be loaded.
+[Wait For Image Completion Modifier|WaitForImageCompletionModifier] is no longer needed, unless you want to wait for an image which is loaded asynchronously (e.g. by an AJAX call)
+
+### Admins
+
+#### [PR-326](https://github.com/Cognifide/aet/pull/326) Upgrade OSGI annotations to 6.0.0 version
 
 With the OSGI annotations update to 6.0.0 version we had to change a little bit variable names. Currently, your config could have old names and you have to update them. Please follow instruction below:
 
@@ -31,7 +44,7 @@ mongoURI=mongodb://localhost
 allowAutoCreate=true
 ```
 
-### BrowserMob Proxy server connection  
+#### BrowserMob Proxy server connection  
   The address of BrowserMob Proxy server is set to `localhost:8080` by default (in Karaf config) - 
   it's used by workers to connect to the proxy server. Previously, when tests were being run on local Firefox instances
   running on the same machine as the proxy server, there was no need to change the default config.
