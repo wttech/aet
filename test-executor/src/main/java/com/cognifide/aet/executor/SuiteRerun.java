@@ -24,18 +24,20 @@ import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.StorageException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SuiteRerun {
+class SuiteRerun {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SuiteRerun.class);
 
   private SuiteRerun() {
   }
 
-  public static Suite getAndPrepareSuite(MetadataDAO metadataDAO, DBKey dbKey, String correlationId, String suiteName,
+  static Suite getAndPrepareSuite(MetadataDAO metadataDAO, DBKey dbKey, String correlationId,
+      String suiteName,
       String testName) {
     Suite suite = null;
     try {
@@ -47,7 +49,8 @@ public class SuiteRerun {
     return suite;
   }
 
-  private static Suite getSuiteFromMetadata(MetadataDAO metadataDAO, DBKey dbKey, String correlationId, String suiteName)
+  private static Suite getSuiteFromMetadata(MetadataDAO metadataDAO, DBKey dbKey,
+      String correlationId, String suiteName)
       throws StorageException {
     if (isValidCorrelationId(correlationId)) {
       return metadataDAO.getSuite(dbKey, correlationId);
@@ -60,25 +63,30 @@ public class SuiteRerun {
 
   private static void prepareSuiteToRerun(Suite suite, String testName) {
     Optional.ofNullable(suite)
-        .ifPresent(s -> s.setRerunned(true));
-    Optional.ofNullable(testName)
-        .map(test -> suite.getTest(testName))
-        .ifPresent(testToRerun -> {
-          suite.removeAllTests();
-          suite.addTest(testToRerun);
-          cleanDataFromSuite(testToRerun);
+        .ifPresent(s -> {
+          suite.setRerunned(false);
+          Optional.ofNullable(testName)
+              .map(s::getTest)
+              .ifPresent(testToRerun -> {
+                s.setRerunned(true);
+                s.removeAllTests();
+                s.addTest(testToRerun);
+              });
+          cleanDataFromSuite(s);
         });
   }
 
-  private static void cleanDataFromSuite(Test test) {
-    test.getUrls().stream()
+  private static void cleanDataFromSuite(Suite suite) {
+    suite.getTests().stream()
+        .map(Test::getUrls)
+        .flatMap(Collection::stream)
         .forEach(url -> {
           url.setCollectionStats(null);
           url.getSteps()
               .forEach(step -> {
                 step.setStepResult(null);
-                if(step.getComparators() != null){
-                  step.getComparators().stream()
+                if (step.getComparators() != null) {
+                  step.getComparators()
                       .forEach(comparator -> {
                         comparator.setStepResult(null);
                         comparator.setFilters(new ArrayList<>());

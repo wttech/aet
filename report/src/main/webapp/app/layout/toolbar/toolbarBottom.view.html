@@ -20,14 +20,23 @@
 <div class="toolbar-bottom">
   <div class="toolbar-link">
     <h4 class="toolbar-link-header ellipsis">
-        <div ng-if="toolbarBottom.viewMode != 'suite'"class="fontawesome-link"
+      <div ng-if="toolbarBottom.viewMode != 'suite'"class="fontawesome-link"
+         data-toggle="popover"
+         data-content="Localize the currently opened url on side panel"
+         data-trigger="hover"
+         data-container="body"
+         data-ng-click="toolbarBottom.scrollSidepanel(false)">
+          <i class="fas fa-crosshairs fa-sm"></i>
+      </div>
+      <div ng-if="toolbarBottom.viewMode == 'suite' && !toolbarBottom.historyService.getNextVersion(toolbarBottom.suiteInfoService.getInfo().version)"
+           class="fontawesome-link"
            data-toggle="popover"
-           data-content="Localize the currently opened url on side panel"
+           data-content="Rerun current suite"
            data-trigger="hover"
            data-container="body"
-           data-ng-click="toolbarBottom.scrollSidepanel(false)">
-            <i class="fas fa-crosshairs fa-sm"></i>
-        </div>
+           data-ng-click="toolbarBottom.rerunSuite()">
+        <i class="far fa-play-circle fa-sm"></i>
+      </div>
       <div ng-if="toolbarBottom.viewMode != 'url' && toolbarBottom.viewMode != 'suite'"class="fontawesome-link"
            data-toggle="popover"
            data-content="Rerun current test"
@@ -36,7 +45,7 @@
            data-ng-click="toolbarBottom.rerunTest()">
         <i class="far fa-play-circle fa-sm"></i>
       </div>
-        <span class="preformatted">{{toolbarBottom.viewMode}}:</span>
+      <span class="preformatted">{{toolbarBottom.viewMode}}:</span>
       <span ng-if="toolbarBottom.viewMode != 'url'">{{toolbarBottom.model.name}}</button></span>
         <a ng-if="toolbarBottom.viewMode == 'url'"
             href="{{toolbarBottom.model.domain + toolbarBottom.model.url}}" target="_blank"
@@ -52,10 +61,17 @@
          data-trigger="hover"
          data-container="body"
          data-ng-click="toolbarBottom.scrollSidepanel(true)">
-          <i class="fas fa-crosshairs"></i>
+        <i class="fas fa-crosshairs"></i>
       </div>
-        </i>
-    <span class="preformatted">test:</span><span>{{toolbarBottom.model.testGroupName}}</span>
+      <div class="fontawesome-link"
+           data-toggle="popover"
+           data-content="Rerun current test"
+           data-trigger="hover"
+           data-container="body"
+           data-ng-click="toolbarBottom.rerunTest()">
+        <i class="far fa-play-circle fa-sm"></i>
+      </div>
+      <span class="preformatted">test:</span><span>{{toolbarBottom.model.testGroupName}}</span>
     </h5>
   </div>
   <div class="toolbar-blocks">

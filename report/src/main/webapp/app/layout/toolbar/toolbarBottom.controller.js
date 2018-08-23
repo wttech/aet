@@ -20,11 +20,12 @@ define([], function () {
   return ['$scope', '$rootScope', '$uibModal', '$stateParams',
     '$http', 'patternsService', 'metadataAccessService',
     'notesService', 'viewModeService', 'suiteInfoService',
+    'historyService',
     ToolbarBottomController];
 
   function ToolbarBottomController($scope, $rootScope, $uibModal, $stateParams,
       $http, patternsService, metadataAccessService, notesService,
-      viewModeService, suiteInfoService) {
+      viewModeService, suiteInfoService, historyService) {
     var vm = this;
 
     // disables accept button if compared against another suite patterns
@@ -35,7 +36,10 @@ define([], function () {
     vm.showRevertButton = patternsMarkedForUpdateMayBeReverted;
     vm.displayCommentModal = displayCommentModal;
     vm.scrollSidepanel = scrollSidepanel;
+    vm.rerunSuite = rerunSuite;
     vm.rerunTest = rerunTest;
+    vm.historyService = historyService;
+    vm.suiteInfoService = suiteInfoService;
 
     $rootScope.$on('metadata:changed', updateToolbar);
     $scope.$watch('viewMode', function() {
@@ -135,29 +139,68 @@ define([], function () {
         }
     }
 
-    function rerunSuite(){
-      //ToDo
-    }
-
-    function rerunTest(){
-        alert("Rerun in progress...");
+    function rerunSuite() {
         var suiteInfo = suiteInfoService.getInfo();
-//        var payload = new FormData();
-//        payload.append("company",suiteInfo.company);
-//        payload.append("project",suiteInfo.project);
-//        payload.append("suite",suiteInfo.name);
-//        payload.append("test",vm.model.name);
-
         var rerunParams = "company=" + suiteInfo.company + "&" + "project=" + suiteInfo.project + "&" +
-           "suite=" + suiteInfo.name + "&" + "test=" + vm.model.name;
-        //var config = { headers:{'Content-Type':undefined} };
+           "suite=" + suiteInfo.name;
         const url='http://aet-vagrant:8181/suite-rerun?' + rerunParams;
         $http.post(url,{}).then(function successCallback(response) {
-             //console.log(response.data);  #ToDo
-             console.log("Test to rerun accepted...");
+             //ToDo
+             console.log("Suite to rerun accepted...");
+             alert("Rerun '" + vm.model.name + "' in progress...");
+             checkRerunStatus(response.data.statusUrl);
            }, function errorCallback(response) {
+             alert(response.statusText);
              console.log(response.statusText);
           });
+    }
+
+    function rerunTest() {
+        var testName = vm.model.name;
+        if(vm.model.testGroupName){
+          testName = vm.model.testGroupName;
+        }
+        var suiteInfo = suiteInfoService.getInfo();
+
+        var rerunParams = "company=" + suiteInfo.company + "&" + "project=" + suiteInfo.project + "&" +
+           "suite=" + suiteInfo.name + "&" + "testName=" + testName;
+        const url='http://aet-vagrant:8181/suite-rerun?' + rerunParams;
+        $http.post(url,{}).then(function successCallback(response) {
+             //ToDo
+             console.log("Test to rerun accepted...");
+             alert("Rerun '" + testName + "' in progress...");
+             checkRerunStatus(response.data.statusUrl);
+           }, function errorCallback(response) {
+             alert(response.statusText);
+             console.log(response.statusText);
+          });
+    }
+
+    function checkRerunStatus(statusUrl) {
+        const url = 'http://aet-vagrant:8181' + statusUrl;
+        setTimeout(function() {
+          $http.get(url,{}).then(function successCallback(response) {
+            console.log(response.data.status);
+             if (response.data.status === "FINISHED") {
+                var suiteInfo = vm.suiteInfoService.getInfo();
+                var linkParams = "?" + "company=" + suiteInfo.company + "&" + "project=" + suiteInfo.project + "&" +
+                  "suite=" + suiteInfo.name
+                linkParams = linkParams + '#' + window.location.href.split('#')[1];
+                var linkToLatestSuite = location.protocol + '//' + location.host + location.pathname + linkParams;
+                alert("Rerun completed!");
+                window.location.assign(linkToLatestSuite);
+             }else if(response.data.status === "PROGRESS") {
+              alert(response.data.message)
+             } else {
+              alert("Waiting for progress...");
+             }
+           }, function errorCallback(response) {
+             alert(response.data.status);
+             console.log(response.data.status);
+             return;
+          });
+          checkRerunStatus(statusUrl);
+         }, 1000);
     }
 
     function performScroll (element) {
