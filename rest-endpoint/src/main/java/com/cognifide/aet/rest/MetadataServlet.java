@@ -35,19 +35,18 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.BooleanUtils;
-import org.apache.felix.scr.annotations.Activate;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Deactivate;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.Service;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.http.HttpService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Service
-@Component(label = "MetadataServlet", description = "Returns Suite Metadata", immediate = true)
+@Component(immediate = true)
 public class MetadataServlet extends BasicDataServlet {
 
-  private static final long serialVersionUID = 100244101178249562L;
+  private static final long serialVersionUID = 7233205495217724069L;
 
   private static final Logger LOGGER = LoggerFactory.getLogger(MetadataServlet.class);
 
@@ -60,6 +59,9 @@ public class MetadataServlet extends BasicDataServlet {
 
   @Reference
   private LockService lockService;
+
+  @Reference
+  private transient HttpService httpService;
 
   @Override
   protected void process(DBKey dbKey, HttpServletRequest req, HttpServletResponse resp)
@@ -101,6 +103,16 @@ public class MetadataServlet extends BasicDataServlet {
       resp.getWriter()
           .write(responseAsJson(GSON,"Unable to get Suite Metadata for %s", dbKey.toString()));
     }
+  }
+
+  @Override
+  protected HttpService getHttpService() {
+    return this.httpService;
+  }
+
+  @Override
+  protected void setHttpService(HttpService httpService) {
+    this.httpService = httpService;
   }
 
   /***

@@ -21,31 +21,44 @@ import com.cognifide.aet.job.api.datafilter.DataFilterFactory;
 import com.cognifide.aet.worker.api.JobRegistry;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Properties;
-import org.apache.felix.scr.annotations.Property;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.ReferenceCardinality;
-import org.apache.felix.scr.annotations.ReferencePolicy;
-import org.apache.felix.scr.annotations.Service;
 import org.osgi.framework.Constants;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.component.annotations.ReferenceCardinality;
+import org.osgi.service.component.annotations.ReferencePolicy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Service
-@Component(immediate = true, description = "AET JMS Registry", label = "AET Job Registry Implementation")
-@Properties({@Property(name = Constants.SERVICE_VENDOR, value = "Cognifide Ltd")})
+@Component(
+    immediate = true,
+    property = {Constants.SERVICE_VENDOR + "=Cognifide Ltd"}
+)
 public class JobRegistryImpl implements JobRegistry {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(JobRegistryImpl.class);
 
-  @Reference(referenceInterface = CollectorFactory.class, policy = ReferencePolicy.DYNAMIC, cardinality = ReferenceCardinality.OPTIONAL_MULTIPLE, bind = "bindCollectorFactory", unbind = "unbindCollectorFactory")
+  @Reference(
+      service = CollectorFactory.class,
+      policy = ReferencePolicy.DYNAMIC,
+      cardinality = ReferenceCardinality.MULTIPLE,
+      bind = "bindCollectorFactory",
+      unbind = "unbindCollectorFactory")
   private Map<String, CollectorFactory> collectorFactories = new ConcurrentHashMap<>();
 
-  @Reference(referenceInterface = ComparatorFactory.class, policy = ReferencePolicy.DYNAMIC, cardinality = ReferenceCardinality.OPTIONAL_MULTIPLE, bind = "bindComparatorFactory", unbind = "unbindComparatorFactory")
+  @Reference(
+      service = ComparatorFactory.class,
+      policy = ReferencePolicy.DYNAMIC,
+      cardinality = ReferenceCardinality.MULTIPLE,
+      bind = "bindComparatorFactory",
+      unbind = "unbindComparatorFactory")
   private Map<String, ComparatorFactory> comparatorFactoryMap = new ConcurrentHashMap<>();
 
-  @Reference(referenceInterface = DataFilterFactory.class, policy = ReferencePolicy.DYNAMIC, cardinality = ReferenceCardinality.OPTIONAL_MULTIPLE, bind = "bindDataModifierFactory", unbind = "unbindDataModifierFactory")
+  @Reference(
+      service = DataFilterFactory.class,
+      policy = ReferencePolicy.DYNAMIC,
+      cardinality = ReferenceCardinality.MULTIPLE,
+      bind = "bindDataModifierFactory",
+      unbind = "unbindDataModifierFactory")
   private Map<String, DataFilterFactory> dataModifierFactoryMap = new ConcurrentHashMap<>();
 
   private Map<String, ComparatorFactory> defaultComparatorMap = new ConcurrentHashMap<>();

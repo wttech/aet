@@ -20,12 +20,10 @@ import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.SimpleDBKey;
 import com.cognifide.aet.vs.StorageException;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.Service;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
-@Service(SuiteDataService.class)
-@Component(label = "Internal Runner service for Suite data operations")
+@Component(service = SuiteDataService.class)
 public class SuiteDataService {
 
   @Reference
