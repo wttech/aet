@@ -65,17 +65,20 @@ public class HistoryServlet extends BasicDataServlet {
         } else {
           resp.setStatus(HttpURLConnection.HTTP_NOT_FOUND);
           resp.getWriter()
-              .write(responseAsJson("History not found for suite: %s %s", suiteName, dbKey.toString()));
+              .write(
+                  responseAsJson(PRETTY_PRINT_GSON, "History not found for suite: %s %s", suiteName,
+                      dbKey.toString()));
         }
       } else {
         resp.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
         resp.getWriter()
-            .write(responseAsJson("Invalid suite param was specified."));
+            .write(responseAsJson(PRETTY_PRINT_GSON, "Invalid suite param was specified."));
       }
     } catch (StorageException e) {
       LOGGER.error("Failed to get suite's history", e);
       resp.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
-      resp.getWriter().write(responseAsJson("Failed to get history of suite: %s", e.getMessage()));
+      resp.getWriter().write(
+          responseAsJson(PRETTY_PRINT_GSON, "Failed to get history of suite: %s", e.getMessage()));
     }
   }
 
