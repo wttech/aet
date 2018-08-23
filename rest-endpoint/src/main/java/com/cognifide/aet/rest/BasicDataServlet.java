@@ -99,7 +99,7 @@ public abstract class BasicDataServlet extends HttpServlet {
     return valid;
   }
 
-  boolean isValidCorrelationId(String correlationId) {
+  public static boolean isValidCorrelationId(String correlationId) {
     return ValidatorProvider.getValidator()
         .validateValue(Suite.class, "correlationId", correlationId).isEmpty();
   }
