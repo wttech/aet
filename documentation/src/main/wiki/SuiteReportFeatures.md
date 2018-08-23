@@ -55,7 +55,7 @@ Clicking the suite's name in the top toolbar will show a popup in which the user
 Bold version means that this version is the same as the version that's currently being viewed.
 Blue version means that it is a rebased version of previous suite - this is also shown by the timestamps which are identical for original and rebased suite versions.
 
-![Suite history popup](assets/suiteReport/suite-history-popup.png)
+![Suite history popup](assets/suiteReport/history-popup.png)
 
 #### Navigation via keyboard shortcuts
 * press **q** to expand/collapse all items
