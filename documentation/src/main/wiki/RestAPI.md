@@ -25,7 +25,7 @@ Base api path:
 * **HTTP Method**: GET
 * **Parameters**: `company`, `project`, `correlationId` 
 * **Example**: http://aet.example.com/api/metadata?company=cognifide&project=example&correlationId=cognifide-example-1459257500567 
-* **Description**: Returns newest version of metadata identified by provided correlationId.\
+* **Description**: Returns newest version of metadata identified by provided correlationId.
 
 --------
 ##### Get metadata by suite name
@@ -36,12 +36,28 @@ Base api path:
 * **Description**: Returns newest version of latest run (identified by latest correlationId) of metadata by with provided suite name.
 
 --------
+##### Get metadata by suite name and version
+* **URL**: `/api/metadata`
+* **HTTP Method**: GET
+* **Parameters**: `company`, `project`, `suite`, `version` 
+* **Example**: http://aet.example.com/api/metadata?company=cognifide&project=example&suite=mysimplesuite&version=7
+* **Description**: Returns specified version of metadata identified by provided suite and version.
+
+--------
 ##### Update suite metadata
 * **URL**: `/api/metadata`
 * **HTTP Method**: POST
 * **Parameters**: raw JSON in POST body
 * **Example**: http://aet.example.com/api/metadata `[raw json in post body]`
 * **Description**: This method increments version number before saving to DB and returns updated suite object in json format. Returns status 409 if given suite is locked.
+
+--------
+##### Get correlationIds and versions by suite name
+* **URL**: `/api/history`
+* **HTTP Method**: GET
+* **Parameters**: `company`, `project`, `suite`
+* **Example**: http://aet.example.com/api/history?company=cognifide&project=example&suite=mysimplesuite
+* **Description**: Returns all found correlationIds and versions by suite name
 
 --------
 ##### Get lock for suite

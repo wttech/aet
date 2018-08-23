@@ -86,7 +86,20 @@ public abstract class BasicDataServlet extends HttpServlet {
     return ValidatorProvider.getValidator().validateValue(Suite.class, "name", suiteName).isEmpty();
   }
 
-  public static boolean isValidCorrelationId(String correlationId) {
+  boolean isValidVersion(String version) {
+    boolean valid = false;
+    if (version != null) {
+      try {
+        Integer.parseInt(version);
+        valid = true;
+      } catch (NumberFormatException ex) {
+        // Ok, continue
+      }
+    }
+    return valid;
+  }
+
+  boolean isValidCorrelationId(String correlationId) {
     return ValidatorProvider.getValidator()
         .validateValue(Suite.class, "correlationId", correlationId).isEmpty();
   }

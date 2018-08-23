@@ -26,6 +26,7 @@ public final class Helper {
   static final String ARTIFACT_PART_PATH = "artifact";
   static final String METADATA_PART_PATH = "metadata";
   static final String RERUN_PART_PATH = "rerun";
+  static final String HISTORY_PART_PATH = "history";
   static final String REPORT_PART_PATH = "/report";
   static final String CONFIGS_PART_PATH = "/configs";
   static final String LOCK_PART_PATH = "/lock";
@@ -36,6 +37,7 @@ public final class Helper {
   public static final String PROJECT_PARAM = "project";
   public static final String CORRELATION_ID_PARAM = "correlationId";
   public static final String SUITE_PARAM = "suite";
+  public static final String VERSION_PARAM = "version";
   public static final String ID_PARAM = "id";
   public static final String REPORT_PART_PATH_DEFAULT_PAGE = "index.html";
   public static final String TEST_RERUN_PARAM = "testName";
@@ -46,6 +48,10 @@ public final class Helper {
 
   public static String getMetadataPath() {
     return REST_PREFIX + PATH_SEPARATOR + METADATA_PART_PATH;
+  }
+
+  public static String getHistoryPath() {
+    return REST_PREFIX + PATH_SEPARATOR + HISTORY_PART_PATH;
   }
 
   public static String getArtifactPath() {
