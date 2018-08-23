@@ -30,7 +30,7 @@ import org.osgi.service.http.HttpService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-abstract class BasicDataServlet extends HttpServlet {
+public abstract class BasicDataServlet extends HttpServlet {
 
   private static final long serialVersionUID = -5819760668750910009L;
 

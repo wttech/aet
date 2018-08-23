@@ -146,7 +146,7 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
     MongoCollection<Document> metadata = getMetadataCollection(new SimpleDBKey(oldSuite));
     LOGGER.debug("Replacing suite {} in  metadata collection.", oldSuite);
     metadata.findOneAndReplace(Document.parse(oldSuite.toJson()),Document.parse(newSuite.toJson()));
-    return  newSuite;
+    return newSuite;
   }
 
   @Override

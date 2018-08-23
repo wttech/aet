@@ -24,7 +24,6 @@ import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.StorageException;
 import java.util.ArrayList;
-import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
