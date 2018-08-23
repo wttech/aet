@@ -32,7 +32,7 @@ public class ReportConfigurationManager {
 
   @Activate
   public void activate(ReportConfigurationManagerConf config) {
-    reportDomain = Optional.of(config.reportDomain())
+    reportDomain = Optional.ofNullable(config.reportDomain())
         .filter(StringUtils::isNotBlank)
         .orElseGet(() -> Optional.ofNullable(System.getenv(REPORT_DOMAIN_ENV))
             .orElse(ReportConfigurationManagerConf.DEFAULT_REPORT_DOMAIN));
