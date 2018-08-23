@@ -24,6 +24,7 @@ import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.StorageException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -78,22 +79,21 @@ class SuiteRerun {
   private static void cleanDataFromSuite(Suite suite) {
     suite.getTests().stream()
         .map(Test::getUrls)
-        .forEach(urls -> urls
-            .forEach(url -> {
-              url.setCollectionStats(null);
-              url.getSteps()
-                  .forEach(step -> {
-                    step.setStepResult(null);
-                    if (step.getComparators() != null) {
-                      step.getComparators()
-                          .forEach(comparator -> {
-                            comparator.setStepResult(null);
-                            comparator.setFilters(new ArrayList<>());
-                          });
-                    }
-                  });
-            })
-        );
+        .flatMap(Collection::stream)
+        .forEach(url -> {
+          url.setCollectionStats(null);
+          url.getSteps()
+              .forEach(step -> {
+                step.setStepResult(null);
+                if (step.getComparators() != null) {
+                  step.getComparators()
+                      .forEach(comparator -> {
+                        comparator.setStepResult(null);
+                        comparator.setFilters(new ArrayList<>());
+                      });
+                }
+              });
+        });
   }
 }
 

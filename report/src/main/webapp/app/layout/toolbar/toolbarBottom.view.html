@@ -61,9 +61,17 @@
          data-trigger="hover"
          data-container="body"
          data-ng-click="toolbarBottom.scrollSidepanel(true)">
-          <i class="fas fa-crosshairs"></i>
+        <i class="fas fa-crosshairs"></i>
       </div>
-    <span class="preformatted">test:</span><span>{{toolbarBottom.model.testGroupName}}</span>
+      <div class="fontawesome-link"
+           data-toggle="popover"
+           data-content="Rerun current test"
+           data-trigger="hover"
+           data-container="body"
+           data-ng-click="toolbarBottom.rerunTest()">
+        <i class="far fa-play-circle fa-sm"></i>
+      </div>
+      <span class="preformatted">test:</span><span>{{toolbarBottom.model.testGroupName}}</span>
     </h5>
   </div>
   <div class="toolbar-blocks">

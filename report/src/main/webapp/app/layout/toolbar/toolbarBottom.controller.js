@@ -139,8 +139,7 @@ define([], function () {
         }
     }
 
-    function rerunSuite(){
-        alert("Rerun '" + vm.model.name + "' in progress...");
+    function rerunSuite() {
         var suiteInfo = suiteInfoService.getInfo();
         var rerunParams = "company=" + suiteInfo.company + "&" + "project=" + suiteInfo.project + "&" +
            "suite=" + suiteInfo.name;
@@ -148,24 +147,60 @@ define([], function () {
         $http.post(url,{}).then(function successCallback(response) {
              //ToDo
              console.log("Suite to rerun accepted...");
+             alert("Rerun '" + vm.model.name + "' in progress...");
+             checkRerunStatus(response.data.statusUrl);
            }, function errorCallback(response) {
+             alert(response.statusText);
              console.log(response.statusText);
           });
     }
 
-    function rerunTest(){
-        alert("Rerun '" + vm.model.name + "' in progress...");
+    function rerunTest() {
+        var testName = vm.model.name;
+        if(vm.model.testGroupName){
+          testName = vm.model.testGroupName;
+        }
         var suiteInfo = suiteInfoService.getInfo();
 
         var rerunParams = "company=" + suiteInfo.company + "&" + "project=" + suiteInfo.project + "&" +
-           "suite=" + suiteInfo.name + "&" + "testName=" + vm.model.name;
+           "suite=" + suiteInfo.name + "&" + "testName=" + testName;
         const url='http://aet-vagrant:8181/suite-rerun?' + rerunParams;
         $http.post(url,{}).then(function successCallback(response) {
              //ToDo
              console.log("Test to rerun accepted...");
+             alert("Rerun '" + testName + "' in progress...");
+             checkRerunStatus(response.data.statusUrl);
            }, function errorCallback(response) {
+             alert(response.statusText);
              console.log(response.statusText);
           });
+    }
+
+    function checkRerunStatus(statusUrl) {
+        const url = 'http://aet-vagrant:8181' + statusUrl;
+        setTimeout(function() {
+          $http.get(url,{}).then(function successCallback(response) {
+            console.log(response.data.status);
+             if (response.data.status === "FINISHED") {
+                var suiteInfo = vm.suiteInfoService.getInfo();
+                var linkParams = "?" + "company=" + suiteInfo.company + "&" + "project=" + suiteInfo.project + "&" +
+                  "suite=" + suiteInfo.name
+                linkParams = linkParams + '#' + window.location.href.split('#')[1];
+                var linkToLatestSuite = location.protocol + '//' + location.host + location.pathname + linkParams;
+                alert("Rerun completed!");
+                window.location.assign(linkToLatestSuite);
+             }else if(response.data.status === "PROGRESS") {
+              alert(response.data.message)
+             } else {
+              alert("Waiting for progress...");
+             }
+           }, function errorCallback(response) {
+             alert(response.data.status);
+             console.log(response.data.status);
+             return;
+          });
+          checkRerunStatus(statusUrl);
+         }, 1000);
     }
 
     function performScroll (element) {
