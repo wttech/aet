@@ -20,11 +20,12 @@ define([], function () {
   return ['$scope', '$rootScope', '$uibModal', '$stateParams',
     '$http', 'patternsService', 'metadataAccessService',
     'notesService', 'viewModeService', 'suiteInfoService',
+    'historyService',
     ToolbarBottomController];
 
   function ToolbarBottomController($scope, $rootScope, $uibModal, $stateParams,
       $http, patternsService, metadataAccessService, notesService,
-      viewModeService, suiteInfoService) {
+      viewModeService, suiteInfoService, historyService) {
     var vm = this;
 
     // disables accept button if compared against another suite patterns
@@ -35,7 +36,10 @@ define([], function () {
     vm.showRevertButton = patternsMarkedForUpdateMayBeReverted;
     vm.displayCommentModal = displayCommentModal;
     vm.scrollSidepanel = scrollSidepanel;
+    vm.rerunSuite = rerunSuite;
     vm.rerunTest = rerunTest;
+    vm.historyService = historyService;
+    vm.suiteInfoService = suiteInfoService;
 
     $rootScope.$on('metadata:changed', updateToolbar);
     $scope.$watch('viewMode', function() {
@@ -136,15 +140,25 @@ define([], function () {
     }
 
     function rerunSuite(){
-      //ToDo
+        alert("Rerun '" + vm.model.name + "' in progress...");
+        var suiteInfo = suiteInfoService.getInfo();
+        var rerunParams = "company=" + suiteInfo.company + "&" + "project=" + suiteInfo.project + "&" +
+           "suite=" + suiteInfo.name;
+        const url='http://aet-vagrant:8181/suite-rerun?' + rerunParams;
+        $http.post(url,{}).then(function successCallback(response) {
+             //ToDo
+             console.log("Suite to rerun accepted...");
+           }, function errorCallback(response) {
+             console.log(response.statusText);
+          });
     }
 
     function rerunTest(){
-        alert("Rerun in progress...");
+        alert("Rerun '" + vm.model.name + "' in progress...");
         var suiteInfo = suiteInfoService.getInfo();
 
         var rerunParams = "company=" + suiteInfo.company + "&" + "project=" + suiteInfo.project + "&" +
-           "suite=" + suiteInfo.name + "&" + "test=" + vm.model.name;
+           "suite=" + suiteInfo.name + "&" + "testName=" + vm.model.name;
         const url='http://aet-vagrant:8181/suite-rerun?' + rerunParams;
         $http.post(url,{}).then(function successCallback(response) {
              //ToDo

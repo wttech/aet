@@ -63,6 +63,7 @@ class SuiteRerun {
   private static void prepareSuiteToRerun(Suite suite, String testName) {
     Optional.ofNullable(suite)
         .ifPresent(s -> {
+          suite.setRerunned(false);
           Optional.ofNullable(testName)
               .map(s::getTest)
               .ifPresent(testToRerun -> {
