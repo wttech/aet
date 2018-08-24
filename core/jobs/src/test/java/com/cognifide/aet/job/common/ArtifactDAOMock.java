@@ -27,6 +27,7 @@ import java.lang.reflect.Type;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -113,10 +114,9 @@ public class ArtifactDAOMock implements ArtifactsDAO {
     //do nothing here
   }
 
-  //<TODO Write tests for it>
   @Override
   public Set<String> getArtifactsId(DBKey dbKey) {
-    return null;
+    return Collections.emptySet();
   }
 
   /**
