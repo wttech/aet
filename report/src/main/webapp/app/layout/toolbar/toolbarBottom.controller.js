@@ -188,7 +188,11 @@ define([], function () {
                 linkParams = linkParams + '#' + window.location.href.split('#')[1];
                 var linkToLatestSuite = location.protocol + '//' + location.host + location.pathname + linkParams;
                 alert("Rerun completed!");
-                window.location.href = linkToLatestSuite;
+                if(window.location.href !== linkToLatestSuite) {
+                  window.location.assign(linkToLatestSuite);
+                } else {
+                  window.location.reload();
+                }
                 return;
              }else if(response.data.status === "PROGRESS") {
               alert(response.data.message)
