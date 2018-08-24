@@ -6,11 +6,7 @@ import "../../assets/icons/fontawesome-all.min";
 
 const App = () => (
     <div>
-        <BrowserRouter>
-            <Switch>
-                <Route exact path="/" component={SuiteGenerator}/>
-            </Switch>
-        </BrowserRouter>
+        <SuiteGenerator />
     </div>
 );
 
