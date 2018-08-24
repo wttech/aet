@@ -8,28 +8,60 @@ import {saveAs} from "file-saver";
 class GenerateSuiteButton extends Component {
   handleSuiteGenerating() {
     const projectTests = this.props.project[0].tests;
-    const suiteElement = xmlbuilder.create('suite', {encoding: "utf-8"});
-    suiteElement.att('name', this.props.project[0].suite)
-      .att('company', this.props.project[0].company)
-      .att('domain', this.props.project[0].domain)
-      .att('project', this.props.project[0].project);
-    if(Object.values(projectTests).length > 0) {
-      Object.values(projectTests).forEach((testItem) => {
-        const isProxyRequired = this.checkForProxy(testItem);
-        let testElement = null;
-        if(isProxyRequired) {
-          testElement = suiteElement.ele("test", {name: testItem.name.name, useProxy: "rest"})
-        } else {
-          testElement = suiteElement.ele("test", {name: testItem.name.name})
-        }      
-        this.generateCollectorsGroup(testElement, testItem);
-        this.generateComparatorsGroup(testElement, testItem);
-        this.generateUrls(testElement, testItem);
+    //const suiteValidator = this.validateSuite(projectTests);
+    //console.log(suiteValidator)
+   // if(suiteValidator.name === null) {
+      const suiteElement = xmlbuilder.create('suite', {encoding: "utf-8"});
+      suiteElement.att('name', this.props.project[0].suite)
+        .att('company', this.props.project[0].company)
+        .att('domain', this.props.project[0].domain)
+        .att('project', this.props.project[0].project);
+      if(Object.values(projectTests).length > 0) {
+        Object.values(projectTests).forEach((testItem) => {
+          const isProxyRequired = this.checkForProxy(testItem);
+          let testElement = null;
+          if(isProxyRequired) {
+            testElement = suiteElement.ele("test", {name: testItem.name.name, useProxy: "rest"})
+          } else {
+            testElement = suiteElement.ele("test", {name: testItem.name.name})
+          }      
+          this.generateCollectorsGroup(testElement, testItem);
+          this.generateComparatorsGroup(testElement, testItem);
+          this.generateUrls(testElement, testItem);
+        });
+      }
+      const xml = suiteElement.end({pretty: true});
+      var file = new File([xml], "suite.xml", {type: "application/xml;charset=utf-8"});
+      saveAs(file);
+    //} else {
+    //  console.error(suiteValidator.name + " has missing params");
+   // }
+  }
+
+  validateSuite(suite) {
+    let invalidTests = [];
+    Object.values(suite).forEach((testObject) => {
+      Object.values(testObject.tests).forEach((test) => {
+        if(test.parameters !== null) {
+          Object.values(test.parameters).forEach((param) => {
+            if(param.current === null && param.isMandatory) {
+              const testName = testObject.name.name;
+              const invalidBlock = test;
+              console.log(param)
+              invalidTests.push({
+                  name: testName,
+                  blocks: {
+                    ...this.blocks,
+                    invalidBlock,
+                  }
+              });
+              console.log(invalidTests)
+            }
+          });
+        }
       });
-    }
-    const xml = suiteElement.end({pretty: true});
-    var file = new File([xml], "suite.xml", {type: "application/xml;charset=utf-8"});
-    saveAs(file);
+    });
+    return invalidTests;
   }
 
   generateCollectorsGroup(testElement, projectTests) {
@@ -40,7 +72,6 @@ class GenerateSuiteButton extends Component {
         this.generateParameters(testItem, modifierItem);
       } 
     });
-    collectors.ele("open");
     projectTests.tests.forEach((testItem) => {
       if(testItem.dropTo === "Collectors") {
         const collectorItem = collectors.ele(testItem.tag);

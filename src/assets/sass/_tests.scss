@@ -106,6 +106,14 @@
         background-color: lighten($blockURL, 6%);
         position: relative;
 
+        span {
+          width: 90%;
+          text-align: center;
+          margin: 0 auto;
+          display: block;
+          word-wrap: break-word;
+        }
+
         &:hover {
           cursor: pointer;
           background-color: $blockDelete;
@@ -128,7 +136,8 @@
           z-index: 99999;
           font-size: 14px;
           left: 110%;
-          top: 0;
+          top: 50%;
+          transform: translateY(-50%);
           display: none;
           width: 200px;
           transition: all 0.3s ease-in-out;
@@ -140,10 +149,10 @@
           height: 15px;
           background-color: $black;
           position: absolute;
-          top: 0;
-          left: 108%;
-          margin-top: 11px;
-          transform: rotate(45deg);
+          top: 50%;
+          left: 106%;
+          margin-top: -2px;
+          transform: rotate(45deg) translateY(-50%);
           display: none;
           transition: all 0.3s ease-in-out;
         }
@@ -210,6 +219,10 @@
         &:hover {
           background-color: darken($blockValid, 25%);
         }
+      }
+
+      .modifier {
+        background-color: #2ad4ff;
       }
 
       .block-error {

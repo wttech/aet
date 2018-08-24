@@ -4,8 +4,14 @@ import {bindActionCreators} from 'redux';
 import {deleteItemFromTest, toggleEditBox, hideOptionsBox, hideEditBox} from "../../actions"
 
 class OptionsBox extends Component {
+  constructor(props) {
+    super(props);
+
+    this.handleScrolling = this.handleScrolling.bind(this);
+  }
 
   updateOptionsBox() {
+    console.log(this.props.optionsBox);
     const parentID = this.props.optionsBox.optionsBoxItemID;
     if(document.getElementById(parentID) !== null) {
       const boundingRect = document.getElementById(parentID).getBoundingClientRect();
@@ -20,12 +26,26 @@ class OptionsBox extends Component {
       this.props.hideEditBox();
     }
   }
+
+  handleScrolling() {
+    this.updateOptionsBox();
+  }
+
+  //fix scrolling when optionsbox window is open
   
   componentDidUpdate() {
     this.updateOptionsBox();
   }
 
+  componentWillUnmount() {
+    console.log("unmount")
+    window.removeEventListener("scroll", (ev) => this.handleScrolling(ev), false);
+    // document.getElementsByClassName("tests-wrapper")[0].removeEventListener("scroll", (ev) => this.handleScrolling(ev), false);
+  }
+
   componentDidMount() {
+    window.removeEventListener("scroll", (ev) => this.handleScrolling(ev), false);
+    // document.getElementsByClassName("tests-wrapper")[0].addEventListener("scroll", (ev) => this.handleScrolling(ev), false);
     this.updateOptionsBox();
   }
 

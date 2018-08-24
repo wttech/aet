@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
-import {loadTest, loadUrls, loadTestName} from "../../actions"
+import {hideOptionsBox, hideEditBox, loadTest, loadUrls, loadTestName} from "../../actions"
 
 class TestsList extends Component {
 
@@ -36,6 +36,8 @@ class TestsList extends Component {
   }
 
   handleTestLoading(test) {
+    this.props.hideOptionsBox();
+    this.props.hideEditBox();
     this.props.loadTest(test);
     this.props.loadUrls(test.urls);
     this.props.loadTestName(test.name);
@@ -61,7 +63,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({loadTest, loadUrls, loadTestName}, dispatch)
+  return bindActionCreators({hideOptionsBox, hideEditBox, loadTest, loadUrls, loadTestName}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(TestsList);

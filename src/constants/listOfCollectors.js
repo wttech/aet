@@ -1,6 +1,16 @@
 const listOfCollectors = 
 [
   {
+    type: "Open",
+    tag: "open",
+    parameters: null,
+    deps: null,
+    depType: null,
+    dropTo: "Collectors",
+    group: "Open",
+    proxy: "false",
+  },
+  {
     type: 'Accessibility',
     tag: "accessibility",
     parameters: {

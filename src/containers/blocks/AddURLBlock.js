@@ -40,7 +40,7 @@ class AddURLBlock extends Component {
     if(this.props.urls.length > 0) {
       return this.props.urls.map((url, index) => {
         return (
-          <div key={index} className="block nested added-url" onClick={() => this.props.removeUrlFromTest(url)}>{url}</div>
+          <div key={index} className="block nested added-url" onClick={() => this.props.removeUrlFromTest(url)}><span>{url}</span></div>
         )
       });
     }

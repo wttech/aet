@@ -17,8 +17,8 @@ class UpdateTest extends Component {
       this.readLoadedFile(ev, (fileData) => {
 
         const parser = new DOMParser();
-        const xml = parser.parseFromString(fileData, "text/xml");
-
+        const parsedFileData = this.removeSpecialCharacters(fileData);
+        const xml = parser.parseFromString(parsedFileData, "text/xml");
         const attributes = xml.getElementsByTagName("suite")[0].attributes;
         const projectData = vm.getProjectData(attributes);
         let projectTree = {
@@ -61,6 +61,11 @@ class UpdateTest extends Component {
     }
   }
 
+  removeSpecialCharacters(fileData) {
+    const parse = fileData.replace(/&/g, '&amp;');
+    return parse;
+  }
+
   clearTestTree() {
     this.props.clearTests();
     this.props.hideUrlInput();
@@ -84,7 +89,6 @@ class UpdateTest extends Component {
         urls[i] = "BAD_URL_OR_DOMAIN";
       }
     }
-
     return urls;
   }
 
@@ -119,26 +123,14 @@ class UpdateTest extends Component {
 
   getTestCollectors(vm, collectorsChildren) {
     let collectors = [];
-    let modifiers = true;
     for (let i = 0; i < collectorsChildren.length; i++) {
-      if (collectorsChildren[i].nodeName === "open") {
-        modifiers = false;
-      } else {
-        if (modifiers) {
-          const tag = collectorsChildren[i].nodeName;
-          let block = vm.getMatchingBlock(tag, "modifiers");
-          block = vm.setBlockParameters(block, collectorsChildren[i].attributes);
-          collectors.push(block);
-        } else {
-          const tag = collectorsChildren[i].nodeName;
-          let block = vm.getMatchingBlock(tag, "collectors");
-          if(block === null) {
-            block = vm.getMatchingBlock(tag, "modifiers");
-          }
-          block = vm.setBlockParameters(block, collectorsChildren[i].attributes);
-          collectors.push(block);
-        }
+      const tag = collectorsChildren[i].nodeName;
+      let block = vm.getMatchingBlock(tag, "collectors");
+      if(block === null) {
+        block = vm.getMatchingBlock(tag, "modifiers");
       }
+      block = vm.setBlockParameters(block, collectorsChildren[i].attributes);
+      collectors.push(block);
     }
     return collectors;
   }
@@ -146,10 +138,11 @@ class UpdateTest extends Component {
   setBlockParameters(block, params) {
     let newBlock = {...block};
     let newParam = null;
-    if(newBlock.parameters !== null) {
+    if(typeof newBlock.parameters !== "undefined" && newBlock.parameters !== null) {
       Object.values(newBlock.parameters).forEach((blockParam) => {
         Object.values(params).forEach((param) => {
           if(param.name === blockParam.tag) {
+            const tempParamName = param.name.replace(/-|_/g, '').toString().toLowerCase();
             newParam = {
               ...blockParam,
               current: param.value,
@@ -158,7 +151,7 @@ class UpdateTest extends Component {
               ...newBlock,
               parameters: {
                 ...newBlock.parameters,
-                [newParam.tag]: newParam,
+                [tempParamName]: newParam,
               }
             };
           }

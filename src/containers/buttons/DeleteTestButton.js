@@ -16,9 +16,9 @@ class DeleteTest extends Component {
   }
 
   render () {
-      return (
-        <div className={"delete-test test-button "  + (this.props.testName.name ? null : "btn-disabled")} onClick={() => this.deleteTest()}>DELETE TEST</div>
-      )
+    return (
+      <div className={"delete-test test-button "  + (this.props.testName.name ? null : "btn-disabled")} onClick={() => this.deleteTest()}>DELETE TEST</div>
+    )
   }
 }
 

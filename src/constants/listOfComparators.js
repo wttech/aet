@@ -4,7 +4,7 @@ const listOfComparators =
     type: 'Accessibility',
     tag: "accessibility",
     parameters: {
-      report_level: {
+      reportlevel: {
         name: "Raport Level",
         tag: "raport-level",
         values: ["ERROR", "WARN", "NOTICE"],
@@ -13,7 +13,7 @@ const listOfComparators =
         description: "Violation types to be show in the report, ERROR for errors, WARN for errors and warnings, NOTICE for everything",
         current: null,
       },
-      ignore_notice: {
+      ignorenotice: {
         name: "Ignore Notice",
         tag: "ignore-notice",
         values: ["true", "false"],
@@ -22,7 +22,7 @@ const listOfComparators =
         description: "If the ignore-notice=true test status does not depend on the number of notices. If ignore-notice=false notices are treated as warnings in calculating the test status.",
         current: null,
       },
-      showExcluded: {
+      showexcluded: {
         name: "Show Excluded",
         tag: "showExcluded",
         values: ["true", "false"],
@@ -63,7 +63,7 @@ const listOfComparators =
         description: "Violation types to be show in the report, ERROR for errors, WARN for errors and warnings, NOTICE for everything",
         current: null,
       },
-      cookie_name: {
+      cookiename: {
         name: "Cookie Name",
         tag: "cookie-name",
         values: null,
@@ -72,7 +72,7 @@ const listOfComparators =
         description: "The name of the cookie to test, applicable only for the test action",
         current: null,
       },
-      cookie_value: {
+      cookievalue: {
         name: "Cookie Value",
         tag: "cookie-value",
         values: null,
@@ -81,7 +81,7 @@ const listOfComparators =
         description: "The value of the cookie to test, applicable only for the test action",
         current: null,
       },
-      showMatched: {
+      showmatched: {
         name: "Show Matched",
         tag: "showMatched",
         values: ["true", "false"],
@@ -162,7 +162,7 @@ const listOfComparators =
     type: 'StatusCodes',
     tag: "status-codes",
     parameters: {
-      filterRange: {
+      filterrange: {
         name: "Filter Range",
         tag: "filterRange",
         values: null,
@@ -171,7 +171,7 @@ const listOfComparators =
         description: "Defines range of status codes that should be processed, example values: [400, 500]. Mandatory if filterCodes is not set",
         current: null,
       },
-      filterCodes: {
+      filtercodes: {
         name: "Filter Codes",
         tag: "filterCodes",
         values: null,
@@ -180,7 +180,7 @@ const listOfComparators =
         description: "List of status codes that should be processed, example values: [400, 401, 404]. Mandatory if filterRange is not set",
         current: null,
       },
-      showExcluded: {
+      showexcluded: {
         name: "Show Excluded",
         tag: "showExcluded",
         values: ["true", "false"],
@@ -208,7 +208,7 @@ const listOfComparators =
         isMandatory: true,
         description: "See wiki for specific information",
       },
-      ignore_warnings: {
+      ignorewarnings: {
         name: "Ignore Warnings",
         tag: "ignore-warnings",
         values: ["true", "false"],

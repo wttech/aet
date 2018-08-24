@@ -13,7 +13,7 @@ const listOfDataFilters =
         description: "The exact error message. At least one parameter is required, ignored if 'errorPattern' parameter is provided",
         current: null,
       },
-      errorPattern: {
+      errorpattern: {
         name: "Error Pattern",
         tag: "errorPattern",
         values: null,
@@ -61,7 +61,7 @@ const listOfDataFilters =
     type: 'Extract Element',
     tag: "extract-element",
     parameters: {
-      elementId: {
+      elementid: {
         name: "Element ID",
         tag: "elementId",
         values: null,
@@ -109,7 +109,7 @@ const listOfDataFilters =
         description: "Source file name in which error occurred. At least one parameter is required.",
         current: null,
       },
-      errorPattern: {
+      errorpattern: {
         name: "Error Pattern",
         tag: "errorPattern",
         values: null,
@@ -139,7 +139,7 @@ const listOfDataFilters =
     type: 'Remove Lines',
     tag: "remove-lines",
     parameters: {
-      dataRanges: {
+      dataranges: {
         name: "Data Ranges",
         tag: "dataRanges",
         values: null,
@@ -297,7 +297,7 @@ const listOfDataFilters =
         description: "Exact message text of the issue to be filtered out. *see notes below. At least one parameter is required.",
         current: null,
       },
-      messagePattern: {
+      messagepattern: {
         name: "Message Pattern",
         tag: "messagePattern",
         values: null,

@@ -27,7 +27,6 @@ function mapStateToProps(state) {
     project: state.project,
     urls: state.urls,
     urlInput: state.urlInput,
-    testName: state.testName
   }
 }
 

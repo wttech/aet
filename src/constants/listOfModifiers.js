@@ -51,7 +51,7 @@ const listOfModifiers =
         description: "New text value for given attribute or innterHTML of selected element",
         current: null,
       },
-      attributeName: {
+      attributename: {
         name: "Atrribute Name",
         tag: "attributeName",
         values: null,
@@ -107,7 +107,7 @@ const listOfModifiers =
         description: "Specifies what action should be taken with a given cookie",
         current: null,
       },
-      cookie_name: {
+      cookiename: {
         name: "Cookie Name",
         tag: "cookie-name",
         values: null,
@@ -116,7 +116,7 @@ const listOfModifiers =
         description: "Cookie name",
         current: null,
       },
-      cookie_value: {
+      cookievalue: {
         name: "Cookie Value",
         tag: "cookie-value",
         values: null,
@@ -125,7 +125,7 @@ const listOfModifiers =
         description: "Cookie Value, mandatory if 'add' action is selected",
         current: null,
       },
-      cookie_domain: {
+      cookiedomain: {
         name: "Cookie Domain",
         tag: "cookie-domain",
         values: null,
@@ -134,7 +134,7 @@ const listOfModifiers =
         description: "Cookie domain, used only if 'add' action is selected but it's not mandatory",
         current: null,
       },
-      cookie_path: {
+      cookiepath: {
         name: "Cookie Path",
         tag: "cookie-path",
         values: null,
@@ -145,7 +145,7 @@ const listOfModifiers =
       },
     },
     deps: null,
-    dropTo: "Modifiers",
+    dropTo: "Collectors",
     group: "Modifiers",
     proxy: "false",
     wiki: "https://github.com/Cognifide/aet/wiki/CookieModifier",
@@ -174,7 +174,7 @@ const listOfModifiers =
       },
     },
     deps: null,
-    dropTo: "Modifiers",
+    dropTo: "Collectors",
     group: "Modifiers",
     proxy: "true",
     wiki: "https://github.com/Cognifide/aet/wiki/HeaderModifier",
@@ -210,7 +210,7 @@ const listOfModifiers =
         description: "The timeout for the element to appear, in milliseconds. The max value of this parameter is 15000ms",
         current: null,
       },
-      leaveBlankSpace: {
+      leaveblankspace: {
         name: "Leave Blank Space",
         tag: "leaveBlankSpace",
         values: ["true", "false"],
@@ -248,7 +248,7 @@ const listOfModifiers =
         description: "User's password",
         current: null,
       },
-      login_page: {
+      loginpage: {
         name: "Login Page",
         tag: "login-page",
         values: null,
@@ -257,7 +257,7 @@ const listOfModifiers =
         description: "Url to login page",
         current: null,
       },
-      login_input_selector: {
+      logininputselector: {
         name: "Login Input Selector",
         tag: "login-input-selector",
         values: null,
@@ -266,7 +266,7 @@ const listOfModifiers =
         description: "Xpath expression for login input",
         current: null,
       },
-      login_password_selector: {
+      loginpasswordselector: {
         name: "Login Password Selector",
         tag: "login-password-selector",
         values: null,
@@ -275,7 +275,7 @@ const listOfModifiers =
         description: "Xpath expression for password input",
         current: null,
       },
-      submit_button_selector: {
+      submitbuttonselector: {
         name: "Submit Button Selector",
         tag: "submit-button-selector",
         values: null,
@@ -284,7 +284,7 @@ const listOfModifiers =
         description: "Xpath expression for submit button",
         current: null,
       },
-      login_token_key: {
+      logintokenkey: {
         name: "Login Token Key",
         tag: "login-token-key",
         values: null,
@@ -302,7 +302,7 @@ const listOfModifiers =
         description: "Number of milliseconds (between 0 and 10000) that modifier will wait to login page response after submiting credentials. It is also used between reattempts to log in.",
         current: null,
       },
-      force_login: {
+      forcelogin: {
         name: "Force Login",
         tag: "force-login",
         values: null,
@@ -311,7 +311,7 @@ const listOfModifiers =
         description: "Enforces login even when login cookie is present.",
         current: null,
       },
-      retrial_number: {
+      retrialnumber: {
         name: "Retrial Number",
         tag: "retrial-number",
         values: null,
@@ -322,7 +322,7 @@ const listOfModifiers =
       },
     },
     deps: null,
-    dropTo: "Modifiers",
+    dropTo: "Collectors",
     group: "Modifiers",
     proxy: "false",
     wiki: "https://github.com/Cognifide/aet/wiki/LoginModifier",
@@ -399,7 +399,7 @@ const listOfModifiers =
         description: "Javascript command that will be executed, not mandatory if snippetUrl is set",
         current: null,
       },
-      snippetUrl: {
+      snippeturl: {
         name: "Snippet URL",
         tag: "snippetUrl",
         values: null,
@@ -408,7 +408,7 @@ const listOfModifiers =
         description: "The url to external js snippet that will be executed, not mandatory if cmd is set",
         current: null,
       },
-      basicAuthUsername: {
+      basicauthusername: {
         name: "Basic Auth Username",
         tag: "basicAuthUsername",
         values: null,
@@ -417,7 +417,7 @@ const listOfModifiers =
         description: "For Basic HTTP Authentication header, only if basicAuthPassword is set",
         current: null,
       },
-      basicAuthPassword: {
+      basicauthpassword: {
         name: "Basic Auth Password",
         tag: "basicAuthPassword",
         values: null,

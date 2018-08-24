@@ -4,6 +4,7 @@
   width: 100%;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
+  z-index:999;
   box-shadow: 0px 3px 5px 0px $shadow;
 
   .project-info-block {

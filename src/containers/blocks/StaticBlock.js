@@ -39,10 +39,6 @@ class StaticBlock extends Component {
           {this.props.value}
         </div>
       )
-    } else if(this.props.type === "open") {
-      return (
-        <div className="block static nested">{this.props.value}</div>
-      )
     } else {
       return null;
     }

@@ -52,13 +52,13 @@ class UserBlockContainer extends Component {
               return (
                 <div className={elemClass}  key={elemID}>
                   <div 
-                  className="block custom nested" 
+                  className={`block custom nested  ${test.group === "Modifiers" ? "modifier" : ""} ${test.group === "Open" ? "static" : ""}`}
                   onClick={(ev) => this.toggleOptionsBox(ev, test, elemID)}
                   key={elemID} 
                   id={elemID}>
                   <span>{test.type}</span>
                   </div>
-                  <DropContainer dropTo={(type === "modifiers" ? "modifiers" : "collectors")} />
+                  <DropContainer dropTo="collectors" />
                 </div>
               )
             } 
