@@ -79,6 +79,12 @@ public interface ArtifactsDAO extends Serializable {
 
   /**
    * @param dbKey - key with project and company name
+   * @return Set of all artifacts id contained in database as String or empty set
+   */
+  Set<String> getArtifactsId(DBKey dbKey);
+
+  /**
+   * @param dbKey - key with project and company name
    * @param objectID - suite run identificator
    * @param type - type of artifact to deserialize
    * @param <T> - returned artifact.
@@ -107,8 +113,5 @@ public interface ArtifactsDAO extends Serializable {
    * @param artifactsToRemove - set of Artifact objectIDs.
    */
   void removeArtifacts(DBKey dbKey, Set<String> artifactsToRemove);
-
-  //<TODO Description and tests>
-  Set<String> getArtifactsId(DBKey dbKey);
 
 }

@@ -114,10 +114,10 @@ public class ArtifactsDAOMongoDBImpl implements ArtifactsDAO {
     FindIterable<Document> findIterable =
         client.getDatabase(dbName)
             .getCollection(ARTIFACTS_COLLECTION_NAME + FILES_COLLECTION_SUFFIX)
-            .find().projection(fields(include("_id")));
+            .find().projection(fields(include(ID_FIELD_NAME)));
 
     for (Document document : findIterable) {
-      artifactsId.add(document.get("_id").toString());
+      artifactsId.add(document.get(ID_FIELD_NAME).toString());
     }
     return artifactsId;
   }
