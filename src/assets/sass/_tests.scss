@@ -85,7 +85,7 @@
             padding: 7px 0;
             font-size: 15px;     
             word-wrap: break-word;   
-            width:95%;
+            width:100%;
             margin: 0px auto;  
             border-bottom:1px solid rgba(0,0,0,0.3);
 
@@ -93,9 +93,10 @@
               border-bottom:0px solid; 
             }
 
-            &-mandatory {
+            &-mandatory-missing {
               font-weight: bold;
-              color: $blockError;
+              background-color: rgba(255,0,0,0.7);
+              //color: $blockError;
             }
 
             &-bold {

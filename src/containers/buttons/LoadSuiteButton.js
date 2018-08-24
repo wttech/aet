@@ -75,32 +75,35 @@ class UpdateTest extends Component {
 
   getTestUrls(urlsChildren, domain) {
     let urls = [];
-    for(let i=0; i<urlsChildren.length; i++) {
+    if(urlsChildren && Object.values(urlsChildren).forEach((child, index) => {
+      const validChild = Object.values(child.attributes).find((attr) => {
+        return attr.name === "href";
+      });
       if(domain) {
-        if(typeof urlsChildren[i].attributes[0].value.split(domain)[1] !== "undefined") {
-          urls.push(urlsChildren[i].attributes[0].value.split(domain)[1]);
+        if(typeof validChild.value.split(domain)[1] !== "undefined") {
+          urls.push(validChild.value.split(domain)[1]);
         } else {
-          urls.push(urlsChildren[i].attributes[0].value.split(domain)[0]);
+          urls.push(validChild.value.split(domain)[0]);
         }
       } else {
-        urls.push(urlsChildren[i].attributes[0].value)
+        urls.push(validChild.value)
       }
-      if(typeof urls[i] === "undefined") {
-        urls[i] = "BAD_URL_OR_DOMAIN";
+      if(typeof urls[index] === "undefined") {
+        urls[index] = "BAD_URL_OR_DOMAIN";
       }
-    }
+    }));
     return urls;
   }
 
   getTestComparators(vm, comparatorsChildren) {
     let comparators = [];
-    for(let i=0; i<comparatorsChildren.length; i++) {
-      const tag = comparatorsChildren[i].nodeName;
+    if(comparatorsChildren && Object.values(comparatorsChildren).forEach((child) => {
+      const tag = child.nodeName;
       let block = vm.getMatchingBlock(tag, "comparators");
-      block = vm.setBlockParameters(block, comparatorsChildren[i].attributes);
-      block = vm.setBlockFilters(vm, block, comparatorsChildren[i].children);
+      block = vm.setBlockParameters(block, child.attributes);
+      block = vm.setBlockFilters(vm, block, child.children);
       comparators.push(block);
-    }
+    }));
     return comparators;
   }
 
@@ -123,34 +126,34 @@ class UpdateTest extends Component {
 
   getTestCollectors(vm, collectorsChildren) {
     let collectors = [];
-    for (let i = 0; i < collectorsChildren.length; i++) {
-      const tag = collectorsChildren[i].nodeName;
+    if(collectorsChildren && Object.values(collectorsChildren).forEach((child) => {
+      const tag = child.nodeName;
       let block = vm.getMatchingBlock(tag, "collectors");
       if(block === null) {
         block = vm.getMatchingBlock(tag, "modifiers");
       }
-      block = vm.setBlockParameters(block, collectorsChildren[i].attributes);
+      block = vm.setBlockParameters(block, child.attributes);
       collectors.push(block);
-    }
+    }));
+
     return collectors;
   }
 
   setBlockParameters(block, params) {
-    let newBlock = {...block};
     let newParam = null;
-    if(typeof newBlock.parameters !== "undefined" && newBlock.parameters !== null) {
-      Object.values(newBlock.parameters).forEach((blockParam) => {
+    if(typeof block.parameters !== "undefined" && block.parameters !== null) {
+      Object.values(block.parameters).forEach((blockParam) => {
         Object.values(params).forEach((param) => {
           if(param.name === blockParam.tag) {
             const tempParamName = param.name.replace(/-|_/g, '').toString().toLowerCase();
             newParam = {
               ...blockParam,
               current: param.value,
-            }
-            newBlock = {
-              ...newBlock,
+            };
+            block = {
+              ...block,
               parameters: {
-                ...newBlock.parameters,
+                ...block.parameters,
                 [tempParamName]: newParam,
               }
             };
@@ -158,7 +161,7 @@ class UpdateTest extends Component {
         });
       });
     }
-    return newBlock;
+    return block;
   }
 
 
@@ -211,12 +214,12 @@ class UpdateTest extends Component {
 
   getProjectData(attributes) {
     let projectData = {};
-    for (let i = 0; i < attributes.length; i++) {
+    if(attributes && Object.values(attributes).forEach((att) => {
       projectData = {
         ...projectData,
-        [attributes[i].name]: attributes[i].value,
+        [att.name]: att.value,
       };
-    }
+    }));
     return projectData;
   }
 

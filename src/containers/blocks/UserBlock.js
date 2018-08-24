@@ -90,14 +90,10 @@ class UserBlockContainer extends Component {
     if(test.parameters !== null) {
       return Object.values(test.parameters).map((param, index) => {
         return (
-          <p className="block-parameter" key={index}>
-            {param.isMandatory ? (
-            <span className="block-parameter-mandatory">{param.name}</span>
-            ) : (
+          <div className={`block-parameter ${param.isMandatory && (param.current === null || param.current === "")  ? ("block-parameter-mandatory-missing") : ""}`} key={index}>
             <span className="block-parameter-bold">{param.name}</span>
-            )} 
             : {param.current === null || param.current === "" ? "null" : param.current}
-          </p>
+          </div>
         )
       });
     }
