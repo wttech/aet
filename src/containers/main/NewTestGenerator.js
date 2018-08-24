@@ -11,11 +11,12 @@ import AddURLBlock from "../../containers/blocks/AddURLBlock";
 import TestNameBlock from "../../containers/popups/TestName"
 import {checkIfTestAlreadyExists} from "../../functions/checkIfTestExists"
 import ProjectInfo from "../../containers/test/ProjectInfo";
-import {hideEditBox, hideOptionsBox, hideUrlInput, hideTestNameInput, addTestToProject, clearTests, clearUrlsList} from "../../actions/";
+import {testOptionsInited, hideEditBox, hideOptionsBox, hideUrlInput, hideTestNameInput, addTestToProject, clearTests, clearUrlsList} from "../../actions/";
 
 class NewTestGenerator extends Component {
 
   componentDidMount() {
+    this.props.testOptionsInited();
     this.props.hideOptionsBox();
     this.props.hideEditBox();
   }
@@ -87,6 +88,7 @@ class NewTestGenerator extends Component {
         <ProjectInfo />
         <div className="tests-wrapper">
           <div className="tests">
+            {this.props.testName.name ? (<span className="test-name">Current test: {this.props.testName.name}</span>) : null}
             <StaticBlock type="start" value="Collectors" expandable={true} />
             <DropContainer dropTo="modifiers" />
             <UserBlocksContainer type="modifiers" />
@@ -123,7 +125,7 @@ function mapStateToProps(state)
 
 function matchDispatchToProps(dispatch)
 {
-  return bindActionCreators({hideEditBox, hideOptionsBox, hideUrlInput, hideTestNameInput,  addTestToProject, clearTests, clearUrlsList}, dispatch);
+  return bindActionCreators({testOptionsInited, hideEditBox, hideOptionsBox, hideUrlInput, hideTestNameInput,  addTestToProject, clearTests, clearUrlsList}, dispatch);
 }
 
 export default connect(mapStateToProps, matchDispatchToProps)(NewTestGenerator)

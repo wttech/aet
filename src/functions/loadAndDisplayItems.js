@@ -5,7 +5,9 @@ import generateID from "../functions/generateID";
 const loadListOfItems = (array, searchString) => {
     return array.map((item) => {
       const featureID = generateID(item);
-      typeof searchString === "undefined" ? searchString = "" : null;
+      if(typeof searchString === "undefined") {
+        searchString = "";
+      }
        if(item.type.toLowerCase().search(searchString.toLowerCase()) !== -1) {
         return (
           <FeatureItem itemKey={item.type.trim()} key={item.type.trim()} value={item.type} id={featureID} feature={item}/>

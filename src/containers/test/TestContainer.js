@@ -8,6 +8,7 @@ import AddTest from "../buttons/AddTestButton";
 import UpdateTest from "../buttons/UpdateTestButton";
 import DeleteTest from "../buttons/DeleteTestButton";
 import ClearTest from "../buttons/ClearTestButton";
+import ToggleTestOptions from "../buttons/ToggleBlocksExpandButton";
 
 class TestContainer extends Component {
 
@@ -28,6 +29,7 @@ class TestContainer extends Component {
       <div>
           <NewTestGenerator/>
           <div className="buttons-container">
+            <ToggleTestOptions />
             <AddTest />
             <UpdateTest />
             <DeleteTest />

@@ -9,6 +9,7 @@ import urls from "./urls/urlsReducer";
 import urlInput from "./urls/urlInputReducer";
 import testName from "./test/testNameReducer";
 import staticBlocks from "./blocks/staticBlocksReducer";
+import testOptions from "./test/testOptionsReducer";
 
 const reducer = combineReducers(
   {
@@ -22,6 +23,7 @@ const reducer = combineReducers(
     urlInput: urlInput,
     testName: testName,
     staticBlocks: staticBlocks,
+    testOptions: testOptions,
   }
 )
 

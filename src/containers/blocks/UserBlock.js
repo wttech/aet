@@ -41,8 +41,16 @@ class UserBlockContainer extends Component {
                   id={elemID} 
                   onClick={(ev) => this.toggleOptionsBox(ev, test, elemID)}
                   onDragOver={(ev) => handleDragOver(ev)}  
-                  onDrop={(ev) => this.handleFilterDrop(ev, test)}
-                  >{test.type}</div>
+                  onDrop={(ev) => this.handleFilterDrop(ev, test)}>
+                  <div className={`${test.group !== "Open" ? "block-type" : ""}`}>
+                    <span>{test.type}</span>
+                  </div>
+                  {this.props.testOptions.blocksExpanded ? (
+                    <div className="block-parameters-container">
+                      {this.generateListOfBlockParameters(test)}
+                    </div>
+                  ) : null}
+                  </div>
                   {this.generateListOfFilters(test, index)}
                 </div>
                 <DropContainer dropTo={"comparators"} />
@@ -56,7 +64,14 @@ class UserBlockContainer extends Component {
                   onClick={(ev) => this.toggleOptionsBox(ev, test, elemID)}
                   key={elemID} 
                   id={elemID}>
-                  <span>{test.type}</span>
+                  <div className={`${test.group !== "Open" ? "block-type" : ""}`}>
+                    <span>{test.type}</span>
+                  </div>
+                  {test.group !== "Open" && this.props.testOptions.blocksExpanded ? (
+                    <div className="block-parameters-container">
+                      {this.generateListOfBlockParameters(test)}
+                    </div>
+                  ) : null}
                   </div>
                   <DropContainer dropTo="collectors" />
                 </div>
@@ -71,8 +86,24 @@ class UserBlockContainer extends Component {
     }
   }
 
-  generateListOfFilters(test, parentIndex) {
+  generateListOfBlockParameters(test) {
+    if(test.parameters !== null) {
+      return Object.values(test.parameters).map((param, index) => {
+        return (
+          <p className="block-parameter" key={index}>
+            {param.isMandatory ? (
+            <span className="block-parameter-mandatory">{param.name}</span>
+            ) : (
+            <span className="block-parameter-bold">{param.name}</span>
+            )} 
+            : {param.current === null || param.current === "" ? "null" : param.current}
+          </p>
+        )
+      });
+    }
+  }
 
+  generateListOfFilters(test, parentIndex) {
     return (test.filters !== null && Object.values(test.filters).map((filter, index) => {
       if(filter !== null) {
         if(filter.dropTo === generateID(test)) {
@@ -83,7 +114,14 @@ class UserBlockContainer extends Component {
             id={filterID}
             onClick={(ev) => this.toggleOptionsBox(ev, filter, filterID, test)}
             className="block nested-twice filter-block">
-            {filter.type} Filter
+            <div className="block-type">
+              <span>{filter.type}</span>
+            </div>
+            {this.props.testOptions.blocksExpanded ? (
+              <div className="block-parameters-container">
+                {this.generateListOfBlockParameters(filter)}
+              </div>
+            ) : null}
             </div>
           )
         }  
@@ -106,6 +144,7 @@ function mapStateToProps(state) {
     test: state.test,
     optionsBox: state.optionsBox,
     staticBlocks: state.staticBlocks,
+    testOptions: state.testOptions,
   }
 }
 

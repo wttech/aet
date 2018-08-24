@@ -182,3 +182,13 @@ export const setLoadedFileAsCurrentProject = (projectTree) => ({
   type: "SUITE_FILE_LOADED",
   payload: projectTree
 });
+
+export const testOptionsInited = () => ({
+  type: "TEST_OPTIONS_INITED",
+  payload: null
+});
+
+export const blocksExpandToggle = () => ({
+  type: "BLOCKS_EXPAND_TOGGLED",
+  payload: null
+});

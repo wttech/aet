@@ -27,8 +27,8 @@
 
   .test-button {
     background-color: $gray_extralight;
-    width: 110px;
-    padding: 15px 10px;
+    width: 140px;
+    padding: 15px 3px;
     font-size: 15px;
     font-weight: bold;
     position: relative;
@@ -37,6 +37,10 @@
     text-align: center;
     transition: all 0.3s ease-in-out;
     position: relative;
+
+    span {
+      font-weight: bold;
+    }
 
     &:hover {
       cursor: pointer;
@@ -97,6 +101,13 @@
   .clear-test {
     &::after {
       content: "Clear current test tree. This won't delete anything from the project.";
+      display: none;
+    }
+  }
+
+  .expand-test {
+    &::after {
+      content: "Click to show or hide parameters of blocks in the test.";
       display: none;
     }
   }

@@ -23,6 +23,16 @@
         overflow: hidden;
       }
 
+      .test-name {
+        color: $white;
+        font-size: 18px;
+        font-weight: bold;
+        width: 300px;
+        margin-left: 12px;
+        text-align: center;
+        display: block;
+      }
+
       .list-expanded {
         height: 100%;
       }
@@ -46,7 +56,6 @@
       .block {
         width: 300px;
         background-color: $gray_light;
-        padding: 7px 0px;
         margin: 10px;
         text-align: center;
         transition: all 0.3s ease-in-out;
@@ -56,6 +65,43 @@
           position: absolute;
           top:7px;
           right: 15px;
+        }
+
+        .block-type {
+          width:100%;
+          text-align: center;
+          background-color:rgba(0,0,0,0.15);
+          padding:7px 0;
+
+          span {
+            font-size:16px;
+          }
+        }
+
+        .block-parameters-container {
+          
+          .block-parameter {
+            text-align: center;
+            padding: 7px 0;
+            font-size: 15px;     
+            word-wrap: break-word;   
+            width:95%;
+            margin: 0px auto;  
+            border-bottom:1px solid rgba(0,0,0,0.3);
+
+            &:last-child {
+              border-bottom:0px solid; 
+            }
+
+            &-mandatory {
+              font-weight: bold;
+              color: $blockError;
+            }
+
+            &-bold {
+              font-weight: bold;
+            }
+          }
         }
       }
 
@@ -67,7 +113,12 @@
         font-size: 1.3rem;
         font-weight: bold;
         font-style: italic;
-        background-color: $blockDefault
+        background-color: $blockDefault;
+        padding:7px 0;
+
+        div {
+          text-align: center;
+        }
       }
 
       .start {
@@ -95,6 +146,7 @@
         background-color: $blockURL;
         font-size: 16px;
         font-weight: bold;
+        padding:7px 0;
 
         &:hover {
           cursor: pointer;
@@ -104,6 +156,7 @@
 
       .added-url {
         background-color: lighten($blockURL, 6%);
+        padding:7px 0;
         position: relative;
 
         span {
@@ -217,12 +270,16 @@
         background-color: $blockValid;
 
         &:hover {
-          background-color: darken($blockValid, 25%);
+          background-color: darken($blockValid, 15%);
         }
       }
 
       .modifier {
-        background-color: #2ad4ff;
+        background-color: $blockModifier;
+
+        &:hover {
+          background-color: darken($blockModifier, 15%);
+        }
       }
 
       .block-error {
@@ -327,7 +384,7 @@
         background-color: $blockFilter;
         
         &:hover {
-          background-color: darken($blockFilter, 40%);
+          background-color: darken($blockFilter, 30%);
           cursor: pointer;
         }
       }
