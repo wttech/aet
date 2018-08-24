@@ -22,9 +22,7 @@ import java.util.Set;
 
 public class ReferencedArtifactsMessageBody extends MessageBody<String> {
 
-  private static final long serialVersionUID = 3811933888080393100L;
-
-  private Set<String> artifactsToRemove;
+  private static final long serialVersionUID = 6150857968321878532L;
 
   private Set<String> artifactsToKeep;
 
@@ -34,15 +32,6 @@ public class ReferencedArtifactsMessageBody extends MessageBody<String> {
 
   public String getId() {
     return getDbKey().getCompany() + "_" + getDbKey().getProject() + "|" + getData();
-  }
-
-  public Set<String> getArtifactsToRemove() {
-    return artifactsToRemove != null ? Collections.unmodifiableSet(artifactsToRemove)
-        : Collections.<String>emptySet();
-  }
-
-  public void setArtifactsToRemove(Set<String> artifactsToRemove) {
-    this.artifactsToRemove = artifactsToRemove;
   }
 
   public Set<String> getArtifactsToKeep() {
@@ -55,11 +44,6 @@ public class ReferencedArtifactsMessageBody extends MessageBody<String> {
   }
 
   public void update(ReferencedArtifactsMessageBody body) {
-    if (artifactsToRemove == null) {
-      artifactsToRemove = new HashSet<>();
-    }
-    artifactsToRemove.addAll(body.getArtifactsToRemove());
-
     if (artifactsToKeep == null) {
       artifactsToKeep = new HashSet<>();
     }
