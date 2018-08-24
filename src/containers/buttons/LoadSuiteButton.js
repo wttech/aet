@@ -141,7 +141,11 @@ class UpdateTest extends Component {
 
   setBlockParameters(block, params) {
     let newParam = null;
-    if(typeof block.parameters !== "undefined" && block.parameters !== null) {
+    if(block === null) {
+      console.log(block)
+      console.log(params)
+    }
+    if(block !== null && typeof block.parameters !== "undefined" && block.parameters !== null) {
       Object.values(block.parameters).forEach((blockParam) => {
         Object.values(params).forEach((param) => {
           if(param.name === blockParam.tag) {
