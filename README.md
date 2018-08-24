@@ -22,12 +22,9 @@ To run the app locally you need:
 2. Run `npm i` to install required npm modules.
 3. To start the app run `npm start`
 
-#### Deploying report application to vagrant virtual machine
+### Known bugs
 
-Suite app can be uploaded to vagrant virtual machine by running
-
-    mvn clean install -P upload
-
+1. URL `name` parameter is being ignored. 
 
 [node-js]: https://nodejs.org/en/
 [npm-install]: https://docs.npmjs.com/getting-started/installing-node#updating-npm
