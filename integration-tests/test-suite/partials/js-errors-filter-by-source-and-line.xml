@@ -91,7 +91,7 @@
 	</test>
 
 	<test
-		name="S-comparator-JsErrors-filter-by-source-and-line-number-22-and-390">
+		name="S-comparator-JsErrors-filter-by-source-and-line-number-21-and-371">
 		<collect>
 			<open />
 			<sleep duration="1000" />
@@ -99,8 +99,8 @@
 		</collect>
 		<compare>
 			<js-errors>
-				<js-errors-filter source="failed.jsp" line="22" />
-				<js-errors-filter source="failed.jsp" line="390" />
+				<js-errors-filter source="failed.jsp" line="21" />
+				<js-errors-filter source="failed.jsp" line="371" />
 				<js-errors-filter errorPattern=".*nonExistingVariable.*" />
 				<js-errors-filter
 					error="ReferenceError: nonExistingVariable is not defined"

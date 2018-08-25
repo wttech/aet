@@ -21,9 +21,9 @@ Every test case has one of the following states:
 
 1. passed — if the comparator doesn't find any change, i.e. validation passes,
 2. passed with warnings — if there are some warnings, but they are not very important,
-3. failed — if the comparator detects some changes or some validation rules are broken,
-4. accepted — if failed test was accepted.
-The state of the test case is propagated to the URL then to the test and to the test suite. It is possible to accept all test cases for a given URL or in a current test suite.
+3. conditionally passed - if the comparator finds some change, but the change is smaller or equal to error threshold
+4. failed — if the comparator detects some changes or some validation rules are broken,
+5. accepted — if failed test was accepted.
 
 Tests and URLs may be filtered by:
 

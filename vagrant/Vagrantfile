@@ -96,7 +96,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       }
     }
     chef.run_list = [
-      "recipe[aet::_develop]",
+#      "recipe[aet::_develop]",
       "recipe[aet::display]",
       "recipe[aet::apache]",
       "recipe[aet::mongo]",

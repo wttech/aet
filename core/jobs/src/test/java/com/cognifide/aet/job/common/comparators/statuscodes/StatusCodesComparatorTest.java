@@ -16,22 +16,20 @@
 package com.cognifide.aet.job.common.comparators.statuscodes;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.fail;
 import static org.mockito.Mockito.when;
 
 import com.cognifide.aet.communication.api.metadata.ComparatorStepResult;
+import com.cognifide.aet.communication.api.metadata.ComparatorStepResult.Status;
 import com.cognifide.aet.job.api.comparator.ComparatorProperties;
-import com.cognifide.aet.job.api.datafilter.DataFilterJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.job.common.ArtifactDAOMock;
-import com.cognifide.aet.job.common.collectors.statuscodes.StatusCode;
-import com.cognifide.aet.job.common.collectors.statuscodes.StatusCodesCollectorResult;
 import com.cognifide.aet.job.common.comparators.AbstractComparatorTest;
-import com.cognifide.aet.job.common.comparators.source.SourceComparator;
-import com.google.common.collect.Lists;
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
+
+import com.google.common.collect.ImmutableMap;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -65,54 +63,165 @@ public class StatusCodesComparatorTest extends AbstractComparatorTest {
 
   private static final String FILTER_CODES_MULTIPLE_NAN = "NaN,NaN,NaN,NaN";
 
+  private static final String FILTER_CODES_ONLY_SUCCESS = "200";
+
+  private static final String FILTER_RANGE_REMOVE_DEFAULT_RANGE = "1,1";
+
+  private static final String FILTER_CODES_EXCLUDED = "500";
+
   private StatusCodesComparator tested;
-
-  @Mock
-  private Map<String, String> params;
-
-  @Mock
-  private StatusCodesCollectorResult dataResult;
 
   @Mock
   private ComparatorProperties comparatorProperties;
 
-  private List<StatusCode> statusCodes;
-
   @Before
   public void setUp() {
     artifactDaoMock = new ArtifactDAOMock(StatusCodesComparator.class);
-    comparatorProperties = new ComparatorProperties(TEST_COMPANY, TEST_PROJECT, null,
-        "expected-data-200-result.json");
-    tested = new StatusCodesComparator(artifactDaoMock, comparatorProperties,
-        new ArrayList<DataFilterJob>());
-    artifactDaoMock = new ArtifactDAOMock(SourceComparator.class);
-    initStatusCodes();
-    when(dataResult.getStatusCodes()).thenReturn(statusCodes);
-
-    when(params.containsKey(PARAM_FILTER_RANGE)).thenReturn(false);
-    when(params.containsKey(PARAM_FILTER_CODES)).thenReturn(false);
   }
 
   @Test
-  public void compareTest() throws ProcessingException {
+  public void compareTest_expectPassed() throws ProcessingException {
+    tested = createNewStatusCodesComparator("expected-data-200-result.json");
+
+    result = tested.compare();
+    assertEquals(ComparatorStepResult.Status.PASSED, result.getStatus());
+  }
+
+  @Test
+  public void compareTest_expectFailed() throws ProcessingException, ParametersException {
+    tested = createNewStatusCodesComparator("expected-data-200-result.json");
+
+    Map<String, String> params = ImmutableMap
+        .of(PARAM_FILTER_CODES, FILTER_CODES_ONLY_SUCCESS);
+    tested.setParameters(params);
+
     result = tested.compare();
     assertEquals(ComparatorStepResult.Status.FAILED, result.getStatus());
   }
 
   @Test
-  public void compareTest_filterRange() throws ProcessingException {
-    // filter only by range
-    when(params.containsKey(PARAM_FILTER_RANGE)).thenReturn(true);
-    when(params.get(PARAM_FILTER_RANGE)).thenReturn(FILTER_RANGE);
+  public void compareTest_filterRange_expectPassed()
+      throws ProcessingException, ParametersException {
+    tested = createNewStatusCodesComparator("not-existing-page-404-result.json");
+
+    Map<String, String> params = ImmutableMap
+        .of(PARAM_FILTER_RANGE, FILTER_RANGE_REMOVE_DEFAULT_RANGE);
+    tested.setParameters(params);
+
+    result = tested.compare();
+    assertEquals(ComparatorStepResult.Status.PASSED, result.getStatus());
+  }
+
+  @Test
+  public void compareTest_filterRange_expectFailed()
+      throws ProcessingException, ParametersException {
+    tested = createNewStatusCodesComparator("not-existing-page-404-result.json");
+
+    Map<String, String> params = ImmutableMap
+        .of(PARAM_FILTER_RANGE, FILTER_RANGE);
+    tested.setParameters(params);
+
     result = tested.compare();
     assertEquals(ComparatorStepResult.Status.FAILED, result.getStatus());
   }
 
   @Test
-  public void compareTest_filterCodes() throws ProcessingException {
-    // filter only by codes
-    when(params.containsKey(PARAM_FILTER_CODES)).thenReturn(true);
-    when(params.get(PARAM_FILTER_CODES)).thenReturn(FILTER_CODES_MULTIPLE);
+  public void compareTest_filterCodes_expectPassed()
+      throws ProcessingException, ParametersException {
+    tested = createNewStatusCodesComparator("not-existing-page-404-result.json");
+
+    Map<String, String> params = ImmutableMap
+        .of(PARAM_FILTER_CODES, FILTER_CODES_ONLY_SUCCESS,
+            PARAM_FILTER_RANGE, FILTER_RANGE_REMOVE_DEFAULT_RANGE);
+    tested.setParameters(params);
+
+    result = tested.compare();
+    assertEquals(ComparatorStepResult.Status.PASSED, result.getStatus());
+  }
+
+  @Test
+  public void compareTest_filterCodesMultipleCodes_expectFailed()
+      throws ProcessingException, ParametersException {
+    tested = createNewStatusCodesComparator("not-existing-page-404-result.json");
+
+    Map<String, String> params = ImmutableMap
+        .of(PARAM_FILTER_CODES, FILTER_CODES_MULTIPLE,
+            PARAM_FILTER_RANGE, FILTER_RANGE_REMOVE_DEFAULT_RANGE);
+    tested.setParameters(params);
+
+    result = tested.compare();
+    assertEquals(ComparatorStepResult.Status.FAILED, result.getStatus());
+  }
+
+  @Test
+  public void compareTest_filterCodesAndFilterRange_expectFailed()
+      throws ParametersException, ProcessingException {
+    tested = createNewStatusCodesComparator("a-lot-of-errors-with-exclude-result.json");
+    Map<String, String> params;
+
+    params = ImmutableMap
+        .of(PARAM_FILTER_CODES, FILTER_RANGE);
+    tested.setParameters(params);
+
+    result = tested.compare();
+    assertEquals(ComparatorStepResult.Status.FAILED, result.getStatus());
+
+    params = ImmutableMap
+        .of(PARAM_FILTER_CODES, FILTER_CODES_MULTIPLE,
+            PARAM_FILTER_RANGE, FILTER_RANGE_REMOVE_DEFAULT_RANGE);
+    tested.setParameters(params);
+
+    result = tested.compare();
+    assertEquals(ComparatorStepResult.Status.FAILED, result.getStatus());
+
+    params = ImmutableMap
+        .of(PARAM_FILTER_CODES, FILTER_CODES_MULTIPLE,
+            PARAM_FILTER_RANGE, FILTER_RANGE);
+    tested.setParameters(params);
+
+    result = tested.compare();
+    assertEquals(ComparatorStepResult.Status.FAILED, result.getStatus());
+  }
+
+  @Test
+  public void compareTest_filterCodesAndFilterRange_expectPassed()
+      throws ParametersException, ProcessingException {
+    tested = createNewStatusCodesComparator("a-lot-of-errors-with-exclude-result.json");
+
+    Map<String, String> params = ImmutableMap
+        .of(PARAM_FILTER_CODES, FILTER_CODES_SINGLE,
+            PARAM_FILTER_RANGE, FILTER_RANGE_REMOVE_DEFAULT_RANGE);
+    tested.setParameters(params);
+
+    result = tested.compare();
+    assertEquals(Status.PASSED, result.getStatus());
+  }
+
+  @Test
+  public void compareTest_testExclude_expectPassed()
+      throws ParametersException, ProcessingException {
+    tested = createNewStatusCodesComparator("a-lot-of-errors-with-exclude-result.json");
+
+    Map<String, String> params = ImmutableMap
+        .of(PARAM_FILTER_CODES, FILTER_CODES_EXCLUDED,
+            PARAM_FILTER_RANGE, FILTER_RANGE_REMOVE_DEFAULT_RANGE);
+    tested.setParameters(params);
+
+    result = tested.compare();
+    assertEquals(ComparatorStepResult.Status.PASSED, result.getStatus());
+  }
+
+  @Test
+  public void compareTest_defaultRange_expectPassed() throws ProcessingException {
+    tested = createNewStatusCodesComparator("default-range-399-601-errors-result.json");
+
+    result = tested.compare();
+    assertEquals(ComparatorStepResult.Status.PASSED, result.getStatus());
+  }
+
+  @Test
+  public void compareTest_defaultRange_expectFailed() throws ProcessingException {
+    tested = createNewStatusCodesComparator("default-range-400-600-errors-result.json");
 
     result = tested.compare();
     assertEquals(ComparatorStepResult.Status.FAILED, result.getStatus());
@@ -120,130 +229,99 @@ public class StatusCodesComparatorTest extends AbstractComparatorTest {
 
   @Test
   public void setParameters() throws ParametersException {
-    when(params.containsKey(PARAM_FILTER_RANGE)).thenReturn(true);
-    when(params.get(PARAM_FILTER_RANGE)).thenReturn(FILTER_RANGE);
-    when(params.containsKey(PARAM_FILTER_CODES)).thenReturn(true);
-    when(params.get(PARAM_FILTER_CODES)).thenReturn(FILTER_CODES_SINGLE);
+    tested = createNewStatusCodesComparator("expected-data-200-result.json");
 
-    // no parameters errors expected - unable to assert anything
+    Map<String, String> params = ImmutableMap
+        .of(PARAM_FILTER_CODES, FILTER_CODES_SINGLE,
+            PARAM_FILTER_RANGE, FILTER_RANGE);
     tested.setParameters(params);
+    // parameters were set successfully
   }
 
   @Test
   public void setParameters_filterRange() throws ParametersException {
-    when(params.containsKey(PARAM_FILTER_RANGE)).thenReturn(true);
-    when(params.get(PARAM_FILTER_RANGE)).thenReturn(FILTER_RANGE);
+    tested = createNewStatusCodesComparator("expected-data-200-result.json");
 
-    // no parameters errors expected - unable to assert anything
+    Map<String, String> params = ImmutableMap
+        .of(PARAM_FILTER_RANGE, FILTER_RANGE);
     tested.setParameters(params);
+    // parameters were set successfully
   }
 
   @Test(expected = ParametersException.class)
   public void setParameters_filterRangeInvalid() throws ParametersException {
-    when(params.containsKey(PARAM_FILTER_RANGE)).thenReturn(true);
-    when(params.get(PARAM_FILTER_RANGE)).thenReturn(FILTER_RANGE_INVALID);
+    tested = createNewStatusCodesComparator("expected-data-200-result.json");
 
-    // parameters exception expected - unable to assert anything
+    Map<String, String> params = ImmutableMap
+        .of(PARAM_FILTER_RANGE, FILTER_RANGE_INVALID);
     tested.setParameters(params);
+    fail("parameters exception expected");
   }
 
   @Test(expected = ParametersException.class)
   public void setParameters_filterRangeNotANumber() throws ParametersException {
-    when(params.containsKey(PARAM_FILTER_RANGE)).thenReturn(true);
-    when(params.get(PARAM_FILTER_RANGE)).thenReturn(FILTER_RANGE_NAN);
+    tested = createNewStatusCodesComparator("expected-data-200-result.json");
 
-    // parameters exception expected - unable to assert anything
+    Map<String, String> params = ImmutableMap
+        .of(PARAM_FILTER_RANGE, FILTER_RANGE_NAN);
     tested.setParameters(params);
+    fail("parameters exception expected");
   }
 
   @Test(expected = ParametersException.class)
   public void setParameters_filterRangeUpperBoundLessThanLowerBound() throws ParametersException {
-    when(params.containsKey(PARAM_FILTER_RANGE)).thenReturn(true);
-    when(params.get(PARAM_FILTER_RANGE)).thenReturn(FILTER_RANGE_UPPER_LESS_THAN_LOWER);
+    tested = createNewStatusCodesComparator("expected-data-200-result.json");
 
-    // parameters exception expected - unable to assert anything
+    Map<String, String> params = ImmutableMap
+        .of(PARAM_FILTER_RANGE, FILTER_RANGE_UPPER_LESS_THAN_LOWER);
     tested.setParameters(params);
+    fail("parameters exception expected");
   }
 
   @Test
   public void setParameters_filterCodes() throws ParametersException {
-    when(params.containsKey(PARAM_FILTER_CODES)).thenReturn(true);
-    when(params.get(PARAM_FILTER_CODES)).thenReturn(FILTER_CODES_SINGLE);
+    tested = createNewStatusCodesComparator("expected-data-200-result.json");
 
-    // parameters exception expected - unable to assert anything
+    Map<String, String> params = ImmutableMap
+        .of(PARAM_FILTER_CODES, FILTER_CODES_SINGLE);
     tested.setParameters(params);
+    // parameters were set successfully
   }
 
   @Test
   public void setParameters_filterCodesMultipleValues() throws ParametersException {
-    when(params.containsKey(PARAM_FILTER_CODES)).thenReturn(true);
-    when(params.get(PARAM_FILTER_CODES)).thenReturn(FILTER_CODES_MULTIPLE);
+    tested = createNewStatusCodesComparator("expected-data-200-result.json");
 
-    // no parameters errors expected - unable to assert anything
+    Map<String, String> params = ImmutableMap
+        .of(PARAM_FILTER_CODES, FILTER_CODES_MULTIPLE);
     tested.setParameters(params);
+    // parameters were set successfully
   }
 
   @Test(expected = ParametersException.class)
   public void setParameters_filterCodesNotANumber() throws ParametersException {
-    when(params.containsKey(PARAM_FILTER_CODES)).thenReturn(true);
-    when(params.get(PARAM_FILTER_CODES)).thenReturn(FILTER_CODES_SINGLE_NAN);
+    tested = createNewStatusCodesComparator("expected-data-200-result.json");
 
-    // parameters exception expected - unable to assert anything
+    Map<String, String> params = ImmutableMap
+        .of(PARAM_FILTER_CODES, FILTER_CODES_SINGLE_NAN);
     tested.setParameters(params);
+    fail("parameters exception expected");
   }
 
   @Test(expected = ParametersException.class)
   public void setParameters_filterCodesMultipleValuesNotANumber() throws ParametersException {
-    when(params.containsKey(PARAM_FILTER_CODES)).thenReturn(true);
-    when(params.get(PARAM_FILTER_CODES)).thenReturn(FILTER_CODES_MULTIPLE_NAN);
+    tested = createNewStatusCodesComparator("expected-data-200-result.json");
 
-    // parameters exception expected - unable to assert anything
+    Map<String, String> params = ImmutableMap
+        .of(PARAM_FILTER_CODES, FILTER_CODES_MULTIPLE_NAN);
     tested.setParameters(params);
+    fail("parameters exception expected");
   }
 
-  private void initStatusCodes() {
-    statusCodes = new StatusCodesBuilder().add(404, 303, 500, 501, 302, 200, 400, 201)
-        .add(404, "http://www.example.com/image.png").build();
+  private StatusCodesComparator createNewStatusCodesComparator(String pathToJson) {
+    comparatorProperties = new ComparatorProperties(TEST_COMPANY, TEST_PROJECT, null,
+        pathToJson);
+    return new StatusCodesComparator(artifactDaoMock, comparatorProperties, new ArrayList<>());
   }
 
-  private static class StatusCodesBuilder {
-
-    private static final String DEFAULT_URL = "http://www.example.com";
-
-    private final List<StatusCode> codes;
-
-    private StatusCodesBuilder() {
-      this.codes = Lists.newArrayList();
-    }
-
-    public StatusCodesBuilder add(int code) {
-      codes.add(new StatusCode(code, DEFAULT_URL));
-      return this;
-    }
-
-    ;
-
-    public StatusCodesBuilder add(Integer... httpCodes) {
-      for (Integer httpCode : httpCodes) {
-        codes.add(new StatusCode(httpCode, DEFAULT_URL));
-      }
-      return this;
-    }
-
-    ;
-
-    public StatusCodesBuilder add(int code, String url) {
-      codes.add(new StatusCode(code, url));
-      return this;
-    }
-
-    ;
-
-    public List<StatusCode> build() {
-      return codes;
-    }
-
-    ;
-
-  }
 }

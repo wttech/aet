@@ -21,14 +21,12 @@ import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.vs.MetadataDAO;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.Service;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Service(RemoveMetadataProcessor.class)
-@Component
+@Component(service = RemoveMetadataProcessor.class)
 public class RemoveMetadataProcessor implements Processor {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(RemoveMetadataProcessor.class);

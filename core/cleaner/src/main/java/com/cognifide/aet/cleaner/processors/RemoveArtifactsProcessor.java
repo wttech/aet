@@ -21,14 +21,12 @@ import com.cognifide.aet.vs.ArtifactsDAO;
 import com.google.common.collect.Sets;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.Service;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Service(RemoveArtifactsProcessor.class)
-@Component
+@Component(service = RemoveArtifactsProcessor.class)
 public class RemoveArtifactsProcessor implements Processor {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(RemoveArtifactsProcessor.class);

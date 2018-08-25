@@ -71,6 +71,7 @@
                 <exclude>src/main/webapp/.csslintrc</exclude>
                 <exclude>src/main/webapp/.jsbeautifyrc</exclude>
                 <exclude>src/main/webapp/.jshintrc</exclude>
+                <exclude>src/main/webapp/.babelrc</exclude>
 
                 <exclude>src/main/webapp/assets/libs/**</exclude>
                 <exclude>src/main/webapp/assets/js/**</exclude>
@@ -105,8 +106,8 @@
             </goals>
             <configuration>
               <workingDirectory>src/main/webapp</workingDirectory>
-              <nodeVersion>v4.4.7</nodeVersion>
-              <npmVersion>3.9.5</npmVersion>
+              <nodeVersion>v8.11.3</nodeVersion>
+              <npmVersion>6.2.0</npmVersion>
             </configuration>
           </execution>
           <execution>
@@ -120,9 +121,9 @@
             </configuration>
           </execution>
           <execution>
-            <id>build-with-grunt</id>
+            <id>build-with-gulp</id>
             <goals>
-              <goal>grunt</goal>
+              <goal>gulp</goal>
             </goals>
             <configuration>
               <workingDirectory>src/main/webapp</workingDirectory>

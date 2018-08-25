@@ -24,7 +24,8 @@
 	<test name="S-modifier-Wait-For-Element-To-Be-Visible">
 		<collect>
 			<open />
-			<wait-for-element-to-be-visible css="#test-element" timeout = "6000"/>
+			<resolution width="1500" />
+			<wait-for-element-to-be-visible css="#test-element" timeout = "10000"/>
 			<screen />
 		</collect>
 		<compare>
@@ -38,7 +39,8 @@
 	<test name="F-modifier-Wait-For-Element-To-Be-Visible">
 		<collect>
 			<open />
-			<wait-for-element-to-be-visible css="#test-element" timeout="1000"/>
+			<resolution width="1500" />
+			<wait-for-element-to-be-visible css="#test-element" timeout="100"/>
 			<screen />
 		</collect>
 		<compare>
