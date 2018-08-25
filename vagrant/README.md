@@ -47,7 +47,7 @@ recommended though).
 ### Installation
 
 * Download and install
-  [VirtualBox 5.2.16](https://www.virtualbox.org/wiki/Downloads)
+  [VirtualBox 5.2.18](https://www.virtualbox.org/wiki/Downloads)
 * Download and install
   [Vagrant 2.1.2](https://releases.hashicorp.com/vagrant/)
 * Download and install [ChefDK 3.1.0](https://downloads.chef.io/chefdk/stable)

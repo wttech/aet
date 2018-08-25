@@ -6,7 +6,7 @@ To see the full list of changes, please refer to [CHANGELOG](https://github.com/
 #### Upgrade for our virtualization tool set
 We now use newest versions of VirtualBox, Vagrant and Chef, for AET instance setup:
 
-* [VirtualBox 5.2.16](https://www.virtualbox.org/wiki/Downloads)
+* [VirtualBox 5.2.18](https://www.virtualbox.org/wiki/Downloads)
 * [Vagrant 2.1.2](https://releases.hashicorp.com/vagrant/)
 * [ChefDK 3.1.0](https://downloads.chef.io/chefdk/stable)
 
