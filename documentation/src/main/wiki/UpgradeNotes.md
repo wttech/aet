@@ -12,11 +12,13 @@ You may see all changes in the [Changelog](https://github.com/Cognifide/aet/blob
 #### Suite update guide
 
 Changes related to Chrome web driver migration (from old Firefox version):
-* The [Screen Collector|ScreenCollector] now can only takes a screenshot of whole viewport size set by the [Resolution Modifier|ResolutionModifier]. 
+* The [[Screen Collector|ScreenCollector]] now can only takes a screenshot of whole viewport size set by the [[Resolution Modifier|ResolutionModifier]]. 
+If you want to take a screenshot of entire page, you should either skip the height parameter of resolution modifier 
+(to let it be computed by JavaScript), or set it to a value which will cover the whole page.
 If you want to take a partial screenshot (specified by xpath/css selector), then the whole element must be visible in the current viewport. 
-Please see latest [Screen Collector|ScreenCollector] and [Resolution Modifier|ResolutionModifier] documentation in the wiki for details.
-* The [Open|Open] may take more time to complete now, because it waits for all images to be loaded.
-[Wait For Image Completion Modifier|WaitForImageCompletionModifier] is no longer needed, unless you want to wait for an image which is loaded asynchronously (e.g. by an AJAX call)
+Please see latest [[Screen Collector|ScreenCollector]] and [[Resolution Modifier|ResolutionModifier]] documentation in the wiki for details.
+* The [[Open|Open]] may take more time to complete now, because it waits for all images to be loaded.
+[[Wait For Image Completion Modifier|WaitForImageCompletionModifier]] is no longer needed, unless you want to wait for an image which is loaded asynchronously (e.g. by an AJAX call)
 
 ### Admins
 
