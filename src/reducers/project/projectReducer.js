@@ -37,12 +37,13 @@ export default function (state = {}, action = null) {
       let oldTests = newState.tests;
       const newTests = action.payload.tests;
       const urls = action.payload.urls;
+      const isValid = true;
       let addedTests = null;
       if(oldTests === null) {
-        addedTests = [{tests: newTests, urls, name}]
+        addedTests = [{tests: newTests, urls, name, isValid}]
       } else {
         oldTests = Object.values(oldTests);
-        addedTests = [...oldTests, {tests: newTests, urls, name}];
+        addedTests = [...oldTests, {tests: newTests, urls, name, isValid}];
       }
       localStorage.setItem("tests", JSON.stringify({...addedTests}));
       return [{...newState, tests: addedTests}]
@@ -77,8 +78,19 @@ export default function (state = {}, action = null) {
           } 
         });
       }
-      return state;
+      return [newState];
     }
+
+    case "TEST_SET_AS_INVALID": {
+      let newState = [...state];
+      const testObj = Object.values(newState[0].tests).forEach((test) => {
+        if(test.name.name === action.payload.name.name) {
+          test.isValid = false;
+        }
+      });
+      return newState;
+    }
+
     default: {
       return state;
     }

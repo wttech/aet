@@ -25,7 +25,7 @@ class UserBlockContainer extends Component {
       return this.props.test.map((test, index) => {
         if(typeof test !== 'undefined') {   
           if(test.dropTo.toLowerCase() === type) {
-            const elemClass = type + "-list-container";
+            const elemClass = `${type}-list-container ${this.props.testName.isVisible ? "block-hidden" : ""}`;
             let elemID = null;
             if(test.type === "Source W3CHTML5") {
               elemID = "source-comparators-" + index;
@@ -90,9 +90,14 @@ class UserBlockContainer extends Component {
     if(test.parameters !== null) {
       return Object.values(test.parameters).map((param, index) => {
         return (
-          <div className={`block-parameter ${param.isMandatory && (param.current === null || param.current === "")  ? ("block-parameter-mandatory-missing") : ""}`} key={index}>
-            <span className="block-parameter-bold">{param.name}</span>
-            : {param.current === null || param.current === "" ? "null" : param.current}
+          <div className={`block-parameter ${param.isMandatory && (param.current === null || param.current === "") && param.default === null  ? ("block-parameter-mandatory-missing") : ""}`} key={index}>
+              <span className="block-parameter-bold">{param.name}</span>
+              {(param.current !== null && param.current !== "") ? (
+                `: ${param.current}`
+              ) : (
+                `: ${param.default}`
+              )}
+
           </div>
         )
       });
@@ -141,6 +146,7 @@ function mapStateToProps(state) {
     optionsBox: state.optionsBox,
     staticBlocks: state.staticBlocks,
     testOptions: state.testOptions,
+    testName: state.testName,
   }
 }
 

@@ -8,14 +8,11 @@ import listOfModifiers from "../../constants/listOfModifiers";
 import listOfDataFilters from "../../constants/listOfDataFilters";
 
 class UpdateTest extends Component {
-
-  // IMPORTANT NOTE: DO NOT REVIEW THIS FILE YET, STILL WORK IN PROGRESS!
-
+  
   loadSuite(ev) {
     if (window.File && window.FileReader && window.FileList && window.Blob) {
       const vm = this;
       this.readLoadedFile(ev, (fileData) => {
-
         const parser = new DOMParser();
         const parsedFileData = this.removeSpecialCharacters(fileData);
         const xml = parser.parseFromString(parsedFileData, "text/xml");
@@ -44,6 +41,7 @@ class UpdateTest extends Component {
               ...comparatorsBlocks,
             ],
             urls: testUrls,
+            isValid: true,
           }
           projectTree = {
             ...projectTree,

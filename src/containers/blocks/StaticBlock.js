@@ -26,7 +26,7 @@ class StaticBlock extends Component {
     const isListExpanded = this.props.staticBlocks[this.props.value.toString().toLowerCase()];
     if(this.props.type === "start") {
       return (
-        <div className="block static start" id={ `${this.props.value}-start` } onClick={() => this.handleExpanding()}>
+        <div className={`block static start ${this.props.testName.isVisible ? "block-hidden" : ""}`} id={ `${this.props.value}-start` } onClick={() => this.handleExpanding()}>
           {this.props.value}
           <div className={`arrow-block ${isListExpanded ? ("arrow-expanded") : ("arrow-hidden")}`}>
             <i className={`fas fa-angle-right block-arrow`}></i>
@@ -35,7 +35,7 @@ class StaticBlock extends Component {
       )
     } else if (this.props.type === "end") {
       return (
-        <div className="block static end">
+        <div className={`block static start ${this.props.testName.isVisible ? "block-hidden" : ""}`}>
           {this.props.value}
         </div>
       )
@@ -48,6 +48,7 @@ class StaticBlock extends Component {
 function mapStateToProps(state) {
   return {
     staticBlocks: state.staticBlocks,
+    testName: state.testName,
   }
 }
 

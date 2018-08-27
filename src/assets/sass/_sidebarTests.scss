@@ -44,6 +44,10 @@
       width: 90%;
       margin: 25px auto;
 
+      .test-invalid-block{
+        background-color: lighten($blockError, 15%) !important;
+      }
+
       .test-name {
         width: 100%;
         padding: 10px 3px;

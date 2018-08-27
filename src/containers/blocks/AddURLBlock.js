@@ -48,7 +48,7 @@ class AddURLBlock extends Component {
 
   render () {
     return (
-      <div className={`urls-list ${this.props.staticBlocks["urls"] ? ("list-expanded") : ("list-hidden")}`}>
+      <div className={`urls-list ${this.props.staticBlocks["urls"] ? ("list-expanded") : ("list-hidden")} ${this.props.testName.isVisible ? "block-hidden" : ""}`}>
         {this.props.urlInput.isUrlInputVisible ? (
           <div className="block nested add-url-input-container" id="addurl-empty-input">
             <input className="add-url-input" value={this.state.urlValue} onChange={(ev) => this.handleInputChange(ev.target.value)} placeholder="Enter URL here"></input>
@@ -67,7 +67,8 @@ function mapStateToProps(state) {
   return {
     urls: state.urls,
     urlInput: state.urlInput,
-    staticBlocks: state.staticBlocks  
+    staticBlocks: state.staticBlocks,  
+    testName: state.testName,
   }
 }
 

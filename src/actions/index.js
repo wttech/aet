@@ -88,13 +88,13 @@ export const addTestToProject = (tests, urls, name) => ({
   }
 });
 
-export const updateTestInProject = (tests, urls, name, testID) => ({
+export const updateTestInProject = (tests, urls, name, isValid) => ({
   type: "TEST_UPDATED",
   payload: {
     tests: tests,
     urls: urls,
     name: name,
-    testID: testID
+    isValid: isValid
   }
 });
 
@@ -191,4 +191,9 @@ export const testOptionsInited = () => ({
 export const blocksExpandToggle = () => ({
   type: "BLOCKS_EXPAND_TOGGLED",
   payload: null
+});
+
+export const setTestAsInvalid = (test) => ({
+  type: "TEST_SET_AS_INVALID",
+  payload: test,
 });

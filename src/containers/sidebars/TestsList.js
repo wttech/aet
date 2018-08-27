@@ -17,9 +17,10 @@ class TestsList extends Component {
         let searchValue = null;
         Object.keys(this.props.searchTests).length ? searchValue = this.props.searchTests : searchValue = "";
         if(test.name.name.includes(searchValue)) {
+          console.log(test.isValid);
           return (
             <div key={index} className="test-item" onClick={() => this.handleTestLoading(test)}>
-              <h2 className="test-name">{test.name.name}</h2>
+              <h2 className={`test-name ${!test.isValid ? ("test-invalid-block") : ""} `}>{test.name.name}</h2>
             </div> 
           )
         } else {

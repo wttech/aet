@@ -3,14 +3,15 @@ import {bindActionCreators} from "redux";
 import {connect} from "react-redux";
 import xmlbuilder from "xmlbuilder";
 import {saveAs} from "file-saver";
+import {setTestAsInvalid} from "../../actions";
 
 
 class GenerateSuiteButton extends Component {
   handleSuiteGenerating() {
     const projectTests = this.props.project[0].tests;
-    //const suiteValidator = this.validateSuite(projectTests);
-    //console.log(suiteValidator)
-   // if(suiteValidator.name === null) {
+    const invalidParams = this.validateParams(projectTests);
+    console.log(invalidParams)
+   if(invalidParams.length === 0 ) {
       const suiteElement = xmlbuilder.create('suite', {encoding: "utf-8"});
       suiteElement.att('name', this.props.project[0].suite)
         .att('company', this.props.project[0].company)
@@ -33,35 +34,43 @@ class GenerateSuiteButton extends Component {
       const xml = suiteElement.end({pretty: true});
       var file = new File([xml], "suite.xml", {type: "application/xml;charset=utf-8"});
       saveAs(file);
-    //} else {
-    //  console.error(suiteValidator.name + " has missing params");
-   // }
+    } else {
+    Object.values(invalidParams).forEach((test) => {
+      const testInProject = Object.values(this.props.project[0].tests).find((obj) => {
+        return obj.name.name === test.name;
+      });
+      this.props.setTestAsInvalid(testInProject);
+    });
+   }
   }
 
-  validateSuite(suite) {
-    let invalidTests = [];
-    Object.values(suite).forEach((testObject) => {
-      Object.values(testObject.tests).forEach((test) => {
-        if(test.parameters !== null) {
-          Object.values(test.parameters).forEach((param) => {
-            if(param.current === null && param.isMandatory) {
-              const testName = testObject.name.name;
-              const invalidBlock = test;
-              console.log(param)
-              invalidTests.push({
-                  name: testName,
-                  blocks: {
-                    ...this.blocks,
-                    invalidBlock,
-                  }
-              });
-              console.log(invalidTests)
-            }
-          });
+  validateParams(suite) {
+    let invalidParams = [];
+    let invalidBlock = {};
+    let listOfMissingParams = [];
+    let testName = null;
+    Object.values(suite).forEach((testObj) => {
+      listOfMissingParams = [];
+      Object.values(testObj.tests).forEach((test) => {
+        if(test.parameters && Object.values(test.parameters).forEach((param) => {
+          if((param.current === null || param.current === "") && param.isMandatory) {
+            testName = testObj.name.name;
+            listOfMissingParams.push(
+              param.name
+            ); 
+          }
+        }));
+        invalidBlock = {
+          name: testName,
+          params: listOfMissingParams,
+        };
+        if(invalidBlock.name) {
+          invalidParams.push(invalidBlock);
         }
       });
     });
-    return invalidTests;
+    console.log(invalidParams)
+    return invalidParams;
   }
 
   generateCollectorsGroup(testElement, projectTests) {
@@ -174,7 +183,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({}, dispatch)
+  return bindActionCreators({setTestAsInvalid}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(GenerateSuiteButton);

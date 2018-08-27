@@ -7,16 +7,13 @@ class AddTest extends Component {
 
   addTestToProject() {
     if(this.props.test.length > 0 && this.props.urls.length > 0) {
-      document.querySelectorAll(".block").forEach((block) => {
-        block.classList.add("block-hidden");
-      });
       this.props.initTestName();
     }
   }
 
   render () {
     return (
-      <div className={"add-test test-button " + (this.props.test.length && this.props.urls.length ? null : "btn-disabled") } onClick={() => this.addTestToProject()}>ADD TEST</div>
+      <div className={"add-test test-button " + (this.props.test.length && this.props.urls.length && this.validateBlocks() ? null : "btn-disabled") } onClick={() => this.addTestToProject()}>ADD TEST</div>
     )
   }
 }
