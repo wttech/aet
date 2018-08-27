@@ -16,7 +16,7 @@
 package com.cognifide.aet.cleaner.processors;
 
 import com.cognifide.aet.cleaner.context.CleanerContext;
-import com.cognifide.aet.cleaner.context.ProjectAggregationCounter;
+import com.cognifide.aet.cleaner.context.SuiteAggregationCounter;
 import com.cognifide.aet.cleaner.processors.exchange.AllSuiteVersionsMessageBody;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.vs.DBKey;
@@ -74,9 +74,8 @@ public class FetchAllProjectSuitesProcessor implements Processor {
             }).toList();
 
     exchange.getOut().setBody(body);
+    exchange.getOut().setHeader(SuiteAggregationCounter.NAME_KEY, new SuiteAggregationCounter(0));
     exchange.getOut().setHeader(CleanerContext.KEY_NAME, cleanerContext);
-    exchange.getOut().setHeader(ProjectAggregationCounter.NAME_KEY,
-        new ProjectAggregationCounter(allProjectSuites.size()));
   }
 
 

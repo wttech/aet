@@ -17,7 +17,6 @@ package com.cognifide.aet.cleaner.route;
 
 
 import com.cognifide.aet.cleaner.context.SuiteAggregationCounter;
-import com.cognifide.aet.cleaner.context.ProjectAggregationCounter;
 import com.cognifide.aet.cleaner.processors.ErrorHandlingProcessor;
 import com.cognifide.aet.cleaner.processors.FetchAllProjectSuitesProcessor;
 import com.cognifide.aet.cleaner.processors.GetMetadataArtifactsProcessor;
@@ -87,14 +86,8 @@ public class MetadataCleanerRouteBuilder extends RouteBuilder {
         .to(direct(AGGREGATE_SUITES_BY_VERSION_STEP));
 
     from(direct(AGGREGATE_SUITES_BY_VERSION_STEP))
-        .aggregate(body().method("getId"), new SuitesAggregationStrategy())
-        .completionSize(header(SuiteAggregationCounter.NAME_KEY).method("getSuitesToAggregate"))
-        .completionTimeout(60000L).forceCompletionOnStop()
-        .to(direct("collect"));
-
-    from(direct("collect"))
         .aggregate(body().method("getDbKey"), new SuitesAggregationStrategy())
-        .completionSize(header(ProjectAggregationCounter.NAME_KEY).method("getProjectsToAggregate"))
+        .completionSize(header(SuiteAggregationCounter.NAME_KEY).method("getSuitesToAggregate"))
         .completionTimeout(60000L).forceCompletionOnStop()
         .to(direct("removeArtifacts"));
 
