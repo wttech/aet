@@ -35,11 +35,15 @@
     align-self: center;
     margin-left: 2%;
     text-align: center;
-    transition: all 0.3s ease-in-out;
+    transition: all 0.1s ease-in-out;
     position: relative;
 
     span {
       font-weight: bold;
+    }
+
+    &:active {
+      background-color: darken($gray_extralight,50%) !important;
     }
 
     &:hover {

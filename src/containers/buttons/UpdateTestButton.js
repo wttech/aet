@@ -8,10 +8,6 @@ class UpdateTest extends Component {
   updateTest() {
    if(this.props.test.length > 0) {
       this.props.updateTestInProject(this.props.test, this.props.urls, this.props.testName, true);
-      this.props.clearTests();
-      this.props.hideUrlInput();
-      this.props.clearUrlsList();
-      this.props.hideTestNameInput(true);
    }
   }
 
