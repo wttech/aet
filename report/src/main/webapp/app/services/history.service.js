@@ -96,7 +96,7 @@ define(['angularAMD', 'endpointConfiguration', 'suiteInfoService'], function (an
           var company = company;
           var project = project;
           var suite = suite;
-          var timestamp = suiteHeaders[i].correlationId.split('-')[suiteHeaders.lenght - 1];
+          var timestamp = suiteHeaders[i].correlationId.split('-')[suiteHeaders[i].correlationId.split('-').length - 1];
           suiteHeaders[i] = {
             company: company,
             project: project,
