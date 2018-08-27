@@ -59,6 +59,8 @@
         margin: 10px;
         text-align: center;
         box-sizing: border-box;
+        transition: all 0.3s ease-in-out;
+        user-select: none;
 
         .arrow-block {
           position: absolute;

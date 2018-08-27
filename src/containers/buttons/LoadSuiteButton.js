@@ -16,7 +16,10 @@ class UpdateTest extends Component {
         const parser = new DOMParser();
         const parsedFileData = this.removeSpecialCharacters(fileData);
         const xml = parser.parseFromString(parsedFileData, "text/xml");
-        const attributes = xml.getElementsByTagName("suite")[0].attributes;
+        let attributes;
+        if(xml.getElementsByTagName("suite")[0]) {
+          attributes = xml.getElementsByTagName("suite")[0].attributes;
+        }
         const projectData = vm.getProjectData(attributes);
         let projectTree = {
           company: projectData.company,
@@ -26,6 +29,9 @@ class UpdateTest extends Component {
           tests: {}
         };
         const testsInProject = xml.getElementsByTagName("test");
+        if(!testsInProject.length > 0) {
+          return;
+        }
         Object.values(testsInProject).forEach((test, index) => {
           const testName = test.attributes[0].value;
           const collectorsChildren = xml.getElementsByTagName("collect")[index].children;

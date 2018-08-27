@@ -37,6 +37,7 @@
     text-align: center;
     transition: all 0.1s ease-in-out;
     position: relative;
+    user-select: none;
 
     span {
       font-weight: bold;
