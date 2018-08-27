@@ -42,8 +42,8 @@ class GenerateSuiteButton extends Component {
       document.querySelectorAll(".test-item").forEach((block) => {
         if(testInProject.name.name === block.children[0].innerHTML) {
           const scrollToValue = block.getBoundingClientRect().top;
-          const scrollCurrent = document.querySelector(".sidebar-tests").scrollTop;
-          document.querySelector(".sidebar-tests").scrollTo(0, scrollToValue + scrollCurrent);
+          const scrollCurrent = document.querySelector(".tests-container").scrollTop;
+          document.querySelector(".tests-container").scrollTo(0, scrollToValue + scrollCurrent - 200);
         }
       });
     });

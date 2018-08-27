@@ -88,7 +88,7 @@ class NewTestGenerator extends Component {
         <ProjectInfo />
         <div className="tests-wrapper">
           <div className="tests">
-            {this.props.testName.name ? (<span className="test-name">Current test: {this.props.testName.name}</span>) : null}
+            {this.props.testName.name && !this.props.testName.isVisible ? (<span className="test-name">Current test: {this.props.testName.name}</span>) : null}
             <StaticBlock type="start" value="Collectors" expandable={true} />
             <DropContainer dropTo="modifiers" />
             <UserBlocksContainer type="modifiers" />

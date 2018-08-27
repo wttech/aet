@@ -4,8 +4,6 @@
   top: 0;
   width: 300px;
   background-color: $aside_background;
-  overflow-y: scroll;
-  overflow-x: hidden;
   height: 100vh;
 
   .sidebar-btn {
@@ -30,9 +28,12 @@
   }
 
   .tests-container {
-    width: 90%;
+    width: 96%;
     margin: 20px auto;
     color: $white;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height:75%;
 
     .tests-main {
       font-weight: bold;
