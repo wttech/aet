@@ -56,6 +56,6 @@ class SuitesAggregationStrategy implements CompletionAwareAggregationStrategy {
   public void onCompletion(Exchange exchange) {
     ReferencedArtifactsMessageBody body = exchange.getIn()
         .getBody(ReferencedArtifactsMessageBody.class);
-    LOGGER.debug("Finished aggregating {}", body.getId());
+    LOGGER.debug("Finished aggregating {}", body.getData());
   }
 }
