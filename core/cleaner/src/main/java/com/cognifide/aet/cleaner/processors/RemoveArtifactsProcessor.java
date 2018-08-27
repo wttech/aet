@@ -39,6 +39,11 @@ public class RemoveArtifactsProcessor implements Processor {
   @Reference
   private ArtifactsDAO artifactsDAO;
 
+  // for unit tests
+  public RemoveArtifactsProcessor(ArtifactsDAO artifactsDAO) {
+    this.artifactsDAO = artifactsDAO;
+  }
+
   @Override
   @SuppressWarnings("unchecked")
   public void process(Exchange exchange) throws Exception {
@@ -46,8 +51,8 @@ public class RemoveArtifactsProcessor implements Processor {
         .getHeader(CleanerContext.KEY_NAME, CleanerContext.class);
     final ReferencedArtifactsMessageBody messageBody = exchange.getIn()
         .getBody(ReferencedArtifactsMessageBody.class);
-    Set<String> artifactsToRemove = artifactsDAO.getArtifactsId(messageBody.getDbKey());
-    artifactsToRemove.removeAll(messageBody.getArtifactsToKeep());
+
+    Set<String> artifactsToRemove = getArtifactsIdsToRemove(artifactsDAO, messageBody);
 
     LOGGER.debug("Artifacts that will be removed: {}", artifactsToRemove);
     if (!cleanerContext.isDryRun()) {
@@ -60,5 +65,13 @@ public class RemoveArtifactsProcessor implements Processor {
           "Dry run completed! {} unreferenced artifacts should be removed from {} after cleaning suite `{}`",
           artifactsToRemove.size(), messageBody.getDbKey(), messageBody.getData());
     }
+
+  }
+
+  public static Set<String> getArtifactsIdsToRemove(ArtifactsDAO artifactsDAO,
+      ReferencedArtifactsMessageBody messageBody) {
+    Set<String> artifactsToRemove = artifactsDAO.getArtifactsId(messageBody.getDbKey());
+    artifactsToRemove.removeAll(messageBody.getArtifactsToKeep());
+    return artifactsToRemove;
   }
 }
