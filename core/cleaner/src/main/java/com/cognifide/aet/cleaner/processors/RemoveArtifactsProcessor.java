@@ -37,7 +37,12 @@ public class RemoveArtifactsProcessor implements Processor {
   private static final Logger LOGGER = LoggerFactory.getLogger(RemoveArtifactsProcessor.class);
 
   @Reference
+
   private ArtifactsDAO artifactsDAO;
+
+  public RemoveArtifactsProcessor() {
+    //default constructor
+  }
 
   // for unit tests
   public RemoveArtifactsProcessor(ArtifactsDAO artifactsDAO) {
