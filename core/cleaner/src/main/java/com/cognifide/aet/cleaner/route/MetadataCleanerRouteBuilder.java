@@ -17,6 +17,7 @@ package com.cognifide.aet.cleaner.route;
 
 
 import com.cognifide.aet.cleaner.context.SuiteAggregationCounter;
+import com.cognifide.aet.cleaner.context.ProjectAggregationCounter;
 import com.cognifide.aet.cleaner.processors.ErrorHandlingProcessor;
 import com.cognifide.aet.cleaner.processors.FetchAllProjectSuitesProcessor;
 import com.cognifide.aet.cleaner.processors.GetMetadataArtifactsProcessor;
@@ -34,7 +35,7 @@ public class MetadataCleanerRouteBuilder extends RouteBuilder {
 
   private static final String ERROR_ENDPOINT = "seda:Error";
 
-  private static final String AGGREGATE_SUITES_STEP = "aggregateSuites";
+  private static final String AGGREGATE_SUITES_BY_VERSION_STEP = "aggregateSuites";
 
   @Reference
   private StartMetadataCleanupProcessor startMetadataCleanupProcessor;
@@ -72,22 +73,28 @@ public class MetadataCleanerRouteBuilder extends RouteBuilder {
         .process(suitesRemovePredicateProcessor)
         .split(body())
         .choice()
-        .when(body().method("shouldBeRemoved").isEqualTo(true)).to(direct("removeMetadata"))
+        .when(body().method("shouldBeKeeped").isEqualTo(false)).to(direct("removeMetadata"))
         .otherwise().to(direct("getMetadataArtifacts"))
         .endChoice();
 
     from(direct("getMetadataArtifacts"))
         .process(getMetadataArtifactsProcessor)
-        .to(direct(AGGREGATE_SUITES_STEP));
+        .to(direct(AGGREGATE_SUITES_BY_VERSION_STEP));
 
     from(direct("removeMetadata"))
         .process(removeMetadataProcessor)
         .process(getMetadataArtifactsProcessor)
-        .to(direct(AGGREGATE_SUITES_STEP));
+        .to(direct(AGGREGATE_SUITES_BY_VERSION_STEP));
 
-    from(direct(AGGREGATE_SUITES_STEP))
+    from(direct(AGGREGATE_SUITES_BY_VERSION_STEP))
         .aggregate(body().method("getId"), new SuitesAggregationStrategy())
         .completionSize(header(SuiteAggregationCounter.NAME_KEY).method("getSuitesToAggregate"))
+        .completionTimeout(60000L).forceCompletionOnStop()
+        .to(direct("collect"));
+
+    from(direct("collect"))
+        .aggregate(body().method("getDbKey"), new SuitesAggregationStrategy())
+        .completionSize(header(ProjectAggregationCounter.NAME_KEY).method("getProjectsToAggregate"))
         .completionTimeout(60000L).forceCompletionOnStop()
         .to(direct("removeArtifacts"));
 
