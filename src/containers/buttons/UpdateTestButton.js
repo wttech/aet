@@ -13,7 +13,7 @@ class UpdateTest extends Component {
 
   render () {
       return (
-        <div className={"update-test test-button "  + (this.props.testName.name ? null : "btn-disabled")} onClick={() => this.updateTest()}>UPDATE TEST</div>
+        <div className={"update-test test-button "  + (this.props.testName.name && this.props.urls.length ? null : "btn-disabled")} onClick={() => this.updateTest()}>UPDATE TEST</div>
       )
   }
 }

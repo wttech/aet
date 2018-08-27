@@ -58,7 +58,6 @@
         background-color: $gray_light;
         margin: 10px;
         text-align: center;
-        transition: all 0.3s ease-in-out;
         box-sizing: border-box;
 
         .arrow-block {
@@ -221,12 +220,14 @@
           height: 25px;
           font-size: 16px;
           padding: 0 15px;
+          margin-top: 7px;
         }
 
         .add-url-button {
           float: right;
           padding: 0 10px;
           margin-right: 15px;
+          margin-top: 7px;
           background-color: $white;
           color: $text_color;
           font-size: 28px;
