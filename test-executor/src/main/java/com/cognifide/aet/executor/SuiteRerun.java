@@ -19,7 +19,9 @@ import static com.cognifide.aet.rest.BasicDataServlet.isValidCorrelationId;
 import static com.cognifide.aet.rest.BasicDataServlet.isValidName;
 
 import com.cognifide.aet.communication.api.metadata.Suite;
+import com.cognifide.aet.communication.api.metadata.Suite.Timestamp;
 import com.cognifide.aet.communication.api.metadata.Test;
+import com.cognifide.aet.executor.model.CorrelationIdGenerator;
 import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.StorageException;
@@ -64,14 +66,20 @@ class SuiteRerun {
   private static void prepareSuiteToRerun(Suite suite, String testName) {
     Optional.ofNullable(suite)
         .ifPresent(s -> {
-          suite.setRerunned(false);
-          Optional.ofNullable(testName)
-              .map(s::getTest)
-              .ifPresent(testToRerun -> {
-                s.setRerunned(true);
-                s.removeAllTests();
-                s.addTest(testToRerun);
-              });
+          s.setRerunned(false);
+          Optional<String> testString = Optional.ofNullable(testName);
+          if(testString.isPresent()) {
+            testString.map(s::getTest)
+                .ifPresent(testToRerun -> {
+                  s.setRerunned(true);
+                  s.removeAllTests();
+                  s.addTest(testToRerun);
+                });
+          }else{
+            s.setCorrelationId(CorrelationIdGenerator
+                .generateCorrelationId(s.getCompany(), s.getProject(), s.getName()));
+            s.setRunTimestamp(new Timestamp(System.currentTimeMillis()));
+          }
           cleanDataFromSuite(s);
         });
   }

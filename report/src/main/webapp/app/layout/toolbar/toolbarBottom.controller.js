@@ -188,18 +188,23 @@ define([], function () {
                 linkParams = linkParams + '#' + window.location.href.split('#')[1];
                 var linkToLatestSuite = location.protocol + '//' + location.host + location.pathname + linkParams;
                 alert("Rerun completed!");
-                window.location.assign(linkToLatestSuite);
+                if(window.location.href !== linkToLatestSuite) {
+                  window.location.assign(linkToLatestSuite);
+                } else {
+                  window.location.reload();
+                }
+                return;
              }else if(response.data.status === "PROGRESS") {
               alert(response.data.message)
              } else {
               alert("Waiting for progress...");
              }
+             checkRerunStatus(statusUrl);
            }, function errorCallback(response) {
              alert(response.data.status);
              console.log(response.data.status);
              return;
           });
-          checkRerunStatus(statusUrl);
          }, 1000);
     }
 
