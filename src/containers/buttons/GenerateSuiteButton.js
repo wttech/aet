@@ -10,7 +10,6 @@ class GenerateSuiteButton extends Component {
   handleSuiteGenerating() {
     const projectTests = this.props.project[0].tests;
     const invalidParams = this.validateParams(projectTests);
-    console.log(invalidParams)
    if(invalidParams.length === 0 ) {
       const suiteElement = xmlbuilder.create('suite', {encoding: "utf-8"});
       suiteElement.att('name', this.props.project[0].suite)
@@ -35,11 +34,18 @@ class GenerateSuiteButton extends Component {
       var file = new File([xml], "suite.xml", {type: "application/xml;charset=utf-8"});
       saveAs(file);
     } else {
-    Object.values(invalidParams).forEach((test) => {
+      Object.values(invalidParams).forEach((test, index) => {
       const testInProject = Object.values(this.props.project[0].tests).find((obj) => {
         return obj.name.name === test.name;
       });
       this.props.setTestAsInvalid(testInProject);
+      document.querySelectorAll(".test-item").forEach((block) => {
+        if(testInProject.name.name === block.children[0].innerHTML) {
+          const scrollToValue = block.getBoundingClientRect().top;
+          const scrollCurrent = document.querySelector(".sidebar-tests").scrollTop;
+          document.querySelector(".sidebar-tests").scrollTo(0, scrollToValue + scrollCurrent);
+        }
+      });
     });
    }
   }
@@ -64,12 +70,11 @@ class GenerateSuiteButton extends Component {
           name: testName,
           params: listOfMissingParams,
         };
-        if(invalidBlock.name) {
-          invalidParams.push(invalidBlock);
-        }
       });
+      if(invalidBlock.name) {
+        invalidParams.push(invalidBlock);
+      }
     });
-    console.log(invalidParams)
     return invalidParams;
   }
 
