@@ -13,7 +13,7 @@ class AddTest extends Component {
 
   render () {
     return (
-      <div className={"add-test test-button " + (this.props.test.length && this.props.urls.length && this.validateBlocks() ? null : "btn-disabled") } onClick={() => this.addTestToProject()}>ADD TEST</div>
+      <div className={"add-test test-button " + (this.props.test.length && this.props.urls.length ? null : "btn-disabled") } onClick={() => this.addTestToProject()}>ADD TEST</div>
     )
   }
 }
