@@ -26,6 +26,7 @@ All notable changes to AET will be documented in this file.
 - [PR-298](https://github.com/Cognifide/aet/pull/298) Filtering accessibility errors by markup CSS ([#214](https://github.com/Cognifide/aet/issues/214))
 - [PR-296](https://github.com/Cognifide/aet/pull/296) Status Code Comparator now checks range 400-600 by default, parameters validation added
 - [PR-325](https://github.com/Cognifide/aet/pull/325) Support env variables in report manager
+- [PR-331](https://github.com/Cognifide/aet/pull/325) Support env variables in MongoDB config
 
 ## Version 2.1.6
 
