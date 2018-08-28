@@ -30,7 +30,7 @@ Module name: **hide**
             <hide xpath="//*[@id='logo']" />
             <hide css="#ad-section > a" />            
             ...
-            <resolution width="1200" height="760" />
+            <resolution width="1200" />
             <screen />
             ...
         </collect>

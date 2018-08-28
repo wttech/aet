@@ -28,8 +28,10 @@ public @interface ReportConfigurationManagerConf {
 
   @AttributeDefinition(
       name = REPORT_DOMAIN_PROPERTY_NAME,
-      description = "Report application domain",
+      description = "Report application domain that is printed at the end of processing suite. "
+          + "If not provided here, env variable REPORT_DOMAIN will be used instead or value will "
+          + "fallback to the default: " + DEFAULT_REPORT_DOMAIN,
       type = AttributeType.STRING)
-  String reportDomain() default DEFAULT_REPORT_DOMAIN;
+  String reportDomain() default "";
 
 }
