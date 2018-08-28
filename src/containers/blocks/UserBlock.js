@@ -37,7 +37,7 @@ class UserBlockContainer extends Component {
               <div key={elemID} >
                 <div className={elemClass}>
                   <div 
-                  className="block custom nested" 
+                  className="block custom nested comparator" 
                   id={elemID} 
                   onClick={(ev) => this.toggleOptionsBox(ev, test, elemID)}
                   onDragOver={(ev) => handleDragOver(ev)}  
@@ -60,7 +60,7 @@ class UserBlockContainer extends Component {
               return (
                 <div className={elemClass}  key={elemID}>
                   <div 
-                  className={`block custom nested  ${test.group === "Modifiers" ? "modifier" : ""} ${test.group === "Open" ? "static" : ""}`}
+                  className={`block custom nested  ${test.group === "Modifiers" ? "modifier" : "collector"} ${test.group === "Open" ? "static" : ""}`}
                   onClick={(ev) => this.toggleOptionsBox(ev, test, elemID)}
                   key={elemID} 
                   id={elemID}>

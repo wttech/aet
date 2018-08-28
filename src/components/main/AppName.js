@@ -7,10 +7,8 @@ class SidebarFeatures extends Component {
 
   render () {
     return (
-      <div className="sidebar-features">
-        <AppName />
-        <SearchFeatures/>
-        <CreateFeatureList />
+      <div className="app-name">
+          Suite <span>Generator</span>
       </div>
     )
   }

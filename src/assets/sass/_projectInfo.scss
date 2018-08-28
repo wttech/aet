@@ -1,6 +1,6 @@
 .project-info-container {
   position: relative;
-  background-color: lighten($gray, 10%);
+  background-color: $projectInfoBg;
   width: 100%;
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -10,51 +10,50 @@
   .project-info-block {
     text-align: center;
     color: white;
-    padding: 15px 0 45px 0;
+    padding: 15px 0 21px 0;
     justify-items: center;
     align-items: center;
     position: relative;
 
-    .new-proj-btn {
-      background-color: $white;
-      color: $black;
-      width: 150px;
-      padding: 3px 5px;
-      text-align: center;
-      margin-top: 3px;
-      position: absolute;
-      left: 50%;
-      transform: translate(-50%);
-      transition: all 0.3s ease-in-out;
+    span {
+      color: $textColorDark;
       font-weight: bold;
+    }
+
+    .new-proj-btn {
+      background-color: $newProjectBtnBg;
+      color: $textColor;
+      position: absolute;
+      width: 50px;
+      padding:12px 0;
+      border-radius:50%;
+      text-align: center;
+      font-size:33px;
+      left: 20px;
+      top: 120%;
+      box-shadow: 2px 5px 5px 0px rgba(0,0,0,0.2);
+      transition: all 0.25s ease-in-out;
 
       &:hover {
         cursor: pointer;
-        background-color: darken($white, 20%)
+        background-color: darken($newProjectBtnBg, 10%)
       }
-    }
-
-    &:nth-child(n+1) {
-      border-right: 1px solid $gray_light;
-    }
-
-    &:last-child {
-      border-right: 0px;
     }
 
     h4 {
       margin-top: 7px;
       text-align: center;
-      font-weight: bold;
+      font-family: "Roboto", sans-serif;
       width: 90%;
       margin: 0 auto;
       word-wrap: break-word;
+      color: $textColorDark;
       
       a {
         color: inherit;
         &:hover {
           cursor: pointer;
-          color: darken($white, 20%);
+          color: lighten($textColorDark, 40%);
         }
       }
     }

@@ -5,8 +5,10 @@
   width:60%;
   height:500px;
   margin:0 auto;
-  background-color: lighten($gray,10%);
+  background-color: $featuresBg;
+  border-radius:15px;
   display:block;
+  box-shadow: 5px 5px 3px 0 rgba(0,0,0,0.25);
 
   form {
     color:white;
@@ -15,25 +17,29 @@
       input {
         float:left;
         width:90%;
-        margin:0 4%;
-        background-color:white;
+        margin:3px 4%;
+        background-color:$white;
         height:45px;
         padding-left:15px;
+        border-radius:15px;
       }
   
       .submit-button {
-        color:$text_color;
+        color:$textColor;
         width:100px;
-        margin-top:25px;
+        margin-top:15px;
         float:right;
         text-align:center;
         font-size:16px;
         transition:all 0.4s ease-in-out;
         padding: 0;
+        font-weight: bold;
+        border-radius:15px;
+        background-color: $newProjectBtnBg;
   
         &:hover {
           cursor:pointer;
-          background-color: darken($white, 20%);
+          background-color: darken($newProjectBtnBg, 10%);
         }
       }
   

@@ -1,12 +1,15 @@
 .test-container {
-  background-color: $gray;
+  background-color: $testContainerBg ;
   position: relative;
   width: 100%;
   height: 90vh;
+  overflow: hidden;
 
   .tests-wrapper {
     position: relative;
-    height: 85.2%;
+    height: 88%;
+    padding-right: 17px;
+    right: -17px;
     overflow-y: scroll;
     overflow-x: hidden;
 
@@ -24,11 +27,11 @@
       }
 
       .test-name {
-        color: $white;
+        color: $textColorDark;
         font-size: 18px;
         font-weight: bold;
-        width: 300px;
-        margin-left: 12px;
+        width: 400px;
+        margin-left: 10px;
         text-align: center;
         display: block;
       }
@@ -55,13 +58,15 @@
 
       .block {
         width: 300px;
-        background-color: $gray_light;
         margin: 10px;
         text-align: center;
         box-sizing: border-box;
         transition: all 0.3s ease-in-out;
         user-select: none;
-
+        border-radius:25px;
+        box-shadow: 3px 3px 8px 0px rgba(0,0,0,0.25) !important;
+        color: $textColor;
+        
         .arrow-block {
           position: absolute;
           top:7px;
@@ -71,32 +76,36 @@
         .block-type {
           width:100%;
           text-align: center;
-          background-color:rgba(0,0,0,0.15);
           padding:7px 0;
 
           span {
             font-size:16px;
+            font-weight: bold;
           }
         }
 
         .block-parameters-container {
           
           .block-parameter {
+            background-color: $white;
+            color: $textColorDark;
             text-align: center;
             padding: 7px 0;
             font-size: 15px;     
             word-wrap: break-word;   
             width:100%;
             margin: 0px auto;  
-            border-bottom:1px solid rgba(0,0,0,0.3);
+            border-bottom: 1px solid lighten($gray, 60%);
 
             &:last-child {
               border-bottom:0px solid; 
+              border-bottom-right-radius: 25px;
+              border-bottom-left-radius: 25px;
             }
 
             &-mandatory-missing {
               font-weight: bold;
-              background-color: rgba(255,0,0,0.9);
+              background-color: lighten($blockError, 15%);
               //color: $blockError;
             }
 
@@ -118,11 +127,10 @@
       }
 
       .static {
-        font-size: 1.3rem;
-        font-weight: bold;
-        font-style: italic;
-        background-color: $blockDefault;
+        background-color: $collectorsBg;
         padding:7px 0;
+        font-weight: bold;
+        width:400px;
 
         div {
           text-align: center;
@@ -133,7 +141,7 @@
         position: relative;
         &:hover {
           cursor: pointer;
-          background-color: darken($blockDefault, 20%);
+          background-color: darken($collectorsBg, 20%);
         }
       }
 
@@ -143,7 +151,8 @@
 
       .custom {
         position: relative;
-        margin: 7px 0;
+        margin: 15px 0;
+        width:300px;
 
         &:hover {
           cursor: pointer;
@@ -151,19 +160,20 @@
       }
 
       .add-url {
-        background-color: $blockURL;
+        background-color: $urlsBg;
         font-size: 16px;
         font-weight: bold;
         padding:7px 0;
+        transition: none !important;
 
         &:hover {
           cursor: pointer;
-          background-color: darken($blockURL, 10%);
+          background-color: darken($urlsBg, 10%);
         }
       }
 
       .added-url {
-        background-color: lighten($blockURL, 6%);
+        background-color: lighten($urlsBg, 15%);
         padding:7px 0;
         position: relative;
 
@@ -177,32 +187,38 @@
 
         &:hover {
           cursor: pointer;
-          background-color: $blockDelete;
+          background-color: lighten($urlsBg, 25%);
         }
       }
 
       .add-url-input-container {
         height: 36px;
-        background-color: $blockURL;
+        background-color: $urlsBg;
 
         .add-url-input {
           float: left;
           height: 25px;
           font-size: 16px;
-          padding: 0 15px;
-          margin-top: 7px;
+          padding: 0px 20px;
+          margin-top: 5px;
+          color: $textColor;
+          transition: none;
+           
+          &::placeholder {
+            color: $textColor;
+          }
         }
 
         .add-url-button {
           float: right;
-          padding: 0 10px;
-          margin-right: 15px;
-          margin-top: 7px;
+          padding: 7px 15px;
+          border-top-right-radius:25px;
+          border-bottom-right-radius:25px;
           background-color: $white;
-          color: $text_color;
+          color: $textColorDark;
           font-size: 28px;
           font-weight: bold;
-          transition: all 0.5s ease-in-out;
+          transition: none !important;
 
           &:hover {
             cursor: pointer;
@@ -214,7 +230,7 @@
       .empty {
         color: transparent;
         background-color: transparent;
-        border: 1px solid transparent;
+        border: 0px solid transparent;
         box-sizing: border-box;
         padding: 0;
         margin: 0;
@@ -222,11 +238,11 @@
       }
 
       .nested {
-        margin-left: 100px;
+        margin-left: 60px;
       }
 
       .nested-twice {
-        margin-left: 160px;
+        margin-left: 60px;
       }
 
       .valid {
@@ -247,10 +263,26 @@
       }
 
       .modifier {
-        background-color: $blockModifier;
+        background-color: $modifiersBg;
 
         &:hover {
-          background-color: darken($blockModifier, 15%);
+          background-color: darken($modifiersBg, 15%);
+        }
+      }
+
+      .collector {
+        background-color: $collectorsBg;
+
+        &:hover {
+          background-color: darken($collectorsBg, 15%);
+        }
+      }
+
+      .comparator {
+        background-color: $comparatorsBg;
+
+        &:hover {
+          background: darken($comparatorsBg, 15%);
         }
       }
 
@@ -353,10 +385,10 @@
       }
 
       .filter-block {
-        background-color: $blockFilter;
+        background-color: $filtersBg;
         
         &:hover {
-          background-color: darken($blockFilter, 30%);
+          background-color: darken($filtersBg, 30%);
           cursor: pointer;
         }
       }

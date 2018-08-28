@@ -27,8 +27,8 @@ class FeaturesList extends Component {
     return (
         <div className={this.state.componentClass}>
         <div  onClick={() => toggleItemsVisibility(this.props.type)}>
+          <h3 className="feature-title">{this.props.type} </h3>
           <i className="fas fa-angle-right arrow-before-title"></i>
-          <h3 className="feature-title">{this.props.type.toUpperCase()}: </h3>
         </div>
         <ul className="list-of-features">
           {loadAndDisplayItems(this.state.data[this.props.type], this.props.searchFeatures[0])}

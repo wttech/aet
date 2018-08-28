@@ -1,6 +1,6 @@
 .buttons-container {
   display: flex;
-  background-color: $gray;
+  background-color: $projectInfoBg;
   position: relative;
   align-content: center;
   justify-content: center;
@@ -26,16 +26,18 @@
   }
 
   .test-button {
-    background-color: $gray_extralight;
+    background-color: $buttonsBg;
+    color: $textColor;
+    border-radius:35px;
     width: 140px;
-    padding: 15px 3px;
-    font-size: 15px;
+    padding: 20px 3px;
+    font-size: 13px;
     font-weight: bold;
     position: relative;
     align-self: center;
     margin-left: 2%;
     text-align: center;
-    transition: all 0.1s ease-in-out;
+    transition: all 0.3s ease-in-out;
     position: relative;
     user-select: none;
 
@@ -44,12 +46,12 @@
     }
 
     &:active {
-      background-color: darken($gray_extralight,50%) !important;
+      background-color: darken($buttonsBg,50%) !important;
     }
 
     &:hover {
       cursor: pointer;
-      background-color: darken($white, 20%);
+      background-color: darken($buttonsBg, 15%);
 
       &::after {
         font-size: 14px;

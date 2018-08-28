@@ -47,7 +47,7 @@ class TestsList extends Component {
   render () {
     return (
       <div className="tests-container">
-        <h2 className="tests-main">TESTS: </h2>
+        <h2 className="tests-main">Tests </h2>
         {this.generateTests()}
       </div>
     )

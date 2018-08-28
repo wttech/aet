@@ -14,7 +14,7 @@ class FeatureItem extends Component {
   render() {
     return (
       <li key={this.props.itemKey}
-      className="feature"
+      className={`feature-${this.props.group.toLowerCase()}`}
       draggable
       onDragStart = {(ev) => this.onDragStart(ev, this.props.feature)}
       onDragEnd={(ev) => handleDragEnd(ev)}   

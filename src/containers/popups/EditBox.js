@@ -75,10 +75,12 @@ class EditBox extends Component {
   render() {
     const item = this.props.editBox.editBoxItem;
     return (
-      <div className="edit-box">
+      <div className="edit-box-container">
+        <div className="edit-box">       
           <h2 className="type center">Parameter: {item.type}</h2>
           <h2 className="group center">Group: {item.group}</h2>
           {this.displayParameters(item)}
+        </div>
       </div>
     )
   }

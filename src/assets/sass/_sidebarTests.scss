@@ -3,16 +3,39 @@
   right: 0;
   top: 0;
   width: 300px;
-  background-color: $aside_background;
+  background-color: $testsBg;
   height: 100vh;
+  overflow: hidden;
+
+  .search-bar {
+    width: 220px;
+    padding: 5px 15px;
+    height: 40px;
+    display: block;
+    margin: 30px auto;
+    background-color: transparent;
+    border:1px solid $textColor;
+    border-radius:20px;
+    background-color: $featuresBg;
+    box-sizing: border-box;
+
+    &>input {
+      width: 90%;
+      margin-left: 2%;
+      height: 25px;
+      font-size: 16px;
+      color: $textColor;
+    }
+  }
 
   .sidebar-btn {
     display: block;
     width: 90%;
     padding: 7px 3px;
     text-align: center;
-    background-color: $white;
-    color: $text_color;
+    background-color: $newProjectBtnBg;
+    color: $textColor;
+    border-radius:25px;
     font-weight: bold;
     position: relative;
     bottom: 1%;
@@ -23,11 +46,14 @@
 
     &:hover {
       cursor: pointer;
-      background-color: darken($white, 25%);
+      background-color: darken($newProjectBtnBg, 10%);
     }
   }
 
   .tests-container {
+    position: relative;
+    right: -17px;
+    padding-right:20px;
     width: 96%;
     margin: 20px auto;
     color: $white;
@@ -36,32 +62,33 @@
     height:75%;
 
     .tests-main {
-      font-weight: bold;
-      font-size: 22px;
-      margin-left: 10px;
+      font-weight: 500;
+      font-size: 21px;
+      margin-left: 15px;
     }
 
     .test-item {
       width: 90%;
-      margin: 25px auto;
+      margin: 18px auto;
 
       .test-invalid-block{
-        background-color: lighten($blockError, 15%) !important;
+        background-color: rgba(255,0,0,0.4) !important;
       }
 
       .test-name {
         width: 100%;
         padding: 10px 3px;
-        background-color: $white;
-        color: $text_color;
+        color: $textColor;
         font-weight: bold;
-        font-size: 18px;
+        font-size: 15px;
         text-align: center;
         transition: all 0.2s ease-in-out;
+        border:1.5px solid $collectorsBg;
+        border-radius:25px;
 
         &:hover {
           cursor: pointer;
-          background-color: darken($white, 20%);
+          background-color: rgba(70, 121, 246, 0.2);
         }
       }
 

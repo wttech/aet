@@ -1,9 +1,18 @@
+
+@font-face {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  src: url("https://fonts.googleapis.com/css?family=Roboto");
+}
+
 * {
+
   background: none repeat scroll 0 0 transparent;
   border: medium none;
   border-spacing: 0;
-  font-family: 'Lato', sans-serif;
   font-weight: normal;
+  font-family: "Roboto";
   line-height: 1.42rem;
   list-style: none outside none;
   margin: 0;

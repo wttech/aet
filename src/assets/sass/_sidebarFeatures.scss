@@ -1,31 +1,56 @@
-.search-bar {
-  width: 220px;
-  padding: 5px;
-  height: 30px;
-  display: block;
-  margin: 30px auto;
-  background-color: $gray_extralight;
-
-  &>input {
-    width: 90%;
-    margin-left: 2%;
-    height: 30px;
-    font-size: 20px;
-  }
-}
-
 .sidebar-features {
-  width: 400px;
+  width: 350px;
   background-color: $aside_background;
   height: 100vh;
   overflow: hidden;
+  background-color: $featuresBg;
+  position: relative;
+
+  .app-name {
+    font-size:30px;
+    text-align: center;
+    padding: 40px 0;
+    width:100%;
+    font-weight: bold;
+    color: $textColor;
+    background-color: $featuresBgDark;
+
+    span {
+      font-weight: bold;
+      color: $textColorSecondary;
+    }
+  }
+  
+  .search-bar {
+    width: 220px;
+    padding: 5px 15px;
+    height: 40px;
+    display: block;
+    margin: 30px auto;
+    background-color: transparent;
+    border:1px solid $textColor;
+    border-radius:20px;
+    background-color: $featuresBg;
+    box-sizing: border-box;
+
+    &>input {
+      width: 90%;
+      margin-left: 2%;
+      height: 25px;
+      font-size: 16px;
+      color: $textColor;
+    }
+  }
 
   .features-container {
-    width: 95%;
-    height: 92%;
+    position: absolute;
+    right: -17px;
+    width: 100%;
+    height: 78%;
     margin: 0 auto;
     color: $white;
-    overflow: scroll;
+    overflow-y: scroll;
+    overflow-x: hidden;
 
     .feature {
       margin: 30px auto;
@@ -35,7 +60,7 @@
         position: absolute;
         font-size: 26px;
         top: -3px;
-        left: 20px;
+        right: 20px;
         transition: all 0.3s ease-in-out;
 
         &:hover {
@@ -46,8 +71,10 @@
 
       .feature-title {
         font-size: 22px;
-        font-weight: bold;
-        margin-left: 40px;
+        font-weight: 500;
+        margin-left: 23px;
+        text-transform: capitalize;
+
 
         &:hover {
           cursor: pointer;
@@ -62,20 +89,60 @@
         max-height: 700px;
         height: auto;
 
-        &>li {
-          position: relative;
-          color: $gray;
-          margin: 10px auto;
-          padding: 10px 0;
-          text-align: center;
-          background-color: $gray_extralight;
-          transition: all 0.3s ease-in-out;
-          font-weight: 700;
+        .feature-collectors {
+          background-color: $collectorsBg;
 
           &:hover {
             cursor: pointer;
-            background-color: darken($gray_extralight, 20%);
+            background-color: darken($collectorsBg, 10%);
           }
+        }
+
+        .feature-modifiers {
+          background-color: $modifiersBg;
+
+          &:hover {
+            cursor: pointer;
+            background-color: darken($modifiersBg, 10%);
+          }
+        }
+
+        .feature-comparators {
+          background-color: $comparatorsBg;
+
+          &:hover {
+            cursor: pointer;
+            background-color: darken($comparatorsBg, 10%);
+          }
+        }
+
+        .feature-datafilters{
+          background-color: $filtersBg;
+
+          &:hover {
+            cursor: pointer;
+            background-color: darken($filtersBg, 10%);
+          }
+        }
+
+        .feature-open {
+          background-color: $collectorsBg;
+
+          &:hover {
+            cursor: pointer;
+            background-color: darken($collectorsBg, 10%);
+          }
+        }
+
+        &>li {
+          position: relative;
+          color: $textColor;
+          margin: 10px auto;
+          padding: 10px 0;
+          text-align: center;
+          transition: all 0.3s ease-in-out;
+          border-radius:20px;
+          font-weight: 700;
           
           .icon-right {
             position: absolute;

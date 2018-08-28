@@ -14,7 +14,7 @@ class ProjectInfo extends Component {
       <div className="project-info-container">
         <div className="project-info-block">
           <span>Project: </span> <h4>{this.props.project[0].project}</h4>
-          <div className="new-proj-btn" onClick={() => this.createNewProject()}>NEW PROJECT</div>
+          <div className="new-proj-btn" onClick={() => this.createNewProject()}>+</div>
         </div>
         <div className="project-info-block">
           <span>Company: </span> <h4>{this.props.project[0].company}</h4>

@@ -17,7 +17,7 @@ class OptionsBox extends Component {
       if(!optionsBox) { return }
       const boundingRect = document.getElementById(parentID).getBoundingClientRect();
       const currentScroll = document.getElementsByClassName("test-container")[0].scrollTop;
-      const posX = boundingRect.x - 628;
+      const posX = boundingRect.x - 580;
       const posY = boundingRect.y - 2 + currentScroll;
       const offsetY = boundingRect.height / 2;
       const boxHeight = 40/2; // 40 is the height of the options box
