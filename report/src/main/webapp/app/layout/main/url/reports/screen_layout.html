@@ -30,7 +30,7 @@
     </div>
   </div>
   <div class="advanced-screen-comparison button button-small button-blue">
-  <a ng-if="case.status == 'FAILED'" data-ng-click="advancedScreenComparison()" data-aet-compare-screens>Advanced Screen Comparison</a>
+  <a ng-if="case.status == 'FAILED' || case.status == 'CONDITIONALLY_PASSED'" data-ng-click="advancedScreenComparison()" data-aet-compare-screens>Advanced Screen Comparison</a>
   </div>
   <div class="toolbar-blocks">
     <div class="toolbar-btns pull-right">
