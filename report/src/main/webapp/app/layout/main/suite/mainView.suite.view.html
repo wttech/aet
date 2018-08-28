@@ -26,10 +26,10 @@
         <div class="inner">
           <div ng-class="test.getStatus()">
             <div class="test-count test-count-dashboard">
-              <div ng-if="test.getStatus() != 'rebased'" class="failed">
+              <div ng-if="test.getStatus() != 'rebased' && test.getStatus() != 'conditionallyPassed'"  class="failed">
                 <i class="fas {{theme.statusClasses[test.getStatus()]}}"></i>
               </div>
-              <div ng-if="test.getStatus() == 'rebased'">
+              <div ng-if="test.getStatus() == 'rebased' || test.getStatus() == 'conditionallyPassed'">
                 <i class="fas {{theme.statusClasses[test.getStatus()]}}"></i>
               </div>
               <span>{{test.name}}</span>

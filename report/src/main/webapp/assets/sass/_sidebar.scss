@@ -104,6 +104,10 @@
         color: $rebased;
       }
 
+      &.conditionallyPassed {
+        color: $conditionallyPassed;
+      }
+
       &.is-hidden {
         + .urls-list {
           display: none;
@@ -120,7 +124,7 @@
     }
 
     span {
-      @include ellipsis();
+      @extend .ellipsis;
       color: inherit;
       font-family: $font_light;
       font-size: 15px;
@@ -140,7 +144,7 @@
     &.is-expanded {
 
       svg.rotate-svg {
-        @include transform(rotate(90deg));
+        transform: rotate(90deg);
       }
     }
 
@@ -192,6 +196,10 @@
 
         &.rebased {
           color: $rebased;
+        }
+
+        &.conditionallyPassed {
+          color: $conditionallyPassed;
         }
       }
     }

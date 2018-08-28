@@ -18,8 +18,7 @@ Please setup AET environment and run some tests to have the data to show.
 You will need following tools installed locally:
 
 * [Node.js][node-js] with [npm][npm-install] package manager
-* [Compass][compass] for building css files
-* Grunt installed globally: `npm install grunt -g`
+* Gulp installed globally: `npm i gulp -g`
 
 #### Running web application locally
 
@@ -30,9 +29,10 @@ You will need following tools installed locally:
         };
    in order to fetch data displayed on the report from instance `http://aet.server.com:8181`.
    (for vagrant setup url example: 'http://aet-vagrant/api/')
-2. got into `.../report/src/main/webapp` folder
+2. go into `.../report/src/main/webapp` folder
 3. run `npm install` to install required npm modules
-4. run `grunt` to start your web application
+4. if you are running the app for the first time use `gulp installLibs` or `gulp build`
+4. run `gulp` to start the application
 
 
 #### Deploying report application to vagrant virtual machine
@@ -43,4 +43,3 @@ You could also upload report application to local virtual machine:
 
 [node-js]: https://nodejs.org/en/
 [npm-install]: https://docs.npmjs.com/getting-started/installing-node#updating-npm
-[compass]: http://compass-style.org/install/

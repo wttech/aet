@@ -79,14 +79,14 @@ public class NuValidatorWrapper {
 
   private void end() throws SAXException {
     errorHandler
-        .end("Document checking completed. No errors found.", "Document checking completed.");
+        .end("Document checking completed. No errors found.", "Document checking completed.", null);
   }
 
   private void setErrorHandler() {
     SourceCode sourceCode = validator.getSourceCode();
     ImageCollector imageCollector = new ImageCollector(sourceCode);
 
-    errorHandler = new MessageEmitterAdapter(sourceCode, false, imageCollector, 0, true, new
+    errorHandler = new MessageEmitterAdapter(null, sourceCode, false, imageCollector, 0, true, new
         JsonMessageEmitter(new Serializer(out), null));
     errorHandler.setErrorsOnly(errorsOnly);
   }

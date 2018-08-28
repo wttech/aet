@@ -59,6 +59,6 @@
 				elementToChange.innerHTML = 'Final Text That is displayed after timeout while page elements are still loading.';
 			}
 			++COUNTER;
-		}, t * 600);
+		}, t * 1000);
 	}
 </script>

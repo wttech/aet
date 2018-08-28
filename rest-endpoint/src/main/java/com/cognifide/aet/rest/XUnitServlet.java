@@ -35,26 +35,28 @@ import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import org.apache.commons.io.IOUtils;
-import org.apache.felix.scr.annotations.Activate;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Deactivate;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.Service;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.http.HttpService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Service
-@Component(label = "XUnitServlet", description = "Provides xunit test result", immediate = true)
+@Component(immediate = true)
 public class XUnitServlet extends BasicDataServlet {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(XUnitServlet.class);
+  private static final long serialVersionUID = -5583065996820534015L;
 
-  private static final long serialVersionUID = 2459345654081429533L;
+  private static final Logger LOGGER = LoggerFactory.getLogger(XUnitServlet.class);
 
   private static final String XML_HEADER = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\" ?>\n";
 
   @Reference
   private MetadataDAO metadataDAO;
+
+  @Reference
+  private transient HttpService httpService;
 
   @Activate
   public void start() {
@@ -82,6 +84,16 @@ public class XUnitServlet extends BasicDataServlet {
       response.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
       response.getWriter().write(responseAsJson(e.getMessage()));
     }
+  }
+
+  @Override
+  protected HttpService getHttpService() {
+    return this.httpService;
+  }
+
+  @Override
+  protected void setHttpService(HttpService httpService) {
+    this.httpService = httpService;
   }
 
   private Suite getSuite(DBKey dbKey, String correlationId, String suiteName)

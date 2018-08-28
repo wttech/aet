@@ -19,10 +19,10 @@ require.config({
   baseUrl: 'app/',
   paths: {
     // **** LIBRARIES ****
-    'jquery': '../assets/libs/jquery/jquery',
-    'bootstrap': '../assets/libs/bootstrap-sass-twbs/bootstrap',
+    'jquery': '../assets/libs/jquery/dist/jquery',
+    'bootstrap': '../assets/libs/bootstrap-sass-twbs/assets/javascripts/bootstrap',
     'angular': '../assets/libs/angular/angular',
-    'angular-ui-router': '../assets/libs/angular-ui-router/angular-ui-router',
+    'angular-ui-router': '../assets/libs/angular-ui-router/release/angular-ui-router',
     'angularAMD': '../assets/libs/angularAMD/angularAMD',
     'lodash': '../assets/libs/lodash/dist/lodash',
     'angular-bootstrap': '../assets/libs/angular-bootstrap/ui-bootstrap-tpls',

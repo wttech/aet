@@ -29,13 +29,15 @@ import org.junit.runner.RunWith;
 @Modules(GuiceModule.class)
 public class HomePageTilesTest {
 
-  private static final int TESTS = 112;
+  private static final int TESTS = 132;
 
-  private static final int EXPECTED_TESTS_SUCCESS = 66;
+  private static final int EXPECTED_TESTS_SUCCESS = 75;
+
+  private static final int EXPECTED_TESTS_CONDITIONALLY_PASSED = 7;
 
   private static final int EXPECTED_TESTS_WARN = 5;
 
-  private static final int EXPECTED_TESTS_FAIL = 41;
+  private static final int EXPECTED_TESTS_FAIL = 52;
 
   @Inject
   private ReportHomePage page;
@@ -55,7 +57,17 @@ public class HomePageTilesTest {
   public void checkNumberOfSuccessTiles() {
     String cssClassToSearch = TestStatus.SUCCESS.getCssClass();
     int tiles = page.findTiles(cssClassToSearch).size();
-    assertEquals("number of tests tiles with SUCCESS status is incorrect", EXPECTED_TESTS_SUCCESS,
+    assertEquals("number of tests tiles with SUCCESS status is incorrect",
+        EXPECTED_TESTS_SUCCESS - EXPECTED_TESTS_CONDITIONALLY_PASSED,
+        tiles);
+  }
+
+  @Test
+  public void checkNumberOfConditionallyPassedTiles() {
+    String cssClassToSearch = TestStatus.CONDITIONALLY_PASSED.getCssClass();
+    int tiles = page.findTiles(cssClassToSearch).size();
+    assertEquals("number of tests tiles with CONDITIONALLY PASSED status is incorrect",
+        EXPECTED_TESTS_CONDITIONALLY_PASSED,
         tiles);
   }
 

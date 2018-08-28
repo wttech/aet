@@ -24,6 +24,7 @@
 	<test name="S-modifier-Click">
 		<collect>
 			<open />
+			<resolution width="1500" />
 			<click xpath="//a[@id='hide']" timeout="3000"/>
 			<sleep duration="1000" />
 			<screen />

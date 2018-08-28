@@ -36,6 +36,8 @@ atlassian-ide-plugin.xml
 /report/src/main/webapp/.sass-cache/
 # auto-generated assets
 /report/src/main/webapp/assets/libs
+# auto-generated css file
+/report/src/main/webapp/assets/css
 
 ### AET sanity tests
 /integration-tests/test-suite/suite.xml
