@@ -42,13 +42,13 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class RemoveArtifactsProcessorTest {
 
-  private static final Set<String> SEVEN_ARTIFACTS_ID_SET = new HashSet<>(Arrays
+  private static final Set<String> ONE_TO_SEVEN_ARTIFACTS_ID_SET = new HashSet<>(Arrays
       .asList("1", "2", "3", "4", "5", "6", "7"));
 
-  private static final Set<String> FIVE_ARTIFACTS_ID_SET = new HashSet<>(Arrays
+  private static final Set<String> ONE_TO_FIVE_ARTIFACTS_ID_SET = new HashSet<>(Arrays
       .asList("1", "2", "3", "4", "5"));
 
-  private static final Set<String> TWO_ARTIFACTS_ID_SET = new HashSet<>(Arrays
+  private static final Set<String> SIX_TO_SEVEN_ARTIFACTS_ID_SET = new HashSet<>(Arrays
       .asList("6", "7"));
 
   private static final Set<String> EMPTY_ARTIFACTS_ID_SET = new HashSet<>();
@@ -81,8 +81,8 @@ public class RemoveArtifactsProcessorTest {
   @Test
   public void check_ifRemoveArtifactsWasCalled_expectTrue() throws Exception {
     when(artifactDAO.getArtifactsId(any(DBKey.class)))
-        .thenReturn(new HashSet<>(SEVEN_ARTIFACTS_ID_SET));
-    setArtifactsIdToKeep(FIVE_ARTIFACTS_ID_SET);
+        .thenReturn(new HashSet<>(ONE_TO_SEVEN_ARTIFACTS_ID_SET));
+    setArtifactsIdToKeep(ONE_TO_FIVE_ARTIFACTS_ID_SET);
 
     removeArtifactsProcessor = new RemoveArtifactsProcessor(artifactDAO);
     removeArtifactsProcessor.process(exchange);
@@ -95,8 +95,8 @@ public class RemoveArtifactsProcessorTest {
   public void check_ifRemoveArtifactsWasCalled_expectFalse() throws Exception {
     when(cleanerContext.isDryRun()).thenReturn(true);
     when(artifactDAO.getArtifactsId(any(DBKey.class)))
-        .thenReturn(new HashSet<>(SEVEN_ARTIFACTS_ID_SET));
-    setArtifactsIdToKeep(FIVE_ARTIFACTS_ID_SET);
+        .thenReturn(new HashSet<>(ONE_TO_SEVEN_ARTIFACTS_ID_SET));
+    setArtifactsIdToKeep(ONE_TO_FIVE_ARTIFACTS_ID_SET);
 
     removeArtifactsProcessor = new RemoveArtifactsProcessor(artifactDAO);
     removeArtifactsProcessor.process(exchange);
@@ -108,19 +108,19 @@ public class RemoveArtifactsProcessorTest {
   @Test
   public void check_substractArtifactsSets_expectSetOfTwoVariables() throws Exception {
     when(artifactDAO.getArtifactsId(any(DBKey.class)))
-        .thenReturn(new HashSet<>(SEVEN_ARTIFACTS_ID_SET));
-    setArtifactsIdToKeep(FIVE_ARTIFACTS_ID_SET);
+        .thenReturn(new HashSet<>(ONE_TO_SEVEN_ARTIFACTS_ID_SET));
+    setArtifactsIdToKeep(ONE_TO_FIVE_ARTIFACTS_ID_SET);
     ReferencedArtifactsMessageBody messageBody = (ReferencedArtifactsMessageBody) exchange.getIn()
         .getBody();
-    assertEquals(TWO_ARTIFACTS_ID_SET,
+    assertEquals(SIX_TO_SEVEN_ARTIFACTS_ID_SET,
         removeArtifactsProcessor.getArtifactsIdsToRemove(artifactDAO, messageBody));
   }
 
   @Test
   public void check_substractArtifactsSets_expectEmptySet() throws Exception {
     when(artifactDAO.getArtifactsId(any(DBKey.class)))
-        .thenReturn(new HashSet<>(FIVE_ARTIFACTS_ID_SET));
-    setArtifactsIdToKeep(SEVEN_ARTIFACTS_ID_SET);
+        .thenReturn(new HashSet<>(ONE_TO_FIVE_ARTIFACTS_ID_SET));
+    setArtifactsIdToKeep(ONE_TO_SEVEN_ARTIFACTS_ID_SET);
     ReferencedArtifactsMessageBody messageBody = (ReferencedArtifactsMessageBody) exchange.getIn()
         .getBody();
     assertEquals(EMPTY_ARTIFACTS_ID_SET,
@@ -130,13 +130,13 @@ public class RemoveArtifactsProcessorTest {
   @Test
   public void check_substractArtifactsSets_expectSetOfFiveVariables() throws Exception {
     when(artifactDAO.getArtifactsId(any(DBKey.class)))
-        .thenReturn(new HashSet<>(SEVEN_ARTIFACTS_ID_SET));
-    setArtifactsIdToKeep(TWO_ARTIFACTS_ID_SET);
+        .thenReturn(new HashSet<>(ONE_TO_SEVEN_ARTIFACTS_ID_SET));
+    setArtifactsIdToKeep(SIX_TO_SEVEN_ARTIFACTS_ID_SET);
 
     ReferencedArtifactsMessageBody messageBody = (ReferencedArtifactsMessageBody) exchange.getIn()
         .getBody();
 
-    assertEquals(FIVE_ARTIFACTS_ID_SET,
+    assertEquals(ONE_TO_FIVE_ARTIFACTS_ID_SET,
         removeArtifactsProcessor.getArtifactsIdsToRemove(artifactDAO, messageBody));
   }
 
@@ -144,7 +144,7 @@ public class RemoveArtifactsProcessorTest {
   public void check_substractArtifactsSetsWhenDbIsEmpty_expectEmptySet() throws Exception {
     when(artifactDAO.getArtifactsId(any(DBKey.class)))
         .thenReturn(new HashSet<>(EMPTY_ARTIFACTS_ID_SET));
-    setArtifactsIdToKeep(TWO_ARTIFACTS_ID_SET);
+    setArtifactsIdToKeep(SIX_TO_SEVEN_ARTIFACTS_ID_SET);
     ReferencedArtifactsMessageBody messageBody = (ReferencedArtifactsMessageBody) exchange.getIn()
         .getBody();
     assertEquals(EMPTY_ARTIFACTS_ID_SET,

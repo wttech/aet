@@ -37,7 +37,6 @@ public class RemoveArtifactsProcessor implements Processor {
   private static final Logger LOGGER = LoggerFactory.getLogger(RemoveArtifactsProcessor.class);
 
   @Reference
-
   private ArtifactsDAO artifactsDAO;
 
   public RemoveArtifactsProcessor() {
@@ -70,7 +69,6 @@ public class RemoveArtifactsProcessor implements Processor {
           "Dry run completed! {} unreferenced artifacts should be removed from {} after cleaning suite `{}`",
           artifactsToRemove.size(), messageBody.getDbKey(), messageBody.getData());
     }
-
   }
 
   public static Set<String> getArtifactsIdsToRemove(ArtifactsDAO artifactsDAO,

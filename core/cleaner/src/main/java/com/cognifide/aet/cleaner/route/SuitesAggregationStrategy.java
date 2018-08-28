@@ -38,6 +38,7 @@ class SuitesAggregationStrategy implements CompletionAwareAggregationStrategy {
           .getBody(ReferencedArtifactsMessageBody.class);
 
       newBody.update(oldBody);
+      
       oldExchange.getIn().setBody(newBody);
       oldExchange.getIn().setHeader(CleanerContext.KEY_NAME,
           newExchange.getIn().getHeader(CleanerContext.KEY_NAME, CleanerContext.class));

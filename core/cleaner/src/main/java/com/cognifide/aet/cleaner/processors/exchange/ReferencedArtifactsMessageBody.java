@@ -22,7 +22,7 @@ import java.util.Set;
 
 public class ReferencedArtifactsMessageBody extends MessageBody<String> {
 
-  private static final long serialVersionUID = 6150857968321878532L;
+  private static final long serialVersionUID = 3748474548512567069L;
 
   private Set<String> artifactsToKeep;
 

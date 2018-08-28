@@ -34,7 +34,7 @@ public class MetadataCleanerRouteBuilder extends RouteBuilder {
 
   private static final String ERROR_ENDPOINT = "seda:Error";
 
-  private static final String AGGREGATE_SUITES_BY_VERSION_STEP = "aggregateSuites";
+  private static final String AGGREGATE_SUITES_STEP = "aggregateSuites";
 
   @Reference
   private StartMetadataCleanupProcessor startMetadataCleanupProcessor;
@@ -78,14 +78,14 @@ public class MetadataCleanerRouteBuilder extends RouteBuilder {
 
     from(direct("getMetadataArtifacts"))
         .process(getMetadataArtifactsProcessor)
-        .to(direct(AGGREGATE_SUITES_BY_VERSION_STEP));
+        .to(direct(AGGREGATE_SUITES_STEP));
 
     from(direct("removeMetadata"))
         .process(removeMetadataProcessor)
         .process(getMetadataArtifactsProcessor)
-        .to(direct(AGGREGATE_SUITES_BY_VERSION_STEP));
+        .to(direct(AGGREGATE_SUITES_STEP));
 
-    from(direct(AGGREGATE_SUITES_BY_VERSION_STEP))
+    from(direct(AGGREGATE_SUITES_STEP))
         .aggregate(body().method("getDbKey"), new SuitesAggregationStrategy())
         .completionSize(header(SuiteAggregationCounter.NAME_KEY).method("getSuitesToAggregate"))
         .completionTimeout(60000L).forceCompletionOnStop()

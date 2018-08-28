@@ -21,8 +21,8 @@ public class SuiteAggregationCounter {
 
   private final int suitesToAggregate;
 
-  public SuiteAggregationCounter(int suitesToAggregate) {
-    this.suitesToAggregate = suitesToAggregate;
+  public SuiteAggregationCounter() {
+    this.suitesToAggregate = 0;
   }
 
   public int getSuitesToAggregate() {
