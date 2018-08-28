@@ -79,7 +79,7 @@ public class RemoveArtifactsProcessorTest {
   }
 
   @Test
-  public void check_ifRemoveArtifactsWasCalled_expectTrue() throws Exception {
+  public void checkIfRemoveArtifactsWasCalled_whenDryRunIsFalse_expectTrue() throws Exception {
     when(artifactDAO.getArtifactsIds(any(DBKey.class)))
         .thenReturn(new HashSet<>(ONE_TO_SEVEN_ARTIFACTS_ID_SET));
     setArtifactsIdToKeep(ONE_TO_FIVE_ARTIFACTS_ID_SET);
@@ -92,7 +92,7 @@ public class RemoveArtifactsProcessorTest {
   }
 
   @Test
-  public void check_ifRemoveArtifactsWasCalled_expectFalse() throws Exception {
+  public void checkIfRemoveArtifactsWasCalled_whenDryRunIsTrue_expectFalse() throws Exception {
     when(cleanerContext.isDryRun()).thenReturn(true);
     when(artifactDAO.getArtifactsIds(any(DBKey.class)))
         .thenReturn(new HashSet<>(ONE_TO_SEVEN_ARTIFACTS_ID_SET));
@@ -151,10 +151,10 @@ public class RemoveArtifactsProcessorTest {
         removeArtifactsProcessor.getArtifactsIdsToRemove(artifactDAO, messageBody));
   }
 
-  private void setArtifactsIdToKeep(Set<String> artifactsIdToRemove) {
+  private void setArtifactsIdToKeep(Set<String> artifactsIdToKeep) {
     ReferencedArtifactsMessageBody body = (ReferencedArtifactsMessageBody) exchange.getIn()
         .getBody();
-    body.setArtifactsToKeep(artifactsIdToRemove);
+    body.setArtifactsToKeep(artifactsIdToKeep);
   }
 
 }
