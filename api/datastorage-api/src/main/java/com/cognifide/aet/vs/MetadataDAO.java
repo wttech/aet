@@ -64,11 +64,19 @@ public interface MetadataDAO extends Serializable {
   Suite getLatestRun(DBKey dbKey, String name) throws StorageException;
 
   /**
-   * TODO Create description for methods below
+   * This function get old suite from db using correlationId from first param and replace them test called as second param
+   * @param suite - suite from we will get correlation Id and test to replace in real suite
+   * @param testName - testName contained in suite
+   * @return Suite object with replaced test
    */
   Suite overrideOneTestInSuite(Suite suite, String testName)
       throws StorageException, ValidatorException;
 
+  /**
+   * @param oldSuite - Suite to replace in DB
+   * @param newSuite - New suite which will be replace oldSuite
+   * @return New Suite
+   */
   Suite replaceSuite(Suite oldSuite, Suite newSuite) throws StorageException;
 
   /**
