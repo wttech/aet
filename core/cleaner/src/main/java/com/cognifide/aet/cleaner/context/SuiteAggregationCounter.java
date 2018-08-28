@@ -19,17 +19,14 @@ public class SuiteAggregationCounter {
 
   public static final String NAME_KEY = "suiteAggregationCounter";
 
-  private int suitesToAggregate;
+  private final int suitesToAggregate;
 
-  public SuiteAggregationCounter() {
-    this.suitesToAggregate = 0;
+  public SuiteAggregationCounter(int suitesToAggregate) {
+    this.suitesToAggregate = suitesToAggregate;
   }
 
   public int getSuitesToAggregate() {
     return suitesToAggregate;
   }
 
-  public void addSuitesToAggregate(int suitesToAggregate) {
-    this.suitesToAggregate += suitesToAggregate;
-  }
 }

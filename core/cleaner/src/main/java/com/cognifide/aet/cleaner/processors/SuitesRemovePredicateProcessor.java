@@ -49,10 +49,6 @@ public class SuitesRemovePredicateProcessor implements Processor {
     final Collection<Suite> suiteVersions = allSuiteVersions.getAllVersions();
     final DBKey dbKey = allSuiteVersions.getDbKey();
 
-    SuiteAggregationCounter suiteAggregationCounter = exchange.getIn()
-        .getHeader(SuiteAggregationCounter.NAME_KEY, SuiteAggregationCounter.class);
-    suiteAggregationCounter.addSuitesToAggregate(suiteVersions.size());
-
     LOGGER.info("Processing suite `{}` with {} version(s) in {}", allSuiteVersions.getData(),
         suiteVersions.size(), dbKey);
 
@@ -68,8 +64,8 @@ public class SuitesRemovePredicateProcessor implements Processor {
         }).toList();
 
     exchange.getOut().setBody(body);
-    exchange.getOut().setHeader(SuiteAggregationCounter.NAME_KEY,
-        suiteAggregationCounter);
+    exchange.getOut().setHeader(SuiteAggregationCounter.NAME_KEY, exchange.getIn()
+        .getHeader(SuiteAggregationCounter.NAME_KEY, SuiteAggregationCounter.class));
     exchange.getOut().setHeader(CleanerContext.KEY_NAME, cleanerContext);
   }
 }

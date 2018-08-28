@@ -74,7 +74,8 @@ public class FetchAllProjectSuitesProcessor implements Processor {
             }).toList();
 
     exchange.getOut().setBody(body);
-    exchange.getOut().setHeader(SuiteAggregationCounter.NAME_KEY, new SuiteAggregationCounter());
+    exchange.getOut().setHeader(SuiteAggregationCounter.NAME_KEY,
+        new SuiteAggregationCounter(allProjectSuites.size()));
     exchange.getOut().setHeader(CleanerContext.KEY_NAME, cleanerContext);
   }
 
