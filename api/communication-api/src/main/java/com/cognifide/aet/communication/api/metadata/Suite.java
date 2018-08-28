@@ -63,7 +63,6 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
   @NotBlank
   private String correlationId;
 
-
   @NotBlank
   @Size(max = 30)
   @Pattern(regexp = "^[a-z\\d-]+$", message = "may include only alphanumeric characters and '-'")
