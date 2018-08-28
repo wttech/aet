@@ -16,6 +16,8 @@
 package com.cognifide.aet.rest.helpers;
 
 import com.cognifide.aet.rest.helpers.configuration.ReportConfigurationManagerConf;
+import java.util.Optional;
+import org.apache.commons.lang3.StringUtils;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.metatype.annotations.Designate;
@@ -24,14 +26,19 @@ import org.osgi.service.metatype.annotations.Designate;
 @Designate(ocd = ReportConfigurationManagerConf.class)
 public class ReportConfigurationManager {
 
-  ReportConfigurationManagerConf config;
+  private static final String REPORT_DOMAIN_ENV = "REPORT_DOMAIN";
+
+  private String reportDomain;
 
   @Activate
   public void activate(ReportConfigurationManagerConf config) {
-    this.config = config;
+    reportDomain = Optional.ofNullable(config.reportDomain())
+        .filter(StringUtils::isNotBlank)
+        .orElseGet(() -> Optional.ofNullable(System.getenv(REPORT_DOMAIN_ENV))
+            .orElse(ReportConfigurationManagerConf.DEFAULT_REPORT_DOMAIN));
   }
 
   public String getReportDomain() {
-    return config.reportDomain();
+    return reportDomain;
   }
 }

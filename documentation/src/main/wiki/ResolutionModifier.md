@@ -4,7 +4,7 @@ Resolution Modifier is responsible for changing browser screen size. Affects [[S
 
 | ! Note |
 |:------ |
-| Firefox: Please note that final resoulution of screenshots may be different when scrollbar is dispayed. <br/><br/> Default  width of Firefox's Scrollbar is equal to 33px.  (so when you want to grab viewport of size 1024, then set width parameter to 1057px) |
+| Firefox: Please note that final resolution of screenshots may be different when scrollbar is displayed. <br/><br/> Default  width of Firefox's Scrollbar is equal to 33px.  (so when you want to grab viewport of size 1024, then set width parameter to 1057px) |
 
 Module name: **resolution**
 
@@ -17,7 +17,8 @@ Module name: **resolution**
 
 | Note |
 |:------ |
-| When height is not specified then it's computed by JavaScript. <br/> **If the resolution is specified without height parameter it should be specified after [`open`](https://github.com/Cognifide/aet/wiki/Open)**. |
+| When height is not specified then it's computed by JavaScript (using `document.body.scrollHeight` property). | 
+| **If the resolution is specified without height parameter it should be specified after [`open`](https://github.com/Cognifide/aet/wiki/Open)** and after all modifiers which may affect the page height (e.g. [`hide`](https://github.com/Cognifide/aet/wiki/HideModifier))  |
 
 ##### Example Usage
 

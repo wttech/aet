@@ -56,7 +56,7 @@ public class DefaultJmsConnection implements JmsConnection {
 
   @Override
   public JmsEndpointConfig getEndpointConfig() {
-    return new JmsEndpointConfig(config.brokerURL(), config.username(), config.password());
+    return new JmsEndpointConfig(config.url(), config.username(), config.password());
   }
 
   @Activate
@@ -66,8 +66,8 @@ public class DefaultJmsConnection implements JmsConnection {
   }
 
   public void connect() throws JMSException {
-    LOG.info("Connecting to broker {} on user {}", config.brokerURL(), config.username());
-    final ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(config.brokerURL());
+    LOG.info("Connecting to broker {} on user {}", config.url(), config.username());
+    final ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(config.url());
     connectionFactory.setUserName(config.username());
     connectionFactory.setPassword(config.password());
     connectionFactory.setTrustAllPackages(true);
@@ -81,7 +81,7 @@ public class DefaultJmsConnection implements JmsConnection {
   }
 
   public void disconnect() {
-    LOG.info("Disconnecting from broker {} on user {}", config.brokerURL(), config.username());
+    LOG.info("Disconnecting from broker {} on user {}", config.url(), config.username());
     JmsUtils.closeQuietly(connection);
   }
 
