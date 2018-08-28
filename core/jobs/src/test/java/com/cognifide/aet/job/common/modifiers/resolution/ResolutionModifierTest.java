@@ -29,19 +29,21 @@ import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.openqa.selenium.Capabilities;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.remote.RemoteWebDriver;
 
 @RunWith(MockitoJUnitRunner.class)
 public class ResolutionModifierTest {
-
-  private static final String PARAM_MAXIMIZE = "maximize";
 
   private static final String WIDTH_PARAM = "width";
 
   private static final String HEIGHT_PARAM = "height";
 
   private static final String NOT_A_NUMBER = "NaN";
+
+  private static final String JAVASCRIPT_GET_BODY_HEIGHT = "return document.body.scrollHeight";
 
   private static final int WINDOW_WIDTH = 1024;
 
@@ -51,8 +53,13 @@ public class ResolutionModifierTest {
 
   private static final int CUSTOM_HEIGHT = 600;
 
+  private static final int BROWSER_HEIGHT_LIMIT = 15000;
+
   @Mock
-  private WebDriver webDriver;
+  private RemoteWebDriver webDriver;
+
+  @Mock
+  private Capabilities capabilities;
 
   @Mock
   private Map<String, String> params;
@@ -72,6 +79,7 @@ public class ResolutionModifierTest {
   @Before
   public void setUp() {
     when(webDriver.manage()).thenReturn(options);
+    when(webDriver.getCapabilities()).thenReturn(capabilities);
     when(options.window()).thenReturn(window);
     when(window.getSize()).thenReturn(windowDimension);
     when(windowDimension.getWidth()).thenReturn(WINDOW_WIDTH);
@@ -110,28 +118,6 @@ public class ResolutionModifierTest {
     tested.setParameters(params);
   }
 
-  @Test(expected = ParametersException.class)
-  public void setParametersTest_maximizeWithWindowSize() throws ParametersException {
-    when(params.get(PARAM_MAXIMIZE)).thenReturn("true");
-    when(params.containsKey(HEIGHT_PARAM)).thenReturn(true);
-    when(params.get(HEIGHT_PARAM)).thenReturn("100");
-
-    tested.setParameters(params);
-  }
-
-  @Test
-  public void collectTest_maximize() throws ParametersException, ProcessingException {
-    when(params.get(PARAM_MAXIMIZE)).thenReturn("true");
-
-    tested.setParameters(params);
-    tested.collect();
-
-    verify(window, times(1)).maximize();
-    verify(windowDimension, times(1)).getWidth();
-    verify(windowDimension, times(1)).getHeight();
-    verify(window, never()).setSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
-  }
-
   @Test
   public void collectTest_setWidthHeight() throws ParametersException, ProcessingException {
     when(params.containsKey(HEIGHT_PARAM)).thenReturn(true);
@@ -142,25 +128,49 @@ public class ResolutionModifierTest {
     tested.setParameters(params);
     tested.collect();
 
-    verify(window, never()).maximize();
     verify(windowDimension, never()).getWidth();
     verify(windowDimension, never()).getHeight();
     verify(window, times(1)).setSize(new Dimension(CUSTOM_WIDTH, CUSTOM_HEIGHT));
   }
 
   @Test(expected = ParametersException.class)
-  public void collectTest_setOnlyHeight() throws ParametersException, ProcessingException {
+  public void collectTest_setOnlyHeight() throws ParametersException {
     when(params.containsKey(HEIGHT_PARAM)).thenReturn(true);
     when(params.get(HEIGHT_PARAM)).thenReturn("" + CUSTOM_HEIGHT);
-
     tested.setParameters(params);
   }
 
-  @Test(expected = ParametersException.class)
-  public void collectTest_setOnlyWidth() throws ParametersException, ProcessingException {
+  private void setUp_setOnlyWidth(){
     when(params.containsKey(WIDTH_PARAM)).thenReturn(true);
+    when(params.containsKey(HEIGHT_PARAM)).thenReturn(false);
     when(params.get(WIDTH_PARAM)).thenReturn("" + CUSTOM_WIDTH);
+  }
+
+  @Test
+  public void collectTest_setOnlyWidth() throws ParametersException, ProcessingException {
+    setUp_setOnlyWidth();
+    when(webDriver.executeScript(JAVASCRIPT_GET_BODY_HEIGHT))
+        .thenReturn(CUSTOM_HEIGHT);
 
     tested.setParameters(params);
+    tested.collect();
+
+    verify(windowDimension, never()).getWidth();
+    verify(windowDimension, never()).getHeight();
+    verify(window, times(1)).setSize(new Dimension(CUSTOM_WIDTH, CUSTOM_HEIGHT));
+  }
+
+  @Test
+  public void collectTest_setOnlyWidth_reachedBrowserHeightLimit() throws ParametersException, ProcessingException {
+    setUp_setOnlyWidth();
+    when(webDriver.executeScript(JAVASCRIPT_GET_BODY_HEIGHT))
+        .thenReturn(BROWSER_HEIGHT_LIMIT + 5000L);
+
+    tested.setParameters(params);
+    tested.collect();
+
+    verify(windowDimension, never()).getWidth();
+    verify(windowDimension, never()).getHeight();
+    verify(window, times(1)).setSize(new Dimension(CUSTOM_WIDTH, BROWSER_HEIGHT_LIMIT));
   }
 }

@@ -20,11 +20,9 @@ import com.cognifide.aet.job.api.datafilter.DataFilterJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.common.collectors.statuscodes.StatusCodesCollectorResult;
 import java.util.Map;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Service;
+import org.osgi.service.component.annotations.Component;
 
 @Component
-@Service
 public class IncludeStatusCodesFilterFactory implements DataFilterFactory {
 
   @Override

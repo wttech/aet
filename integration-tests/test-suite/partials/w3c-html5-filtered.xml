@@ -48,9 +48,9 @@
         </collect>
         <compare>
             <source comparator="w3c-html5" ignore-warnings="false">
-                <w3c-filter line="386"/>
-                <w3c-filter line="389"/>
-                <w3c-filter line="390"/>
+                <w3c-filter line="368"/>
+                <w3c-filter line="371"/>
+                <w3c-filter line="372"/>
             </source>
         </compare>
         <urls>
@@ -90,9 +90,9 @@
                 <w3c-filter message="Element “img” is missing required attribute “src”."/>
                 <w3c-filter message="A slash was not immediately followed by “&gt;”."/>
                 <w3c-filter messagePattern="Saw .+ when expecting an attribute name.*"/>
-                <w3c-filter line="389" column="7" messagePattern="Element .* not allowed as child of element .*"/>
-                <w3c-filter line="389" column="7" messagePattern="Unclosed element .*"/>
-                <w3c-filter line="389" column="7" messagePattern="Attribute .* is not serializable as XML 1.0."/>
+                <w3c-filter line="371" column="7" messagePattern="Element .* not allowed as child of element .*"/>
+                <w3c-filter line="371" column="7" messagePattern="Unclosed element .*"/>
+                <w3c-filter line="371" column="7" messagePattern="Attribute .* is not serializable as XML 1.0."/>
                 <w3c-filter message="End tag for  “html” seen, but there were unclosed elements."/>
             </source>
         </compare>

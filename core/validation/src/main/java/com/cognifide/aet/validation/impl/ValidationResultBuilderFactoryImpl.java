@@ -17,16 +17,11 @@ package com.cognifide.aet.validation.impl;
 
 import com.cognifide.aet.validation.ValidationResultBuilder;
 import com.cognifide.aet.validation.ValidationResultBuilderFactory;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Service;
+import org.osgi.service.component.annotations.Component;
 
-@Service
-@Component(
-    label = "AET Validation Result Builder Factory",
-    description = "AET Validation Result Builder Factory")
+@Component
 public class ValidationResultBuilderFactoryImpl implements ValidationResultBuilderFactory {
-
-  @Override
+  
   public ValidationResultBuilder createInstance() {
     return new ValidationResultBuilderImpl();
   }

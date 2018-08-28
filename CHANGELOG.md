@@ -10,11 +10,21 @@ All notable changes to AET will be documented in this file.
 ## Unreleased
 **List of changes that are finished but not yet released in any final version.**
 
+- [PR-303](https://github.com/Cognifide/aet/pull/303) Added `exclude-elements` parameter to [ScreenCollector](https://github.com/Cognifide/aet/wiki/ScreenCollector)
+- [PR-327](https://github.com/Cognifide/aet/pull/327) Default web driver changed from Firefox to Chrome
+- [PR-294](https://github.com/Cognifide/aet/pull/294) Added support for full page screenshot in chrome
+- [PR-326](https://github.com/Cognifide/aet/pull/326) ([PR-308](https://github.com/Cognifide/aet/pull/308), [PR-310](https://github.com/Cognifide/aet/pull/310), [PR-311](https://github.com/Cognifide/aet/pull/311), [PR-312](https://github.com/Cognifide/aet/pull/312), [PR-313](https://github.com/Cognifide/aet/pull/313), [PR-314](https://github.com/Cognifide/aet/pull/314), [PR-315](https://github.com/Cognifide/aet/pull/315), [PR-316](https://github.com/Cognifide/aet/pull/316), [PR-322](https://github.com/Cognifide/aet/pull/322)) - updated OSGi annotations to 6.0.0 OSGi standard
+- [PR-293](https://github.com/Cognifide/aet/pull/293) Added error treshold in pixels and percentages for screen comparator
+- [PR-300](https://github.com/Cognifide/aet/pull/300) Added creating indexes for collection
+- [PR-289](https://github.com/Cognifide/aet/pull/289) User now stays on the same tab while navigating between URLs
 - [PR-271](https://github.com/Cognifide/aet/pull/271) Added possibility to override name parameter from the aet client
 - [PR-268](https://github.com/Cognifide/aet/pull/268) Bobcat upgrade to version 1.4.0
 - [PR-279](https://github.com/Cognifide/aet/pull/279) Upgrade for some of libraries used by AET
 - [PR-281](https://github.com/Cognifide/aet/pull/281) No version in Bundle names (simpler deployment)
 - [PR-286](https://github.com/Cognifide/aet/pull/286) Shared Patterns - use latest patterns of given suite name ([#121](https://github.com/Cognifide/aet/issues/121))
+- [PR-291](https://github.com/Cognifide/aet/pull/291) Updated nu.validator version from 15.6.29 to 17.11.1
+- [PR-298](https://github.com/Cognifide/aet/pull/298) Filtering accessibility errors by markup CSS ([#214](https://github.com/Cognifide/aet/issues/214))
+- [PR-296](https://github.com/Cognifide/aet/pull/296) Status Code Comparator now checks range 400-600 by default, parameters validation added
 
 ## Version 2.1.6
 

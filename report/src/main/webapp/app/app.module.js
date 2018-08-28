@@ -89,7 +89,8 @@ define(['angularAMD',
           failed: 'fa-times',
           warning: 'fa-exclamation-triangle',
           rebased: 'fa-cloud-upload-alt',
-          unrebased: 'fa-cloud-download-alt'
+          unrebased: 'fa-cloud-download-alt',
+          conditionallyPassed: 'fa-dot-circle',
         }
       };
 

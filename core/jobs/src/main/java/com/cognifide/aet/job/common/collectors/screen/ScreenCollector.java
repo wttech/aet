@@ -16,6 +16,9 @@
 package com.cognifide.aet.job.common.collectors.screen;
 
 import com.cognifide.aet.communication.api.metadata.CollectorStepResult;
+import com.cognifide.aet.communication.api.metadata.Payload;
+import com.cognifide.aet.communication.api.metadata.exclude.ExcludedElement;
+import com.cognifide.aet.communication.api.metadata.exclude.LayoutExclude;
 import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
@@ -28,11 +31,14 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import javax.imageio.ImageIO;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
@@ -56,10 +62,25 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
 
   private final CollectorProperties properties;
 
+  private String excludeCssSelector;
+
   ScreenCollector(CollectorProperties properties, WebDriver webDriver, ArtifactsDAO artifactsDAO) {
     this.properties = properties;
     this.webDriver = webDriver;
     this.artifactsDAO = artifactsDAO;
+  }
+
+  private List<ExcludedElement> getExcludeElementsFromWebElements(
+      List<WebElement> webElements) {
+    List<ExcludedElement> excludeExcludedElements = new ArrayList<>(webElements.size());
+    for (WebElement webElement : webElements) {
+      java.awt.Point point = new java.awt.Point(webElement.getLocation().x,
+          webElement.getLocation().y);
+      java.awt.Dimension dimension = new java.awt.Dimension(webElement.getSize().width,
+          webElement.getSize().height);
+      excludeExcludedElements.add(new ExcludedElement(point, dimension));
+    }
+    return excludeExcludedElements;
   }
 
   @Override
@@ -72,7 +93,16 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
     } else {
       try (final InputStream screenshotStream = new ByteArrayInputStream(screenshot)) {
         String resultId = artifactsDAO.saveArtifact(properties, screenshotStream, CONTENT_TYPE);
-        stepResult = CollectorStepResult.newCollectedResult(resultId);
+
+        if (excludeCssSelector != null) {
+          List<ExcludedElement> excludeExcludedElements = getExcludeElementsFromWebElements(
+              webDriver.findElements(By.cssSelector(excludeCssSelector)));
+          stepResult = CollectorStepResult
+              .newCollectedResult(resultId,
+                  new Payload((new LayoutExclude(excludeExcludedElements))));
+        } else {
+          stepResult = CollectorStepResult.newCollectedResult(resultId);
+        }
       } catch (Exception e) {
         throw new ProcessingException(e.getMessage(), e);
       }
@@ -96,6 +126,9 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
     if (StringUtils.isNotBlank(params.get(XPATH_PARAM)) || StringUtils
         .isNotBlank(params.get(CSS_PARAM))) {
       setElementParams(params);
+    }
+    if (StringUtils.isNotBlank(params.get(EXCLUDE_ELEMENT_PARAM))) {
+      excludeCssSelector = params.get(EXCLUDE_ELEMENT_PARAM);
     }
   }
 

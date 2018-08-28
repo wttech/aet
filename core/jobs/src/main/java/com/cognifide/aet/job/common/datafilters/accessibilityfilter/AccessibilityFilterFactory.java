@@ -21,11 +21,9 @@ import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.common.collectors.accessibility.AccessibilityIssue;
 import java.util.List;
 import java.util.Map;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Service;
+import org.osgi.service.component.annotations.Component;
 
 @Component
-@Service
 public class AccessibilityFilterFactory implements DataFilterFactory {
 
   @Override

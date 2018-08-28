@@ -17,6 +17,7 @@ Resource name: accessibility
 | `principle` | string principle | The exact accessibility issue principle |
 | `line` | integer line number |The line number in the file which the issue occurred in |
 | `column` | integer column number | The column number in the file which the issue occurred is |
+| `markupCss` | CSS selector | CSS selector matching the HTML fragment where the issue was detected |
 
 *Note:*
 - `error` will be overridden by `errorPattern` if set.
@@ -51,6 +52,7 @@ In this example the exact match of the accessibility issue breaking principle "W
                 <accessibility-filter line="252" />
                 <accessibility-filter column="6" />
                 <accessibility-filter line="317" column="50" />
+                <accessibility-filter markupCss=".form-control" />
             </accessibility>
             ...
         </compare>

@@ -16,14 +16,19 @@
 package com.cognifide.aet.job.common.comparators.layout.utils;
 
 import java.awt.image.BufferedImage;
+import java.util.Optional;
 
 public class ImageComparisonResult {
+
+  private int pixelCount;
 
   private int pixelDifferenceCount;
 
   private int heightDifference;
 
   private int widthDifference;
+
+  private double percentagePixelDifference;
 
   private BufferedImage resultImage;
 
@@ -37,11 +42,8 @@ public class ImageComparisonResult {
     this.heightDifference = heightDifference;
     this.widthDifference = widthDifference;
     this.resultImage = resultImage;
-  }
-
-  public boolean isMatch() {
-    return this.pixelDifferenceCount == 0 && this.heightDifference == 0
-        && this.widthDifference == 0;
+    this.pixelCount = resultImage.getHeight() * resultImage.getWidth();
+    this.percentagePixelDifference = 100 * this.pixelDifferenceCount / (double) this.pixelCount;
   }
 
   public int getPixelDifferenceCount() {
@@ -59,4 +61,9 @@ public class ImageComparisonResult {
   public BufferedImage getResultImage() {
     return resultImage;
   }
+
+  public double getPercentagePixelDifference() {
+    return percentagePixelDifference;
+  }
+
 }

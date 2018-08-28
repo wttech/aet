@@ -23,6 +23,7 @@ import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import java.util.Map;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.openqa.selenium.Dimension;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriver.Window;
 import org.slf4j.Logger;
@@ -34,22 +35,23 @@ public class ResolutionModifier implements CollectorJob {
 
   private static final Logger LOG = LoggerFactory.getLogger(ResolutionModifier.class);
 
-  private static final String PARAM_MAXIMIZE = "maximize";
-
   private static final String WIDTH_PARAM = "width";
 
   private static final String HEIGHT_PARAM = "height";
 
-  private static final int MAX_SIZE = 100000;
+  private static final String JAVASCRIPT_GET_BODY_HEIGHT = "return document.body.scrollHeight";
+
+  private static final int MAX_SIZE = 15000;
+
+  private static final int INITIAL_HEIGHT = 300;
+
+  private static final int HEIGHT_NOT_DEFINED = 0;
 
   private final WebDriver webDriver;
 
   private int width;
 
   private int height;
-
-  @Deprecated
-  private boolean maximize;
 
   public ResolutionModifier(WebDriver webDriver) {
     this.webDriver = webDriver;
@@ -64,33 +66,32 @@ public class ResolutionModifier implements CollectorJob {
 
   @Override
   public void setParameters(Map<String, String> params) throws ParametersException {
-    String paramValue = params.get(PARAM_MAXIMIZE);
-    maximize = Boolean.valueOf(paramValue);
-
-    if (params.containsKey(WIDTH_PARAM) && params.containsKey(HEIGHT_PARAM)) {
+    if (params.containsKey(WIDTH_PARAM)) {
       width = NumberUtils.toInt(params.get(WIDTH_PARAM));
       ParametersValidator.checkRange(width, 1, MAX_SIZE, "Width should be greater than 0");
-
-      height = NumberUtils.toInt(params.get(HEIGHT_PARAM));
-      ParametersValidator.checkRange(height, 1, MAX_SIZE, "Height should be greater than 0");
-
-      ParametersValidator.checkParameter(!maximize,
-          "You cannot maximize the window and specify the dimension");
-    } else if (params.containsKey(WIDTH_PARAM) || params.containsKey(HEIGHT_PARAM)) {
-      throw new ParametersException("You have to specify both width and height");
+      if (params.containsKey(HEIGHT_PARAM)) {
+        height = NumberUtils.toInt(params.get(HEIGHT_PARAM));
+        ParametersValidator
+            .checkRange(height, 1, MAX_SIZE, "Height should be greater than 0 and smaller than " + MAX_SIZE);
+      }
+    } else {
+      throw new ParametersException("You have to specify width, height parameter is optional");
     }
   }
 
   private void setResolution(WebDriver webDriver) {
     Window window = webDriver.manage().window();
-    if (maximize) {
-      window.maximize();
-      LOG.error("Trying to maximise window to  {}x{}!", window.getSize().getWidth(),
-          window.getSize().getHeight());
-    } else {
-      LOG.info("Setting resolution to  {}x{}  ", width, height);
-      window.setSize(new Dimension(width, height));
+    if (height == HEIGHT_NOT_DEFINED) {
+      window.setSize(new Dimension(width, INITIAL_HEIGHT));
+      JavascriptExecutor js = (JavascriptExecutor) webDriver;
+      height = Integer
+          .parseInt(js.executeScript(JAVASCRIPT_GET_BODY_HEIGHT).toString());
+      if (height > MAX_SIZE) {
+        LOG.warn("Height is over browser limit, changing height to {}", MAX_SIZE);
+        height = MAX_SIZE;
+      }
     }
+    LOG.info("Setting resolution to  {}x{}  ", width, height);
+    window.setSize(new Dimension(width, height));
   }
-
 }

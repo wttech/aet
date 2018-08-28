@@ -143,9 +143,3 @@
 .name {
   font-style: italic;
 }
-
-input[type=text] {
-  @include input-placeholder {
-    color: #85898e;
-  }
-}

@@ -28,6 +28,7 @@
         <span>Show Mask</span>
       </label>
     </div>
+    <span ng-if="case.comparator.stepResult.data.excludeMessage" class="checkboxes-inline">Exclude info: {{case.comparator.stepResult.data.excludeMessage}}</span>
   </div>
   <div class="advanced-screen-comparison button button-small button-blue">
   <a ng-if="case.status == 'FAILED' || case.status == 'CONDITIONALLY_PASSED'" data-ng-click="advancedScreenComparison()" data-aet-compare-screens>Advanced Screen Comparison</a>
@@ -43,7 +44,8 @@
   <div class="layout-compare">
     <div class="layout-compare-item pull-left">
       <p class="layout-compare-description">Pattern
-        <span class="label label-info">{{case.comparator.stepResult.data.patternTimestamp | date:'yyyy-MM-dd HH:mm'}}</span>
+        <span class="label label-info">{{case.comparator.stepResult.data.patternTimestamp | date:'yyyy-MM-dd HH:mm'}}</span><br>
+        <span class="label-spacer"></span>
       </p>
       <div class="mask-container">
         <img ng-src="{{case.getResultUrl()}}"
@@ -56,9 +58,11 @@
         </a>
       </div>
     </div>
-    <div class="layout-compare-item pull-left" ng-if="case.status == 'FAILED'">
+    <div class="layout-compare-item pull-left" ng-if="case.status == 'FAILED' || case.status == 'CONDITIONALLY_PASSED'">
       <p class="layout-compare-description">Collected
-        <span class="label label-info">{{case.comparator.stepResult.data.collectTimestamp | date:'yyyy-MM-dd HH:mm'}}</span>
+        <span class="label label-info">{{case.comparator.stepResult.data.collectTimestamp | date:'yyyy-MM-dd HH:mm'}}</span><br>
+        <span>Difference: {{case.comparator.stepResult.data.percentagePixelDifference | number: 2}}%,
+          {{case.comparator.stepResult.data.pixelDifference}}px</span>
       </p>
 
       <div class="mask-container">
@@ -71,7 +75,7 @@
         </a>
       </div>
     </div>
-    <div class="layout-compare-item pull-left" ng-if="case.status != 'FAILED'">
+    <div class="layout-compare-item pull-left" ng-if="case.status != 'FAILED' && case.status != 'CONDITIONALLY_PASSED'">
       <p class="layout-compare-description">No difference was detected!</p>
     </div>
   </div>

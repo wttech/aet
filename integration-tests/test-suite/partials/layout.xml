@@ -24,6 +24,7 @@
 	<test name="S-comparator-Layout">
 		<collect>
 			<open />
+			<resolution width="1500" />
 			<sleep duration="3000" />
 			<screen />
 		</collect>
@@ -50,6 +51,7 @@
 	<test name="S-comparator-Layout-Hide">
 		<collect>
 			<open />
+			<resolution width="1500" />
 			<sleep duration="3000" />
 			<hide xpath="//*[@id='demo1']" />
 			<hide xpath="//*[@id='demo2']" />
@@ -65,6 +67,7 @@
 	<test name="F-comparator-Layout-Hide-space">
 		<collect>
 			<open />
+			<resolution width="1500" />
 			<sleep duration="3000" />
 			<hide xpath="//*[@class='space']" />
 			<screen />
@@ -81,6 +84,7 @@
 			<open />
 			<sleep duration="3000" />
 			<hide xpath="//*[@class='space']" leaveBlankSpace="false" />
+			<resolution width="1500" />
 			<screen />
 		</collect>
 		<compare>
@@ -93,7 +97,7 @@
 	<test name="S-comparator-Layout-Resolution">
 		<collect>
 			<open />
-			<resolution width="200" height="300" />
+			<resolution width="767" />
 			<sleep duration="3000" />
 			<screen />
 		</collect>
@@ -122,7 +126,7 @@
 	<test name="S-comparator-Layout-Partial-By-CSS">
 		<collect>
 			<open />
-			<resolution width="200" height="300" />
+			<resolution width="1500" height="1500" />
 			<sleep duration="3000" />
 			<screen css="img" />
 		</collect>
@@ -137,7 +141,7 @@
 	<test name="S-comparator-Layout-Partial-By-XPATH">
 		<collect>
 			<open />
-			<resolution width="200" height="300" />
+			<resolution width="1500" height="1500" />
 			<sleep duration="3000" />
 			<screen xpath="//*[@id='banner']/div/div[1]/h1" />
 		</collect>
@@ -146,6 +150,268 @@
 		</compare>
 		<urls>
 			<url href="comparators/layout/success.jsp" />
+		</urls>
+	</test>
+
+	<test name="F-comparator-Layout-Auto-Height-Detection-with-dynamic-content-at-bottom">
+		<collect>
+			<open />
+			<resolution width="767" />
+			<sleep duration="3000" />
+			<screen />
+		</collect>
+		<compare>
+			<screen comparator="layout" />
+		</compare>
+		<urls>
+			<url href="comparators/layout/height_detection.jsp" />
+		</urls>
+	</test>
+
+	<test name="S-comparator-Layout-Fixed-Height">
+		<collect>
+			<open />
+			<resolution width="767" height="400"/>
+			<sleep duration="3000" />
+			<screen />
+		</collect>
+		<compare>
+			<screen comparator="layout" />
+		</compare>
+		<urls>
+			<url href="comparators/layout/height_detection.jsp" />
+		</urls>
+	</test>
+
+	<test name="F-comparator-Layout-pixel-threshold">
+		<collect>
+			<open />
+			<sleep duration="3000" />
+			<screen />
+		</collect>
+		<compare>
+			<screen pixelThreshold="1" comparator="layout" />
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp" />
+		</urls>
+	</test>
+
+	<test name="S-comparator-Layout-pixel-threshold">
+		<collect>
+			<open />
+			<sleep duration="3000" />
+			<screen />
+		</collect>
+		<compare>
+			<screen pixelThreshold="2500" comparator="layout" />
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp" />
+		</urls>
+	</test>
+
+	<test name="F-comparator-Layout-percentage-threshold">
+		<collect>
+			<open />
+			<sleep duration="3000" />
+			<screen />
+		</collect>
+		<compare>
+			<screen percentageThreshold="0.001" comparator="layout" />
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp" />
+		</urls>
+	</test>
+
+	<test name="S-comparator-Layout-percentage-threshold">
+		<collect>
+			<open />
+			<sleep duration="3000" />
+			<screen />
+		</collect>
+		<compare>
+			<screen percentageThreshold="0.5" comparator="layout" />
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp" />
+		</urls>
+	</test>
+
+	<test name="F-comparator-Layout-small-pixel-threshold-big-percentage-threshold">
+		<collect>
+			<open />
+			<sleep duration="3000" />
+			<screen />
+		</collect>
+		<compare>
+			<screen pixelThreshold="1" percentageThreshold="0.5" comparator="layout" />
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp" />
+		</urls>
+	</test>
+
+	<test name="F-comparator-Layout-big-pixel-threshold-small-percentage-threshold">
+		<collect>
+			<open />
+			<sleep duration="3000" />
+			<screen />
+		</collect>
+		<compare>
+			<screen pixelThreshold="2500" percentageThreshold="0.001" comparator="layout" />
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp" />
+		</urls>
+	</test>
+
+	<test name="F-comparator-Layout-small-pixel-threshold-small-percentage-threshold">
+		<collect>
+			<open />
+			<sleep duration="3000" />
+			<screen />
+		</collect>
+		<compare>
+			<screen pixelThreshold="1000" percentageThreshold="0.001" comparator="layout" />
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp" />
+		</urls>
+	</test>
+
+	<test name="S-comparator-Layout-big-pixel-threshold-and-big-percentage-threshold">
+		<collect>
+			<open />
+			<sleep duration="3000" />
+			<screen />
+		</collect>
+		<compare>
+			<screen pixelThreshold="2500" percentageThreshold="0.5" comparator="layout" />
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp" />
+		</urls>
+	</test>
+
+	<test name="S-comparator-Layout-Exclude-id">
+		<collect>
+			<open/>
+			<resolution width="767" height="300"/>
+			<sleep duration="3000"/>
+			<screen exclude-elements="#demo1,#demo2" />
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp"/>
+		</urls>
+	</test>
+
+	<test name="S-comparator-Layout-Exclude-css">
+		<collect>
+			<open/>
+			<resolution width="767" height="300"/>
+			<sleep duration="3000"/>
+			<screen exclude-elements=".dynamic1,.dynamic2" />
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp"/>
+		</urls>
+	</test>
+
+	<test name="F-comparator-Layout-Exclude-id">
+		<collect>
+			<open/>
+			<resolution width="767" height="300"/>
+			<sleep duration="3000"/>
+			<screen exclude-elements="#demo2" />
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp"/>
+		</urls>
+	</test>
+
+	<test name="F-comparator-Layout-Exclude-css">
+		<collect>
+			<open/>
+			<resolution width="767" height="300"/>
+			<sleep duration="3000"/>
+			<screen exclude-elements=".dynamic2" />
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp"/>
+		</urls>
+	</test>
+
+	<test name="S-comparator-Layout-Exclude-id-css">
+		<collect>
+			<open/>
+			<resolution width="767" height="300"/>
+			<sleep duration="3000"/>
+			<screen exclude-elements=".dynamic1,#demo2" />
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp"/>
+		</urls>
+	</test>
+
+	<test name="S-comparator-Layout-Exclude-Elements-with-Percentage-Treshold">
+		<collect>
+			<open/>
+			<resolution width="767" height="3200"/>
+			<sleep duration="3000"/>
+			<screen exclude-elements="#demo1,#demo2"/>
+		</collect>
+		<compare>
+			<screen comparator="layout" percentageThreshold="35"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/different_sized_divs.jsp"/>
+		</urls>
+	</test>
+
+	<test name="F-comparator-Layout-Exclude-Elements-with-Percentage-Treshold">
+		<collect>
+			<open/>
+			<resolution width="767" height="3200"/>
+			<sleep duration="3000"/>
+			<screen exclude-elements="unnamed" percentageThreshold="10"/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/different_sized_divs.jsp"/>
+		</urls>
+	</test>
+
+	<test name="F-comparator-Layout-Exclude-Elements">
+		<collect>
+			<open/>
+			<resolution width="767" height="300"/>
+			<sleep duration="3000"/>
+			<screen exclude-elements="unnamed" />
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp"/>
 		</urls>
 	</test>
 	<!-- Layout-Comparator END -->
