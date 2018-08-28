@@ -32,7 +32,7 @@ public class SuiteMessageBody extends MessageBody<Suite> {
     this.toRemove = toRemove;
   }
 
-  public boolean shouldBeKeeped() {
+  public boolean shouldBeKept() {
     return !toRemove;
   }
 

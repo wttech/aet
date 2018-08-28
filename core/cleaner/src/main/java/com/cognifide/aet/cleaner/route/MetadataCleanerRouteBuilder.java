@@ -72,7 +72,7 @@ public class MetadataCleanerRouteBuilder extends RouteBuilder {
         .process(suitesRemovePredicateProcessor)
         .split(body())
         .choice()
-        .when(body().method("shouldBeKeeped").isEqualTo(false)).to(direct("removeMetadata"))
+        .when(body().method("shouldBeKept").isEqualTo(false)).to(direct("removeMetadata"))
         .otherwise().to(direct("getMetadataArtifacts"))
         .endChoice();
 

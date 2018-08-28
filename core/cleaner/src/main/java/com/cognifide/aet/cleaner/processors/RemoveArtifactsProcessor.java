@@ -66,7 +66,7 @@ public class RemoveArtifactsProcessor implements Processor {
     }
   }
 
-  public static Set<String> getArtifactsIdsToRemove(ArtifactsDAO artifactsDAO,
+  static Set<String> getArtifactsIdsToRemove(ArtifactsDAO artifactsDAO,
       ReferencedArtifactsMessageBody messageBody) {
     Set<String> artifactsToRemove = artifactsDAO.getArtifactsIds(messageBody.getDbKey());
     artifactsToRemove.removeAll(messageBody.getArtifactsToKeep());
