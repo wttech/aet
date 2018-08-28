@@ -80,7 +80,7 @@ public class RemoveArtifactsProcessorTest {
 
   @Test
   public void check_ifRemoveArtifactsWasCalled_expectTrue() throws Exception {
-    when(artifactDAO.getArtifactsId(any(DBKey.class)))
+    when(artifactDAO.getArtifactsIds(any(DBKey.class)))
         .thenReturn(new HashSet<>(ONE_TO_SEVEN_ARTIFACTS_ID_SET));
     setArtifactsIdToKeep(ONE_TO_FIVE_ARTIFACTS_ID_SET);
 
@@ -88,13 +88,13 @@ public class RemoveArtifactsProcessorTest {
     removeArtifactsProcessor.process(exchange);
 
     verify(artifactDAO, times(1)).removeArtifacts(any(DBKey.class), any(Set.class));
-    verify(artifactDAO, times(1)).getArtifactsId(any(DBKey.class));
+    verify(artifactDAO, times(1)).getArtifactsIds(any(DBKey.class));
   }
 
   @Test
   public void check_ifRemoveArtifactsWasCalled_expectFalse() throws Exception {
     when(cleanerContext.isDryRun()).thenReturn(true);
-    when(artifactDAO.getArtifactsId(any(DBKey.class)))
+    when(artifactDAO.getArtifactsIds(any(DBKey.class)))
         .thenReturn(new HashSet<>(ONE_TO_SEVEN_ARTIFACTS_ID_SET));
     setArtifactsIdToKeep(ONE_TO_FIVE_ARTIFACTS_ID_SET);
 
@@ -102,12 +102,12 @@ public class RemoveArtifactsProcessorTest {
     removeArtifactsProcessor.process(exchange);
 
     verify(artifactDAO, times(0)).removeArtifacts(any(DBKey.class), any(Set.class));
-    verify(artifactDAO, times(1)).getArtifactsId(any(DBKey.class));
+    verify(artifactDAO, times(1)).getArtifactsIds(any(DBKey.class));
   }
 
   @Test
   public void check_substractArtifactsSets_expectSetOfTwoVariables() throws Exception {
-    when(artifactDAO.getArtifactsId(any(DBKey.class)))
+    when(artifactDAO.getArtifactsIds(any(DBKey.class)))
         .thenReturn(new HashSet<>(ONE_TO_SEVEN_ARTIFACTS_ID_SET));
     setArtifactsIdToKeep(ONE_TO_FIVE_ARTIFACTS_ID_SET);
     ReferencedArtifactsMessageBody messageBody = (ReferencedArtifactsMessageBody) exchange.getIn()
@@ -118,7 +118,7 @@ public class RemoveArtifactsProcessorTest {
 
   @Test
   public void check_substractArtifactsSets_expectEmptySet() throws Exception {
-    when(artifactDAO.getArtifactsId(any(DBKey.class)))
+    when(artifactDAO.getArtifactsIds(any(DBKey.class)))
         .thenReturn(new HashSet<>(ONE_TO_FIVE_ARTIFACTS_ID_SET));
     setArtifactsIdToKeep(ONE_TO_SEVEN_ARTIFACTS_ID_SET);
     ReferencedArtifactsMessageBody messageBody = (ReferencedArtifactsMessageBody) exchange.getIn()
@@ -129,7 +129,7 @@ public class RemoveArtifactsProcessorTest {
 
   @Test
   public void check_substractArtifactsSets_expectSetOfFiveVariables() throws Exception {
-    when(artifactDAO.getArtifactsId(any(DBKey.class)))
+    when(artifactDAO.getArtifactsIds(any(DBKey.class)))
         .thenReturn(new HashSet<>(ONE_TO_SEVEN_ARTIFACTS_ID_SET));
     setArtifactsIdToKeep(SIX_TO_SEVEN_ARTIFACTS_ID_SET);
 
@@ -142,7 +142,7 @@ public class RemoveArtifactsProcessorTest {
 
   @Test
   public void check_substractArtifactsSetsWhenDbIsEmpty_expectEmptySet() throws Exception {
-    when(artifactDAO.getArtifactsId(any(DBKey.class)))
+    when(artifactDAO.getArtifactsIds(any(DBKey.class)))
         .thenReturn(new HashSet<>(EMPTY_ARTIFACTS_ID_SET));
     setArtifactsIdToKeep(SIX_TO_SEVEN_ARTIFACTS_ID_SET);
     ReferencedArtifactsMessageBody messageBody = (ReferencedArtifactsMessageBody) exchange.getIn()

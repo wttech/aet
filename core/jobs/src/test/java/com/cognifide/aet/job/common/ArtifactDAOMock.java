@@ -115,7 +115,7 @@ public class ArtifactDAOMock implements ArtifactsDAO {
   }
 
   @Override
-  public Set<String> getArtifactsId(DBKey dbKey) {
+  public Set<String> getArtifactsIds(DBKey dbKey) {
     return Collections.emptySet();
   }
 

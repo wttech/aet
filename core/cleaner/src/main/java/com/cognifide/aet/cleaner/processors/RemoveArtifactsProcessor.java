@@ -18,12 +18,7 @@ package com.cognifide.aet.cleaner.processors;
 import com.cognifide.aet.cleaner.context.CleanerContext;
 import com.cognifide.aet.cleaner.processors.exchange.ReferencedArtifactsMessageBody;
 import com.cognifide.aet.vs.ArtifactsDAO;
-import com.google.common.collect.Sets;
-import com.google.common.collect.Sets.SetView;
-import java.util.ArrayList;
 import java.util.Set;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.osgi.service.component.annotations.Component;
@@ -73,7 +68,7 @@ public class RemoveArtifactsProcessor implements Processor {
 
   public static Set<String> getArtifactsIdsToRemove(ArtifactsDAO artifactsDAO,
       ReferencedArtifactsMessageBody messageBody) {
-    Set<String> artifactsToRemove = artifactsDAO.getArtifactsId(messageBody.getDbKey());
+    Set<String> artifactsToRemove = artifactsDAO.getArtifactsIds(messageBody.getDbKey());
     artifactsToRemove.removeAll(messageBody.getArtifactsToKeep());
     return artifactsToRemove;
   }

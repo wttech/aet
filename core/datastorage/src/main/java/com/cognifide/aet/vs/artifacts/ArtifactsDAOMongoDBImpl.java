@@ -108,7 +108,7 @@ public class ArtifactsDAOMongoDBImpl implements ArtifactsDAO {
   }
 
   @Override
-  public Set<String> getArtifactsId(DBKey dbKey) {
+  public Set<String> getArtifactsIds(DBKey dbKey) {
     final String dbName = MongoDBClient.getDbName(dbKey.getCompany(), dbKey.getProject());
     FindIterable<Document> findIterable =
         client.getDatabase(dbName)
