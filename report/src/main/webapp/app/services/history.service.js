@@ -24,7 +24,7 @@ define(['angularAMD', 'endpointConfiguration', 'suiteInfoService'], function (an
    */
   function historyService($rootScope, $http, endpointConfiguration, suiteInfoService) {
     var suiteHeaders;
-    $rootScope.endpointUrl = endpointConfiguration.getEndpoint().getUrl;
+    var endpointUrl = endpointConfiguration.getEndpoint().getUrl;
     var service = {
       getNextVersion: getNextVersion,
       getPreviousVersion: getPreviousVersion,
@@ -35,13 +35,13 @@ define(['angularAMD', 'endpointConfiguration', 'suiteInfoService'], function (an
 
     function fetchHistory(currentVersion, fetchCallback) {
       $rootScope.selectedVersion = currentVersion;
-      getSuiteHistory(suiteHeaders, suiteInfoService, $rootScope, $http, function () {
+      getSuiteHistory(endpointUrl, suiteHeaders, suiteInfoService, $rootScope, $http, function () {
         fetchCallback();
       });
     }
 
-    function buildApiPath($allParametersList) {
-      return $rootScope.endpointUrl + 'history' + '?' +
+    function buildApiPath(endpointUrl, $allParametersList) {
+      return endpointUrl + 'history' + '?' +
         $allParametersList[0] + '&' +
         $allParametersList[1] + '&' +
         $allParametersList[2];
@@ -71,7 +71,7 @@ define(['angularAMD', 'endpointConfiguration', 'suiteInfoService'], function (an
       return nextVersion;
     }
 
-    function getSuiteHistory(suiteHeaders, suiteInfoService, $rootScope, $http, historyCallback) {
+    function getSuiteHistory(endpointUrl, suiteHeaders, suiteInfoService, $rootScope, $http, historyCallback) {
       $rootScope.data = 'test';
       var cUrl = new URL(window.location.href);
       var company = cUrl.searchParams.get('company');
@@ -84,7 +84,7 @@ define(['angularAMD', 'endpointConfiguration', 'suiteInfoService'], function (an
       var allParametersList = ['company=' + company, 'project=' + project, 'suite=' + suite];
       return $http({
         method: 'GET',
-        url: buildApiPath(allParametersList),
+        url: buildApiPath(endpointUrl, allParametersList),
         headers: {
           'Content-Type': 'text/plain'
         }
