@@ -38,9 +38,6 @@ class NewTestGenerator extends Component {
       this.props.hideOptionsBox();
       this.props.hideUrlInput();
       this.props.hideTestNameInput();
-      document.querySelectorAll(".block").forEach((block) => {
-        block.classList.remove("block-hidden");
-      });
     }
   }
 
@@ -51,7 +48,7 @@ class NewTestGenerator extends Component {
         this.props.clearTests();
         this.props.hideUrlInput();
         this.props.clearUrlsList();
-        this.props.hideTestNameInput();
+        this.props.hideTestNameInput(true);
         document.querySelectorAll(".block").forEach((block) => {
           block.classList.remove("block-hidden");
         });
@@ -64,13 +61,15 @@ class NewTestGenerator extends Component {
   handleKeyboardShortcuts(ev) {
     if(ev.key === "Enter") {
       if(this.props.editBox.isVisible) {
-        this.props.hideEditBox(); 
+        this.props.hideEditBox();
+        this.props.hideTestNameInput(); 
       } else if(this.props.testName.isVisible) {
         this.handleNewTest();
       }   
     } else if(ev.key === "Escape") {
       if(this.props.editBox.isVisible) {
-        this.props.hideEditBox(); 
+        this.props.hideEditBox();
+        this.props.hideTestNameInput(); 
       } else if(this.props.testName.isVisible) {
         this.props.hideTestNameInput(true);
         document.querySelectorAll(".block").forEach((block) => {

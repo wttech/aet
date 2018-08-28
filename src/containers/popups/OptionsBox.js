@@ -30,7 +30,7 @@ class OptionsBox extends Component {
   }
 
   handleScrolling() {
-    this.updateOptionsBox();
+    console.log(this.props.optionsBox.isVisible);
   }
 
   //fix scrolling when optionsbox window is open
@@ -41,12 +41,12 @@ class OptionsBox extends Component {
 
   componentWillUnmount() {
     window.removeEventListener("scroll", (ev) => this.handleScrolling(ev), false);
-    // document.getElementsByClassName("tests-wrapper")[0].removeEventListener("scroll", (ev) => this.handleScrolling(), false);
+    document.getElementsByClassName("tests-wrapper")[0].removeEventListener("scroll", (ev) => this.handleScrolling(ev), false);
   }
 
   componentDidMount() {
     window.removeEventListener("scroll", (ev) => this.handleScrolling(ev), false);
-    // document.getElementsByClassName("tests-wrapper")[0].addEventListener("scroll", (ev) => this.handleScrolling(), false);
+    document.getElementsByClassName("tests-wrapper")[0].addEventListener("scroll", (ev) => this.handleScrolling(ev), false);
     this.updateOptionsBox();
   }
 

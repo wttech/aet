@@ -16,7 +16,6 @@ class EditBox extends Component {
   }
 
   displayParameters(item) {
-    console.log(item)
     if(item.parameters) {
       const parameters = Object.values(item.parameters);
       return parameters.map((param, index) => {

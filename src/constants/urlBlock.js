@@ -25,7 +25,7 @@ const urlBlock = {
   proxy: false,
   tag: "url",
   type: "URL",
-  wiki: "http://www.google.com",
+  wiki: "https://github.com/Cognifide/aet/wiki/Urls",
 };
 
 export default urlBlock;
