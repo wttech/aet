@@ -140,8 +140,9 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
   }
 
   @Override
-  public Suite overrideOneTestInSuite(Suite suiteWithOneTest, String testName)
+  public Suite overrideFirstTestInSuite(Suite suiteWithOneTest)
       throws StorageException {
+    String testName = suiteWithOneTest.getTests().get(0).getName();
     SimpleDBKey dbKey = new SimpleDBKey(suiteWithOneTest.getCompany(),suiteWithOneTest.getProject());
     Suite oldSuite = getSuite(dbKey, suiteWithOneTest.getCorrelationId());
     Suite newSuite = createNewSuiteWithReplacedTest(dbKey, suiteWithOneTest, testName);
@@ -153,7 +154,6 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
     Suite newSuite = getSuite(dbKey, suiteWithOneTest.getCorrelationId());
     newSuite.removeTest(testName);
     newSuite.addTest(suiteWithOneTest.getTest(testName));
-    newSuite.setRerunned(true);
     return newSuite;
   }
 

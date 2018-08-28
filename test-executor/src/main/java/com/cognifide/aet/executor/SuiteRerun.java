@@ -73,6 +73,7 @@ class SuiteRerun {
                 .ifPresent(testToRerun -> {
                   s.setRerunned(true);
                   s.removeAllTests();
+                  testToRerun.setRerunned();
                   s.addTest(testToRerun);
                 });
           }else{

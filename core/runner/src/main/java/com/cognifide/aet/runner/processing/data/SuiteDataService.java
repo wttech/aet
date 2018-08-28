@@ -49,8 +49,7 @@ public class SuiteDataService {
 
   public Suite saveSuite(final Suite suite) throws ValidatorException, StorageException {
     if (suite.isRerunned()) {
-      String firstTestName = suite.getTests().get(0).getName();
-      return metadataDAO.overrideOneTestInSuite(suite, firstTestName);
+      return metadataDAO.overrideFirstTestInSuite(suite);
     } else {
       return metadataDAO.saveSuite(suite);
     }

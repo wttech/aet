@@ -15,6 +15,7 @@
  */
 package com.cognifide.aet.communication.api.metadata;
 
+import com.cognifide.aet.communication.api.metadata.Suite.Timestamp;
 import com.google.common.base.MoreObjects;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -33,6 +34,10 @@ public class Test implements Serializable, Commentable, Named {
   private final String proxy;
 
   private final String preferredBrowserId;
+
+  private boolean isRerunned = false;
+
+  private Timestamp rerunTimestamp;
 
   private String comment;
 
@@ -114,5 +119,10 @@ public class Test implements Serializable, Commentable, Named {
     return MoreObjects.toStringHelper(this)
         .add("name", name)
         .toString();
+  }
+
+  public void setRerunned() {
+    isRerunned = true;
+    rerunTimestamp = new Timestamp(System.currentTimeMillis());
   }
 }
