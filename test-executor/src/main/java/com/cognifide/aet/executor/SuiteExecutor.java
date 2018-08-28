@@ -116,7 +116,6 @@ public class SuiteExecutor {
     suiteStatusHandler = new SuiteStatusHandler(suiteStatusCache);
   }
 
-
   /**
    * Executes the test suite provided as a parameter.
    *
