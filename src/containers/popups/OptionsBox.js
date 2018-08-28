@@ -1,26 +1,26 @@
 import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
-import {deleteItemFromTest, toggleEditBox, hideOptionsBox, hideEditBox} from "../../actions"
+import {removeUrlFromTest, deleteItemFromTest, toggleEditBox, hideOptionsBox, hideEditBox} from "../../actions"
 
 class OptionsBox extends Component {
   constructor(props) {
     super(props);
 
-    this.handleScrolling = this.handleScrolling.bind(this);
+    
   }
 
   updateOptionsBox() {
-    // console.log(this.props.optionsBox);
     const parentID = this.props.optionsBox.optionsBoxItemID;
     if(document.getElementById(parentID) !== null) {
+      const optionsBox = document.querySelector(".options-box");
+      if(!optionsBox) { return }
       const boundingRect = document.getElementById(parentID).getBoundingClientRect();
       const currentScroll = document.getElementsByClassName("test-container")[0].scrollTop;
       const posX = boundingRect.x - 628;
       const posY = boundingRect.y - 2 + currentScroll;
       const offsetY = boundingRect.height / 2;
       const boxHeight = 40/2; // 40 is the height of the options box
-      const optionsBox = document.querySelector(".options-box");
       optionsBox.style.left = posX + "px";
       optionsBox.style.top = posY + offsetY - boxHeight + "px";
     } else {
@@ -40,14 +40,13 @@ class OptionsBox extends Component {
   }
 
   componentWillUnmount() {
-    // console.log("unmount")
     window.removeEventListener("scroll", (ev) => this.handleScrolling(ev), false);
-    // document.getElementsByClassName("tests-wrapper")[0].removeEventListener("scroll", (ev) => this.handleScrolling(ev), false);
+    // document.getElementsByClassName("tests-wrapper")[0].removeEventListener("scroll", (ev) => this.handleScrolling(), false);
   }
 
   componentDidMount() {
     window.removeEventListener("scroll", (ev) => this.handleScrolling(ev), false);
-    // document.getElementsByClassName("tests-wrapper")[0].addEventListener("scroll", (ev) => this.handleScrolling(ev), false);
+    // document.getElementsByClassName("tests-wrapper")[0].addEventListener("scroll", (ev) => this.handleScrolling(), false);
     this.updateOptionsBox();
   }
 
@@ -56,7 +55,14 @@ class OptionsBox extends Component {
   }
 
   deleteItem(item, itemID, parentItem) {
-    this.props.deleteItemFromTest(item, itemID, parentItem);
+    console.log(item);
+    console.log(itemID);
+    console.log(parentItem);
+    if(item.type === "URL") {
+      this.props.removeUrlFromTest(item, parentItem);
+    } else {
+      this.props.deleteItemFromTest(item, itemID, parentItem);
+    }
     this.props.hideOptionsBox()
   }
 
@@ -94,7 +100,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({deleteItemFromTest, toggleEditBox, hideOptionsBox, hideEditBox}, dispatch)
+  return bindActionCreators({removeUrlFromTest, deleteItemFromTest, toggleEditBox, hideOptionsBox, hideEditBox}, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(OptionsBox)

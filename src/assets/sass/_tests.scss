@@ -103,6 +103,12 @@
             &-bold {
               font-weight: bold;
             }
+
+            &-wrapper {
+              width:90%;
+              margin: 0 auto;
+              text-align: center;
+            }
           }
         }
       }
@@ -172,44 +178,6 @@
         &:hover {
           cursor: pointer;
           background-color: $blockDelete;
-
-          &::after {
-            display: block;
-          }
-
-          &::before {
-            display: block;
-          }
-        }
-
-        &::after {
-          position: absolute;
-          content: "Click to delete this URL";
-          background-color: $black;
-          color: $white;
-          padding: 8px 12px;
-          z-index: 99999;
-          font-size: 14px;
-          left: 110%;
-          top: 50%;
-          transform: translateY(-50%);
-          display: none;
-          width: 200px;
-          transition: all 0.3s ease-in-out;
-        }
-
-        &::before {
-          content: " ";
-          width: 15px;
-          height: 15px;
-          background-color: $black;
-          position: absolute;
-          top: 50%;
-          left: 106%;
-          margin-top: -2px;
-          transform: rotate(45deg) translateY(-50%);
-          display: none;
-          transition: all 0.3s ease-in-out;
         }
       }
 

@@ -143,7 +143,12 @@ class GenerateSuiteButton extends Component {
     const urls = testElement.ele("urls");
     if(projectTests.urls.length > 0 ) {
       projectTests.urls.forEach((url) => {
-          urls.ele("url", {href: url});
+          if(url.parameters.name.current) {
+            urls.ele("url", {href: url.parameters.href.current, name: url.parameters.name.current});
+          } else {
+            urls.ele("url", {href: url.parameters.href.current});
+          }
+
       });
     }
   }

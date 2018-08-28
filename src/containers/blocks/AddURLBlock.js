@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {bindActionCreators} from 'redux';
-import {addUrlToTest, hideUrlInput, toggleUrlInput, removeUrlFromTest} from "../../actions"
+import {addUrlToTest, hideUrlInput, toggleUrlInput, removeUrlFromTest, toggleOptionsBox} from "../../actions";
+import urlBlock from "../../constants/urlBlock";
 
 class AddURLBlock extends Component {
   constructor(props){
@@ -27,7 +28,17 @@ class AddURLBlock extends Component {
 
   handleUrlAdded() {
     if(this.state.urlValue.length > 0) {
-      this.props.addUrlToTest(this.state.urlValue);
+      const urlItem = {
+        ...urlBlock,
+        parameters: {
+          ...urlBlock.parameters,
+          href: {
+            ...urlBlock.parameters.href,
+            current: this.state.urlValue
+          }
+        }
+      };
+      this.props.addUrlToTest(urlItem);
       this.setState({
         ...this.state,
         urlValue: ""
@@ -36,14 +47,21 @@ class AddURLBlock extends Component {
     }
   }
 
+  handleURLClick(url, urlID) {
+    this.props.toggleOptionsBox(url, urlID, null);
+  }
+
+// return (
+//   <div key={index} className="block nested added-url" id={urlID} onClick={(ev) => this.handleURLClick(ev, url, urlID, this)}><span>{url}</span></div>
+// )
+
   generateListOfUrls() {
-    if(this.props.urls.length > 0) {
-      return this.props.urls.map((url, index) => {
-        return (
-          <div key={index} className="block nested added-url" onClick={() => this.props.removeUrlFromTest(url)}><span>{url}</span></div>
-        )
-      });
-    }
+    return Object.values(this.props.urls).map((url, index) => {
+      const urlID = `${url.tag}-${index}`;
+      return (
+        <div key={index} className="block nested added-url" id={urlID} onClick={(ev) => this.handleURLClick(url, urlID)}><span>{url.parameters.href.current}</span></div>
+      )
+    });
   }
 
   render () {
@@ -73,7 +91,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({addUrlToTest, hideUrlInput, toggleUrlInput, removeUrlFromTest}, dispatch);
+  return bindActionCreators({addUrlToTest, hideUrlInput, toggleUrlInput, removeUrlFromTest, toggleOptionsBox}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddURLBlock);

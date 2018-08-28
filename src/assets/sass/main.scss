@@ -20,4 +20,5 @@
   background-color: $gray;
   display: grid;
   grid-template-columns: 400px 1fr 300px;
+  user-select: none;
 }

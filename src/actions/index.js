@@ -158,6 +158,11 @@ export const deleteTestFromProject = (name) => ({
   payload: name
 });
 
+export const deleteURLFromTest = (item, id) => ({
+  type: "URL_DELETED",
+  payload: {item, id}
+})
+
 export const toggleComparatorsList = () => ({
   type: "COMPARATORS_LIST_TOGGLE",
   payload: null

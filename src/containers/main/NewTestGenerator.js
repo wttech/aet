@@ -32,6 +32,7 @@ class NewTestGenerator extends Component {
     || ev.target.classList.contains("modifiers-list-container") 
     || ev.target.classList.contains("collectors-list-container")
     || ev.target.classList.contains("tests")
+    || ev.target.classList.contains("urls-list")
     ) {
       this.props.hideEditBox();
       this.props.hideOptionsBox();

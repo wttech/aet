@@ -6,6 +6,7 @@ import listOfComparators from "../../constants/listOfComparators";
 import listOfCollectors from "../../constants/listOfCollectors";
 import listOfModifiers from "../../constants/listOfModifiers";
 import listOfDataFilters from "../../constants/listOfDataFilters";
+import urlBlock from "../../constants/urlBlock";
 
 class UpdateTest extends Component {
   
@@ -39,7 +40,7 @@ class UpdateTest extends Component {
           const urlsChildren = xml.getElementsByTagName("urls")[index].children;
           const collectorsBlocks = vm.getTestCollectors(vm, collectorsChildren);
           const comparatorsBlocks = vm.getTestComparators(vm, comparatorsChildren);
-          const testUrls = vm.getTestUrls(urlsChildren, projectData.domain);
+          const testUrls = vm.getTestUrls(vm, urlsChildren, projectData.domain);
           const testObject = {
             name: {name: testName, isVisible: false},
             tests: [
@@ -77,24 +78,12 @@ class UpdateTest extends Component {
     this.props.hideTestNameInput(true);
   }
 
-  getTestUrls(urlsChildren, domain) {
+  getTestUrls(vm, urlsChildren, domain) {
     let urls = [];
-    if(urlsChildren && Object.values(urlsChildren).forEach((child, index) => {
-      const validChild = Object.values(child.attributes).find((attr) => {
-        return attr.name === "href";
-      });
-      if(domain) {
-        if(typeof validChild.value.split(domain)[1] !== "undefined") {
-          urls.push(validChild.value.split(domain)[1]);
-        } else {
-          urls.push(validChild.value.split(domain)[0]);
-        }
-      } else {
-        urls.push(validChild.value)
-      }
-      if(typeof urls[index] === "undefined") {
-        urls[index] = "BAD_URL_OR_DOMAIN";
-      }
+    if(urlsChildren && Object.values(urlsChildren).forEach((child) => {
+      let block = vm.getMatchingBlock("url", "urls");
+      block = vm.setBlockParameters(block, child.attributes);
+      urls.push(block)
     }));
     return urls;
   }
@@ -212,6 +201,9 @@ class UpdateTest extends Component {
           });
           break;
         }
+      case "urls": {
+        block = urlBlock;
+      }
       default:
         {
           break;

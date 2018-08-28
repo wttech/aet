@@ -3,21 +3,24 @@ export default function (state = {}, action = null) {
   switch(action.type) {
 
     case "URL_ADDED": {
-      let newState = [...state];
-      let newUrls = null;
-      if(newState.length === 0) {
-        newUrls = [action.payload];
-      } else {
-        newUrls = [...newState, action.payload];
-      }
-      newState = [...newUrls];
+      const newURL = action.payload;
+      const newState = [
+        ...state,
+        newURL
+      ];
       return newState;
     }
 
     case "URL_REMOVED": {
       let newState = [...state];
-      const index = newState.indexOf(action.payload);
-      newState = [...newState.slice(0, index), ...newState.slice(index + 1)];
+      newState.forEach((url, index) => {
+        if(url === action.payload) {
+          newState = [
+            ...newState.splice(0, index),
+            ...newState.splice(index + 1)
+          ]        
+        }
+      });
       return newState;
     }
 
@@ -26,8 +29,7 @@ export default function (state = {}, action = null) {
     }
 
     case "URLS_LOADED": {
-      const urls = action.payload;
-      return urls;
+      return action.payload;
     }
 
     default: {
