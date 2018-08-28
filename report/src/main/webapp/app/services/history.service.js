@@ -92,22 +92,23 @@ define(['angularAMD', 'endpointConfiguration', 'suiteInfoService'], function (an
         $rootScope.data = response.data;
         suiteHeaders = response.data;
         for (var i = 0; i < suiteHeaders.length; i++) {
+          var correlationIdPart = suiteHeaders[i].correlationId.split('-');
           var version = suiteHeaders[i].version;
           var company = company;
           var project = project;
           var suite = suite;
-          var timestamp = suiteHeaders[i].correlationId.split('-')[suiteHeaders[i].correlationId.split('-').length - 1];
+          var timestamp = correlationIdPart[correlationIdPart.length - 1];
           suiteHeaders[i] = {
             company: company,
             project: project,
             suite: suite,
             version: version,
-            correlationId: timestamp,
+            timestamp: timestamp,
             selectedVersion: null,
             isRebased: false,
           };
           if (typeof suiteHeaders[i - 1] !== 'undefined') {
-            if (suiteHeaders[i].correlationId === suiteHeaders[i - 1].correlationId) {
+            if (suiteHeaders[i].timestamp === suiteHeaders[i - 1].timestamp) {
               suiteHeaders[i - 1].isRebased = true;
             }
           }
