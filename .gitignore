@@ -54,3 +54,7 @@ atlassian-ide-plugin.xml
 # aet-vagrant
 /vagrant/.vagrant
 /vagrant/Berksfile.lock
+
+# Node
+node
+node_modules
