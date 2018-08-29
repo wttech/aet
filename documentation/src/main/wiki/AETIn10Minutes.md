@@ -43,11 +43,14 @@ Then download the AET [shell script](https://github.com/Cognifide/aet/blob/maste
 
 ### Run the Test
 
-Once you have created both `suite.xml` and downloaded `aet.sh`, open a command prompt in the directory which contains the `aet.sh` file and execute the following command:
+Once you have both `suite.xml` and `aet.sh` files in the same directory, open a command prompt in that directory and execute following command:
 ```
-./aet.sh http://localhost:8181 path/to/suite.xml
+./aet.sh http://localhost:8181
 ```
-Remember to provide the path to your `suite.xml` file.
+If your suite file is not named `suite.xml` or it's in a different directory than `aet.sh`, you need to specify the suite path:
+```
+./aet.sh http://localhost:8181 path/to/my-suite.xml
+```
 
 ### Check Results
 

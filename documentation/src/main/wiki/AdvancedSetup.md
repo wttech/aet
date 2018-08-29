@@ -2,13 +2,19 @@
 
 This section describes advanced setup of AET using Linux and Windows. 
 
-Please note that full list of required tools and its versions can be found in [System Components](SystemComponents) section.
+Please note that full list of required tools and its versions can be found in [[System Components|SystemComponents]] section.
 
 ![aet-setup-advanced](assets/diagrams/aet-setup-advanced-grid-scaled.png)
 
 #### Linux Setup
 
-For Linux environment setup, use the [AET Cookbook](https://github.com/Cognifide/aet-cookbook)
+For Linux environment setup, use the [AET Cookbook](https://github.com/Cognifide/aet-cookbook) which provides following services:
+* Karaf with AET service running
+* MongoDB as the database
+* ActiveMQ as the message broker
+* BrowserMob as the proxy server
+* Selenium Grid Hub (that later Windows nodes will be attached to)
+* Apache Server with the Report app
 
 #### Windows Setup
 

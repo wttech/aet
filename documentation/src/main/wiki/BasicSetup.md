@@ -20,8 +20,8 @@ All services run using default ports. For communication please use the following
 
 #### Prerequisites
 
-By default the Vagrant virtual machine needs 3 GB of RAM and 2 vCPUs, so please make sure that 
-you have enough memory on your machine (8 GB is minimum, 16 GB is recommended though).
+By default the Vagrant virtual machine needs 6 GB of RAM and 4 vCPUs, so please make sure that 
+you have enough memory on your machine (16 GB is recommended).
 
 You need to download and install the following software:
    * [VirtualBox 5.1.30](https://www.virtualbox.org/wiki/Download_Old_Builds_5_1)
