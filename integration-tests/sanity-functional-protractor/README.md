@@ -7,7 +7,7 @@
   - `nvm install`
   - `nvm use`
 - Clone the  repository to your local machine
-- Run `npm install` in `automation/cp-zg-extension-protractor`
+- Run `npm install` in `/integration-tests/sanity-functional-protractor`
 - Create new branch and start automating the tests :)
 
 ## Running the tests on local machine
