@@ -29,14 +29,16 @@ public @interface MongoDBClientConf {
 
   String DEFAULT_MONGODB_URI = "mongodb://localhost";
 
+  String MONGODB_URI_ENV = "MONGODB_URI";
+
   String ALLOW_AUTO_CREATE_PROPERTY_NAME = "Allow automatic creation of DB";
 
   String ALLOW_AUTO_CREATE_PROPERTY_DESCRIPTION = "Allows automatic creation of DB if set to true";
 
-  boolean DEFAULT_AUTOCREATE_VALUE = false;
+  boolean DEFAULT_AUTOCREATE_VALUE = true;
 
   @AttributeDefinition(name = MONGO_URI_PROPERTY_NAME, description = MONGO_URI_PROPERTY_DESCRIPTION, type = AttributeType.STRING)
-  String mongoURI() default DEFAULT_MONGODB_URI;
+  String mongoURI() default "";
 
   @AttributeDefinition(name = ALLOW_AUTO_CREATE_PROPERTY_NAME, description = ALLOW_AUTO_CREATE_PROPERTY_DESCRIPTION, type = AttributeType.BOOLEAN)
   boolean allowAutoCreate() default DEFAULT_AUTOCREATE_VALUE;
