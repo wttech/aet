@@ -75,7 +75,7 @@
         * [[Test Executor|TestExecutor]]
         * [[Runner|Runner]]
         * [[Worker|Worker]]
-        * [[REST API|RestAPI]]
+        * [[Web API|WebAPI]]
         * [[Cleaner|Cleaner]]
     * [[Test Processing|TestProcessing]]
     * [[Lock Mechanism|LockMechanism]]

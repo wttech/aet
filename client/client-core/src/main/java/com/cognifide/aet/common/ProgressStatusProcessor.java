@@ -22,6 +22,7 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
+@Deprecated
 class ProgressStatusProcessor implements StatusProcessor {
 
   private static final String DATE_FORMAT = "HH:mm:ss.SSS";

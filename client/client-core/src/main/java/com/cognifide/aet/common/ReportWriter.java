@@ -23,6 +23,7 @@ import java.io.OutputStream;
 import java.net.URL;
 import org.apache.commons.io.IOUtils;
 
+@Deprecated
 class ReportWriter {
 
   void write(String buildDirectory, String endpointUrl, String saveAsFileName) throws IOException {
