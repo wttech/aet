@@ -250,7 +250,7 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
   public void setRerunned(boolean rerunned) {
     isRerunned = rerunned;
   }
-  
+
   @Override
   public void setComment(String comment) {
     this.comment = comment;

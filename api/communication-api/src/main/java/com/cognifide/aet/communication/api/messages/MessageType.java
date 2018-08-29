@@ -21,6 +21,8 @@ package com.cognifide.aet.communication.api.messages;
 public enum MessageType {
 
   RUN,
+  RERUN_TEST,
+  RERUN_URL,
   CANCEL,
   PROCESSING_FINISHED,
   ERROR,

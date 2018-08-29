@@ -39,8 +39,7 @@ class SuiteRerun {
   }
 
   static Suite getAndPrepareSuite(MetadataDAO metadataDAO, DBKey dbKey, String correlationId,
-      String suiteName,
-      String testName) {
+      String suiteName, String testName) {
     Suite suite = null;
     try {
       suite = getSuiteFromMetadata(metadataDAO, dbKey, correlationId, suiteName);

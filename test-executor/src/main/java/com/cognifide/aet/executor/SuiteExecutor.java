@@ -25,6 +25,8 @@ import com.cognifide.aet.executor.configuration.SuiteExecutorConf;
 import com.cognifide.aet.executor.http.HttpSuiteExecutionResultWrapper;
 import com.cognifide.aet.executor.model.TestRun;
 import com.cognifide.aet.executor.model.TestSuiteRun;
+import com.cognifide.aet.executor.wrappers.Run;
+import com.cognifide.aet.executor.wrappers.SuiteRunWrapper;
 import com.cognifide.aet.executor.xmlparser.api.ParseException;
 import com.cognifide.aet.executor.xmlparser.api.TestSuiteParser;
 import com.cognifide.aet.executor.xmlparser.xml.XmlTestSuiteParser;
@@ -168,7 +170,8 @@ public class SuiteExecutor {
       throws JMSException, ValidatorException {
     suite.validate(Sets.newHashSet("version", "runTimestamp"));
     if (lockTestSuite(suite)) {
-      suiteRunner = createSuiteRunner(suite);
+      Run objectToRunWrapper = new SuiteRunWrapper(suite);
+      suiteRunner = createSuiteRunner(objectToRunWrapper);
       suiteRunner.runSuite();
 
       String statusUrl = getStatusUrl(suite);
@@ -224,12 +227,12 @@ public class SuiteExecutor {
     return lockService.trySetLock(suiteIdentifier, correlationId);
   }
 
-  private SuiteRunner createSuiteRunner(Suite suite) throws JMSException {
+  private SuiteRunner createSuiteRunner(Run objectToRun) throws JMSException {
     Session session = jmsConnection.getJmsSession();
     SuiteRunner suiteRunner = new SuiteRunner(session, cacheUpdater,
-        suiteStatusHandler, suite, RUNNER_IN_QUEUE, config.messageReceiveTimeout());
-    suiteRunnerCache.put(suite.getCorrelationId(), suiteRunner);
-    suiteStatusCache.put(suite.getCorrelationId(), new ConcurrentLinkedQueue<SuiteStatusResult>());
+        suiteStatusHandler, objectToRun, RUNNER_IN_QUEUE, config.messageReceiveTimeout());
+    suiteRunnerCache.put(objectToRun.getCorrelationId(), suiteRunner);
+    suiteStatusCache.put(objectToRun.getCorrelationId(), new ConcurrentLinkedQueue<SuiteStatusResult>());
     return suiteRunner;
   }
 
