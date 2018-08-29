@@ -89,11 +89,7 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
 
   private Statistics statistics;
 
-  public void setRerunned(boolean rerunned) {
-    isRerunned = rerunned;
-  }
-
-  private boolean isRerunned = false;
+  private boolean isRerunned;
 
   @NotNull
   @Valid
@@ -251,6 +247,10 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
     return GSON_FOR_JSON.toJson(this, SUITE_TYPE);
   }
 
+  public void setRerunned(boolean rerunned) {
+    isRerunned = rerunned;
+  }
+  
   @Override
   public void setComment(String comment) {
     this.comment = comment;
