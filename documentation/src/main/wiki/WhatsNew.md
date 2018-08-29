@@ -4,7 +4,8 @@ To see the full list of changes, please refer to [CHANGELOG](https://github.com/
 ### `master` branch version (not released yet)
 
 #### Upgrade for our virtualization tool set
-We now use newest versions of VirtualBox, Vagrant and Chef, for AET instance setup:
+
+Changes that allows us to use newer versions of VirtualBox, Vagrant and Chef for AET instance setup:
 
 * [VirtualBox 5.2.18](https://www.virtualbox.org/wiki/Downloads)
 * [Vagrant 2.1.2](https://releases.hashicorp.com/vagrant/)
