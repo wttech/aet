@@ -1,0 +1,189 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "required": [
+    "correlationId",
+    "company",
+    "project",
+    "name",
+    "version",
+    "runTimestamp",
+    "finishedTimestamp",
+    "statistics",
+    "tests"
+  ],
+  "properties": {
+    "correlationId": {
+      "$id": "#/properties/correlationId",
+      "type": "string",
+      "pattern": "^(.*)$"
+    },
+    "company": {
+      "$id": "#/properties/company",
+      "type": "string",
+      "pattern": "^(.*)$"
+    },
+    "project": {
+      "$id": "#/properties/project",
+      "type": "string",
+      "pattern": "^(.*)$"
+    },
+    "name": {
+      "$id": "#/properties/name",
+      "type": "string",
+      "pattern": "^(.*)$"
+    },
+    "version": {
+      "$id": "#/properties/version",
+      "type": "integer"
+    },
+    "runTimestamp": {
+      "$id": "#/properties/runTimestamp",
+      "type": "integer"
+    },
+    "finishedTimestamp": {
+      "$id": "#/properties/finishedTimestamp",
+      "type": "integer"
+    },
+    "statistics": {
+      "$id": "#/properties/statistics",
+      "type": "object",
+      "required": [
+        "duration"
+      ],
+      "properties": {
+        "duration": {
+          "$id": "#/properties/statistics/properties/duration",
+          "type": "integer"
+        }
+      }
+    },
+    "tests": {
+      "$id": "#/properties/tests",
+      "type": "array",
+      "items": {
+        "$id": "#/properties/tests/items",
+        "type": "object",
+        "required": [
+        ],
+        "properties": {
+          "name": {
+            "$id": "#/properties/tests/items/properties/name",
+            "type": "string",
+            "pattern": "^(.*)$"
+          },
+          "proxy": {
+            "$id": "#/properties/tests/items/properties/proxy",
+            "type": "string",
+            "pattern": "^(.*)$"
+          },
+          "urls": {
+            "$id": "#/properties/tests/items/properties/urls",
+            "type": "array",
+            "items": {
+              "$id": "#/properties/tests/items/properties/urls/items",
+              "type": "object",
+              "required": [
+                "name",
+                "url",
+                "domain",
+                "collectionStats",
+                "steps"
+              ],
+              "properties": {
+                "name": {
+                  "$id": "#/properties/tests/items/properties/urls/items/properties/name",
+                  "type": "string",
+                  "pattern": "^(.*)$"
+                },
+                "url": {
+                  "$id": "#/properties/tests/items/properties/urls/items/properties/url",
+                  "type": "string",
+                  "pattern": "^(.*)$"
+                },
+                "domain": {
+                  "$id": "#/properties/tests/items/properties/urls/items/properties/domain",
+                  "type": "string",
+                  "pattern": "^(.*)$"
+                },
+                "collectionStats": {
+                  "$id": "#/properties/tests/items/properties/urls/items/properties/collectionStats",
+                  "type": "object",
+                  "required": [
+                    "duration"
+                  ],
+                  "properties": {
+                    "duration": {
+                      "$id": "#/properties/tests/items/properties/urls/items/properties/collectionStats/properties/duration",
+                      "type": "integer"
+                    }
+                  }
+                },
+                "steps": {
+                  "$id": "#/properties/tests/items/properties/urls/items/properties/steps",
+                  "type": "array",
+                  "items": {
+                    "$id": "#/properties/tests/items/properties/urls/items/properties/steps/items",
+                    "type": "object",
+                    "required": [
+                      "index",
+                      "name",
+                      "stepResult",
+                      "statistics",
+                      "type"
+                    ],
+                    "properties": {
+                      "index": {
+                        "$id": "#/properties/tests/items/properties/urls/items/properties/steps/items/properties/index",
+                        "type": "integer"
+                      },
+                      "name": {
+                        "$id": "#/properties/tests/items/properties/urls/items/properties/steps/items/properties/name",
+                        "type": "string",
+                        "pattern": "^(.*)$"
+                      },
+                      "stepResult": {
+                        "$id": "#/properties/tests/items/properties/urls/items/properties/steps/items/properties/stepResult",
+                        "type": "object",
+                        "required": [
+                          "status"
+                        ],
+                        "properties": {
+                          "status": {
+                            "$id": "#/properties/tests/items/properties/urls/items/properties/steps/items/properties/stepResult/properties/status",
+                            "type": "string",
+                            "pattern": "^(.*)$"
+                          }
+                        }
+                      },
+                      "statistics": {
+                        "$id": "#/properties/tests/items/properties/urls/items/properties/steps/items/properties/statistics",
+                        "type": "object",
+                        "required": [
+                          "duration"
+                        ],
+                        "properties": {
+                          "duration": {
+                            "$id": "#/properties/tests/items/properties/urls/items/properties/steps/items/properties/statistics/properties/duration",
+                            "type": "integer"
+                          }
+                        }
+                      },
+                      "type": {
+                        "$id": "#/properties/tests/items/properties/urls/items/properties/steps/items/properties/type",
+                        "type": "string",
+                        "pattern": "^(.*)$"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
