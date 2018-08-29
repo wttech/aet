@@ -18,8 +18,8 @@ describe('AET reports web application - filtering results validation', () => {
       - Filtering phrase: ${testCase.search_phrase}
       - Expected no. of total results 
       - Expected statistics: ${testCase.statistics}`, () => {
-            ReportPage.fillInSearchText(testCase.search_phrase).then(() => {
-                expect(ReportPage.getCurrentNoOfTests()).toEqual(parseInt(this.getNoOfResultsFromTestData(testCase.statistics)));
+            return ReportPage.fillInSearchText(testCase.search_phrase).then(() => {
+                expect(ReportPage.getCurrentNoOfTests()).toEqual(this.getNoOfResultsFromTestData(testCase.statistics));
                 expect(ReportPage.getStatistics()).toEqual(testCase.statistics);
             });
         });
@@ -27,7 +27,7 @@ describe('AET reports web application - filtering results validation', () => {
 });
 
 this.getNoOfResultsFromTestData = (statistics) => {
-    return statistics.slice(0, statistics.indexOf(' '));
+    return parseInt(statistics.slice(0, statistics.indexOf(' ')));
 }
 
 

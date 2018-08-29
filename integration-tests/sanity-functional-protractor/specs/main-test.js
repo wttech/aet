@@ -11,8 +11,8 @@ describe('AET reports web application - main report results validation', () => {
 
     beforeAll((done) => {
         PublishPage.open("reportHome");
-        this.countExpectedTestsResults()
-            .then(() => this.countActualTestsResults())
+        countExpectedTestsResults()
+            .then(() => countActualTestsResults())
             .then(() => done());
     });
 
@@ -33,7 +33,7 @@ describe('AET reports web application - main report results validation', () => {
     });
 });
 
-this.countExpectedTestsResults = () => {
+const countExpectedTestsResults = () => {
     return ReportPage.getTestLinksTitles().then((linksTitles) => {
         let linksFirstLetters = [];
         linksTitles.forEach(title => {
@@ -46,7 +46,7 @@ this.countExpectedTestsResults = () => {
     })
 };
 
-this.countActualTestsResults = () => {
+const countActualTestsResults = () => {
     return ReportPage.getCurrentNoOfPassedTests()
         .then((tmp) => {
             currentNoOfPassedTests = tmp;
