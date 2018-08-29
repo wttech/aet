@@ -68,6 +68,7 @@ public class MetadataServlet extends BasicDataServlet {
       throws IOException {
     String correlationId = req.getParameter(Helper.CORRELATION_ID_PARAM);
     String suiteName = req.getParameter(Helper.SUITE_PARAM);
+    String suiteVersion = req.getParameter(Helper.VERSION_PARAM);
     String formatted = req.getParameter(FORMATTED_PARAM);
     resp.setCharacterEncoding("UTF-8");
 
@@ -77,7 +78,11 @@ public class MetadataServlet extends BasicDataServlet {
       if (isValidCorrelationId(correlationId)) {
         suite = metadataDAO.getSuite(dbKey, correlationId);
       } else if (isValidName(suiteName)) {
-        suite = metadataDAO.getLatestRun(dbKey, suiteName);
+        if (isValidVersion(suiteVersion)) {
+          suite = metadataDAO.getSuite(dbKey, suiteName, suiteVersion);
+        } else {
+          suite = metadataDAO.getLatestRun(dbKey, suiteName);
+        }
       } else {
         resp.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
         resp.getWriter()

@@ -11,82 +11,9 @@
 This is a pseudo-cookbook which is responsible for local environment
 provisioning using Vagrant (powered by Chef + Berkshelf under the hood)
 
-### Overview
-
-Currently it creates a virtual machine with the following services
-
-* Karaf
-* Apache
-* Tomcat
-* ActiveMQ
-* MongoDb
-* Brosermob
-* Firefox
-* X environment
-
-### AET services
-
-All services are running using default ports. For communication please use
-IP address:
-
-* `192.168.123.100`
-
-### General prerequisites
-
-Make sure command line Git works for you without any issues (including SSH key
-authorization). The easiest way to test that would be to open a terminal and
-execute `git clone https://github.com/Cognifide/AET`.
-
-Moreover original EOL characters must be preserved during `git clone` command.
-To force that please execute `git config --global core.autocrlf false`.
-
-By default Vagrant virtual machine needs 3 GB of RAM and 2 vCPUs, so please
-make sure that you have enough memory on your machine (8 GB is minimum, 16 GB
-recommended though).
-
 ### Installation
 
-* Download and install
-  [VirtualBox 5.2.18](https://www.virtualbox.org/wiki/Downloads)
-* Download and install
-  [Vagrant 2.1.2](https://releases.hashicorp.com/vagrant/)
-* Download and install [ChefDK 3.1.0](https://downloads.chef.io/chefdk/stable)
-
-As an administrator execute the following commands:
-
-* `vagrant plugin install vagrant-omnibus`
-* `vagrant plugin install vagrant-berkshelf`
-* `vagrant plugin install vagrant-hostmanager`
-
-Whenever you'd like to keep all Vagrant related data and virtual machine disks
-in non-standard directories please:
-
-* set `VAGRANT_HOME` variable to new location (by default it is set to
-  `$HOME/vagrant.d`)
-* update VirtualBox settings (`File -> Preferences -> General`) to move all
-  disks to other directory
-
-### TL;DR
-
-Once you set all described things up just execute:
-
-```
-git pull && berks update && vagrant destroy -f && vagrant up
-```
-
-### First run
-
-Please clone AET [application](https://github.com/Cognifide/AET)
-using `git clone` command if you haven't done it yet. All commands have to be
-executed when you're inside an `application/vagrant` directory - it contains
-`Vagrantfile` necessary to execute Vagrant.
-
-Next please execute:
-
-* `berks install` - downloads Chef dependencies from external sources. It acts
-  as `mvn clean install`, but for Chef cookbooks.
-* `vagrant up` - creates new virtual machine (`.box` file will be downloaded
-  during first run), runs Chef inside it, sets domains and port forwarding up
+See [Basic Setup](https://github.com/Cognifide/aet/wiki/BasicSetup) guide.
 
 ### Updates
 

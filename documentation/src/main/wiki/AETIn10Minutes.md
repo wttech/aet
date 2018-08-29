@@ -2,29 +2,13 @@
 
 This is a quick guide showing how to setup the AET environment and run a sample test.
 
-### Prerequisites
-Before start make sure that you have enough memory on your machine (8 GB is minimum, 16 GB is recommended though).
+### Environment setup
 
-You need to download and install the following software:
-   * [VirtualBox 5.2.18](https://www.virtualbox.org/wiki/Downloads)
-   * [Vagrant 2.1.2](https://releases.hashicorp.com/vagrant/)
-   * [ChefDK 3.1.0](https://downloads.chef.io/chefdk/stable)
-   * [Maven](https://maven.apache.org/download.cgi) (at least version 3.0.4)
-   * [JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
-   * [Chrome browser](https://www.google.com/chrome/browser/desktop/) to view reports
-
-### Set Up Vagrant
-
-Open a command prompt **as the administrator** and execute the following commands:
-* `vagrant plugin install vagrant-omnibus`
-* `vagrant plugin install vagrant-berkshelf`
-* `vagrant plugin install vagrant-hostmanager`
-
-Download or clone (`git clone git@github.com:Cognifide/aet.git`) the AET source code and navigate to the `vagrant` module directory. Run `berks install` and then `vagrant up` to start the virtual machine. This process may take a few minutes.
+See [[Basic Setup|BasicSetup]] guide.
 
 ### Set Up the Test
 
-Create the file named `suite.xml` with the following content:
+Create the file named `suite.xml` (in any location) with the following content:
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
@@ -54,55 +38,28 @@ Create the file named `suite.xml` with the following content:
 </suite>
 ```
 
-Then create another file named `pom.xml` with the following content:
-
-```xml
-<?xml version="1.0" encoding="UTF-8"?>
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-
-    <groupId>test-group</groupId>
-    <artifactId>test-project</artifactId>
-    <version>1.0.0</version>
-    <packaging>pom</packaging>
-
-    <name>Test project</name>
-    <url>http://www.example.com</url>
-
-    <properties>
-        <aet.version>2.1.5</aet.version>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    </properties>
-
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>com.cognifide.aet</groupId>
-                <artifactId>aet-maven-plugin</artifactId>
-                <version>${aet.version}</version>
-            </plugin>
-        </plugins>
-    </build>
-</project>
-```
-
-It does not need to be in the same directory as the `suite.xml` file.
+Then download the AET [shell script](https://github.com/Cognifide/aet/blob/master/client/client-scripts/aet.sh)
+(see required prerequisites in [README](https://github.com/Cognifide/aet/blob/master/client/client-scripts/README.md)).
 
 ### Run the Test
 
-Once you have created both `suite.xml` and `pom.xml` files open a command prompt in the directory which contains the `pom.xml` file and execute the following command:
-
+Once you have both `suite.xml` and `aet.sh` files in the same directory, open a command prompt in that directory and execute following command:
 ```
-mvn aet:run -DtestSuite=full/path/to/suite.xml
+./aet.sh http://localhost:8181
 ```
-
-Remember to provide the path to your `suite.xml` file.
+If your suite file is not named `suite.xml` or it's in a different directory than `aet.sh`, you need to specify the suite path:
+```
+./aet.sh http://localhost:8181 path/to/my-suite.xml
+```
 
 ### Check Results
 
-Once the test run finishes there should be the `target` directory created inside the directory containing the `pom.xml` file. Inside the `target` directory you should find the `redirect.html` file. Open this file and the test report will show up in your web browser.
+At the end of script output, there's a generated report URL, e.g.:
+```
+Report url:
+http://aet-vagrant/report.html?company=company&project=project&correlationId=company-project-test-suite-1535375408860
+```
+Open the report URL in your browser to see the test results.
 
 Congratulations! You have successfully created and run your first AET test.
 
