@@ -30,7 +30,7 @@ class EditBox extends Component {
           <p className="desc center">{param.description}</p>
           {param.values ? <div className="parameters center"><h3 className="values center">Choose a value:</h3><ul className="param-list center">{this.generateListOfParamValues(param, param.values)}</ul></div> : null}
           {param.default ? (<p className="default center">Default value: {param.default} </p>) : null}
-          {param.current ? (<p className="current center">Current value: {param.current}</p>) : (<p className="current center">No current value has been set. Will use default or none on export, depending if the parameter is mandatory.</p>)}
+          {param.current ? (<p className="current center">Current value: {param.current} </p>) : (<p className="current center">No current value has been set. Will use default or none on export, depending if the parameter is mandatory.</p>)}
           {!param.values ? (
             <div className="input-wrapper">
               <span className="input-text">Set value:</span>

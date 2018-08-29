@@ -60,11 +60,11 @@ class UserBlockContainer extends Component {
               return (
                 <div className={elemClass}  key={elemID}>
                   <div 
-                  className={`block custom nested  ${test.group === "Modifiers" ? "modifier" : "collector"} ${test.group === "Open" ? "static" : ""}`}
+                  className={`block custom nested  ${test.group === "Modifiers" ? "modifier" : "collector"}`}
                   onClick={(ev) => this.toggleOptionsBox(ev, test, elemID)}
                   key={elemID} 
                   id={elemID}>
-                  <div className={`${test.group !== "Open" ? "block-type" : ""}`}>
+                  <div className="block-type">
                     <span>{test.type}</span>
                   </div>
                   {test.group !== "Open" && this.props.testOptions.blocksExpanded ? (
@@ -93,10 +93,10 @@ class UserBlockContainer extends Component {
           <div className={`block-parameter ${param.isMandatory && (param.current === null || param.current === "") && param.default === null  ? ("block-parameter-mandatory-missing") : ""}`} key={index}>
               <div className="block-parameter-wrapper">
                 <span className="block-parameter-bold">{param.name}</span>
-                {(param.current !== null && param.current !== "") ? (
-                  `: ${param.current}`
-                ) : (
+                {param.isMandatory && (typeof param.current === "undefined" || param.current === null || param.current === "") ? (
                   `: ${param.default}`
+                ) : (
+                  `: ${param.current}`
                 )}
               </div>
           </div>

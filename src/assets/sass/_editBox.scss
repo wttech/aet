@@ -71,7 +71,8 @@
     .parameters {
       margin-top: 10px;
       .param-list>.param {
-        color: #a2ecff;
+        color: darken($collectorsBg, 10%);
+        transition: all 0.2s ease-in-out;
         &:hover {
           cursor: pointer;
           color: $red_light;

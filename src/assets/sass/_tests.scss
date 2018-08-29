@@ -127,7 +127,7 @@
       }
 
       .static {
-        background-color: $collectorsBg;
+        background-color: $staticBg;
         padding:7px 0;
         font-weight: bold;
         width:400px;
@@ -141,7 +141,7 @@
         position: relative;
         &:hover {
           cursor: pointer;
-          background-color: darken($collectorsBg, 20%);
+          background-color: darken($staticBg, 8%);
         }
       }
 
@@ -242,7 +242,9 @@
       }
 
       .nested-twice {
-        margin-left: 60px;
+        width:230px;
+        margin-left: 92.5px;
+        margin-top: -7px;
       }
 
       .valid {
