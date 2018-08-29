@@ -1,4 +1,4 @@
-const listOfCollectors = 
+const listOfCollectors =
 [
   {
     type: "Open",
@@ -102,6 +102,15 @@ const listOfCollectors =
         default: "1000ms",
         isMandatory: false,
         description: "The timeout for the element to appear, in milliseconds. The max value of this parameter is 15000ms",
+        current: null,
+      },
+      excludeelements: {
+        name: "Exclude Elements",
+        tag: "exclude-elements",
+        values: null,
+        default: null,
+        isMandatory: false,
+        description: "Elements found with that selector will be ignored by layout comparator (they won't affect its results) but will be rendered on the report as captured.",
         current: null,
       },
     },
