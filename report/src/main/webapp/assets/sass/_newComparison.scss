@@ -1,0 +1,160 @@
+/*
+ * AET
+ *
+ * Copyright (C) 2013 Cognifide Limited
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+.advanced-screen-comparison {
+  display: inline-block;
+  vertical-align: middle;
+  a {
+    color: $white;
+  }
+}
+
+.button-disabled {
+  background-color: $gray_disabled;
+}
+
+.info-msg {
+  display: block;
+  position: relative;
+  width: 100%;
+  left: 50%;
+  text-align: center;
+  padding: 50px 0;
+  transform: translate(-50%, -50%);
+  color: $text_color;
+  border: 1px solid $grayish;
+  border-radius: 5px;
+  background-color: rgba(0, 0, 0, 0.25);
+  box-shadow: 0 0 50px rgba(0, 0, 0, 0.3) !important;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.layout-compare {
+  position: relative;
+
+  .customMasks {
+    position: absolute;
+    top: 0;
+    box-sizing: content-box;
+    left: 50%;
+    transform: translate(-50%, 0);
+    .maskBtop,
+    .maskBbot {
+      left: 52%;
+    }
+
+    .customMask {
+      box-shadow: inset 0 0 50px rgba(0, 0, 0, 0.3) !important;
+      /* required to overwrite * { box-shadow: none !important; } */
+      position: absolute;
+      width: 48%;
+      z-index: 1;
+      pointer-events: none;
+      box-sizing: content-box;
+    }
+
+    .customLabel {
+      display: none;
+      position: absolute;
+      right: 100%;
+      left: auto;
+      height: 20px;
+      font-size:16px;
+      font-weight:bold;
+      margin: -20px 4px 0;
+      background: red;
+      color: $white;
+      padding: 10px 20px 10px 15px;
+      cursor: default;
+      pointer-events: none;
+      box-sizing: content-box;
+      &.labelB {
+        left: 100%;
+        right: auto;
+      }
+    }
+
+    .labelA .ruler {
+      left: auto;
+      right: -4px;
+    }
+
+    .ruler {
+      position: absolute;
+      top: 50%;
+      left: -4px;
+      right: auto;
+      width: 5px;
+      background: red;
+      transform: translate(0, -50%);
+      min-height: 1px;
+      box-sizing: content-box;
+    }
+  }
+
+  .difs {
+    position: absolute;
+    top: 0;
+    box-sizing: content-box;
+    left: 50%;
+    transform: translate(-50%, 0);
+
+    canvas {
+      width: 48%;
+      position: absolute;
+      top: 0;
+      left: 0;
+      background: rgba(0, 255, 255, 0.1);
+      box-sizing: content-box;
+
+      &.hover {
+        background: transparent;
+        animation: blink 0.6s infinite;
+      }
+    }
+  }
+  .canvas-wrapper {
+    max-width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    box-sizing: content-box;
+
+    canvas {
+      max-width: 48%;
+      vertical-align: top;
+      box-sizing: content-box;
+
+      +canvas {
+        margin-left: 4%;
+      }
+    }
+  }
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  49% {
+    opacity: 0;
+  }
+  50% {
+    opacity: 1;
+  }
+}
