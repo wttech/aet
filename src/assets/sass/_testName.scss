@@ -7,9 +7,12 @@
   z-index: 99999;
   padding: 30px 50px;
   box-shadow: 3px 3px 5px 2px $shadow;
-  background-color: lighten($gray, 10%);
+  background-color: $featuresBg;
+  border-radius:15px;
+
   .test-name-input {
     width: 90%;
+    border-radius:8px;
     margin: 0 auto;
     height: 24px;
     font-size: 18px;
@@ -17,7 +20,9 @@
     text-align: center;
     background-color: $white;
   }
+
   .test-name-add-test {
+    border-radius:8px;
     text-align: center;
     background-color: $white;
     width: 150px;

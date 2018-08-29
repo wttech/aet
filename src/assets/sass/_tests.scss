@@ -15,9 +15,11 @@
 
     .tests {
       position: relative;
-      margin-left: 25%;
+      left: 50%;
+      transform: translate(-50%);
       margin-top: 40px;
       padding: 25px 0;
+      width:415px;
 
       .collectors-list,
       .modifiers-list,
@@ -37,6 +39,7 @@
       }
 
       .list-expanded {
+        overflow: visible;
         height: 100%;
       }
 
@@ -294,9 +297,10 @@
         &::after {
           content: "Error: Collector for this type of comparator was not found!";
           width: 100%;
-          top: 0;
-          left: 109%;
+          top: -56px;
+          left: -5px;
           margin-top: -8px;
+          border-radius:5px;
           padding: 1% 3%;
           font-size: 12px;
           position: absolute;
@@ -312,8 +316,8 @@
           height: 15px;
           background-color: $black;
           position: absolute;
-          top: 0;
-          left: 107%;
+          top: -35px;
+          left: 50%;
           margin-top: 11px;
           transform: rotate(45deg);
           display: none;
@@ -339,12 +343,13 @@
         &::after {
           content: "Warning: Comparator for this type of collector was not found!";
           width: 100%;
-          top: 0;
-          left: 109%;
+          top: -56px;
+          left: -5px;
           margin-top: -8px;
           padding: 1% 3%;
           font-size: 12px;
           position: absolute;
+          border-radius:5px;
           background-color: $black;
           color: $white;
           display: none;
@@ -357,8 +362,8 @@
           height: 15px;
           background-color: $black;
           position: absolute;
-          top: 0;
-          left: 107%;
+          top: -35px;
+          left: 50%;
           margin-top: 11px;
           transform: rotate(45deg);
           display: none;
