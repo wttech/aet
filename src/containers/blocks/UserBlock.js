@@ -89,11 +89,14 @@ class UserBlockContainer extends Component {
   generateListOfBlockParameters(test) {
     if(test.parameters !== null) {
       return Object.values(test.parameters).map((param, index) => {
+        if(typeof param.current === "undefined") {
+          param.current = null;
+        }
         return (
           <div className={`block-parameter ${param.isMandatory && (param.current === null || param.current === "") && param.default === null  ? ("block-parameter-mandatory-missing") : ""}`} key={index}>
               <div className="block-parameter-wrapper">
                 <span className="block-parameter-bold">{param.name}</span>
-                {param.isMandatory && (typeof param.current === "undefined" || param.current === null || param.current === "") ? (
+                {param.isMandatory && (param.current === null || param.current === "") ? (
                   `: ${param.default}`
                 ) : (
                   `: ${param.current}`
