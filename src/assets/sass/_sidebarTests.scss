@@ -52,8 +52,7 @@
 
   .tests-container {
     position: relative;
-    right: -17px;
-    padding-right:20px;
+    padding-right:3px;
     width: 96%;
     margin: 20px auto;
     color: $white;
@@ -67,17 +66,25 @@
       margin-left: 15px;
     }
 
+    .test-currently-selected {
+      background-color: rgba(70, 121, 246, 0.4);
+
+      &:hover {
+        background-color: rgba(70, 121, 246, 0.6) !important; // overwriting a default hover style
+      }
+    }
+
     .test-item {
       width: 90%;
       margin: 18px auto;
 
       .test-invalid-block{
-        background-color: rgba(255,0,0,0.4) !important;
+        background-color: rgba(255,0,0,0.4) !important; // overwriting a default background style
       }
 
       .test-name {
-        width: 100%;
-        padding: 10px 3px;
+        width: 90%;
+        padding: 3% 5%;
         color: $textColor;
         font-weight: bold;
         font-size: 15px;

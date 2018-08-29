@@ -8,18 +8,23 @@ class TestsList extends Component {
   generateTests() {
     const project = this.props.project;
     let listOfTests = project;
+    let currentlySelectedTest = false;
     if (Object.keys(listOfTests).lenght !== 0) {
       listOfTests = project[0];
     } 
     listOfTests = {...listOfTests}.tests;
     if (listOfTests) {
       return Object.values(listOfTests).map((test, index) => {
+        currentlySelectedTest = false;
+        if(this.props.testName.name === test.name.name) {
+          currentlySelectedTest = true;
+        }
         let searchValue = null;
         Object.keys(this.props.searchTests).length ? searchValue = this.props.searchTests : searchValue = "";
         if(test.name.name.includes(searchValue)) {
           return (
             <div key={index} className="test-item" onClick={() => this.handleTestLoading(test)}>
-              <h2 className={`test-name ${!test.isValid ? ("test-invalid-block") : ""} `}>{test.name.name}</h2>
+              <h2 className={`test-name ${!test.isValid ? ("test-invalid-block") : ""} ${currentlySelectedTest ? ("test-currently-selected") : ""}`}>{test.name.name}</h2>
             </div> 
           )
         } else {
@@ -58,7 +63,8 @@ function mapStateToProps(state) {
   return {
     test: state.test,
     project: state.project,
-    searchTests: state.searchTests
+    searchTests: state.searchTests,
+    testName: state.testName,
   }
 }
 
