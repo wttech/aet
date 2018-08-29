@@ -28,6 +28,7 @@ All notable changes to AET will be documented in this file.
 - [PR-296](https://github.com/Cognifide/aet/pull/296) Status Code Comparator now checks range 400-600 by default, parameters validation added
 - [PR-325](https://github.com/Cognifide/aet/pull/325) Support env variables in report manager
 - [PR-331](https://github.com/Cognifide/aet/pull/325) Support env variables in MongoDB config
+- [PR-338](https://github.com/Cognifide/aet/pull/338) Enable creating new dbs by default
 
 ## Version 2.1.6
 
