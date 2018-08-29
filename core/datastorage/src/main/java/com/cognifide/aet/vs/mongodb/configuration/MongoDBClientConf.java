@@ -35,7 +35,7 @@ public @interface MongoDBClientConf {
 
   String ALLOW_AUTO_CREATE_PROPERTY_DESCRIPTION = "Allows automatic creation of DB if set to true";
 
-  boolean DEFAULT_AUTOCREATE_VALUE = false;
+  boolean DEFAULT_AUTOCREATE_VALUE = true;
 
   @AttributeDefinition(name = MONGO_URI_PROPERTY_NAME, description = MONGO_URI_PROPERTY_DESCRIPTION, type = AttributeType.STRING)
   String mongoURI() default "";
