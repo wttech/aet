@@ -1,0 +1,56 @@
+{
+  "test_data": [
+    {
+      "search_phrase": "accessibility",
+      "statistics": "16 ( 8 / 3 / 5 (0) / 0 )"
+    },
+    {
+      "search_phrase": "cookie",
+      "statistics": "9 ( 4 / 0 / 5 (0) / 0 )"
+    },
+    {
+      "search_phrase": "layout",
+      "statistics": "23 ( 9 / 0 / 14 (3) / 0 )"
+    },
+    {
+      "search_phrase": "jserrors",
+      "statistics": "14 ( 6 / 0 / 8 (0) / 0 )"
+    },
+    {
+      "search_phrase": "source",
+      "statistics": "17 ( 7 / 0 / 10 (0) / 0 )"
+    },
+    {
+      "search_phrase": "status",
+      "statistics": "21 ( 9 / 0 / 12 (0) / 0 )"
+    },
+    {
+      "search_phrase": "w3c-html5",
+      "statistics": "8 ( 1 / 1 / 6 (0) / 0 )"
+    },
+    {
+      "search_phrase": "click",
+      "statistics": "1 ( 0 / 0 / 1 (0) / 0 )"
+    },
+    {
+      "search_phrase": "header",
+      "statistics": "1 ( 0 / 0 / 1 (0) / 0 )"
+    },
+    {
+      "search_phrase": "sleep",
+      "statistics": "2 ( 1 / 0 / 1 (0) / 0 )"
+    },
+    {
+      "search_phrase": "wait-for-page-loaded",
+      "statistics": "2 ( 1 / 0 / 1 (0) / 0 )"
+    },
+    {
+      "search_phrase": "wait-for-element-to-be-visible",
+      "statistics": "2 ( 1 / 0 / 1 (0) / 0 )"
+    },
+    {
+      "search_phrase": "wait-for-image-completion",
+      "statistics": "4 ( 1 / 0 / 3 (0) / 0 )"
+    }
+  ]
+}
