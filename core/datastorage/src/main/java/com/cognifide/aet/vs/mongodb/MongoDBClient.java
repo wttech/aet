@@ -26,6 +26,7 @@ import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Optional;
 import java.util.Set;
 import org.apache.commons.lang3.StringUtils;
 import org.bson.BsonDocument;
@@ -60,8 +61,7 @@ public class MongoDBClient {
 
   @Activate
   public void activate(MongoDBClientConf config) {
-    this.mongoUri = config.mongoURI();
-    this.allowAutoCreate = config.allowAutoCreate();
+    setupConfiguration(config);
     try {
       setupMongoDBConnection();
     } catch (Exception e) {
@@ -103,7 +103,15 @@ public class MongoDBClient {
 
     return companies;
   }
-  
+
+  protected void setupConfiguration(MongoDBClientConf config) {
+    mongoUri = Optional.ofNullable(config.mongoURI())
+        .filter(StringUtils::isNotBlank)
+        .orElseGet(() -> Optional.ofNullable(System.getenv(MongoDBClientConf.MONGODB_URI_ENV))
+            .orElse(MongoDBClientConf.DEFAULT_MONGODB_URI));
+    allowAutoCreate = config.allowAutoCreate();
+  }
+
   private void setupMongoDBConnection() throws UnknownHostException {
     mongoClient = new MongoClient(new MongoClientURI(mongoUri));
     testConnection();
@@ -251,5 +259,9 @@ public class MongoDBClient {
 
   public static String getProjectNameFromDbName(String dbName) {
     return StringUtils.substringAfter(dbName, DB_NAME_SEPARATOR);
+  }
+
+  protected String getMongoUri() {
+    return mongoUri;
   }
 }

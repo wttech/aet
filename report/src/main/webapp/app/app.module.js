@@ -45,6 +45,7 @@ define(['angularAMD',
   'metadataService',
   'metadataAccessService',
   'notesService',
+  'historyService',
   'suiteInfoService',
   'patternsService',
   'caseFactory',
@@ -64,6 +65,7 @@ define(['angularAMD',
   'filterInformationDirective',
   // modals
   'noteModalController',
+  'historyModalController',
   'unsavedChangesModalController'], function (angularAMD, _) {
 
   var app = angular.module('app', ['ui.router', 'ui.bootstrap']);

@@ -1,0 +1,106 @@
+/*
+ * AET
+ *
+ * Copyright (C) 2013 Cognifide Limited
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+.suite-history-container {
+  position: absolute;
+  left:22%;
+  top:70px;
+  width:670px;
+  padding-bottom:10px;
+  border:1px solid $border-color;
+  background-color: #fff;
+  background: $gray_light;
+  box-shadow: 0px 0px 7px 7px rgba(0,0,0,0.25) !important;
+  display: block;
+
+  .suite-history-top-bar {
+    position: relative;
+    height:40px;
+    border-bottom:1px solid darken($border-color, 10%);
+
+    .suite-history-top-bar-close {
+      width:35px;
+      height:100%;
+      float:right;
+      font-size:26px;
+      margin-top: 2px;
+      float: right;
+      transition: all 0.3s ease-in-out;
+
+      &:hover {
+        cursor: pointer;
+        color: $red;
+      }
+    }
+
+    .suite-history-title {
+      display: block;
+      width:200px;
+      position: absolute;
+      float: left;
+      margin-left: 20px;
+      margin-top: 7px;
+      font-size: 20px;
+    }
+  }
+
+  .suite-history-item {
+    text-align: left;
+    font-family: $font_light;
+    color: rgb(119, 119, 124);
+    font-size: 14px;
+    padding: 16px 22px;
+    position: relative;
+    width:220px;
+    margin:0 auto;
+    padding:12px 0;
+    float: left;
+    color: $history;
+
+    &:hover {
+      color: darken($history, 20%);
+    }
+
+    .suite-history-rebased-bold {
+      font-weight: bold;
+      color: $historyRebased;
+  
+      &:hover {
+        cursor: default;
+      }
+    }
+  
+    .suite-history-bold {
+      font-weight: bold;
+      color: darken($history, 20%);
+  
+      &:hover {
+        cursor: default;
+      }
+    }
+
+    .suite-history-arrow {
+      margin:-3px 7px;
+      color: $grayish;
+      font-size:18px;
+    }
+  }
+
+  .suite-history-rebased {
+    color: $historyRebased;
+  }
+}
