@@ -9,6 +9,7 @@
   "nonew": true,
   "quotmark": true,
   "maxparams": 10,
+  "validthis": true,
 
   // Environments
   "jquery": true,

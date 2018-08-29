@@ -1,0 +1,46 @@
+<!--
+
+    AET
+
+    Copyright (C) 2013 Cognifide Limited
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+
+<div class="suite-history-container">
+  <div class="suite-history-top-bar">
+      <h3 class="suite-history-title">Suite's History</h3>
+    <div class="suite-history-top-bar-close" ng-click="historyModal.hideSuiteHistory()">
+        <i class="far fa-window-close"></i>
+    </div>
+  </div>
+    <div ng-repeat="suiteHeader in suiteHeaders track by $index">
+      <a href="{{reportPath}}&version={{suiteHeader.version}}" ng-if="suiteHeader.isRebased">
+        <div class="suite-history-item suite-history-rebased" ng-if="selectedVersion === suiteHeader.version">
+          <i class="fas fa-angle-right suite-history-arrow"></i><span class="suite-history-rebased-bold">v{{suiteHeader.version}} | {{suiteHeader.timestamp | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
+        </div>
+        <div class="suite-history-item suite-history-rebased" ng-if="selectedVersion !== suiteHeader.version">
+          <i class="fas fa-angle-right suite-history-arrow"></i>v{{suiteHeader.version}} | {{suiteHeader.timestamp | date: 'yyyy-MM-dd HH:mm:ss'}}
+        </div>
+      </a>
+      <a href="{{reportPath}}&version={{suiteHeader.version}}" ng-if="!suiteHeader.isRebased">
+        <div class="suite-history-item" ng-if="selectedVersion === suiteHeader.version">
+          <i class="fas fa-angle-right suite-history-arrow"></i><span class="suite-history-bold">v{{suiteHeader.version}} | {{suiteHeader.timestamp | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
+        </div>
+        <div class="suite-history-item" ng-if="selectedVersion !== suiteHeader.version">
+          <i class="fas fa-angle-right suite-history-arrow"></i>v{{suiteHeader.version}} | {{suiteHeader.timestamp | date: 'yyyy-MM-dd HH:mm:ss'}}
+        </div>
+      </a>
+    </div>
+  </div>
