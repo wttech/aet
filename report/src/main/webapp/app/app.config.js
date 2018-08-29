@@ -35,6 +35,7 @@ require.config({
     'urlStatusFilter': 'components/urlStatus.filter',
     'keyboardShortcutsDirective': 'components/keyboardShortcuts.directive',
     'hidePopoversDirective': 'components/hidePopovers.directive',
+    'compareScreensDirective': 'components/compareScreens.directive',
     'winterEdition': 'themes/winterEdition.directive',
     //services
     'endpointConfiguration': 'services/endpointConfiguration.service',
@@ -47,6 +48,7 @@ require.config({
     'metadataService': 'services/metadata.service',
     'metadataAccessService': 'services/metadataAccess.service',
     'notesService': 'services/notes.service',
+    'historyService': 'services/history.service',
     'suiteInfoService': 'services/suiteInfo.service',
     'patternsService': 'services/patterns.service',
     'userSettingsService': 'services/userSettings.service',
@@ -73,7 +75,8 @@ require.config({
     'includedCommentPopoverDirective': 'layout/main/url/includedCommentPopover.directive',
     //modals
     'unsavedChangesModalController': 'layout/modal/unsavedChanges/unsavedChangesModal.controller',
-    'noteModalController': 'layout/modal/note/noteModal.controller'
+    'noteModalController': 'layout/modal/note/noteModal.controller',
+    'historyModalController': 'layout/modal/history/historyModal.controller'
   },
   shim: {
     jquery: {

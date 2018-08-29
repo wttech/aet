@@ -50,6 +50,14 @@ public interface MetadataDAO extends Serializable {
   /**
    * @param dbKey - key with project and company name
    * @param name - name of suite
+   * @param version - version of suite
+   * @return Suite object found by given criteria or null.
+   */
+  Suite getSuite(DBKey dbKey, String name, String version) throws StorageException;
+
+  /**
+   * @param dbKey - key with project and company name
+   * @param name - name of suite
    * @return Suite object from the latest run (with currently maxVersion) or null if no run were
    * performed before for this suite.
    */
@@ -60,6 +68,13 @@ public interface MetadataDAO extends Serializable {
    * @return List of suites that were found in database.
    */
   List<Suite> listSuites(DBKey dbKey) throws StorageException;
+
+  /**
+   * @param dbKey - key with project and company name
+   * @param name - name of suite
+   * @return List of suite's correlationsIds & versions that were found in database.
+   */
+  List<SuiteVersion> listSuiteVersions(DBKey dbKey, String name) throws StorageException;
 
   /**
    * Removes suite from .metadata collection.
