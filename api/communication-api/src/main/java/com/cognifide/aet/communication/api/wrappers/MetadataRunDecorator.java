@@ -1,4 +1,4 @@
-package com.cognifide.aet.executor.wrappers;
+package com.cognifide.aet.communication.api.wrappers;
 
 public class MetadataRunDecorator extends RunDecorator {
 

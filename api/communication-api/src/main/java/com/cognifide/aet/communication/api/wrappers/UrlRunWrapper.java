@@ -1,4 +1,4 @@
-package com.cognifide.aet.executor.wrappers;
+package com.cognifide.aet.communication.api.wrappers;
 
 import com.cognifide.aet.communication.api.messages.MessageType;
 import com.cognifide.aet.communication.api.metadata.Url;

@@ -16,6 +16,7 @@
 package com.cognifide.aet.runner;
 
 import com.cognifide.aet.communication.api.metadata.Suite;
+import com.cognifide.aet.communication.api.wrappers.Run;
 import com.cognifide.aet.runner.processing.SuiteExecutionFactory;
 import com.cognifide.aet.runner.processing.SuiteExecutionTask;
 import com.cognifide.aet.runner.processing.data.SuiteDataService;
@@ -78,13 +79,13 @@ public class SuiteExecutorService {
     scheduledSuites.clear();
   }
 
-  void scheduleSuite(Suite suite, Destination jmsReplyTo) {
-    LOGGER.debug("Scheduling {}!", suite);
+  void scheduleSuite(Run objectToRun, Destination jmsReplyTo) {
+    LOGGER.debug("Scheduling {}!", objectToRun.getObjectToRun());
     final ListenableFuture<String> suiteExecutionTask = executor
-        .submit(new SuiteExecutionTask(suite, jmsReplyTo, suiteDataService, runnerConfiguration,
+        .submit(new SuiteExecutionTask((Suite)objectToRun.getObjectToRun(), jmsReplyTo, suiteDataService, runnerConfiguration,
             suiteExecutionFactory));
-    scheduledSuites.add(suite.getCorrelationId());
-    Futures.addCallback(suiteExecutionTask, new SuiteFinishedCallback(suite.getCorrelationId()),
+    scheduledSuites.add(objectToRun.getCorrelationId());
+    Futures.addCallback(suiteExecutionTask, new SuiteFinishedCallback(objectToRun.getCorrelationId()),
         callbackExecutor);
     LOGGER.debug(
         "Currently {} suites are scheduled in the system (max number of concurrent suites: {})",

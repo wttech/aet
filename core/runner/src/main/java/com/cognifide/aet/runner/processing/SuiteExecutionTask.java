@@ -29,15 +29,11 @@ import javax.jms.JMSException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SuiteExecutionTask implements Callable<String> {
+public class SuiteExecutionTask extends ProcessorStrategy {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SuiteExecutionTask.class);
 
   private final Suite suite;
-  private final Destination jmsReplyTo;
-  private final SuiteDataService suiteDataService;
-  private final RunnerConfiguration runnerConfiguration;
-  private final SuiteExecutionFactory suiteExecutionFactory;
 
   private SuiteIndexWrapper indexedSuite;
 
@@ -47,38 +43,16 @@ public class SuiteExecutionTask implements Callable<String> {
   public SuiteExecutionTask(Suite suite, Destination jmsReplyTo,
       SuiteDataService suiteDataService, RunnerConfiguration runnerConfiguration,
       SuiteExecutionFactory suiteExecutionFactory) {
+    super(jmsReplyTo, suiteDataService, runnerConfiguration, suiteExecutionFactory);
     this.suite = suite;
-    this.jmsReplyTo = jmsReplyTo;
-    this.suiteDataService = suiteDataService;
-    this.runnerConfiguration = runnerConfiguration;
-    this.suiteExecutionFactory = suiteExecutionFactory;
   }
 
-  @Override
-  public String call() {
-    try {
-      prepareSuiteWrapper();
-      init();
-      process();
-      save();
-    } catch (StorageException | JMSException | ValidatorException e) {
-      LOGGER.error("Error during processing suite {}", suite, e);
-      FinishedSuiteProcessingMessage message = new FinishedSuiteProcessingMessage(Status.FAILED,
-          suite.getCorrelationId());
-      message.addError(e.getMessage());
-      messagesSender.sendMessage(message);
-    } finally {
-      cleanup();
-    }
-    return suite.getCorrelationId();
-  }
-
-  private void prepareSuiteWrapper() throws StorageException {
+  protected void prepareSuiteWrapper() throws StorageException {
     LOGGER.debug("Fetching suite patterns {}", suite);
     indexedSuite = new SuiteIndexWrapper(suiteDataService.enrichWithPatterns(suite));
   }
 
-  private void init() throws JMSException {
+  protected void init() throws JMSException {
     LOGGER.debug("Initializing suite processors {}", suite);
     messagesSender = suiteExecutionFactory.newMessagesSender(jmsReplyTo);
     suiteProcessor = new SuiteProcessor(suiteExecutionFactory, indexedSuite, runnerConfiguration,
