@@ -29,7 +29,7 @@ import com.cognifide.aet.communication.api.job.ComparatorResultData;
 import com.cognifide.aet.communication.api.metadata.Step;
 import com.cognifide.aet.communication.api.metadata.Suite.Timestamp;
 import com.cognifide.aet.communication.api.metadata.Url;
-import com.cognifide.aet.runner.processing.ProgressLog;
+import com.cognifide.aet.communication.api.messages.ProgressLog;
 import com.google.common.base.Optional;
 import java.util.Collections;
 import java.util.Observable;

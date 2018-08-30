@@ -20,24 +20,34 @@
 <div class="toolbar-bottom">
   <div class="toolbar-link">
     <h4 class="toolbar-link-header ellipsis">
-      <div ng-if="toolbarBottom.viewMode != 'objectToRun'"class="fontawesome-link"
+      <div ng-if="toolbarBottom.viewMode != 'suite'"class="fontawesome-link"
          data-toggle="popover"
          data-content="Localize the currently opened url on side panel"
          data-trigger="hover"
          data-container="body"
          data-ng-click="toolbarBottom.scrollSidepanel(false)">
-          <i class="fas fa-crosshairs fa-sm"></i>
+        <i class="fas fa-crosshairs fa-sm"></i>
       </div>
-      <div ng-if="toolbarBottom.viewMode == 'objectToRun' && !toolbarBottom.historyService.getNextVersion(toolbarBottom.suiteInfoService.getInfo().version)"
+      <div 
+        ng-if="toolbarBottom.viewMode != 'suite' && toolbarBottom.viewMode != 'test'"
+        class="fontawesome-link"
+        data-toggle="popover"
+        data-content="Rerun current URL"
+        data-trigger="hover"
+        data-container="body"
+        data-ng-click="toolbarBottom.rerunURL()">
+        <i class="far fa-play-circle fa-sm"></i>
+      </div>
+      <div ng-if="toolbarBottom.viewMode == 'suite' && !toolbarBottom.historyService.getNextVersion(toolbarBottom.suiteInfoService.getInfo().version)"
            class="fontawesome-link"
            data-toggle="popover"
-           data-content="Rerun current objectToRun"
+           data-content="Rerun current suite"
            data-trigger="hover"
            data-container="body"
            data-ng-click="toolbarBottom.rerunSuite()">
         <i class="far fa-play-circle fa-sm"></i>
       </div>
-      <div ng-if="toolbarBottom.viewMode != 'url' && toolbarBottom.viewMode != 'objectToRun'"class="fontawesome-link"
+      <div ng-if="toolbarBottom.viewMode != 'url' && toolbarBottom.viewMode != 'suite'"class="fontawesome-link"
            data-toggle="popover"
            data-content="Rerun current test"
            data-trigger="hover"
@@ -64,15 +74,19 @@
         <i class="fas fa-crosshairs"></i>
       </div>
       <div class="fontawesome-link"
-           data-toggle="popover"
-           data-content="Rerun current test"
-           data-trigger="hover"
-           data-container="body"
-           data-ng-click="toolbarBottom.rerunTest()">
-        <i class="far fa-play-circle fa-sm"></i>
+        data-toggle="popover"
+        data-content="Rerun current test"
+        data-trigger="hover"
+        data-container="body"
+        data-ng-click="toolbarBottom.rerunTest()">
+      <i class="far fa-play-circle fa-sm"></i>
       </div>
       <span class="preformatted">test:</span><span>{{toolbarBottom.model.testGroupName}}</span>
     </h5>
+  </div>
+  <div class="suite-rerun" ng-if="rerunInProgress">
+    <p class="suite-rerun-msg">Status: {{rerunMsg}}</p>
+    <p class="suite-rerun-progress" ng-if="rerunInProgressSuccessful">Progress: {{rerunProgress | number: 2}}%</p>
   </div>
   <div class="toolbar-blocks">
     <div class="toolbar-btns is-absolute">
@@ -93,41 +107,41 @@
         </a>
       </div>
       <span class="comments-status pull-left"
-            data-toggle="popover"
-            data-ng-class="toolbarBottom.model.comment ? 'present' : 'absent'"
-            data-content="{{toolbarBottom.model.comment && '<span>' + toolbarBottom.model.comment + '</span>' || !toolbarBottom.model.comment && '<span>Click to update this ' + toolbarBottom.viewMode + ' note</span>'}}"
-            data-html="true" data-trigger="hover"
-            data-ng-click="toolbarBottom.displayCommentModal()">
-                <div ng-if="toolbarBottom.model.comment">
-                    <i class="fas fa-ellipsis-h" data-fa-transform="shrink-10 up-.5" data-fa-mask="fas fa-comment"></i>
-                </div>
-                <div ng-if="!toolbarBottom.model.comment">
-                    <i class="fas fa-pencil-alt" data-fa-transform="shrink-10 up-.5" data-fa-mask="fas fa-comment"></i>
-                </div>
-            </span>
+        data-toggle="popover"
+        data-ng-class="toolbarBottom.model.comment ? 'present' : 'absent'"
+        data-content="{{toolbarBottom.model.comment && '<span>' + toolbarBottom.model.comment + '</span>' || !toolbarBottom.model.comment && '<span>Click to update this ' + toolbarBottom.viewMode + ' note</span>'}}"
+        data-html="true" data-trigger="hover"
+        data-ng-click="toolbarBottom.displayCommentModal()">
+          <div ng-if="toolbarBottom.model.comment">
+            <i class="fas fa-ellipsis-h" data-fa-transform="shrink-10 up-.5" data-fa-mask="fas fa-comment"></i>
+          </div>
+          <div ng-if="!toolbarBottom.model.comment">
+            <i class="fas fa-pencil-alt" data-fa-transform="shrink-10 up-.5" data-fa-mask="fas fa-comment"></i>
+          </div>
+      </span>
 
       <span class="button button-dark button-disabled"
             data-ng-if="toolbarBottom.usesCrossSuitePattern"
             data-aet-included-comment-popover
             data-toggle="popover"
-            data-content="May not be accepted because compared against another objectToRun patterns."
+            data-content="May not be accepted because compared against another suite patterns."
             data-html="true"
             data-trigger="hover"></i>
         Accept {{toolbarBottom.viewMode}}
-            </span>
-
-      <span class="button js-rebase-objectToRun button-blue"
+      </span>
+    
+      <span class="button js-rebase-suite button-blue"
             data-ng-if="toolbarBottom.showAcceptButton()"
             data-ng-click="toolbarBottom.updatePatterns()"></i>
         Accept {{toolbarBottom.viewMode}}
-            </span>
+      </span>
 
-      <span class="button js-rebase-objectToRun button-red"
+      <span class="button js-rebase-suite button-red"
             data-ng-if="toolbarBottom.showRevertButton()"
             data-ng-click="toolbarBottom.revertAcceptedPatterns()">
-                <i class="fas {{theme.statusClasses['unrebased']}}"></i>
-                Revert {{toolbarBottom.viewMode}}
-            </span>
+        <i class="fas {{theme.statusClasses['unrebased']}}"></i>
+        Revert {{toolbarBottom.viewMode}}
+      </span>
     </div>
   </div>
 </div>

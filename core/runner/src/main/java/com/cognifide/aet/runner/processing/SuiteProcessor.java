@@ -16,18 +16,18 @@
 package com.cognifide.aet.runner.processing;
 
 import com.cognifide.aet.communication.api.ProcessingError;
-import com.cognifide.aet.communication.api.messages.ProcessingErrorMessage;
 import com.cognifide.aet.communication.api.messages.ProgressMessage;
+import com.cognifide.aet.communication.api.messages.ProcessingErrorMessage;
+import com.cognifide.aet.communication.api.messages.ProgressLog;
 import com.cognifide.aet.communication.api.util.ExecutionTimer;
 import com.cognifide.aet.runner.RunnerConfiguration;
 import com.cognifide.aet.runner.processing.data.RunIndexWrapper;
+import com.cognifide.aet.communication.api.messages.FullProgressLog;
 import com.cognifide.aet.runner.processing.steps.CollectDispatcher;
 import com.cognifide.aet.runner.processing.steps.CollectionResultsRouter;
 import com.cognifide.aet.runner.processing.steps.ComparisonResultsRouter;
-import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 import javax.jms.JMSException;
-import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -105,11 +105,11 @@ class SuiteProcessor {
     while (!comparisonResultsRouter.isFinished() && !timeoutWatch
         .isTimedOut(runnerConfiguration.getFt())) {
       try {
-        String currentLog = composeProgressLog();
-        if (!currentLog.equals(logMessage)) {
-          logMessage = currentLog;
+        FullProgressLog currentLog = composeProgressLog();
+        if (!currentLog.toString().equals(logMessage)) {
+          logMessage = currentLog.toString();
           LOGGER.info("[{}]: {}", indexedSuite.get().getCorrelationId(), logMessage);
-          messagesSender.sendMessage(new ProgressMessage(logMessage));
+          messagesSender.sendMessage(new ProgressMessage(currentLog));
         }
         Thread.sleep(1000);
       } catch (InterruptedException e) {
@@ -118,10 +118,10 @@ class SuiteProcessor {
     }
   }
 
-  private String composeProgressLog() {
-    ProgressLog compareLog = collectionResultsRouter.getProgress();
-    ProgressLog reportLog = comparisonResultsRouter.getProgress();
-    return StringUtils.join(Arrays.asList(compareLog, reportLog), " ::: ");
+  private FullProgressLog composeProgressLog() {
+    ProgressLog collectLog = collectionResultsRouter.getProgress();
+    ProgressLog compareLog = comparisonResultsRouter.getProgress();
+    return new FullProgressLog(collectLog, compareLog);
   }
 
   private synchronized boolean tryProcess() throws JMSException {
