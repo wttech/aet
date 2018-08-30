@@ -20,7 +20,8 @@ import java.io.Serializable;
 
 public interface Run<T> extends Serializable {
 
-  MessageType getMessageType();
+  //TODO Change it to ENUM
+  String getType();
 
   T getObjectToRun();
 
@@ -43,4 +44,5 @@ public interface Run<T> extends Serializable {
   default String getSuiteIdentifier() {
     return null;
   }
+
 }

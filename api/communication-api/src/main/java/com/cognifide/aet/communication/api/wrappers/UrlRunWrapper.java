@@ -27,8 +27,8 @@ public class UrlRunWrapper implements Run {
   }
 
   @Override
-  public MessageType getMessageType() {
-    return MessageType.RERUN_URL;
+  public String getType() {
+    return "URL";
   }
 
   @Override

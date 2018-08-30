@@ -21,6 +21,10 @@ import static com.cognifide.aet.rest.BasicDataServlet.isValidName;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.Suite.Timestamp;
 import com.cognifide.aet.communication.api.metadata.Test;
+import com.cognifide.aet.communication.api.wrappers.MetadataRunDecorator;
+import com.cognifide.aet.communication.api.wrappers.Run;
+import com.cognifide.aet.communication.api.wrappers.SuiteRunWrapper;
+import com.cognifide.aet.communication.api.wrappers.TestRunWrapper;
 import com.cognifide.aet.executor.model.CorrelationIdGenerator;
 import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.MetadataDAO;
@@ -38,7 +42,7 @@ class SuiteRerun {
   private SuiteRerun() {
   }
 
-  static Suite getAndPrepareSuite(MetadataDAO metadataDAO, DBKey dbKey, String correlationId,
+  static Run getAndPrepareSuite(MetadataDAO metadataDAO, DBKey dbKey, String correlationId,
       String suiteName, String testName) {
     Suite suite = null;
     try {
@@ -47,10 +51,18 @@ class SuiteRerun {
       LOGGER.error("Read metadata from DB problem!", e);
     }
     prepareSuiteToRerun(suite, testName);
-    return suite;
+    Run objectToRunWrapper;
+    if(testName!=null){
+      Test test = suite.getTest(testName);
+      objectToRunWrapper = new MetadataRunDecorator(new TestRunWrapper(test),
+          suite.getCorrelationId(), suite.getCompany(), suite.getProject());
+    } else {
+      objectToRunWrapper = new SuiteRunWrapper(suite);
+    }
+    return objectToRunWrapper;
   }
 
-  private static Suite getSuiteFromMetadata(MetadataDAO metadataDAO, DBKey dbKey,
+  public static Suite getSuiteFromMetadata(MetadataDAO metadataDAO, DBKey dbKey,
       String correlationId, String suiteName)
       throws StorageException {
     if (isValidCorrelationId(correlationId)) {
@@ -65,17 +77,15 @@ class SuiteRerun {
   private static void prepareSuiteToRerun(Suite suite, String testName) {
     Optional.ofNullable(suite)
         .ifPresent(s -> {
-          s.setRerunned(false);
           Optional<String> testString = Optional.ofNullable(testName);
-          if(testString.isPresent()) {
+          if (testString.isPresent()) {
             testString.map(s::getTest)
                 .ifPresent(testToRerun -> {
-                  s.setRerunned(true);
                   s.removeAllTests();
                   testToRerun.setRerunned();
                   s.addTest(testToRerun);
                 });
-          }else{
+          } else {
             s.setCorrelationId(CorrelationIdGenerator
                 .generateCorrelationId(s.getCompany(), s.getProject(), s.getName()));
             s.setRunTimestamp(new Timestamp(System.currentTimeMillis()));

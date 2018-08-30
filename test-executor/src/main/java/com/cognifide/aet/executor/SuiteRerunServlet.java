@@ -18,6 +18,7 @@ package com.cognifide.aet.executor;
 import com.cognifide.aet.communication.api.execution.SuiteExecutionResult;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
+import com.cognifide.aet.communication.api.wrappers.Run;
 import com.cognifide.aet.executor.http.HttpSuiteExecutionResultWrapper;
 import com.cognifide.aet.rest.Helper;
 import com.cognifide.aet.vs.MetadataDAO;
@@ -69,15 +70,15 @@ public class SuiteRerunServlet extends HttpServlet {
     String suiteName = request.getParameter(Helper.SUITE_PARAM);
     String testName = request.getParameter(Helper.TEST_RERUN_PARAM);
 
-    Suite suite = null;
+    Run objectToRunWrapper = null;
 
     try {
-      suite = SuiteRerun
+      objectToRunWrapper = SuiteRerun
           .getAndPrepareSuite(metadataDAO, Helper.getDBKeyFromRequest(request), correlationId, suiteName,
               testName);
-      if(suite != null) {
+      if(objectToRunWrapper != null) {
         try {
-          resultWrapper = suiteExecutor.executeSuite(suite);
+          resultWrapper = suiteExecutor.executeSuite(objectToRunWrapper);
           createResponse(resultWrapper, response);
         } catch (javax.jms.JMSException | ValidatorException e) {
           e.printStackTrace();

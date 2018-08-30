@@ -25,7 +25,7 @@ public abstract class RunDecorator implements Run{
   }
 
   @Override
-  public MessageType getMessageType() {
-    return decoratedRun.getMessageType();
+  public String getType() {
+    return decoratedRun.getType();
   }
 }

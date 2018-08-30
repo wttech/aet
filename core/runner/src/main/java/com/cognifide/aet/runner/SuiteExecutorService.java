@@ -15,10 +15,9 @@
  */
 package com.cognifide.aet.runner;
 
-import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.wrappers.Run;
 import com.cognifide.aet.runner.processing.SuiteExecutionFactory;
-import com.cognifide.aet.runner.processing.SuiteExecutionTask;
+import com.cognifide.aet.runner.processing.SuiteExecutionProcessorStrategy;
 import com.cognifide.aet.runner.processing.data.SuiteDataService;
 import com.google.common.collect.Sets;
 import com.google.common.util.concurrent.FutureCallback;
@@ -82,7 +81,7 @@ public class SuiteExecutorService {
   void scheduleSuite(Run objectToRun, Destination jmsReplyTo) {
     LOGGER.debug("Scheduling {}!", objectToRun.getObjectToRun());
     final ListenableFuture<String> suiteExecutionTask = executor
-        .submit(new SuiteExecutionTask(objectToRun, jmsReplyTo, suiteDataService, runnerConfiguration,
+        .submit(new SuiteExecutionProcessorStrategy(objectToRun, jmsReplyTo, suiteDataService, runnerConfiguration,
             suiteExecutionFactory));
     scheduledSuites.add(objectToRun.getCorrelationId());
     Futures.addCallback(suiteExecutionTask, new SuiteFinishedCallback(objectToRun.getCorrelationId()),

@@ -18,6 +18,7 @@ package com.cognifide.aet.runner.processing.data;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.Test;
 import com.cognifide.aet.communication.api.metadata.Url;
+import com.cognifide.aet.communication.api.wrappers.Run;
 import com.google.common.base.Optional;
 import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
@@ -27,16 +28,16 @@ public class SuiteIndexWrapper {
 
   private final Map<String, Test> tests;
 
-  private final Suite suite;
+  private final Run suite;
 
-  public SuiteIndexWrapper(Suite suite) {
+  public SuiteIndexWrapper(Run suite) {
     this.suite = suite;
     this.tests = FluentIterable.from(suite.getTests()).uniqueIndex(new NamedToMapFunction<Test>());
   }
 
   public Test getTest(String testName) {
     return tests.get(testName);
-  }
+  } //update url, test name, url name, url
 
   public Optional<Url> getTestUrl(String testName, final String urlName) {
     Test test = tests.get(testName);

@@ -17,6 +17,7 @@ package com.cognifide.aet.executor;
 
 import com.cognifide.aet.communication.api.execution.ProcessingStatus;
 import com.cognifide.aet.communication.api.execution.SuiteStatusResult;
+import com.cognifide.aet.communication.api.messages.MessageType;
 import com.cognifide.aet.communication.api.messages.TaskMessage;
 import com.cognifide.aet.executor.common.MessageProcessor;
 import com.cognifide.aet.executor.common.ProcessorFactory;
@@ -63,6 +64,7 @@ public class SuiteRunner implements Runnable {
       long messageReceiveTimeout) {
     this.session = session;
     this.suiteStatusHandler = suiteStatusHandler;
+
     this.runnerTerminator = new RunnerTerminator();
     this.objectToRunWrapper = objectToRunWrapper;
     this.inQueueName = inQueueName;
@@ -78,7 +80,7 @@ public class SuiteRunner implements Runnable {
     Destination outRunnerDestination = session.createTemporaryQueue();
     messageConsumer = session.createConsumer(outRunnerDestination);
 
-    TaskMessage taskMessage = new TaskMessage<>(objectToRunWrapper.getMessageType(), objectToRunWrapper);
+    TaskMessage taskMessage = new TaskMessage<>(MessageType.RUN, objectToRunWrapper);
     ObjectMessage message = session.createObjectMessage(taskMessage);
     message.setJMSReplyTo(outRunnerDestination);
     messageProducer.send(message);

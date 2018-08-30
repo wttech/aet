@@ -52,10 +52,6 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
   private static final Type SUITE_TYPE = new TypeToken<Suite>() {
   }.getType();
 
-  public boolean isRerunned() {
-    return isRerunned;
-  }
-
   public void setCorrelationId(String correlationId) {
     this.correlationId = correlationId;
   }
@@ -88,8 +84,6 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
   private String comment;
 
   private Statistics statistics;
-
-  private boolean isRerunned;
 
   @NotNull
   @Valid
@@ -245,10 +239,6 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
 
   public String toJson() {
     return GSON_FOR_JSON.toJson(this, SUITE_TYPE);
-  }
-
-  public void setRerunned(boolean rerunned) {
-    isRerunned = rerunned;
   }
 
   @Override

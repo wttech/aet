@@ -24,11 +24,12 @@ public class TestRunWrapper implements Run {
 
   public TestRunWrapper(Test test) {
     this.test = test;
+    test.setRerunned();
   }
 
   @Override
-  public MessageType getMessageType() {
-    return MessageType.RERUN_TEST;
+  public String getType() {
+    return "";
   }
 
   @Override

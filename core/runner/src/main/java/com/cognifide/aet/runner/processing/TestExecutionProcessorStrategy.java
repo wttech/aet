@@ -18,6 +18,7 @@ package com.cognifide.aet.runner.processing;
 import com.cognifide.aet.communication.api.messages.FinishedSuiteProcessingMessage;
 import com.cognifide.aet.communication.api.messages.FinishedSuiteProcessingMessage.Status;
 import com.cognifide.aet.communication.api.metadata.Suite;
+import com.cognifide.aet.communication.api.metadata.Test;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.communication.api.wrappers.Run;
 import com.cognifide.aet.runner.RunnerConfiguration;
@@ -30,9 +31,11 @@ import javax.jms.JMSException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SuiteExecutionTask extends ProcessorStrategy {
+public class TestExecutionProcessorStrategy extends ProcessorStrategy {
 
-  public SuiteExecutionTask(Run objectToRun, Destination jmsReplyTo,
+  protected static final Logger LOGGER = LoggerFactory.getLogger(TestExecutionProcessorStrategy.class);
+
+  public TestExecutionProcessorStrategy(Run objectToRun, Destination jmsReplyTo,
       SuiteDataService suiteDataService, RunnerConfiguration runnerConfiguration,
       SuiteExecutionFactory suiteExecutionFactory) {
     super(jmsReplyTo, suiteDataService, runnerConfiguration, suiteExecutionFactory);
@@ -60,7 +63,7 @@ public class SuiteExecutionTask extends ProcessorStrategy {
             objectToRun.getCorrelationId()));
   }
 
-  protected Suite getObjectToRun(){
-    return (Suite) objectToRun.getObjectToRun();
+  protected Test getObjectToRun(){
+    return (Test) objectToRun.getObjectToRun();
   }
 }

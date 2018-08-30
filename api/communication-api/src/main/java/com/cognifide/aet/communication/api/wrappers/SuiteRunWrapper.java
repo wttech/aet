@@ -26,8 +26,8 @@ public class SuiteRunWrapper implements Run {
   }
 
   @Override
-  public MessageType getMessageType() {
-    return MessageType.RUN;
+  public String getType() {
+    return "SUITE";
   }
 
   @Override

@@ -123,14 +123,14 @@ public class SuiteExecutor {
    *
    * @param suiteString - content of the test suite XML file
    * @param domain - overrides domain defined in the suite file
-   * @param patternCorrelationId - optional pattern to set, this is a correlation ID of a suite
-   * that will be used as patterns source
+   * @param patternCorrelationId - optional pattern to set, this is a correlation ID of a suite that
+   * will be used as patterns source
    * @param patternSuite - optional pattern to set, this is a name of a suite whose latest version
    * will be used as patterns source. This parameter is ignored if patternCorrelationId is set
    * @return status of the suite execution
    */
   HttpSuiteExecutionResultWrapper execute(String suiteString, String name, String domain,
-          String patternCorrelationId, String patternSuite) {
+      String patternCorrelationId, String patternSuite) {
     HttpSuiteExecutionResultWrapper result;
     TestSuiteParser xmlFileParser = new XmlTestSuiteParser();
     try {
@@ -142,7 +142,8 @@ public class SuiteExecutor {
       String validationError = suiteValidator.validateTestSuiteRun(testSuiteRun);
       if (validationError == null) {
         final Suite suite = suiteFactory.suiteFromTestSuiteRun(testSuiteRun);
-        result = executeSuite(suite);
+        Run objectToRunWrapper = new SuiteRunWrapper(suite);
+        result = executeSuite(objectToRunWrapper);
       } else {
         result = HttpSuiteExecutionResultWrapper
             .wrapError(SuiteExecutionResult.createErrorResult(validationError),
@@ -158,7 +159,7 @@ public class SuiteExecutor {
       result = HttpSuiteExecutionResultWrapper
           .wrapError(SuiteExecutionResult.createErrorResult(e.getMessage()),
               HttpStatus.SC_INTERNAL_SERVER_ERROR);
-      if (suiteRunner != null){
+      if (suiteRunner != null) {
         suiteRunner.close();
       }
     }
@@ -166,20 +167,19 @@ public class SuiteExecutor {
     return result;
   }
 
-  HttpSuiteExecutionResultWrapper executeSuite(Suite suite)
+  HttpSuiteExecutionResultWrapper executeSuite(Run objectToRunWrapper)
       throws JMSException, ValidatorException {
-    suite.validate(Sets.newHashSet("version", "runTimestamp"));
-    if (lockTestSuite(suite)) {
-      Run objectToRunWrapper = new SuiteRunWrapper(suite);
+    //suite.validate(Sets.newHashSet("version", "runTimestamp"));
+    if (lockTestSuite(objectToRunWrapper)) {
       suiteRunner = createSuiteRunner(objectToRunWrapper);
       suiteRunner.runSuite();
 
-      String statusUrl = getStatusUrl(suite);
+      String statusUrl = getStatusUrl(objectToRunWrapper);
       String htmlReportUrl = getReportUrl(HTML_REPORT_URL_FORMAT,
-          reportConfigurationManager.getReportDomain(), suite);
-      String xunitReportUrl = getReportUrl(XUNIT_REPORT_URL_FORMAT, StringUtils.EMPTY, suite);
+          reportConfigurationManager.getReportDomain(), objectToRunWrapper);
+      String xunitReportUrl = getReportUrl(XUNIT_REPORT_URL_FORMAT, StringUtils.EMPTY, objectToRunWrapper);
       return HttpSuiteExecutionResultWrapper.wrap(
-          SuiteExecutionResult.createSuccessResult(suite.getCorrelationId(), statusUrl,
+          SuiteExecutionResult.createSuccessResult(objectToRunWrapper.getCorrelationId(), statusUrl,
               htmlReportUrl, xunitReportUrl));
     } else {
       return HttpSuiteExecutionResultWrapper.wrapError(
@@ -220,9 +220,9 @@ public class SuiteExecutor {
     return localTestSuiteRun;
   }
 
-  private boolean lockTestSuite(Suite suite) {
-    String suiteIdentifier = suite.getSuiteIdentifier();
-    String correlationId = suite.getCorrelationId();
+  private boolean lockTestSuite(Run objectToRunWrapper) {
+    String suiteIdentifier = objectToRunWrapper.getSuiteIdentifier();
+    String correlationId = objectToRunWrapper.getCorrelationId();
     LOGGER.debug("locking suite: '{}' with correlation id: '{}'", suiteIdentifier, correlationId);
     return lockService.trySetLock(suiteIdentifier, correlationId);
   }
@@ -232,17 +232,19 @@ public class SuiteExecutor {
     SuiteRunner suiteRunner = new SuiteRunner(session, cacheUpdater,
         suiteStatusHandler, objectToRun, RUNNER_IN_QUEUE, config.messageReceiveTimeout());
     suiteRunnerCache.put(objectToRun.getCorrelationId(), suiteRunner);
-    suiteStatusCache.put(objectToRun.getCorrelationId(), new ConcurrentLinkedQueue<SuiteStatusResult>());
+    suiteStatusCache
+        .put(objectToRun.getCorrelationId(), new ConcurrentLinkedQueue<SuiteStatusResult>());
     return suiteRunner;
   }
 
-  private String getReportUrl(String format, String domain, Suite suite) {
+  private String getReportUrl(String format, String domain, Run objectToRunWrapper) {
     return String
-        .format(format, domain, suite.getCompany(), suite.getProject(), suite.getCorrelationId());
+        .format(format, domain, objectToRunWrapper.getCompany(), objectToRunWrapper.getProject(),
+            objectToRunWrapper.getCorrelationId());
   }
 
-  private String getStatusUrl(Suite suite) {
-    return SuiteStatusServlet.SERVLET_PATH + "/" + suite.getCorrelationId();
+  private String getStatusUrl(Run objectToRunWrapper) {
+    return SuiteStatusServlet.SERVLET_PATH + "/" + objectToRunWrapper.getCorrelationId();
   }
 
   private static class RunnerCacheRemovalListener implements RemovalListener<String, SuiteRunner> {
