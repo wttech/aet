@@ -119,9 +119,9 @@ class SuiteProcessor {
   }
 
   private FullProgressLog composeProgressLog() {
-    ProgressLog compareLog = collectionResultsRouter.getProgress();
-    ProgressLog reportLog = comparisonResultsRouter.getProgress();
-    return new FullProgressLog(compareLog, reportLog);
+    ProgressLog collectLog = collectionResultsRouter.getProgress();
+    ProgressLog compareLog = comparisonResultsRouter.getProgress();
+    return new FullProgressLog(collectLog, compareLog);
   }
 
   private synchronized boolean tryProcess() throws JMSException {

@@ -24,9 +24,9 @@ public class FullProgressLog implements Serializable {
   private ProgressLog compareLog;
   private ProgressLog collectLog;
 
-  public FullProgressLog(ProgressLog compareLog, ProgressLog collectLog) {
-    this.compareLog = compareLog;
+  public FullProgressLog(ProgressLog collectLog, ProgressLog compareLog) {
     this.collectLog = collectLog;
+    this.compareLog = compareLog;
   }
 
   public ProgressLog getCompareLog() {
