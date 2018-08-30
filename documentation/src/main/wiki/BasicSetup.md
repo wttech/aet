@@ -48,6 +48,7 @@ Open a command prompt **as the administrator** and execute the following command
 Download or clone (`git clone git@github.com:Cognifide/aet.git`) the AET source code and navigate to the `vagrant` module directory.
 Execute following commands to start the virtual machine (this process may take a few minutes):
 * `berks install` - downloads Chef dependencies from external sources. It acts as `mvn clean install`, but for Chef cookbooks.
+* `berks update`
 * `vagrant up` - creates a new virtual machine (the `.box` file will be downloaded during the first run), runs Chef inside it, sets domains and port forwarding up.
 
 See [Vagrant README](https://github.com/Cognifide/aet/blob/master/vagrant/README.md) file
