@@ -5,104 +5,65 @@ This setup makes use of the Vagrant module, a pseudo-cookbook which is responsib
 #### Overview
 
 Currently a virtual machine with the following services is created:
-
 * Karaf
 * Apache
 * Tomcat
 * ActiveMQ
 * MongoDb
-* Brosermob
-* Firefox
-* X environment
+* Browsermob
+* Selenium Grid hub
 
-#### AET Services
+![aet-setup-vagrant](assets/diagrams/aet-setup-with-vagrant.png)
 
 All services run using default ports. For communication please use the following IP address:
-
 * `192.168.123.100`
 
-#### General Prerequisites
+#### Prerequisites
 
-By default the Vagrant virtual machine needs 3 GB of RAM and 2 vCPUs, so please make sure that you have enough memory on your machine (8 GB is minimum, 16 GB is recommended though).
+By default the Vagrant virtual machine needs 6 GB of RAM and 4 vCPUs, so please make sure that 
+you have enough memory on your machine (16 GB is recommended).
 
-#### Installation
+You need to download and install the following software:
+   * [VirtualBox 5.1.30](https://www.virtualbox.org/wiki/Download_Old_Builds_5_1)
+   * [Vagrant 1.9.2](https://releases.hashicorp.com/vagrant/)
+   * [ChefDK 2.4.17](https://downloads.chef.io/chef-dk/)
+   * [JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+   * [Chrome browser](https://www.google.com/chrome/browser/desktop/) to view reports
+   * [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/downloads) (at least version 2.40)
+   * [Selenium Standalone Server](http://www.seleniumhq.org/download/) (at least version 3.41)
+   * [Maven](https://maven.apache.org/download.cgi) (at least version 3.0.4; for development only)
 
-* Download and install [VirtualBox 5.1.30](https://www.virtualbox.org/wiki/Download_Old_Builds_5_1)
-* Download and install [Vagrant 1.9.2](https://releases.hashicorp.com/vagrant/)
-* Download and install [ChefDK 2.4.17](https://downloads.chef.io/chef-dk/)
 
-As the administrator execute the following commands:
+#### Set up Vagrant
 
+Open a command prompt **as the administrator** and execute the following commands:
 * `vagrant plugin install vagrant-omnibus`
 * `vagrant plugin install vagrant-berkshelf`
 * `vagrant plugin install vagrant-hostmanager`
 
-Whenever you'd like to keep all Vagrant related data and virtual machine disks in non-standard directories please:
+> Note Whenever you'd like to keep all Vagrant related data and virtual machine disks in non-standard directories please
+ set the `VAGRANT_HOME` variable for the location (by default it is set to `$HOME/vagrant.d`) and
+ update VirtualBox settings (`File -> Preferences -> General`) to move all disks to other directory.
 
-* set the `VAGRANT_HOME` variable for the location (by default it is set to `$HOME/vagrant.d`).
-* update VirtualBox settings (`File -> Preferences -> General`) to move all disks to other directory.
-
-#### Starting Virtual Machine
-
-Once you set all the thigs described above just execute:
-
-```
-berks update && vagrant destroy -f && vagrant up
-```
-
-#### First Run
-
-All the commands need to be executed when you're inside a directory that contains `Vagrantfile`.
-
-Next you will need to execute:
-
+Download or clone (`git clone git@github.com:Cognifide/aet.git`) the AET source code and navigate to the `vagrant` module directory. 
+Execute following commands to start the virtual machine (this process may take a few minutes):
 * `berks install` - downloads Chef dependencies from external sources. It acts as `mvn clean install`, but for Chef cookbooks.
 * `vagrant up` - creates a new virtual machine (the `.box` file will be downloaded during the first run), runs Chef inside it, sets domains and port forwarding up.
 
-#### Updates
+See [Vagrant README](https://github.com/Cognifide/aet/blob/master/vagrant/README.md) file 
+for more Vagrant details, useful commands, etc.
 
-Whenever a new version is released please execute the following:
+#### Set up Selenium Grid node
 
-* `git pull` to get the latest version of `Vagrantfile`.
-* `berks update` to update Chef dependencies.
-* `vagrant provision` to re-run Chef on the virtual machine.
+When your Vagrant virtual machine is up and running, you need to start a Selenium Grid node process 
+to be able to run AET suites. To start the node process on your host machine (e.g. Windows):
+```
+java -Dwebdriver.chrome.driver="<path/to/chromedriver>" -jar <path/to/selenium-server-standalone.jar> -role node -hub http://192.168.123.100:4444/grid/register -browser "browserName=chrome,maxInstances=20" -maxSession 20
+```
+> Note: `192.168.123.100` is Vagrant IP
 
-#### SSH Access
+Go to [Selenium Grid Console](http://192.168.123.100:4444/grid/console) and check if Chrome WebDrivers are available
 
-To access the virtual machine via SSH please execute `vagrant ssh` from the same directory that contains `Vagrantfile`. After that please type `sudo -i` and press ENTER to switch to `root`.
+#### Troubleshooting
 
-If you prefer to use PuTTY, mRemote or any other connection manager, please log in as the user `vagrant` with the password `vagrant` on `localhost` with the port `2222`. Keep in mind that the port may be different if you have more than one Vagrant machine running at the same time. You can check the current assignment by executing the `vagrant ssh-config` command from the directory that contains your `Vagrantfile`.
-
-#### Useful Vagrant Commands
-
-* `vagrant reload` restarts the Vagrant machine and re-applies settings defined in
-  `Vagrantfile`. It's useful whenever you've changed the port forwarding or synced
-  folder configuration.
-* `vagrant destroy -f` deletes the entire virtual machine.
-* `vagrant reload --provision` restarts the virtual machine and re-runs Chef
-  afterwards.
-* `vagrant suspend` suspends the virtual machine that is currently running.
-* `vagrant resume` resumes the suspended virtual machine.
-* `vagrant status` shows the status of the virtual machine described in `Vagrantfile`.
-* `vagrant halt` halts/turns off the virtual machine.
-
-#### Port Forwarding
-
-The local port is a port exposed on your machine. You can access services via `localhost:<PORT>`.
-
-The VM port refers to the port assigned inside the Vagrant virtual machine.
-
-Port forwarding rules can be easily changed in `Vagrantfile`.
-
-| Local port | VM port | Description |
-| ---------- | ------- | ----------- |
-| 8181       | 8181    | Karaf       |
-
-
-#### Known Issues
-
-* When getting the following error during application deployment to the local Vagrant:
-    ```
-    What went wrong: Execution failed for task ':deployDevClearCache'. > java.net.ConnectException: Connection timed out: connect
-    ```
-    run the `ifup eth1` command on Vagrant using ssh.
+See [[Troubleshooting|Troubleshooting]] page.
