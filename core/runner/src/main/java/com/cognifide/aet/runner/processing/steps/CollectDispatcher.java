@@ -16,6 +16,7 @@
 package com.cognifide.aet.runner.processing.steps;
 
 import com.cognifide.aet.communication.api.job.CollectorJobData;
+import com.cognifide.aet.communication.api.messages.ProgressLog;
 import com.cognifide.aet.communication.api.metadata.Test;
 import com.cognifide.aet.communication.api.metadata.Url;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
@@ -25,12 +26,10 @@ import com.cognifide.aet.runner.RunnerConfiguration;
 import com.cognifide.aet.runner.processing.data.RunIndexWrapper;
 import com.cognifide.aet.runner.scheduler.CollectorJobSchedulerService;
 import com.cognifide.aet.runner.scheduler.MessageWithDestination;
-import com.cognifide.aet.runner.processing.ProgressLog;
 import com.cognifide.aet.runner.processing.TimeoutWatch;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Queues;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
