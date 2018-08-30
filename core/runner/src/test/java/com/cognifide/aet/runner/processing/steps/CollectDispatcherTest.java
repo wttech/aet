@@ -46,7 +46,8 @@ public class CollectDispatcherTest extends StepManagerTest {
 
   @Override
   protected StepManager createTested() throws JMSException {
-    return new CollectDispatcher(timeoutWatch, connection, runnerConfiguration, scheduler, suiteIndexWrapper);
+    return new CollectDispatcher(timeoutWatch, connection, runnerConfiguration, scheduler,
+        runIndexWrapper);
   }
 
   @Override

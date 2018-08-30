@@ -19,7 +19,7 @@
 
 POLL_INTERVAL=1
 UNLOCK_TIMEOUT=0
-SUITE_ENDPOINT="/suite"
+SUITE_ENDPOINT="/objectToRun"
 DOMAIN_BODY=""
 SUITE_NAME_BODY=""
 CORRELATION_ID_BODY=""
@@ -33,12 +33,12 @@ function usage {
     echo -e "\t$0 <endpoint> [<suite_file_name>] [options]"
     echo
     echo "Options:"
-    echo -e "\t-d --domain <DOMAIN>                 - Override domain attribute defined in suite file"
-    echo -e "\t-n --name <SUITE_NAME>               - Override name attribute defined in suite file"
+    echo -e "\t-d --domain <DOMAIN>                 - Override domain attribute defined in objectToRun file"
+    echo -e "\t-n --name <SUITE_NAME>               - Override name attribute defined in objectToRun file"
     echo -e "\t-c --correlationId <CORRELATION_ID>  - Set id of patterns to run test against."
-    echo -e "\t-p --patternSuite <SUITE_NAME>       - Set the suite name to run test against its latest pattern (only used if -c is not set)"
-    echo -e "\t-i --interval <POLL_INTERVAL>        - Set interval in seconds for polling suite status. Default interval : 1 sec."
-    echo -e "\t-w --waitForUnlock <TIMEOUT>         - Set timeout for the script to wait for unlocked suite. Default timeout: 0 sec."
+    echo -e "\t-p --patternSuite <SUITE_NAME>       - Set the objectToRun name to run test against its latest pattern (only used if -c is not set)"
+    echo -e "\t-i --interval <POLL_INTERVAL>        - Set interval in seconds for polling objectToRun status. Default interval : 1 sec."
+    echo -e "\t-w --waitForUnlock <TIMEOUT>         - Set timeout for the script to wait for unlocked objectToRun. Default timeout: 0 sec."
     echo -e "\t-v --verbose                         - Make it more descriptive"
     echo
     exit 1
@@ -76,7 +76,7 @@ function prepare_redirect {
 
 function process_locked_suite {
   if [[ $code -eq 500 && UNLOCK_TIMEOUT -gt 0 && "$body" =~ "Suite is currently locked" ]]; then
-      echo "Waiting for suite to be unlocked for $UNLOCK_TIMEOUT second(s)"
+      echo "Waiting for objectToRun to be unlocked for $UNLOCK_TIMEOUT second(s)"
       sleep $(( 5 > $UNLOCK_TIMEOUT ? $UNLOCK_TIMEOUT : 5))
       ((UNLOCK_TIMEOUT-=5))
       start_suite
@@ -87,9 +87,9 @@ function process_locked_suite {
   fi
 }
 
-# request /suite endpoint
+# request /objectToRun endpoint
 function start_suite {
-  run_response=$(curl -sw "%{http_code}" -F "suite=@$suite_file_name"$DOMAIN_BODY$SUITE_NAME_BODY$CORRELATION_ID_BODY$PATTERN_SUITE_BODY "$endpoint$SUITE_ENDPOINT")
+  run_response=$(curl -sw "%{http_code}" -F "objectToRun=@$suite_file_name"$DOMAIN_BODY$SUITE_NAME_BODY$CORRELATION_ID_BODY$PATTERN_SUITE_BODY "$endpoint$SUITE_ENDPOINT")
   extract_code_and_body "$run_response"
 
   if [ $code -eq 200 ]; then
@@ -106,7 +106,7 @@ function start_suite {
 [[ $# -eq 0 ]] && usage
 
 endpoint=$1
-suite_file_name=${2-suite.xml}
+suite_file_name=${2-objectToRun.xml}
 
 while [[ $# -gt 0 ]]; do
     case "$1" in
@@ -153,9 +153,9 @@ if [[ $VERBOSE -eq 1 ]]; then
   echo -e "\tAET endpoint:          $endpoint$SUITE_ENDPOINT"
   echo -e "\tSuite:                 $suite_file_name"
   echo -e "\tOverridden domain:     ${DOMAIN-not set}"
-  echo -e "\tOverridden suite name: ${SUITE_NAME-not set}"
+  echo -e "\tOverridden objectToRun name: ${SUITE_NAME-not set}"
   echo -e "\tPattern id:            ${CORRELATION_ID-not set}"
-  echo -e "\tPattern suite:         ${PATTERN_SUITE-not set}"
+  echo -e "\tPattern objectToRun:         ${PATTERN_SUITE-not set}"
   echo ""
 fi
 

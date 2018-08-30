@@ -54,8 +54,7 @@ class SuiteRerun {
     Run objectToRunWrapper;
     if(testName!=null){
       Test test = suite.getTest(testName);
-      objectToRunWrapper = new MetadataRunDecorator(new TestRunWrapper(test),
-          suite.getCorrelationId(), suite.getCompany(), suite.getProject());
+      objectToRunWrapper = new MetadataRunDecorator(new TestRunWrapper(test), suite);
     } else {
       objectToRunWrapper = new SuiteRunWrapper(suite);
     }

@@ -26,7 +26,7 @@ import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.runner.RunnerConfiguration;
 import com.cognifide.aet.runner.processing.TimeoutWatch;
-import com.cognifide.aet.runner.processing.data.SuiteIndexWrapper;
+import com.cognifide.aet.runner.processing.data.RunIndexWrapper;
 import com.cognifide.aet.runner.scheduler.CollectorJobSchedulerService;
 import java.io.Serializable;
 import java.util.Observable;
@@ -67,7 +67,7 @@ public abstract class StepManagerTest {
   protected CollectorJobSchedulerService scheduler;
 
   @Mock
-  protected SuiteIndexWrapper suiteIndexWrapper;
+  protected RunIndexWrapper runIndexWrapper;
 
   @Mock
   protected Suite suite;
@@ -91,9 +91,10 @@ public abstract class StepManagerTest {
     when(connection.getJmsSession()).thenReturn(session);
     when(session.createQueue(anyString())).thenReturn(Mockito.mock(Queue.class));
     when(session.createConsumer(Matchers.<Destination>any(), anyString())).thenReturn(consumer);
-    when(session.createProducer(Matchers.<Destination>any())).thenReturn(sender);
+    when(session.createProducer(
+        Matchers.<Destination>any())).thenReturn(sender);
     when(session.createObjectMessage(Matchers.<Serializable>any())).thenReturn(mockedMessage);
-    when(suiteIndexWrapper.get()).thenReturn(suite);
+    //when(runIndexWrapper.get()).thenReturn(suite);
     when(suite.getCorrelationId()).thenReturn(CORRELATION_ID);
     when(runnerConfiguration.getMttl()).thenReturn(100L);
     when(runnerConfiguration.getUrlPackageSize()).thenReturn(2);

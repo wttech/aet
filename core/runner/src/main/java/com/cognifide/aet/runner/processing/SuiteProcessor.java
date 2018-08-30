@@ -20,7 +20,7 @@ import com.cognifide.aet.communication.api.messages.ProcessingErrorMessage;
 import com.cognifide.aet.communication.api.messages.ProgressMessage;
 import com.cognifide.aet.communication.api.util.ExecutionTimer;
 import com.cognifide.aet.runner.RunnerConfiguration;
-import com.cognifide.aet.runner.processing.data.SuiteIndexWrapper;
+import com.cognifide.aet.runner.processing.data.RunIndexWrapper;
 import com.cognifide.aet.runner.processing.steps.CollectDispatcher;
 import com.cognifide.aet.runner.processing.steps.CollectionResultsRouter;
 import com.cognifide.aet.runner.processing.steps.ComparisonResultsRouter;
@@ -44,12 +44,12 @@ class SuiteProcessor {
   private final CollectDispatcher collectDispatcher;
   private final CollectionResultsRouter collectionResultsRouter;
   private final ComparisonResultsRouter comparisonResultsRouter;
-  private final SuiteIndexWrapper indexedSuite;
+  private final RunIndexWrapper indexedSuite;
   private final RunnerConfiguration runnerConfiguration;
   private final MessagesSender messagesSender;
 
   SuiteProcessor(SuiteExecutionFactory suiteExecutionFactory,
-      SuiteIndexWrapper indexedSuite, RunnerConfiguration runnerConfiguration,
+      RunIndexWrapper indexedSuite, RunnerConfiguration runnerConfiguration,
       MessagesSender messagesSender) throws JMSException {
     this.indexedSuite = indexedSuite;
     this.runnerConfiguration = runnerConfiguration;

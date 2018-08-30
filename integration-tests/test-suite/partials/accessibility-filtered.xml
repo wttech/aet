@@ -18,7 +18,7 @@
     limitations under the License.
 
 -->
-<suite name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
+<objectToRun name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
 
 	<!-- Accessibility Comparator START -->
 	<test name="F-comparator-accessibility-with-standard-wcag2a-filtered-only-by-principle">
@@ -117,4 +117,4 @@
 		</urls>
 	</test>
 	<!-- Accessibility Comparator END -->
-</suite>
+</objectToRun>

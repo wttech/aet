@@ -18,7 +18,7 @@
     limitations under the License.
 
 -->
-<suite name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
+<objectToRun name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
 	
 	<!-- STATUS CODES-Comparator START -->
 	<test name="F-comparator-StatusCodes-no-filter" useProxy="rest">
@@ -360,4 +360,4 @@
 	</test>
 
 	<!-- STATUS CODES-Comparator END -->
-</suite>
+</objectToRun>

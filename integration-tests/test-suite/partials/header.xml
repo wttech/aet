@@ -18,7 +18,7 @@
     limitations under the License.
 
 -->
-<suite name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
+<objectToRun name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
 
 	<!-- Header-Modifier BEGIN -->
 	<test name="S-modifier-Header" useProxy="rest">
@@ -39,4 +39,4 @@
 		</urls>
 	</test>
 	<!-- Header-Modifier END -->
-</suite>
+</objectToRun>

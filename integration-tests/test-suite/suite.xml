@@ -1,0 +1,1875 @@
+<?xml version="1.0" encoding="UTF-8"?><!--
+
+    AET
+
+    Copyright (C) 2013 Cognifide Limited
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+--><objectToRun name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
+<test name="S-comparator-JsErrors">
+		<collect>
+			<open/>
+			<sleep duration="1000"/>
+			<js-errors/>
+		</collect>
+		<compare>
+			<js-errors/>
+		</compare>
+		<urls>
+			<url href="comparators/jserrors/success.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-JsErrors-NONEXISTINGPAGE-404">
+		<collect>
+			<open/>
+			<sleep duration="1000"/>
+			<js-errors/>
+		</collect>
+		<compare>
+			<js-errors>
+				<js-errors-filter error="Failed to load resource: the server responded with a status of 404 (Not Found)"/>
+			</js-errors>
+		</compare>
+		<urls>
+			<url href="comparators/jserrors/nonExistingPage.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-JsErrors">
+		<collect>
+			<open/>
+			<sleep duration="1000"/>
+			<js-errors/>
+		</collect>
+		<compare>
+			<js-errors/>
+		</compare>
+		<urls>
+			<url href="comparators/jserrors/failed.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-JsErrors-mix-of-filters">
+		<collect>
+			<open/>
+			<sleep duration="1000"/>
+			<js-errors/>
+		</collect>
+		<compare>
+			<js-errors>
+				<js-errors-filter errorPattern="[\w ]+: nonExistingJsFunction is \d*(not |un)defined"/>
+				<js-errors-filter line="371"/>
+			</js-errors>
+		</compare>
+		<urls>
+			<url href="comparators/jserrors/failed.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-JsErrors-filter-by-error-name">
+		<collect>
+			<open/>
+			<sleep duration="2000"/>
+			<js-errors/>
+		</collect>
+		<compare>
+			<js-errors>
+				<js-errors-filter error="ReferenceError: nonExistingJsFunction is not defined"/>
+			</js-errors>
+		</compare>
+		<urls>
+			<url href="comparators/jserrors/failed.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-JsErrors-filter-by-error-name">
+		<collect>
+			<open/>
+			<sleep duration="2000"/>
+			<js-errors/>
+		</collect>
+		<compare>
+			<js-errors>
+				<js-errors-filter error="Uncaught ReferenceError: nonExistingJsFunction is not defined"/>
+				<js-errors-filter error="Uncaught ReferenceError: nonExistingVariable is not defined"/>
+			</js-errors>
+		</compare>
+		<urls>
+			<url href="comparators/jserrors/failed.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-JsErrors-filter-by-error-name-external-resource">
+		<collect>
+			<open/>
+			<sleep duration="2000"/>
+			<js-errors/>
+		</collect>
+		<compare>
+			<js-errors>
+				<js-errors-filter error="Uncaught ReferenceError: nonExistingJsFunction is not defined"/>
+				<js-errors-filter error="Uncaught ReferenceError: nonExistingVariable is not defined"/>
+			</js-errors>
+		</compare>
+		<urls>
+			<url href="comparators/jserrors/failed.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-JsErrors-one-error-left-unfiltered">
+		<collect>
+			<open/>
+			<sleep duration="2000"/>
+			<js-errors/>
+		</collect>
+		<compare>
+			<js-errors>
+				<js-errors-filter errorPattern="[\w]+: nonExistingJsFunction is .*"/>
+				<js-errors-filter errorPattern="[\w]* some non-existing error \d+"/>
+			</js-errors>
+		</compare>
+		<urls>
+			<url href="comparators/jserrors/failed.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-JsErrors-filter-by-source-external-only">
+		<collect>
+			<open/>
+			<sleep duration="2000"/>
+			<js-errors/>
+		</collect>
+		<compare>
+			<js-errors>
+				<js-errors-filter source="sanity/comparators/jserrors/failed-mainAndExternalJS.jsp"/>
+			</js-errors>
+		</compare>
+		<urls>
+			<url href="comparators/jserrors/failed-mainAndExternalJS.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-JsErrors-filter-by-source-mainpage-only">
+		<collect>
+			<open/>
+			<sleep duration="2000"/>
+			<js-errors/>
+		</collect>
+		<compare>
+			<js-errors>
+				<js-errors-filter source="sanity/comparators/jserrors/failed-externalJS.jsp"/>
+			</js-errors>
+		</compare>
+		<urls>
+			<url href="comparators/jserrors/failed-externalJS.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-JsErrors-filter-by-source-mainpage-and-external">
+		<collect>
+			<open/>
+			<sleep duration="2000"/>
+			<js-errors/>
+		</collect>
+		<compare>
+			<js-errors>
+				<js-errors-filter source="comparators/jserrors/failed-mainAndExternalJS.jsp"/>
+				<js-errors-filter source="comparators/jserrors/jsFileWithError.js"/>
+			</js-errors>
+		</compare>
+		<urls>
+			<url href="comparators/jserrors/failed-mainAndExternalJS.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-JsErrors-filter-by-source-and-line-number-20">
+		<collect>
+			<open/>
+			<sleep duration="2000"/>
+			<js-errors/>
+		</collect>
+		<compare>
+			<js-errors>
+				<js-errors-filter source="failed.jsp" line="20"/>
+			</js-errors>
+		</compare>
+		<urls>
+			<url href="comparators/jserrors/failed.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-JsErrors-filter-by-source-and-line-number-21-and-371">
+		<collect>
+			<open/>
+			<sleep duration="1000"/>
+			<js-errors/>
+		</collect>
+		<compare>
+			<js-errors>
+				<js-errors-filter source="failed.jsp" line="21"/>
+				<js-errors-filter source="failed.jsp" line="371"/>
+				<js-errors-filter errorPattern=".*nonExistingVariable.*"/>
+				<js-errors-filter error="ReferenceError: nonExistingVariable is not defined" source="/sample-site/sanity/comparators/jserrors/failed.jsp"/>
+			</js-errors>
+		</compare>
+		<urls>
+			<url href="comparators/jserrors/failed.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-JsErrors-filter-by-file-source-external-resource">
+		<collect>
+			<open/>
+			<sleep duration="1000"/>
+			<js-errors/>
+		</collect>
+		<compare>
+			<js-errors>
+				<js-errors-filter source="jsFileWithError.js"/>
+			</js-errors>
+		</compare>
+		<urls>
+			<url href="comparators/jserrors/failed-externalJS.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-StatusCodes-no-filter" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes showExcluded="true"/>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/failed.jsp"/>
+			<url href="comparators/statuscodes/noneexistingPage.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-StatusCodes-200-success" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes filterCodes="200" showExcluded="true"/>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/success.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-StatusCodes-filter-300-505" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes filterRange="300,500" showExcluded="true"/>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/success.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-StatusCodes-filter-404-404" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<!-- we could use filterCodes here, but we want to test this case -->
+			<status-codes filterRange="404,404" showExcluded="true"/>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/noneexistingPage404.jsp"/>
+			<url href="comparators/statuscodes/failed.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-StatusCodes-404-exclude-specific-url" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes filterCodes="404" showExcluded="true">
+				<exclude url="/sample-site/NonExistingResourceFile.png"/>
+			</status-codes>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/failed.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-StatusCodes-404-exclude-pattern" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes filterCodes="404" showExcluded="true">
+				<exclude pattern="^.*png$"/>
+			</status-codes>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/failed.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-StatusCodes-404-include-only-one-url" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes filterCodes="404" showExcluded="true">
+				<include url="/~/media/cognifide2014/avada-assets/cognifide-expertly-done.png"/>
+			</status-codes>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/failed.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-StatusCodes-404-include-only-pattern" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes filterCodes="404" showExcluded="true">
+				<include pattern="^.*logo.png$"/>
+			</status-codes>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/failed.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-StatusCodes-exclude-all-external-by-url" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes showExcluded="true"/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes filterRange="300,600">
+				<exclude pattern=".*sample-site.*"/>
+				<exclude url="http://fonts.googleapis.com/css?family=Lato:300,400,700"/>
+				<exclude url="http://cognifide.com/%7E/media/cognifide2014/avada-assets/cognifide-expertly-done.png"/>
+				<exclude url="http://fonts.gstatic.com/s/lato/v11/KT3KS9Aol4WfR6Vas8kNcg.woff"/>
+				<exclude url="http://fonts.gstatic.com/s/lato/v11/wkfQbvfT_02e2IWO3yYueQ.woff"/>
+				<exclude url="http://fonts.gstatic.com/s/lato/v11/9k-RPmcnxYEPm8CNFsH2gg.woff"/>
+			</status-codes>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/failed.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-StatusCodes-exclude-all-by-pattern" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes showExcluded="true">
+				<exclude pattern="^.*$"/>
+			</status-codes>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/failed.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-StatusCodes-exclude-url-and-pattern-only-url" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes filterCodes="404" showExcluded="true">
+				<exclude url="/sample-site/NonExistingResourceFile.jpg"/>
+			</status-codes>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/exclude-url-and-pattern.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-StatusCodes-exclude-url-and-pattern-only-pattern" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes filterCodes="404" showExcluded="true">
+				<exclude pattern="^.*png$"/>
+			</status-codes>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/exclude-url-and-pattern.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-StatusCodes-exclude-url-and-pattern" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes filterCodes="404" showExcluded="true">
+				<exclude url="/sample-site/NonExistingResourceFile.jpg" pattern="^.*png$"/>
+			</status-codes>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/exclude-url-and-pattern.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-StatusCodes-include-non-existing-url" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes showExcluded="true">
+				<include url="/sample-site/NonExistingUrl.png"/>
+			</status-codes>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/failed.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-StatusCodes-include-non-matching-pattern" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes showExcluded="true">
+				<include pattern="^nonMatchingPattern$"/>
+			</status-codes>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/failed.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-StatusCodes-include-exclude-only-exclude-url" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes filterCodes="200,404" showExcluded="true">
+				<exclude url="/sample-site/NonExistingResourceFile.png"/>
+			</status-codes>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/include-exclude.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-StatusCodes-include-exclude-only-include-url" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes showExcluded="true">
+				<include url="/sample-site/NonExistingResourceFile.png"/>
+			</status-codes>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/include-exclude.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-StatusCodes-include-exclude-url" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes showExcluded="true">
+				<include url="/sample-site/NonExistingResourceFile.png"/>
+				<exclude url="/sample-site/NonExistingResourceFile.png"/>
+			</status-codes>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/include-exclude.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-StatusCodes-include-exclude-only-include-pattern" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes filterCodes="200" showExcluded="true">
+				<include pattern="^.*css$"/>
+			</status-codes>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/include-exclude.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-StatusCodes-include-exclude-only-exclude-pattern" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes showExcluded="true">
+				<exclude pattern="^.*css$"/>
+			</status-codes>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/include-exclude.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-StatusCodes-include-exclude-pattern" useProxy="rest">
+		<collect>
+			<open/>
+			<status-codes/>
+			<sleep duration="3000"/>
+		</collect>
+		<compare>
+			<status-codes showExcluded="true">
+				<include pattern="^.*css$"/>
+				<exclude pattern="^.*css$"/>
+			</status-codes>
+		</compare>
+		<urls>
+			<url href="comparators/statuscodes/include-exclude.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-w3c-html5">
+		<collect>
+			<open/>
+			<source/>
+		</collect>
+		<compare>
+			<source comparator="w3c-html5" ignore-warnings="false"/>
+		</compare>
+		<urls>
+			<url href="comparators/w3c-html5/success.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-w3c-html5-with-ignore-warnings-on-page-with-warnings">
+		<collect>
+			<open/>
+			<source/>
+		</collect>
+		<compare>
+			<source comparator="w3c-html5"/>
+		</compare>
+		<urls>
+			<url href="comparators/w3c-html5/warning.jsp"/>
+		</urls>
+	</test>
+<test name="W-comparator-w3c-html5">
+		<collect>
+			<open/>
+			<source/>
+		</collect>
+		<compare>
+			<source comparator="w3c-html5" ignore-warnings="false"/>
+		</compare>
+		<urls>
+			<url href="comparators/w3c-html5/warning.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-w3c-html5">
+		<collect>
+			<open/>
+			<source/>
+		</collect>
+		<compare>
+			<source comparator="w3c-html5" ignore-warnings="false"/>
+		</compare>
+		<urls>
+			<url href="comparators/w3c-html5/failed.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-w3c-html5-with-filtering-messagePattern">
+        <collect>
+            <open/>
+            <source/>
+        </collect>
+        <compare>
+            <source comparator="w3c-html5" ignore-warnings="false">
+                <w3c-filter messagePattern="Saw .*"/>
+                <w3c-filter messagePattern="Attribute .*"/>
+                <w3c-filter messagePattern="Unclosed .*"/>
+                <w3c-filter messagePattern="End tag for .*"/>
+                <w3c-filter messagePattern="Element .*"/>
+                <w3c-filter messagePattern="A slash was not immed.*"/>
+            </source>
+        </compare>
+        <urls>
+            <url href="comparators/w3c-html5/failed.jsp"/>
+        </urls>
+    </test>
+<test name="S-comparator-w3c-html5-with-filtering-lines">
+        <collect>
+            <open/>
+            <source/>
+        </collect>
+        <compare>
+            <source comparator="w3c-html5" ignore-warnings="false">
+                <w3c-filter line="368"/>
+                <w3c-filter line="371"/>
+                <w3c-filter line="372"/>
+            </source>
+        </compare>
+        <urls>
+            <url href="comparators/w3c-html5/failed.jsp"/>
+        </urls>
+    </test>
+<test name="S-comparator-w3c-html5-with-filtering-columns">
+        <collect>
+            <open/>
+            <source/>
+        </collect>
+        <compare>
+            <source comparator="w3c-html5" ignore-warnings="false">
+                <w3c-filter column="3"/>
+                <w3c-filter column="7"/>
+                <w3c-filter column="1"/>
+                <w3c-filter column="46"/>
+            </source>
+        </compare>
+        <urls>
+            <url href="comparators/w3c-html5/failed.jsp"/>
+        </urls>
+    </test>
+<test name="S-comparator-w3c-html5-with-filtering-all">
+        <collect>
+            <open/>
+            <source/>
+        </collect>
+        <compare>
+            <source comparator="w3c-html5" ignore-warnings="false">
+                <!--
+                    it is not easy to filter W3C quote characters
+                    see https://github.com/Cognifide/aet/wiki/W3CHTML5IssuesFilter#parameters
+                -->
+                <w3c-filter message="Element “img” is missing required attribute “src”."/>
+                <w3c-filter message="A slash was not immediately followed by “&gt;”."/>
+                <w3c-filter messagePattern="Saw .+ when expecting an attribute name.*"/>
+                <w3c-filter line="371" column="7" messagePattern="Element .* not allowed as child of element .*"/>
+                <w3c-filter line="371" column="7" messagePattern="Unclosed element .*"/>
+                <w3c-filter line="371" column="7" messagePattern="Attribute .* is not serializable as XML 1.0."/>
+                <w3c-filter message="End tag for  “html” seen, but there were unclosed elements."/>
+            </source>
+        </compare>
+        <urls>
+            <url href="comparators/w3c-html5/failed.jsp"/>
+        </urls>
+    </test>
+<test name="S-comparator-Source">
+		<collect>
+			<open/>
+			<source/>
+		</collect>
+		<compare>
+			<source comparator="source"/>
+		</compare>
+		<urls>
+			<url href="comparators/source/success.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-Source">
+		<collect>
+			<open/>
+			<source/>
+		</collect>
+		<compare>
+			<source comparator="source"/>
+		</compare>
+		<urls>
+			<url href="comparators/source/failed.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-Source-Remove-Lines">
+		<collect>
+			<open/>
+			<source/>
+		</collect>
+		<compare>
+			<source comparator="source">
+				<remove-lines dataRanges="10,15;27,27" patternRanges="10,15;27,27"/>
+			</source>
+		</compare>
+		<urls>
+			<url href="comparators/source/success_remove_lines.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-Source-Remove-Lines">
+		<collect>
+			<open/>
+			<source/>
+		</collect>
+		<compare>
+			<source comparator="source">
+				<remove-lines dataRanges="10,15;27,27" patternRanges="10,15;27,27"/>
+			</source>
+		</compare>
+		<urls>
+			<url href="comparators/source/failed_remove_lines.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-Source-Remove-Nodes">
+		<collect>
+			<open/>
+			<source/>
+		</collect>
+		<compare>
+			<source comparator="source">
+				<remove-nodes xpath="/html/body/div[2]/div[3]/div[1]/div/div"/>
+			</source>
+		</compare>
+		<urls>
+			<url href="comparators/source/success_remove_nodes.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-Source-Remove-Nodes">
+		<collect>
+			<open/>
+			<source/>
+		</collect>
+		<compare>
+			<source comparator="source">
+				<remove-nodes xpath="/html/body/div[2]/div[3]/div[1]/div/div"/>
+			</source>
+		</compare>
+		<urls>
+			<url href="comparators/source/failed_remove_nodes.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-Source-Extract-Element">
+		<collect>
+			<open/>
+			<source/>
+		</collect>
+		<compare>
+			<source comparator="source">
+				<extract-element elementId="banner"/>
+			</source>
+		</compare>
+		<urls>
+			<url href="comparators/source/success_extract_element.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-Source-Extract-Element">
+		<collect>
+			<open/>
+			<source/>
+		</collect>
+		<compare>
+			<source comparator="source">
+				<extract-element elementId="date-panel"/>
+			</source>
+		</compare>
+		<urls>
+			<url href="comparators/source/failed_extract_element.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-Source-Long-Response">
+		<collect>
+			<open/>
+			<source/>
+		</collect>
+		<compare>
+			<source comparator="source"/>
+		</compare>
+		<urls>
+			<url href="comparators/source/success_long_response.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-Source-Long-Response">
+		<collect>
+			<open/>
+			<source/>
+		</collect>
+		<compare>
+			<source comparator="source"/>
+		</compare>
+		<urls>
+			<url href="comparators/source/failed_long_response.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-Source-Redirect">
+		<collect>
+			<open/>
+			<source/>
+		</collect>
+		<compare>
+			<source comparator="source"/>
+		</compare>
+		<urls>
+			<url href="comparators/source/success_redirect.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-Source-Redirect">
+		<collect>
+			<open/>
+			<source/>
+		</collect>
+		<compare>
+			<source comparator="source"/>
+		</compare>
+		<urls>
+			<url href="comparators/source/failed_redirect.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-Source-Random-Empty-Lines-ALLFORMATTED">
+		<collect>
+			<open/>
+			<source/>
+		</collect>
+		<compare>
+			<source compareType="allFormatted"/>
+		</compare>
+		<urls>
+			<url href="comparators/source/random-empty-lines.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-Source-Random-Empty-Lines">
+		<collect>
+			<open/>
+			<source/>
+		</collect>
+		<compare>
+			<source/>
+		</compare>
+		<urls>
+			<url href="comparators/source/random-empty-lines.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-Source-compareType-CONTENT">
+		<collect>
+			<open/>
+			<source/>
+		</collect>
+		<compare>
+			<source compareType="content"/>
+		</compare>
+		<urls>
+			<url href="comparators/source/random-empty-lines.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-Source-compareType-MARKUP">
+		<collect>
+			<open/>
+			<source/>
+		</collect>
+		<compare>
+			<source compareType="markup"/>
+		</compare>
+		<urls>
+			<url href="comparators/source/random-empty-lines.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-Source-compareType-ALLFORMATTED">
+		<collect>
+			<open/>
+			<source/>
+		</collect>
+		<compare>
+			<source compareType="allFormatted"/>
+		</compare>
+		<urls>
+			<url href="comparators/source/random-empty-lines.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-Layout">
+		<collect>
+			<open/>
+			<resolution width="1500"/>
+			<sleep duration="3000"/>
+			<screen/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/success.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-Layout">
+		<collect>
+			<open/>
+			<sleep duration="3000"/>
+			<screen/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-Layout-Hide">
+		<collect>
+			<open/>
+			<resolution width="1500"/>
+			<sleep duration="3000"/>
+			<hide xpath="//*[@id='demo1']"/>
+			<hide xpath="//*[@id='demo2']"/>
+			<screen/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-Layout-Hide-space">
+		<collect>
+			<open/>
+			<resolution width="1500"/>
+			<sleep duration="3000"/>
+			<hide xpath="//*[@class='space']"/>
+			<screen/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/different_sized_divs.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-Layout-Hide-leaveBlankSpace-false">
+		<collect>
+			<open/>
+			<sleep duration="3000"/>
+			<hide xpath="//*[@class='space']" leaveBlankSpace="false"/>
+			<resolution width="1500"/>
+			<screen/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/different_sized_divs.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-Layout-Resolution">
+		<collect>
+			<open/>
+			<resolution width="767"/>
+			<sleep duration="3000"/>
+			<screen/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/success_resolution.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-Layout-Resolution">
+		<collect>
+			<open/>
+			<resolution width="200" height="300"/>
+			<sleep duration="3000"/>
+			<screen/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-Layout-Partial-By-CSS">
+		<collect>
+			<open/>
+			<resolution width="1500" height="1500"/>
+			<sleep duration="3000"/>
+			<screen css="img"/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/success.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-Layout-Partial-By-XPATH">
+		<collect>
+			<open/>
+			<resolution width="1500" height="1500"/>
+			<sleep duration="3000"/>
+			<screen xpath="//*[@id='banner']/div/div[1]/h1"/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/success.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-Layout-Auto-Height-Detection-with-dynamic-content-at-bottom">
+		<collect>
+			<open/>
+			<resolution width="767"/>
+			<sleep duration="3000"/>
+			<screen/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/height_detection.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-Layout-Fixed-Height">
+		<collect>
+			<open/>
+			<resolution width="767" height="400"/>
+			<sleep duration="3000"/>
+			<screen/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/height_detection.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-Layout-pixel-threshold">
+		<collect>
+			<open/>
+			<sleep duration="3000"/>
+			<screen/>
+		</collect>
+		<compare>
+			<screen pixelThreshold="1" comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-Layout-pixel-threshold">
+		<collect>
+			<open/>
+			<sleep duration="3000"/>
+			<screen/>
+		</collect>
+		<compare>
+			<screen pixelThreshold="2500" comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-Layout-percentage-threshold">
+		<collect>
+			<open/>
+			<sleep duration="3000"/>
+			<screen/>
+		</collect>
+		<compare>
+			<screen percentageThreshold="0.001" comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-Layout-percentage-threshold">
+		<collect>
+			<open/>
+			<sleep duration="3000"/>
+			<screen/>
+		</collect>
+		<compare>
+			<screen percentageThreshold="0.5" comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-Layout-small-pixel-threshold-big-percentage-threshold">
+		<collect>
+			<open/>
+			<sleep duration="3000"/>
+			<screen/>
+		</collect>
+		<compare>
+			<screen pixelThreshold="1" percentageThreshold="0.5" comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-Layout-big-pixel-threshold-small-percentage-threshold">
+		<collect>
+			<open/>
+			<sleep duration="3000"/>
+			<screen/>
+		</collect>
+		<compare>
+			<screen pixelThreshold="2500" percentageThreshold="0.001" comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-Layout-small-pixel-threshold-small-percentage-threshold">
+		<collect>
+			<open/>
+			<sleep duration="3000"/>
+			<screen/>
+		</collect>
+		<compare>
+			<screen pixelThreshold="1000" percentageThreshold="0.001" comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-Layout-big-pixel-threshold-and-big-percentage-threshold">
+		<collect>
+			<open/>
+			<sleep duration="3000"/>
+			<screen/>
+		</collect>
+		<compare>
+			<screen pixelThreshold="2500" percentageThreshold="0.5" comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-Layout-Exclude-id">
+		<collect>
+			<open/>
+			<resolution width="767" height="300"/>
+			<sleep duration="3000"/>
+			<screen exclude-elements="#demo1,#demo2"/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-Layout-Exclude-css">
+		<collect>
+			<open/>
+			<resolution width="767" height="300"/>
+			<sleep duration="3000"/>
+			<screen exclude-elements=".dynamic1,.dynamic2"/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-Layout-Exclude-id">
+		<collect>
+			<open/>
+			<resolution width="767" height="300"/>
+			<sleep duration="3000"/>
+			<screen exclude-elements="#demo2"/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-Layout-Exclude-css">
+		<collect>
+			<open/>
+			<resolution width="767" height="300"/>
+			<sleep duration="3000"/>
+			<screen exclude-elements=".dynamic2"/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-Layout-Exclude-id-css">
+		<collect>
+			<open/>
+			<resolution width="767" height="300"/>
+			<sleep duration="3000"/>
+			<screen exclude-elements=".dynamic1,#demo2"/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-Layout-Exclude-Elements-with-Percentage-Treshold">
+		<collect>
+			<open/>
+			<resolution width="767" height="3200"/>
+			<sleep duration="3000"/>
+			<screen exclude-elements="#demo1,#demo2"/>
+		</collect>
+		<compare>
+			<screen comparator="layout" percentageThreshold="35"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/different_sized_divs.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-Layout-Exclude-Elements-with-Percentage-Treshold">
+		<collect>
+			<open/>
+			<resolution width="767" height="3200"/>
+			<sleep duration="3000"/>
+			<screen exclude-elements="unnamed" percentageThreshold="10"/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/different_sized_divs.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-Layout-Exclude-Elements">
+		<collect>
+			<open/>
+			<resolution width="767" height="300"/>
+			<sleep duration="3000"/>
+			<screen exclude-elements="unnamed"/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp"/>
+		</urls>
+	</test>
+<test name="S-modifier-Sleep">
+		<collect>
+			<open/>
+			<resolution width="1500"/>
+			<sleep duration="10000"/>
+			<screen/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="modifiers/sleep/success.jsp"/>
+		</urls>
+	</test>
+<test name="F-modifier-Sleep">
+		<collect>
+			<open/>
+			<resolution width="1500"/>
+			<sleep duration="100"/>
+			<screen/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="modifiers/sleep/failed.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-Cookie-action-list">
+		<collect>
+			<open/>
+			<cookie/>
+		</collect>
+		<compare>
+			<cookie action="list"/>
+		</compare>
+		<urls>
+			<url href="comparators/cookie/success.jsp"/>
+			<url href="comparators/cookie/failed.jsp" description="list action have always success status"/>
+		</urls>
+	</test>
+<test name="S-comparator-Cookie-action-test">
+		<collect>
+			<open/>
+			<cookie/>
+		</collect>
+		<compare>
+			<cookie action="test" cookie-name="sampleCookieName" cookie-value="sampleCookieValue"/>
+		</compare>
+		<urls>
+			<url href="comparators/cookie/success.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-Cookie-action-compare">
+		<collect>
+			<open/>
+			<cookie/>
+		</collect>
+		<compare>
+			<cookie action="compare" cookie-name="sampleCookieName" showMatched="true" cookie-value="sampleCookieValue"/>
+		</compare>
+		<urls>
+			<url href="comparators/cookie/success.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-Cookie-action-test-cookie-name-and-value">
+		<collect>
+			<open/>
+			<cookie/>
+		</collect>
+		<compare>
+			<cookie action="test" cookie-name="sampleCookieName" cookie-value="sampleCookieValue"/>
+		</compare>
+		<urls>
+			<url href="comparators/cookie/success.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-Cookie-action-compare">
+		<collect>
+			<open/>
+			<cookie/>
+		</collect>
+		<compare>
+			<cookie action="compare" showMatched="true"/>
+		</compare>
+		<urls>
+			<url href="comparators/cookie/failed.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-Cookie-action-test-cookie-name">
+		<collect>
+			<open/>
+			<cookie/>
+		</collect>
+		<compare>
+			<cookie action="test" cookie-name="nonExistingCookieName"/>
+		</compare>
+		<urls>
+			<url href="comparators/cookie/failed.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-Cookie-action-test-cookie-name-and-value">
+		<collect>
+			<open/>
+			<cookie/>
+		</collect>
+		<compare>
+			<cookie action="test" cookie-name="sampleCookieName" cookie-value="nonExpectedValue"/>
+		</compare>
+		<urls>
+			<url href="comparators/cookie/failed.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-Cookie-Modifer">
+		<collect>
+			<modify-cookie action="add" cookie-name="sampleCookieName" cookie-value="sampleCookieValue"/>
+			<open/>
+			<cookie/>
+		</collect>
+		<compare>
+			<cookie action="test" cookie-name="sampleCookieName" cookie-value="sampleCookieValue"/>
+		</compare>
+		<urls>
+			<url href="modifiers/cookie/success.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-Cookie-Modifer">
+		<collect>
+			<open/>
+			<cookie/>
+		</collect>
+		<compare>
+			<cookie action="test" cookie-name="sampleCookieName" cookie-value="sampleCookieValue"/>
+		</compare>
+		<urls>
+			<url href="modifiers/cookie/failed.jsp"/>
+		</urls>
+	</test>
+<test name="S-modifier-Click">
+		<collect>
+			<open/>
+			<resolution width="1500"/>
+			<click xpath="//a[@id='hide']" timeout="3000"/>
+			<sleep duration="1000"/>
+			<screen/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="modifiers/click/success.jsp"/>
+		</urls>
+	</test>
+<test name="S-modifier-Wait-For-Page-Loaded">
+		<collect>
+			<open/>
+			<resolution width="1500"/>
+			<wait-for-page-loaded/>
+			<screen/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="modifiers/wait-for-page-loaded/success.jsp"/>
+		</urls>
+	</test>
+<test name="F-modifier-Wait-For-Page-Loaded">
+		<collect>
+			<open/>
+			<resolution width="1500"/>
+			<!-- needed for initial timestamp rendering on Vagrant -->
+			<sleep duration="100"/>
+			<screen/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="modifiers/wait-for-page-loaded/failed.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-Client-side-performance-grade-A" useProxy="rest">
+		<collect>
+			<open/>
+			<client-side-performance/>
+		</collect>
+		<compare>
+			<client-side-performance/>
+		</compare>
+		<urls>
+			<url href="comparators/clientsideperformance/success.jsp"/>
+		</urls>
+	</test>
+<test name="W-comparator-Client-side-performance-grade-B" useProxy="rest">
+		<collect>
+			<open/>
+			<client-side-performance/>
+		</collect>
+		<compare>
+			<client-side-performance/>
+		</compare>
+		<urls>
+			<url href="comparators/clientsideperformance/warning.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-accessibility-with-standard-wcag2a">
+		<collect>
+			<open/>
+			<accessibility standard="WCAG2A"/>
+		</collect>
+		<compare>
+			<accessibility/>
+		</compare>
+		<urls>
+			<url href="comparators/accessibility/success.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-accessibility-with-standard-wcag2aa">
+		<collect>
+			<open/>
+			<accessibility/>
+		</collect>
+		<compare>
+			<accessibility/>
+		</compare>
+		<urls>
+			<url href="comparators/accessibility/success.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-accessibility-with-standard-wcag2aaa">
+		<collect>
+			<open/>
+			<accessibility standard="WCAG2AAA"/>
+		</collect>
+		<compare>
+			<accessibility/>
+		</compare>
+		<urls>
+			<url href="comparators/accessibility/success.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-accessibility-with-standard-wcag2aaa-report-level-error">
+		<collect>
+			<open/>
+			<accessibility standard="WCAG2AAA"/>
+		</collect>
+		<compare>
+			<accessibility report-level="ERROR"/>
+		</compare>
+		<urls>
+			<url href="comparators/accessibility/warning.jsp"/>
+		</urls>
+	</test>
+<test name="W-comparator-accessibility-with-standard-wcag2aaa-report-level-warn">
+		<collect>
+			<open/>
+			<accessibility standard="WCAG2AAA"/>
+		</collect>
+		<compare>
+			<accessibility report-level="WARN"/>
+		</compare>
+		<urls>
+			<url href="comparators/accessibility/warning.jsp"/>
+		</urls>
+	</test>
+<test name="W-comparator-accessibility-with-standard-wcag2aaa-report-level-notice">
+		<collect>
+			<open/>
+			<accessibility standard="WCAG2AAA"/>
+		</collect>
+		<compare>
+			<accessibility report-level="NOTICE"/>
+		</compare>
+		<urls>
+			<url href="comparators/accessibility/warning.jsp"/>
+		</urls>
+	</test>
+<test name="W-comparator-accessibility-no-ignore-notice">
+		<collect>
+			<open/>
+			<accessibility standard="WCAG2AAA"/>
+		</collect>
+		<compare>
+			<accessibility ignore-notice="false"/>
+		</compare>
+		<urls>
+			<url href="comparators/accessibility/success.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-accessibility-with-standard-wcag2a">
+		<collect>
+			<open/>
+			<accessibility standard="WCAG2A"/>
+		</collect>
+		<compare>
+			<accessibility/>
+		</compare>
+		<urls>
+			<url href="comparators/accessibility/failed.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-accessibility-with-standard-wcag2aa">
+		<collect>
+			<open/>
+			<accessibility/>
+		</collect>
+		<compare>
+			<accessibility/>
+		</compare>
+		<urls>
+			<url href="comparators/accessibility/failed.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-accessibility-with-standard-wcag2aaa">
+		<collect>
+			<open/>
+			<accessibility standard="WCAG2AAA"/>
+		</collect>
+		<compare>
+			<accessibility/>
+		</compare>
+		<urls>
+			<url href="comparators/accessibility/failed.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-accessibility-with-standard-wcag2a-filtered-only-by-principle">
+		<collect>
+			<open/>
+			<accessibility standard="WCAG2A"/>
+		</collect>
+		<compare>
+			<accessibility>
+				<accessibility-filter principle="WCAG2A.Principle1.Guideline1_3.1_3_1.F68"/>
+			</accessibility>
+		</compare>
+		<urls>
+			<url href="comparators/accessibility/failed.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-accessibility-with-standard-wcag2a-filtered-only-by-error">
+		<collect>
+			<open/>
+			<accessibility standard="WCAG2A"/>
+		</collect>
+		<compare>
+			<accessibility>
+				<accessibility-filter error="This select element does not have a name available to an accessibility API. Valid names are: label element, title attribute."/>
+			</accessibility>
+		</compare>
+		<urls>
+			<url href="comparators/accessibility/failed.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-accessibility-with-standard-wcag2a-filtered-only-by-line">
+		<collect>
+			<open/>
+			<accessibility standard="WCAG2A"/>
+		</collect>
+		<compare>
+			<accessibility>
+				<accessibility-filter line="270"/>
+				<accessibility-filter line="314"/>
+			</accessibility>
+		</compare>
+		<urls>
+			<url href="comparators/accessibility/failed.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-accessibility-with-standard-wcag2a-filtered-only-by-column">
+		<collect>
+			<open/>
+			<accessibility standard="WCAG2A"/>
+		</collect>
+		<compare>
+			<accessibility>
+				<accessibility-filter column="5"/>
+			</accessibility>
+		</compare>
+		<urls>
+			<url href="comparators/accessibility/failed.jsp"/>
+		</urls>
+	</test>
+<test name="F-comparator-accessibility-with-standard-wcag2a-filtered-only-by-markup-css">
+		<collect>
+			<open/>
+			<accessibility standard="WCAG2A"/>
+		</collect>
+		<compare>
+			<accessibility>
+				<accessibility-filter markupCss=".form-control"/>
+			</accessibility>
+		</compare>
+		<urls>
+			<url href="comparators/accessibility/failed.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-accessibility-with-standard-wcag2a-filtered-all">
+		<collect>
+			<open/>
+			<accessibility standard="WCAG2A"/>
+		</collect>
+		<compare>
+			<accessibility>
+				<accessibility-filter errorPattern="[\w]* button element does not have a name available .*"/>
+				<accessibility-filter error="This select element does not have a name available to an accessibility API. Valid names are: label element, title attribute."/>
+				<accessibility-filter principle="WCAG2A.Principle1.Guideline1_3.1_3_1.F68"/>
+				<accessibility-filter line="252"/>
+				<accessibility-filter column="6"/>
+				<accessibility-filter line="299" column="50"/>
+			</accessibility>
+		</compare>
+		<urls>
+			<url href="comparators/accessibility/failed.jsp"/>
+		</urls>
+	</test>
+<test name="S-modifier-Header" useProxy="rest">
+		<collect>
+			<!--
+				the header here contains encoded username and password
+				see also context.xml file in AET sample-site module
+			-->
+			<header key="authorization" value="Basic dXNlcjpwYXNzd29yZA=="/>
+			<open/>
+			<source/>
+		</collect>
+		<compare>
+			<source comparator="source"/>
+		</compare>
+		<urls>
+			<url href="modifiers/header/private/basic_auth_required.jsp"/>
+		</urls>
+	</test>
+<test name="S-loginModifier">
+		<collect>
+			<login login="admin" password="password" login-page="http://192.168.123.100:9090/sample-site/sanity/modifiers/login/loginForm.jsp" login-input-selector="//input[@name='j_username']" password-input-selector="//input[@name='j_password']" submit-button-selector="//input[@id='input-submit']" login-token-key="login-token"/>
+			<open/>
+			<cookie/>
+		</collect>
+		<compare>
+			<cookie name="c0" action="list"/>
+			<cookie name="c1" action="test" cookie-name="static-cookie" cookie-value="cookievalue"/>
+			<cookie name="c2" action="test" cookie-name="login-token" cookie-value="admin_password"/>
+		</compare>
+		<urls>
+			<url href="modifiers/login/check.jsp"/>
+		</urls>
+	</test>
+<test name="S-replaceText">
+        <collect>
+            <open/>
+            <resolution width="1500"/>
+            <replaceText xpath="//*[@id='demo1']" value="xpath replaced !"/>
+            <replaceText css=".replaceMe" value="css replaced !"/>
+            <replaceText css="#demo3" attributeName="value" value="No Numbers Here !"/>
+            <sleep duration="1000"/>
+            <screen/>
+        </collect>
+        <compare>
+            <screen comparator="layout"/>
+        </compare>
+        <urls>
+            <url href="modifiers/replaceText/success.jsp"/>
+        </urls>
+    </test>
+<test name="S-comparator-Layout-Executejavascript-cmd-hide">
+		<collect>
+			<open/>
+			<resolution width="1500"/>
+			<sleep duration="3000"/>
+			<executejavascript cmd="document.getElementById('demo1').style.display='none'"/>
+			<executejavascript cmd="document.getElementById('demo2').style.display='none'"/>
+			<screen/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/failed.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-Layout-Executejavascript-cmd-background">
+		<collect>
+			<open/>
+			<resolution width="1500"/>
+			<sleep duration="3000"/>
+			<executejavascript cmd="document.body.style.background = 'green';"/>
+			<screen/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/success.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-Layout-Executejavascript-snippetUrl-background">
+		<collect>
+			<open/>
+			<resolution width="1500"/>
+			<sleep duration="3000"/>
+			<executejavascript snippetUrl="http://192.168.123.100:9090/sample-site/assets/snippets/change-bg-snippet.js"/>
+			<screen/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/success.jsp"/>
+		</urls>
+	</test>
+<test name="S-comparator-Layout-Executejavascript-snippetUrl-basicAuth-background">
+		<collect>
+			<open/>
+			<resolution width="1500"/>
+			<sleep duration="3000"/>
+			<executejavascript snippetUrl="http://192.168.123.100:9090/sample-site/assets/secured/change-bg-snippet.js" basicAuthUsername="user" basicAuthPassword="password"/>
+			<screen/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/success.jsp"/>
+		</urls>
+	</test>
+<test name="S-modifier-Wait-For-Element-To-Be-Visible">
+		<collect>
+			<open/>
+			<resolution width="1500"/>
+			<wait-for-element-to-be-visible css="#test-element" timeout="10000"/>
+			<screen/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="modifiers/wait-for-element-to-be-visible/element-will-cover-timestamp.jsp"/>
+		</urls>
+	</test>
+<test name="F-modifier-Wait-For-Element-To-Be-Visible">
+		<collect>
+			<open/>
+			<resolution width="1500"/>
+			<wait-for-element-to-be-visible css="#test-element" timeout="100"/>
+			<screen/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="modifiers/wait-for-element-to-be-visible/element-will-cover-timestamp.jsp"/>
+		</urls>
+	</test>
+<test name="S-modifier-Wait-For-Image-Completion">
+		<collect>
+			<open/>
+			<resolution width="1500" height="800"/>
+			<wait-for-image-completion xpath="//img[@id = 'image-to-wait-for']" timeout="15000"/>
+			<screen/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="modifiers/wait-for-image-completion/image-will-cover-timestamp.jsp"/>
+		</urls>
+	</test>
+<test name="F-modifier-Wait-For-Image-Completion-not-visible">
+		<collect>
+			<open/>
+			<resolution width="1500"/>
+			<wait-for-image-completion css="#image-to-wait-for" timeout="100"/>
+			<screen/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="modifiers/wait-for-image-completion/image-will-cover-timestamp.jsp"/>
+		</urls>
+	</test>
+<test name="S-modifier-Wait-For-Image-Completion-slow-image">
+		<collect>
+			<open/>
+			<resolution width="1500"/>
+			<!-- image is served with additional latency -->
+			<wait-for-image-completion css="#image-to-wait-for" timeout="7000"/>
+			<screen/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="modifiers/wait-for-image-completion/image-with-latency.jsp"/>
+		</urls>
+	</test>
+<test name="S-modifier-Wait-For-Image-Completion-slow-image-short-timeout">
+		<collect>
+			<open/>
+			<!-- image is served with additional latency -->
+			<wait-for-image-completion xpath="//img[@id = 'image-to-wait-for']" timeout="1"/>
+			<screen/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="modifiers/wait-for-image-completion/image-with-latency.jsp"/>
+		</urls>
+	</test>
+</objectToRun>

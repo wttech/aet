@@ -31,11 +31,6 @@ public class SuiteRunWrapper implements Run {
   }
 
   @Override
-  public Suite getObjectToRun(){
-    return suite;
-  }
-
-  @Override
   public String getCorrelationId(){
     return suite.getCorrelationId();
   }
@@ -60,4 +55,13 @@ public class SuiteRunWrapper implements Run {
     return suite.getProject();
   }
 
+  @Override
+  public Suite getRealSuite() {
+    return suite;
+  }
+
+  @Override
+  public Suite getObjectToRun(){
+    return suite;
+  }
 }

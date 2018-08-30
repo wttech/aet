@@ -15,9 +15,6 @@
  */
 package com.cognifide.aet.runner.processing;
 
-import static com.cognifide.aet.rest.BasicDataServlet.isValidCorrelationId;
-import static com.cognifide.aet.rest.BasicDataServlet.isValidName;
-
 import com.cognifide.aet.communication.api.messages.FinishedSuiteProcessingMessage;
 import com.cognifide.aet.communication.api.messages.FinishedSuiteProcessingMessage.Status;
 import com.cognifide.aet.communication.api.metadata.Suite;
@@ -25,7 +22,7 @@ import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.communication.api.wrappers.Run;
 import com.cognifide.aet.runner.RunnerConfiguration;
 import com.cognifide.aet.runner.processing.data.SuiteDataService;
-import com.cognifide.aet.runner.processing.data.SuiteIndexWrapper;
+import com.cognifide.aet.runner.processing.data.RunIndexWrapper;
 import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.StorageException;
@@ -36,13 +33,13 @@ import javax.jms.Destination;
 
 abstract class ProcessorStrategy<T> implements Callable<String> {
 
-  protected Logger LOGGER;
+  protected static Logger LOGGER;
   protected final Destination jmsReplyTo;
   protected final SuiteDataService suiteDataService;
   protected final RunnerConfiguration runnerConfiguration;
   protected final SuiteExecutionFactory suiteExecutionFactory;
 
-  protected SuiteIndexWrapper indexedSuite;
+  protected RunIndexWrapper indexedSuite;
 
   protected MessagesSender messagesSender;
   protected SuiteProcessor suiteProcessor;
@@ -51,11 +48,12 @@ abstract class ProcessorStrategy<T> implements Callable<String> {
 
   public ProcessorStrategy(Destination jmsReplyTo,
       SuiteDataService suiteDataService, RunnerConfiguration runnerConfiguration,
-      SuiteExecutionFactory suiteExecutionFactory) {
+      SuiteExecutionFactory suiteExecutionFactory, Logger LOGGER) {
     this.jmsReplyTo = jmsReplyTo;
     this.suiteDataService = suiteDataService;
     this.runnerConfiguration = runnerConfiguration;
     this.suiteExecutionFactory = suiteExecutionFactory;
+    this.LOGGER = LOGGER;
   }
 
   @Override
@@ -93,18 +91,6 @@ abstract class ProcessorStrategy<T> implements Callable<String> {
     LOGGER.debug("Cleaning up suite {}", getObjectToRun());
     messagesSender.close();
     suiteProcessor.cleanup();
-  }
-
-  protected static Suite getSuiteFromMetadata(MetadataDAO metadataDAO, DBKey dbKey,
-      String correlationId, String suiteName)
-      throws StorageException {
-    if (isValidCorrelationId(correlationId)) {
-      return metadataDAO.getSuite(dbKey, correlationId);
-    } else if (isValidName(suiteName)) {
-      return metadataDAO.getLatestRun(dbKey, suiteName);
-    } else {
-      return null;
-    }
   }
 
   protected abstract T getObjectToRun();

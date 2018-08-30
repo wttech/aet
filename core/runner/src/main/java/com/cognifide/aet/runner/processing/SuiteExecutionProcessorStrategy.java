@@ -16,35 +16,35 @@
 package com.cognifide.aet.runner.processing;
 
 import com.cognifide.aet.communication.api.messages.FinishedSuiteProcessingMessage;
-import com.cognifide.aet.communication.api.messages.FinishedSuiteProcessingMessage.Status;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.communication.api.wrappers.Run;
+import com.cognifide.aet.communication.api.wrappers.SuiteRunWrapper;
 import com.cognifide.aet.runner.RunnerConfiguration;
 import com.cognifide.aet.runner.processing.data.SuiteDataService;
-import com.cognifide.aet.runner.processing.data.SuiteIndexWrapper;
+import com.cognifide.aet.runner.processing.data.RunIndexWrapper;
 import com.cognifide.aet.vs.StorageException;
-import java.util.concurrent.Callable;
 import javax.jms.Destination;
-import javax.jms.JMSException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class SuiteExecutionProcessorStrategy extends
-{
-  protected static final Logger LOGGER = LoggerFactory.getLogger(SuiteExecutionProcessorStrategy.class);
+public class SuiteExecutionProcessorStrategy extends ProcessorStrategy {
+
+  protected static final Logger LOGGER = LoggerFactory
+      .getLogger(SuiteExecutionProcessorStrategy.class);
 
   public SuiteExecutionProcessorStrategy(Run objectToRun, Destination jmsReplyTo,
       SuiteDataService suiteDataService, RunnerConfiguration runnerConfiguration,
       SuiteExecutionFactory suiteExecutionFactory) {
-    super(jmsReplyTo, suiteDataService, runnerConfiguration, suiteExecutionFactory);
+    super(jmsReplyTo, suiteDataService, runnerConfiguration, suiteExecutionFactory, LOGGER);
     this.objectToRun = objectToRun;
   }
 
   void prepareSuiteWrapper() throws StorageException {
     LOGGER.debug("Fetching suite patterns {}", getObjectToRun());
     try {
-      indexedSuite = new SuiteIndexWrapper(suiteDataService.enrichWithPatterns(getObjectToRun()));
+      indexedSuite = new RunIndexWrapper(
+          new SuiteRunWrapper(suiteDataService.enrichWithPatterns(objectToRun.getRealSuite())));
     } catch (StorageException e) {
       e.printStackTrace();
     }
@@ -53,7 +53,7 @@ public class SuiteExecutionProcessorStrategy extends
   void save() throws ValidatorException, StorageException {
     LOGGER.debug("Persisting suite {}", getObjectToRun());
     try {
-      suiteDataService.saveSuite(indexedSuite.get());
+      suiteDataService.saveSuite(indexedSuite.get().getRealSuite());
     } catch (ValidatorException | StorageException e) {
       e.printStackTrace();
     }
@@ -62,7 +62,8 @@ public class SuiteExecutionProcessorStrategy extends
             objectToRun.getCorrelationId()));
   }
 
-  protected Suite getObjectToRun(){
-    return (Suite) objectToRun.getObjectToRun();
+  @Override
+  protected Suite getObjectToRun() {
+    return objectToRun.getRealSuite();
   }
 }

@@ -16,6 +16,7 @@
 package com.cognifide.aet.communication.api.wrappers;
 
 import com.cognifide.aet.communication.api.messages.MessageType;
+import com.cognifide.aet.communication.api.metadata.Suite;
 import java.io.Serializable;
 
 public interface Run<T> extends Serializable {
@@ -24,6 +25,10 @@ public interface Run<T> extends Serializable {
   String getType();
 
   T getObjectToRun();
+
+  default Suite getRealSuite(){
+    return null;
+  }
 
   default String getCorrelationId() {
     return null;
@@ -44,5 +49,4 @@ public interface Run<T> extends Serializable {
   default String getSuiteIdentifier() {
     return null;
   }
-
 }

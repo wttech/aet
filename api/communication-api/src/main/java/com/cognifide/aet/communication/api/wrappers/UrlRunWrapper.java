@@ -15,12 +15,14 @@
  */
 package com.cognifide.aet.communication.api.wrappers;
 
-import com.cognifide.aet.communication.api.messages.MessageType;
 import com.cognifide.aet.communication.api.metadata.Url;
 
 public class UrlRunWrapper implements Run {
 
   private Url url;
+  private String testName;
+  private String proxy;
+  private String preferredBrowserId;
 
   public UrlRunWrapper(Url url) {
     this.url = url;
@@ -35,4 +37,30 @@ public class UrlRunWrapper implements Run {
   public Url getObjectToRun() {
     return url;
   }
+
+
+  public String getTestName() {
+    return testName;
+  }
+
+  public String getProxy() {
+    return proxy;
+  }
+
+  public String getPreferredBrowserId() {
+    return preferredBrowserId;
+  }
+
+  public void setTestName(String testName) {
+    this.testName = testName;
+  }
+
+  public void setProxy(String proxy) {
+    this.proxy = proxy;
+  }
+
+  public void setPreferredBrowserId(String preferredBrowserId) {
+    this.preferredBrowserId = preferredBrowserId;
+  }
+
 }

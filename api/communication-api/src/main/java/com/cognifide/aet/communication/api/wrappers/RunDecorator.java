@@ -20,6 +20,10 @@ import com.cognifide.aet.communication.api.messages.MessageType;
 public abstract class RunDecorator implements Run{
   protected Run decoratedRun;
 
+  public Run getDecoratedRun() {
+    return decoratedRun;
+  }
+
   public RunDecorator(Run decoratedRun) {
     this.decoratedRun = decoratedRun;
   }

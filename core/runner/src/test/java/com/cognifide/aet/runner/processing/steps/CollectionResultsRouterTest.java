@@ -60,10 +60,10 @@ public class CollectionResultsRouterTest extends StepManagerTest {
             .metadata.Test.class);
     when(mockedTest.getUrls()).thenReturn(Collections.singleton(Mockito.mock(Url.class)));
     when(suite.getTests()).thenReturn(Collections.singletonList(mockedTest));
-    when(suiteIndexWrapper.getTest(anyString())).thenReturn(mockedTest);
+    when(runIndexWrapper.getTest(anyString())).thenReturn(mockedTest);
     CollectionResultsRouter collectionResultsRouter = new CollectionResultsRouter(timeoutWatch,
         connection, runnerConfiguration,
-        scheduler, suiteIndexWrapper);
+        scheduler, runIndexWrapper);
     collectionResultsRouter.addChangeObserver(changeObserver);
     return collectionResultsRouter;
   }

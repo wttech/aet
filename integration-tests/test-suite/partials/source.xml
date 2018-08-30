@@ -18,7 +18,7 @@
     limitations under the License.
 
 -->
-<suite name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
+<objectToRun name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
 
 	<!-- Source-Comparator START -->
 	<test name="S-comparator-Source">
@@ -239,4 +239,4 @@
 		</urls>
 	</test>
 	<!-- Source-Comparator END -->
-</suite>
+</objectToRun>

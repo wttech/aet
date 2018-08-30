@@ -48,10 +48,6 @@ public class SuiteDataService {
   }
 
   public Suite saveSuite(final Suite suite) throws ValidatorException, StorageException {
-    if (suite.isRerunned()) {
-      return metadataDAO.overrideFirstTestInSuite(suite);
-    } else {
-      return metadataDAO.saveSuite(suite);
-    }
+    return metadataDAO.saveSuite(suite);
   }
 }

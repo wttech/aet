@@ -51,7 +51,7 @@ public class ComparisonResultsRouterTest extends StepManagerTest {
   @Override
   protected StepManager createTested() throws JMSException {
     ComparisonResultsRouter tested = new ComparisonResultsRouter(timeoutWatch, connection, runnerConfiguration,
-        suiteIndexWrapper);
+        runIndexWrapper);
     return tested;
   }
 
@@ -59,7 +59,7 @@ public class ComparisonResultsRouterTest extends StepManagerTest {
   public void informChangesCompleted_whenCollectingFinished_expectMetadataPersisted()
       throws Exception {
     Timestamp mockedTimestamp = Mockito.mock(Timestamp.class);
-    when(suiteIndexWrapper.get()).thenReturn(suite);
+ //   when(runIndexWrapper.get()).thenReturn(suite);
     when(suite.getRunTimestamp()).thenReturn(mockedTimestamp);
     when(suite.getFinishedTimestamp()).thenReturn(mockedTimestamp);
     ((ComparisonResultsRouter) tested).informChangesCompleted();
@@ -74,7 +74,7 @@ public class ComparisonResultsRouterTest extends StepManagerTest {
     when(comparatorResultData.getStepIndex()).thenReturn(0);
     Url mockedUrl = Mockito.mock(Url.class);
     when(mockedUrl.getSteps()).thenReturn(Collections.singletonList(Mockito.mock(Step.class)));
-    when(suiteIndexWrapper.getTestUrl(anyString(), anyString())).thenReturn(Optional.of(mockedUrl));
+    when(runIndexWrapper.getTestUrl(anyString(), anyString())).thenReturn(Optional.of(mockedUrl));
     ((ComparisonResultsRouter) tested).updateAmountToReceive(1);
 
     ProgressLog progress = tested.getProgress();
@@ -92,7 +92,7 @@ public class ComparisonResultsRouterTest extends StepManagerTest {
     when(comparatorResultData.getStepIndex()).thenReturn(0);
     Url mockedUrl = Mockito.mock(Url.class);
     when(mockedUrl.getSteps()).thenReturn(Collections.singletonList(Mockito.mock(Step.class)));
-    when(suiteIndexWrapper.getTestUrl(anyString(), anyString())).thenReturn(Optional.of(mockedUrl));
+    when(runIndexWrapper.getTestUrl(anyString(), anyString())).thenReturn(Optional.of(mockedUrl));
     ((ComparisonResultsRouter) tested).updateAmountToReceive(1);
 
     ProgressLog progress = tested.getProgress();

@@ -19,7 +19,7 @@
 -->
 <div class="aside" ui-view="aside">
   <div class="logo-holder">
-    <a ui-sref="suite">
+    <a ui-sref="objectToRun">
       <img class="logo" ng-src="assets/img/logo_{{theme.name}}.png" alt="">
     </a>
   </div>
@@ -126,7 +126,7 @@
   <div class="aside-report-container">
     <div ng-repeat="test in sidepanel.tests | orderBy:'name'"
          class="aside-report {{filteredUrls.length > 0 ? 'is-visible' : 'is-hidden'}}">
-      <a ui-sref="test({'suite':$root.params.project, 'test':test.name})" ui-sref-active="is-active"
+      <a ui-sref="test({'objectToRun':$root.params.project, 'test':test.name})" ui-sref-active="is-active"
          class="test-name {{filteredUrls.length > 0 ? 'is-visible' : 'is-hidden'}}" aet-toggle-link
          type="test-name" ng-class="[test.getStatus()]" data-url="{{test.name}}">
             <span>
@@ -150,7 +150,7 @@
               <i class="fas {{theme.statusClasses[test.getStatus()]}}"></i>
             </div>
               <a class="test-url" ui-sref-active="is-active"
-               ui-sref="url({'suite':$root.params.project,'test':test.name, 'url':url.name})">
+               ui-sref="url({'objectToRun':$root.params.project,'test':test.name, 'url':url.name})">
               {{url.name}}
             </a>
           </div>

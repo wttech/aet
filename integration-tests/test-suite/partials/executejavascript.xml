@@ -20,67 +20,67 @@
 -->
 <objectToRun name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
 
-	<!-- Wait-For-Image-Completion-Modifier BEGIN -->
-	<test name="S-modifier-Wait-For-Image-Completion">
-		<collect>
-			<open />
-			<resolution width="1500" height="800"/>
-			<wait-for-image-completion xpath="//img[@id = 'image-to-wait-for']" timeout = "15000"/>
-			<screen />
-		</collect>
-		<compare>
-			<screen comparator="layout" />
-		</compare>
-		<urls>
-			<url href="modifiers/wait-for-image-completion/image-will-cover-timestamp.jsp" />
-		</urls>
-	</test>
-	<!-- Should fail because the test doesn't wait for the image to load before timeout -->
-	<test name="F-modifier-Wait-For-Image-Completion-not-visible">
+	<!-- Executejavascript-Modifier BEGIN -->
+	<test name="S-comparator-Layout-Executejavascript-cmd-hide">
 		<collect>
 			<open />
 			<resolution width="1500" />
-			<wait-for-image-completion css="#image-to-wait-for" timeout="100"/>
+			<sleep duration="3000" />
+			<executejavascript cmd="document.getElementById('demo1').style.display='none'" />
+			<executejavascript cmd="document.getElementById('demo2').style.display='none'" />
 			<screen />
 		</collect>
 		<compare>
 			<screen comparator="layout" />
 		</compare>
 		<urls>
-			<url href="modifiers/wait-for-image-completion/image-will-cover-timestamp.jsp" />
+			<url href="comparators/layout/failed.jsp" />
 		</urls>
 	</test>
-
-	<test name="S-modifier-Wait-For-Image-Completion-slow-image">
+	<test name="S-comparator-Layout-Executejavascript-cmd-background">
 		<collect>
 			<open />
 			<resolution width="1500" />
-			<!-- image is served with additional latency -->
-			<wait-for-image-completion css="#image-to-wait-for" timeout = "7000"/>
+			<sleep duration="3000" />
+			<executejavascript cmd="document.body.style.background = 'green';" />
 			<screen />
 		</collect>
 		<compare>
 			<screen comparator="layout" />
 		</compare>
 		<urls>
-			<url href="modifiers/wait-for-image-completion/image-with-latency.jsp" />
+			<url href="comparators/layout/success.jsp" />
 		</urls>
 	</test>
-
-	<!-- Should pass because Chrome waits for images in the <open> phase -->
-	<test name="S-modifier-Wait-For-Image-Completion-slow-image-short-timeout">
+	<test name="S-comparator-Layout-Executejavascript-snippetUrl-background">
 		<collect>
 			<open />
-			<!-- image is served with additional latency -->
-			<wait-for-image-completion xpath="//img[@id = 'image-to-wait-for']" timeout = "1"/>
+			<resolution width="1500" />
+			<sleep duration="3000" />
+			<executejavascript snippetUrl="http://192.168.123.100:9090/sample-site/assets/snippets/change-bg-snippet.js" />
 			<screen />
 		</collect>
 		<compare>
 			<screen comparator="layout" />
 		</compare>
 		<urls>
-			<url href="modifiers/wait-for-image-completion/image-with-latency.jsp" />
+			<url href="comparators/layout/success.jsp" />
 		</urls>
 	</test>
-	<!-- Wait-For-Image-Completion-Modifier END -->
+	<test name="S-comparator-Layout-Executejavascript-snippetUrl-basicAuth-background">
+		<collect>
+			<open />
+			<resolution width="1500" />
+			<sleep duration="3000" />
+			<executejavascript snippetUrl="http://192.168.123.100:9090/sample-site/assets/secured/change-bg-snippet.js" basicAuthUsername="user" basicAuthPassword="password" />
+			<screen />
+		</collect>
+		<compare>
+			<screen comparator="layout" />
+		</compare>
+		<urls>
+			<url href="comparators/layout/success.jsp" />
+		</urls>
+	</test>
+	<!-- Executejavascript-Modifier END -->
 </objectToRun>

@@ -19,14 +19,19 @@ import com.cognifide.aet.communication.api.job.CollectorJobData;
 import com.cognifide.aet.communication.api.metadata.Test;
 import com.cognifide.aet.communication.api.metadata.Url;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
+import com.cognifide.aet.communication.api.wrappers.MetadataRunDecorator;
+import com.cognifide.aet.communication.api.wrappers.UrlRunWrapper;
 import com.cognifide.aet.runner.RunnerConfiguration;
+import com.cognifide.aet.runner.processing.data.RunIndexWrapper;
 import com.cognifide.aet.runner.scheduler.CollectorJobSchedulerService;
 import com.cognifide.aet.runner.scheduler.MessageWithDestination;
 import com.cognifide.aet.runner.processing.ProgressLog;
-import com.cognifide.aet.runner.processing.data.SuiteIndexWrapper;
 import com.cognifide.aet.runner.processing.TimeoutWatch;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Queues;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Deque;
 import java.util.List;
 import javax.jms.JMSException;
@@ -46,15 +51,15 @@ public class CollectDispatcher extends StepManager {
 
   private final CollectorJobSchedulerService collectorJobScheduler;
 
-  private final SuiteIndexWrapper suite;
+  private final RunIndexWrapper objectToRun;
 
   public CollectDispatcher(TimeoutWatch timeoutWatch, JmsConnection jmsConnection,
       RunnerConfiguration runnerConfiguration,
-      CollectorJobSchedulerService collectorJobScheduler, SuiteIndexWrapper suite) throws JMSException {
-    super(timeoutWatch, jmsConnection, suite.get().getCorrelationId(), runnerConfiguration.getMttl());
+      CollectorJobSchedulerService collectorJobScheduler, RunIndexWrapper objectToRun) throws JMSException {
+    super(timeoutWatch, jmsConnection, objectToRun.get().getCorrelationId(), runnerConfiguration.getMttl());
     this.urlPackageSize = runnerConfiguration.getUrlPackageSize();
     this.collectorJobScheduler = collectorJobScheduler;
-    this.suite = suite;
+    this.objectToRun = objectToRun;
     sender = session.createProducer(null);
     sender.setTimeToLive(runnerConfiguration.getMttl());
   }
@@ -73,10 +78,17 @@ public class CollectDispatcher extends StepManager {
     Deque<MessageWithDestination> messagesQueue = Queues.newArrayDeque();
     LOGGER.info("Starting processing new Test Suite. CorrelationId: {} ", correlationId);
 
-    for (Test test : suite.get().getTests()) {
-      processUrlsAndGroupToPackages(messagesQueue, test);
+    for (MetadataRunDecorator metadataRunDecorator : objectToRun.getUrls()) {
+      UrlRunWrapper urlRunWrapper = (UrlRunWrapper) metadataRunDecorator.getDecoratedRun();
+      final CollectorJobData data = new CollectorJobData(metadataRunDecorator.getCompany(),
+          metadataRunDecorator.getProject(), metadataRunDecorator.getName(), urlRunWrapper.getTestName(),
+          new ArrayList<>(Collections.singleton(urlRunWrapper.getObjectToRun())),
+          urlRunWrapper.getProxy(), urlRunWrapper.getPreferredBrowserId());
+      ObjectMessage message = session.createObjectMessage(data);
+      message.setJMSCorrelationID(correlationId);
+      messagesQueue.add(new MessageWithDestination(getQueueOut(), message, 1));
     }
-    collectorJobScheduler.add(messagesQueue, suite.get().getCorrelationId());
+    collectorJobScheduler.add(messagesQueue, objectToRun.get().getCorrelationId());
     LOGGER.info("MessagesQueue was added to collectorJobScheduler. CorrelationId: {} ",
         correlationId);
   }
@@ -94,12 +106,7 @@ public class CollectDispatcher extends StepManager {
       msgIndex++;
       urlsToSend.add(testUrl);
       if (msgIndex % urlPackageSize == 0 || msgIndex == totalUrls) {
-        final CollectorJobData data = new CollectorJobData(suite.get().getCompany(),
-            suite.get().getProject(), suite.get().getName(), test.getName(), urlsToSend,
-            test.getProxy(), test.getPreferredBrowserId());
-        ObjectMessage message = session.createObjectMessage(data);
-        message.setJMSCorrelationID(correlationId);
-        messagesQueue.add(new MessageWithDestination(getQueueOut(), message, urlsToSend.size()));
+
         urlsToSend.clear();
       }
     }

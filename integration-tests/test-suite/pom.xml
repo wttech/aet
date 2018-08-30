@@ -28,7 +28,7 @@
     <relativePath>../..</relativePath>
   </parent>
 
-  <artifactId>test-suite</artifactId>
+  <artifactId>test-objectToRun</artifactId>
   <packaging>pom</packaging>
 
   <name>AET :: Integration Tests :: Test Suite</name>
@@ -92,12 +92,12 @@
               <transformationSets>
                 <transformationSet>
                   <dir>xml</dir>
-                  <stylesheet>test-suite-assembly.xsl</stylesheet>
+                  <stylesheet>test-objectToRun-assembly.xsl</stylesheet>
                   <outputDir>.</outputDir>
                   <fileMappers>
                     <fileMapper implementation="org.codehaus.plexus.components.io.filemappers.RegExpFileMapper">
                       <pattern>main-test-template</pattern>
-                      <replacement>suite</replacement>
+                      <replacement>objectToRun</replacement>
                     </fileMapper>
                   </fileMappers>
                 </transformationSet>

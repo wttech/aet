@@ -18,7 +18,7 @@
     limitations under the License.
 
 -->
-<suite name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
+<objectToRun name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
 
 	<!-- JS ERRORS-Comparator START -->
 	<test name="F-comparator-JsErrors-filter-by-source-external-only">
@@ -129,4 +129,4 @@
 		</urls>
 	</test>
 	<!-- JS ERRORS-Comparator END -->
-</suite>
+</objectToRun>

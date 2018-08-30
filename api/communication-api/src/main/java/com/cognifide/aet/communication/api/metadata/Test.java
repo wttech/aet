@@ -125,4 +125,13 @@ public class Test implements Serializable, Commentable, Named {
     isRerunned = true;
     rerunTimestamp = new Timestamp(System.currentTimeMillis());
   }
+
+  public Url getUrl(String urlName) {
+    for (Url url: this.urls) {
+      if(url.getName().equals(urlName)){
+        return url;
+      }
+    }
+    return null;
+  }
 }

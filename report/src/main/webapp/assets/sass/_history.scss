@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-.suite-history-container {
+.objectToRun-history-container {
   position: absolute;
   left:22%;
   top:70px;
@@ -27,12 +27,12 @@
   box-shadow: 0px 0px 7px 7px rgba(0,0,0,0.25) !important;
   display: block;
 
-  .suite-history-top-bar {
+  .objectToRun-history-top-bar {
     position: relative;
     height:40px;
     border-bottom:1px solid darken($border-color, 10%);
 
-    .suite-history-top-bar-close {
+    .objectToRun-history-top-bar-close {
       width:35px;
       height:100%;
       float:right;
@@ -47,7 +47,7 @@
       }
     }
 
-    .suite-history-title {
+    .objectToRun-history-title {
       display: block;
       width:200px;
       position: absolute;
@@ -58,7 +58,7 @@
     }
   }
 
-  .suite-history-item {
+  .objectToRun-history-item {
     text-align: left;
     font-family: $font_light;
     color: rgb(119, 119, 124);
@@ -75,7 +75,7 @@
       color: darken($history, 20%);
     }
 
-    .suite-history-rebased-bold {
+    .objectToRun-history-rebased-bold {
       font-weight: bold;
       color: $historyRebased;
   
@@ -84,7 +84,7 @@
       }
     }
   
-    .suite-history-bold {
+    .objectToRun-history-bold {
       font-weight: bold;
       color: darken($history, 20%);
   
@@ -93,14 +93,14 @@
       }
     }
 
-    .suite-history-arrow {
+    .objectToRun-history-arrow {
       margin:-3px 7px;
       color: $grayish;
       font-size:18px;
     }
   }
 
-  .suite-history-rebased {
+  .objectToRun-history-rebased {
     color: $historyRebased;
   }
 }
