@@ -19,6 +19,7 @@ import com.cognifide.aet.communication.api.messages.FinishedSuiteProcessingMessa
 import com.cognifide.aet.communication.api.messages.FinishedSuiteProcessingMessage.Status;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
+import com.cognifide.aet.communication.api.wrappers.Run;
 import com.cognifide.aet.runner.RunnerConfiguration;
 import com.cognifide.aet.runner.processing.data.SuiteDataService;
 import com.cognifide.aet.runner.processing.data.SuiteIndexWrapper;
@@ -31,52 +32,35 @@ import org.slf4j.LoggerFactory;
 
 public class SuiteExecutionTask extends ProcessorStrategy {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(SuiteExecutionTask.class);
-
-  private final Suite suite;
-
-  private SuiteIndexWrapper indexedSuite;
-
-  private MessagesSender messagesSender;
-  private SuiteProcessor suiteProcessor;
-
-  public SuiteExecutionTask(Suite suite, Destination jmsReplyTo,
+  public SuiteExecutionTask(Run objectToRun, Destination jmsReplyTo,
       SuiteDataService suiteDataService, RunnerConfiguration runnerConfiguration,
       SuiteExecutionFactory suiteExecutionFactory) {
     super(jmsReplyTo, suiteDataService, runnerConfiguration, suiteExecutionFactory);
-    this.suite = suite;
+    this.objectToRun = objectToRun;
   }
 
-  protected void prepareSuiteWrapper() throws StorageException {
-    LOGGER.debug("Fetching suite patterns {}", suite);
-    indexedSuite = new SuiteIndexWrapper(suiteDataService.enrichWithPatterns(suite));
+  void prepareSuiteWrapper() throws StorageException {
+    LOGGER.debug("Fetching suite patterns {}", getObjectToRun());
+    try {
+      indexedSuite = new SuiteIndexWrapper(suiteDataService.enrichWithPatterns(getObjectToRun()));
+    } catch (StorageException e) {
+      e.printStackTrace();
+    }
   }
 
-  protected void init() throws JMSException {
-    LOGGER.debug("Initializing suite processors {}", suite);
-    messagesSender = suiteExecutionFactory.newMessagesSender(jmsReplyTo);
-    suiteProcessor = new SuiteProcessor(suiteExecutionFactory, indexedSuite, runnerConfiguration,
-        messagesSender);
-  }
-
-  private void process() throws JMSException {
-    LOGGER.info("Start processing: {}", indexedSuite.get());
-    suiteProcessor.startProcessing();
-  }
-
-
-  private void save() throws ValidatorException, StorageException {
-    LOGGER.debug("Persisting suite {}", suite);
-    suiteDataService.saveSuite(indexedSuite.get());
+  void save() throws ValidatorException, StorageException {
+    LOGGER.debug("Persisting suite {}", getObjectToRun());
+    try {
+      suiteDataService.saveSuite(indexedSuite.get());
+    } catch (ValidatorException | StorageException e) {
+      e.printStackTrace();
+    }
     messagesSender.sendMessage(
         new FinishedSuiteProcessingMessage(FinishedSuiteProcessingMessage.Status.OK,
-            suite.getCorrelationId()));
+            objectToRun.getCorrelationId()));
   }
 
-  private void cleanup() {
-    LOGGER.debug("Cleaning up suite {}", suite);
-    messagesSender.close();
-    suiteProcessor.cleanup();
+  protected Suite getObjectToRun(){
+    return (Suite) objectToRun;
   }
-
 }

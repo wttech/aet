@@ -82,7 +82,7 @@ public class SuiteExecutorService {
   void scheduleSuite(Run objectToRun, Destination jmsReplyTo) {
     LOGGER.debug("Scheduling {}!", objectToRun.getObjectToRun());
     final ListenableFuture<String> suiteExecutionTask = executor
-        .submit(new SuiteExecutionTask((Suite)objectToRun.getObjectToRun(), jmsReplyTo, suiteDataService, runnerConfiguration,
+        .submit(new SuiteExecutionTask(objectToRun, jmsReplyTo, suiteDataService, runnerConfiguration,
             suiteExecutionFactory));
     scheduledSuites.add(objectToRun.getCorrelationId());
     Futures.addCallback(suiteExecutionTask, new SuiteFinishedCallback(objectToRun.getCorrelationId()),
