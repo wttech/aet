@@ -40,7 +40,9 @@
     font-size: 11px;
     display: inline-block;
     padding: 0 20px;
-    line-height: 30px;
+    line-height: 31px;
+    margin: 8px 0;
+    vertical-align: middle;
     border-right: solid 1px $border_color_darken;
     margin-top: 5px
   }
@@ -48,11 +50,14 @@
 
 .checkboxes-inline {
   display: inline-block;
-  margin: 0 0 20px 11px;
-
+  margin: 0;
+  height: 20px;
+  vertical-align: middle;
+  
   .checkbox {
     display: inline-block;
-    margin-bottom: 20px;
+    margin: 0;
+    height: 20px;
   }
 }
 
@@ -61,18 +66,17 @@
   width: 150px;
 
   label {
+    position: relative;
     cursor: pointer;
-    position: absolute;
     width: 18px;
     height: 18px;
-    left: 4px;
-    top: 4px;
     background: $white;
     border: solid 1px $black;
+    margin-left: 4px;
 
     span {
       position: absolute;
-      width: 150px;
+      width: 120px;
       left: 30px;
     }
 

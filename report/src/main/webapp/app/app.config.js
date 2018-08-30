@@ -35,6 +35,7 @@ require.config({
     'urlStatusFilter': 'components/urlStatus.filter',
     'keyboardShortcutsDirective': 'components/keyboardShortcuts.directive',
     'hidePopoversDirective': 'components/hidePopovers.directive',
+    'compareScreensDirective': 'components/compareScreens.directive',
     'winterEdition': 'themes/winterEdition.directive',
     //services
     'endpointConfiguration': 'services/endpointConfiguration.service',
@@ -48,6 +49,7 @@ require.config({
     'metadataAccessService': 'services/metadataAccess.service',
     'notesService': 'services/notes.service',
     'historyService': 'services/history.service',
+    'rerunService': 'services/rerun.service',
     'suiteInfoService': 'services/suiteInfo.service',
     'patternsService': 'services/patterns.service',
     'userSettingsService': 'services/userSettings.service',

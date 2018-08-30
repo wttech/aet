@@ -15,18 +15,30 @@
  */
 package com.cognifide.aet.communication.api.messages;
 
-/**
- * Basic message used to send work progress via JMS.
- */
-public class ProgressMessage extends TaskMessage<FullProgressLog> {
+import java.io.Serializable;
+import java.util.Arrays;
+import org.apache.commons.lang3.StringUtils;
 
-  private static final long serialVersionUID = 490908210242015178L;
+public class FullProgressLog implements Serializable {
 
-  /**
-   * @param message - progress message.
-   */
-  public ProgressMessage(FullProgressLog message) {
-    super(MessageType.PROGRESS, message);
+  private ProgressLog compareLog;
+  private ProgressLog collectLog;
+
+  public FullProgressLog(ProgressLog collectLog, ProgressLog compareLog) {
+    this.collectLog = collectLog;
+    this.compareLog = compareLog;
   }
 
+  public ProgressLog getCompareLog() {
+    return compareLog;
+  }
+
+  public ProgressLog getCollectLog() {
+    return collectLog;
+  }
+
+  @Override
+  public String toString() {
+    return StringUtils.join(Arrays.asList(compareLog, collectLog), " ::: ");
+  }
 }

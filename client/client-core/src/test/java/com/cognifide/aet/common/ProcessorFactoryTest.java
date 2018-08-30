@@ -22,7 +22,6 @@ import static org.hamcrest.core.Is.is;
 
 import com.cognifide.aet.communication.api.execution.ProcessingStatus;
 import com.cognifide.aet.communication.api.execution.SuiteStatusResult;
-import javax.jms.JMSException;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
@@ -38,7 +37,7 @@ public class ProcessorFactoryTest {
   private RunnerTerminator runnerTerminator;
 
   @Test
-  public void processTest_statusIsNull() throws JMSException {
+  public void processTest_statusIsNull() {
     SuiteStatusResult nullSuiteStatus = null;
     StatusProcessor processor = ProcessorFactory
         .produce(nullSuiteStatus, REPORT_URL, null, runnerTerminator);

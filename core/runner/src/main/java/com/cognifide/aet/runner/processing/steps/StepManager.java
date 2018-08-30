@@ -20,7 +20,7 @@ import com.cognifide.aet.communication.api.ProcessingError;
 import com.cognifide.aet.communication.api.messages.ProcessingErrorMessage;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.queues.JmsUtils;
-import com.cognifide.aet.runner.processing.ProgressLog;
+import com.cognifide.aet.communication.api.messages.ProgressLog;
 import com.cognifide.aet.runner.processing.TimeoutWatch;
 import java.util.Observable;
 import java.util.concurrent.atomic.AtomicInteger;

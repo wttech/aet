@@ -27,10 +27,12 @@ import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.metatype.annotations.Designate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Component(immediate = true)
+@Designate(ocd = DefaultJmsConnectionConf.class)
 public class DefaultJmsConnection implements JmsConnection {
 
   private static final boolean SESSION_TRANSACTION_DEFAULT_SETTING = false;
