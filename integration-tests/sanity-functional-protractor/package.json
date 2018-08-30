@@ -1,9 +1,7 @@
 {
-  "name": "protractor-js-automation",
-  "description": "Template to Test Project that contains Protractor tests",
   "version": "0.1.0",
-  "license": "UNLICENSED",
-  "repository": "ssh://git@stash.cognifide.com/qa/protractor-template.git",
+  "license": "Apache-2.0",
+  "repository": "https://github.com/Cognifide/aet.git",
   "scripts": {
     "postinstall": "npm run webdriver-manager-update",
     "test": "protractor ./protractor-conf.js",
