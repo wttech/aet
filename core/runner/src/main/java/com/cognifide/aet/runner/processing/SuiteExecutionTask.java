@@ -61,6 +61,6 @@ public class SuiteExecutionTask extends ProcessorStrategy {
   }
 
   protected Suite getObjectToRun(){
-    return (Suite) objectToRun;
+    return (Suite) objectToRun.getObjectToRun();
   }
 }
