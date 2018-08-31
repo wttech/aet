@@ -30,6 +30,7 @@ All notable changes to AET will be documented in this file.
 - [PR-331](https://github.com/Cognifide/aet/pull/325) Support env variables in MongoDB config
 - [PR-338](https://github.com/Cognifide/aet/pull/338) Enable creating new dbs by default
 - [PR-345](https://github.com/Cognifide/aet/pull/345) Deprecate AET maven plugin
+- [PR-301](https://github.com/Cognifide/aet/pull/301) New versions of virtualization tools used with new AET cookbook
 
 ## Version 2.1.6
 
