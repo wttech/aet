@@ -50,7 +50,7 @@ public class CollectDispatcher extends StepManager {
 
   private final CollectorJobSchedulerService collectorJobScheduler;
 
-  private final RunIndexWrapper objectToRun;
+  private final RunIndexWrapper objectToRunWrapper;
 
   public CollectDispatcher(TimeoutWatch timeoutWatch, JmsConnection jmsConnection,
       RunnerConfiguration runnerConfiguration,
@@ -58,7 +58,7 @@ public class CollectDispatcher extends StepManager {
     super(timeoutWatch, jmsConnection, objectToRun.get().getCorrelationId(), runnerConfiguration.getMttl());
     this.urlPackageSize = runnerConfiguration.getUrlPackageSize();
     this.collectorJobScheduler = collectorJobScheduler;
-    this.objectToRun = objectToRun;
+    this.objectToRunWrapper = objectToRun;
     sender = session.createProducer(null);
     sender.setTimeToLive(runnerConfiguration.getMttl());
   }
@@ -77,7 +77,7 @@ public class CollectDispatcher extends StepManager {
     Deque<MessageWithDestination> messagesQueue = Queues.newArrayDeque();
     LOGGER.info("Starting processing new Test Suite. CorrelationId: {} ", correlationId);
 
-    for (MetadataRunDecorator metadataRunDecorator : objectToRun.getUrls()) {
+    for (MetadataRunDecorator metadataRunDecorator : objectToRunWrapper.getUrls()) {
       UrlRunWrapper urlRunWrapper = (UrlRunWrapper) metadataRunDecorator.getDecoratedRun();
       final CollectorJobData data = new CollectorJobData(metadataRunDecorator.getCompany(),
           metadataRunDecorator.getProject(), metadataRunDecorator.getName(), urlRunWrapper.getTestName(),
@@ -87,7 +87,7 @@ public class CollectDispatcher extends StepManager {
       message.setJMSCorrelationID(correlationId);
       messagesQueue.add(new MessageWithDestination(getQueueOut(), message, 1));
     }
-    collectorJobScheduler.add(messagesQueue, objectToRun.get().getCorrelationId());
+    collectorJobScheduler.add(messagesQueue, objectToRunWrapper.get().getCorrelationId());
     LOGGER.info("MessagesQueue was added to collectorJobScheduler. CorrelationId: {} ",
         correlationId);
   }

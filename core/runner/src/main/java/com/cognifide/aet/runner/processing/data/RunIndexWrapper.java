@@ -63,6 +63,13 @@ public class RunIndexWrapper {
         UrlRunWrapper urlRunWrapper = new UrlRunWrapper(url, test);
         urls.add(new MetadataRunDecorator(urlRunWrapper, objectToRunWrapper.getRealSuite()));
       }
+    } else if (objectToRunWrapper.getType()==RunType.URL){
+      UrlRunWrapper tempUrlWrapper = (UrlRunWrapper) objectToRunWrapper;
+      Test test = tempUrlWrapper.getRealSuite().getTest(tempUrlWrapper.getTestName());
+      Url url = (Url) tempUrlWrapper.getObjectToRun();
+      cleanUrlFromExecutionData(url);
+      UrlRunWrapper urlRunWrapper = new UrlRunWrapper(url, test);
+      urls.add(new MetadataRunDecorator(urlRunWrapper, objectToRunWrapper.getRealSuite()));
     }
     return urls;
   }
@@ -100,6 +107,8 @@ public class RunIndexWrapper {
       for(Url url : test.getUrls()){
         quantityUrls++;
       }
+    } else if(objectToRunWrapper.getType()==RunType.URL){
+      quantityUrls++;
     }
     return quantityUrls;
   }

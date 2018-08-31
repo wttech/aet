@@ -36,7 +36,7 @@ public class UrlRunWrapper implements Run {
 
   @Override
   public RunType getType() {
-    return RunType.TEST;
+    return RunType.URL;
   }
 
   @Override

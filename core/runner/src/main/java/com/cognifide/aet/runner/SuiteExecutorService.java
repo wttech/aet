@@ -20,6 +20,7 @@ import com.cognifide.aet.communication.api.wrappers.Run;
 import com.cognifide.aet.runner.processing.SuiteExecutionFactory;
 import com.cognifide.aet.runner.processing.SuiteExecutionProcessorStrategy;
 import com.cognifide.aet.runner.processing.TestExecutionProcessorStrategy;
+import com.cognifide.aet.runner.processing.UrlExecutionProcessorStrategy;
 import com.cognifide.aet.runner.processing.data.SuiteDataService;
 import com.google.common.collect.Sets;
 import com.google.common.util.concurrent.FutureCallback;
@@ -87,9 +88,13 @@ public class SuiteExecutorService {
       suiteExecutionTask = executor
           .submit(new SuiteExecutionProcessorStrategy(objectToRun, jmsReplyTo, suiteDataService,
               runnerConfiguration, suiteExecutionFactory));
-    } else {
+    } else if (objectToRun.getType() == RunType.TEST){
       suiteExecutionTask = executor
           .submit(new TestExecutionProcessorStrategy(objectToRun, jmsReplyTo, suiteDataService,
+              runnerConfiguration, suiteExecutionFactory));
+    } else {
+      suiteExecutionTask = executor
+          .submit(new UrlExecutionProcessorStrategy(objectToRun, jmsReplyTo, suiteDataService,
               runnerConfiguration, suiteExecutionFactory));
     }
     scheduledSuites.add(objectToRun.getCorrelationId());

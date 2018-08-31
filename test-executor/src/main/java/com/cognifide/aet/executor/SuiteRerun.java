@@ -21,10 +21,12 @@ import static com.cognifide.aet.rest.BasicDataServlet.isValidName;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.Suite.Timestamp;
 import com.cognifide.aet.communication.api.metadata.Test;
+import com.cognifide.aet.communication.api.metadata.Url;
 import com.cognifide.aet.communication.api.wrappers.MetadataRunDecorator;
 import com.cognifide.aet.communication.api.wrappers.Run;
 import com.cognifide.aet.communication.api.wrappers.SuiteRunWrapper;
 import com.cognifide.aet.communication.api.wrappers.TestRunWrapper;
+import com.cognifide.aet.communication.api.wrappers.UrlRunWrapper;
 import com.cognifide.aet.executor.model.CorrelationIdGenerator;
 import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.MetadataDAO;
@@ -41,7 +43,7 @@ class SuiteRerun {
   }
 
   static Run getAndPrepareObject(MetadataDAO metadataDAO, DBKey dbKey, String correlationId,
-      String suiteName, String testName) {
+      String suiteName, String testName, String urlName) {
     Suite suite = null;
     try {
       suite = getSuiteFromMetadata(metadataDAO, dbKey, correlationId, suiteName);
@@ -49,7 +51,11 @@ class SuiteRerun {
       LOGGER.error("Read metadata from DB problem!", e);
     }
     Run objectToRunWrapper;
-    if(testName!=null){
+    if (urlName != null) {
+      Test test = suite.getTest(testName);
+      Url url = test.getUrl(urlName);
+      objectToRunWrapper = new MetadataRunDecorator(new UrlRunWrapper(url, test), suite);
+    } else if (testName != null) {
       Test test = suite.getTest(testName);
       objectToRunWrapper = new MetadataRunDecorator(new TestRunWrapper(test), suite);
     } else {

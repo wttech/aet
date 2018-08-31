@@ -31,6 +31,8 @@
     </compare>
     <urls>
       <url href="comparators/layout/failed.jsp" />
+      <url href="comparators/layout/height_detection.jsp" />
+      <url href="comparators/layout/success.jsp" />
     </urls>
   </test>
 

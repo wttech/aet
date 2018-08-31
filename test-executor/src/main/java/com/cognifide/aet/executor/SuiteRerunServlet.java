@@ -68,13 +68,14 @@ public class SuiteRerunServlet extends HttpServlet {
     String correlationId = request.getParameter(Helper.CORRELATION_ID_PARAM);
     String suiteName = request.getParameter(Helper.SUITE_PARAM);
     String testName = request.getParameter(Helper.TEST_RERUN_PARAM);
+    String urlName = request.getParameter(Helper.URL_RERUN_PARAM);
 
     Run objectToRunWrapper = null;
 
     try {
       objectToRunWrapper = SuiteRerun
           .getAndPrepareObject(metadataDAO, Helper.getDBKeyFromRequest(request), correlationId, suiteName,
-              testName);
+              testName, urlName);
       if(objectToRunWrapper != null) {
         try {
           resultWrapper = suiteExecutor.executeSuite(objectToRunWrapper);
