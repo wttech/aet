@@ -81,7 +81,6 @@
       var rerunParams = 'company=' + suiteInfo.company + '&' + 'project=' + suiteInfo.project + '&' +
         'suite=' + suiteInfo.name + '&' + 'testUrl=' + testUrl + '&' + 'testName=' + testName;
       var url = 'http://aet-vagrant:8181/suite-rerun?' + rerunParams;
-      console.log(url);
       $http.post(url, {}).then(function successCallback(response) {
         $rootScope.rerunMsg = 'URL rerun initialized';
         $rootScope.rerunProgress = 0;
