@@ -64,9 +64,8 @@ public class RunIndexWrapper {
         urls.add(new MetadataRunDecorator(urlRunWrapper, objectToRunWrapper.getRealSuite()));
       }
     } else if (objectToRunWrapper.getType()==RunType.URL){
-      UrlRunWrapper tempUrlWrapper = (UrlRunWrapper) objectToRunWrapper;
-      Test test = tempUrlWrapper.getRealSuite().getTest(tempUrlWrapper.getTestName());
-      Url url = (Url) tempUrlWrapper.getObjectToRun();
+      Test test = objectToRunWrapper.getRealSuite().getTest(objectToRunWrapper.getTestName());
+      Url url = (Url) objectToRunWrapper.getObjectToRun();
       cleanUrlFromExecutionData(url);
       UrlRunWrapper urlRunWrapper = new UrlRunWrapper(url, test);
       urls.add(new MetadataRunDecorator(urlRunWrapper, objectToRunWrapper.getRealSuite()));

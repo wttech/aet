@@ -41,4 +41,8 @@ public class TestRunWrapper implements Run {
   public Test getObjectToRun() {
     return test;
   }
+
+  public String getTestName() {
+    return test.getName();
+  }
 }

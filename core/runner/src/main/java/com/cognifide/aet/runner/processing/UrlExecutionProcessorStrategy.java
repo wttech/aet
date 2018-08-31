@@ -48,10 +48,9 @@ public class UrlExecutionProcessorStrategy extends ProcessorStrategy {
       Suite mergedSuite = suiteDataService.enrichWithPatterns(objectToRunWrapper.getRealSuite());
       objectToRunWrapper.setRealSuite(mergedSuite);
 
-      UrlRunWrapper urlRunWrapper = (UrlRunWrapper) objectToRunWrapper;
-      Url url = urlRunWrapper.getObjectToRun();
+      Url url = (Url) objectToRunWrapper.getObjectToRun();
       String urlName = url.getName();
-      String testName = urlRunWrapper.getTestName();
+      String testName = objectToRunWrapper.getTestName();
       objectToRunWrapper.setObjectToRun(mergedSuite.getTest(testName).getUrl(urlName));
       indexedSuite = new RunIndexWrapper(objectToRunWrapper);
     } catch (StorageException e) {
@@ -73,6 +72,7 @@ public class UrlExecutionProcessorStrategy extends ProcessorStrategy {
             objectToRunWrapper.getCorrelationId()));
   }
 
+  @Override
   protected Url getObjectToRunWrapper() {
     return (Url) objectToRunWrapper.getObjectToRun();
   }

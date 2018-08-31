@@ -52,4 +52,6 @@ public interface Run<T> extends Serializable {
   default String getSuiteIdentifier() {
     return null;
   }
+
+  default String getTestName(){return null;}
 }

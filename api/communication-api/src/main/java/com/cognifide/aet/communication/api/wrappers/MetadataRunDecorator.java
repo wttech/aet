@@ -70,4 +70,10 @@ public class MetadataRunDecorator extends RunDecorator {
   public Suite getRealSuite() {
     return suite;
   }
+
+
+  public String getTestName() {
+    return decoratedRun.getTestName();
+  }
+
 }

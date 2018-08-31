@@ -85,7 +85,7 @@ abstract class ProcessorStrategy<T> implements Callable<String> {
   }
 
   protected void cleanup() {
-    LOGGER.debug("Cleaning up suite {}", getObjectToRunWrapper());
+    // TODO Add there information in logs
     messagesSender.close();
     suiteProcessor.cleanup();
   }

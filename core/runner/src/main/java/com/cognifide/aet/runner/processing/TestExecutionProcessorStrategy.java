@@ -68,7 +68,7 @@ public class TestExecutionProcessorStrategy extends ProcessorStrategy {
         new FinishedSuiteProcessingMessage(FinishedSuiteProcessingMessage.Status.OK,
             objectToRunWrapper.getCorrelationId()));
   }
-
+  @Override
   protected Test getObjectToRunWrapper() {
     return (Test) objectToRunWrapper.getObjectToRun();
   }
