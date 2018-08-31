@@ -98,7 +98,7 @@
           if (response.data.status === 'FINISHED') {
             var suiteInfo = suiteInfoService.getInfo();
             var linkParams = '?' + 'company=' + suiteInfo.company + '&' + 'project=' + suiteInfo.project + '&' +
-              'suite=' + suiteInfo.name
+              'suite=' + suiteInfo.name;
             linkParams = linkParams + '#' + window.location.href.split('#')[1];
             var linkToLatestSuite = location.protocol + '//' + location.host + location.pathname + linkParams;
             $rootScope.rerunMsg = 'Rerun completed. Page will now refresh.';
