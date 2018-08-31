@@ -17,6 +17,7 @@ package com.cognifide.aet.common;
 
 import com.cognifide.aet.communication.api.exceptions.AETException;
 
+@Deprecated
 public interface StatusProcessor {
 
   void process() throws AETException;

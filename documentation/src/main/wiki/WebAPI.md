@@ -1,17 +1,46 @@
-### REST API
+### Web API
 
-Representational State Transfer API for accessing and modifying data stored in AET Database. REST API is part of AET System and is the interface between system database, user and application.
+Web API for accessing and modifying data stored in AET Database. This API is part of AET System and is the interface between system database, user and application.
 
 Its methods are used by *AET Maven Plugin* to download reports, *HTML Report* uses it to load images and to perform rebase action.  
 
-Rebase (switching artifacts id of pattern(s)) and adding comments should be done on client side. REST API only consumes whole json representation of suite.  
+Rebase (switching artifacts id of pattern(s)) and adding comments should be done on client side. Web API only consumes whole json representation of suite.
 
-#### REST API HTTP methods
+#### Web API HTTP methods
 
-Base api path:
+##### Schedule suite run
+* **URL**: `/suite`
+* **HTTP Method**: POST
+* **Parameters**:
+      - `suite` - suite XML file body, this is the only *mandatory* parameter
+      - `name` - overrides name attribute defined in suite file
+      - `domain` - overrides domain attribute defined in suite file
+      - `pattern` - sets id of patterns to run test against
+      - `patternSuite` - sets the suite name to run test against its latest pattern
+* **Description**: Schedules processing suite passed in the `suite` parameter.
+Returns unique `correlationId` of the scheduled suite run or `errorMessage` in case of failure in form of `application/json`.
 
-`http://<Domain_or_IP_Address>:<PORT>/api`
+--------
+##### Get suite status by `correlationId`
+* **URL**: `/suitestatus`
+* **HTTP Method**: GET
+* **Parameters**:
+      - `correlationId` - path param, unique `correlationId` of the scheduled suite
+* **Example**: http://aet.example.com/suitestatus/56fa80c1ab21c61f14bfef45
+* **Description**: Returns the status of currently processed suite in form of `application/json` or `404` if suite can't be found in the system.
+Example response:
+```json
+    {"status":"FINISHED", "message":"Suite processing finished"}
+```
+--------
+##### Get suite xUnit output
+* **URL**: `/xunit`
+* **HTTP Method**: GET
+* **Parameters**: `company`, `project`, `correlationId` or `suite` (name)
+* **Example**: http://aet.example.com/xunit?company=cognifide&project=example&correlationId=56fa80c1ab21c61f14bfef45
+* **Description**: Returns xUnit file with the output of the run of suite identified by `correlationId`.
 
+--------
 ##### Get artifact by artifact Id
 * **URL**: `/api/artifact`
 * **HTTP Method**: GET

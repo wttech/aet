@@ -22,6 +22,7 @@ import com.google.common.io.Resources;
 import java.io.File;
 import java.io.IOException;
 
+@Deprecated
 class RedirectWriter {
 
   private static final String REPORT_URL_PLACEHOLDER = "\\$\\{fullReportUrl}";
