@@ -171,6 +171,7 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
               failed: failed,
               warning: warning,
               rebased: rebased,
+              conditionallyPassed: conditionallyPassed,
               updateStatistics: updateStatistics,
               updatePatternStatistics: updatePatternStatistics,
               revertPatternStatistics: revertPatternStatistics,
@@ -190,6 +191,7 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
           decoratedObject.warning = 0;
           decoratedObject.passed = 0;
           decoratedObject.rebased = 0;
+          decoratedObject.conditionallyPassed = 0;
           decoratedObject.patternsToAccept = 0;
           decoratedObject.acceptedPatterns = 0;
           decoratedObject.getStatus = getStatus;
@@ -210,6 +212,8 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
             status = 'rebased';
           } else if (decoratedObject.warning > 0) {
             status = 'warning';
+          } else if (decoratedObject.conditionallyPassed > 0) {
+            status = 'conditionallyPassed';
           }
           return status;
         }
@@ -314,6 +318,14 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
           }
         }
 
+        function conditionallyPassed() {
+          decoratedObject.total++;
+          decoratedObject.conditionallyPassed++;
+          if (decoratedParentReference && decoratedParentReference.conditionallyPassed) {
+            decoratedParentReference.conditionallyPassed();
+          }
+        }
+
         function updatePatternsToAccept(numberOfPatternsToAccept) {
           decoratedObject.patternsToAccept += numberOfPatternsToAccept;
           if (decoratedParentReference &&
@@ -343,6 +355,9 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
             switch (stepResult.status) {
               case 'PASSED':
                 passed();
+                break;
+              case 'CONDITIONALLY_PASSED':
+                conditionallyPassed();
                 break;
               case 'FAILED':
                 // if `rebaseable` comparator, increment acceptable patterns counter

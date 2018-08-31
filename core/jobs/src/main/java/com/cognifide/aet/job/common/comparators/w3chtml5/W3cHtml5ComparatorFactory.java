@@ -25,12 +25,10 @@ import com.cognifide.aet.job.common.comparators.w3chtml5.parser.W3cHtml5Validati
 import com.cognifide.aet.job.common.comparators.w3chtml5.wrapper.NuValidatorWrapper;
 import com.cognifide.aet.vs.ArtifactsDAO;
 import java.util.List;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.Service;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 @Component
-@Service
 public class W3cHtml5ComparatorFactory implements ComparatorFactory {
 
   private final W3cHtml5ValidationResultParser resultParser = new W3cHtml5ValidationResultParser();

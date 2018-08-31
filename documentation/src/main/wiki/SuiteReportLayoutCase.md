@@ -32,6 +32,12 @@ Test case's result is marked as successful when there is no difference between v
 
 ![Layout success](assets/suiteReport/layout-success.png)
 
+##### Conditionally passed
+
+Test case's result is marked as conditionally passed when there is difference between view and pattern (see screenshot below) but the difference is below threshold - here `percentageThreshold="5"`. The test is pass so you can't accept it, therefore "Accept test case" button isn't available and the test has green color (but with different icon to be perceptible) but images are different so you can see a mask.
+
+![Layout conditionally passed](assets/suiteReport/layout-conditionally-passed.png)
+
 ##### What vulnerabilities it discovers
 * Differences found in page screenshots may indicate undesired changes in the page layout (css, html structure) e.g. when a new functionality was implemented 
 in a system it may have an impact on another system component(s). This may show itself as a changed page layout.

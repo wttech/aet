@@ -21,9 +21,9 @@ Every test case has one of the following states:
 
 1. passed — if the comparator doesn't find any change, i.e. validation passes,
 2. passed with warnings — if there are some warnings, but they are not very important,
-3. failed — if the comparator detects some changes or some validation rules are broken,
-4. accepted — if failed test was accepted.
-The state of the test case is propagated to the URL then to the test and to the test suite. It is possible to accept all test cases for a given URL or in a current test suite.
+3. conditionally passed - if the comparator finds some change, but the change is smaller or equal to error threshold
+4. failed — if the comparator detects some changes or some validation rules are broken,
+5. accepted — if failed test was accepted.
 
 Tests and URLs may be filtered by:
 
@@ -44,6 +44,18 @@ It is possible to find currently opened test/URL in Side Panel by using the cros
 Moreover, every URL has information to which test group it belongs.
 
 ![Find example](assets/suiteReport/find-in-sidepanel-example.png)
+
+#### Browsing suite's history
+It is possible to view current suite's history by clicking current suite's name and version in the top toolbar. User can also navigate through versions by clicking next/previous arrow next to suite's version. 
+
+![Suite history](assets/suiteReport/suite-history.png)
+
+Clicking the suite's name in the top toolbar will show a popup in which the user can see every suite's version that is still available in the database. User can also directly go to the newest version of the suite by clicking the step-forward icon (the one furthest to the right in the image above).
+
+Bold version means that this version is the same as the version that's currently being viewed.
+Blue version means that it is a rebased version of previous suite - this is also shown by the timestamps which are identical for original and rebased suite versions.
+
+![Suite history popup](assets/suiteReport/history-popup.png)
 
 #### Navigation via keyboard shortcuts
 * press **q** to expand/collapse all items

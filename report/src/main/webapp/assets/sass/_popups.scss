@@ -23,6 +23,10 @@
     color: $gray_darker;
   }
 
+  &-content {
+    border:0px;
+  }
+
   &-body {
     textarea {
       width: 100%;
@@ -60,7 +64,7 @@
 
   p {
     text-align: left;
-    @include ellipsis();
+    @extend .ellipsis;
     max-width: 86%;
   }
 }

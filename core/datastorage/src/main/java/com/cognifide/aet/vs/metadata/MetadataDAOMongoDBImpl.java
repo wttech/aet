@@ -21,11 +21,10 @@ import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.SimpleDBKey;
 import com.cognifide.aet.vs.StorageException;
+import com.cognifide.aet.vs.SuiteVersion;
 import com.cognifide.aet.vs.mongodb.MongoDBClient;
-import com.google.common.base.Function;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Collections2;
-import com.google.common.collect.FluentIterable;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -35,16 +34,16 @@ import com.mongodb.client.result.DeleteResult;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.Service;
 import org.bson.Document;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Service
-@Component(label = "AET Metadata DAO implementation for MongoDB", immediate = true)
+@Component(immediate = true)
 public class MetadataDAOMongoDBImpl implements MetadataDAO {
 
   private static final long serialVersionUID = 3031952772776598636L;
@@ -52,6 +51,8 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
   private static final Logger LOGGER = LoggerFactory.getLogger(MetadataDAOMongoDBImpl.class);
 
   public static final String METADATA_COLLECTION_NAME = "metadata";
+
+  private static final String SUITE_PARAM_NAME = "name";
 
   private static final String SUITE_VERSION_PARAM_NAME = "version";
 
@@ -112,6 +113,19 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
   }
 
   @Override
+  public Suite getSuite(DBKey dbKey, String name, String version) throws StorageException {
+    MongoCollection<Document> metadata = getMetadataCollection(dbKey);
+
+    LOGGER.debug("Fetching suite with name: {}, version: {}", name, version);
+
+    final FindIterable<Document> found = metadata
+        .find(Filters.and(Filters.eq(SUITE_PARAM_NAME, name),
+            Filters.eq(SUITE_VERSION_PARAM_NAME, Integer.parseInt(version))));
+    final Document result = found.first();
+    return new DocumentConverter(result).toSuite();
+  }
+
+  @Override
   public Suite getLatestRun(DBKey dbKey, String name) throws StorageException {
     MongoCollection<Document> metadata = getMetadataCollection(dbKey);
     LOGGER.debug("Fetching latest suite run for company: `{}`, project: `{}`, name `{}`.",
@@ -135,12 +149,26 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
         .find()
         .sort(Sorts.descending(SUITE_VERSION_PARAM_NAME));
 
-    return FluentIterable.from(found).transform(new Function<Document, Suite>() {
-      @Override
-      public Suite apply(Document result) {
-        return new DocumentConverter(result).toSuite();
-      }
-    }).toList();
+    return StreamSupport.stream(found.spliterator(), false)
+        .map(document -> new DocumentConverter(document).toSuite())
+        .collect(Collectors.toList());
+  }
+
+  public List<SuiteVersion> listSuiteVersions(DBKey dbKey, String name) throws StorageException {
+    MongoCollection<Document> metadata = getMetadataCollection(dbKey);
+    LOGGER.debug("Fetching all versions of suite: `{}` , company: `{}`, project: `{}`.", name,
+        dbKey.getCompany(),
+        dbKey.getProject());
+
+    final FindIterable<Document> found = metadata
+        .find(Filters.eq(SUITE_PARAM_NAME, name))
+        .sort(Sorts.descending(SUITE_VERSION_PARAM_NAME));
+
+    return StreamSupport.stream(found.spliterator(), false)
+        .map(document -> new SuiteVersion(
+            document.getString(CORRELATION_ID_PARAM_NAME),
+            document.getInteger(SUITE_VERSION_PARAM_NAME)))
+        .collect(Collectors.toList());
   }
 
   @Override

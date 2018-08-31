@@ -51,6 +51,7 @@ define(['angularAMD'], function (angularAMD) {
       result.company = allParameters.company ? allParameters.company : null;
       result.project = allParameters.project ? allParameters.project : null;
       result.suite = allParameters.suite ? allParameters.suite : null;
+      result.version = allParameters.version ? allParameters.version : null;
       result.correlationId =
           allParameters.correlationId ? allParameters.correlationId : null;
       return result;

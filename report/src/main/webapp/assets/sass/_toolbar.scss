@@ -30,7 +30,6 @@
     width: 100%;
     background: $gray_light;
     border-bottom: solid 1px #ededed;
-    background: $gray_light;
     padding: 0 20px;
   }
 
@@ -66,6 +65,16 @@
     color: rgb(119, 119, 124);
     font-size: 14px;
     padding: 16px 22px;
+    position: relative;
+
+    .suite-name-container {
+      display: inline-block;
+
+      &:hover {
+        cursor: pointer;
+        color: $rebased;
+      }
+    }
 
     svg {
       color: $gray_dark;
@@ -100,21 +109,20 @@
   }
 
   &-generate-raport {
-
     display:flex;
+    align-items: center;
     justify-content: center;
 
     .raport-button {
+      background-color: $rebased_bg;
       padding:10px 15px;
-      color:$white;
-      margin-top:16px;
+      font-weight: bold;
+      color:$text_color;
 
       &:hover {
         cursor:pointer;
       }
     }
-
-
   }
 
   &-bottom {
@@ -249,6 +257,10 @@
   .toolbar-blocks {
     display: inline;
   }
+}
+
+.set-initial-font-size {
+  font-size: initial !important;
 }
 
 .important-message {

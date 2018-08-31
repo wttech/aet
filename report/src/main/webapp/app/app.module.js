@@ -33,6 +33,7 @@ define(['angularAMD',
   'generatePDFDirective',
   'hidePopoversDirective',
   'keyboardShortcutsDirective',
+  'compareScreensDirective',
   'testSearchFilter',
   'testStatusFilter',
   'urlSearchFilter',
@@ -48,7 +49,10 @@ define(['angularAMD',
   'metadataCacheService',
   'metadataService',
   'metadataAccessService',
+  'generatePdfDataService',
+  'generatePdfDrawService',
   'notesService',
+  'historyService',
   'suiteInfoService',
   'patternsService',
   'caseFactory',
@@ -68,10 +72,11 @@ define(['angularAMD',
   'filterInformationDirective',
   // modals
   'noteModalController',
-  'unsavedChangesModalController'], function (angularAMD, _, pdfkit) {
+  'historyModalController',
+  'unsavedChangesModalController'], function (angularAMD, _) {
 
   var app = angular.module('app', ['ui.router', 'ui.bootstrap']);
-  window.PDFDocument = pdfkit; // jshint ignore:line
+  // jshint ignore:line
   // we have to export global PDFDocument because canvas2pdf needs it globally
 
   app.run([
@@ -95,7 +100,8 @@ define(['angularAMD',
           failed: 'fa-times',
           warning: 'fa-exclamation-triangle',
           rebased: 'fa-cloud-upload-alt',
-          unrebased: 'fa-cloud-download-alt'
+          unrebased: 'fa-cloud-download-alt',
+          conditionallyPassed: 'fa-dot-circle',
         }
       };
 

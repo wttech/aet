@@ -17,35 +17,27 @@ package com.cognifide.aet.queues;
 
 import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.communication.api.queues.JmsEndpointConfig;
-import java.util.Map;
+import com.cognifide.aet.queues.configuration.DefaultJmsConnectionConf;
 import javax.jms.Connection;
 import javax.jms.JMSException;
 import javax.jms.Session;
 import org.apache.activemq.ActiveMQConnectionFactory;
-import org.apache.felix.scr.annotations.Activate;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Deactivate;
-import org.apache.felix.scr.annotations.Property;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.Service;
 import org.osgi.service.cm.ConfigurationAdmin;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.metatype.annotations.Designate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Service
-@Component(immediate = true, metatype = true, description = "AET JMS Connection", label = "AET Default JMS Connection")
+@Component(immediate = true)
+@Designate(ocd = DefaultJmsConnectionConf.class)
 public class DefaultJmsConnection implements JmsConnection {
 
   private static final boolean SESSION_TRANSACTION_DEFAULT_SETTING = false;
 
-  @Property(name = "url", label = "brokerUrl", description = "URL of the broker, no trailing '/', see http://activemq.apache.org/uri-protocols.html", value = "failover:tcp://localhost:61616")
-  private String brokerURL;
-
-  @Property(name = "username", label = "username", description = "ActiveMQ username", value = "karaf")
-  private String username;
-
-  @Property(name = "password", label = "password", description = "ActiveMQ password", value = "karaf")
-  private String password;
+  private DefaultJmsConnectionConf config;
 
   @Reference
   private ConfigurationAdmin configurationAdmin;
@@ -66,20 +58,20 @@ public class DefaultJmsConnection implements JmsConnection {
 
   @Override
   public JmsEndpointConfig getEndpointConfig() {
-    return new JmsEndpointConfig(brokerURL, username, password);
+    return new JmsEndpointConfig(config.url(), config.username(), config.password());
   }
 
   @Activate
-  public void activate(Map properties) throws JMSException {
-    updateProperties(properties);
+  public void activate(DefaultJmsConnectionConf config) throws JMSException {
+    this.config = config;
     connect();
   }
 
   public void connect() throws JMSException {
-    LOG.info("Connecting to broker {} on user {}", brokerURL, username);
-    final ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(brokerURL);
-    connectionFactory.setUserName(username);
-    connectionFactory.setPassword(password);
+    LOG.info("Connecting to broker {} on user {}", config.url(), config.username());
+    final ActiveMQConnectionFactory connectionFactory = new ActiveMQConnectionFactory(config.url());
+    connectionFactory.setUserName(config.username());
+    connectionFactory.setPassword(config.password());
     connectionFactory.setTrustAllPackages(true);
     connection = connectionFactory.createConnection();
     connection.start();
@@ -91,14 +83,8 @@ public class DefaultJmsConnection implements JmsConnection {
   }
 
   public void disconnect() {
-    LOG.info("Disconnecting from broker {} on user {}", brokerURL, username);
+    LOG.info("Disconnecting from broker {} on user {}", config.url(), config.username());
     JmsUtils.closeQuietly(connection);
-  }
-
-  private void updateProperties(Map<String, ?> stringDictionary) {
-    username = (String) stringDictionary.get("username");
-    password = (String) stringDictionary.get("password");
-    brokerURL = (String) stringDictionary.get("url");
   }
 
 }

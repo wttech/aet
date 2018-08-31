@@ -15,6 +15,7 @@
  */
 package com.cognifide.aet.common;
 
+@Deprecated
 class RunnerTerminator {
 
   private volatile boolean runFinished;

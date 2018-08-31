@@ -26,34 +26,24 @@ import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.job.api.comparator.ComparatorProperties;
 import com.cognifide.aet.queues.JmsUtils;
 import com.cognifide.aet.worker.api.ComparatorDispatcher;
-import java.util.Map;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import org.apache.commons.lang3.StringUtils;
-import org.apache.felix.scr.annotations.Activate;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.ConfigurationPolicy;
-import org.apache.felix.scr.annotations.Deactivate;
-import org.apache.felix.scr.annotations.Property;
-import org.apache.felix.scr.annotations.Reference;
-import org.apache.felix.scr.annotations.Service;
+import org.osgi.service.component.annotations.Activate;
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Deactivate;
+import org.osgi.service.component.annotations.Reference;
+import org.osgi.service.metatype.annotations.Designate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Service
-@Component(immediate = true, metatype = true, label = "AET Comparator Message Listener", policy = ConfigurationPolicy.REQUIRE, configurationFactory = true)
+@Component(
+    service = ComparatorMessageListenerImpl.class,
+    immediate = true)
+@Designate(ocd = ComparatorMessageListenerImplConfig.class, factory = true)
 public class ComparatorMessageListenerImpl extends AbstractTaskMessageListener {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(ComparatorMessageListenerImpl.class);
-
-  @Property(name = LISTENER_NAME, label = "Comparator name", description = "Name of comparator. Used in logs only", value = "Comparator")
-  private String name;
-
-  @Property(name = CONSUMER_QUEUE_NAME, label = "Consumer queue name", value = "AET.comparatorJobs")
-  private String consumerQueueName;
-
-  @Property(name = PRODUCER_QUEUE_NAME, label = "Producer queue name", value = "AET.comparatorResults")
-  private String producerQueueName;
 
   @Reference
   private JmsConnection jmsConnection;
@@ -61,9 +51,12 @@ public class ComparatorMessageListenerImpl extends AbstractTaskMessageListener {
   @Reference
   private ComparatorDispatcher dispatcher;
 
+  private ComparatorMessageListenerImplConfig config;
+
   @Activate
-  void activate(Map<String, String> properties) {
-    super.doActivate(properties);
+  void activate(ComparatorMessageListenerImplConfig config) {
+    this.config = config;
+    super.doActivate(config.consumerQueueName(), config.producerQueueName(), config.pf());
   }
 
   @Deactivate
@@ -91,7 +84,7 @@ public class ComparatorMessageListenerImpl extends AbstractTaskMessageListener {
       final Step step = comparatorJobData.getStep();
       final ComparatorProperties properties = new ComparatorProperties(
           comparatorJobData.getCompany(),
-          comparatorJobData.getProject(), step.getPattern(), step.getStepResult().getArtifactId());
+          comparatorJobData.getProject(), step.getPattern(), step.getStepResult().getArtifactId(), step.getStepResult().getPayload());
 
       for (Comparator comparator : step.getComparators()) {
         LOGGER.info("Start comparison for comparator {} in step {}", comparator, step);
@@ -122,21 +115,6 @@ public class ComparatorMessageListenerImpl extends AbstractTaskMessageListener {
       }
 
     }
-  }
-
-  @Override
-  protected void setName(String name) {
-    this.name = name;
-  }
-
-  @Override
-  protected void setConsumerQueueName(String consumerQueueName) {
-    this.consumerQueueName = consumerQueueName;
-  }
-
-  @Override
-  protected void setProducerQueueName(String producerQueueName) {
-    this.producerQueueName = producerQueueName;
   }
 
   @Override

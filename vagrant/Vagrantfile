@@ -24,7 +24,7 @@
 ENV["GEM_PATH"] = nil
 ENV["GEM_HOME"] = nil
 
-AET_VERSION = '2.1.6'
+AET_VERSION = '3.0.0-rc01'
 
 VAGRANTFILE_API_VERSION = '2'
 
@@ -68,7 +68,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     aet.local
   )
 
-  config.omnibus.chef_version = '12.19.36'
+  config.omnibus.chef_version = '14.3.37'
   config.berkshelf.enabled = true
 
   config.vm.provision :chef_solo do |chef|
@@ -81,8 +81,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
         "jdk" => {
           "8" => {
             "x86_64" => {
-              "url" => "http://download.oracle.com/otn-pub/java/jdk/8u172-b11/a58eab1ec242421181065cdc37240b08/jdk-8u172-linux-x64.tar.gz",
-              "checksum" => "28a00b9400b6913563553e09e8024c286b506d8523334c93ddec6c9ec7e9d346"
+              "url" => "http://download.oracle.com/otn-pub/java/jdk/8u181-b13/96a7b8442fe848ef90c96a2fad6ed6d1/jdk-8u181-linux-x64.tar.gz",
+              "checksum" => "1845567095bfbfebd42ed0d09397939796d05456290fb20a83c476ba09f991d3"
             }
           }
         }

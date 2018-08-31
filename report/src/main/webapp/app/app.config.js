@@ -19,10 +19,10 @@ require.config({
   baseUrl: 'app/',
   paths: {
     // **** LIBRARIES ****
-    'jquery': '../assets/libs/jquery/jquery',
-    'bootstrap': '../assets/libs/bootstrap-sass-twbs/bootstrap',
+    'jquery': '../assets/libs/jquery/dist/jquery',
+    'bootstrap': '../assets/libs/bootstrap-sass-twbs/assets/javascripts/bootstrap',
     'angular': '../assets/libs/angular/angular',
-    'angular-ui-router': '../assets/libs/angular-ui-router/angular-ui-router',
+    'angular-ui-router': '../assets/libs/angular-ui-router/release/angular-ui-router',
     'angularAMD': '../assets/libs/angularAMD/angularAMD',
     'lodash': '../assets/libs/lodash/dist/lodash',
     'angular-bootstrap': '../assets/libs/angular-bootstrap/ui-bootstrap-tpls',
@@ -40,6 +40,7 @@ require.config({
     'keyboardShortcutsDirective': 'components/keyboardShortcuts.directive',
     'generatePDFDirective': 'components/generatePdf.directive',
     'hidePopoversDirective': 'components/hidePopovers.directive',
+    'compareScreensDirective': 'components/compareScreens.directive',
     'winterEdition': 'themes/winterEdition.directive',
     //services
     'endpointConfiguration': 'services/endpointConfiguration.service',
@@ -52,6 +53,7 @@ require.config({
     'metadataService': 'services/metadata.service',
     'metadataAccessService': 'services/metadataAccess.service',
     'notesService': 'services/notes.service',
+    'historyService': 'services/history.service',
     'suiteInfoService': 'services/suiteInfo.service',
     'patternsService': 'services/patterns.service',
     'userSettingsService': 'services/userSettings.service',
@@ -78,7 +80,8 @@ require.config({
     'includedCommentPopoverDirective': 'layout/main/url/includedCommentPopover.directive',
     //modals
     'unsavedChangesModalController': 'layout/modal/unsavedChanges/unsavedChangesModal.controller',
-    'noteModalController': 'layout/modal/note/noteModal.controller'
+    'noteModalController': 'layout/modal/note/noteModal.controller',
+    'historyModalController': 'layout/modal/history/historyModal.controller'
   },
   shim: {
     jquery: {

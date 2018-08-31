@@ -24,6 +24,7 @@
 	<test name="S-comparator-Layout-Executejavascript-cmd-hide">
 		<collect>
 			<open />
+			<resolution width="1500" />
 			<sleep duration="3000" />
 			<executejavascript cmd="document.getElementById('demo1').style.display='none'" />
 			<executejavascript cmd="document.getElementById('demo2').style.display='none'" />
@@ -39,6 +40,7 @@
 	<test name="S-comparator-Layout-Executejavascript-cmd-background">
 		<collect>
 			<open />
+			<resolution width="1500" />
 			<sleep duration="3000" />
 			<executejavascript cmd="document.body.style.background = 'green';" />
 			<screen />
@@ -53,6 +55,7 @@
 	<test name="S-comparator-Layout-Executejavascript-snippetUrl-background">
 		<collect>
 			<open />
+			<resolution width="1500" />
 			<sleep duration="3000" />
 			<executejavascript snippetUrl="${snippet.url.domain}snippets/change-bg-snippet.js" />
 			<screen />
@@ -67,6 +70,7 @@
 	<test name="S-comparator-Layout-Executejavascript-snippetUrl-basicAuth-background">
 		<collect>
 			<open />
+			<resolution width="1500" />
 			<sleep duration="3000" />
 			<executejavascript snippetUrl="${snippet.url.domain}secured/change-bg-snippet.js" basicAuthUsername="user" basicAuthPassword="password" />
 			<screen />

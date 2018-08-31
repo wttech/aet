@@ -18,6 +18,7 @@ package com.cognifide.aet.common;
 import com.cognifide.aet.communication.api.exceptions.AETException;
 import com.cognifide.aet.communication.api.execution.SuiteStatusResult;
 
+@Deprecated
 class FatalErrorStatusProcessor implements StatusProcessor {
 
   private final SuiteStatusResult suiteStatusResult;
