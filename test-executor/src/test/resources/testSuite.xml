@@ -18,7 +18,7 @@
     limitations under the License.
 
 -->
-<objectToRun name="TS1" company="cognifide" project="project">
+<suite name="TS1" company="cognifide" project="project">
 	<test name="test1" useProxy="true">
 		<collect>
 			<open/>
@@ -64,4 +64,4 @@
 			<url href="http://www.google.pl/search?g=<>'" />
 		</urls>
 	</test>
-</objectToRun>
+</suite>

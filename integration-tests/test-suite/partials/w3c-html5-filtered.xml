@@ -18,7 +18,7 @@
     limitations under the License.
 
 -->
-<objectToRun name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
+<suite name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
 
 	<!-- W3C-HTML5-Comparator START -->
     <test name="S-comparator-w3c-html5-with-filtering-messagePattern">
@@ -101,4 +101,4 @@
         </urls>
     </test>
 	<!-- W3C-HTML5-Comparator END -->
-</objectToRun>
+</suite>

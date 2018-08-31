@@ -22,7 +22,7 @@
     <div class="reports-list-item {{url.getStatus()}}"
          ng-repeat="url in testView.urls | aetUrlStatusFilter:$root.activeFilters | aetUrlSearchFilter:$root.searchText | orderBy:'name'"
          ng-class="url.getStatus()">
-      <a ui-sref="url({'objectToRun':data.project,'test':testView.testName,'url':url.name})">
+      <a ui-sref="url({'suite':data.project,'test':testView.testName,'url':url.name})">
         <div class="url-tile {{url.getStatus()}}">
           <div class="inner">
             <div ng-class="url.getStatus()">

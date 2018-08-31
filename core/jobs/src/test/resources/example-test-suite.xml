@@ -18,7 +18,7 @@
     limitations under the License.
 
 -->
-<objectToRun name="TS1" company="Cognifide">
+<suite name="TS1" company="Cognifide">
 	<test name="test1">
 		<collect>
 			<open/>
@@ -38,4 +38,4 @@
 		</urls>
 	</test>
 	<report/>
-</objectToRun>
+</suite>

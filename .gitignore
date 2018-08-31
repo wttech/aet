@@ -24,8 +24,8 @@ atlassian-ide-plugin.xml
 
 ### AET integration tests
 # this partial is generated from template
-/integration-tests/test-objectToRun/partials/executejavascript.xml
-/integration-tests/test-objectToRun/partials/loginmodifier.xml
+/integration-tests/test-suite/partials/executejavascript.xml
+/integration-tests/test-suite/partials/loginmodifier.xml
 
 ### AET report web application
 # node instance for frontend-maven-plugin
@@ -40,7 +40,7 @@ atlassian-ide-plugin.xml
 /report/src/main/webapp/assets/css
 
 ### AET sanity tests
-/integration-tests/test-objectToRun/objectToRun.xml
+/integration-tests/test-suite/objectToRun.xml
 
 ### AET documentation
 # node instance for frontend-maven-plugin
