@@ -52,6 +52,8 @@ require.config({
     'metadataCacheService': 'services/metadataCache.service',
     'metadataService': 'services/metadata.service',
     'metadataAccessService': 'services/metadataAccess.service',
+    'generatePdfDataService': 'services/generatePdfData.service',
+    'generatePdfDrawService': 'services/generatePdfDraw.service',
     'notesService': 'services/notes.service',
     'historyService': 'services/history.service',
     'suiteInfoService': 'services/suiteInfo.service',
