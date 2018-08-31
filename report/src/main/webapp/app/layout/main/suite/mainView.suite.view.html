@@ -22,7 +22,7 @@
     <div class="reports-list-item {{test.getStatus()}}"
          ng-repeat="test in suiteView.tests | aetTestStatusFilter:$root.activeFilters | aetTestSearchFilter:$root.searchText | orderBy:'name'"
          ng-class="test.getStatus()">
-      <a ui-sref="test({'objectToRun':data.project,'test':test.name})">
+      <a ui-sref="test({'suite':data.project,'test':test.name})">
         <div class="inner">
           <div ng-class="test.getStatus()">
             <div class="test-count test-count-dashboard">

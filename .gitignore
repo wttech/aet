@@ -40,7 +40,7 @@ atlassian-ide-plugin.xml
 /report/src/main/webapp/assets/css
 
 ### AET sanity tests
-/integration-tests/test-suite/objectToRun.xml
+/integration-tests/test-suite/suite.xml
 
 ### AET documentation
 # node instance for frontend-maven-plugin

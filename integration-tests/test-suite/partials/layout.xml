@@ -31,7 +31,7 @@
 		<compare>
 			<screen comparator="layout" />
 		</compare>
-		<urls>z
+		<urls>
 			<url href="comparators/layout/success.jsp" />
 		</urls>
 	</test>
