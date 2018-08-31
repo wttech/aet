@@ -24,6 +24,7 @@ import static org.mockito.internal.verification.VerificationModeFactory.times;
 import com.cognifide.aet.communication.api.ProcessingError;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
+import com.cognifide.aet.communication.api.wrappers.SuiteRunWrapper;
 import com.cognifide.aet.runner.RunnerConfiguration;
 import com.cognifide.aet.runner.processing.TimeoutWatch;
 import com.cognifide.aet.runner.processing.data.RunIndexWrapper;
@@ -73,6 +74,9 @@ public abstract class StepManagerTest {
   protected Suite suite;
 
   @Mock
+  protected SuiteRunWrapper suiteRunWrapper;
+
+  @Mock
   protected MessageConsumer consumer;
 
   @Mock
@@ -94,7 +98,8 @@ public abstract class StepManagerTest {
     when(session.createProducer(
         Matchers.<Destination>any())).thenReturn(sender);
     when(session.createObjectMessage(Matchers.<Serializable>any())).thenReturn(mockedMessage);
-    //when(runIndexWrapper.get()).thenReturn(suite);
+    when(runIndexWrapper.get()).thenReturn(suiteRunWrapper);
+    when(suiteRunWrapper.getCorrelationId()).thenReturn(CORRELATION_ID);
     when(suite.getCorrelationId()).thenReturn(CORRELATION_ID);
     when(runnerConfiguration.getMttl()).thenReturn(100L);
     when(runnerConfiguration.getUrlPackageSize()).thenReturn(2);

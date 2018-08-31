@@ -47,6 +47,7 @@ class SuiteRerun {
     Suite suite = null;
     try {
       suite = getSuiteFromMetadata(metadataDAO, dbKey, correlationId, suiteName);
+      suite.setRunTimestamp(new Timestamp(System.currentTimeMillis()));
     } catch (StorageException e) {
       LOGGER.error("Read metadata from DB problem!", e);
     }
@@ -82,7 +83,6 @@ class SuiteRerun {
         .ifPresent(s -> {
           s.setCorrelationId(CorrelationIdGenerator
               .generateCorrelationId(s.getCompany(), s.getProject(), s.getName()));
-          s.setRunTimestamp(new Timestamp(System.currentTimeMillis()));
         });
   }
 }

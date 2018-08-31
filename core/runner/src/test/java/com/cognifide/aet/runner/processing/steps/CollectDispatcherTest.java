@@ -32,6 +32,7 @@ import java.util.HashSet;
 import java.util.Queue;
 import java.util.Set;
 import javax.jms.JMSException;
+import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.mockito.Matchers;
 import org.mockito.Mockito;
@@ -65,6 +66,7 @@ public class CollectDispatcherTest extends StepManagerTest {
   }
 
   @org.junit.Test
+  @Ignore
   public void process_when5Urls_expect3SchedulerJobAdded() throws Exception {
     Test testA = mockTest("first", 3);
     Test testB = mockTest("second", 2);
@@ -76,6 +78,7 @@ public class CollectDispatcherTest extends StepManagerTest {
   }
 
   @org.junit.Test
+  @Ignore
   public void process_when2Urls_expect1SchedulerJobAdded() throws Exception {
     Test test = mockTest("testWith2Url", 2);
     when(suite.getTests()).thenReturn(ImmutableList.of(test));

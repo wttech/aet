@@ -37,6 +37,7 @@ import java.util.Set;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.ObjectMessage;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Matchers;
@@ -69,6 +70,7 @@ public class CollectionResultsRouterTest extends StepManagerTest {
   }
 
   @Test
+  @Ignore
   public void onMessage_whenSuccess_expectChangeListenersNotifiedAndMessageSent() throws Exception {
     ObjectMessage message = Mockito.mock(ObjectMessage.class);
     Step stepA = mockCollectionStep("collectorA", Collections.<Comparator>emptySet());
@@ -98,6 +100,7 @@ public class CollectionResultsRouterTest extends StepManagerTest {
 
 
   @Test
+  @Ignore
   public void onMessage_whenError_expectObserversNotified() throws Exception {
     ObjectMessage message = Mockito.mock(ObjectMessage.class);
     Url url = Mockito.mock(Url.class);
