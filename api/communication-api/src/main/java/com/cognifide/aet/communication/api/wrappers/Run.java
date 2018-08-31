@@ -15,14 +15,14 @@
  */
 package com.cognifide.aet.communication.api.wrappers;
 
-import com.cognifide.aet.communication.api.messages.MessageType;
+import com.cognifide.aet.communication.api.metadata.RunType;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import java.io.Serializable;
 
 public interface Run<T> extends Serializable {
 
   //TODO Change it to ENUM
-  String getType();
+  RunType getType();
 
   T getObjectToRun();
 

@@ -96,21 +96,6 @@ public class CollectDispatcher extends StepManager {
     collectorJobScheduler.cancel(correlationId);
   }
 
-  private void processUrlsAndGroupToPackages(Deque<MessageWithDestination> messagesQueue, Test test)
-      throws JMSException {
-    int msgIndex = 0;
-    final int totalUrls = test.getUrls().size();
-    List<Url> urlsToSend = Lists.newArrayList();
-    for (Url testUrl : test.getUrls()) {
-      msgIndex++;
-      urlsToSend.add(testUrl);
-      if (msgIndex % urlPackageSize == 0 || msgIndex == totalUrls) {
-
-        urlsToSend.clear();
-      }
-    }
-  }
-
   @Override
   public void onMessage(Message message) {
     // do nothing, this is the first step

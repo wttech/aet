@@ -15,6 +15,7 @@
  */
 package com.cognifide.aet.runner.processing.data;
 
+import com.cognifide.aet.communication.api.metadata.RunType;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.Test;
 import com.cognifide.aet.communication.api.metadata.Url;
@@ -28,17 +29,11 @@ import java.util.ArrayList;
 
 public class RunIndexWrapper {
 
-  //private final Map<String, Test> tests;
-
   private Run objectToRunWrapper = null;
 
   public RunIndexWrapper(Run objectToRunWrapper) {
     this.objectToRunWrapper = objectToRunWrapper;
   }
-
-//  public Test getTest(String testName) {
-//    return tests.get(testName);
-//  } //update url, test name, url name, url
 
   public Optional<Url> getTestUrl(String testName, final String urlName) {
     Test test = objectToRunWrapper.getRealSuite().getTest(testName);
@@ -52,19 +47,32 @@ public class RunIndexWrapper {
 
   public ArrayList<MetadataRunDecorator> getUrls() {
     ArrayList<MetadataRunDecorator>urls = new ArrayList<>();
-    if(objectToRunWrapper.getType()=="SUITE"){
+    if(objectToRunWrapper.getType()==RunType.SUITE){
       Suite suite = (Suite) objectToRunWrapper.getObjectToRun();
       for (Test test : suite.getTests()) {
         for(Url url : test.getUrls()){
-          UrlRunWrapper urlRunWrapper = new UrlRunWrapper(url);
-          urlRunWrapper.setPreferredBrowserId(test.getPreferredBrowserId());
-          urlRunWrapper.setProxy(test.getProxy());
-          urlRunWrapper.setTestName(test.getName());
+          cleanUrlFromExecutionData(url);
+          UrlRunWrapper urlRunWrapper = new UrlRunWrapper(url, test);
           urls.add(new MetadataRunDecorator(urlRunWrapper, suite));
         }
       }
     }
     return urls;
+  }
+
+  private void cleanUrlFromExecutionData(Url url) {
+    url.setCollectionStats(null);
+    url.getSteps()
+        .forEach(step -> {
+          step.setStepResult(null);
+          if (step.getComparators() != null) {
+            step.getComparators()
+                .forEach(comparator -> {
+                  comparator.setStepResult(null);
+                  comparator.setFilters(new ArrayList<>());
+                });
+          }
+        });
   }
 
   public Test getTest(String testName) {
@@ -73,7 +81,7 @@ public class RunIndexWrapper {
 
   public int countUrls() {
     int quantityUrls = 0;
-    if(objectToRunWrapper.getType()=="SUITE"){
+    if(objectToRunWrapper.getType()==RunType.SUITE){
       Suite suite = (Suite) objectToRunWrapper.getObjectToRun();
       for (Test test : suite.getTests()) {
         for(Url url : test.getUrls()){

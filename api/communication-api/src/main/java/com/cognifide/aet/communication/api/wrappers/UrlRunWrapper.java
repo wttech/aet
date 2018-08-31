@@ -15,6 +15,8 @@
  */
 package com.cognifide.aet.communication.api.wrappers;
 
+import com.cognifide.aet.communication.api.metadata.RunType;
+import com.cognifide.aet.communication.api.metadata.Test;
 import com.cognifide.aet.communication.api.metadata.Url;
 
 public class UrlRunWrapper implements Run {
@@ -24,20 +26,22 @@ public class UrlRunWrapper implements Run {
   private String proxy;
   private String preferredBrowserId;
 
-  public UrlRunWrapper(Url url) {
+  public UrlRunWrapper(Url url, Test test) {
     this.url = url;
+    this.testName = test.getName();
+    this.proxy = test.getProxy();
+    this.preferredBrowserId = test.getPreferredBrowserId();
   }
 
   @Override
-  public String getType() {
-    return "URL";
+  public RunType getType() {
+    return RunType.TEST;
   }
 
   @Override
   public Url getObjectToRun() {
     return url;
   }
-
 
   public String getTestName() {
     return testName;
@@ -49,18 +53,6 @@ public class UrlRunWrapper implements Run {
 
   public String getPreferredBrowserId() {
     return preferredBrowserId;
-  }
-
-  public void setTestName(String testName) {
-    this.testName = testName;
-  }
-
-  public void setProxy(String proxy) {
-    this.proxy = proxy;
-  }
-
-  public void setPreferredBrowserId(String preferredBrowserId) {
-    this.preferredBrowserId = preferredBrowserId;
   }
 
 }

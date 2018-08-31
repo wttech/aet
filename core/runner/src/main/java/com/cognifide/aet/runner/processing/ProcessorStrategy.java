@@ -17,14 +17,11 @@ package com.cognifide.aet.runner.processing;
 
 import com.cognifide.aet.communication.api.messages.FinishedSuiteProcessingMessage;
 import com.cognifide.aet.communication.api.messages.FinishedSuiteProcessingMessage.Status;
-import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.communication.api.wrappers.Run;
 import com.cognifide.aet.runner.RunnerConfiguration;
 import com.cognifide.aet.runner.processing.data.SuiteDataService;
 import com.cognifide.aet.runner.processing.data.RunIndexWrapper;
-import com.cognifide.aet.vs.DBKey;
-import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.StorageException;
 import java.util.concurrent.Callable;
 import javax.jms.JMSException;

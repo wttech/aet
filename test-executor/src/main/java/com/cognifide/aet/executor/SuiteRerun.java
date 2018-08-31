@@ -50,12 +50,12 @@ class SuiteRerun {
     } catch (StorageException e) {
       LOGGER.error("Read metadata from DB problem!", e);
     }
-    prepareSuiteToRerun(suite, testName);
     Run objectToRunWrapper;
     if(testName!=null){
       Test test = suite.getTest(testName);
       objectToRunWrapper = new MetadataRunDecorator(new TestRunWrapper(test), suite);
     } else {
+      prepareSuiteToRerun(suite);
       objectToRunWrapper = new SuiteRunWrapper(suite);
     }
     return objectToRunWrapper;
@@ -73,43 +73,12 @@ class SuiteRerun {
     }
   }
 
-  private static void prepareSuiteToRerun(Suite suite, String testName) {
+  private static void prepareSuiteToRerun(Suite suite) {
     Optional.ofNullable(suite)
         .ifPresent(s -> {
-          Optional<String> testString = Optional.ofNullable(testName);
-          if (testString.isPresent()) {
-            testString.map(s::getTest)
-                .ifPresent(testToRerun -> {
-                  s.removeAllTests();
-                  testToRerun.setRerunned();
-                  s.addTest(testToRerun);
-                });
-          } else {
-            s.setCorrelationId(CorrelationIdGenerator
-                .generateCorrelationId(s.getCompany(), s.getProject(), s.getName()));
-            s.setRunTimestamp(new Timestamp(System.currentTimeMillis()));
-          }
-          cleanDataFromSuite(s);
-        });
-  }
-
-  private static void cleanDataFromSuite(Suite suite) {
-    suite.getTests().stream()
-        .map(Test::getUrls)
-        .flatMap(Collection::stream)
-        .forEach(url -> {
-          url.setCollectionStats(null);
-          url.getSteps()
-              .forEach(step -> {
-                step.setStepResult(null);
-                if (step.getComparators() != null) {
-                  step.getComparators()
-                      .forEach(comparator -> {
-                        comparator.setStepResult(null);
-                        comparator.setFilters(new ArrayList<>());
-                      });
-                }
-              });
+          s.setCorrelationId(CorrelationIdGenerator
+              .generateCorrelationId(s.getCompany(), s.getProject(), s.getName()));
+          s.setRunTimestamp(new Timestamp(System.currentTimeMillis()));
         });
   }
 }

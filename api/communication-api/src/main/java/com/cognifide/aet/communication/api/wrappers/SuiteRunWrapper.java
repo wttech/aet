@@ -15,7 +15,7 @@
  */
 package com.cognifide.aet.communication.api.wrappers;
 
-import com.cognifide.aet.communication.api.messages.MessageType;
+import com.cognifide.aet.communication.api.metadata.RunType;
 import com.cognifide.aet.communication.api.metadata.Suite;
 
 public class SuiteRunWrapper implements Run {
@@ -26,8 +26,8 @@ public class SuiteRunWrapper implements Run {
   }
 
   @Override
-  public String getType() {
-    return "SUITE";
+  public RunType getType() {
+    return RunType.SUITE;
   }
 
   @Override
