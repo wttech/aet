@@ -153,8 +153,7 @@ define([], function () {
       rerunService.rerunSuite();
     }
 
-    function rerunURL() {
-      var testUrl = location.href.split("/").pop();
+    function rerunURL(testUrl) {
       var testName = vm.model.name;
       if (vm.model.testGroupName) {
         testName = vm.model.testGroupName;
