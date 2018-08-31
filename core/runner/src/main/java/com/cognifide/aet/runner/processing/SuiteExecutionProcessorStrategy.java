@@ -33,25 +33,25 @@ public class SuiteExecutionProcessorStrategy extends ProcessorStrategy {
   protected static final Logger LOGGER = LoggerFactory
       .getLogger(SuiteExecutionProcessorStrategy.class);
 
-  public SuiteExecutionProcessorStrategy(Run objectToRun, Destination jmsReplyTo,
+  public SuiteExecutionProcessorStrategy(Run objectToRunWrapper, Destination jmsReplyTo,
       SuiteDataService suiteDataService, RunnerConfiguration runnerConfiguration,
       SuiteExecutionFactory suiteExecutionFactory) {
     super(jmsReplyTo, suiteDataService, runnerConfiguration, suiteExecutionFactory, LOGGER);
-    this.objectToRun = objectToRun;
+    this.objectToRunWrapper = objectToRunWrapper;
   }
 
   void prepareSuiteWrapper() throws StorageException {
-    LOGGER.debug("Fetching suite patterns {}", getObjectToRun());
+    LOGGER.debug("Fetching suite patterns {}", getObjectToRunWrapper());
     try {
       indexedSuite = new RunIndexWrapper(
-          new SuiteRunWrapper(suiteDataService.enrichWithPatterns(objectToRun.getRealSuite())));
+          new SuiteRunWrapper(suiteDataService.enrichWithPatterns(objectToRunWrapper.getRealSuite())));
     } catch (StorageException e) {
       e.printStackTrace();
     }
   }
 
   void save() throws ValidatorException, StorageException {
-    LOGGER.debug("Persisting suite {}", getObjectToRun());
+    LOGGER.debug("Persisting suite {}", getObjectToRunWrapper());
     try {
       suiteDataService.saveSuite(indexedSuite.get().getRealSuite());
     } catch (ValidatorException | StorageException e) {
@@ -59,11 +59,11 @@ public class SuiteExecutionProcessorStrategy extends ProcessorStrategy {
     }
     messagesSender.sendMessage(
         new FinishedSuiteProcessingMessage(FinishedSuiteProcessingMessage.Status.OK,
-            objectToRun.getCorrelationId()));
+            objectToRunWrapper.getCorrelationId()));
   }
 
   @Override
-  protected Suite getObjectToRun() {
-    return objectToRun.getRealSuite();
+  protected Suite getObjectToRunWrapper() {
+    return objectToRunWrapper.getRealSuite();
   }
 }

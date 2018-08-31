@@ -21,10 +21,13 @@ import java.io.Serializable;
 
 public interface Run<T> extends Serializable {
 
-  //TODO Change it to ENUM
   RunType getType();
 
   T getObjectToRun();
+
+  void setObjectToRun(T object);
+
+  default void setRealSuite(Suite suite){};
 
   default Suite getRealSuite(){
     return null;

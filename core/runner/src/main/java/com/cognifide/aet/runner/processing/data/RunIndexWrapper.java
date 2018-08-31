@@ -56,6 +56,13 @@ public class RunIndexWrapper {
           urls.add(new MetadataRunDecorator(urlRunWrapper, suite));
         }
       }
+    } else if (objectToRunWrapper.getType()==RunType.TEST){
+      Test test = (Test) objectToRunWrapper.getObjectToRun();
+      for(Url url : test.getUrls()){
+        cleanUrlFromExecutionData(url);
+        UrlRunWrapper urlRunWrapper = new UrlRunWrapper(url, test);
+        urls.add(new MetadataRunDecorator(urlRunWrapper, objectToRunWrapper.getRealSuite()));
+      }
     }
     return urls;
   }
@@ -87,6 +94,11 @@ public class RunIndexWrapper {
         for(Url url : test.getUrls()){
           quantityUrls++;
         }
+      }
+    } else if(objectToRunWrapper.getType()==RunType.TEST){
+      Test test = (Test) objectToRunWrapper.getObjectToRun();
+      for(Url url : test.getUrls()){
+        quantityUrls++;
       }
     }
     return quantityUrls;

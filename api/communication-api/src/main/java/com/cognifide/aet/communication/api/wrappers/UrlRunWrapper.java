@@ -28,6 +28,7 @@ public class UrlRunWrapper implements Run {
 
   public UrlRunWrapper(Url url, Test test) {
     this.url = url;
+    url.setRerunned();
     this.testName = test.getName();
     this.proxy = test.getProxy();
     this.preferredBrowserId = test.getPreferredBrowserId();
@@ -36,6 +37,11 @@ public class UrlRunWrapper implements Run {
   @Override
   public RunType getType() {
     return RunType.TEST;
+  }
+
+  @Override
+  public void setObjectToRun(Object object) {
+    this.url = (Url) object;
   }
 
   @Override

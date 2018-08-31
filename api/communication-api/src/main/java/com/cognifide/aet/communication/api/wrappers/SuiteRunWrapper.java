@@ -31,6 +31,16 @@ public class SuiteRunWrapper implements Run {
   }
 
   @Override
+  public void setObjectToRun(Object object) {
+    this.suite = (Suite) object;
+  }
+
+  @Override
+  public void setRealSuite(Suite suite) {
+    this.suite = suite;
+  }
+
+  @Override
   public String getCorrelationId(){
     return suite.getCorrelationId();
   }

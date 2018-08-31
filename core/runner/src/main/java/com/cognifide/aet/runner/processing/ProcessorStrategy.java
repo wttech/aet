@@ -41,7 +41,7 @@ abstract class ProcessorStrategy<T> implements Callable<String> {
   protected MessagesSender messagesSender;
   protected SuiteProcessor suiteProcessor;
 
-  protected Run objectToRun;
+  protected Run objectToRunWrapper;
 
   public ProcessorStrategy(Destination jmsReplyTo,
       SuiteDataService suiteDataService, RunnerConfiguration runnerConfiguration,
@@ -61,19 +61,19 @@ abstract class ProcessorStrategy<T> implements Callable<String> {
       process();
       save();
     } catch (StorageException | JMSException | ValidatorException e) {
-      LOGGER.error("Error during processing suite {}", getObjectToRun(), e);
+      LOGGER.error("Error during processing suite {}", getObjectToRunWrapper(), e);
       FinishedSuiteProcessingMessage message = new FinishedSuiteProcessingMessage(Status.FAILED,
-          objectToRun.getCorrelationId());
+          objectToRunWrapper.getCorrelationId());
       message.addError(e.getMessage());
       messagesSender.sendMessage(message);
     } finally {
       cleanup();
     }
-    return objectToRun.getCorrelationId();
+    return objectToRunWrapper.getCorrelationId();
   }
 
   protected void init() throws JMSException {
-    LOGGER.debug("Initializing suite processors {}", getObjectToRun());
+    LOGGER.debug("Initializing suite processors {}", getObjectToRunWrapper());
     messagesSender = suiteExecutionFactory.newMessagesSender(jmsReplyTo);
     suiteProcessor = new SuiteProcessor(suiteExecutionFactory, indexedSuite, runnerConfiguration,
         messagesSender);
@@ -85,12 +85,12 @@ abstract class ProcessorStrategy<T> implements Callable<String> {
   }
 
   protected void cleanup() {
-    LOGGER.debug("Cleaning up suite {}", getObjectToRun());
+    LOGGER.debug("Cleaning up suite {}", getObjectToRunWrapper());
     messagesSender.close();
     suiteProcessor.cleanup();
   }
 
-  protected abstract T getObjectToRun();
+  protected abstract T getObjectToRunWrapper();
 
   abstract void prepareSuiteWrapper() throws StorageException;
 

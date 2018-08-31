@@ -29,8 +29,6 @@ import com.cognifide.aet.executor.model.CorrelationIdGenerator;
 import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.StorageException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +40,7 @@ class SuiteRerun {
   private SuiteRerun() {
   }
 
-  static Run getAndPrepareSuite(MetadataDAO metadataDAO, DBKey dbKey, String correlationId,
+  static Run getAndPrepareObject(MetadataDAO metadataDAO, DBKey dbKey, String correlationId,
       String suiteName, String testName) {
     Suite suite = null;
     try {

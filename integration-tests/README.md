@@ -26,7 +26,7 @@ By default the sample site will be available at [http://aet-vagrant:9090/sample-
 ### test-suite
 
 Prepares test suite and run tests on the pages provided by `sample-site` module.
-Run `mvn clean install` to prepare `suite.xml` file.
+Run `mvn clean install` to prepare `poligon.xml` file.
 Then run `mvn aet:run` to test sample pages and store results in AET database.
 
 The result should be available at:

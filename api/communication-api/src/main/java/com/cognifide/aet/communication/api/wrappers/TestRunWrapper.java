@@ -28,6 +28,11 @@ public class TestRunWrapper implements Run {
   }
 
   @Override
+  public void setObjectToRun(Object object) {
+    this.test = (Test) object;
+  }
+
+  @Override
   public RunType getType() {
     return RunType.TEST;
   }

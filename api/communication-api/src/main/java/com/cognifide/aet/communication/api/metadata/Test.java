@@ -35,7 +35,7 @@ public class Test implements Serializable, Commentable, Named {
 
   private final String preferredBrowserId;
 
-  private boolean isRerunned = false;
+  private boolean isRerunned;
 
   private Timestamp rerunTimestamp;
 

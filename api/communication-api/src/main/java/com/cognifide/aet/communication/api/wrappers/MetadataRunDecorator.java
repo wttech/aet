@@ -27,6 +27,16 @@ public class MetadataRunDecorator extends RunDecorator {
   }
 
   @Override
+  public void setObjectToRun(Object object) {
+    decoratedRun.setObjectToRun(object);
+  }
+
+  @Override
+  public void setRealSuite(Suite suite) {
+    this.suite = suite;
+  }
+
+  @Override
   public String getCorrelationId() {
     return suite.getCorrelationId();
   }
