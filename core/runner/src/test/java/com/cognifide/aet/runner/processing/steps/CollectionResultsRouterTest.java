@@ -100,7 +100,6 @@ public class CollectionResultsRouterTest extends StepManagerTest {
 
 
   @Test
-  @Ignore
   public void onMessage_whenError_expectObserversNotified() throws Exception {
     ObjectMessage message = Mockito.mock(ObjectMessage.class);
     Url url = Mockito.mock(Url.class);
