@@ -24,7 +24,7 @@ public class TestRunWrapper implements Run {
 
   public TestRunWrapper(Test test) {
     this.test = test;
-    test.setRerunned();
+    test.setReran();
   }
 
   @Override

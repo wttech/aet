@@ -46,7 +46,7 @@ public class Url implements Serializable, Commentable, Named {
   @NotNull
   private final List<Step> steps = new ArrayList<>();
 
-  private boolean isRerunned;
+  private boolean isReran;
 
   private Timestamp rerunTimestamp;
 
@@ -129,8 +129,9 @@ public class Url implements Serializable, Commentable, Named {
     return java.util.Objects.hash(name);
   }
 
-  public void setRerunned() {
-    isRerunned = true;
+  public void setReran() {
+    isReran = true;
     rerunTimestamp = new Timestamp(System.currentTimeMillis());
   }
+
 }

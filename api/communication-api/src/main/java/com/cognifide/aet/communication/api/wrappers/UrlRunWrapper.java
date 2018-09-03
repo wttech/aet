@@ -28,7 +28,7 @@ public class UrlRunWrapper implements Run {
 
   public UrlRunWrapper(Url url, Test test) {
     this.url = url;
-    url.setRerunned();
+    url.setReran();
     this.testName = test.getName();
     this.proxy = test.getProxy();
     this.preferredBrowserId = test.getPreferredBrowserId();

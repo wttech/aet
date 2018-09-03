@@ -92,10 +92,10 @@ class SuiteRerun {
 
   private static void prepareSuiteToRerun(Suite suite) {
     Optional.ofNullable(suite)
-        .ifPresent(s -> {
+        .ifPresent(s ->
           s.setCorrelationId(CorrelationIdGenerator
-              .generateCorrelationId(s.getCompany(), s.getProject(), s.getName()));
-        });
+              .generateCorrelationId(s.getCompany(), s.getProject(), s.getName()))
+        );
   }
-}
 
+}
