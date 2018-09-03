@@ -25,16 +25,19 @@ import static org.mockito.Mockito.when;
 
 import com.cognifide.aet.communication.api.metadata.Test;
 import com.cognifide.aet.communication.api.metadata.Url;
+import com.cognifide.aet.communication.api.wrappers.MetadataRunDecorator;
+import com.cognifide.aet.communication.api.wrappers.UrlRunWrapper;
 import com.cognifide.aet.runner.scheduler.MessageWithDestination;
 import com.google.common.collect.ImmutableList;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Queue;
 import java.util.Set;
 import javax.jms.JMSException;
-import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.mockito.Matchers;
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.internal.verification.VerificationModeFactory;
 import org.mockito.runners.MockitoJUnitRunner;
@@ -44,6 +47,9 @@ import org.mockito.runners.MockitoJUnitRunner;
  */
 @RunWith(MockitoJUnitRunner.class)
 public class CollectDispatcherTest extends StepManagerTest {
+
+  @Mock
+  Test test;
 
   @Override
   protected StepManager createTested() throws JMSException {
@@ -66,25 +72,24 @@ public class CollectDispatcherTest extends StepManagerTest {
   }
 
   @org.junit.Test
-  @Ignore
-  public void process_when5Urls_expect3SchedulerJobAdded() throws Exception {
-    Test testA = mockTest("first", 3);
-    Test testB = mockTest("second", 2);
-    when(suite.getTests()).thenReturn(ImmutableList.of(testA, testB));
+  public void process_when5Urls_expect5SchedulerJobAdded() throws Exception {
+    ArrayList<MetadataRunDecorator> urlsArray=mockUrlsWrappers(5);
+    when(runIndexWrapper.getUrls()).thenReturn(urlsArray);
 
     ((CollectDispatcher) tested).process();
-    verify(session, times(3)).createObjectMessage(Matchers.<Serializable>any());
+
+    verify(session, times(5)).createObjectMessage(Matchers.<Serializable>any());
     verify(scheduler, times(1)).add(Matchers.<Queue<MessageWithDestination>>any(), anyString());
   }
 
   @org.junit.Test
-  @Ignore
   public void process_when2Urls_expect1SchedulerJobAdded() throws Exception {
-    Test test = mockTest("testWith2Url", 2);
+    ArrayList<MetadataRunDecorator> urlsArray=mockUrlsWrappers(2);
+    when(runIndexWrapper.getUrls()).thenReturn(urlsArray);
     when(suite.getTests()).thenReturn(ImmutableList.of(test));
 
     ((CollectDispatcher) tested).process();
-    verify(session, times(1)).createObjectMessage(Matchers.<Serializable>any());
+    verify(session, times(2)).createObjectMessage(Matchers.<Serializable>any());
     verify(scheduler, times(1)).add(Matchers.<Queue<MessageWithDestination>>any(), anyString());
   }
 
@@ -122,6 +127,15 @@ public class CollectDispatcherTest extends StepManagerTest {
     when(test.getUrls()).thenReturn(urlsList);
     when(test.getName()).thenReturn("testName_" + name);
     return test;
+  }
+
+  private ArrayList<MetadataRunDecorator> mockUrlsWrappers (int numberOfUrls){
+    ArrayList<MetadataRunDecorator>urls = new ArrayList<>();
+    for (int i = 0; i < numberOfUrls; ++i) {
+        UrlRunWrapper urlRunWrapper = new UrlRunWrapper(new Url("/url/" + "Name" + i, "" + i + "_name", null), test);
+        urls.add(new MetadataRunDecorator(urlRunWrapper, suite));
+    }
+    return urls;
   }
 
 }

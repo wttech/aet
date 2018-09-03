@@ -33,7 +33,7 @@ public abstract class RunIndexWrapper {
     return objectToRunWrapper;
   }
 
-  protected void cleanUrlFromExecutionData(Url url) {
+  protected static void cleanUrlFromExecutionData(Url url) {
     url.setCollectionStats(null);
     url.getSteps()
         .forEach(step -> {
