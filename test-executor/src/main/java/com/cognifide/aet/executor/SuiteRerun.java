@@ -42,7 +42,7 @@ class SuiteRerun {
   private SuiteRerun() {
   }
 
-  Run getAndPrepareObject(MetadataDAO metadataDAO, DBKey dbKey, String correlationId,
+  static Run getAndPrepareObject(MetadataDAO metadataDAO, DBKey dbKey, String correlationId,
       String suiteName, String testName, String urlName) {
     Suite suite = null;
     try {
@@ -66,15 +66,15 @@ class SuiteRerun {
     return objectToRunWrapper;
   }
 
-  private boolean isSuiteRerun(String testName, String urlName) {
+  private static boolean isSuiteRerun(String testName, String urlName) {
     return testName == null && urlName == null;
   }
 
-  private boolean isTestRerun(String testName, String urlName) {
+  private static boolean isTestRerun(String testName, String urlName) {
     return testName != null && urlName == null;
   }
 
-  private boolean isUrlRerun(String testName, String urlName) {
+  private static boolean isUrlRerun(String testName, String urlName) {
     return testName != null && urlName != null;
   }
 
