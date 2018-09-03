@@ -76,9 +76,7 @@ define(['angularAMD',
   'unsavedChangesModalController'], function (angularAMD, _) {
 
   var app = angular.module('app', ['ui.router', 'ui.bootstrap']);
-  // jshint ignore:line
-  // we have to export global PDFDocument because canvas2pdf needs it globally
-
+  
   app.run([
     '$rootScope',
     '$state',
