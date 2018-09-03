@@ -32,9 +32,6 @@ import org.osgi.service.component.annotations.ReferencePolicy;
 )
 public class ProxyServerProvider {
 
-  @Reference(service = ProxyManager.class, policy = ReferencePolicy.DYNAMIC,
-      cardinality = ReferenceCardinality.MULTIPLE, bind = "bindProxyManager",
-      unbind = "unbindProxyManager")
   private final Map<String, ProxyManager> collectorManagers = Maps.newConcurrentMap();
 
   public ProxyServerWrapper createProxy(String proxyName) throws ProxyException {
@@ -51,6 +48,10 @@ public class ProxyServerProvider {
     }
   }
 
+  @Reference(
+      service = ProxyManager.class,
+      policy = ReferencePolicy.DYNAMIC,
+      cardinality = ReferenceCardinality.MULTIPLE)
   protected void bindProxyManager(ProxyManager proxyManager) {
     this.collectorManagers.put(proxyManager.getName(), proxyManager);
   }
