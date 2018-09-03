@@ -42,7 +42,7 @@ class SuiteRerun {
   private SuiteRerun() {
   }
 
-  static Run getAndPrepareObject(MetadataDAO metadataDAO, DBKey dbKey, String correlationId,
+  Run getAndPrepareObject(MetadataDAO metadataDAO, DBKey dbKey, String correlationId,
       String suiteName, String testName, String urlName) {
     Suite suite = null;
     try {
@@ -51,19 +51,31 @@ class SuiteRerun {
     } catch (StorageException e) {
       LOGGER.error("Read metadata from DB problem!", e);
     }
-    Run objectToRunWrapper;
-    if (urlName != null) {
+    Run objectToRunWrapper = null;
+    if (isSuiteRerun(testName, urlName)) {
+      prepareSuiteToRerun(suite);
+      objectToRunWrapper = new SuiteRunWrapper(suite);
+    } else if (isTestRerun(testName, urlName)) {
+      Test test = suite.getTest(testName);
+      objectToRunWrapper = new MetadataRunDecorator(new TestRunWrapper(test), suite);
+    } else if (isUrlRerun(testName, urlName)) {
       Test test = suite.getTest(testName);
       Url url = test.getUrl(urlName);
       objectToRunWrapper = new MetadataRunDecorator(new UrlRunWrapper(url, test), suite);
-    } else if (testName != null) {
-      Test test = suite.getTest(testName);
-      objectToRunWrapper = new MetadataRunDecorator(new TestRunWrapper(test), suite);
-    } else {
-      prepareSuiteToRerun(suite);
-      objectToRunWrapper = new SuiteRunWrapper(suite);
     }
     return objectToRunWrapper;
+  }
+
+  private boolean isSuiteRerun(String testName, String urlName) {
+    return testName == null && urlName == null;
+  }
+
+  private boolean isTestRerun(String testName, String urlName) {
+    return testName != null && urlName == null;
+  }
+
+  private boolean isUrlRerun(String testName, String urlName) {
+    return testName != null && urlName != null;
   }
 
   public static Suite getSuiteFromMetadata(MetadataDAO metadataDAO, DBKey dbKey,
