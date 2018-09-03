@@ -21,90 +21,96 @@
 <div class="tab-content-toolbar">
   <div class="toolbar-blocks">
     <div class="toolbar-btns pull-right">
-      <ng-include src="'app/layout/main/url/navigation/navigation.comments.html'"/>
+      <ng-include src="'app/layout/main/url/navigation/navigation.comments.html'" />
+      <ng-include src="'app/layout/main/url/navigation/navigation.createIssueButton.html'" />      
     </div>
   </div>
 </div>
 <div>
   <span ng-if="!case.result.nonExcludedIssues.length && !case.result.excludedIssues.length">
-      No issues found
+    No issues found
   </span>
   <p ng-if="case.result.errorCount >= 0">
-    Validation errors count: <span class="badge alert-danger">{{case.result.errorCount}}</span>
+    Validation errors count:
+    <span class="badge alert-danger">{{case.result.errorCount}}</span>
   </p>
   <p ng-if="case.result.warningCount >= 0">
-    Validation warnings count: <span class="badge alert-warning">{{case.result.warningCount}}</span>
+    Validation warnings count:
+    <span class="badge alert-warning">{{case.result.warningCount}}</span>
   </p>
   <p ng-if="case.result.noticeCount >= 0">
-    Validation notices count: <span class="badge alert-info">{{case.result.noticeCount}}</span>
+    Validation notices count:
+    <span class="badge alert-info">{{case.result.noticeCount}}</span>
   </p>
 
   <div class="clearfix"></div>
   <div>
 
-    <table class="table table-condensed table-bordered"
-           ng-if="case.result.nonExcludedIssues.length || case.result.excludedIssues.length">
+    <table class="table table-condensed table-bordered" ng-if="case.result.nonExcludedIssues.length || case.result.excludedIssues.length">
       <thead>
-      <tr>
-        <th>No.</th>
-        <th>Validation Output</th>
-      </tr>
+        <tr>
+          <th>No.</th>
+          <th>Validation Output</th>
+        </tr>
       </thead>
       <tbody>
-      <tr ng-class="item.type.toLowerCase()" ng-repeat="item in case.result.nonExcludedIssues"
-          ng-if="case.result.nonExcludedIssues">
-        <td>{{$index+1}}</td>
-        <td>
-          <p>
-            <em>Line {{item.lineNumber}}, column {{item.columnNumber}}:</em>
-            <strong>{{item.message}}</strong>
-          </p>
-          <pre ng-bind-html="item.elementStringAbbreviated | to_trusted"></pre>
-          <small><em>{{item.code}}</em></small>
-          <p></p>
-        </td>
-      </tr>
-      <tr ng-if="case.result.excludedIssues.length">
-        <td colspan="3" class="info">
-          Excluded issues:
-        </td>
-      </tr>
-      <tr ng-class="item.type.toLowerCase()" ng-repeat="item in case.result.excludedIssues"
-          ng-if="case.result.excludedIssues.length">
-        <td>{{$index+1}}</td>
-        <td>
-          <p>
-            <em>Line {{item.lineNumber}}, column {{item.columnNumber}}:</em>
-            <strong>{{item.message}}</strong>
-          </p>
-          <pre ng-bind-html="item.elementStringAbbreviated | to_trusted"></pre>
-          <small><em>{{item.code}}</em></small>
-        </td>
-      </tr>
+        <tr ng-class="item.type.toLowerCase()" ng-repeat="item in case.result.nonExcludedIssues" ng-if="case.result.nonExcludedIssues">
+          <td>{{$index+1}}</td>
+          <td>
+            <p>
+              <em>Line {{item.lineNumber}}, column {{item.columnNumber}}:</em>
+              <strong>{{item.message}}</strong>
+            </p>
+            <pre ng-bind-html="item.elementStringAbbreviated | to_trusted"></pre>
+            <small>
+              <em>{{item.code}}</em>
+            </small>
+            <p></p>
+          </td>
+        </tr>
+        <tr ng-if="case.result.excludedIssues.length">
+          <td colspan="3" class="info">
+            Excluded issues:
+          </td>
+        </tr>
+        <tr ng-class="item.type.toLowerCase()" ng-repeat="item in case.result.excludedIssues" ng-if="case.result.excludedIssues.length">
+          <td>{{$index+1}}</td>
+          <td>
+            <p>
+              <em>Line {{item.lineNumber}}, column {{item.columnNumber}}:</em>
+              <strong>{{item.message}}</strong>
+            </p>
+            <pre ng-bind-html="item.elementStringAbbreviated | to_trusted"></pre>
+            <small>
+              <em>{{item.code}}</em>
+            </small>
+          </td>
+        </tr>
       </tbody>
     </table>
 
-    <table class="table table-condensed table-bordered"
-           ng-if="!case.result.nonExcludedIssues.length && !case.result.excludedIssues.length && (case.result.noticeCount != 0 || case.result.warningCount != 0 || case.result.errorCount != 0)">
+    <table class="table table-condensed table-bordered" ng-if="!case.result.nonExcludedIssues.length && !case.result.excludedIssues.length && (case.result.noticeCount != 0 || case.result.warningCount != 0 || case.result.errorCount != 0)">
       <thead>
-      <tr>
-        <th>No.</th>
-        <th>Validation Output</th>
-      </tr>
+        <tr>
+          <th>No.</th>
+          <th>Validation Output</th>
+        </tr>
       </thead>
       <tbody>
-      <tr ng-class="item.type.toLowerCase()" ng-repeat="item in case.result">
-        <td>{{$index+1}}</td>
-        <td>
-          <p>
-            <em>Line {{item.lineNumber}}, column {{item.columnNumber}}:</em>
-            <strong>{{item.message}}</strong>
-          </p>
-          <pre ng-bind-html="item.elementStringAbbreviated | to_trusted"></pre>
-          <small><em>{{item.code}}</em></small>
-          <p></p>
-        </td>
-      </tr>
+        <tr ng-class="item.type.toLowerCase()" ng-repeat="item in case.result">
+          <td>{{$index+1}}</td>
+          <td>
+            <p>
+              <em>Line {{item.lineNumber}}, column {{item.columnNumber}}:</em>
+              <strong>{{item.message}}</strong>
+            </p>
+            <pre ng-bind-html="item.elementStringAbbreviated | to_trusted"></pre>
+            <small>
+              <em>{{item.code}}</em>
+            </small>
+            <p></p>
+          </td>
+        </tr>
       </tbody>
     </table>
 
