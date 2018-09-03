@@ -62,6 +62,7 @@ public class CollectionResultsRouterTest extends StepManagerTest {
     when(mockedTest.getUrls()).thenReturn(Collections.singleton(Mockito.mock(Url.class)));
     when(suite.getTests()).thenReturn(Collections.singletonList(mockedTest));
     when(runIndexWrapper.getTest(anyString())).thenReturn(mockedTest);
+    when(runIndexWrapper.countUrls()).thenReturn(1);
     CollectionResultsRouter collectionResultsRouter = new CollectionResultsRouter(timeoutWatch,
         connection, runnerConfiguration,
         scheduler, runIndexWrapper);
@@ -70,7 +71,6 @@ public class CollectionResultsRouterTest extends StepManagerTest {
   }
 
   @Test
-  @Ignore
   public void onMessage_whenSuccess_expectChangeListenersNotifiedAndMessageSent() throws Exception {
     ObjectMessage message = Mockito.mock(ObjectMessage.class);
     Step stepA = mockCollectionStep("collectorA", Collections.<Comparator>emptySet());
