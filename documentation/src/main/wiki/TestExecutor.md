@@ -1,6 +1,6 @@
 ### Test Executor
 
-The Test Executor module is an entry point of the test suite processing. It exposes endpoints which client applications can use to run the test suite and check the processing status by sending the simple HTTP requests.
+The Test Executor module is a part of [[Web API|WebAPI]] and an entry point of the test suite processing. It exposes endpoints which client applications can use to run the test suite and check the processing status by sending the simple HTTP requests.
 
 The heart of this module is the SuiteExecutor OSGi service. This service is responsible for starting the test suite execution and storing the processing status. It communicates directly with the AET Runner via ActiveMQ.
 
@@ -19,11 +19,14 @@ Base path for both endpoints:
 * **URL**: `/suite`
 * **HTTP Method**: POST
 * **Parameters**:
-    * `suite` - xml file containing the suite definition,
+    * `suite` - xml file content with the suite definition
+    * `name` - overrides name attribute defined in suite file
     * `domain` - overrides domain specified in the suite xml file
     * `pattern` - id of suite that will be used as patterns source
     * `name` - overrides the *name* parameter value from the sute xml file
-* **Description**: Executes test suite provided as a parameter. The request's content type has to be `multipart/form-data`.
+* **Description**: Schedules processing suite passed in the `suite` parameter.
+Returns unique `correlationId` of the scheduled suite run or `errorMessage` in case of
+failure in form of `application/json`. The request's content type has to be `multipart/form-data`.
 
 ###### Response
 
@@ -45,7 +48,8 @@ This endpoint returns JSON object with following fields:
 * **HTTP Method**: GET
 * **Parameters**:
     * `correlationId` - correlation ID of the suite run, which is returned in response to the suite run request.
-* **Description**: Returns processing status of the suite run identified by `correlationId`. Please note that the `Run suite` request returns full URL from which the processing status can be obtained.
+* **Description**: Returns processing status of the suite run identified by `correlationId` or `404` if suite can't be found in the system.
+Please note that the `Run suite` request returns full URL from which the processing status can be obtained.
 
 ###### Response
 
