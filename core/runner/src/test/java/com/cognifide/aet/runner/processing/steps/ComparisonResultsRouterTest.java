@@ -67,7 +67,6 @@ public class ComparisonResultsRouterTest extends StepManagerTest {
   }
 
   @Test
-  @Ignore
   public void onMessage_whenSuccess_expectResultAddedToMetadataAndCountersUpdated()
       throws Exception {
     ComparatorResultData comparatorResultData = Mockito.mock(ComparatorResultData.class);
@@ -87,7 +86,6 @@ public class ComparisonResultsRouterTest extends StepManagerTest {
   }
 
   @Test
-  @Ignore
   public void onMessage_whenError_expectObserversNotifiedAndCountersUpdated() throws Exception {
     ComparatorResultData comparatorResultData = Mockito.mock(ComparatorResultData.class);
     when(mockedMessage.getObject()).thenReturn(comparatorResultData);
