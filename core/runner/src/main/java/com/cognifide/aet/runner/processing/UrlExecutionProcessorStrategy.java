@@ -20,10 +20,9 @@ import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.Url;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.communication.api.wrappers.Run;
-import com.cognifide.aet.communication.api.wrappers.UrlRunWrapper;
 import com.cognifide.aet.runner.RunnerConfiguration;
+import com.cognifide.aet.runner.processing.data.RunIndexWrappers.RunIndexWrapperFactory;
 import com.cognifide.aet.runner.processing.data.SuiteDataService;
-import com.cognifide.aet.runner.processing.data.RunIndexWrapper;
 import com.cognifide.aet.vs.SimpleDBKey;
 import com.cognifide.aet.vs.StorageException;
 import javax.jms.Destination;
@@ -52,7 +51,7 @@ public class UrlExecutionProcessorStrategy extends ProcessorStrategy {
       String urlName = url.getName();
       String testName = objectToRunWrapper.getTestName();
       objectToRunWrapper.setObjectToRun(mergedSuite.getTest(testName).getUrl(urlName));
-      indexedSuite = new RunIndexWrapper(objectToRunWrapper);
+      indexedObject = RunIndexWrapperFactory.createInstance(objectToRunWrapper);
     } catch (StorageException e) {
       e.printStackTrace();
     }

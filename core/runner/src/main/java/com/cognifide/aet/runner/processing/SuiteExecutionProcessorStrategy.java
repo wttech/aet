@@ -21,8 +21,8 @@ import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.communication.api.wrappers.Run;
 import com.cognifide.aet.communication.api.wrappers.SuiteRunWrapper;
 import com.cognifide.aet.runner.RunnerConfiguration;
+import com.cognifide.aet.runner.processing.data.RunIndexWrappers.RunIndexWrapperFactory;
 import com.cognifide.aet.runner.processing.data.SuiteDataService;
-import com.cognifide.aet.runner.processing.data.RunIndexWrapper;
 import com.cognifide.aet.vs.StorageException;
 import javax.jms.Destination;
 import org.slf4j.Logger;
@@ -40,20 +40,19 @@ public class SuiteExecutionProcessorStrategy extends ProcessorStrategy {
     this.objectToRunWrapper = objectToRunWrapper;
   }
 
-  void prepareSuiteWrapper() throws StorageException {
+  void prepareSuiteWrapper() {
     LOGGER.debug("Fetching suite patterns {}", getObjectToRunWrapper());
     try {
-      indexedSuite = new RunIndexWrapper(
-          new SuiteRunWrapper(suiteDataService.enrichWithPatterns(objectToRunWrapper.getRealSuite())));
+      indexedObject = RunIndexWrapperFactory.createInstance(new SuiteRunWrapper(suiteDataService.enrichWithPatterns(objectToRunWrapper.getRealSuite())));
     } catch (StorageException e) {
       e.printStackTrace();
     }
   }
 
-  void save() throws ValidatorException, StorageException {
+  void save() {
     LOGGER.debug("Persisting suite {}", getObjectToRunWrapper());
     try {
-      suiteDataService.saveSuite(indexedSuite.get().getRealSuite());
+      suiteDataService.saveSuite(indexedObject.get().getRealSuite());
     } catch (ValidatorException | StorageException e) {
       e.printStackTrace();
     }

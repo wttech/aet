@@ -21,8 +21,9 @@ import com.cognifide.aet.communication.api.metadata.Test;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.communication.api.wrappers.Run;
 import com.cognifide.aet.runner.RunnerConfiguration;
+import com.cognifide.aet.runner.processing.data.RunIndexWrappers.RunIndexWrapper;
+import com.cognifide.aet.runner.processing.data.RunIndexWrappers.RunIndexWrapperFactory;
 import com.cognifide.aet.runner.processing.data.SuiteDataService;
-import com.cognifide.aet.runner.processing.data.RunIndexWrapper;
 import com.cognifide.aet.vs.SimpleDBKey;
 import com.cognifide.aet.vs.StorageException;
 import javax.jms.Destination;
@@ -49,7 +50,7 @@ public class TestExecutionProcessorStrategy extends ProcessorStrategy {
       Test test = (Test) objectToRunWrapper.getObjectToRun();
       String testName = test.getName();
       objectToRunWrapper.setObjectToRun(mergedSuite.getTest(testName));
-      indexedSuite = new RunIndexWrapper(objectToRunWrapper);
+      indexedObject = RunIndexWrapperFactory.createInstance(objectToRunWrapper);
     } catch (StorageException e) {
       e.printStackTrace();
     }
