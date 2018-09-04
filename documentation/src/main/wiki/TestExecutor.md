@@ -20,7 +20,6 @@ Base path for both endpoints:
 * **HTTP Method**: POST
 * **Parameters**:
     * `suite` - xml file content with the suite definition
-    * `name` - overrides name attribute defined in suite file
     * `domain` - overrides domain specified in the suite xml file
     * `pattern` - id of suite that will be used as patterns source
     * `name` - overrides the *name* parameter value from the sute xml file
