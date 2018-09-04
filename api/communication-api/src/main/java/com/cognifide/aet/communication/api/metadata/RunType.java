@@ -13,23 +13,10 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.communication.api.wrappers;
+package com.cognifide.aet.communication.api.metadata;
 
-import com.cognifide.aet.communication.api.metadata.RunType;
-
-public abstract class RunDecorator implements Run{
-  protected Run decoratedRun;
-
-  public Run getDecoratedRun() {
-    return decoratedRun;
-  }
-
-  public RunDecorator(Run decoratedRun) {
-    this.decoratedRun = decoratedRun;
-  }
-
-  @Override
-  public RunType getType() {
-    return decoratedRun.getType();
-  }
-}
+public enum RunType{
+  SUITE,
+  TEST,
+  URL,
+    }

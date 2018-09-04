@@ -13,23 +13,22 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.communication.api.wrappers;
+package com.cognifide.aet.runner.processing.data.RunIndexWrappers;
 
 import com.cognifide.aet.communication.api.metadata.RunType;
+import com.cognifide.aet.communication.api.wrappers.Run;
 
-public abstract class RunDecorator implements Run{
-  protected Run decoratedRun;
+public class RunIndexWrapperFactory {
 
-  public Run getDecoratedRun() {
-    return decoratedRun;
+  public static RunIndexWrapper createInstance(Run objectToRunWrapper) {
+    if(objectToRunWrapper.getType() == RunType.SUITE){
+      return new SuiteRunIndexWrapper(objectToRunWrapper);
+    } else if (objectToRunWrapper.getType() == RunType.TEST){
+      return new TestRunIndexWrapper(objectToRunWrapper);
+    } else if (objectToRunWrapper.getType() == RunType.URL){
+      return new UrlRunIndexWrapper(objectToRunWrapper);
+    }
+    return null;
   }
 
-  public RunDecorator(Run decoratedRun) {
-    this.decoratedRun = decoratedRun;
-  }
-
-  @Override
-  public RunType getType() {
-    return decoratedRun.getType();
-  }
 }

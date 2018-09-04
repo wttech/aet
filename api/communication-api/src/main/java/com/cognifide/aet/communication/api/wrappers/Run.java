@@ -15,15 +15,23 @@
  */
 package com.cognifide.aet.communication.api.wrappers;
 
-import com.cognifide.aet.communication.api.messages.MessageType;
+import com.cognifide.aet.communication.api.metadata.RunType;
+import com.cognifide.aet.communication.api.metadata.Suite;
 import java.io.Serializable;
 
 public interface Run<T> extends Serializable {
 
-  //TODO Change it to ENUM
-  String getType();
+  RunType getType();
 
   T getObjectToRun();
+
+  void setObjectToRun(T object);
+
+  default void setRealSuite(Suite suite){};
+
+  default Suite getRealSuite(){
+    return null;
+  }
 
   default String getCorrelationId() {
     return null;
@@ -45,4 +53,5 @@ public interface Run<T> extends Serializable {
     return null;
   }
 
+  default String getTestName(){return null;}
 }

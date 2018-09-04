@@ -15,19 +15,13 @@
  */
 package com.cognifide.aet.runner.processing;
 
-import static com.cognifide.aet.rest.BasicDataServlet.isValidCorrelationId;
-import static com.cognifide.aet.rest.BasicDataServlet.isValidName;
-
 import com.cognifide.aet.communication.api.messages.FinishedSuiteProcessingMessage;
 import com.cognifide.aet.communication.api.messages.FinishedSuiteProcessingMessage.Status;
-import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.communication.api.wrappers.Run;
 import com.cognifide.aet.runner.RunnerConfiguration;
+import com.cognifide.aet.runner.processing.data.RunIndexWrappers.RunIndexWrapper;
 import com.cognifide.aet.runner.processing.data.SuiteDataService;
-import com.cognifide.aet.runner.processing.data.SuiteIndexWrapper;
-import com.cognifide.aet.vs.DBKey;
-import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.StorageException;
 import java.util.concurrent.Callable;
 import javax.jms.JMSException;
@@ -36,26 +30,27 @@ import javax.jms.Destination;
 
 abstract class ProcessorStrategy<T> implements Callable<String> {
 
-  protected Logger LOGGER;
+  protected static Logger LOGGER;
   protected final Destination jmsReplyTo;
   protected final SuiteDataService suiteDataService;
   protected final RunnerConfiguration runnerConfiguration;
   protected final SuiteExecutionFactory suiteExecutionFactory;
 
-  protected SuiteIndexWrapper indexedSuite;
+  protected RunIndexWrapper runIndexWrapper;
 
   protected MessagesSender messagesSender;
   protected SuiteProcessor suiteProcessor;
 
-  protected Run objectToRun;
+  protected Run objectToRunWrapper;
 
   public ProcessorStrategy(Destination jmsReplyTo,
       SuiteDataService suiteDataService, RunnerConfiguration runnerConfiguration,
-      SuiteExecutionFactory suiteExecutionFactory) {
+      SuiteExecutionFactory suiteExecutionFactory, Logger LOGGER) {
     this.jmsReplyTo = jmsReplyTo;
     this.suiteDataService = suiteDataService;
     this.runnerConfiguration = runnerConfiguration;
     this.suiteExecutionFactory = suiteExecutionFactory;
+    this.LOGGER = LOGGER;
   }
 
   @Override
@@ -68,43 +63,31 @@ abstract class ProcessorStrategy<T> implements Callable<String> {
     } catch (StorageException | JMSException | ValidatorException e) {
       LOGGER.error("Error during processing suite {}", getObjectToRun(), e);
       FinishedSuiteProcessingMessage message = new FinishedSuiteProcessingMessage(Status.FAILED,
-          objectToRun.getCorrelationId());
+          objectToRunWrapper.getCorrelationId());
       message.addError(e.getMessage());
       messagesSender.sendMessage(message);
     } finally {
       cleanup();
     }
-    return objectToRun.getCorrelationId();
+    return objectToRunWrapper.getCorrelationId();
   }
 
   protected void init() throws JMSException {
     LOGGER.debug("Initializing suite processors {}", getObjectToRun());
     messagesSender = suiteExecutionFactory.newMessagesSender(jmsReplyTo);
-    suiteProcessor = new SuiteProcessor(suiteExecutionFactory, indexedSuite, runnerConfiguration,
+    suiteProcessor = new SuiteProcessor(suiteExecutionFactory, runIndexWrapper, runnerConfiguration,
         messagesSender);
   }
 
   protected void process() throws JMSException {
-    LOGGER.info("Start processing: {}", indexedSuite.get());
+    LOGGER.info("Start processing: {}", runIndexWrapper.get());
     suiteProcessor.startProcessing();
   }
 
   protected void cleanup() {
-    LOGGER.debug("Cleaning up suite {}", getObjectToRun());
+    LOGGER.debug("Cleaning up suite {}", runIndexWrapper.get());
     messagesSender.close();
     suiteProcessor.cleanup();
-  }
-
-  protected static Suite getSuiteFromMetadata(MetadataDAO metadataDAO, DBKey dbKey,
-      String correlationId, String suiteName)
-      throws StorageException {
-    if (isValidCorrelationId(correlationId)) {
-      return metadataDAO.getSuite(dbKey, correlationId);
-    } else if (isValidName(suiteName)) {
-      return metadataDAO.getLatestRun(dbKey, suiteName);
-    } else {
-      return null;
-    }
   }
 
   protected abstract T getObjectToRun();

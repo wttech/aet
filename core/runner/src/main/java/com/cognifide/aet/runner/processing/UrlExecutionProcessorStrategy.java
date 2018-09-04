@@ -17,7 +17,7 @@ package com.cognifide.aet.runner.processing;
 
 import com.cognifide.aet.communication.api.messages.FinishedSuiteProcessingMessage;
 import com.cognifide.aet.communication.api.metadata.Suite;
-import com.cognifide.aet.communication.api.metadata.Test;
+import com.cognifide.aet.communication.api.metadata.Url;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.communication.api.wrappers.Run;
 import com.cognifide.aet.runner.RunnerConfiguration;
@@ -29,12 +29,12 @@ import javax.jms.Destination;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class TestExecutionProcessorStrategy extends ProcessorStrategy {
+public class UrlExecutionProcessorStrategy extends ProcessorStrategy {
 
   protected static final Logger LOGGER = LoggerFactory
       .getLogger(TestExecutionProcessorStrategy.class);
 
-  public TestExecutionProcessorStrategy(Run objectToRunWrapper, Destination jmsReplyTo,
+  public UrlExecutionProcessorStrategy(Run objectToRunWrapper, Destination jmsReplyTo,
       SuiteDataService suiteDataService, RunnerConfiguration runnerConfiguration,
       SuiteExecutionFactory suiteExecutionFactory) {
     super(jmsReplyTo, suiteDataService, runnerConfiguration, suiteExecutionFactory, LOGGER);
@@ -46,9 +46,11 @@ public class TestExecutionProcessorStrategy extends ProcessorStrategy {
     try {
       Suite mergedSuite = suiteDataService.enrichWithPatterns(objectToRunWrapper.getRealSuite());
       objectToRunWrapper.setRealSuite(mergedSuite);
-      Test test = (Test) objectToRunWrapper.getObjectToRun();
-      String testName = test.getName();
-      objectToRunWrapper.setObjectToRun(mergedSuite.getTest(testName));
+
+      Url url = (Url) objectToRunWrapper.getObjectToRun();
+      String urlName = url.getName();
+      String testName = objectToRunWrapper.getTestName();
+      objectToRunWrapper.setObjectToRun(mergedSuite.getTest(testName).getUrl(urlName));
       runIndexWrapper = RunIndexWrapperFactory.createInstance(objectToRunWrapper);
     } catch (StorageException e) {
       e.printStackTrace();
@@ -68,8 +70,9 @@ public class TestExecutionProcessorStrategy extends ProcessorStrategy {
         new FinishedSuiteProcessingMessage(FinishedSuiteProcessingMessage.Status.OK,
             objectToRunWrapper.getCorrelationId()));
   }
+
   @Override
-  protected Test getObjectToRun() {
-    return (Test) objectToRunWrapper.getObjectToRun();
+  protected Url getObjectToRun() {
+    return (Url) objectToRunWrapper.getObjectToRun();
   }
 }

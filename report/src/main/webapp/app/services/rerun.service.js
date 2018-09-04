@@ -81,7 +81,6 @@
       var rerunParams = 'company=' + suiteInfo.company + '&' + 'project=' + suiteInfo.project + '&' +
         'suite=' + suiteInfo.name + '&' + 'testUrl=' + testUrl + '&' + 'testName=' + testName;
       var url = 'http://aet-vagrant:8181/suite-rerun?' + rerunParams;
-      console.log(url);
       $http.post(url, {}).then(function successCallback(response) {
         $rootScope.rerunMsg = 'URL rerun initialized';
         $rootScope.rerunProgress = 0;
@@ -99,7 +98,7 @@
           if (response.data.status === 'FINISHED') {
             var suiteInfo = suiteInfoService.getInfo();
             var linkParams = '?' + 'company=' + suiteInfo.company + '&' + 'project=' + suiteInfo.project + '&' +
-              'suite=' + suiteInfo.name
+              'suite=' + suiteInfo.name;
             linkParams = linkParams + '#' + window.location.href.split('#')[1];
             var linkToLatestSuite = location.protocol + '//' + location.host + location.pathname + linkParams;
             $rootScope.rerunMsg = 'Rerun completed. Page will now refresh.';

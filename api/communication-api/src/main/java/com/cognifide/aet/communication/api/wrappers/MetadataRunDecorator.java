@@ -15,42 +15,45 @@
  */
 package com.cognifide.aet.communication.api.wrappers;
 
+import com.cognifide.aet.communication.api.metadata.Suite;
+
 public class MetadataRunDecorator extends RunDecorator {
 
-  private String correlationId;
+  private Suite suite;
 
-  private String company;
-
-  private String project;
-
-  private String name;
-
-  public MetadataRunDecorator(Run decoratedRun, String correlationId, String company,
-      String project) {
+  public MetadataRunDecorator(Run decoratedRun, Suite suite) {
     super(decoratedRun);
-    this.correlationId = correlationId;
-    this.company = company;
-    this.project = project;
+    this.suite = suite;
+  }
+
+  @Override
+  public void setObjectToRun(Object object) {
+    decoratedRun.setObjectToRun(object);
+  }
+
+  @Override
+  public void setRealSuite(Suite suite) {
+    this.suite = suite;
   }
 
   @Override
   public String getCorrelationId() {
-    return correlationId;
+    return suite.getCorrelationId();
   }
 
   @Override
   public String getCompany() {
-    return company;
+    return suite.getCompany();
   }
 
   @Override
   public String getName() {
-    return name;
+    return suite.getName();
   }
 
   @Override
   public String getSuiteIdentifier() {
-    return company + "-" + project + "-" + name;
+    return suite.getSuiteIdentifier();
   }
 
   @Override
@@ -60,7 +63,17 @@ public class MetadataRunDecorator extends RunDecorator {
 
   @Override
   public String getProject() {
-    return project;
+    return suite.getProject();
+  }
+
+  @Override
+  public Suite getRealSuite() {
+    return suite;
+  }
+
+
+  public String getTestName() {
+    return decoratedRun.getTestName();
   }
 
 }

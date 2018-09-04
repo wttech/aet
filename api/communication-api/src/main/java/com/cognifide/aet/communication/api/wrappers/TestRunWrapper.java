@@ -15,7 +15,7 @@
  */
 package com.cognifide.aet.communication.api.wrappers;
 
-import com.cognifide.aet.communication.api.messages.MessageType;
+import com.cognifide.aet.communication.api.metadata.RunType;
 import com.cognifide.aet.communication.api.metadata.Test;
 
 public class TestRunWrapper implements Run {
@@ -24,16 +24,25 @@ public class TestRunWrapper implements Run {
 
   public TestRunWrapper(Test test) {
     this.test = test;
-    test.setRerunned();
+    test.setReran();
   }
 
   @Override
-  public String getType() {
-    return "";
+  public void setObjectToRun(Object object) {
+    this.test = (Test) object;
+  }
+
+  @Override
+  public RunType getType() {
+    return RunType.TEST;
   }
 
   @Override
   public Test getObjectToRun() {
     return test;
+  }
+
+  public String getTestName() {
+    return test.getName();
   }
 }

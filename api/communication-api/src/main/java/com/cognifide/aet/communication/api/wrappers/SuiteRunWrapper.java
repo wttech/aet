@@ -15,7 +15,7 @@
  */
 package com.cognifide.aet.communication.api.wrappers;
 
-import com.cognifide.aet.communication.api.messages.MessageType;
+import com.cognifide.aet.communication.api.metadata.RunType;
 import com.cognifide.aet.communication.api.metadata.Suite;
 
 public class SuiteRunWrapper implements Run {
@@ -26,13 +26,18 @@ public class SuiteRunWrapper implements Run {
   }
 
   @Override
-  public String getType() {
-    return "SUITE";
+  public RunType getType() {
+    return RunType.SUITE;
   }
 
   @Override
-  public Suite getObjectToRun(){
-    return suite;
+  public void setObjectToRun(Object object) {
+    this.suite = (Suite) object;
+  }
+
+  @Override
+  public void setRealSuite(Suite suite) {
+    this.suite = suite;
   }
 
   @Override
@@ -60,4 +65,13 @@ public class SuiteRunWrapper implements Run {
     return suite.getProject();
   }
 
+  @Override
+  public Suite getRealSuite() {
+    return suite;
+  }
+
+  @Override
+  public Suite getObjectToRun(){
+    return suite;
+  }
 }

@@ -121,11 +121,11 @@ public class RunnerMessageListener implements MessageListener {
   }
 
   private void processTestSuite(Message wrapperMessage, TaskMessage message) {
-    Run objectToRun  = (Run) message.getData();
+    Run objectToRunWrapper  = (Run) message.getData();
     try {
-      suiteExecutorService.scheduleSuite(objectToRun, wrapperMessage.getJMSReplyTo());
+      suiteExecutorService.scheduleSuite(objectToRunWrapper, wrapperMessage.getJMSReplyTo());
     } catch (JMSException e) {
-      LOGGER.error("Error wile processing RUN {}: ", objectToRun.getCorrelationId(), e);
+      LOGGER.error("Error wile processing RUN {}: ", objectToRunWrapper.getCorrelationId(), e);
       sendFatalMessage(wrapperMessage, e.getMessage());
     }
   }

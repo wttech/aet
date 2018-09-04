@@ -93,7 +93,6 @@
     display: flex;
     flex-wrap: nowrap;
     z-index: 100;
-    border-left: solid 1px $border-color;
 
     &.is-absolute {
       right: 0;
@@ -176,22 +175,6 @@
         top: 3px;
       }
     }
-
-    .suite-rerun {
-      width:20%;
-      border-left: solid 1px #ededed;
-      padding-left: 15px;
-      color: $gray_dark;
-
-      &-msg {
-        padding-top:18px;
-        margin-bottom: 3px;
-      }
-
-      &-progress {
-
-      }
-    }
   }
 
   &-nav {
@@ -221,6 +204,7 @@
     }
   }
   &-btns {
+    border-left: solid 1px $border-color;
     padding-left: 20px;
     padding-top: 15px;
     height: 73px;

@@ -35,7 +35,7 @@ public class Test implements Serializable, Commentable, Named {
 
   private final String preferredBrowserId;
 
-  private boolean isRerunned = false;
+  private boolean isReran;
 
   private Timestamp rerunTimestamp;
 
@@ -121,8 +121,17 @@ public class Test implements Serializable, Commentable, Named {
         .toString();
   }
 
-  public void setRerunned() {
-    isRerunned = true;
+  public void setReran() {
+    isReran = true;
     rerunTimestamp = new Timestamp(System.currentTimeMillis());
+  }
+
+  public Url getUrl(String urlName) {
+    for (Url url: this.urls) {
+      if(url.getName().equals(urlName)){
+        return url;
+      }
+    }
+    return null;
   }
 }

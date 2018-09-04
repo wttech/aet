@@ -21,16 +21,16 @@ import static com.cognifide.aet.rest.BasicDataServlet.isValidName;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.Suite.Timestamp;
 import com.cognifide.aet.communication.api.metadata.Test;
+import com.cognifide.aet.communication.api.metadata.Url;
 import com.cognifide.aet.communication.api.wrappers.MetadataRunDecorator;
 import com.cognifide.aet.communication.api.wrappers.Run;
 import com.cognifide.aet.communication.api.wrappers.SuiteRunWrapper;
 import com.cognifide.aet.communication.api.wrappers.TestRunWrapper;
+import com.cognifide.aet.communication.api.wrappers.UrlRunWrapper;
 import com.cognifide.aet.executor.model.CorrelationIdGenerator;
 import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.StorageException;
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,24 +42,40 @@ class SuiteRerun {
   private SuiteRerun() {
   }
 
-  static Run getAndPrepareSuite(MetadataDAO metadataDAO, DBKey dbKey, String correlationId,
-      String suiteName, String testName) {
+  static Run getAndPrepareObject(MetadataDAO metadataDAO, DBKey dbKey, String correlationId,
+      String suiteName, String testName, String urlName) {
     Suite suite = null;
     try {
       suite = getSuiteFromMetadata(metadataDAO, dbKey, correlationId, suiteName);
+      suite.setRunTimestamp(new Timestamp(System.currentTimeMillis()));
     } catch (StorageException e) {
       LOGGER.error("Read metadata from DB problem!", e);
     }
-    prepareSuiteToRerun(suite, testName);
-    Run objectToRunWrapper;
-    if(testName!=null){
-      Test test = suite.getTest(testName);
-      objectToRunWrapper = new MetadataRunDecorator(new TestRunWrapper(test),
-          suite.getCorrelationId(), suite.getCompany(), suite.getProject());
-    } else {
+    Run objectToRunWrapper = null;
+    if (isSuiteRerun(testName, urlName)) {
+      prepareSuiteToRerun(suite);
       objectToRunWrapper = new SuiteRunWrapper(suite);
+    } else if (isTestRerun(testName, urlName)) {
+      Test test = suite.getTest(testName);
+      objectToRunWrapper = new MetadataRunDecorator(new TestRunWrapper(test), suite);
+    } else if (isUrlRerun(testName, urlName)) {
+      Test test = suite.getTest(testName);
+      Url url = test.getUrl(urlName);
+      objectToRunWrapper = new MetadataRunDecorator(new UrlRunWrapper(url, test), suite);
     }
     return objectToRunWrapper;
+  }
+
+  private static boolean isSuiteRerun(String testName, String urlName) {
+    return testName == null && urlName == null;
+  }
+
+  private static boolean isTestRerun(String testName, String urlName) {
+    return testName != null && urlName == null;
+  }
+
+  private static boolean isUrlRerun(String testName, String urlName) {
+    return testName != null && urlName != null;
   }
 
   public static Suite getSuiteFromMetadata(MetadataDAO metadataDAO, DBKey dbKey,
@@ -74,44 +90,12 @@ class SuiteRerun {
     }
   }
 
-  private static void prepareSuiteToRerun(Suite suite, String testName) {
+  private static void prepareSuiteToRerun(Suite suite) {
     Optional.ofNullable(suite)
-        .ifPresent(s -> {
-          Optional<String> testString = Optional.ofNullable(testName);
-          if (testString.isPresent()) {
-            testString.map(s::getTest)
-                .ifPresent(testToRerun -> {
-                  s.removeAllTests();
-                  testToRerun.setRerunned();
-                  s.addTest(testToRerun);
-                });
-          } else {
-            s.setCorrelationId(CorrelationIdGenerator
-                .generateCorrelationId(s.getCompany(), s.getProject(), s.getName()));
-            s.setRunTimestamp(new Timestamp(System.currentTimeMillis()));
-          }
-          cleanDataFromSuite(s);
-        });
+        .ifPresent(s ->
+          s.setCorrelationId(CorrelationIdGenerator
+              .generateCorrelationId(s.getCompany(), s.getProject(), s.getName()))
+        );
   }
 
-  private static void cleanDataFromSuite(Suite suite) {
-    suite.getTests().stream()
-        .map(Test::getUrls)
-        .flatMap(Collection::stream)
-        .forEach(url -> {
-          url.setCollectionStats(null);
-          url.getSteps()
-              .forEach(step -> {
-                step.setStepResult(null);
-                if (step.getComparators() != null) {
-                  step.getComparators()
-                      .forEach(comparator -> {
-                        comparator.setStepResult(null);
-                        comparator.setFilters(new ArrayList<>());
-                      });
-                }
-              });
-        });
-  }
 }
-

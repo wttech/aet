@@ -16,7 +16,6 @@
 package com.cognifide.aet.executor;
 
 import com.cognifide.aet.communication.api.execution.SuiteExecutionResult;
-import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.communication.api.wrappers.Run;
 import com.cognifide.aet.executor.http.HttpSuiteExecutionResultWrapper;
@@ -69,13 +68,14 @@ public class SuiteRerunServlet extends HttpServlet {
     String correlationId = request.getParameter(Helper.CORRELATION_ID_PARAM);
     String suiteName = request.getParameter(Helper.SUITE_PARAM);
     String testName = request.getParameter(Helper.TEST_RERUN_PARAM);
+    String urlName = request.getParameter(Helper.URL_RERUN_PARAM);
 
     Run objectToRunWrapper = null;
 
     try {
       objectToRunWrapper = SuiteRerun
-          .getAndPrepareSuite(metadataDAO, Helper.getDBKeyFromRequest(request), correlationId, suiteName,
-              testName);
+          .getAndPrepareObject(metadataDAO, Helper.getDBKeyFromRequest(request), correlationId, suiteName,
+              testName, urlName);
       if(objectToRunWrapper != null) {
         try {
           resultWrapper = suiteExecutor.executeSuite(objectToRunWrapper);
