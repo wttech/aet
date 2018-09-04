@@ -17,6 +17,7 @@ package com.cognifide.aet.common;
 
 import com.cognifide.aet.communication.api.execution.SuiteStatusResult;
 
+@Deprecated
 final class ProcessorFactory {
 
   private ProcessorFactory() {

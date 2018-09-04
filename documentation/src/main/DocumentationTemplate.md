@@ -12,11 +12,7 @@
 
 #include "wiki/BasicSetup.md"
 
-### Advanced Setup
-
-#include "wiki/LinuxAndWindowsSetup.md"
-
-#include "wiki/OsgiConfiguration.md"
+#include "wiki/AdvancedSetup.md"
 
 #include "wiki/DefiningSuite.md"
 
@@ -146,7 +142,7 @@
 
 #include "wiki/Worker.md"
 
-#include "wiki/RestAPI.md"
+#include "wiki/WebAPI.md"
 
 #include "wiki/Cleaner.md"
 

@@ -28,18 +28,18 @@
     <div ng-repeat="suiteHeader in suiteHeaders track by $index">
       <a href="{{reportPath}}&version={{suiteHeader.version}}" ng-if="suiteHeader.isRebased">
         <div class="suite-history-item suite-history-rebased" ng-if="selectedVersion === suiteHeader.version">
-          <i class="fas fa-angle-right suite-history-arrow"></i><span class="suite-history-rebased-bold">v{{suiteHeader.version}} | {{suiteHeader.correlationId | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
+          <i class="fas fa-angle-right suite-history-arrow"></i><span class="suite-history-rebased-bold">v{{suiteHeader.version}} | {{suiteHeader.timestamp | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
         </div>
         <div class="suite-history-item suite-history-rebased" ng-if="selectedVersion !== suiteHeader.version">
-          <i class="fas fa-angle-right suite-history-arrow"></i>v{{suiteHeader.version}} | {{suiteHeader.correlationId | date: 'yyyy-MM-dd HH:mm:ss'}}
+          <i class="fas fa-angle-right suite-history-arrow"></i>v{{suiteHeader.version}} | {{suiteHeader.timestamp | date: 'yyyy-MM-dd HH:mm:ss'}}
         </div>
       </a>
       <a href="{{reportPath}}&version={{suiteHeader.version}}" ng-if="!suiteHeader.isRebased">
         <div class="suite-history-item" ng-if="selectedVersion === suiteHeader.version">
-          <i class="fas fa-angle-right suite-history-arrow"></i><span class="suite-history-bold">v{{suiteHeader.version}} | {{suiteHeader.correlationId | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
+          <i class="fas fa-angle-right suite-history-arrow"></i><span class="suite-history-bold">v{{suiteHeader.version}} | {{suiteHeader.timestamp | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
         </div>
         <div class="suite-history-item" ng-if="selectedVersion !== suiteHeader.version">
-          <i class="fas fa-angle-right suite-history-arrow"></i>v{{suiteHeader.version}} | {{suiteHeader.correlationId | date: 'yyyy-MM-dd HH:mm:ss'}}
+          <i class="fas fa-angle-right suite-history-arrow"></i>v{{suiteHeader.version}} | {{suiteHeader.timestamp | date: 'yyyy-MM-dd HH:mm:ss'}}
         </div>
       </a>
     </div>
