@@ -35,7 +35,7 @@
         data-content="Rerun current URL"
         data-trigger="hover"
         data-container="body"
-        data-ng-click="toolbarBottom.rerunURL()">
+        data-ng-click="toolbarBottom.rerunURL(toolbarBottom.model.url)">
         <i class="far fa-play-circle fa-sm"></i>
       </div>
       <div ng-if="toolbarBottom.viewMode == 'suite' && !toolbarBottom.historyService.getNextVersion(toolbarBottom.suiteInfoService.getInfo().version)"

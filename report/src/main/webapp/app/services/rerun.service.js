@@ -15,14 +15,14 @@
   * See the License for the specific language governing permissions and
   * limitations under the License.
   */
- define(['angularAMD', 'endpointConfiguration', 'suiteInfoService'], function (angularAMD) {
+ define(['angularAMD', 'endpointConfiguration', 'suiteInfoService' , 'caseFactory'], function (angularAMD) {
   'use strict';
   angularAMD.factory('rerunService', rerunService);
 
   /**
    * Service responsible for fetching suite's history
    */
-  function rerunService($rootScope, $http, endpointConfiguration, suiteInfoService) {
+  function rerunService($rootScope, $http, endpointConfiguration, suiteInfoService, caseFactory) {
     $rootScope.endpointUrl = endpointConfiguration.getEndpoint().getUrl;
     var service = {
       getRerunStatistics: getRerunStatistics,
@@ -76,12 +76,12 @@
     }
 
     function rerunURL(testName, testUrl) {
-      
       $rootScope.rerunInProgress = true;
       var suiteInfo = suiteInfoService.getInfo();
       var rerunParams = 'company=' + suiteInfo.company + '&' + 'project=' + suiteInfo.project + '&' +
         'suite=' + suiteInfo.name + '&' + 'testUrl=' + testUrl + '&' + 'testName=' + testName;
       var url = 'http://aet-vagrant:8181/suite-rerun?' + rerunParams;
+      console.log(url);
       $http.post(url, {}).then(function successCallback(response) {
         $rootScope.rerunMsg = 'URL rerun initialized';
         $rootScope.rerunProgress = 0;
