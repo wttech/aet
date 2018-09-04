@@ -19,6 +19,7 @@ import com.cognifide.aet.communication.api.exceptions.AETException;
 import com.cognifide.aet.communication.api.execution.SuiteStatusResult;
 import com.jcabi.log.Logger;
 
+@Deprecated
 public class UnexpectedStatusProcessor implements StatusProcessor {
 
   private final SuiteStatusResult suiteStatusResult;

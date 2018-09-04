@@ -24,6 +24,7 @@ import org.apache.http.client.ResponseHandler;
 import org.apache.http.entity.mime.MIME;
 import org.apache.http.util.EntityUtils;
 
+@Deprecated
 class JsonResponseHandler<T> implements ResponseHandler<T> {
 
   private Class<T> resultClass;

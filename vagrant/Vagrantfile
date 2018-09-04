@@ -24,7 +24,7 @@
 ENV["GEM_PATH"] = nil
 ENV["GEM_HOME"] = nil
 
-AET_VERSION = '2.1.6'
+AET_VERSION = '3.0.0-rc01'
 
 VAGRANTFILE_API_VERSION = '2'
 
@@ -68,7 +68,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     aet.local
   )
 
-  config.omnibus.chef_version = '12.19.36'
+  config.omnibus.chef_version = '14.3.37'
   config.berkshelf.enabled = true
 
   config.vm.provision :chef_solo do |chef|
