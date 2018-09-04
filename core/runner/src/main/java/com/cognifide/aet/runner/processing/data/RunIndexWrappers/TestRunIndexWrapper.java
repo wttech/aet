@@ -22,9 +22,9 @@ import com.cognifide.aet.communication.api.wrappers.Run;
 import com.cognifide.aet.communication.api.wrappers.UrlRunWrapper;
 import java.util.ArrayList;
 
-public class TestindexWrapper extends RunIndexWrapper {
+public class TestRunIndexWrapper extends RunIndexWrapper {
 
-  public TestindexWrapper(Run objectToRunWrapper) {
+  public TestRunIndexWrapper(Run objectToRunWrapper) {
     super(objectToRunWrapper);
   }
 

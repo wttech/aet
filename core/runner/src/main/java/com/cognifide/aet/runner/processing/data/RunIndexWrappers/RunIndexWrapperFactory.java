@@ -24,7 +24,7 @@ public class RunIndexWrapperFactory {
     if(objectToRunWrapper.getType() == RunType.SUITE){
       return new SuiteRunIndexWrapper(objectToRunWrapper);
     } else if (objectToRunWrapper.getType() == RunType.TEST){
-      return new TestindexWrapper(objectToRunWrapper);
+      return new TestRunIndexWrapper(objectToRunWrapper);
     } else if (objectToRunWrapper.getType() == RunType.URL){
       return new UrlRunIndexWrapper(objectToRunWrapper);
     }

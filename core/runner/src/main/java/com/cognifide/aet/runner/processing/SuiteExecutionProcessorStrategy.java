@@ -41,18 +41,18 @@ public class SuiteExecutionProcessorStrategy extends ProcessorStrategy {
   }
 
   void prepareSuiteWrapper() {
-    LOGGER.debug("Fetching suite patterns {}", getObjectToRunWrapper());
+    LOGGER.debug("Fetching suite patterns {}", getObjectToRun());
     try {
-      indexedObject = RunIndexWrapperFactory.createInstance(new SuiteRunWrapper(suiteDataService.enrichWithPatterns(objectToRunWrapper.getRealSuite())));
+      runIndexWrapper = RunIndexWrapperFactory.createInstance(new SuiteRunWrapper(suiteDataService.enrichWithPatterns(objectToRunWrapper.getRealSuite())));
     } catch (StorageException e) {
       e.printStackTrace();
     }
   }
 
   void save() {
-    LOGGER.debug("Persisting suite {}", getObjectToRunWrapper());
+    LOGGER.debug("Persisting suite {}", getObjectToRun());
     try {
-      suiteDataService.saveSuite(indexedObject.get().getRealSuite());
+      suiteDataService.saveSuite(runIndexWrapper.get().getRealSuite());
     } catch (ValidatorException | StorageException e) {
       e.printStackTrace();
     }
@@ -62,7 +62,8 @@ public class SuiteExecutionProcessorStrategy extends ProcessorStrategy {
   }
 
   @Override
-  protected Suite getObjectToRunWrapper() {
-    return objectToRunWrapper.getRealSuite();
+  protected Suite getObjectToRun() {
+    return (Suite) objectToRunWrapper.getObjectToRun();
   }
+
 }

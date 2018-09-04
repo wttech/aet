@@ -44,23 +44,23 @@ class SuiteProcessor {
   private final CollectDispatcher collectDispatcher;
   private final CollectionResultsRouter collectionResultsRouter;
   private final ComparisonResultsRouter comparisonResultsRouter;
-  private final RunIndexWrapper indexedObject;
+  private final RunIndexWrapper runIndexWrapper;
   private final RunnerConfiguration runnerConfiguration;
   private final MessagesSender messagesSender;
 
   SuiteProcessor(SuiteExecutionFactory suiteExecutionFactory,
-      RunIndexWrapper indexedObject, RunnerConfiguration runnerConfiguration,
+      RunIndexWrapper runIndexWrapper, RunnerConfiguration runnerConfiguration,
       MessagesSender messagesSender) throws JMSException {
-    this.indexedObject = indexedObject;
+    this.runIndexWrapper = runIndexWrapper;
     this.runnerConfiguration = runnerConfiguration;
     this.messagesSender = messagesSender;
     this.timeoutWatch = new TimeoutWatch();
     timer = ExecutionTimer.createAndRun("RUNNER");
-    collectDispatcher = suiteExecutionFactory.newCollectDispatcher(timeoutWatch, this.indexedObject);
+    collectDispatcher = suiteExecutionFactory.newCollectDispatcher(timeoutWatch, this.runIndexWrapper);
     collectionResultsRouter = suiteExecutionFactory
-        .newCollectionResultsRouter(timeoutWatch, this.indexedObject);
+        .newCollectionResultsRouter(timeoutWatch, this.runIndexWrapper);
     comparisonResultsRouter = suiteExecutionFactory
-        .newComparisonResultsRouter(timeoutWatch, this.indexedObject);
+        .newComparisonResultsRouter(timeoutWatch, this.runIndexWrapper);
     collectionResultsRouter.addObserver(messagesSender);
     comparisonResultsRouter.addObserver(messagesSender);
     collectionResultsRouter.addChangeObserver(comparisonResultsRouter);
@@ -73,7 +73,7 @@ class SuiteProcessor {
       if (comparisonResultsRouter.isFinished()) {
         timer.finish();
         LOGGER.info("Finished suite run: {}. Task finished in {} ms ({}).",
-            indexedObject.get().getCorrelationId(), timer.getExecutionTimeInMillis(),
+            runIndexWrapper.get().getCorrelationId(), timer.getExecutionTimeInMillis(),
             timer.getExecutionTimeInMMSS());
         LOGGER.info("Total tasks finished in steps: collect: {}; compare: {}.",
             collectionResultsRouter.getTotalTasksCount(),
@@ -82,7 +82,7 @@ class SuiteProcessor {
         timer.finish();
         LOGGER.warn(
             "Running {} interrupted after {} ms ({}). Last message received: {} seconds ago... Trying to force report generation.",
-            indexedObject.get().getCorrelationId(), timer.getExecutionTimeInMillis(),
+            runIndexWrapper.get().getCorrelationId(), timer.getExecutionTimeInMillis(),
             timer.getExecutionTimeInMMSS(),
             TimeUnit.NANOSECONDS.toSeconds(timeoutWatch.getLastUpdateDifference()));
         forceFinishSuite();
@@ -108,7 +108,7 @@ class SuiteProcessor {
         FullProgressLog currentLog = composeProgressLog();
         if (!currentLog.toString().equals(logMessage)) {
           logMessage = currentLog.toString();
-          LOGGER.info("[{}]: {}", indexedObject.get().getCorrelationId(), logMessage);
+          LOGGER.info("[{}]: {}", runIndexWrapper.get().getCorrelationId(), logMessage);
           messagesSender.sendMessage(new ProgressMessage(currentLog));
         }
         Thread.sleep(1000);
@@ -137,7 +137,7 @@ class SuiteProcessor {
     messagesSender.sendMessage(new ProcessingErrorMessage(ProcessingError
         .reportingError(
             "Report will be generated after timeout - some results might be missing!"),
-        indexedObject.get().getCorrelationId()));
+        runIndexWrapper.get().getCorrelationId()));
     timeoutWatch.update();
     checkStatusUntilFinishedOrTimedOut();
     if (!comparisonResultsRouter.isFinished()) {
@@ -145,8 +145,8 @@ class SuiteProcessor {
       messagesSender.sendMessage(new ProcessingErrorMessage(ProcessingError
           .reportingError(
               "Report will be generated after timeout - some results might be missing!"),
-          indexedObject.get().getCorrelationId()));
+          runIndexWrapper.get().getCorrelationId()));
     }
-    collectDispatcher.cancel(indexedObject.get().getCorrelationId());
+    collectDispatcher.cancel(runIndexWrapper.get().getCorrelationId());
   }
 }

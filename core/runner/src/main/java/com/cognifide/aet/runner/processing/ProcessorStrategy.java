@@ -36,7 +36,7 @@ abstract class ProcessorStrategy<T> implements Callable<String> {
   protected final RunnerConfiguration runnerConfiguration;
   protected final SuiteExecutionFactory suiteExecutionFactory;
 
-  protected RunIndexWrapper indexedObject;
+  protected RunIndexWrapper runIndexWrapper;
 
   protected MessagesSender messagesSender;
   protected SuiteProcessor suiteProcessor;
@@ -61,7 +61,7 @@ abstract class ProcessorStrategy<T> implements Callable<String> {
       process();
       save();
     } catch (StorageException | JMSException | ValidatorException e) {
-      LOGGER.error("Error during processing suite {}", getObjectToRunWrapper(), e);
+      LOGGER.error("Error during processing suite {}", getObjectToRun(), e);
       FinishedSuiteProcessingMessage message = new FinishedSuiteProcessingMessage(Status.FAILED,
           objectToRunWrapper.getCorrelationId());
       message.addError(e.getMessage());
@@ -73,24 +73,24 @@ abstract class ProcessorStrategy<T> implements Callable<String> {
   }
 
   protected void init() throws JMSException {
-    LOGGER.debug("Initializing suite processors {}", getObjectToRunWrapper());
+    LOGGER.debug("Initializing suite processors {}", getObjectToRun());
     messagesSender = suiteExecutionFactory.newMessagesSender(jmsReplyTo);
-    suiteProcessor = new SuiteProcessor(suiteExecutionFactory, indexedObject, runnerConfiguration,
+    suiteProcessor = new SuiteProcessor(suiteExecutionFactory, runIndexWrapper, runnerConfiguration,
         messagesSender);
   }
 
   protected void process() throws JMSException {
-    LOGGER.info("Start processing: {}", indexedObject.get());
+    LOGGER.info("Start processing: {}", runIndexWrapper.get());
     suiteProcessor.startProcessing();
   }
 
   protected void cleanup() {
-    // TODO Add there information in logs
+    LOGGER.debug("Cleaning up suite {}", runIndexWrapper.get());
     messagesSender.close();
     suiteProcessor.cleanup();
   }
 
-  protected abstract T getObjectToRunWrapper();
+  protected abstract T getObjectToRun();
 
   abstract void prepareSuiteWrapper() throws StorageException;
 

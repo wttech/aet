@@ -42,7 +42,7 @@ public class UrlExecutionProcessorStrategy extends ProcessorStrategy {
   }
 
   void prepareSuiteWrapper() throws StorageException {
-    LOGGER.debug("Fetching suite patterns {}", getObjectToRunWrapper());
+    LOGGER.debug("Fetching suite patterns {}", getObjectToRun());
     try {
       Suite mergedSuite = suiteDataService.enrichWithPatterns(objectToRunWrapper.getRealSuite());
       objectToRunWrapper.setRealSuite(mergedSuite);
@@ -51,14 +51,14 @@ public class UrlExecutionProcessorStrategy extends ProcessorStrategy {
       String urlName = url.getName();
       String testName = objectToRunWrapper.getTestName();
       objectToRunWrapper.setObjectToRun(mergedSuite.getTest(testName).getUrl(urlName));
-      indexedObject = RunIndexWrapperFactory.createInstance(objectToRunWrapper);
+      runIndexWrapper = RunIndexWrapperFactory.createInstance(objectToRunWrapper);
     } catch (StorageException e) {
       e.printStackTrace();
     }
   }
 
   void save() throws ValidatorException, StorageException {
-    LOGGER.debug("Persisting suite {}", getObjectToRunWrapper());
+    LOGGER.debug("Persisting suite {}", getObjectToRun());
     try {
       Suite oldSuite = suiteDataService.getSuite(new SimpleDBKey(objectToRunWrapper.getRealSuite()),
           objectToRunWrapper.getCorrelationId());
@@ -72,7 +72,7 @@ public class UrlExecutionProcessorStrategy extends ProcessorStrategy {
   }
 
   @Override
-  protected Url getObjectToRunWrapper() {
+  protected Url getObjectToRun() {
     return (Url) objectToRunWrapper.getObjectToRun();
   }
 }

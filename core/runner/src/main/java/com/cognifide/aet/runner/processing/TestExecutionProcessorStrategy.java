@@ -21,7 +21,6 @@ import com.cognifide.aet.communication.api.metadata.Test;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.communication.api.wrappers.Run;
 import com.cognifide.aet.runner.RunnerConfiguration;
-import com.cognifide.aet.runner.processing.data.RunIndexWrappers.RunIndexWrapper;
 import com.cognifide.aet.runner.processing.data.RunIndexWrappers.RunIndexWrapperFactory;
 import com.cognifide.aet.runner.processing.data.SuiteDataService;
 import com.cognifide.aet.vs.SimpleDBKey;
@@ -43,21 +42,21 @@ public class TestExecutionProcessorStrategy extends ProcessorStrategy {
   }
 
   void prepareSuiteWrapper() throws StorageException {
-    LOGGER.debug("Fetching suite patterns {}", getObjectToRunWrapper());
+    LOGGER.debug("Fetching suite patterns {}", getObjectToRun());
     try {
       Suite mergedSuite = suiteDataService.enrichWithPatterns(objectToRunWrapper.getRealSuite());
       objectToRunWrapper.setRealSuite(mergedSuite);
       Test test = (Test) objectToRunWrapper.getObjectToRun();
       String testName = test.getName();
       objectToRunWrapper.setObjectToRun(mergedSuite.getTest(testName));
-      indexedObject = RunIndexWrapperFactory.createInstance(objectToRunWrapper);
+      runIndexWrapper = RunIndexWrapperFactory.createInstance(objectToRunWrapper);
     } catch (StorageException e) {
       e.printStackTrace();
     }
   }
 
   void save() throws ValidatorException, StorageException {
-    LOGGER.debug("Persisting suite {}", getObjectToRunWrapper());
+    LOGGER.debug("Persisting suite {}", getObjectToRun());
     try {
       Suite oldSuite = suiteDataService.getSuite(new SimpleDBKey(objectToRunWrapper.getRealSuite()),
           objectToRunWrapper.getCorrelationId());
@@ -70,7 +69,7 @@ public class TestExecutionProcessorStrategy extends ProcessorStrategy {
             objectToRunWrapper.getCorrelationId()));
   }
   @Override
-  protected Test getObjectToRunWrapper() {
+  protected Test getObjectToRun() {
     return (Test) objectToRunWrapper.getObjectToRun();
   }
 }
