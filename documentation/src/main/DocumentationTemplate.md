@@ -142,7 +142,7 @@
 
 #include "wiki/Worker.md"
 
-#include "wiki/RestAPI.md"
+#include "wiki/WebAPI.md"
 
 #include "wiki/Cleaner.md"
 
