@@ -86,21 +86,21 @@ entry point of the test suite processing. You may read more about it [[here|Test
  
 --------
 ##### Gets list of all suites in system
-* **URL**: `/config/list`
+* **URL**: `/configs/list`
 * **HTTP Method**: GET
 * **Example**: http://aet.example.com/config/list 
 * **Description**: Returns all suites for all projects in all companies as html list of links to reports and metadata (this method will change or will be removed in near future- for now it stays only for devs and testing purposes).
  
 --------
 ##### Get all locked suites
-* **URL**: `/config/locks`
+* **URL**: `/configs/locks`
 * **HTTP Method**: GET
 * **Example**: http://aet.example.com/config/locks 
 * **Description**: Returns list of current locks.
  
 --------
 ##### Get communication settings
-* **URL**: `/config/communicationSettings`
+* **URL**: `/configs/communicationSettings`
 * **HTTP Method**: GET
 * **Example**: http://aet.example.com/config/communicationSettings 
 * **Description**: Returns current JMS broker settings and report app domain. This method is used by maven client.
