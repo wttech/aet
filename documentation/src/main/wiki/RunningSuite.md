@@ -7,7 +7,11 @@ This action will trigger AET suite processing and will return information on how
 AET provides 2 tools to schedule suite execution:
 - [[Client Scripts|ClientScripts]]
 - [[Client Maven Plugin|ClientApplication]]
-however, you may use your own tool or just a simple `curl` to schedule the suite.
+however, you may use your own tool or just a simple `curl` to schedule the suite, e.g.:
+```
+curl -F "suite=@suite.xml" "http://aet-instance.com/suite"
+```
+Assuming your test executor instance is available at `aet-instance.com` domain.
 
 ### Running suite with bash script
 
@@ -40,12 +44,11 @@ Read more about tracking progress in the [[Tracking Progress|TrackingProgress]] 
 ### Running suite with *aet-maven-plugin*
 
 **Important note**
-**`aet-maven-plugin` is deprecated and will be no longer supported. Expect it will be removed during next minor release.
+**`aet-maven-plugin` is deprecated and will be no longer supported. Expect it will be removed soon.
 Please use [[client script|ClientScripts]] instead or simply communicate with AET Web API to schedule your suite.**
 
 #### Requirements
 * Maven installed (recommended version - 3.0.4).
-* Proper version of AET Maven plugin installed.
 * Well-formed and valid xml test suite file available (described with
 details in [[Defining Suite|DefiningSuite]] chapter),
 * [`pom.xml`](#pomxml) file with defined *aet-maven-plugin* configuration (described below).
@@ -121,10 +124,10 @@ by project owner and consists of lowercase letters and dots,
 It should consist only of lowercase letters and `-` characters,
     * example: `aet-sanity-test`
 * `{PLUGIN-VERSION}` which should be set to the *aet-maven-plugin* version currently used
-    * example: `1.0.0`
+    * example: `2.1.6`
 
 Having the version as the maven property (`${aet.version}`) enables
-defining this parameter from the command line later, e.g. `-Daet.version=1.1.0`.
+defining this parameter from the command line later, e.g. `-Daet.version=2.1.6`.
 
 ### Tips and recommendations
 

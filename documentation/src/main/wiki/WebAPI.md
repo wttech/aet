@@ -103,7 +103,7 @@ entry point of the test suite processing. You may read more about it [[here|Test
 * **URL**: `/configs/communicationSettings`
 * **HTTP Method**: GET
 * **Example**: http://aet.example.com/config/communicationSettings 
-* **Description**: Returns current JMS broker settings and report app domain. This method is used by maven client.
+* **Description**: Returns current report app domain. This method is used by maven client.
 
 --------
 ##### Get suite xUnit output
