@@ -13,33 +13,13 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.runner.processing.data.RunIndexWrappers;
+package com.cognifide.aet.runner;
 
-import com.cognifide.aet.communication.api.wrappers.Run;
-import org.junit.Before;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TestRunIndexWrapperTest {
+public class RunnerMessageListenerTest {
 
-  private TestRunIndexWrapper testRunIndexWrapper;
-
-  @Mock
-  private Run objectToRunWrapper;
-
-  @Before
-  public void setUp() throws Exception {
-    testRunIndexWrapper = new TestRunIndexWrapper(objectToRunWrapper);
-  }
-
-  @Test
-  public void getUrls() {
-  }
-
-  @Test
-  public void countUrls() {
-  }
 }

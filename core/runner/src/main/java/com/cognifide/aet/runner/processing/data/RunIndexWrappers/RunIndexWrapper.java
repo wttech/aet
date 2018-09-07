@@ -23,14 +23,11 @@ import com.google.common.base.Optional;
 import java.util.ArrayList;
 
 public abstract class RunIndexWrapper {
+
   protected Run objectToRunWrapper = null;
 
   RunIndexWrapper(Run objectToRunWrapper){
     this.objectToRunWrapper = objectToRunWrapper;
-  }
-
-  public Run get(){
-    return objectToRunWrapper;
   }
 
   protected static void cleanUrlFromExecutionData(Url url) {
@@ -49,13 +46,16 @@ public abstract class RunIndexWrapper {
   }
 
   public Optional<Url> getTestUrl(String testName, final String urlName) {
-    Test test = objectToRunWrapper.getRealSuite().getTest(testName);
-    Url url = test.getUrl(urlName);
+    Url url = getTest(testName).getUrl(urlName);
     return Optional.of(url);
   }
 
   public Test getTest(String testName) {
     return objectToRunWrapper.getRealSuite().getTest(testName);
+  }
+
+  public Run get(){
+    return objectToRunWrapper;
   }
 
   public abstract ArrayList<MetadataRunDecorator> getUrls();
