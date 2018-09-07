@@ -63,7 +63,7 @@ public class SuiteExecutionFactory {
         runnerConfiguration, suite);
   }
 
-  MessagesSender newMessagesSender(Destination jmsReplyTo) throws JMSException {
+  public MessagesSender newMessagesSender(Destination jmsReplyTo) throws JMSException {
     return new MessagesSender(jmsReplyTo, jmsConnection);
   }
 }

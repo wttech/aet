@@ -34,7 +34,7 @@ import org.slf4j.LoggerFactory;
 /**
  * This class contains the actual logic around runner suite processing.
  */
-class SuiteProcessor {
+public class SuiteProcessor {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SuiteProcessor.class);
 
@@ -48,7 +48,7 @@ class SuiteProcessor {
   private final RunnerConfiguration runnerConfiguration;
   private final MessagesSender messagesSender;
 
-  SuiteProcessor(SuiteExecutionFactory suiteExecutionFactory,
+  public SuiteProcessor(SuiteExecutionFactory suiteExecutionFactory,
       RunIndexWrapper runIndexWrapper, RunnerConfiguration runnerConfiguration,
       MessagesSender messagesSender) throws JMSException {
     this.runIndexWrapper = runIndexWrapper;
@@ -66,7 +66,7 @@ class SuiteProcessor {
     collectionResultsRouter.addChangeObserver(comparisonResultsRouter);
   }
 
-  void startProcessing() throws JMSException {
+  public void startProcessing() throws JMSException {
     timeoutWatch.update();
     if (tryProcess()) {
       checkStatusUntilFinishedOrTimedOut();
@@ -90,7 +90,7 @@ class SuiteProcessor {
     }
   }
 
-  void cleanup() {
+  public void cleanup() {
     comparisonResultsRouter.closeConnections();
     collectionResultsRouter.closeConnections();
     collectDispatcher.closeConnections();

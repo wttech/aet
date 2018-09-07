@@ -46,7 +46,8 @@ public abstract class RunIndexWrapper {
   }
 
   public Optional<Url> getTestUrl(String testName, final String urlName) {
-    Url url = getTest(testName).getUrl(urlName);
+    Test test = getTest(testName);
+    Url url = test.getUrl(urlName);
     return Optional.of(url);
   }
 

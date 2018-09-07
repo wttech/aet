@@ -13,13 +13,16 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.runner.processing;
+package com.cognifide.aet.runner.processing.processors;
 
 import com.cognifide.aet.communication.api.messages.FinishedSuiteProcessingMessage;
 import com.cognifide.aet.communication.api.messages.FinishedSuiteProcessingMessage.Status;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.communication.api.wrappers.Run;
 import com.cognifide.aet.runner.RunnerConfiguration;
+import com.cognifide.aet.runner.processing.MessagesSender;
+import com.cognifide.aet.runner.processing.SuiteExecutionFactory;
+import com.cognifide.aet.runner.processing.SuiteProcessor;
 import com.cognifide.aet.runner.processing.data.RunIndexWrappers.RunIndexWrapper;
 import com.cognifide.aet.runner.processing.data.SuiteDataService;
 import com.cognifide.aet.vs.StorageException;

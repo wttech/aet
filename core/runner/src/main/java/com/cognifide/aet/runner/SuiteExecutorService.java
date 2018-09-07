@@ -17,12 +17,12 @@ package com.cognifide.aet.runner;
 
 import com.cognifide.aet.communication.api.metadata.RunType;
 import com.cognifide.aet.communication.api.wrappers.Run;
-import com.cognifide.aet.runner.processing.ProcessorStrategy;
 import com.cognifide.aet.runner.processing.SuiteExecutionFactory;
-import com.cognifide.aet.runner.processing.SuiteExecutionProcessorStrategy;
-import com.cognifide.aet.runner.processing.TestExecutionProcessorStrategy;
-import com.cognifide.aet.runner.processing.UrlExecutionProcessorStrategy;
 import com.cognifide.aet.runner.processing.data.SuiteDataService;
+import com.cognifide.aet.runner.processing.processors.ProcessorStrategy;
+import com.cognifide.aet.runner.processing.processors.SuiteExecutionProcessorStrategy;
+import com.cognifide.aet.runner.processing.processors.TestExecutionProcessorStrategy;
+import com.cognifide.aet.runner.processing.processors.UrlExecutionProcessorStrategy;
 import com.google.common.collect.Sets;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
