@@ -36,7 +36,6 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class TestRunIndexWrapperTest {
 
-
   private TestRunIndexWrapper testRunIndexWrapper;
 
   @Mock
@@ -64,10 +63,7 @@ public class TestRunIndexWrapperTest {
 
   @Test
   public void getUrls_expectTwo() {
-    Set<Url> urls = new HashSet<>();
-    urls.add(url);
-    urls.add(url2);
-    when(test.getUrls()).thenReturn(urls);
+    prepareTwoUrls();
 
     ArrayList<MetadataRunDecorator> urlsResult = testRunIndexWrapper
         .getUrls();
@@ -76,15 +72,26 @@ public class TestRunIndexWrapperTest {
 
   @Test
   public void getUrls_expectZero() {
-    Set<Url> urls = new HashSet<>();
-    when(test.getUrls()).thenReturn(urls);
-
     ArrayList<MetadataRunDecorator> urlsResult = testRunIndexWrapper
         .getUrls();
     assertThat(urlsResult.size(), is(0));
   }
 
   @Test
-  public void countUrls() {
+  public void countUrls_expectZero() {
+    assertThat(testRunIndexWrapper.countUrls(), is(0));
+  }
+
+  @Test
+  public void countUrls_expectTwo(){
+    prepareTwoUrls();
+    assertThat(testRunIndexWrapper.countUrls(), is(2));
+  }
+
+  private void prepareTwoUrls(){
+    Set<Url> urls = new HashSet<>();
+    urls.add(url);
+    urls.add(url2);
+    when(test.getUrls()).thenReturn(urls);
   }
 }
