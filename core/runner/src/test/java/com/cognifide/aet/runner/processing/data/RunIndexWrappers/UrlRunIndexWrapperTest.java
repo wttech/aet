@@ -17,8 +17,14 @@ package com.cognifide.aet.runner.processing.data.RunIndexWrappers;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.*;
+import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.when;
 
+import com.cognifide.aet.communication.api.metadata.Suite;
+import com.cognifide.aet.communication.api.metadata.Url;
+import com.cognifide.aet.communication.api.wrappers.MetadataRunDecorator;
 import com.cognifide.aet.communication.api.wrappers.Run;
+import java.util.ArrayList;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -33,14 +39,29 @@ public class UrlRunIndexWrapperTest {
   @Mock
   private Run objectToRunWrapper;
 
+  @Mock
+  private Suite suite;
+
+  @Mock
+  private com.cognifide.aet.communication.api.metadata.Test test;
+
+  @Mock
+  private Url url;
+
   @Before
   public void setUp() throws Exception {
     urlRunIndexWrapper = new UrlRunIndexWrapper(objectToRunWrapper);
   }
 
   @Test
-  public void getUrls() {
-    //TODO
+  public void getUrls_expectOne() {
+    when(objectToRunWrapper.getRealSuite()).thenReturn(suite);
+    when(suite.getTest(any(String.class))).thenReturn(test);
+    when(objectToRunWrapper.getObjectToRun()).thenReturn(url);
+    when(url.getName()).thenReturn("urlName");
+    ArrayList<MetadataRunDecorator> urls = urlRunIndexWrapper
+        .getUrls();
+    assertThat(urls.size(), is(1));
   }
 
   @Test
