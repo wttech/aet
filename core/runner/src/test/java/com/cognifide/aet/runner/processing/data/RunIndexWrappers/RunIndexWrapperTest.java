@@ -21,7 +21,9 @@ import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
 import com.cognifide.aet.communication.api.metadata.Suite;
+import com.cognifide.aet.communication.api.metadata.Url;
 import com.cognifide.aet.communication.api.wrappers.Run;
+import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,6 +44,9 @@ public class RunIndexWrapperTest {
   @Mock
   private com.cognifide.aet.communication.api.metadata.Test test;
 
+  @Mock
+  private Url url;
+
   @Before
   public void setUp(){
     when(suite.getTest(any(String.class))).thenReturn(null);
@@ -57,30 +62,37 @@ public class RunIndexWrapperTest {
 
   @Test
   public void getTest_whenSuiteHasNotTest_expectNull() {
-    //TODO
-    //assertThat(runIndexWrapper.getTest("testName"), null);
+    when(suite.getTest(any(String.class))).thenReturn(null);
+    when(objectToRunWrapper.getRealSuite()).thenReturn(suite);
+    assertThat(runIndexWrapper.getTest("testName"), null);
   }
   @Test
   public void getTest_whenSuiteHasTest_expectTest() {
-    com.cognifide.aet.communication.api.metadata.Test returnedTest;
     when(suite.getTest("testName")).thenReturn(test);
-    returnedTest = runIndexWrapper.getTest("testName");
-    assertThat(returnedTest, is(test));
+    assertThat(runIndexWrapper.getTest("testName"), is(test));
   }
 
   @Test
   public void getTestUrl_whenSuiteHasNotTest_expectNull() {
-    //TODO
+
+//    when(suite.getTest("testName")).thenReturn(null);
+//    when(objectToRunWrapper.getRealSuite()).thenReturn(suite);
+//    assertThat(runIndexWrapper.getTestUrl("testName","urlName"), null);
   }
 
   @Test
   public void getTestUrl_whenTestHasNotUrl_expectNull() {
-    //TODO
+//    when(test.getUrl("urlName")).thenReturn(null);
+//    when(suite.getTest("testName")).thenReturn(test);
+//    when(objectToRunWrapper.getRealSuite()).thenReturn(suite);
+//    assertThat(runIndexWrapper.getTestUrl("testName","urlName"), null);
   }
 
   @Test
-  public void getTestUrl_whenTestHasUrl_expectUrl() {
-    //TODO
+  public void getTestUrl_whenTestHasUrl_expectOptionalOfUrl() {
+    when(test.getUrl("urlName")).thenReturn(url);
+    when(suite.getTest("testName")).thenReturn(test);
+    assertThat(runIndexWrapper.getTestUrl("testName","urlName").get(), is(url));
   }
 
 }
