@@ -28,30 +28,19 @@ import javax.jms.JMSException;
 import org.slf4j.Logger;
 import javax.jms.Destination;
 
-abstract class ProcessorStrategy<T> implements Callable<String> {
+abstract public class ProcessorStrategy<T> implements Callable<String> {
 
-  protected static Logger LOGGER;
-  protected final Destination jmsReplyTo;
-  protected final SuiteDataService suiteDataService;
-  protected final RunnerConfiguration runnerConfiguration;
-  protected final SuiteExecutionFactory suiteExecutionFactory;
+  protected Logger LOGGER;
 
+  protected Destination jmsReplyTo;
+  protected SuiteDataService suiteDataService;
+  protected RunnerConfiguration runnerConfiguration;
+  protected SuiteExecutionFactory suiteExecutionFactory;
   protected RunIndexWrapper runIndexWrapper;
-
   protected MessagesSender messagesSender;
+
   protected SuiteProcessor suiteProcessor;
-
   protected Run objectToRunWrapper;
-
-  public ProcessorStrategy(Destination jmsReplyTo,
-      SuiteDataService suiteDataService, RunnerConfiguration runnerConfiguration,
-      SuiteExecutionFactory suiteExecutionFactory, Logger LOGGER) {
-    this.jmsReplyTo = jmsReplyTo;
-    this.suiteDataService = suiteDataService;
-    this.runnerConfiguration = runnerConfiguration;
-    this.suiteExecutionFactory = suiteExecutionFactory;
-    this.LOGGER = LOGGER;
-  }
 
   @Override
   public String call() {
@@ -72,6 +61,16 @@ abstract class ProcessorStrategy<T> implements Callable<String> {
     return objectToRunWrapper.getCorrelationId();
   }
 
+  public void setParameters(Run objectToRunWrapper, Destination jmsReplyTo,
+      SuiteDataService suiteDataService, RunnerConfiguration runnerConfiguration,
+      SuiteExecutionFactory suiteExecutionFactory) {
+    this.objectToRunWrapper = objectToRunWrapper;
+    this.jmsReplyTo = jmsReplyTo;
+    this.suiteDataService = suiteDataService;
+    this.runnerConfiguration = runnerConfiguration;
+    this.suiteExecutionFactory = suiteExecutionFactory;
+  }
+
   protected void init() throws JMSException {
     LOGGER.debug("Initializing suite processors {}", getObjectToRun());
     messagesSender = suiteExecutionFactory.newMessagesSender(jmsReplyTo);
@@ -88,6 +87,10 @@ abstract class ProcessorStrategy<T> implements Callable<String> {
     LOGGER.debug("Cleaning up suite {}", runIndexWrapper.get());
     messagesSender.close();
     suiteProcessor.cleanup();
+  }
+
+  protected void setLogger(Logger LOGGER) {
+    this.LOGGER = LOGGER;
   }
 
   protected abstract T getObjectToRun();

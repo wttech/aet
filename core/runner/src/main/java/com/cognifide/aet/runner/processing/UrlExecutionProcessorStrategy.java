@@ -34,11 +34,8 @@ public class UrlExecutionProcessorStrategy extends ProcessorStrategy {
   protected static final Logger LOGGER = LoggerFactory
       .getLogger(TestExecutionProcessorStrategy.class);
 
-  public UrlExecutionProcessorStrategy(Run objectToRunWrapper, Destination jmsReplyTo,
-      SuiteDataService suiteDataService, RunnerConfiguration runnerConfiguration,
-      SuiteExecutionFactory suiteExecutionFactory) {
-    super(jmsReplyTo, suiteDataService, runnerConfiguration, suiteExecutionFactory, LOGGER);
-    this.objectToRunWrapper = objectToRunWrapper;
+  public UrlExecutionProcessorStrategy() {
+    setLogger(LOGGER);
   }
 
   void prepareSuiteWrapper() throws StorageException {
