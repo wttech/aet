@@ -19,13 +19,9 @@ import com.cognifide.aet.communication.api.messages.FinishedSuiteProcessingMessa
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.Test;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
-import com.cognifide.aet.communication.api.wrappers.Run;
-import com.cognifide.aet.runner.RunnerConfiguration;
 import com.cognifide.aet.runner.processing.data.RunIndexWrappers.RunIndexWrapperFactory;
-import com.cognifide.aet.runner.processing.data.SuiteDataService;
 import com.cognifide.aet.vs.SimpleDBKey;
 import com.cognifide.aet.vs.StorageException;
-import javax.jms.Destination;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
