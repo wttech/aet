@@ -36,7 +36,10 @@ public class SuiteExecutionProcessorStrategy extends ProcessorStrategy {
   void prepareSuiteWrapper() {
     LOGGER.debug("Fetching suite patterns {}", getObjectToRun());
     try {
-      runIndexWrapper = RunIndexWrapperFactory.createInstance(new SuiteRunWrapper(suiteDataService.enrichWithPatterns(objectToRunWrapper.getRealSuite())));
+      Suite realSuite = objectToRunWrapper.getRealSuite();
+      Suite mergedSuite = suiteDataService.enrichWithPatterns(realSuite);
+      SuiteRunWrapper suiteRunWrapper = new SuiteRunWrapper(mergedSuite);
+      runIndexWrapper = RunIndexWrapperFactory.createInstance(suiteRunWrapper);
     } catch (StorageException e) {
       e.printStackTrace();
     }
