@@ -50,7 +50,7 @@ This endpoint returns JSON object with following fields:
     * `project` - project name used to create database key
     * `testName` - name of test used to rerun test or used to identify how test should be applied for rerun url, do not provide this parameter for rerun whole suite
     * `testUrl` - name of url used to rerun url. In case of rerun whole suite or whole test do not provide it
-* **Description**: It endpoint can execute suite. In case when you provide testName it override your testss result in the database or if you provide testName and testUrl it override only url's result in the database. If you do not provide additional parameters this endpoint just runs suite and create new version in database - it doesn't override old information.
+* **Description**: This endpoint can execute suite. In case when you provide testName it override your test's result in the database or if you provide testName and testUrl it overrides only url's result in the database. If you do not provide additional parameters this endpoint just runs suite and creates new version in database - it doesn't override old information.
 
 ###### Response
 
