@@ -1,4 +1,4 @@
-## Test Processing
+## Suite Processing
 
 Each AET test processing consists of two phases:
 
@@ -22,3 +22,7 @@ The second phase is operation on collected data. In some cases collected data is
 The following diagram shows the life cycle of test suite:
 
 ![aet-test-suite-lifecycle](assets/diagrams/aet-test-suite-lifecycle.png)
+
+### Run and rerun part of the suite
+
+Suite Executor provides us methods to run suite from XML format or in case of rerun - suite model from the database. In case of rerun a test or an URL we are providing the model from database enriched with information necessary to process by runners and workers e.g `Correlation ID`, `Company`, `Project`. In the next step, the model is taken by the runner. It has knowledge about the type of model - is it a suite, a test or an URL and uses it for correct extraction URLs for workers and save or replace information in a database after comparison part.

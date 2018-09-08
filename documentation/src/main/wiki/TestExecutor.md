@@ -44,8 +44,8 @@ This endpoint returns JSON object with following fields:
 * **URL**: `/suite-rerun`
 * **HTTP Method**: POST
 * **Parameters**:
-    * `correlationId` - Correlation ID of the suite run, used to get it from the database
-    * `suite` - Name of suite, used to get suite from the database in case of correlactionID was not provided
+    * `correlationId` - Correlation ID of the suite to rerun, used to get it from the database
+    * `suite` - Name of suite, used to get model from the database in case of correlactionID was not provided
     * `company` - company name used to create database key
     * `project` - project name used to create database key
     * `testName` - name of test used to rerun test or used to identify how test should be applied for rerun url, do not provide this parameter for rerun whole suite
