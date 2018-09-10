@@ -15,16 +15,28 @@
  */
 package com.cognifide.aet.runner.processing.data.RunIndexWrappers;
 
+import static com.cognifide.aet.runner.processing.data.RunIndexWrappers.RunIndexWrapper.cleanUrlFromExecutionData;
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
+import com.cognifide.aet.communication.api.metadata.Comparator;
+import com.cognifide.aet.communication.api.metadata.ComparatorStepResult;
+import com.cognifide.aet.communication.api.metadata.ComparatorStepResult.Status;
+import com.cognifide.aet.communication.api.metadata.Operation;
+import com.cognifide.aet.communication.api.metadata.Statistics;
+import com.cognifide.aet.communication.api.metadata.Step;
+import com.cognifide.aet.communication.api.metadata.StepResult;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.Url;
 import com.cognifide.aet.communication.api.wrappers.Run;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 import org.junit.Before;
@@ -50,6 +62,9 @@ public class RunIndexWrapperTest {
   @Mock
   private Url url;
 
+  @Mock
+  private Step step;
+
   @Before
   public void setUp(){
     when(suite.getTest(any(String.class))).thenReturn(null);
@@ -59,8 +74,55 @@ public class RunIndexWrapperTest {
   }
 
   @Test
-  public void cleanUrlFromExecutionData_expectClearedData(){
-    //TODO
+  public void cleanUrlFromExecutionData_whenUrlIsRerunning_expectClearedUrl(){
+    Url realUrl = new Url("urlName", "urlUrl", "urlDomain");
+
+    realUrl.setCollectionStats(new Statistics(10));
+    realUrl.addStep(step);
+
+    Comparator comparator = new Comparator("comparatorType");
+    comparator.setStepResult(new ComparatorStepResult("comparatorStepResultName",Status.PASSED));
+    ArrayList<Operation> listOperation = new ArrayList<>();
+    listOperation.add(new Operation("operationType"));
+    comparator.setFilters(listOperation);
+
+    Set<Comparator> comparators = new HashSet<>();
+    comparators.add(comparator);
+
+    when(step.getComparators()).thenReturn(comparators);
+
+    cleanUrlFromExecutionData(realUrl);
+
+    assertEquals(realUrl.getName(), "urlName");
+    assertEquals(realUrl.getUrl(), "urlUrl");
+    assertEquals(realUrl.getDomain(), "urlDomain");
+    assertNull(realUrl.getCollectionStats());
+    verify(step, times(1)).setStepResult(null);
+    assertNull(comparator.getStepResult());
+    assertEquals(comparator.getFilters().size(),0);
+  }
+
+  @Test
+  public void cleanUrlFromExecutionData_whenUrlIsClear_expectTheSameUrl(){
+    Url realUrl = new Url("urlName", "urlUrl", "urlDomain");
+    realUrl.setCollectionStats(null);
+    realUrl.addStep(step);
+
+    Comparator comparator = new Comparator("comparatorType");
+    Set<Comparator> comparators = new HashSet<>();
+    comparators.add(comparator);
+
+    when(step.getComparators()).thenReturn(comparators);
+    cleanUrlFromExecutionData(realUrl);
+
+    assertEquals(realUrl.getName(), "urlName");
+    assertEquals(realUrl.getUrl(), "urlUrl");
+    assertEquals(realUrl.getDomain(), "urlDomain");
+    assertNull(realUrl.getCollectionStats());
+    assertEquals(realUrl.getSteps().size(),1);
+    verify(step, times(1)).setStepResult(null);
+    assertNull(comparator.getStepResult());
+    assertEquals(comparator.getFilters().size(),0);
   }
 
   @Test
