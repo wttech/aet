@@ -37,28 +37,10 @@ public class JobRegistryImpl implements JobRegistry {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(JobRegistryImpl.class);
 
-  @Reference(
-      service = CollectorFactory.class,
-      policy = ReferencePolicy.DYNAMIC,
-      cardinality = ReferenceCardinality.MULTIPLE,
-      bind = "bindCollectorFactory",
-      unbind = "unbindCollectorFactory")
   private Map<String, CollectorFactory> collectorFactories = new ConcurrentHashMap<>();
 
-  @Reference(
-      service = ComparatorFactory.class,
-      policy = ReferencePolicy.DYNAMIC,
-      cardinality = ReferenceCardinality.MULTIPLE,
-      bind = "bindComparatorFactory",
-      unbind = "unbindComparatorFactory")
   private Map<String, ComparatorFactory> comparatorFactoryMap = new ConcurrentHashMap<>();
 
-  @Reference(
-      service = DataFilterFactory.class,
-      policy = ReferencePolicy.DYNAMIC,
-      cardinality = ReferenceCardinality.MULTIPLE,
-      bind = "bindDataModifierFactory",
-      unbind = "unbindDataModifierFactory")
   private Map<String, DataFilterFactory> dataModifierFactoryMap = new ConcurrentHashMap<>();
 
   private Map<String, ComparatorFactory> defaultComparatorMap = new ConcurrentHashMap<>();
@@ -90,6 +72,10 @@ public class JobRegistryImpl implements JobRegistry {
 
   // ######## Binding related methods
 
+  @Reference(
+      service = CollectorFactory.class,
+      policy = ReferencePolicy.DYNAMIC,
+      cardinality = ReferenceCardinality.MULTIPLE)
   protected void bindCollectorFactory(CollectorFactory collectorFactory) {
     LOGGER.info("Binding collector: {}", collectorFactory.getName());
     collectorFactories.put(collectorFactory.getName(), collectorFactory);
@@ -100,6 +86,10 @@ public class JobRegistryImpl implements JobRegistry {
     collectorFactories.remove(collectorFactory.getName());
   }
 
+  @Reference(
+      service = ComparatorFactory.class,
+      policy = ReferencePolicy.DYNAMIC,
+      cardinality = ReferenceCardinality.MULTIPLE)
   protected void bindComparatorFactory(ComparatorFactory comparatorFactory) {
     LOGGER.info("Binding comparator: {}", comparatorFactory.getName());
     comparatorFactoryMap.put(comparatorFactory.getName(), comparatorFactory);
@@ -130,6 +120,10 @@ public class JobRegistryImpl implements JobRegistry {
     }
   }
 
+  @Reference(
+      service = DataFilterFactory.class,
+      policy = ReferencePolicy.DYNAMIC,
+      cardinality = ReferenceCardinality.MULTIPLE)
   protected void bindDataModifierFactory(DataFilterFactory dataFilterFactory) {
     LOGGER.info("Binding data modifier: {}", dataFilterFactory.getName());
     dataModifierFactoryMap.put(dataFilterFactory.getName(), dataFilterFactory);
