@@ -51,16 +51,16 @@ public class SuiteExecutionFactory {
   }
 
   CollectionResultsRouter newCollectionResultsRouter(TimeoutWatch timeoutWatch,
-      RunIndexWrapper suite)
+      RunIndexWrapper runIndexWrapper)
       throws JMSException {
     return new CollectionResultsRouter(timeoutWatch, jmsConnection,
-        runnerConfiguration, collectorJobSchedulerService, suite);
+        runnerConfiguration, collectorJobSchedulerService, runIndexWrapper);
   }
 
   ComparisonResultsRouter newComparisonResultsRouter(TimeoutWatch timeoutWatch,
-      RunIndexWrapper suite) throws JMSException {
+      RunIndexWrapper runIndexWrapper) throws JMSException {
     return new ComparisonResultsRouter(timeoutWatch, jmsConnection,
-        runnerConfiguration, suite);
+        runnerConfiguration, runIndexWrapper);
   }
 
   public MessagesSender newMessagesSender(Destination jmsReplyTo) throws JMSException {

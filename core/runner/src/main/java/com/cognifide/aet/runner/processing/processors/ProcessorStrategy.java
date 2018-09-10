@@ -45,6 +45,7 @@ abstract public class ProcessorStrategy<T> implements Callable<String> {
   protected SuiteProcessor suiteProcessor;
   protected Run objectToRunWrapper;
 
+
   @Override
   public String call() {
     try {
@@ -77,8 +78,10 @@ abstract public class ProcessorStrategy<T> implements Callable<String> {
   protected void init() throws JMSException {
     LOGGER.debug("Initializing suite processors {}", getObjectToRun());
     messagesSender = suiteExecutionFactory.newMessagesSender(jmsReplyTo);
-    suiteProcessor = new SuiteProcessor(suiteExecutionFactory, runIndexWrapper, runnerConfiguration,
-        messagesSender);
+    if (suiteProcessor == null) {
+      suiteProcessor = new SuiteProcessor(suiteExecutionFactory, runIndexWrapper, runnerConfiguration,
+          messagesSender);
+    }
   }
 
   protected void process() throws JMSException {
@@ -88,8 +91,17 @@ abstract public class ProcessorStrategy<T> implements Callable<String> {
 
   protected void cleanup() {
     LOGGER.debug("Cleaning up suite {}", runIndexWrapper.get());
-    messagesSender.close();
-    suiteProcessor.cleanup();
+    if(messagesSender != null){
+      messagesSender.close();
+    }
+    if(suiteProcessor != null){
+      suiteProcessor.cleanup();
+    }
+  }
+
+  //for unit tests
+  public void setSuiteProcessor(SuiteProcessor suiteProcessor) {
+    this.suiteProcessor = suiteProcessor;
   }
 
   protected void setLogger(Logger LOGGER) {
