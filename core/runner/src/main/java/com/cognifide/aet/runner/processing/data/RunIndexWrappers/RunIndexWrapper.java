@@ -19,21 +19,18 @@ import com.cognifide.aet.communication.api.metadata.Test;
 import com.cognifide.aet.communication.api.metadata.Url;
 import com.cognifide.aet.communication.api.wrappers.MetadataRunDecorator;
 import com.cognifide.aet.communication.api.wrappers.Run;
-import com.google.common.base.Optional;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public abstract class RunIndexWrapper {
+
   protected Run objectToRunWrapper = null;
 
   RunIndexWrapper(Run objectToRunWrapper){
     this.objectToRunWrapper = objectToRunWrapper;
   }
 
-  public Run get(){
-    return objectToRunWrapper;
-  }
-
-  protected static void cleanUrlFromExecutionData(Url url) {
+  public static void cleanUrlFromExecutionData(Url url) {
     url.setCollectionStats(null);
     url.getSteps()
         .forEach(step -> {
@@ -49,13 +46,17 @@ public abstract class RunIndexWrapper {
   }
 
   public Optional<Url> getTestUrl(String testName, final String urlName) {
-    Test test = objectToRunWrapper.getRealSuite().getTest(testName);
-    Url url = test.getUrl(urlName);
-    return Optional.of(url);
+    Test test = getTest(testName);
+    Url url = test == null ? null : test.getUrl(urlName);
+    return Optional.ofNullable(url);
   }
 
   public Test getTest(String testName) {
     return objectToRunWrapper.getRealSuite().getTest(testName);
+  }
+
+  public Run get(){
+    return objectToRunWrapper;
   }
 
   public abstract ArrayList<MetadataRunDecorator> getUrls();

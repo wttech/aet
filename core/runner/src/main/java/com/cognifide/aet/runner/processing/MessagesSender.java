@@ -27,7 +27,7 @@ import javax.jms.Session;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-class MessagesSender implements Observer {
+public class MessagesSender implements Observer {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(MessagesSender.class);
 
@@ -49,7 +49,7 @@ class MessagesSender implements Observer {
     }
   }
 
-  void sendMessage(BasicMessage message) {
+  public void sendMessage(BasicMessage message) {
     try {
       LOGGER.debug("Sending message: {}", message);
       resultsProducer.send(session.createObjectMessage(message));
@@ -62,7 +62,7 @@ class MessagesSender implements Observer {
     return message instanceof BasicMessage;
   }
 
-  void close() {
+  public void close() {
     JmsUtils.closeQuietly(resultsProducer);
   }
 

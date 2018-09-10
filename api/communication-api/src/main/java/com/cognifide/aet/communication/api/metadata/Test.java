@@ -43,7 +43,7 @@ public class Test implements Serializable, Commentable, Named {
 
   @Valid
   @NotNull(message = "Test must have at least one url")
-  private final Set<Url> urls = new HashSet<>();
+  private Set<Url> urls = new HashSet<>();
 
   /**
    * @param name - name of a test
@@ -134,4 +134,5 @@ public class Test implements Serializable, Commentable, Named {
     }
     return null;
   }
+
 }

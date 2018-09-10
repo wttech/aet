@@ -29,7 +29,7 @@ import com.cognifide.aet.runner.MessagesManager;
 import com.cognifide.aet.runner.RunnerConfiguration;
 import com.cognifide.aet.runner.processing.TimeoutWatch;
 import com.cognifide.aet.runner.processing.data.RunIndexWrappers.RunIndexWrapper;
-import com.google.common.base.Optional;
+import java.util.Optional;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.ObjectMessage;

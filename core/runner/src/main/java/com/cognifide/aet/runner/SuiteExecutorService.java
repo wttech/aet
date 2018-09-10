@@ -18,16 +18,19 @@ package com.cognifide.aet.runner;
 import com.cognifide.aet.communication.api.metadata.RunType;
 import com.cognifide.aet.communication.api.wrappers.Run;
 import com.cognifide.aet.runner.processing.SuiteExecutionFactory;
-import com.cognifide.aet.runner.processing.SuiteExecutionProcessorStrategy;
-import com.cognifide.aet.runner.processing.TestExecutionProcessorStrategy;
-import com.cognifide.aet.runner.processing.UrlExecutionProcessorStrategy;
 import com.cognifide.aet.runner.processing.data.SuiteDataService;
+import com.cognifide.aet.runner.processing.processors.ProcessorStrategy;
+import com.cognifide.aet.runner.processing.processors.SuiteExecutionProcessorStrategy;
+import com.cognifide.aet.runner.processing.processors.TestExecutionProcessorStrategy;
+import com.cognifide.aet.runner.processing.processors.UrlExecutionProcessorStrategy;
 import com.google.common.collect.Sets;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -84,19 +87,17 @@ public class SuiteExecutorService {
   void scheduleSuite(Run objectToRun, Destination jmsReplyTo) {
     LOGGER.debug("Scheduling {}!", objectToRun.getObjectToRun());
     final ListenableFuture<String> suiteExecutionTask;
-    if (objectToRun.getType() == RunType.SUITE) {
-      suiteExecutionTask = executor
-          .submit(new SuiteExecutionProcessorStrategy(objectToRun, jmsReplyTo, suiteDataService,
-              runnerConfiguration, suiteExecutionFactory));
-    } else if (objectToRun.getType() == RunType.TEST){
-      suiteExecutionTask = executor
-          .submit(new TestExecutionProcessorStrategy(objectToRun, jmsReplyTo, suiteDataService,
-              runnerConfiguration, suiteExecutionFactory));
-    } else {
-      suiteExecutionTask = executor
-          .submit(new UrlExecutionProcessorStrategy(objectToRun, jmsReplyTo, suiteDataService,
-              runnerConfiguration, suiteExecutionFactory));
-    }
+
+    Map<RunType, ProcessorStrategy> strategiesMap = new HashMap<>();
+    strategiesMap.put(RunType.SUITE, new SuiteExecutionProcessorStrategy());
+    strategiesMap.put(RunType.TEST, new TestExecutionProcessorStrategy());
+    strategiesMap.put(RunType.URL, new UrlExecutionProcessorStrategy());
+
+    ProcessorStrategy processorStrategy = strategiesMap.get(objectToRun.getType());
+    processorStrategy.setParameters(objectToRun, jmsReplyTo, suiteDataService,
+        runnerConfiguration, suiteExecutionFactory);
+    suiteExecutionTask = executor.submit(processorStrategy);
+
     scheduledSuites.add(objectToRun.getCorrelationId());
     Futures
         .addCallback(suiteExecutionTask, new SuiteFinishedCallback(objectToRun.getCorrelationId()),

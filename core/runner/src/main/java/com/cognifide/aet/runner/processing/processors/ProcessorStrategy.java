@@ -13,13 +13,16 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.runner.processing;
+package com.cognifide.aet.runner.processing.processors;
 
 import com.cognifide.aet.communication.api.messages.FinishedSuiteProcessingMessage;
 import com.cognifide.aet.communication.api.messages.FinishedSuiteProcessingMessage.Status;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.communication.api.wrappers.Run;
 import com.cognifide.aet.runner.RunnerConfiguration;
+import com.cognifide.aet.runner.processing.MessagesSender;
+import com.cognifide.aet.runner.processing.SuiteExecutionFactory;
+import com.cognifide.aet.runner.processing.SuiteProcessor;
 import com.cognifide.aet.runner.processing.data.RunIndexWrappers.RunIndexWrapper;
 import com.cognifide.aet.runner.processing.data.SuiteDataService;
 import com.cognifide.aet.vs.StorageException;
@@ -28,30 +31,20 @@ import javax.jms.JMSException;
 import org.slf4j.Logger;
 import javax.jms.Destination;
 
-abstract class ProcessorStrategy<T> implements Callable<String> {
+abstract public class ProcessorStrategy<T> implements Callable<String> {
 
-  protected static Logger LOGGER;
-  protected final Destination jmsReplyTo;
-  protected final SuiteDataService suiteDataService;
-  protected final RunnerConfiguration runnerConfiguration;
-  protected final SuiteExecutionFactory suiteExecutionFactory;
+  protected Logger LOGGER;
 
+  protected Destination jmsReplyTo;
+  protected SuiteDataService suiteDataService;
+  protected RunnerConfiguration runnerConfiguration;
+  protected SuiteExecutionFactory suiteExecutionFactory;
   protected RunIndexWrapper runIndexWrapper;
-
   protected MessagesSender messagesSender;
-  protected SuiteProcessor suiteProcessor;
 
+  protected SuiteProcessor suiteProcessor;
   protected Run objectToRunWrapper;
 
-  public ProcessorStrategy(Destination jmsReplyTo,
-      SuiteDataService suiteDataService, RunnerConfiguration runnerConfiguration,
-      SuiteExecutionFactory suiteExecutionFactory, Logger LOGGER) {
-    this.jmsReplyTo = jmsReplyTo;
-    this.suiteDataService = suiteDataService;
-    this.runnerConfiguration = runnerConfiguration;
-    this.suiteExecutionFactory = suiteExecutionFactory;
-    this.LOGGER = LOGGER;
-  }
 
   @Override
   public String call() {
@@ -72,11 +65,23 @@ abstract class ProcessorStrategy<T> implements Callable<String> {
     return objectToRunWrapper.getCorrelationId();
   }
 
+  public void setParameters(Run objectToRunWrapper, Destination jmsReplyTo,
+      SuiteDataService suiteDataService, RunnerConfiguration runnerConfiguration,
+      SuiteExecutionFactory suiteExecutionFactory) {
+    this.objectToRunWrapper = objectToRunWrapper;
+    this.jmsReplyTo = jmsReplyTo;
+    this.suiteDataService = suiteDataService;
+    this.runnerConfiguration = runnerConfiguration;
+    this.suiteExecutionFactory = suiteExecutionFactory;
+  }
+
   protected void init() throws JMSException {
     LOGGER.debug("Initializing suite processors {}", getObjectToRun());
     messagesSender = suiteExecutionFactory.newMessagesSender(jmsReplyTo);
-    suiteProcessor = new SuiteProcessor(suiteExecutionFactory, runIndexWrapper, runnerConfiguration,
-        messagesSender);
+    if (suiteProcessor == null) {
+      suiteProcessor = new SuiteProcessor(suiteExecutionFactory, runIndexWrapper, runnerConfiguration,
+          messagesSender);
+    }
   }
 
   protected void process() throws JMSException {
@@ -86,8 +91,21 @@ abstract class ProcessorStrategy<T> implements Callable<String> {
 
   protected void cleanup() {
     LOGGER.debug("Cleaning up suite {}", runIndexWrapper.get());
-    messagesSender.close();
-    suiteProcessor.cleanup();
+    if(messagesSender != null){
+      messagesSender.close();
+    }
+    if(suiteProcessor != null){
+      suiteProcessor.cleanup();
+    }
+  }
+
+  //for unit tests
+  public void setSuiteProcessor(SuiteProcessor suiteProcessor) {
+    this.suiteProcessor = suiteProcessor;
+  }
+
+  protected void setLogger(Logger LOGGER) {
+    this.LOGGER = LOGGER;
   }
 
   protected abstract T getObjectToRun();
