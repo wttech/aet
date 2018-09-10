@@ -15,20 +15,21 @@
  */
 package com.cognifide.aet.runner.processing.processors;
 
-import static junit.framework.TestCase.assertNotNull;
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
-import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
-import static org.mockito.Mockito.times;
 
 import com.cognifide.aet.communication.api.metadata.Suite;
+import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.communication.api.wrappers.Run;
 import com.cognifide.aet.runner.RunnerConfiguration;
 import com.cognifide.aet.runner.processing.MessagesSender;
 import com.cognifide.aet.runner.processing.SuiteExecutionFactory;
 import com.cognifide.aet.runner.processing.SuiteProcessor;
 import com.cognifide.aet.runner.processing.data.SuiteDataService;
+import com.cognifide.aet.vs.StorageException;
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import org.junit.Before;
@@ -39,9 +40,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.slf4j.Logger;
 
 @RunWith(MockitoJUnitRunner.class)
-public class ProcessorStrategyTest {
+public class SuiteExecutionProcessorStrategyTest {
 
-  private ProcessorStrategyMock processorStrategy;
+  private SuiteExecutionProcessorStrategy suiteExecutionProcessorStrategy;
 
   @Mock
   protected Run objectToRunWrapper;
@@ -71,38 +72,30 @@ public class ProcessorStrategyTest {
   protected SuiteProcessor suiteProcessor;
 
   @Before
-  public void setUp() throws Exception {
-    processorStrategy = new ProcessorStrategyMock();
-    processorStrategy
+  public void setUp() throws JMSException {
+    suiteExecutionProcessorStrategy = new SuiteExecutionProcessorStrategy();
+    suiteExecutionProcessorStrategy
         .setParameters(objectToRunWrapper, jmsReplyTo, suiteDataService, runnerConfiguration,
             suiteExecutionFactory);
-    processorStrategy.setLogger(logger);
+    suiteExecutionProcessorStrategy.setLogger(logger);
     when(objectToRunWrapper.getObjectToRun()).thenReturn(suite);
+    when(objectToRunWrapper.getRealSuite()).thenReturn(suite);
     when(suite.toString()).thenReturn("Suite to string");
     when(suiteExecutionFactory.newMessagesSender(any(Destination.class))).thenReturn(messageSender);
-    processorStrategy.setSuiteProcessor(suiteProcessor);
+    suiteExecutionProcessorStrategy.setSuiteProcessor(suiteProcessor);
   }
 
   @Test
-  public void call_whenAllIsCorrect_expectAllMethodsWereCalled() throws JMSException {
-    processorStrategy.call();
-
-    assertNotNull(processorStrategy.getObjectToRun()); //for check if prepareSuiteWrapper was called
-    assertNotNull(processorStrategy.messagesSender); //for check if init was called
-    verify(suiteProcessor, times(1)).startProcessing();
-    verify(suiteProcessor, times(1)).cleanup();
+  public void getObjectToRun_checkIfMethodReturnCorrectObject_expectSuite(){
+    assertEquals(suite, suiteExecutionProcessorStrategy.getObjectToRun());
   }
 
   @Test
-  public void call_whenRaiseError_expectNullPointerException() throws JMSException {
-    doThrow(JMSException.class).when(suiteProcessor).startProcessing();
-
-    processorStrategy.call();
-
-    assertNotNull(processorStrategy.getObjectToRun()); //for check if prepareSuiteWrapper was called
-    assertNotNull(processorStrategy.messagesSender); //for check if init was called
-    verify(suiteProcessor, times(1)).startProcessing();
-    verify(suiteProcessor, times(1)).cleanup();
+  public void save_checkIfMethodCallsCorrectFunctions()
+      throws ValidatorException, StorageException, JMSException {
+    suiteExecutionProcessorStrategy.init();
+    suiteExecutionProcessorStrategy.save();
+    verify(suiteDataService, times(1)).saveSuite(any(Suite.class));
   }
 
 }

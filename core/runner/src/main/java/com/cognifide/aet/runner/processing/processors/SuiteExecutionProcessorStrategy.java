@@ -48,7 +48,7 @@ public class SuiteExecutionProcessorStrategy extends ProcessorStrategy {
   void save() {
     LOGGER.debug("Persisting suite {}", getObjectToRun());
     try {
-      suiteDataService.saveSuite(runIndexWrapper.get().getRealSuite());
+      suiteDataService.saveSuite(objectToRunWrapper.getRealSuite());
     } catch (ValidatorException | StorageException e) {
       e.printStackTrace();
     }
