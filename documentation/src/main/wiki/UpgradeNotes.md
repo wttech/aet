@@ -21,7 +21,7 @@ Please see latest [[Screen Collector|ScreenCollector]] and [[Resolution Modifier
 [[Wait For Image Completion Modifier|WaitForImageCompletionModifier]] is no longer needed, unless you want to wait for an image which is loaded asynchronously (e.g. by an AJAX call)
 
 #### `aet-maven-plugin` marked as deprecated
-That means it will be no longer supported after release of this version and expect it will be removed during the next minor release.
+That means it will be no longer supported after release of this version and expect it will be removed soon.
 Please use [[client script|ClientScripts]] instead or simply communicate with AET Web API to schedule your suite.
 
 
