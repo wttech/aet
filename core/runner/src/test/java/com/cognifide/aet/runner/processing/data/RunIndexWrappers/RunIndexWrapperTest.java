@@ -32,7 +32,6 @@ import com.cognifide.aet.communication.api.metadata.ComparatorStepResult.Status;
 import com.cognifide.aet.communication.api.metadata.Operation;
 import com.cognifide.aet.communication.api.metadata.Statistics;
 import com.cognifide.aet.communication.api.metadata.Step;
-import com.cognifide.aet.communication.api.metadata.StepResult;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.Url;
 import com.cognifide.aet.communication.api.wrappers.Run;
