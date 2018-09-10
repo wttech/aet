@@ -49,12 +49,6 @@ public class WebDriverProvider {
 
   private WebDriverProviderConf config;
 
-  @Reference(
-      service = WebDriverFactory.class,
-      policy = ReferencePolicy.DYNAMIC,
-      cardinality = ReferenceCardinality.MULTIPLE,
-      bind = "bindWebDriverFactory",
-      unbind = "unbindWebDriverFactory")
   private final Map<String, WebDriverFactory> collectorFactories = Maps.newConcurrentMap();
 
   @Reference
@@ -80,6 +74,10 @@ public class WebDriverProvider {
     return webDriverFactory.createWebDriver();
   }
 
+  @Reference(
+      service = WebDriverFactory.class,
+      policy = ReferencePolicy.DYNAMIC,
+      cardinality = ReferenceCardinality.MULTIPLE)
   protected void bindWebDriverFactory(WebDriverFactory webDriverFactory) {
     this.collectorFactories.put(webDriverFactory.getName(), webDriverFactory);
   }
