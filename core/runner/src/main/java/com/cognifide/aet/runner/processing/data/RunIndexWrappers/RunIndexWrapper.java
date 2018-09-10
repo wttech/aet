@@ -19,8 +19,8 @@ import com.cognifide.aet.communication.api.metadata.Test;
 import com.cognifide.aet.communication.api.metadata.Url;
 import com.cognifide.aet.communication.api.wrappers.MetadataRunDecorator;
 import com.cognifide.aet.communication.api.wrappers.Run;
-import com.google.common.base.Optional;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public abstract class RunIndexWrapper {
 
@@ -47,8 +47,8 @@ public abstract class RunIndexWrapper {
 
   public Optional<Url> getTestUrl(String testName, final String urlName) {
     Test test = getTest(testName);
-    Url url = test.getUrl(urlName);
-    return Optional.of(url);
+    Url url = test == null ? null : test.getUrl(urlName);
+    return Optional.ofNullable(url);
   }
 
   public Test getTest(String testName) {

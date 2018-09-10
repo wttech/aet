@@ -16,6 +16,8 @@
 package com.cognifide.aet.runner.processing.data.RunIndexWrappers;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
@@ -23,7 +25,8 @@ import static org.mockito.Mockito.when;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.Url;
 import com.cognifide.aet.communication.api.wrappers.Run;
-import java.util.Optional;
+import java.util.HashSet;
+import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -62,10 +65,11 @@ public class RunIndexWrapperTest {
 
   @Test
   public void getTest_whenSuiteHasNotTest_expectNull() {
-    when(suite.getTest(any(String.class))).thenReturn(null);
+    when(suite.getTest("testName")).thenReturn(null);
     when(objectToRunWrapper.getRealSuite()).thenReturn(suite);
-    assertThat(runIndexWrapper.getTest("testName"), null);
+    assertNull(runIndexWrapper.getTest("testName"));
   }
+
   @Test
   public void getTest_whenSuiteHasTest_expectTest() {
     when(suite.getTest("testName")).thenReturn(test);
@@ -74,18 +78,19 @@ public class RunIndexWrapperTest {
 
   @Test
   public void getTestUrl_whenSuiteHasNotTest_expectNull() {
-
-//    when(suite.getTest("testName")).thenReturn(null);
-//    when(objectToRunWrapper.getRealSuite()).thenReturn(suite);
-//    assertThat(runIndexWrapper.getTestUrl("testName","urlName"), null);
+    when(suite.getTest("testName")).thenReturn(null);
+    when(objectToRunWrapper.getRealSuite()).thenReturn(suite);
+    assertFalse(runIndexWrapper.getTestUrl("testName", "urlName").isPresent());
   }
 
   @Test
   public void getTestUrl_whenTestHasNotUrl_expectNull() {
-//    when(test.getUrl("urlName")).thenReturn(null);
-//    when(suite.getTest("testName")).thenReturn(test);
-//    when(objectToRunWrapper.getRealSuite()).thenReturn(suite);
-//    assertThat(runIndexWrapper.getTestUrl("testName","urlName"), null);
+    when(suite.getTest("testName")).thenReturn(test);
+    Set<Url> urls = new HashSet<>();
+    urls.add(url);
+    when(test.getUrls()).thenReturn(urls);
+    when(objectToRunWrapper.getRealSuite()).thenReturn(suite);
+    assertFalse(runIndexWrapper.getTestUrl("testName", "urlName").isPresent());
   }
 
   @Test
