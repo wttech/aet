@@ -56,13 +56,20 @@
         <i class="far fa-play-circle fa-sm"></i>
       </div>
       <span class="preformatted">{{toolbarBottom.viewMode}}:</span>
-      <span ng-if="toolbarBottom.viewMode != 'url'">{{toolbarBottom.model.name}}</button></span>
+      <span ng-if="toolbarBottom.viewMode != 'url'">{{toolbarBottom.model.name}}</span>
+      <div ng-if="toolbarBottom.viewMode != 'url' && toolbarBottom.model.lastRerunTimestamp(toolbarBottom.model)">
+        Last rerun: {{toolbarBottom.model.lastRerunTimestamp(toolbarBottom.model) | date:'yyyy-MM-dd HH:mm' }}
+      </div>
         <a ng-if="toolbarBottom.viewMode == 'url'"
             href="{{toolbarBottom.model.domain + toolbarBottom.model.url}}" target="_blank"
             data-toggle="popover"
             data-content="Click to navigate to url"
             data-trigger="hover"
-            data-container="body">{{toolbarBottom.model.name}}</a>
+            data-container="body"> {{toolbarBottom.model.name}}
+        </a>
+      <span ng-if="toolbarBottom.model.isReran">
+        Last rerun: {{toolbarBottom.model.rerunTimestamp | date:'yyyy-MM-dd HH:mm' }}
+      </span>
     </h4>
     <h5 ng-if="toolbarBottom.viewMode == 'url'">
       <div class="fontawesome-link"
