@@ -19,6 +19,8 @@ import com.cognifide.aet.communication.api.metadata.Suite;
 
 public class MetadataRunDecorator extends RunDecorator {
 
+  private static final long serialVersionUID = 2300347507334858549L;
+
   private Suite suite;
 
   public MetadataRunDecorator(Run decoratedRun, Suite suite) {

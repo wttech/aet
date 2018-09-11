@@ -21,6 +21,8 @@ import com.cognifide.aet.communication.api.metadata.Url;
 
 public class UrlRunWrapper implements Run {
 
+  private static final long serialVersionUID = -3534307440930598944L;
+
   private Url url;
   private String testName;
   private String proxy;

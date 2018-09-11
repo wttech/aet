@@ -20,6 +20,8 @@ import com.cognifide.aet.communication.api.metadata.Test;
 
 public class TestRunWrapper implements Run {
 
+  private static final long serialVersionUID = -1391932584294709026L;
+
   private Test test;
 
   public TestRunWrapper(Test test) {

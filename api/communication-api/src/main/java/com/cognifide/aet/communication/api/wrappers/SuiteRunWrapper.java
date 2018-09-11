@@ -19,6 +19,9 @@ import com.cognifide.aet.communication.api.metadata.RunType;
 import com.cognifide.aet.communication.api.metadata.Suite;
 
 public class SuiteRunWrapper implements Run {
+
+  private static final long serialVersionUID = -4514420164522811899L;
+
   private Suite suite;
 
   public SuiteRunWrapper(Suite suite) {
