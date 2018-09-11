@@ -93,7 +93,15 @@ public class SuiteExecutorService {
     strategiesMap.put(RunType.TEST, new TestExecutionProcessorStrategy());
     strategiesMap.put(RunType.URL, new UrlExecutionProcessorStrategy());
 
-    ProcessorStrategy processorStrategy = strategiesMap.get(objectToRun.getType());
+    ProcessorStrategy processorStrategy = null;
+    if(objectToRun.getType() == RunType.SUITE){
+      processorStrategy = new SuiteExecutionProcessorStrategy();
+    } else if (objectToRun.getType() == RunType.TEST) {
+      processorStrategy = new TestExecutionProcessorStrategy();
+    } else if (objectToRun.getType() == RunType.URL){
+      processorStrategy = new UrlExecutionProcessorStrategy();
+    }
+
     processorStrategy.setParameters(objectToRun, jmsReplyTo, suiteDataService,
         runnerConfiguration, suiteExecutionFactory);
     suiteExecutionTask = executor.submit(processorStrategy);
