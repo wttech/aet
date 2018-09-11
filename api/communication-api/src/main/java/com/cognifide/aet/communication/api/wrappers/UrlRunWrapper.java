@@ -28,7 +28,6 @@ public class UrlRunWrapper implements Run {
 
   public UrlRunWrapper(Url url, Test test) {
     this.url = url;
-    url.setReran();
     this.testName = test.getName();
     this.proxy = test.getProxy();
     this.preferredBrowserId = test.getPreferredBrowserId();
@@ -59,6 +58,10 @@ public class UrlRunWrapper implements Run {
 
   public String getPreferredBrowserId() {
     return preferredBrowserId;
+  }
+
+  public void setReran(){
+    url.setReran();
   }
 
 }

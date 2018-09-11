@@ -61,7 +61,9 @@ class SuiteRerun {
     } else if (isUrlRerun(testName, urlName)) {
       Test test = suite.getTest(testName);
       Url url = test.getUrl(urlName);
-      objectToRunWrapper = new MetadataRunDecorator(new UrlRunWrapper(url, test), suite);
+      UrlRunWrapper urlRunWrapper = new UrlRunWrapper(url, test);
+      urlRunWrapper.setReran();
+      objectToRunWrapper = new MetadataRunDecorator(urlRunWrapper, suite);
     }
     return objectToRunWrapper;
   }

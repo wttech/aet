@@ -35,10 +35,6 @@ public class Test implements Serializable, Commentable, Named {
 
   private final String preferredBrowserId;
 
-  private boolean isReran;
-
-  private Timestamp rerunTimestamp;
-
   private String comment;
 
   @Valid
@@ -119,11 +115,6 @@ public class Test implements Serializable, Commentable, Named {
     return MoreObjects.toStringHelper(this)
         .add("name", name)
         .toString();
-  }
-
-  public void setReran() {
-    isReran = true;
-    rerunTimestamp = new Timestamp(System.currentTimeMillis());
   }
 
   public Url getUrl(String urlName) {
