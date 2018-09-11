@@ -74,7 +74,7 @@ public class CollectDispatcher extends StepManager {
     LOGGER.info("Starting processing new Test Suite. CorrelationId: {} ", correlationId);
 
     for (MetadataRunDecorator metadataRunDecorator : runIndexWrapper.getUrls()) {
-      UrlRunWrapper urlRunWrapper = (UrlRunWrapper) metadataRunDecorator.getDecoratedRun();
+      UrlRunWrapper urlRunWrapper = (UrlRunWrapper) metadataRunDecorator.getRun();
       final CollectorJobData data = new CollectorJobData(metadataRunDecorator.getCompany(),
           metadataRunDecorator.getProject(), metadataRunDecorator.getName(), urlRunWrapper.getTestName(),
           new ArrayList<>(Collections.singleton(urlRunWrapper.getObjectToRun())),

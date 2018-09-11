@@ -18,9 +18,12 @@ package com.cognifide.aet.communication.api.wrappers;
 import com.cognifide.aet.communication.api.metadata.RunType;
 
 public abstract class RunDecorator implements Run{
+
+  private static final long serialVersionUID = 6866141366419923230L;
+
   protected Run decoratedRun;
 
-  public Run getDecoratedRun() {
+  public Run getRun() {
     return decoratedRun;
   }
 
