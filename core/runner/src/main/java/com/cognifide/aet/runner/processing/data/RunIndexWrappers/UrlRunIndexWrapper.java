@@ -21,6 +21,7 @@ import com.cognifide.aet.communication.api.wrappers.MetadataRunDecorator;
 import com.cognifide.aet.communication.api.wrappers.Run;
 import com.cognifide.aet.communication.api.wrappers.UrlRunWrapper;
 import java.util.ArrayList;
+import java.util.Optional;
 
 public class UrlRunIndexWrapper extends RunIndexWrapper {
 
@@ -31,10 +32,10 @@ public class UrlRunIndexWrapper extends RunIndexWrapper {
   @Override
   public ArrayList<MetadataRunDecorator> getUrls() {
     ArrayList<MetadataRunDecorator> urls = new ArrayList<>();
-    Test test = objectToRunWrapper.getRealSuite().getTest(objectToRunWrapper.getTestName());
+    Optional<Test> test = objectToRunWrapper.getRealSuite().getTest(objectToRunWrapper.getTestName());
     Url url = (Url) objectToRunWrapper.getObjectToRun();
     cleanUrlFromExecutionData(url);
-    UrlRunWrapper urlRunWrapper = new UrlRunWrapper(url, test);
+    UrlRunWrapper urlRunWrapper = new UrlRunWrapper(url, test.get());
     urls.add(new MetadataRunDecorator(urlRunWrapper, objectToRunWrapper.getRealSuite()));
     return urls;
   }

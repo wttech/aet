@@ -32,6 +32,7 @@ import com.cognifide.aet.runner.processing.SuiteProcessor;
 import com.cognifide.aet.runner.processing.data.SuiteDataService;
 import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.StorageException;
+import java.util.Optional;
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import org.junit.Before;
@@ -73,20 +74,21 @@ public class UrlExecutionProcessorStrategyTest {
   @Mock
   protected SuiteProcessor suiteProcessor;
 
-  @Mock
-  private com.cognifide.aet.communication.api.metadata.Test test;
+  private Optional<com.cognifide.aet.communication.api.metadata.Test> test;
 
-  @Mock
-  private Url url;
+  private Optional<Url> url;
 
   @Before
   public void setUp() throws Exception {
+    url = Optional.of(new Url("urlName","urlUrl","urlDomain"));
+    test = Optional
+        .of(new com.cognifide.aet.communication.api.metadata.Test("testName", "proxy", "chrome"));
     urlExecutionProcessorStrategy = new UrlExecutionProcessorStrategy();
     urlExecutionProcessorStrategy
         .setParameters(objectToRunWrapper, jmsReplyTo, suiteDataService, runnerConfiguration,
             suiteExecutionFactory);
     urlExecutionProcessorStrategy.setLogger(logger);
-    when(objectToRunWrapper.getObjectToRun()).thenReturn(url);
+    when(objectToRunWrapper.getObjectToRun()).thenReturn(url.get());
     when(objectToRunWrapper.getRealSuite()).thenReturn(suite);
     when(suite.toString()).thenReturn("Suite to string");
     when(suiteExecutionFactory.newMessagesSender(any(Destination.class))).thenReturn(messageSender);
@@ -113,6 +115,6 @@ public class UrlExecutionProcessorStrategyTest {
 
   @Test
   public void getObjectToRun_checkIfMethodReturnCorrectObject_expectUrl() {
-    assertEquals(url, urlExecutionProcessorStrategy.getObjectToRun());
+    assertEquals(url.get(), urlExecutionProcessorStrategy.getObjectToRun());
   }
 }

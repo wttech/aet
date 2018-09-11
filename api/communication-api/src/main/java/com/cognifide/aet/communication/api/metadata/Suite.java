@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.Valid;
@@ -134,21 +135,15 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
     return tests;
   }
 
-  public Test getTest(String testName){
+  public Optional<Test> getTest(String testName){
+    Test testToReturn = null;
     for (Test test: this.tests) {
       if(test.getName().equals(testName)){
-        return test;
+        testToReturn = test;
+        break;
       }
     }
-    return null;
-  }
-
-  public void removeAllTests(){
-    tests.clear();
-  }
-
-  public void removeTest(String testName){
-    tests.remove(getTest(testName));
+    return Optional.ofNullable(testToReturn);
   }
 
   public boolean addTest(Test test) {

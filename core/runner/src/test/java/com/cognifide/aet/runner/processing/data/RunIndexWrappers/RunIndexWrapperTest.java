@@ -21,6 +21,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -37,6 +38,7 @@ import com.cognifide.aet.communication.api.metadata.Url;
 import com.cognifide.aet.communication.api.wrappers.Run;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
@@ -55,32 +57,32 @@ public class RunIndexWrapperTest {
   @Mock
   private Suite suite;
 
-  @Mock
-  private com.cognifide.aet.communication.api.metadata.Test test;
+  private Optional<com.cognifide.aet.communication.api.metadata.Test> test;
 
-  @Mock
-  private Url url;
+  private Optional<Url> url;
 
   @Mock
   private Step step;
 
   @Before
-  public void setUp(){
-    when(suite.getTest(any(String.class))).thenReturn(null);
+  public void setUp() {
     when(objectToRunWrapper.getRealSuite()).thenReturn(suite);
-    when(test.getName()).thenReturn("testName");
     runIndexWrapper = new SuiteRunIndexWrapper(objectToRunWrapper);
+    test = Optional
+        .of(new com.cognifide.aet.communication.api.metadata.Test("testName", "proxy", "chrome"));
+    url = Optional.of(new Url("urlName","urlUrl","urlDomain"));
+    test.get().addUrl(url.get());
   }
 
   @Test
-  public void cleanUrlFromExecutionData_whenUrlIsRerunning_expectClearedUrl(){
+  public void cleanUrlFromExecutionData_whenUrlIsRerunning_expectClearedUrl() {
     Url realUrl = new Url("urlName", "urlUrl", "urlDomain");
 
     realUrl.setCollectionStats(new Statistics(10));
     realUrl.addStep(step);
 
     Comparator comparator = new Comparator("comparatorType");
-    comparator.setStepResult(new ComparatorStepResult("comparatorStepResultName",Status.PASSED));
+    comparator.setStepResult(new ComparatorStepResult("comparatorStepResultName", Status.PASSED));
     ArrayList<Operation> listOperation = new ArrayList<>();
     listOperation.add(new Operation("operationType"));
     comparator.setFilters(listOperation);
@@ -98,11 +100,11 @@ public class RunIndexWrapperTest {
     assertNull(realUrl.getCollectionStats());
     verify(step, times(1)).setStepResult(null);
     assertNull(comparator.getStepResult());
-    assertEquals(comparator.getFilters().size(),0);
+    assertEquals(comparator.getFilters().size(), 0);
   }
 
   @Test
-  public void cleanUrlFromExecutionData_whenUrlIsClear_expectTheSameUrl(){
+  public void cleanUrlFromExecutionData_whenUrlIsClear_expectTheSameUrl() {
     Url realUrl = new Url("urlName", "urlUrl", "urlDomain");
     realUrl.setCollectionStats(null);
     realUrl.addStep(step);
@@ -118,10 +120,10 @@ public class RunIndexWrapperTest {
     assertEquals(realUrl.getUrl(), "urlUrl");
     assertEquals(realUrl.getDomain(), "urlDomain");
     assertNull(realUrl.getCollectionStats());
-    assertEquals(realUrl.getSteps().size(),1);
+    assertEquals(realUrl.getSteps().size(), 1);
     verify(step, times(1)).setStepResult(null);
     assertNull(comparator.getStepResult());
-    assertEquals(comparator.getFilters().size(),0);
+    assertEquals(comparator.getFilters().size(), 0);
   }
 
   @Test
@@ -139,26 +141,24 @@ public class RunIndexWrapperTest {
 
   @Test
   public void getTestUrl_whenSuiteHasNotTest_expectNull() {
-    when(suite.getTest("testName")).thenReturn(null);
+    when(suite.getTest("testName")).thenReturn(Optional.ofNullable(null));
     when(objectToRunWrapper.getRealSuite()).thenReturn(suite);
     assertFalse(runIndexWrapper.getTestUrl("testName", "urlName").isPresent());
   }
 
   @Test
   public void getTestUrl_whenTestHasNotUrl_expectNull() {
-    when(suite.getTest("testName")).thenReturn(test);
     Set<Url> urls = new HashSet<>();
-    urls.add(url);
-    when(test.getUrls()).thenReturn(urls);
+    test.get().setUrls(urls);
+    when(suite.getTest("testName")).thenReturn(test);
     when(objectToRunWrapper.getRealSuite()).thenReturn(suite);
     assertFalse(runIndexWrapper.getTestUrl("testName", "urlName").isPresent());
   }
 
   @Test
   public void getTestUrl_whenTestHasUrl_expectOptionalOfUrl() {
-    when(test.getUrl("urlName")).thenReturn(url);
     when(suite.getTest("testName")).thenReturn(test);
-    assertThat(runIndexWrapper.getTestUrl("testName","urlName").get(), is(url));
+    assertThat(runIndexWrapper.getTestUrl("testName", "urlName"), is(url));
   }
 
 }

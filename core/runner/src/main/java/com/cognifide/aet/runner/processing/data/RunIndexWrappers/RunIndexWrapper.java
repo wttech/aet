@@ -46,12 +46,15 @@ public abstract class RunIndexWrapper {
   }
 
   public Optional<Url> getTestUrl(String testName, final String urlName) {
-    Test test = getTest(testName);
-    Url url = test == null ? null : test.getUrl(urlName);
-    return Optional.ofNullable(url);
+    Optional<Test> test = getTest(testName);
+    Optional<Url> url = Optional.ofNullable(null);
+    if(test.isPresent()){
+      url = test.get().getUrl(urlName);
+    }
+    return url;
   }
 
-  public Test getTest(String testName) {
+  public Optional<Test> getTest(String testName) {
     return objectToRunWrapper.getRealSuite().getTest(testName);
   }
 

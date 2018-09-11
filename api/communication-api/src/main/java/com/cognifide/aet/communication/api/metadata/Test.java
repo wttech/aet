@@ -15,10 +15,10 @@
  */
 package com.cognifide.aet.communication.api.metadata;
 
-import com.cognifide.aet.communication.api.metadata.Suite.Timestamp;
 import com.google.common.base.MoreObjects;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -117,13 +117,19 @@ public class Test implements Serializable, Commentable, Named {
         .toString();
   }
 
-  public Url getUrl(String urlName) {
+  public Optional<Url> getUrl(String urlName) {
+    Url urlToReturn = null;
     for (Url url: this.urls) {
       if(url.getName().equals(urlName)){
-        return url;
+        urlToReturn = url;
+        break;
       }
     }
-    return null;
+    return Optional.ofNullable(urlToReturn);
+  }
+
+  public void setUrls(Set<Url> urls) {
+    this.urls = urls;
   }
 
 }

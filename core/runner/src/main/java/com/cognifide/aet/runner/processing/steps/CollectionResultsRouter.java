@@ -31,6 +31,7 @@ import com.cognifide.aet.runner.processing.TimeoutWatch;
 import com.cognifide.aet.runner.processing.data.RunIndexWrappers.RunIndexWrapper;
 import com.cognifide.aet.runner.scheduler.CollectorJobSchedulerService;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -168,8 +169,8 @@ public class CollectionResultsRouter extends StepManager implements TaskFinishPo
   }
 
   private void updateSuiteUrl(String testName, Url processedUrl) {
-    final Test test = runIndexWrapper.getTest(testName);
-    test.addUrl(processedUrl);
+    final Optional<Test> test = runIndexWrapper.getTest(testName);
+    test.get().addUrl(processedUrl);
   }
 
   public void addChangeObserver(ChangeObserver observer) {

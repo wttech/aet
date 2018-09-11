@@ -25,6 +25,7 @@ import com.cognifide.aet.communication.api.metadata.Url;
 import com.cognifide.aet.communication.api.wrappers.MetadataRunDecorator;
 import com.cognifide.aet.communication.api.wrappers.Run;
 import java.util.ArrayList;
+import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,11 +43,9 @@ public class UrlRunIndexWrapperTest {
   @Mock
   private Suite suite;
 
-  @Mock
-  private com.cognifide.aet.communication.api.metadata.Test test;
+  private Optional<com.cognifide.aet.communication.api.metadata.Test> test;
 
-  @Mock
-  private Url url;
+  private Optional<Url> url;
 
   @Before
   public void setUp() throws Exception {
@@ -55,9 +54,12 @@ public class UrlRunIndexWrapperTest {
 
   @Test
   public void getUrls_expectOne() {
+    test = Optional
+        .of(new com.cognifide.aet.communication.api.metadata.Test("testName", "proxy", "chrome"));
+    url = Optional.of(new Url("urlName", "urlUrl", "urlDomain"));
     when(objectToRunWrapper.getRealSuite()).thenReturn(suite);
     when(suite.getTest(any(String.class))).thenReturn(test);
-    when(objectToRunWrapper.getObjectToRun()).thenReturn(url);
+    when(objectToRunWrapper.getObjectToRun()).thenReturn(url.get());
 
     ArrayList<MetadataRunDecorator> urls = urlRunIndexWrapper
         .getUrls();
@@ -66,6 +68,6 @@ public class UrlRunIndexWrapperTest {
 
   @Test
   public void countUrls_expectOne() {
-    assertThat(urlRunIndexWrapper.countUrls(),is(1));
+    assertThat(urlRunIndexWrapper.countUrls(), is(1));
   }
 }

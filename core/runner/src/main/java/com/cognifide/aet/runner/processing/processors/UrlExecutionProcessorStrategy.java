@@ -43,7 +43,7 @@ public class UrlExecutionProcessorStrategy extends ProcessorStrategy {
       Url url = (Url) objectToRunWrapper.getObjectToRun();
       String urlName = url.getName();
       String testName = objectToRunWrapper.getTestName();
-      objectToRunWrapper.setObjectToRun(mergedSuite.getTest(testName).getUrl(urlName));
+      objectToRunWrapper.setObjectToRun(mergedSuite.getTest(testName).get().getUrl(urlName));
       runIndexWrapper = RunIndexWrapperFactory.createInstance(objectToRunWrapper);
     } catch (StorageException e) {
       e.printStackTrace();

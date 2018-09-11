@@ -26,6 +26,7 @@ import com.cognifide.aet.communication.api.wrappers.MetadataRunDecorator;
 import com.cognifide.aet.communication.api.wrappers.Run;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
@@ -44,21 +45,22 @@ public class TestRunIndexWrapperTest {
   @Mock
   private Suite suite;
 
-  @Mock
-  private com.cognifide.aet.communication.api.metadata.Test test;
+  private Optional<com.cognifide.aet.communication.api.metadata.Test> test;
 
-  @Mock
-  private Url url;
+  private Optional<Url> url;
 
-  @Mock
-  private Url url2;
+  private Optional<Url> url2;
 
   @Before
   public void setUp() throws Exception {
+    test = Optional
+        .of(new com.cognifide.aet.communication.api.metadata.Test("testName", "proxy", "chrome"));
+    url = Optional.of(new Url("urlName","urlUrl","urlDomain"));
+    url2 = Optional.of(new Url("urlName2","urlUrl2","urlDomain2"));
     testRunIndexWrapper = new TestRunIndexWrapper(objectToRunWrapper);
     when(objectToRunWrapper.getRealSuite()).thenReturn(suite);
     when(suite.getTest(any(String.class))).thenReturn(test);
-    when(objectToRunWrapper.getObjectToRun()).thenReturn(test);
+    when(objectToRunWrapper.getObjectToRun()).thenReturn(test.get());
   }
 
   @Test
@@ -90,8 +92,8 @@ public class TestRunIndexWrapperTest {
 
   private void prepareTwoUrls(){
     Set<Url> urls = new HashSet<>();
-    urls.add(url);
-    urls.add(url2);
-    when(test.getUrls()).thenReturn(urls);
+    urls.add(url.get());
+    urls.add(url2.get());
+    test.get().setUrls(urls);
   }
 }

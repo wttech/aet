@@ -31,6 +31,7 @@ import com.cognifide.aet.runner.processing.SuiteProcessor;
 import com.cognifide.aet.runner.processing.data.SuiteDataService;
 import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.StorageException;
+import java.util.Optional;
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import org.junit.Before;
@@ -72,17 +73,18 @@ public class TestExecutionProcessorStrategyTest {
   @Mock
   protected SuiteProcessor suiteProcessor;
 
-  @Mock
-  private com.cognifide.aet.communication.api.metadata.Test test;
+  private Optional<com.cognifide.aet.communication.api.metadata.Test> test;
 
   @Before
   public void setUp() throws JMSException, StorageException {
+    test = Optional
+        .of(new com.cognifide.aet.communication.api.metadata.Test("testName", "proxy", "chrome"));
     testExecutionProcessorStrategy = new TestExecutionProcessorStrategy();
     testExecutionProcessorStrategy
         .setParameters(objectToRunWrapper, jmsReplyTo, suiteDataService, runnerConfiguration,
             suiteExecutionFactory);
     testExecutionProcessorStrategy.setLogger(logger);
-    when(objectToRunWrapper.getObjectToRun()).thenReturn(test);
+    when(objectToRunWrapper.getObjectToRun()).thenReturn(test.get());
     when(objectToRunWrapper.getRealSuite()).thenReturn(suite);
     when(suite.toString()).thenReturn("Suite to string");
     when(suiteExecutionFactory.newMessagesSender(any(Destination.class))).thenReturn(messageSender);
@@ -95,12 +97,13 @@ public class TestExecutionProcessorStrategyTest {
   public void prepareSuiteWrapper() throws StorageException {
     testExecutionProcessorStrategy.prepareSuiteWrapper();
     verify(suiteDataService, times(1)).enrichWithPatterns(any(Suite.class));
-    verify(objectToRunWrapper,times(1)).setObjectToRun(any(Object.class));
-    verify(objectToRunWrapper,times(1)).setRealSuite(any(Suite.class));
+    verify(objectToRunWrapper, times(1)).setObjectToRun(any(Object.class));
+    verify(objectToRunWrapper, times(1)).setRealSuite(any(Suite.class));
   }
 
   @Test
-  public void save_checkIfMethodCallsCorrectFunctions() throws JMSException, ValidatorException, StorageException {
+  public void save_checkIfMethodCallsCorrectFunctions()
+      throws JMSException, ValidatorException, StorageException {
     testExecutionProcessorStrategy.init();
     testExecutionProcessorStrategy.save();
     verify(suiteDataService, times(1)).getSuite(any(DBKey.class), any(String.class));
@@ -109,6 +112,6 @@ public class TestExecutionProcessorStrategyTest {
 
   @Test
   public void getObjectToRun_checkIfMethodReturnCorrectObject_expectTest() {
-    assertEquals(test, testExecutionProcessorStrategy.getObjectToRun());
+    assertEquals(test.get(), testExecutionProcessorStrategy.getObjectToRun());
   }
 }

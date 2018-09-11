@@ -56,14 +56,20 @@ class SuiteRerun {
       prepareSuiteToRerun(suite);
       objectToRunWrapper = new SuiteRunWrapper(suite);
     } else if (isTestRerun(testName, urlName)) {
-      Test test = suite.getTest(testName);
-      objectToRunWrapper = new MetadataRunDecorator(new TestRunWrapper(test), suite);
+      Optional<Test> test = suite.getTest(testName);
+      if(test.isPresent()){
+        objectToRunWrapper = new MetadataRunDecorator(new TestRunWrapper(test.get()), suite);
+      }
     } else if (isUrlRerun(testName, urlName)) {
-      Test test = suite.getTest(testName);
-      Url url = test.getUrl(urlName);
-      UrlRunWrapper urlRunWrapper = new UrlRunWrapper(url, test);
-      urlRunWrapper.setReran();
-      objectToRunWrapper = new MetadataRunDecorator(urlRunWrapper, suite);
+      Optional<Test> test = suite.getTest(testName);
+      if(test.isPresent()){
+        Optional<Url> url = test.get().getUrl(urlName);
+        if(url.isPresent()){
+          UrlRunWrapper urlRunWrapper = new UrlRunWrapper(url.get(), test.get());
+          urlRunWrapper.setReran();
+          objectToRunWrapper = new MetadataRunDecorator(urlRunWrapper, suite);
+        }
+      }
     }
     return objectToRunWrapper;
   }

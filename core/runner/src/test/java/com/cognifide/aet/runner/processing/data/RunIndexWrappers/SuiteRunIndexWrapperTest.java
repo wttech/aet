@@ -27,6 +27,7 @@ import com.cognifide.aet.communication.api.wrappers.Run;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
@@ -45,23 +46,25 @@ public class SuiteRunIndexWrapperTest {
   @Mock
   private Suite suite;
 
-  @Mock
-  private com.cognifide.aet.communication.api.metadata.Test test;
+  private Optional<com.cognifide.aet.communication.api.metadata.Test> test;
 
-  @Mock
-  private com.cognifide.aet.communication.api.metadata.Test test2;
+  private Optional<com.cognifide.aet.communication.api.metadata.Test> test2;
 
-  @Mock
-  private Url url;
+  private Optional<Url> url;
 
-  @Mock
-  private Url url2;
+  private Optional<Url> url2;
 
   @Before
   public void setUp() throws Exception {
     suiteRunIndexWrapper = new SuiteRunIndexWrapper(objectToRunWrapper);
     when(objectToRunWrapper.getRealSuite()).thenReturn(suite);
     when(objectToRunWrapper.getObjectToRun()).thenReturn(suite);
+    test = Optional
+        .of(new com.cognifide.aet.communication.api.metadata.Test("testName", "proxy", "chrome"));
+    test2 = Optional
+        .of(new com.cognifide.aet.communication.api.metadata.Test("testName", "proxy", "chrome"));
+    url = Optional.of(new Url("urlName","urlUrl","urlDomain"));
+    url2 = Optional.of(new Url("urlName2","urlUrl2","urlDomain2"));
   }
 
   @Test
@@ -98,24 +101,24 @@ public class SuiteRunIndexWrapperTest {
 
   private void prepareZeroUrls(){
     List<com.cognifide.aet.communication.api.metadata.Test> tests = new ArrayList<>();
-    tests.add(test);
-    tests.add(test2);
+    tests.add(test.get());
+    tests.add(test2.get());
     when(suite.getTests()).thenReturn(tests);
   }
 
   private void prepareThreeUrls(){
     Set<Url> firstUrlsSet = new HashSet<>();
-    firstUrlsSet.add(url);
-    when(test.getUrls()).thenReturn(firstUrlsSet);
+    firstUrlsSet.add(url.get());
+    test.get().setUrls(firstUrlsSet);
 
     Set<Url> secondUrlsSet = new HashSet<>();
-    secondUrlsSet.add(url);
-    secondUrlsSet.add(url2);
-    when(test2.getUrls()).thenReturn(secondUrlsSet);
+    secondUrlsSet.add(url.get());
+    secondUrlsSet.add(url2.get());
+    test2.get().setUrls(secondUrlsSet);
 
     List<com.cognifide.aet.communication.api.metadata.Test> tests = new ArrayList<>();
-    tests.add(test);
-    tests.add(test2);
+    tests.add(test.get());
+    tests.add(test2.get());
     when(suite.getTests()).thenReturn(tests);
   }
 }
