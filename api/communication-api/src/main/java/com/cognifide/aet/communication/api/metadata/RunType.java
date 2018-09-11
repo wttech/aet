@@ -15,8 +15,8 @@
  */
 package com.cognifide.aet.communication.api.metadata;
 
-public enum RunType{
+public enum RunType {
   SUITE,
   TEST,
   URL,
-    }
+}
