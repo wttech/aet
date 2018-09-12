@@ -48,6 +48,7 @@
       var suiteInfo = suiteInfoService.getInfo();
       var rerunParams = 'company=' + suiteInfo.company + '&' + 'project=' + suiteInfo.project + '&' +
         'suite=' + suiteInfo.name;
+      var karafUrl = endpointConfiguration.getKarafUrl().getUrl;
       var url = karafUrl + 'suite-rerun?' + rerunParams;
       $http.post(url, {}).then(function successCallback(response) {
         $rootScope.rerunMsg = 'Suite rerun initialized';
@@ -65,7 +66,7 @@
       var rerunParams = 'company=' + suiteInfo.company + '&' + 'project=' + suiteInfo.project + '&' +
         'suite=' + suiteInfo.name + '&' + 'testName=' + testName;
       var karafUrl = endpointConfiguration.getKarafUrl().getUrl;
-      var url = karafUrl 'suite-rerun?' + rerunParams;
+      var url = karafUrl + 'suite-rerun?' + rerunParams;
       $http.post(url, {}).then(function successCallback(response) {
         $rootScope.rerunMsg = 'Test rerun initialized';
         $rootScope.rerunProgress = 0;
