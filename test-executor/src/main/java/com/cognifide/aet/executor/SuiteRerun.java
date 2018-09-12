@@ -104,7 +104,7 @@ class SuiteRerun {
         .ifPresent(s -> {
               s.setCorrelationId(CorrelationIdGenerator
                   .generateCorrelationId(s.getCompany(), s.getProject(), s.getName()));
-              s.incrementVersion();
+              s.setVersion(Long.parseLong(null));
             }
         );
   }
