@@ -23,7 +23,7 @@ import com.cognifide.aet.runner.RunnerConfiguration;
 import com.cognifide.aet.runner.processing.MessagesSender;
 import com.cognifide.aet.runner.processing.SuiteExecutionFactory;
 import com.cognifide.aet.runner.processing.SuiteProcessor;
-import com.cognifide.aet.runner.processing.data.RunIndexWrappers.RunIndexWrapper;
+import com.cognifide.aet.runner.processing.data.wrappers.RunIndexWrapper;
 import com.cognifide.aet.runner.processing.data.SuiteDataService;
 import com.cognifide.aet.vs.StorageException;
 import java.util.concurrent.Callable;
@@ -101,8 +101,8 @@ public abstract class ProcessorStrategy<T> implements Callable<String> {
     this.suiteProcessor = suiteProcessor;
   }
 
-  protected void setLogger(Logger LOGGER) {
-    this.logger = LOGGER;
+  protected void setLogger(Logger logger) {
+    this.logger = logger;
   }
 
   protected abstract T getObjectToRun();

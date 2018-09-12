@@ -13,9 +13,9 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.runner.processing.data.RunIndexWrappers;
+package com.cognifide.aet.runner.processing.data.wrappers;
 
-import static com.cognifide.aet.runner.processing.data.RunIndexWrappers.RunIndexWrapper.cleanUrlFromExecutionData;
+import static com.cognifide.aet.runner.processing.data.wrappers.RunIndexWrapper.cleanUrlFromExecutionData;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;

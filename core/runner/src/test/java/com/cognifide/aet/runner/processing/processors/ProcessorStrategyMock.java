@@ -16,7 +16,7 @@
 package com.cognifide.aet.runner.processing.processors;
 
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
-import com.cognifide.aet.runner.processing.data.RunIndexWrappers.SuiteRunIndexWrapper;
+import com.cognifide.aet.runner.processing.data.wrappers.SuiteRunIndexWrapper;
 import com.cognifide.aet.vs.StorageException;
 
 public class ProcessorStrategyMock extends ProcessorStrategy{

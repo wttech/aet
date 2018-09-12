@@ -19,7 +19,7 @@ import com.cognifide.aet.communication.api.messages.FinishedSuiteProcessingMessa
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.Url;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
-import com.cognifide.aet.runner.processing.data.RunIndexWrappers.RunIndexWrapperFactory;
+import com.cognifide.aet.runner.processing.data.wrappers.RunIndexWrapperFactory;
 import com.cognifide.aet.vs.SimpleDBKey;
 import com.cognifide.aet.vs.StorageException;
 import org.slf4j.Logger;

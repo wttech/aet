@@ -13,10 +13,10 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.runner.processing.data.RunIndexWrappers;
+package com.cognifide.aet.runner.processing.data.wrappers;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
+import static org.junit.Assert.*;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
@@ -25,9 +25,7 @@ import com.cognifide.aet.communication.api.metadata.Url;
 import com.cognifide.aet.communication.api.wrappers.MetadataRunDecorator;
 import com.cognifide.aet.communication.api.wrappers.Run;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.Optional;
-import java.util.Set;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -35,9 +33,9 @@ import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class TestRunIndexWrapperTest {
+public class UrlRunIndexWrapperTest {
 
-  private TestRunIndexWrapper testRunIndexWrapper;
+  private UrlRunIndexWrapper urlRunIndexWrapper;
 
   @Mock
   private Run objectToRunWrapper;
@@ -49,51 +47,27 @@ public class TestRunIndexWrapperTest {
 
   private Optional<Url> url;
 
-  private Optional<Url> url2;
-
   @Before
   public void setUp() throws Exception {
+    urlRunIndexWrapper = new UrlRunIndexWrapper(objectToRunWrapper);
+  }
+
+  @Test
+  public void getUrls_expectOne() {
     test = Optional
         .of(new com.cognifide.aet.communication.api.metadata.Test("testName", "proxy", "chrome"));
-    url = Optional.of(new Url("urlName","urlUrl","urlDomain"));
-    url2 = Optional.of(new Url("urlName2","urlUrl2","urlDomain2"));
-    testRunIndexWrapper = new TestRunIndexWrapper(objectToRunWrapper);
+    url = Optional.of(new Url("urlName", "urlUrl", "urlDomain"));
     when(objectToRunWrapper.getRealSuite()).thenReturn(suite);
     when(suite.getTest(any(String.class))).thenReturn(test);
-    when(objectToRunWrapper.getObjectToRun()).thenReturn(test.get());
-  }
+    when(objectToRunWrapper.getObjectToRun()).thenReturn(url.get());
 
-  @Test
-  public void getUrls_expectTwo() {
-    prepareTwoUrls();
-
-    ArrayList<MetadataRunDecorator> urlsResult = testRunIndexWrapper
+    ArrayList<MetadataRunDecorator> urls = urlRunIndexWrapper
         .getUrls();
-    assertThat(urlsResult.size(), is(2));
+    assertThat(urls.size(), is(1));
   }
 
   @Test
-  public void getUrls_expectZero() {
-    ArrayList<MetadataRunDecorator> urlsResult = testRunIndexWrapper
-        .getUrls();
-    assertThat(urlsResult.size(), is(0));
-  }
-
-  @Test
-  public void countUrls_expectZero() {
-    assertThat(testRunIndexWrapper.countUrls(), is(0));
-  }
-
-  @Test
-  public void countUrls_expectTwo(){
-    prepareTwoUrls();
-    assertThat(testRunIndexWrapper.countUrls(), is(2));
-  }
-
-  private void prepareTwoUrls(){
-    Set<Url> urls = new HashSet<>();
-    urls.add(url.get());
-    urls.add(url2.get());
-    test.get().setUrls(urls);
+  public void countUrls_expectOne() {
+    assertThat(urlRunIndexWrapper.countUrls(), is(1));
   }
 }

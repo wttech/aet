@@ -22,7 +22,7 @@ import com.cognifide.aet.communication.api.messages.ProgressLog;
 import com.cognifide.aet.communication.api.util.ExecutionTimer;
 import com.cognifide.aet.runner.RunnerConfiguration;
 import com.cognifide.aet.communication.api.messages.FullProgressLog;
-import com.cognifide.aet.runner.processing.data.RunIndexWrappers.RunIndexWrapper;
+import com.cognifide.aet.runner.processing.data.wrappers.RunIndexWrapper;
 import com.cognifide.aet.runner.processing.steps.CollectDispatcher;
 import com.cognifide.aet.runner.processing.steps.CollectionResultsRouter;
 import com.cognifide.aet.runner.processing.steps.ComparisonResultsRouter;
