@@ -15,7 +15,7 @@
  */
 package com.cognifide.aet.communication.api.wrappers;
 
-    import com.cognifide.aet.communication.api.metadata.RunType;
+import com.cognifide.aet.communication.api.metadata.RunType;
 
 public abstract class RunDecorator<T> implements Run<T> {
 

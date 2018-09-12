@@ -31,20 +31,17 @@ import javax.jms.JMSException;
 import org.slf4j.Logger;
 import javax.jms.Destination;
 
-abstract public class ProcessorStrategy<T> implements Callable<String> {
+public abstract class ProcessorStrategy<T> implements Callable<String> {
 
   protected Logger logger;
-
   protected Destination jmsReplyTo;
   protected SuiteDataService suiteDataService;
   protected RunnerConfiguration runnerConfiguration;
   protected SuiteExecutionFactory suiteExecutionFactory;
   protected RunIndexWrapper runIndexWrapper;
   protected MessagesSender messagesSender;
-
   protected SuiteProcessor suiteProcessor;
   protected Run objectToRunWrapper;
-
 
   @Override
   public String call() {
