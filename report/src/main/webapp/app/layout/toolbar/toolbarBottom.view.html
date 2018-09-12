@@ -57,7 +57,7 @@
       </div>
       <span class="preformatted">{{toolbarBottom.viewMode}}:</span>
       <span ng-if="toolbarBottom.viewMode != 'url'">{{toolbarBottom.model.name}}</span>
-      <div ng-if="toolbarBottom.viewMode != 'url' && toolbarBottom.model.lastRerunTimestamp">
+      <div ng-if="toolbarBottom.viewMode != 'url' && toolbarBottom.model.lastRerunTimestamp()">
         Last rerun test: {{toolbarBottom.model.lastRerunTimestamp() | date:'yyyy-MM-dd HH:mm' }}
       </div>
         <a ng-if="toolbarBottom.viewMode == 'url'"
