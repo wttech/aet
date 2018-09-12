@@ -48,7 +48,7 @@
       var suiteInfo = suiteInfoService.getInfo();
       var rerunParams = 'company=' + suiteInfo.company + '&' + 'project=' + suiteInfo.project + '&' +
         'suite=' + suiteInfo.name;
-      var url = 'http://aet-vagrant:8181/suite-rerun?' + rerunParams;
+      var url = karafUrl + 'suite-rerun?' + rerunParams;
       $http.post(url, {}).then(function successCallback(response) {
         $rootScope.rerunMsg = 'Suite rerun initialized';
         $rootScope.rerunInProgressSuccessful = true;
@@ -64,7 +64,8 @@
       var suiteInfo = suiteInfoService.getInfo();
       var rerunParams = 'company=' + suiteInfo.company + '&' + 'project=' + suiteInfo.project + '&' +
         'suite=' + suiteInfo.name + '&' + 'testName=' + testName;
-      var url = 'http://aet-vagrant:8181/suite-rerun?' + rerunParams;
+      var karafUrl = endpointConfiguration.getKarafUrl().getUrl;
+      var url = karafUrl 'suite-rerun?' + rerunParams;
       $http.post(url, {}).then(function successCallback(response) {
         $rootScope.rerunMsg = 'Test rerun initialized';
         $rootScope.rerunProgress = 0;
@@ -80,7 +81,8 @@
       var suiteInfo = suiteInfoService.getInfo();
       var rerunParams = 'company=' + suiteInfo.company + '&' + 'project=' + suiteInfo.project + '&' +
         'suite=' + suiteInfo.name + '&' + 'testUrl=' + testUrl + '&' + 'testName=' + testName;
-      var url = 'http://aet-vagrant:8181/suite-rerun?' + rerunParams;
+      var karafUrl = endpointConfiguration.getKarafUrl().getUrl;
+      var url = karafUrl + 'suite-rerun?' + rerunParams;
       $http.post(url, {}).then(function successCallback(response) {
         $rootScope.rerunMsg = 'URL rerun initialized';
         $rootScope.rerunProgress = 0;
@@ -92,7 +94,8 @@
     }
 
     function checkRerunStatus(statusUrl) {
-      var url = 'http://aet-vagrant:8181' + statusUrl;
+      var karafUrl = endpointConfiguration.getKarafUrl().getUrl;
+      var url = karafUrl + statusUrl;
       setTimeout(function () {
         $http.get(url, {}).then(function successCallback(response) {
           if (response.data.status === 'FINISHED') {
