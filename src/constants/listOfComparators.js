@@ -1,4 +1,4 @@
-const listOfComparators = 
+const listOfComparators =
 [
   {
     type: 'Accessibility',
@@ -120,6 +120,24 @@ const listOfComparators =
         default: "layout",
         isMandatory: true,
         description: "Layout Comparator is responsible for collecting compared screenshot.",
+        current: "layout",
+      },
+      pixelthreshold: {
+        name: "Pixel Threshold",
+        tag: "pixelThreshold",
+        values: null,
+        default: null,
+        isMandatory: false,
+        description: "The value to set the error threshold in pixels e.g if difference between photos is smaller or equal to pixel threshold, the test will pass.",
+        current: null,
+      },
+      percentagethreshold: {
+        name: "Percentage Threshold",
+        tag: "percentageThreshold",
+        values: null,
+        default: null,
+        isMandatory: false,
+        description: "The value to set the error threshold in percentages e.g if difference between photos is smaller or equal to pixel threshold, the test will pass.",
         current: null,
       },
     },
