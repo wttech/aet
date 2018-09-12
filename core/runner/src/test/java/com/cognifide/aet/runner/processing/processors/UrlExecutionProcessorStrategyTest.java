@@ -83,6 +83,7 @@ public class UrlExecutionProcessorStrategyTest {
     url = Optional.of(new Url("urlName","urlUrl","urlDomain"));
     test = Optional
         .of(new com.cognifide.aet.communication.api.metadata.Test("testName", "proxy", "chrome"));
+    test.get().addUrl(url.get());
     urlExecutionProcessorStrategy = new UrlExecutionProcessorStrategy();
     urlExecutionProcessorStrategy
         .setParameters(objectToRunWrapper, jmsReplyTo, suiteDataService, runnerConfiguration,
@@ -95,6 +96,7 @@ public class UrlExecutionProcessorStrategyTest {
     urlExecutionProcessorStrategy.setSuiteProcessor(suiteProcessor);
     when(suiteDataService.enrichWithPatterns(any(Suite.class))).thenReturn(suite);
     when(suite.getTest(any(String.class))).thenReturn(test);
+    when(objectToRunWrapper.getTestName()).thenReturn("testName");
   }
 
   @Test

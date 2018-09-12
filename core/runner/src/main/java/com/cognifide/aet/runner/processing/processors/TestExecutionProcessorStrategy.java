@@ -41,7 +41,7 @@ public class TestExecutionProcessorStrategy extends ProcessorStrategy {
       objectToRunWrapper.setRealSuite(mergedSuite);
       Test test = (Test) objectToRunWrapper.getObjectToRun();
       String testName = test.getName();
-      objectToRunWrapper.setObjectToRun(mergedSuite.getTest(testName));
+      objectToRunWrapper.setObjectToRun(mergedSuite.getTest(testName).get());
       runIndexWrapper = RunIndexWrapperFactory.createInstance(objectToRunWrapper);
     } catch (StorageException e) {
       e.printStackTrace();
