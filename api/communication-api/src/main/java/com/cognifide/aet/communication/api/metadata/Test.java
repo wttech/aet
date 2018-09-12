@@ -132,4 +132,9 @@ public class Test implements Serializable, Commentable, Named {
     this.urls = urls;
   }
 
+  public void setRerunUrls() {
+    for (Url url: this.urls) {
+      url.setReran();
+    }
+  }
 }

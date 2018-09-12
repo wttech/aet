@@ -57,6 +57,7 @@ class SuiteRerun {
       objectToRunWrapper = new SuiteRunWrapper(suite);
     } else if (isTestRerun(testName, urlName)) {
       Optional<Test> test = suite.getTest(testName);
+      test.get().setRerunUrls();
       if(test.isPresent()){
         objectToRunWrapper = new MetadataRunDecorator(new TestRunWrapper(test.get()), suite);
       }

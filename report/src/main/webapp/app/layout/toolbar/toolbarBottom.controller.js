@@ -194,19 +194,6 @@ define([], function () {
       vm.revertAcceptedPatterns = function () {
         patternsService.revertTest(vm.model.name, true);
       };
-      vm.model.lastRerunTimestamp = function (test) {
-        var lastRerunTimestamp = false;
-        console.log(test.urls);
-        test.urls.forEach(function(url){
-        console.log(url);
-          if(url.isReran){
-            if(lastRerunTimestamp == false || lastRerunTimestamp < url.rerunTimestamp){
-              lastRerunTimestamp = url.rerunTimestamp;
-            }
-          }
-        });
-        return lastRerunTimestamp;
-      }
     }
 
     /***************************************

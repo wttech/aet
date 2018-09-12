@@ -185,6 +185,7 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
           decoratedObject.patternsToAccept = 0;
           decoratedObject.acceptedPatterns = 0;
           decoratedObject.getStatus = getStatus;
+          decoratedObject.lastRerunTimestamp = lastRerunTimestamp;
           decoratedObject.updatePatternStatistics = updatePatternStatistics;
           decoratedObject.revertPatternStatistics = revertPatternStatistics;
         }
@@ -201,6 +202,20 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
             status = 'conditionallyPassed';
           }
           return status;
+        }
+
+        function lastRerunTimestamp() {
+          var timestamp = false;
+          if (typeof(this.urls) !== 'undefined'){
+            this.urls.forEach(function(url){
+              if(url.isReran){
+                if(timestamp == false || timestamp < url.rerunTimestamp){
+                timestamp = url.rerunTimestamp;
+                }
+              }
+            });
+          }
+          return timestamp;
         }
 
         function updatePatternStatistics() {
