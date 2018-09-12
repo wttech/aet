@@ -67,7 +67,7 @@
             data-trigger="hover"
             data-container="body"> {{toolbarBottom.model.name}}
         </a>
-      <span ng-if="toolbarBottom.model.isReran">
+      <span ng-if="toolbarBottom.viewMode == 'url' && toolbarBottom.model.isReran">
         <h5>Last rerun: {{toolbarBottom.model.rerunTimestamp | date:'yyyy-MM-dd HH:mm' }}</h5>
       </span>
     </h4>
