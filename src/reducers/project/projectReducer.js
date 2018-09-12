@@ -83,7 +83,7 @@ export default function (state = {}, action = null) {
 
     case "TEST_SET_AS_INVALID": {
       let newState = [...state];
-      const testObj = Object.values(newState[0].tests).forEach((test) => {
+      Object.values(newState[0].tests).forEach((test) => {
         if(test.name.name === action.payload.name.name) {
           test.isValid = false;
         }

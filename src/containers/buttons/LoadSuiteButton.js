@@ -203,6 +203,7 @@ class UpdateTest extends Component {
         }
       case "urls": {
         block = urlBlock;
+        break;
       }
       default:
         {

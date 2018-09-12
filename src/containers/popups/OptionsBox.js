@@ -4,12 +4,7 @@ import {bindActionCreators} from 'redux';
 import {removeUrlFromTest, deleteItemFromTest, toggleEditBox, hideOptionsBox, hideEditBox} from "../../actions"
 
 class OptionsBox extends Component {
-  constructor(props) {
-    super(props);
-
-    
-  }
-
+  
   updateOptionsBox() {
     const parentID = this.props.optionsBox.optionsBoxItemID;
     if(document.getElementById(parentID) !== null) {
