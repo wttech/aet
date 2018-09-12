@@ -207,7 +207,7 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
         .toString();
   }
 
-  public void setVersion(long version) {
+  public void setVersion(Long version) {
     this.version = version;
   }
 

@@ -78,13 +78,13 @@ final class SuiteMergeStrategy {
   private static void setVersion(Suite current, Suite lastVersion) {
     if(isFirstRun(lastVersion)){
       current.setVersion(1L);
-    } else if(!isRerun(current)){
+    } else if(isNotTestOrUrlRerun(current)){
       current.setVersion(lastVersion.getVersion() + 1);
     }
   }
 
-  private static boolean isRerun(Suite current) {
-    return current.getVersion() != null;
+  private static boolean isNotTestOrUrlRerun(Suite current) {
+    return current.getVersion() == null;
   }
 
   private static boolean isFirstRun(Suite lastVersion) {
