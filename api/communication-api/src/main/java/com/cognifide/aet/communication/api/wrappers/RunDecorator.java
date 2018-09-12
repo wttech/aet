@@ -17,17 +17,17 @@ package com.cognifide.aet.communication.api.wrappers;
 
     import com.cognifide.aet.communication.api.metadata.RunType;
 
-public abstract class RunDecorator implements Run {
+public abstract class RunDecorator<T> implements Run<T> {
 
   private static final long serialVersionUID = 6866141366419923230L;
 
-  protected Run decoratedRun;
+  protected Run<T> decoratedRun;
 
-  public Run getRun() {
+  public Run<T> getRun() {
     return decoratedRun;
   }
 
-  public RunDecorator(Run decoratedRun) {
+  public RunDecorator(Run<T> decoratedRun) {
     this.decoratedRun = decoratedRun;
   }
 

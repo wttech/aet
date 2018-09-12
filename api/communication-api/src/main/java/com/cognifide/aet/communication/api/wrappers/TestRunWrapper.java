@@ -18,7 +18,7 @@ package com.cognifide.aet.communication.api.wrappers;
 import com.cognifide.aet.communication.api.metadata.RunType;
 import com.cognifide.aet.communication.api.metadata.Test;
 
-public class TestRunWrapper implements Run {
+public class TestRunWrapper implements Run<Test> {
 
   private static final long serialVersionUID = -1391932584294709026L;
 
@@ -29,7 +29,7 @@ public class TestRunWrapper implements Run {
   }
 
   @Override
-  public void setObjectToRun(Object object) {
+  public void setObjectToRun(Test object) {
     this.test = (Test) object;
   }
 

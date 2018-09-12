@@ -19,7 +19,7 @@ import com.cognifide.aet.communication.api.metadata.RunType;
 import com.cognifide.aet.communication.api.metadata.Test;
 import com.cognifide.aet.communication.api.metadata.Url;
 
-public class UrlRunWrapper implements Run {
+public class UrlRunWrapper implements Run<Url> {
 
   private static final long serialVersionUID = -3534307440930598944L;
 
@@ -41,7 +41,7 @@ public class UrlRunWrapper implements Run {
   }
 
   @Override
-  public void setObjectToRun(Object object) {
+  public void setObjectToRun(Url object) {
     this.url = (Url) object;
   }
 
