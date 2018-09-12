@@ -33,7 +33,7 @@ import javax.jms.Destination;
 
 abstract public class ProcessorStrategy<T> implements Callable<String> {
 
-  protected Logger LOGGER;
+  protected Logger logger;
 
   protected Destination jmsReplyTo;
   protected SuiteDataService suiteDataService;
@@ -54,7 +54,7 @@ abstract public class ProcessorStrategy<T> implements Callable<String> {
       process();
       save();
     } catch (StorageException | JMSException | ValidatorException e) {
-      LOGGER.error("Error during processing suite {}", getObjectToRun(), e);
+      logger.error("Error during processing suite {}", getObjectToRun(), e);
       FinishedSuiteProcessingMessage message = new FinishedSuiteProcessingMessage(Status.FAILED,
           objectToRunWrapper.getCorrelationId());
       message.addError(e.getMessage());
@@ -76,7 +76,7 @@ abstract public class ProcessorStrategy<T> implements Callable<String> {
   }
 
   protected void init() throws JMSException {
-    LOGGER.debug("Initializing suite processors {}", getObjectToRun());
+    logger.debug("Initializing suite processors {}", getObjectToRun());
     messagesSender = suiteExecutionFactory.newMessagesSender(jmsReplyTo);
     if (suiteProcessor == null) {
       suiteProcessor = new SuiteProcessor(suiteExecutionFactory, runIndexWrapper, runnerConfiguration,
@@ -85,12 +85,12 @@ abstract public class ProcessorStrategy<T> implements Callable<String> {
   }
 
   protected void process() throws JMSException {
-    LOGGER.info("Start processing: {}", runIndexWrapper.get());
+    logger.info("Start processing: {}", runIndexWrapper.get());
     suiteProcessor.startProcessing();
   }
 
   protected void cleanup() {
-    LOGGER.debug("Cleaning up suite {}", runIndexWrapper.get());
+    logger.debug("Cleaning up suite {}", runIndexWrapper.get());
     if(messagesSender != null){
       messagesSender.close();
     }
@@ -105,7 +105,7 @@ abstract public class ProcessorStrategy<T> implements Callable<String> {
   }
 
   protected void setLogger(Logger LOGGER) {
-    this.LOGGER = LOGGER;
+    this.logger = LOGGER;
   }
 
   protected abstract T getObjectToRun();

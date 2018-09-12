@@ -26,15 +26,15 @@ import org.slf4j.LoggerFactory;
 
 public class SuiteExecutionProcessorStrategy extends ProcessorStrategy {
 
-  protected static final Logger LOGGER = LoggerFactory
+  protected static final Logger logger = LoggerFactory
       .getLogger(SuiteExecutionProcessorStrategy.class);
 
   public SuiteExecutionProcessorStrategy() {
-    setLogger(LOGGER);
+    setLogger(logger);
   }
 
   void prepareSuiteWrapper() {
-    LOGGER.debug("Fetching suite patterns {}", getObjectToRun());
+    logger.debug("Fetching suite patterns {}", getObjectToRun());
     try {
       Suite realSuite = objectToRunWrapper.getRealSuite();
       Suite mergedSuite = suiteDataService.enrichWithPatterns(realSuite);
@@ -46,7 +46,7 @@ public class SuiteExecutionProcessorStrategy extends ProcessorStrategy {
   }
 
   void save() {
-    LOGGER.debug("Persisting suite {}", getObjectToRun());
+    logger.debug("Persisting suite {}", getObjectToRun());
     try {
       suiteDataService.saveSuite(objectToRunWrapper.getRealSuite());
     } catch (ValidatorException | StorageException e) {
