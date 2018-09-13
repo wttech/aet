@@ -18,15 +18,14 @@
 define([], function () {
   'use strict';
   return ['$scope', '$rootScope', '$uibModal', '$stateParams',
-    'patternsService', 'metadataAccessService',
-    'notesService', 'viewModeService', 'suiteInfoService',
-    'rerunService', 'historyService',
+    'patternsService', 'metadataAccessService', 'notesService',
+    'viewModeService', 'suiteInfoService', 'rerunService', 'historyService',
     ToolbarBottomController
   ];
 
   function ToolbarBottomController($scope, $rootScope, $uibModal, $stateParams,
-    patternsService, metadataAccessService, notesService,
-    viewModeService, suiteInfoService, rerunService, historyService) {
+    patternsService, metadataAccessService, notesService, viewModeService,
+    suiteInfoService, rerunService, historyService) {
     var vm = this;
 
     // disables accept button if compared against another suite patterns
