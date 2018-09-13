@@ -88,11 +88,6 @@ public class SuiteExecutorService {
     LOGGER.debug("Scheduling {}!", objectToRun.getObjectToRun());
     final ListenableFuture<String> suiteExecutionTask;
 
-    Map<RunType, ProcessorStrategy> strategiesMap = new HashMap<>();
-    strategiesMap.put(RunType.SUITE, new SuiteExecutionProcessorStrategy());
-    strategiesMap.put(RunType.TEST, new TestExecutionProcessorStrategy());
-    strategiesMap.put(RunType.URL, new UrlExecutionProcessorStrategy());
-
     ProcessorStrategy processorStrategy = null;
     if(objectToRun.getType() == RunType.SUITE){
       processorStrategy = new SuiteExecutionProcessorStrategy();
