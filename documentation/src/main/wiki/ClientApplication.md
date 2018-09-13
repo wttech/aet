@@ -1,7 +1,7 @@
 ### Client Application
 
 **Important note**
-**`aet-maven-plugin` is deprecated and will be no longer supported. Expect it will be removed during next minor release.
+**`aet-maven-plugin` is deprecated and will be no longer supported. Expect it will be removed soon.
 Please use [[client script|ClientScripts]] instead or simply communicate with AET Web API to schedule your suite.**
 
 The AET client application comes with a sort of a plugin to the *Maven* build automation tool -- `aet-maven-plugin`. This plugin connects to the AET application in order to run the specified test suite.

@@ -2,45 +2,17 @@
 
 Web API for accessing and modifying data stored in AET Database. This API is part of AET System and is the interface between system database, user and application.
 
-Its methods are used by *AET Maven Plugin* to download reports, *HTML Report* uses it to load images and to perform rebase action.  
+Its methods are used by *AET Maven Plugin* to download reports, *HTML Report* uses it to load images and to perform rebase action.
 
 Rebase (switching artifacts id of pattern(s)) and adding comments should be done on client side. Web API only consumes whole json representation of suite.
 
+#### Executor API
+The [[Test Executor|TestExecutor]] module is a part of AET Web API and an
+entry point of the test suite processing. You may read more about it [[here|TestExecutor]]
+
+
 #### Web API HTTP methods
 
-##### Schedule suite run
-* **URL**: `/suite`
-* **HTTP Method**: POST
-* **Parameters**:
-      - `suite` - suite XML file body, this is the only *mandatory* parameter
-      - `name` - overrides name attribute defined in suite file
-      - `domain` - overrides domain attribute defined in suite file
-      - `pattern` - sets id of patterns to run test against
-      - `patternSuite` - sets the suite name to run test against its latest pattern
-* **Description**: Schedules processing suite passed in the `suite` parameter.
-Returns unique `correlationId` of the scheduled suite run or `errorMessage` in case of failure in form of `application/json`.
-
---------
-##### Get suite status by `correlationId`
-* **URL**: `/suitestatus`
-* **HTTP Method**: GET
-* **Parameters**:
-      - `correlationId` - path param, unique `correlationId` of the scheduled suite
-* **Example**: http://aet.example.com/suitestatus/56fa80c1ab21c61f14bfef45
-* **Description**: Returns the status of currently processed suite in form of `application/json` or `404` if suite can't be found in the system.
-Example response:
-```json
-    {"status":"FINISHED", "message":"Suite processing finished"}
-```
---------
-##### Get suite xUnit output
-* **URL**: `/xunit`
-* **HTTP Method**: GET
-* **Parameters**: `company`, `project`, `correlationId` or `suite` (name)
-* **Example**: http://aet.example.com/xunit?company=cognifide&project=example&correlationId=56fa80c1ab21c61f14bfef45
-* **Description**: Returns xUnit file with the output of the run of suite identified by `correlationId`.
-
---------
 ##### Get artifact by artifact Id
 * **URL**: `/api/artifact`
 * **HTTP Method**: GET
@@ -114,21 +86,29 @@ Example response:
  
 --------
 ##### Gets list of all suites in system
-* **URL**: `/config/list`
+* **URL**: `/configs/list`
 * **HTTP Method**: GET
 * **Example**: http://aet.example.com/config/list 
 * **Description**: Returns all suites for all projects in all companies as html list of links to reports and metadata (this method will change or will be removed in near future- for now it stays only for devs and testing purposes).
  
 --------
 ##### Get all locked suites
-* **URL**: `/config/locks`
+* **URL**: `/configs/locks`
 * **HTTP Method**: GET
 * **Example**: http://aet.example.com/config/locks 
 * **Description**: Returns list of current locks.
  
 --------
 ##### Get communication settings
-* **URL**: `/config/communicationSettings`
+* **URL**: `/configs/communicationSettings`
 * **HTTP Method**: GET
 * **Example**: http://aet.example.com/config/communicationSettings 
-* **Description**: Returns current JMS broker settings and report app domain. This method is used by maven client. 
+* **Description**: Returns current report app domain. This method is used by maven client.
+
+--------
+##### Get suite xUnit output
+* **URL**: `/xunit`
+* **HTTP Method**: GET
+* **Parameters**: `company`, `project`, `correlationId` or `suite` (name)
+* **Example**: http://aet.example.com/xunit?company=cognifide&project=example&correlationId=56fa80c1ab21c61f14bfef45
+* **Description**: Returns xUnit file with the output of the run of suite identified by `correlationId`.
