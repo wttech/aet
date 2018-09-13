@@ -59,13 +59,13 @@ public @interface CleanerSchedulerConf {
       name = COMPANY_NAME,
       description = "Name of the company for which we wish cleaning to be performed. Leave blank if you wish to trigger this job for each company on database.",
       type = AttributeType.STRING)
-  String companyName();
+  String companyName() default  "";
 
   @AttributeDefinition(
       name = PROJECT_NAME,
       description = "Name of the project for which we wish cleaning to be performed. Leave blank if you wish to trigger this job for each project on database.",
       type = AttributeType.STRING)
-  String projectName();
+  String projectName() default  "";
 
   @AttributeDefinition(
       name = DRY_RUN,
