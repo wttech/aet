@@ -25,12 +25,6 @@ define(['angularAMD'], function (angularAMD) {
           'getUrl': 'http://aet-vagrant/api/'
         };
         return config;
-      },
-      getKarafUrl: function () {
-        var config = {
-          'getUrl': 'http://aet-vagrant:8181'
-        };
-        return config;
       }
     };
 
