@@ -44,7 +44,8 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class Suite implements Serializable, Commentable, Named, Validatable {
 
-  private static final long serialVersionUID = 3602287822306302730L;
+  private static final long serialVersionUID = -3225670696134184553L;
+
   private static final Gson GSON_FOR_JSON = new GsonBuilder()
       .registerTypeHierarchyAdapter(Collection.class, new CollectionSerializer())
       .registerTypeHierarchyAdapter(Map.class, new MapSerializer())

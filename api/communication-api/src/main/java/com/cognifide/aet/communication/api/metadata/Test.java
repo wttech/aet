@@ -26,7 +26,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class Test implements Serializable, Commentable, Named {
 
-  private static final long serialVersionUID = -220660503633061510L;
+  private static final long serialVersionUID = 6761670624207862805L;
 
   @NotBlank
   private final String name;
