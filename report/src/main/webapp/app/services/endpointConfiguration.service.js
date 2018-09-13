@@ -27,7 +27,5 @@ define(['angularAMD'], function (angularAMD) {
         return config;
       }
     };
-
   });
-
 });
