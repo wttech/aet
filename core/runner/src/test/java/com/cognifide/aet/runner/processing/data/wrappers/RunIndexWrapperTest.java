@@ -21,8 +21,6 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -100,7 +98,7 @@ public class RunIndexWrapperTest {
     assertNull(realUrl.getCollectionStats());
     verify(step, times(1)).setStepResult(null);
     assertNull(comparator.getStepResult());
-    assertEquals(comparator.getFilters().size(), 0);
+    assertEquals(comparator.getFilters().size(), 1);
   }
 
   @Test
@@ -111,6 +109,9 @@ public class RunIndexWrapperTest {
 
     Comparator comparator = new Comparator("comparatorType");
     Set<Comparator> comparators = new HashSet<>();
+    ArrayList<Operation> listOperation = new ArrayList<>();
+    listOperation.add(new Operation("operationType"));
+    comparator.setFilters(listOperation);
     comparators.add(comparator);
 
     when(step.getComparators()).thenReturn(comparators);
@@ -123,7 +124,7 @@ public class RunIndexWrapperTest {
     assertEquals(realUrl.getSteps().size(), 1);
     verify(step, times(1)).setStepResult(null);
     assertNull(comparator.getStepResult());
-    assertEquals(comparator.getFilters().size(), 0);
+    assertEquals(comparator.getFilters().size(), 1);
   }
 
   @Test

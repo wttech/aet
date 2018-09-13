@@ -37,10 +37,9 @@ public abstract class RunIndexWrapper {
           step.setStepResult(null);
           if (step.getComparators() != null) {
             step.getComparators()
-                .forEach(comparator -> {
-                  comparator.setStepResult(null);
-                  comparator.setFilters(new ArrayList<>());
-                });
+                .forEach(comparator ->
+                  comparator.setStepResult(null)
+                );
           }
         });
   }
