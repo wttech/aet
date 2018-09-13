@@ -42,12 +42,8 @@ public class TestRunIndexWrapper extends RunIndexWrapper {
 
   @Override
   public int countUrls() {
-    int quantityUrls = 0;
     Test test = (Test) objectToRunWrapper.getObjectToRun();
-    for (Url url : test.getUrls()) {
-      quantityUrls++;
-    }
-    return quantityUrls;
+    return test.getUrls().size();
   }
 
 }
