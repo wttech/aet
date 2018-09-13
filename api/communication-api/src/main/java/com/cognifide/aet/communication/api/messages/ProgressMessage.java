@@ -19,8 +19,8 @@ package com.cognifide.aet.communication.api.messages;
  * Basic message used to send work progress via JMS.
  */
 public class ProgressMessage extends TaskMessage<FullProgressLog> {
-
-  private static final long serialVersionUID = 490908210242015178L;
+  
+  private static final long serialVersionUID = -428855447599621022L;
 
   /**
    * @param message - progress message.
