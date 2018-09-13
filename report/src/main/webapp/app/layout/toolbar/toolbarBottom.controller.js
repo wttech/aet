@@ -20,13 +20,13 @@ define([], function () {
   return ['$scope', '$rootScope', '$uibModal', '$stateParams',
     'patternsService', 'metadataAccessService',
     'notesService', 'viewModeService', 'suiteInfoService',
-    'rerunService',
+    'rerunService', 'historyService',
     ToolbarBottomController
   ];
 
   function ToolbarBottomController($scope, $rootScope, $uibModal, $stateParams,
     patternsService, metadataAccessService, notesService,
-    viewModeService, suiteInfoService, rerunService) {
+    viewModeService, suiteInfoService, rerunService, historyService) {
     var vm = this;
 
     // disables accept button if compared against another suite patterns
@@ -42,6 +42,11 @@ define([], function () {
     vm.rerunURL = rerunURL;
     vm.rerunService = rerunService;
     vm.suiteInfoService = suiteInfoService;
+
+    historyService.fetchHistory(suiteInfoService.getInfo().version, function() {
+      var currentVersion = suiteInfoService.getInfo().version;
+      vm.isLastSuiteVersion = historyService.getNextVersion(currentVersion) == null;
+    });
 
     $rootScope.$on('metadata:changed', updateToolbar);
     $scope.$watch('viewMode', function () {

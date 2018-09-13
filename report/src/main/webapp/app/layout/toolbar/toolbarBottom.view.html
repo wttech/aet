@@ -20,7 +20,7 @@
 <div class="toolbar-bottom">
   <div class="toolbar-link">
     <h4 class="toolbar-link-header ellipsis">
-      <div ng-if="toolbarBottom.viewMode != 'suite'"class="fontawesome-link"
+      <div ng-if="toolbarBottom.viewMode != 'suite'" class="fontawesome-link"
          data-toggle="popover"
          data-content="Localize the currently opened url on side panel"
          data-trigger="hover"
@@ -29,7 +29,7 @@
         <i class="fas fa-crosshairs fa-sm"></i>
       </div>
       <div 
-        ng-if="toolbarBottom.viewMode != 'suite' && toolbarBottom.viewMode != 'test'"
+        ng-if="toolbarBottom.viewMode != 'suite' && toolbarBottom.viewMode != 'test' && toolbarBottom.isLastSuiteVersion"
         class="fontawesome-link"
         data-toggle="popover"
         data-content="Rerun current URL"
@@ -38,7 +38,7 @@
         data-ng-click="toolbarBottom.rerunURL(toolbarBottom.model.url)">
         <i class="far fa-play-circle fa-sm"></i>
       </div>
-      <div ng-if="toolbarBottom.viewMode == 'suite' && !toolbarBottom.historyService.getNextVersion(toolbarBottom.suiteInfoService.getInfo().version)"
+      <div ng-if="toolbarBottom.viewMode == 'suite' && toolbarBottom.isLastSuiteVersion"
            class="fontawesome-link"
            data-toggle="popover"
            data-content="Rerun current suite"
@@ -47,7 +47,7 @@
            data-ng-click="toolbarBottom.rerunSuite()">
         <i class="far fa-play-circle fa-sm"></i>
       </div>
-      <div ng-if="toolbarBottom.viewMode != 'url' && toolbarBottom.viewMode != 'suite'"class="fontawesome-link"
+      <div ng-if="toolbarBottom.viewMode != 'url' && toolbarBottom.viewMode != 'suite' && toolbarBottom.isLastSuiteVersion" class="fontawesome-link"
            data-toggle="popover"
            data-content="Rerun current test"
            data-trigger="hover"
@@ -85,7 +85,8 @@
         data-content="Rerun current test"
         data-trigger="hover"
         data-container="body"
-        data-ng-click="toolbarBottom.rerunTest()">
+        data-ng-click="toolbarBottom.rerunTest()"
+        ng-if="toolbarBottom.isLastSuiteVersion">
       <i class="far fa-play-circle fa-sm"></i>
       </div>
       <span class="preformatted">test:</span><span>{{toolbarBottom.model.testGroupName}}</span>
