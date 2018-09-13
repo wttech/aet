@@ -24,7 +24,7 @@
 	<test name="S-modifier-Wait-For-Page-Loaded">
 		<collect>
 			<open />
-			<resolution width="1500" />
+			<resolution width="1500" height="3150"/>
 			<wait-for-page-loaded />
 			<screen />
 		</collect>
@@ -39,7 +39,7 @@
 	<test name="F-modifier-Wait-For-Page-Loaded">
 		<collect>
 			<open />
-			<resolution width="1500" />
+			<resolution width="1500" height="3150"/>
 			<!-- needed for initial timestamp rendering on Vagrant -->
 			<sleep duration="100" />
 			<screen />
