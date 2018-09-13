@@ -35,6 +35,7 @@ require.config({
     'urlStatusFilter': 'components/urlStatus.filter',
     'keyboardShortcutsDirective': 'components/keyboardShortcuts.directive',
     'hidePopoversDirective': 'components/hidePopovers.directive',
+    'compareScreensDirective': 'components/compareScreens.directive',
     'winterEdition': 'themes/winterEdition.directive',
     //services
     'endpointConfiguration': 'services/endpointConfiguration.service',

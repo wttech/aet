@@ -1,16 +1,17 @@
-### REST API
+### Web API
 
-Representational State Transfer API for accessing and modifying data stored in AET Database. REST API is part of AET System and is the interface between system database, user and application.
+Web API for accessing and modifying data stored in AET Database. This API is part of AET System and is the interface between system database, user and application.
 
-Its methods are used by *AET Maven Plugin* to download reports, *HTML Report* uses it to load images and to perform rebase action.  
+Its methods are used by *AET Maven Plugin* to download reports, *HTML Report* uses it to load images and to perform rebase action.
 
-Rebase (switching artifacts id of pattern(s)) and adding comments should be done on client side. REST API only consumes whole json representation of suite.  
+Rebase (switching artifacts id of pattern(s)) and adding comments should be done on client side. Web API only consumes whole json representation of suite.
 
-#### REST API HTTP methods
+#### Executor API
+The [[Test Executor|TestExecutor]] module is a part of AET Web API and an
+entry point of the test suite processing. You may read more about it [[here|TestExecutor]]
 
-Base api path:
 
-`http://<Domain_or_IP_Address>:<PORT>/api`
+#### Web API HTTP methods
 
 ##### Get artifact by artifact Id
 * **URL**: `/api/artifact`
@@ -102,4 +103,12 @@ Base api path:
 * **URL**: `/configs/communicationSettings`
 * **HTTP Method**: GET
 * **Example**: `http://aet.example.com/configs/communicationSettings`
-* **Description**: Returns current JMS broker settings and report app domain. This method is used by maven client. 
+* **Description**: Returns current report app domain. This method is used by maven client.
+
+--------
+##### Get suite xUnit output
+* **URL**: `/xunit`
+* **HTTP Method**: GET
+* **Parameters**: `company`, `project`, `correlationId` or `suite` (name)
+* **Example**: `http://aet.example.com/xunit?company=cognifide&project=example&correlationId=56fa80c1ab21c61f14bfef45`
+* **Description**: Returns xUnit file with the output of the run of suite identified by `correlationId`.

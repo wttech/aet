@@ -6,9 +6,7 @@
 * How To Use
     * [[Environment Setup|EnvironmentSetup]]
         * [[Basic Setup|BasicSetup]]
-        * Advanced Setup
-            * [[Linux and Windows Setup|LinuxAndWindowsSetup]]
-            * [[OSGi Configuration|OsgiConfiguration]]
+        * [[Advanced Setup|AdvancedSetup]]
     * [[Defining Suite|DefiningSuite]]
         * [[Suite Structure|SuiteStructure]]
         * [[Best practices|BestPractices]]
@@ -72,10 +70,10 @@
     * [[System Components|SystemComponents]]
         * [[Client Application|ClientApplication]]
         * [[Client Scripts|ClientScripts]]
-        * [[Test Executor|TestExecutor]]
         * [[Runner|Runner]]
         * [[Worker|Worker]]
-        * [[REST API|RestAPI]]
+        * [[Web API|WebAPI]]
+            * [[Test Executor|TestExecutor]]
         * [[Cleaner|Cleaner]]
     * [[Test Processing|TestProcessing]]
     * [[Lock Mechanism|LockMechanism]]

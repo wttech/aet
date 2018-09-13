@@ -28,6 +28,7 @@ import org.apache.maven.project.MavenProject;
 
 
 @Mojo(name = "run", defaultPhase = LifecyclePhase.PROCESS_SOURCES)
+@Deprecated
 public class RunTestSuiteMojo extends AbstractMojo {
 
   private static final String SCREEN = "screen";

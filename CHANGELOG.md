@@ -26,9 +26,12 @@ All notable changes to AET will be documented in this file.
 - [PR-291](https://github.com/Cognifide/aet/pull/291) Updated nu.validator version from 15.6.29 to 17.11.1
 - [PR-298](https://github.com/Cognifide/aet/pull/298) Filtering accessibility errors by markup CSS ([#214](https://github.com/Cognifide/aet/issues/214))
 - [PR-296](https://github.com/Cognifide/aet/pull/296) Status Code Comparator now checks range 400-600 by default, parameters validation added
+- [PR-297](https://github.com/Cognifide/aet/pull/297) Advanced screen comparison
 - [PR-325](https://github.com/Cognifide/aet/pull/325) Support env variables in report manager
 - [PR-331](https://github.com/Cognifide/aet/pull/325) Support env variables in MongoDB config
 - [PR-338](https://github.com/Cognifide/aet/pull/338) Enable creating new dbs by default
+- [PR-345](https://github.com/Cognifide/aet/pull/345) Deprecate AET maven plugin
+- [PR-301](https://github.com/Cognifide/aet/pull/301) New versions of virtualization tools used with new AET cookbook
 
 ## Version 2.1.6
 

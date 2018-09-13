@@ -390,10 +390,10 @@
 			<open/>
 			<resolution width="767" height="3200"/>
 			<sleep duration="3000"/>
-			<screen exclude-elements="unnamed" percentageThreshold="10"/>
+			<screen exclude-elements="unnamed"/>
 		</collect>
 		<compare>
-			<screen comparator="layout"/>
+			<screen comparator="layout" percentageThreshold="5"/>
 		</compare>
 		<urls>
 			<url href="comparators/layout/different_sized_divs.jsp"/>

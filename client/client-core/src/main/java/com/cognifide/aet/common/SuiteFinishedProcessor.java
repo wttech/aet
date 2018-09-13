@@ -18,6 +18,7 @@ package com.cognifide.aet.common;
 import com.cognifide.aet.communication.api.exceptions.AETException;
 import com.jcabi.log.Logger;
 
+@Deprecated
 class SuiteFinishedProcessor implements StatusProcessor {
 
   private final RunnerTerminator runnerTerminator;
