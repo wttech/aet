@@ -29,8 +29,8 @@ public class TestRunWrapper implements Run<Test> {
   }
 
   @Override
-  public void setObjectToRun(Test object) {
-    this.test = (Test) object;
+  public void setObjectToRun(Test test) {
+    this.test = test;
   }
 
   @Override

@@ -41,8 +41,8 @@ public class UrlRunWrapper implements Run<Url> {
   }
 
   @Override
-  public void setObjectToRun(Url object) {
-    this.url = (Url) object;
+  public void setObjectToRun(Url test) {
+    this.url = test;
   }
 
   @Override

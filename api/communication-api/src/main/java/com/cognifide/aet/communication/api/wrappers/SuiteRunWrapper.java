@@ -34,8 +34,8 @@ public class SuiteRunWrapper implements Run<Suite> {
   }
 
   @Override
-  public void setObjectToRun(Suite object) {
-    this.suite = (Suite) object;
+  public void setObjectToRun(Suite suite) {
+    this.suite = suite;
   }
 
   @Override
