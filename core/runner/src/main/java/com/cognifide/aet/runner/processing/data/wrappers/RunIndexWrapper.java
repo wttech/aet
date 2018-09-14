@@ -15,18 +15,21 @@
  */
 package com.cognifide.aet.runner.processing.data.wrappers;
 
+import com.cognifide.aet.communication.api.metadata.Operation;
 import com.cognifide.aet.communication.api.metadata.Test;
 import com.cognifide.aet.communication.api.metadata.Url;
 import com.cognifide.aet.communication.api.wrappers.MetadataRunDecorator;
 import com.cognifide.aet.communication.api.wrappers.Run;
+import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public abstract class RunIndexWrapper {
 
   protected Run objectToRunWrapper = null;
 
-  RunIndexWrapper(Run objectToRunWrapper){
+  RunIndexWrapper(Run objectToRunWrapper) {
     this.objectToRunWrapper = objectToRunWrapper;
   }
 
@@ -38,7 +41,7 @@ public abstract class RunIndexWrapper {
           if (step.getComparators() != null) {
             step.getComparators()
                 .forEach(comparator ->
-                  comparator.setStepResult(null)
+                    comparator.setStepResult(null)
                 );
           }
         });
@@ -47,7 +50,7 @@ public abstract class RunIndexWrapper {
   public Optional<Url> getTestUrl(String testName, final String urlName) {
     Optional<Test> test = getTest(testName);
     Optional<Url> url = Optional.ofNullable(null);
-    if(test.isPresent()){
+    if (test.isPresent()) {
       url = test.get().getUrl(urlName);
     }
     return url;
@@ -57,10 +60,11 @@ public abstract class RunIndexWrapper {
     return objectToRunWrapper.getRealSuite().getTest(testName);
   }
 
-  public Run get(){
+  public Run get() {
     return objectToRunWrapper;
   }
 
   public abstract ArrayList<MetadataRunDecorator> getUrls();
+
   public abstract int countUrls();
 }

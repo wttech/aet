@@ -49,6 +49,9 @@ public class Comparator extends Operation implements Commentable, Named {
   }
 
   public List<Operation> getFilters() {
+    if(filters == null){
+      return new ArrayList<>();
+    }
     return ImmutableList.copyOf(filters);
   }
 
