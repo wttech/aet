@@ -93,8 +93,7 @@
     }
 
     function checkRerunStatus(statusUrl) {
-      var url = 'http://aet-vagrant' + statusUrl;
-      console.log(url);
+      var url = endpointConfiguration.getDomain().getUrl + statusUrl;
       setTimeout(function () {
         $http.get(url, {}).then(function successCallback(response) {
           if (response.data.status === 'FINISHED') {
