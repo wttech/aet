@@ -36,6 +36,8 @@ public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
 
   private static final String PARAM_SOURCE = "source";
 
+  private static final String PARAM_SOURCE_PATTERN = "sourcePattern";
+
   private static final String PARAM_LINE = "line";
 
   private String errorMessage;
@@ -43,6 +45,8 @@ public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
   private Pattern errorMessagePattern;
 
   private String sourceFile;
+
+  private Pattern sourceFilePattern;
 
   private Integer line;
 
@@ -52,8 +56,10 @@ public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
     errorMessagePattern = ParamsHelper.getParamAsPattern(PARAM_ERROR_PATTERN, params);
     line = ParamsHelper.getParamAsInteger(PARAM_LINE, params);
     sourceFile = ParamsHelper.getParamAsString(PARAM_SOURCE, params);
+    sourceFilePattern = ParamsHelper.getParamAsPattern(PARAM_SOURCE_PATTERN, params);
 
-    ParamsHelper.atLeastOneIsProvided(errorMessage, errorMessagePattern, sourceFile, line);
+    ParamsHelper.atLeastOneIsProvided(
+            errorMessage, errorMessagePattern, sourceFile, sourceFilePattern, line);
   }
 
   /**
@@ -75,8 +81,8 @@ public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
   }
 
   private boolean shouldBeIgnored(JsErrorLog jse) {
-    String source = jse.getSourceName();
-    return shouldExcludeRegardingSource(source)
+    return ParamsHelper.matches(sourceFilePattern, jse.getSourceName())
+        && shouldExcludeRegardingSource(jse.getSourceName())
         && ParamsHelper.matches(errorMessagePattern, jse.getErrorMessage())
         && (errorMessage == null || errorMessage.equals(jse.getErrorMessage()))
         && ParamsHelper.equalOrNotSet(line, jse.getLineNumber());
@@ -89,6 +95,7 @@ public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
         .add(PARAM_ERROR, errorMessage)
         .add(PARAM_ERROR_PATTERN, errorPattern)
         .add(PARAM_SOURCE, sourceFile)
+        .add(PARAM_SOURCE_PATTERN, sourceFilePattern)
         .add(PARAM_LINE, line);
     errorLog.addMatchedFilter(filterInfo);
   }
@@ -111,6 +118,7 @@ public class JsErrorsFilter extends AbstractDataModifierJob<Set<JsErrorLog>> {
     return NAME + " DataModifier with parameters: "
         + PARAM_ERROR_PATTERN + ": " + errorMessagePattern + " "
         + PARAM_SOURCE + ": " + sourceFile + " "
+        + PARAM_SOURCE_PATTERN + ": " + sourceFilePattern + " "
         + PARAM_LINE + ": " + line;
   }
 
