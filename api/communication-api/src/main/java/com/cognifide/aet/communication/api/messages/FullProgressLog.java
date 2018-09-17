@@ -21,6 +21,8 @@ import org.apache.commons.lang3.StringUtils;
 
 public class FullProgressLog implements Serializable {
 
+  private static final long serialVersionUID = -7331561874304014158L;
+
   private ProgressLog compareLog;
   private ProgressLog collectLog;
 
