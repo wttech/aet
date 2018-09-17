@@ -15,6 +15,7 @@
  */
 package com.cognifide.aet.cleaner.processors;
 
+import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.times;
@@ -50,8 +51,6 @@ public class RemoveArtifactsProcessorTest {
 
   private static final Set<String> SIX_TO_SEVEN_ARTIFACTS_ID_SET = new HashSet<>(Arrays
       .asList("6", "7"));
-
-  private static final Set<String> EMPTY_ARTIFACTS_ID_SET = new HashSet<>();
 
   private Exchange exchange;
 
@@ -123,8 +122,7 @@ public class RemoveArtifactsProcessorTest {
     setArtifactsIdToKeep(ONE_TO_SEVEN_ARTIFACTS_ID_SET);
     ReferencedArtifactsMessageBody messageBody = (ReferencedArtifactsMessageBody) exchange.getIn()
         .getBody();
-    assertEquals(EMPTY_ARTIFACTS_ID_SET,
-        removeArtifactsProcessor.getArtifactsIdsToRemove(artifactDAO, messageBody));
+    assertTrue(removeArtifactsProcessor.getArtifactsIdsToRemove(artifactDAO, messageBody).isEmpty());
   }
 
   @Test
@@ -143,12 +141,11 @@ public class RemoveArtifactsProcessorTest {
   @Test
   public void check_substractArtifactsSetsWhenDbIsEmpty_expectEmptySet() throws Exception {
     when(artifactDAO.getArtifactsIds(any(DBKey.class)))
-        .thenReturn(new HashSet<>(EMPTY_ARTIFACTS_ID_SET));
+        .thenReturn(new HashSet<>());
     setArtifactsIdToKeep(SIX_TO_SEVEN_ARTIFACTS_ID_SET);
     ReferencedArtifactsMessageBody messageBody = (ReferencedArtifactsMessageBody) exchange.getIn()
         .getBody();
-    assertEquals(EMPTY_ARTIFACTS_ID_SET,
-        removeArtifactsProcessor.getArtifactsIdsToRemove(artifactDAO, messageBody));
+    assertTrue(removeArtifactsProcessor.getArtifactsIdsToRemove(artifactDAO, messageBody).isEmpty());
   }
 
   private void setArtifactsIdToKeep(Set<String> artifactsIdToKeep) {
