@@ -17,7 +17,7 @@ package com.cognifide.aet.communication.api.wrappers;
 
 import com.cognifide.aet.communication.api.metadata.Suite;
 
-public class MetadataRunDecorator extends RunDecorator {
+public class MetadataRunDecorator<T> extends RunDecorator<T> {
 
   private static final long serialVersionUID = 2300347507334858549L;
 
@@ -29,7 +29,7 @@ public class MetadataRunDecorator extends RunDecorator {
   }
 
   @Override
-  public void setObjectToRun(Object object) {
+  public void setObjectToRun(T object) {
     decoratedRun.setObjectToRun(object);
   }
 
@@ -59,7 +59,7 @@ public class MetadataRunDecorator extends RunDecorator {
   }
 
   @Override
-  public Object getObjectToRun() {
+  public T getObjectToRun() {
     return decoratedRun.getObjectToRun();
   }
 
