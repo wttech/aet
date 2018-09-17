@@ -11,6 +11,10 @@ All notable changes to AET will be documented in this file.
 **List of changes that are finished but not yet released in any final version.**
 
 - [PR-336](https://github.com/Cognifide/aet/pull/336) Cleaner will remove artifacts without reference in suites e.g after rerun one test 
+
+## Version 3.0.0
+
+
 - [PR-328](https://github.com/Cognifide/aet/pull/328) Added suite's history
 - [PR-303](https://github.com/Cognifide/aet/pull/303) Added `exclude-elements` parameter to [ScreenCollector](https://github.com/Cognifide/aet/wiki/ScreenCollector)
 - [PR-327](https://github.com/Cognifide/aet/pull/327) Default web driver changed from Firefox to Chrome
