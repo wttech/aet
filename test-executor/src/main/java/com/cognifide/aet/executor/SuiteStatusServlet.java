@@ -37,7 +37,7 @@ public class SuiteStatusServlet extends HttpServlet {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SuiteStatusServlet.class);
 
-  public static final String SERVLET_PATH = "/suitestatus";
+  public static final String SERVLET_PATH = "/api/suitestatus";
 
   @Reference
   private HttpService httpService;

@@ -16,8 +16,8 @@
 package com.cognifide.aet.executor;
 
 import com.cognifide.aet.communication.api.execution.SuiteExecutionResult;
-import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
+import com.cognifide.aet.communication.api.wrappers.Run;
 import com.cognifide.aet.executor.http.HttpSuiteExecutionResultWrapper;
 import com.cognifide.aet.rest.Helper;
 import com.cognifide.aet.vs.MetadataDAO;
@@ -43,8 +43,8 @@ import org.slf4j.LoggerFactory;
 public class SuiteRerunServlet extends HttpServlet {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SuiteRerunServlet.class);
-  private static final String SERVLET_PATH = "/suite-rerun";
-  private static final long serialVersionUID = 6317770911546678642L;
+  private static final String SERVLET_PATH = "/api/suite-rerun";
+  private static final long serialVersionUID = -2644460433789203661L;
 
   @Reference
   private HttpService httpService;
@@ -68,16 +68,17 @@ public class SuiteRerunServlet extends HttpServlet {
     String correlationId = request.getParameter(Helper.CORRELATION_ID_PARAM);
     String suiteName = request.getParameter(Helper.SUITE_PARAM);
     String testName = request.getParameter(Helper.TEST_RERUN_PARAM);
+    String urlName = request.getParameter(Helper.URL_RERUN_PARAM);
 
-    Suite suite = null;
+    Run objectToRunWrapper = null;
 
     try {
-      suite = SuiteRerun
-          .getAndPrepareSuite(metadataDAO, Helper.getDBKeyFromRequest(request), correlationId, suiteName,
-              testName);
-      if(suite != null) {
+      objectToRunWrapper = SuiteRerun
+          .getAndPrepareObject(metadataDAO, Helper.getDBKeyFromRequest(request), correlationId, suiteName,
+              testName, urlName);
+      if(objectToRunWrapper != null) {
         try {
-          resultWrapper = suiteExecutor.executeSuite(suite);
+          resultWrapper = suiteExecutor.executeSuite(objectToRunWrapper);
           createResponse(resultWrapper, response);
         } catch (javax.jms.JMSException | ValidatorException e) {
           e.printStackTrace();

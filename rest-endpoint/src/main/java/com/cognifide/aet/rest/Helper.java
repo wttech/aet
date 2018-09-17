@@ -41,6 +41,7 @@ public final class Helper {
   public static final String ID_PARAM = "id";
   public static final String REPORT_PART_PATH_DEFAULT_PAGE = "index.html";
   public static final String TEST_RERUN_PARAM = "testName";
+  public static final String URL_RERUN_PARAM = "testUrl";
 
   private Helper() {
     //private helper constructor

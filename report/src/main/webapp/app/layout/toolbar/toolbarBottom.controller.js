@@ -18,14 +18,14 @@
 define([], function () {
   'use strict';
   return ['$scope', '$rootScope', '$uibModal', '$stateParams',
-    '$http', 'patternsService', 'metadataAccessService',
-    'notesService', 'viewModeService', 'suiteInfoService',
-    'historyService',
-    ToolbarBottomController];
+    'patternsService', 'metadataAccessService', 'notesService',
+    'viewModeService', 'suiteInfoService', 'rerunService', 'historyService',
+    ToolbarBottomController
+  ];
 
   function ToolbarBottomController($scope, $rootScope, $uibModal, $stateParams,
-      $http, patternsService, metadataAccessService, notesService,
-      viewModeService, suiteInfoService, historyService) {
+    patternsService, metadataAccessService, notesService, viewModeService,
+    suiteInfoService, rerunService, historyService) {
     var vm = this;
 
     // disables accept button if compared against another suite patterns
@@ -38,16 +38,22 @@ define([], function () {
     vm.scrollSidepanel = scrollSidepanel;
     vm.rerunSuite = rerunSuite;
     vm.rerunTest = rerunTest;
-    vm.historyService = historyService;
+    vm.rerunURL = rerunURL;
+    vm.rerunService = rerunService;
     vm.suiteInfoService = suiteInfoService;
 
+    historyService.fetchHistory(suiteInfoService.getInfo().version, function() {
+      var currentVersion = suiteInfoService.getInfo().version;
+      vm.isLastSuiteVersion = historyService.getNextVersion(currentVersion) == null;
+    });
+
     $rootScope.$on('metadata:changed', updateToolbar);
-    $scope.$watch('viewMode', function() {
-        setTimeout(function() {
-          $('[data-toggle="popover"]').not('.pre-initialized-popover').popover({
-                placement: 'bottom'
-          });
-        }, 0);
+    $scope.$watch('viewMode', function () {
+      setTimeout(function () {
+        $('[data-toggle="popover"]').not('.pre-initialized-popover').popover({
+          placement: 'bottom'
+        });
+      }, 0);
     });
 
     $('[data-toggle="popover"]').popover({
@@ -81,7 +87,7 @@ define([], function () {
       var result = false;
       if (vm.model) {
         var patternsToAcceptLeft =
-            vm.model.patternsToAccept - vm.model.acceptedPatterns;
+          vm.model.patternsToAccept - vm.model.acceptedPatterns;
         result = patternsToAcceptLeft > 0;
       }
       if (vm.usesCrossSuitePattern) {
@@ -95,8 +101,8 @@ define([], function () {
       var result = false;
       if (vm.model) {
         result =
-            vm.model.acceptedPatterns > 0 &&
-            vm.model.acceptedPatterns <= vm.model.patternsToAccept;
+          vm.model.acceptedPatterns > 0 &&
+          vm.model.acceptedPatterns <= vm.model.patternsToAccept;
       }
       if (vm.usesCrossSuitePattern) {
         result = false;
@@ -125,91 +131,46 @@ define([], function () {
     }
 
     function scrollSidepanel(findParentGroup) {
-        var $currentElement = $('a.test-name.is-active, a.test-url.is-active');
-        var $reportGroup = $currentElement.closest('.aside-report.is-visible');
-        var $parentElement = $reportGroup.find('.test-name');
+      var $currentElement = $('a.test-name.is-active, a.test-url.is-active');
+      var $reportGroup = $currentElement.closest('.aside-report.is-visible');
+      var $parentElement = $reportGroup.find('.test-name');
 
-        if (findParentGroup) {
-            $parentElement.click();
-            performScroll($parentElement);
-            $reportGroup.addClass('is-expanded');
-        } else {
-            $reportGroup.addClass('is-expanded');
-            performScroll($currentElement);
-        }
-    }
-
-    function rerunSuite() {
-        var suiteInfo = suiteInfoService.getInfo();
-        var rerunParams = "company=" + suiteInfo.company + "&" + "project=" + suiteInfo.project + "&" +
-           "suite=" + suiteInfo.name;
-        const url='http://aet-vagrant:8181/suite-rerun?' + rerunParams;
-        $http.post(url,{}).then(function successCallback(response) {
-             //ToDo
-             console.log("Suite to rerun accepted...");
-             alert("Rerun '" + vm.model.name + "' in progress...");
-             checkRerunStatus(response.data.statusUrl);
-           }, function errorCallback(response) {
-             alert(response.statusText);
-             console.log(response.statusText);
-          });
+      if (findParentGroup) {
+        $parentElement.click();
+        performScroll($parentElement);
+        $reportGroup.addClass('is-expanded');
+      } else {
+        $reportGroup.addClass('is-expanded');
+        performScroll($currentElement);
+      }
     }
 
     function rerunTest() {
-        var testName = vm.model.name;
-        if(vm.model.testGroupName){
-          testName = vm.model.testGroupName;
-        }
-        var suiteInfo = suiteInfoService.getInfo();
-
-        var rerunParams = "company=" + suiteInfo.company + "&" + "project=" + suiteInfo.project + "&" +
-           "suite=" + suiteInfo.name + "&" + "testName=" + testName;
-        const url='http://aet-vagrant:8181/suite-rerun?' + rerunParams;
-        $http.post(url,{}).then(function successCallback(response) {
-             //ToDo
-             console.log("Test to rerun accepted...");
-             alert("Rerun '" + testName + "' in progress...");
-             checkRerunStatus(response.data.statusUrl);
-           }, function errorCallback(response) {
-             alert(response.statusText);
-             console.log(response.statusText);
-          });
+      var testName = vm.model.name;
+      if (vm.model.testGroupName) {
+        testName = vm.model.testGroupName;
+      }
+      rerunService.rerunTest(testName);
     }
 
-    function checkRerunStatus(statusUrl) {
-        const url = 'http://aet-vagrant:8181' + statusUrl;
-        setTimeout(function() {
-          $http.get(url,{}).then(function successCallback(response) {
-            console.log(response.data.status);
-             if (response.data.status === "FINISHED") {
-                var suiteInfo = vm.suiteInfoService.getInfo();
-                var linkParams = "?" + "company=" + suiteInfo.company + "&" + "project=" + suiteInfo.project + "&" +
-                  "suite=" + suiteInfo.name
-                linkParams = linkParams + '#' + window.location.href.split('#')[1];
-                var linkToLatestSuite = location.protocol + '//' + location.host + location.pathname + linkParams;
-                alert("Rerun completed!");
-                if(window.location.href !== linkToLatestSuite) {
-                  window.location.assign(linkToLatestSuite);
-                } else {
-                  window.location.reload();
-                }
-                return;
-             }else if(response.data.status === "PROGRESS") {
-              alert(response.data.message)
-             } else {
-              alert("Waiting for progress...");
-             }
-             checkRerunStatus(statusUrl);
-           }, function errorCallback(response) {
-             alert(response.data.status);
-             console.log(response.data.status);
-             return;
-          });
-         }, 1000);
+    function rerunSuite() {
+      rerunService.rerunSuite();
     }
 
-    function performScroll (element) {
-        element[0].scrollIntoView({behavior: 'smooth', block: 'center', inline: 'nearest'});
+    function rerunURL(testUrl) {
+      var testName = vm.model.name;
+      if (vm.model.testGroupName) {
+        testName = vm.model.testGroupName;
+      }
+      rerunService.rerunURL(testName, testUrl);
+    }
+
+    function performScroll(element) {
+      element[0].scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+        inline: 'nearest'
+      });
     }
 
     /***************************************
@@ -246,7 +207,7 @@ define([], function () {
       var testName = $stateParams.test;
 
       vm.model = metadataAccessService.getUrl($stateParams.test,
-          $stateParams.url);
+        $stateParams.url);
       vm.model.testGroupName = metadataAccessService.getTest(testName).name;
       vm.updatePatterns = function () {
         patternsService.updateUrl($stateParams.test, $stateParams.url, true);

@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.Valid;
@@ -43,7 +44,8 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class Suite implements Serializable, Commentable, Named, Validatable {
 
-  private static final long serialVersionUID = 3602287822306302730L;
+  private static final long serialVersionUID = -3225670696134184553L;
+
   private static final Gson GSON_FOR_JSON = new GsonBuilder()
       .registerTypeHierarchyAdapter(Collection.class, new CollectionSerializer())
       .registerTypeHierarchyAdapter(Map.class, new MapSerializer())
@@ -51,10 +53,6 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
       .create();
   private static final Type SUITE_TYPE = new TypeToken<Suite>() {
   }.getType();
-
-  public boolean isRerunned() {
-    return isRerunned;
-  }
 
   public void setCorrelationId(String correlationId) {
     this.correlationId = correlationId;
@@ -88,12 +86,6 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
   private String comment;
 
   private Statistics statistics;
-
-  public void setRerunned(boolean rerunned) {
-    isRerunned = rerunned;
-  }
-
-  private boolean isRerunned = false;
 
   @NotNull
   @Valid
@@ -144,21 +136,15 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
     return tests;
   }
 
-  public Test getTest(String testName){
+  public Optional<Test> getTest(String testName){
+    Test testToReturn = null;
     for (Test test: this.tests) {
       if(test.getName().equals(testName)){
-        return test;
+        testToReturn = test;
+        break;
       }
     }
-    return null;
-  }
-
-  public void removeAllTests(){
-    tests.clear();
-  }
-
-  public void removeTest(String testName){
-    tests.remove(getTest(testName));
+    return Optional.ofNullable(testToReturn);
   }
 
   public boolean addTest(Test test) {
@@ -222,7 +208,7 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
         .toString();
   }
 
-  public void setVersion(long version) {
+  public void setVersion(Long version) {
     this.version = version;
   }
 

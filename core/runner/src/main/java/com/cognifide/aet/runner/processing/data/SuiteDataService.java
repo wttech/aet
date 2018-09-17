@@ -17,6 +17,7 @@ package com.cognifide.aet.runner.processing.data;
 
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
+import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.SimpleDBKey;
 import com.cognifide.aet.vs.StorageException;
@@ -48,11 +49,16 @@ public class SuiteDataService {
   }
 
   public Suite saveSuite(final Suite suite) throws ValidatorException, StorageException {
-    if (suite.isRerunned()) {
-      String firstTestName = suite.getTests().get(0).getName();
-      return metadataDAO.overrideOneTestInSuite(suite, firstTestName);
-    } else {
-      return metadataDAO.saveSuite(suite);
-    }
+    return metadataDAO.saveSuite(suite);
   }
+
+  public Suite replaceSuite(final Suite oldSuite, final Suite newSuite) throws StorageException {
+    metadataDAO.replaceSuite(oldSuite,newSuite);
+    return newSuite;
+  }
+
+  public Suite getSuite(DBKey dbKey, String correlationId) throws StorageException {
+    return metadataDAO.getSuite(dbKey, correlationId);
+  }
+
 }
