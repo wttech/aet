@@ -9,9 +9,9 @@ All notable changes to AET will be documented in this file.
 
 ## Unreleased
 **List of changes that are finished but not yet released in any final version.**
+- [PR-354](https://github.com/Cognifide/aet/pull/354) Remove jmsEndpointConfig information from communication settings endpoint ([#352](https://github.com/Cognifide/aet/issues/352))
 
 ## Version 3.0.0
-
 
 - [PR-328](https://github.com/Cognifide/aet/pull/328) Added suite's history
 - [PR-303](https://github.com/Cognifide/aet/pull/303) Added `exclude-elements` parameter to [ScreenCollector](https://github.com/Cognifide/aet/wiki/ScreenCollector)
@@ -35,7 +35,6 @@ All notable changes to AET will be documented in this file.
 - [PR-338](https://github.com/Cognifide/aet/pull/338) Enable creating new dbs by default
 - [PR-345](https://github.com/Cognifide/aet/pull/345) Deprecate AET maven plugin
 - [PR-301](https://github.com/Cognifide/aet/pull/301) New versions of virtualization tools used with new AET cookbook
-- [PR-354](https://github.com/Cognifide/aet/pull/354) Remove jmsEndpointConfig information from communication settings endpoint ([#352](https://github.com/Cognifide/aet/issues/352))
 
 ## Version 2.1.6
 
