@@ -37,6 +37,8 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
        code 81 - q
        code 219 - [
        code 221 - ]
+       code 65 - a
+       code 82 - r
        */
 
       var shortcuts = {
@@ -60,14 +62,16 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
         },
         '221': function () {
           scope.traverseTree('down');
-        }
+        },
+        '65': accept,
+        '82': revert
       };
 
       $(document).on('keydown', function (e) {
         if ($('body').hasClass('modal-open') || $(e.target).hasClass('search-input')) {
           return true;
         } else if (shortcuts[e.keyCode]) {
-          shortcuts[e.keyCode]();
+          shortcuts[e.keyCode](e);
         }
       });
 
@@ -85,6 +89,20 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
               $testUrlSelector);
         }
       };
+
+      function clickButton(buttonClass, event) {
+        var $tab = (event.shiftKey) ? $('.tab-content-toolbar') : $('.toolbar-bottom');
+        var $btns = $tab.find('.toolbar-btns');
+        $btns.find(buttonClass).click();
+      }
+
+      function accept(event) {
+        clickButton('.button-blue', event);
+      }
+
+      function revert(event) {
+        clickButton('.button-red', event);
+      }
 
       function goToTab(direction) {
         var $tabs = $('.test-tabs'),
@@ -251,7 +269,7 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
         var $nextTestTabs = $('.nav-tabs').children();
         $nextTestTabs.each(function() {
           if($(this).text().replace(/\s/g, '') === currentTabLabel) {
-            $(this).find('a').click(); 
+            $(this).find('a').click();
             currentTabLabel = null;
           }
         });
@@ -260,7 +278,7 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
       //MutationObserver fires a callback every time something changes on the page
       //and here it's used to click a tab before the page is actually rendered to get rid of flickering effect
       var mutationObserver = new MutationObserver(callback);
-      
+
       function callback(mutList) {
         function findElement(element) {
           if($(element.target).hasClass('nav-tabs')) {
@@ -268,7 +286,7 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
             return true;
           }
         }
-        mutList.find(findElement);     
+        mutList.find(findElement);
       }
 
       mutationObserver.observe(document, {
