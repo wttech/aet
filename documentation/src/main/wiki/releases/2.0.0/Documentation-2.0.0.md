@@ -3410,9 +3410,6 @@ It is possible to search tests and URLs by the query. Searched fields are the UR
 * use **[** / **]** to navigate between test's urls
 * press **m** to show/hide layout mask (when available)
 * press **←** / **→** to navigate between url's tabs
-* press **a** for accepting suite/test/url
-* press **r** for reverting suite/test/url
-* **shift** modifier that will define that the specific opened test case should be accepted/reverted (shift + A - accepts opened test case ; shift + R - reverts opened test case )
 
 # How It Works
 AET is distributed system that consists of modules deployed on 
