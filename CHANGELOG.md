@@ -10,6 +10,8 @@ All notable changes to AET will be documented in this file.
 ## Unreleased
 **List of changes that are finished but not yet released in any final version.**
 
+- [PR-364](https://github.com/Cognifide/aet/pull/364) Fixed bug (which appeared in 3.0.0) with missing conversion from seconds to millisecond for JMX message TTL. 
+
 ## Version 3.0.1
 
 
