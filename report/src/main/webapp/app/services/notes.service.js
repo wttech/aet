@@ -22,7 +22,7 @@ define(['angularAMD', 'metadataService'], function (angularAMD) {
   /**
    * Service responsible adding and removing notes from metadata.
    */
-  function NotesService(metadataService) {
+  function NotesService(metadataService, viewModeService) {
     var service = {
       updateNote: updateNote,
       deleteNote: deleteNote,
@@ -31,11 +31,23 @@ define(['angularAMD', 'metadataService'], function (angularAMD) {
 
     return service;
 
-    function updateNote(object, text) {
-      object.comment = text;
+    function updateNote(vm, param) {
+      if (vm.viewMode === viewModeService.COMPARATOR) {
+        updateComparatorComment(vm, param);
+      } else {
+        updateUrlComment(vm);
+      }
       updateUnsavedNotesFlag();
       metadataService.saveChangesLocally();
       metadataService.notifyMetadataChanged();
+    }
+
+    function updateUrlComment(vm) {
+      vm.model.comment = vm.noteText;
+    }
+
+    function updateComparatorComment(vm, param) {
+      metadataService.updateComment(vm, param);
     }
 
     function deleteNote(object) {
@@ -53,7 +65,7 @@ define(['angularAMD', 'metadataService'], function (angularAMD) {
     }
 
     /***************************************
-     ***********  Private methods  *********
+     ***********  Private methods  *********ó
      ***************************************/
 
     function updateUnsavedNotesFlag() {

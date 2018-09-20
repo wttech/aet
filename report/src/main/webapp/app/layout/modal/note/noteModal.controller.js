@@ -19,8 +19,9 @@ define(['angularAMD'], function (angularAMD) {
   'use strict';
   angularAMD.controller('noteModalController', NoteModalController);
 
-  function NoteModalController($scope, $uibModalInstance, model, viewMode,
-      notesService) {
+  function NoteModalController($scope, $uibModalInstance, model, viewMode, viewModeService,
+      notesService, $stateParams) {
+
     var vm = this;
     init();
 
@@ -33,12 +34,21 @@ define(['angularAMD'], function (angularAMD) {
       vm.cancelNote = cancelNote;
       vm.deleteNote = deleteNote;
       vm.viewMode = viewMode;
-      vm.noteText = model.comment ? model.comment : '';
+      vm.noteText = getComment(viewMode);
       vm.model = model;
     }
 
+    function getComment(viewMode) {
+      if (viewMode === viewModeService.COMPARATOR) {
+        return model.comparator.comment ? model.comparator.comment : '';
+      }
+      else {
+        return model.comment ? model.comment : '';
+      }
+    }
+
     function updateNote() {
-      notesService.updateNote(vm.model, vm.noteText);
+      notesService.updateNote(vm, $stateParams);
       $uibModalInstance.close();
     }
 

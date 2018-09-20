@@ -31,7 +31,9 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
               getTest: getTest,
               getUrl: getUrl,
               getStep: getStep,
+              getStepComparator: getStepComparator,
               notifyMetadataChanged: notifyMetadataChanged,
+              updateComment: updateComment,
               saveChangesLocally: saveChangesLocally,
               discardLocalChanges: discardLocalChanges,
               commitLocalChanges: commitLocalChanges
@@ -89,8 +91,36 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
           return step;
         }
 
+        function getStepByStepName(testName, urlName, stepName) {
+          var step = null;
+          var url = getUrl(testName, urlName);
+          for (var stepNr = 0; stepNr < url.steps.length; stepNr++) {
+            if (url.steps[stepNr].name === stepName) {
+              step = url.steps[stepNr];
+            }
+          }
+          return step;
+        }
+
+        function getStepComparator(testName, urlName, stepName, comparatorIndex) {
+          var step = getStepByStepName(testName, urlName, stepName);
+          var comparator = null;
+          if (step !== null && step.comparators[comparatorIndex] !== null ) {
+            comparator = step.comparators[comparatorIndex];
+          }
+          return comparator
+        }
+
         function notifyMetadataChanged() {
           $rootScope.$emit('metadata:changed');
+        }
+
+        function updateComment(vm, param) {
+          var caseName = vm.model.displayName.split(" ")[0];
+          var testName = param.test;
+          var comparatorIndex = vm.model.index;
+          var comparator = getStepComparator(testName, param.url, caseName, comparatorIndex);
+          comparator.comment = vm.noteText;
         }
 
         function saveChangesLocally() {
@@ -251,7 +281,7 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
 
         function hasStepComparatorAcceptedChanges(comparator) {
           return comparator && comparator.stepResult &&
-              comparator.stepResult.rebaseable  &&
+              comparator.stepResult.rebaseable &&
               comparator.stepResult.status === 'REBASED';
         }
 
@@ -354,4 +384,5 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
           }
         }
       }
-    });
+    }
+);
