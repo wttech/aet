@@ -71,7 +71,7 @@ define(['angularAMD', 'metadataService'], function (angularAMD) {
     }
 
     /***************************************
-     ***********  Private methods  *********ó
+     ***********  Private methods  *********
      ***************************************/
 
     function updateUnsavedNotesFlag() {
