@@ -52,7 +52,13 @@ define(['angularAMD', 'metadataService'], function (angularAMD) {
 
     function deleteNote(object) {
       var text = object.comment;
-      delete object.comment;
+      if (object.comment) {
+        text = object.comment;
+        delete object.comment;
+      } else {
+        text = object.comparator.comment;
+        delete object.comparator.comment;
+      }
       updateUnsavedNotesFlag();
       metadataService.saveChangesLocally();
       metadataService.notifyMetadataChanged();
