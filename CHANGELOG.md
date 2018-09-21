@@ -10,16 +10,7 @@ All notable changes to AET will be documented in this file.
 ## Unreleased
 **List of changes that are finished but not yet released in any final version.**
 
-- [PR-364](https://github.com/Cognifide/aet/pull/364) Fixed bug (which appeared in 3.0.0) with missing conversion from seconds to millisecond for JMX message TTL. 
-
-## Version 3.0.1
-
-
 - [PR-359](https://github.com/Cognifide/aet/pull/359) ([#351](https://github.com/Cognifide/aet/issues/351)) Disabled nu.validator language detection to fix random NPE
-
-## Version 3.0.0
-
-
 - [PR-328](https://github.com/Cognifide/aet/pull/328) Added suite's history
 - [PR-303](https://github.com/Cognifide/aet/pull/303) Added `exclude-elements` parameter to [ScreenCollector](https://github.com/Cognifide/aet/wiki/ScreenCollector)
 - [PR-327](https://github.com/Cognifide/aet/pull/327) Default web driver changed from Firefox to Chrome
