@@ -3,6 +3,9 @@ To see the full list of changes, please refer to [CHANGELOG](https://github.com/
 
 ### `master` branch version (not released yet)
 
+
+### Version 3.0.0
+
 #### Upgrade for our virtualization tool set
 
 Changes that allows us to use newer versions of VirtualBox, Vagrant and Chef for AET instance setup:
