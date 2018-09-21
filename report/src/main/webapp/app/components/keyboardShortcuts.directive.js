@@ -29,49 +29,37 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
 
     function linkFunc(scope) {
 
-      /*
-       code 37 - arrow left
-       code 39 - arrow right
-       code 69 - e
-       code 77 - m
-       code 81 - q
-       code 219 - [
-       code 221 - ]
-       code 65 - a
-       code 82 - r
-       */
-
       var shortcuts = {
-        '37': function () {
-          goToTab('prev');
-        },
-        '39': function () {
-          goToTab('next');
-        },
-        '69': function () {
-          toggleErrors();
-        },
-        '77': function () {
-          toggleMask();
-        },
-        '81': function () {
-          toggleAll();
-        },
-        '219': function () {
+        'ArrowLeft': goToTab,
+        'ArrowRight': goToTab,
+        'e': toggleErrors,
+        'm': toggleMask,
+        'q': toggleAll,
+        '[': function () {
           scope.traverseTree('up');
         },
-        '221': function () {
+        ']': function () {
           scope.traverseTree('down');
         },
-        '65': accept,
-        '82': revert
+        'a': function () {
+          clickById('#accept-test');
+        },
+        'r': function () {
+          clickById('#revert-test');
+        },
+        'A': function () {
+          clickById('#accept-test-case');
+        },
+        'R': function () {
+          clickById('#revert-test-case');
+        }
       };
 
       $(document).on('keydown', function (e) {
         if ($('body').hasClass('modal-open') || $(e.target).hasClass('search-input')) {
           return true;
-        } else if (shortcuts[e.keyCode]) {
-          shortcuts[e.keyCode](e);
+        } else if (shortcuts[e.key]) {
+          shortcuts[e.key](e);
         }
       });
 
@@ -90,25 +78,15 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
         }
       };
 
-      function clickButton(buttonClass, event) {
-        var $tab = (event.shiftKey) ? $('.tab-content-toolbar') : $('.toolbar-bottom');
-        var $btns = $tab.find('.toolbar-btns');
-        $btns.find(buttonClass).click();
+      function clickById(id) {
+        $(id).click();
       }
 
-      function accept(event) {
-        clickButton('.button-blue', event);
-      }
-
-      function revert(event) {
-        clickButton('.button-red', event);
-      }
-
-      function goToTab(direction) {
+      function goToTab(event) {
         var $tabs = $('.test-tabs'),
             $active = $tabs.find('.active');
 
-        if (direction === 'prev') {
+        if (event.key === 'ArrowLeft') {
           $active.prev().find('a').click();
         } else {
           $active.next().find('a').click();
