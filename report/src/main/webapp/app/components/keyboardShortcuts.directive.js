@@ -47,11 +47,15 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
         'r': function () {
           clickById('#revert-test');
         },
-        'A': function () {
-          clickById('#accept-test-case');
+        'A': function (event) {
+          if (!event.ctrlKey) {} {
+            clickById('#accept-test-case');
+          }
         },
-        'R': function () {
-          clickById('#revert-test-case');
+        'R': function (event) {
+          if (!event.ctrlKey) {} {
+            clickById('#revert-test-case');
+          }
         }
       };
 
