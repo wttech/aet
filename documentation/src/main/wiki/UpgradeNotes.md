@@ -7,6 +7,9 @@ You may see all changes in the [Changelog](https://github.com/Cognifide/aet/blob
 
 ## Unreleased
 
+
+## Version 3.0.0
+
 ### Users
 
 #### Suite update guide

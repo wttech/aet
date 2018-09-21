@@ -24,7 +24,7 @@
 ENV["GEM_PATH"] = nil
 ENV["GEM_HOME"] = nil
 
-AET_VERSION = '3.0.0-rc01'
+AET_VERSION = '3.0.0'
 
 VAGRANTFILE_API_VERSION = '2'
 
