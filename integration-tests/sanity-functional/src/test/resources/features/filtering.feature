@@ -43,8 +43,8 @@ Feature: Tests Results Filtering
    Scenario: Filtering Tests Results: jserrors
     Given I have opened sample tests report page
     When I search for tests containing "jserrors"
-    Then There are 14 tiles visible
-    And Statistics text contains "14 ( 6 / 0 / 8 (0) / 0 )"
+    Then There are 16 tiles visible
+    And Statistics text contains "16 ( 7 / 0 / 9 (0) / 0 )"
     
   Scenario: Filtering Tests Results: source
     Given I have opened sample tests report page
