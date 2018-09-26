@@ -71,7 +71,7 @@ public class SuiteRunIndexWrapperTest {
   public void getUrls_expectZero() {
     prepareZeroUrls();
 
-    ArrayList<MetadataRunDecorator> urlsResult = suiteRunIndexWrapper
+    ArrayList<MetadataRunDecorator<Url>> urlsResult = suiteRunIndexWrapper
         .getUrls();
     assertThat(urlsResult.size(), is(0));
   }
@@ -80,7 +80,7 @@ public class SuiteRunIndexWrapperTest {
   public void getUrls_expectThree() {
     prepareThreeUrls();
 
-    ArrayList<MetadataRunDecorator> urlsResult = suiteRunIndexWrapper
+    ArrayList<MetadataRunDecorator<Url>> urlsResult = suiteRunIndexWrapper
         .getUrls();
     assertThat(urlsResult.size(), is(3));
   }

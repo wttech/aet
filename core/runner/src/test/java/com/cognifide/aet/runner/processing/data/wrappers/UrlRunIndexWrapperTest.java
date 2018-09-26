@@ -61,7 +61,7 @@ public class UrlRunIndexWrapperTest {
     when(suite.getTest(any(String.class))).thenReturn(test);
     when(objectToRunWrapper.getObjectToRun()).thenReturn(url.get());
 
-    ArrayList<MetadataRunDecorator> urls = urlRunIndexWrapper
+    ArrayList<MetadataRunDecorator<Url>> urls = urlRunIndexWrapper
         .getUrls();
     assertThat(urls.size(), is(1));
   }

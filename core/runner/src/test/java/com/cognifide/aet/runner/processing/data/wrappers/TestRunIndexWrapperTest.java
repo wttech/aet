@@ -67,14 +67,13 @@ public class TestRunIndexWrapperTest {
   public void getUrls_expectTwo() {
     prepareTwoUrls();
 
-    ArrayList<MetadataRunDecorator> urlsResult = testRunIndexWrapper
-        .getUrls();
+    ArrayList<MetadataRunDecorator<Url>> urlsResult = testRunIndexWrapper.getUrls();
     assertThat(urlsResult.size(), is(2));
   }
 
   @Test
   public void getUrls_expectZero() {
-    ArrayList<MetadataRunDecorator> urlsResult = testRunIndexWrapper
+    ArrayList<MetadataRunDecorator<Url>> urlsResult = testRunIndexWrapper
         .getUrls();
     assertThat(urlsResult.size(), is(0));
   }
