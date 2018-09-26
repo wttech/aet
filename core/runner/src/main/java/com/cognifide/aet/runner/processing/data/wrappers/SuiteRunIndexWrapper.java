@@ -48,9 +48,7 @@ public class SuiteRunIndexWrapper extends RunIndexWrapper<Suite> {
     int quantityUrls = 0;
     Suite suite = objectToRunWrapper.getObjectToRun();
     for (Test test : suite.getTests()) {
-      for (Url url : test.getUrls()) {
-        quantityUrls++;
-      }
+      quantityUrls += test.getUrls().size();
     }
     return quantityUrls;
   }

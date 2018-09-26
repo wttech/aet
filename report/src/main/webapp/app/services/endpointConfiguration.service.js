@@ -18,21 +18,15 @@
 define(['angularAMD'], function (angularAMD) {
   'use strict';
   angularAMD.factory('endpointConfiguration', function () {
-    var domain = 'http://aet-vagrant';
     return {
       getEndpoint: function () {
         var config = {
-          //'getUrl': '/api/'
-          'getUrl': domain + '/api/'
-        };
-        return config;
-      },
-      getDomain: function () {
-        var config = {
-          'getUrl': domain
+          'getUrl': '/api/'
+          //'getUrl': 'http://aet-vagrant/api/'
         };
         return config;
       }
     };
   });
+
 });
