@@ -19,6 +19,8 @@ import java.io.Serializable;
 
 public class ProgressLog implements Serializable {
 
+  private static final long serialVersionUID = -3480689780301447508L;
+  
   private final String name;
 
   private final int receivedMessagesSuccess;
