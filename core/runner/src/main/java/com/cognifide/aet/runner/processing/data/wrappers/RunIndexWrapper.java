@@ -19,7 +19,7 @@ import com.cognifide.aet.communication.api.metadata.Test;
 import com.cognifide.aet.communication.api.metadata.Url;
 import com.cognifide.aet.communication.api.wrappers.MetadataRunDecorator;
 import com.cognifide.aet.communication.api.wrappers.Run;
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public abstract class RunIndexWrapper<T> {
@@ -61,7 +61,7 @@ public abstract class RunIndexWrapper<T> {
     return objectToRunWrapper;
   }
 
-  public abstract ArrayList<MetadataRunDecorator<Url>> getUrls();
+  public abstract List<MetadataRunDecorator<Url>> getUrls();
 
   public abstract int countUrls();
 }

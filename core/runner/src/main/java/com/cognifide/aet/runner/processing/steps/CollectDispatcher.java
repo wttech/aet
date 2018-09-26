@@ -47,11 +47,11 @@ public class CollectDispatcher extends StepManager {
 
   private final CollectorJobSchedulerService collectorJobScheduler;
 
-  private final RunIndexWrapper runIndexWrapper;
+  private final RunIndexWrapper<?> runIndexWrapper;
 
   public CollectDispatcher(TimeoutWatch timeoutWatch, JmsConnection jmsConnection,
       RunnerConfiguration runnerConfiguration,
-      CollectorJobSchedulerService collectorJobScheduler, RunIndexWrapper runIndexWrapper) throws JMSException {
+      CollectorJobSchedulerService collectorJobScheduler, RunIndexWrapper<?> runIndexWrapper) throws JMSException {
     super(timeoutWatch, jmsConnection, runIndexWrapper.get().getCorrelationId(), runnerConfiguration.getMttl());
     this.urlPackageSize = runnerConfiguration.getUrlPackageSize();
     this.collectorJobScheduler = collectorJobScheduler;
