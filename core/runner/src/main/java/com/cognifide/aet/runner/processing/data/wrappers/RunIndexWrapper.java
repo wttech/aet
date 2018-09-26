@@ -25,11 +25,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public abstract class RunIndexWrapper {
+public abstract class RunIndexWrapper<T> {
 
-  protected Run objectToRunWrapper = null;
+  protected Run<T> objectToRunWrapper = null;
 
-  RunIndexWrapper(Run objectToRunWrapper) {
+  RunIndexWrapper(Run<T> objectToRunWrapper) {
     this.objectToRunWrapper = objectToRunWrapper;
   }
 

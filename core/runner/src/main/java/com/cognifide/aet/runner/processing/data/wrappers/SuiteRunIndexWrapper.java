@@ -23,7 +23,7 @@ import com.cognifide.aet.communication.api.wrappers.Run;
 import com.cognifide.aet.communication.api.wrappers.UrlRunWrapper;
 import java.util.ArrayList;
 
-public class SuiteRunIndexWrapper extends RunIndexWrapper {
+public class SuiteRunIndexWrapper extends RunIndexWrapper<Suite> {
 
   public SuiteRunIndexWrapper(Run objectToRunWrapper) {
     super(objectToRunWrapper);
@@ -31,7 +31,7 @@ public class SuiteRunIndexWrapper extends RunIndexWrapper {
 
   @Override
   public ArrayList<MetadataRunDecorator> getUrls() {
-    Suite suite = (Suite) objectToRunWrapper.getObjectToRun();
+    Suite suite = objectToRunWrapper.getObjectToRun();
     ArrayList<MetadataRunDecorator>urls = new ArrayList<>();
     for (Test test : suite.getTests()) {
       for(Url url : test.getUrls()){
@@ -46,7 +46,7 @@ public class SuiteRunIndexWrapper extends RunIndexWrapper {
   @Override
   public int countUrls() {
     int quantityUrls = 0;
-    Suite suite = (Suite) objectToRunWrapper.getObjectToRun();
+    Suite suite = objectToRunWrapper.getObjectToRun();
     for (Test test : suite.getTests()) {
       for (Url url : test.getUrls()) {
         quantityUrls++;

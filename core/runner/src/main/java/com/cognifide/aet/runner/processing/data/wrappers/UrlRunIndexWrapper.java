@@ -23,7 +23,7 @@ import com.cognifide.aet.communication.api.wrappers.UrlRunWrapper;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class UrlRunIndexWrapper extends RunIndexWrapper {
+public class UrlRunIndexWrapper extends RunIndexWrapper<Url> {
 
   public UrlRunIndexWrapper(Run objectToRunWrapper) {
     super(objectToRunWrapper);
@@ -33,7 +33,7 @@ public class UrlRunIndexWrapper extends RunIndexWrapper {
   public ArrayList<MetadataRunDecorator> getUrls() {
     ArrayList<MetadataRunDecorator> urls = new ArrayList<>();
     Optional<Test> test = objectToRunWrapper.getRealSuite().getTest(objectToRunWrapper.getTestName());
-    Url url = (Url) objectToRunWrapper.getObjectToRun();
+    Url url = objectToRunWrapper.getObjectToRun();
     cleanUrlFromExecutionData(url);
     UrlRunWrapper urlRunWrapper = new UrlRunWrapper(url, test.get());
     urls.add(new MetadataRunDecorator(urlRunWrapper, objectToRunWrapper.getRealSuite()));
