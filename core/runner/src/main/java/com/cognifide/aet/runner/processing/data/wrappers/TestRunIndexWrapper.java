@@ -29,13 +29,13 @@ public class TestRunIndexWrapper extends RunIndexWrapper<Test> {
   }
 
   @Override
-  public ArrayList<MetadataRunDecorator> getUrls() {
-    ArrayList<MetadataRunDecorator> urls = new ArrayList<>();
+  public ArrayList<MetadataRunDecorator<Url>> getUrls() {
+    ArrayList<MetadataRunDecorator<Url>> urls = new ArrayList<>();
     Test test = objectToRunWrapper.getObjectToRun();
     for (Url url : test.getUrls()) {
       cleanUrlFromExecutionData(url);
       UrlRunWrapper urlRunWrapper = new UrlRunWrapper(url, test);
-      urls.add(new MetadataRunDecorator(urlRunWrapper, objectToRunWrapper.getRealSuite()));
+      urls.add(new MetadataRunDecorator<>(urlRunWrapper, objectToRunWrapper.getRealSuite()));
     }
     return urls;
   }

@@ -17,6 +17,7 @@ package com.cognifide.aet.runner.processing.steps;
 
 import com.cognifide.aet.communication.api.job.CollectorJobData;
 import com.cognifide.aet.communication.api.messages.ProgressLog;
+import com.cognifide.aet.communication.api.metadata.Url;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.communication.api.wrappers.MetadataRunDecorator;
 import com.cognifide.aet.communication.api.wrappers.UrlRunWrapper;
@@ -73,7 +74,7 @@ public class CollectDispatcher extends StepManager {
     Deque<MessageWithDestination> messagesQueue = Queues.newArrayDeque();
     LOGGER.info("Starting processing new Test Suite. CorrelationId: {} ", correlationId);
 
-    for (MetadataRunDecorator metadataRunDecorator : runIndexWrapper.getUrls()) {
+    for (MetadataRunDecorator<Url> metadataRunDecorator : runIndexWrapper.getUrls()) {
       UrlRunWrapper urlRunWrapper = (UrlRunWrapper) metadataRunDecorator.getRun();
       final CollectorJobData data = new CollectorJobData(metadataRunDecorator.getCompany(),
           metadataRunDecorator.getProject(), metadataRunDecorator.getName(), urlRunWrapper.getTestName(),

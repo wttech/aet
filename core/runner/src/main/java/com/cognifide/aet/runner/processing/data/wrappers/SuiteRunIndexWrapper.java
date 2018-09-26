@@ -30,14 +30,14 @@ public class SuiteRunIndexWrapper extends RunIndexWrapper<Suite> {
   }
 
   @Override
-  public ArrayList<MetadataRunDecorator> getUrls() {
+  public ArrayList<MetadataRunDecorator<Url>> getUrls() {
     Suite suite = objectToRunWrapper.getObjectToRun();
-    ArrayList<MetadataRunDecorator>urls = new ArrayList<>();
+    ArrayList<MetadataRunDecorator<Url>> urls = new ArrayList<>();
     for (Test test : suite.getTests()) {
       for(Url url : test.getUrls()){
         cleanUrlFromExecutionData(url);
         UrlRunWrapper urlRunWrapper = new UrlRunWrapper(url, test);
-        urls.add(new MetadataRunDecorator(urlRunWrapper, suite));
+        urls.add(new MetadataRunDecorator<Url>(urlRunWrapper, suite));
       }
     }
     return urls;

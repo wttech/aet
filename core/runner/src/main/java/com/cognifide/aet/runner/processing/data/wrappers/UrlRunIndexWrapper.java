@@ -30,13 +30,13 @@ public class UrlRunIndexWrapper extends RunIndexWrapper<Url> {
   }
 
   @Override
-  public ArrayList<MetadataRunDecorator> getUrls() {
-    ArrayList<MetadataRunDecorator> urls = new ArrayList<>();
+  public ArrayList<MetadataRunDecorator<Url>> getUrls() {
+    ArrayList<MetadataRunDecorator<Url>> urls = new ArrayList<>();
     Optional<Test> test = objectToRunWrapper.getRealSuite().getTest(objectToRunWrapper.getTestName());
     Url url = objectToRunWrapper.getObjectToRun();
     cleanUrlFromExecutionData(url);
     UrlRunWrapper urlRunWrapper = new UrlRunWrapper(url, test.get());
-    urls.add(new MetadataRunDecorator(urlRunWrapper, objectToRunWrapper.getRealSuite()));
+    urls.add(new MetadataRunDecorator<>(urlRunWrapper, objectToRunWrapper.getRealSuite()));
     return urls;
   }
 

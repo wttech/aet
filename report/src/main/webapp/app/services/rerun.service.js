@@ -82,6 +82,7 @@
       var rerunParams = 'company=' + suiteInfo.company + '&' + 'project=' + suiteInfo.project + '&' +
         'suite=' + suiteInfo.name + '&' + 'testUrl=' + testUrl + '&' + 'testName=' + testName;
       var url = endpointConfiguration.getEndpoint().getUrl + 'suite-rerun?' + rerunParams;
+      console.log(url);
       $http.post(url, {}).then(function successCallback(response) {
         $rootScope.rerunMsg = 'URL rerun initialized';
         $rootScope.rerunProgress = 0;
@@ -93,7 +94,8 @@
     }
 
     function checkRerunStatus(statusUrl) {
-      var url = endpointConfiguration.getDomain().getUrl + statusUrl;
+      var url = statusUrl;
+      console.log(url);
       setTimeout(function () {
         $http.get(url, {}).then(function successCallback(response) {
           if (response.data.status === 'FINISHED') {
