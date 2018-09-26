@@ -15,8 +15,8 @@
  */
 package com.cognifide.aet.executor;
 
-import static com.cognifide.aet.rest.BasicDataServlet.isValidCorrelationId;
-import static com.cognifide.aet.rest.BasicDataServlet.isValidName;
+import static com.cognifide.aet.rest.Helper.isValidCorrelationId;
+import static com.cognifide.aet.rest.Helper.isValidName;
 
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.Suite.Timestamp;
