@@ -21,6 +21,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
 
 public class Comparator extends Operation implements Commentable, Named {
 
@@ -50,7 +51,7 @@ public class Comparator extends Operation implements Commentable, Named {
 
   public List<Operation> getFilters() {
     if(filters == null){
-      return new ArrayList<>();
+      return Collections.emptyList();
     }
     return ImmutableList.copyOf(filters);
   }
