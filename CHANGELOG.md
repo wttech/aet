@@ -32,6 +32,7 @@ All notable changes to AET will be documented in this file.
 - [PR-338](https://github.com/Cognifide/aet/pull/338) Enable creating new dbs by default
 - [PR-345](https://github.com/Cognifide/aet/pull/345) Deprecate AET maven plugin
 - [PR-301](https://github.com/Cognifide/aet/pull/301) New versions of virtualization tools used with new AET cookbook
+- [PR-376](https://github.com/Cognifide/aet/pull/376) Added .htaccess file to prevent directory listing ([#152](https://github.com/Cognifide/aet/issues/152))
 
 ## Version 2.1.6
 
