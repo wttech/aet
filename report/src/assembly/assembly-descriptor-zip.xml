@@ -42,6 +42,7 @@
 				<include>app/**</include>
 				<include>assets/**</include>
 				<include>html/index.html</include>
+				<include>.htaccess</include>
 			</includes>
 		</fileSet>
 	</fileSets>
