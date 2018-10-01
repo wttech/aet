@@ -24,7 +24,7 @@ import java.util.ArrayList;
 
 public class TestRunIndexWrapper extends RunIndexWrapper<Test> {
 
-  public TestRunIndexWrapper(Run objectToRunWrapper) {
+  public TestRunIndexWrapper(Run<Test> objectToRunWrapper) {
     super(objectToRunWrapper);
   }
 
@@ -42,7 +42,7 @@ public class TestRunIndexWrapper extends RunIndexWrapper<Test> {
 
   @Override
   public int countUrls() {
-    Test test = (Test) objectToRunWrapper.getObjectToRun();
+    Test test = objectToRunWrapper.getObjectToRun();
     return test.getUrls().size();
   }
 

@@ -24,9 +24,9 @@ import java.util.Optional;
 
 public abstract class RunIndexWrapper<T> {
 
-  protected Run<T> objectToRunWrapper = null;
+  protected Run<T> objectToRunWrapper;
 
-  RunIndexWrapper(Run objectToRunWrapper) {
+  RunIndexWrapper(Run<T> objectToRunWrapper) {
     this.objectToRunWrapper = objectToRunWrapper;
   }
 
@@ -57,7 +57,7 @@ public abstract class RunIndexWrapper<T> {
     return objectToRunWrapper.getRealSuite().getTest(testName);
   }
 
-  public Run get() {
+  public Run<T> get() {
     return objectToRunWrapper;
   }
 

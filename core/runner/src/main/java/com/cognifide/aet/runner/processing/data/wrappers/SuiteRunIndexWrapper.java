@@ -25,7 +25,7 @@ import java.util.ArrayList;
 
 public class SuiteRunIndexWrapper extends RunIndexWrapper<Suite> {
 
-  public SuiteRunIndexWrapper(Run objectToRunWrapper) {
+  public SuiteRunIndexWrapper(Run<Suite> objectToRunWrapper) {
     super(objectToRunWrapper);
   }
 
@@ -37,7 +37,7 @@ public class SuiteRunIndexWrapper extends RunIndexWrapper<Suite> {
       for(Url url : test.getUrls()){
         cleanUrlFromExecutionData(url);
         UrlRunWrapper urlRunWrapper = new UrlRunWrapper(url, test);
-        urls.add(new MetadataRunDecorator<Url>(urlRunWrapper, suite));
+        urls.add(new MetadataRunDecorator<>(urlRunWrapper, suite));
       }
     }
     return urls;
