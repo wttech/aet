@@ -32,6 +32,7 @@ define([], function () {
     if (suiteInfoService.getInfo().patternCorrelationId) {
       vm.usesCrossSuitePattern = true;
     }
+
     vm.showAcceptButton = patternsMayBeUpdated;
     vm.showRevertButton = patternsMarkedForUpdateMayBeReverted;
     vm.displayCommentModal = displayCommentModal;
@@ -41,6 +42,7 @@ define([], function () {
     vm.rerunURL = rerunURL;
     vm.rerunService = rerunService;
     vm.suiteInfoService = suiteInfoService;
+    vm.checkRerunStatus = rerunService.checkRerunStatus;
 
     historyService.fetchHistory(suiteInfoService.getInfo().version, function() {
       var currentVersion = suiteInfoService.getInfo().version;
@@ -177,6 +179,9 @@ define([], function () {
      ***********  SUITE VIEW PART  *********
      ***************************************/
     function setupSuiteToolbarModel() {
+      if (localStorage.getItem('currentRerunEndpointUrl')) {
+        vm.checkRerunStatus(localStorage.getItem('currentRerunEndpointUrl'));
+      }
       vm.model = metadataAccessService.getSuite();
       vm.updatePatterns = function () {
         patternsService.updateSuite();
@@ -190,6 +195,9 @@ define([], function () {
      ***********  TEST VIEW PART  *********
      ***************************************/
     function setupTestToolbarModel() {
+      if (localStorage.getItem('currentRerunEndpointUrl')) {
+        vm.checkRerunStatus(localStorage.getItem('currentRerunEndpointUrl'));
+      }
       var testName = $stateParams.test;
       vm.model = metadataAccessService.getTest(testName);
       vm.updatePatterns = function () {
@@ -204,8 +212,10 @@ define([], function () {
      ***********  URL VIEW PART  *********
      ***************************************/
     function setupUrlToolbarModel() {
+      if (localStorage.getItem('currentRerunEndpointUrl')) {
+        vm.checkRerunStatus(localStorage.getItem('currentRerunEndpointUrl'));
+      }
       var testName = $stateParams.test;
-
       vm.model = metadataAccessService.getUrl($stateParams.test,
         $stateParams.url);
       vm.model.testGroupName = metadataAccessService.getTest(testName).name;
