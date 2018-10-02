@@ -32,6 +32,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.Valid;
@@ -43,7 +44,8 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class Suite implements Serializable, Commentable, Named, Validatable {
 
-  private static final long serialVersionUID = 3602287822306302730L;
+  private static final long serialVersionUID = -3225670696134184553L;
+
   private static final Gson GSON_FOR_JSON = new GsonBuilder()
       .registerTypeHierarchyAdapter(Collection.class, new CollectionSerializer())
       .registerTypeHierarchyAdapter(Map.class, new MapSerializer())
@@ -52,8 +54,12 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
   private static final Type SUITE_TYPE = new TypeToken<Suite>() {
   }.getType();
 
+  public void setCorrelationId(String correlationId) {
+    this.correlationId = correlationId;
+  }
+
   @NotBlank
-  private final String correlationId;
+  private String correlationId;
 
   @NotBlank
   @Size(max = 30)
@@ -130,6 +136,17 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
     return tests;
   }
 
+  public Optional<Test> getTest(String testName){
+    Test testToReturn = null;
+    for (Test test: this.tests) {
+      if(test.getName().equals(testName)){
+        testToReturn = test;
+        break;
+      }
+    }
+    return Optional.ofNullable(testToReturn);
+  }
+
   public boolean addTest(Test test) {
     return tests.add(test);
   }
@@ -191,7 +208,7 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
         .toString();
   }
 
-  public void setVersion(long version) {
+  public void setVersion(Long version) {
     this.version = version;
   }
 

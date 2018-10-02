@@ -18,6 +18,7 @@ package com.cognifide.aet.communication.api.metadata;
 import com.google.common.base.MoreObjects;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -25,7 +26,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class Test implements Serializable, Commentable, Named {
 
-  private static final long serialVersionUID = -220660503633061510L;
+  private static final long serialVersionUID = 6761670624207862805L;
 
   @NotBlank
   private final String name;
@@ -38,7 +39,7 @@ public class Test implements Serializable, Commentable, Named {
 
   @Valid
   @NotNull(message = "Test must have at least one url")
-  private final Set<Url> urls = new HashSet<>();
+  private Set<Url> urls = new HashSet<>();
 
   /**
    * @param name - name of a test
@@ -114,5 +115,26 @@ public class Test implements Serializable, Commentable, Named {
     return MoreObjects.toStringHelper(this)
         .add("name", name)
         .toString();
+  }
+
+  public Optional<Url> getUrl(String urlName) {
+    Url urlToReturn = null;
+    for (Url url: this.urls) {
+      if(url.getName().equals(urlName)){
+        urlToReturn = url;
+        break;
+      }
+    }
+    return Optional.ofNullable(urlToReturn);
+  }
+
+  public void setUrls(Set<Url> urls) {
+    this.urls = urls;
+  }
+
+  public void setRerunUrls() {
+    for (Url url: this.urls) {
+      url.setReran();
+    }
   }
 }

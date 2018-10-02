@@ -13,10 +13,14 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.runner.processing;
+package com.cognifide.aet.communication.api.messages;
 
-public class ProgressLog {
+import java.io.Serializable;
 
+public class ProgressLog implements Serializable {
+
+  private static final long serialVersionUID = -3480689780301447508L;
+  
   private final String name;
 
   private final int receivedMessagesSuccess;

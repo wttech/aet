@@ -15,6 +15,8 @@
  */
 package com.cognifide.aet.rest;
 
+import static com.cognifide.aet.rest.Helper.responseAsJson;
+
 import com.cognifide.aet.vs.Artifact;
 import com.cognifide.aet.vs.ArtifactsDAO;
 import com.cognifide.aet.vs.DBKey;
@@ -58,7 +60,7 @@ public class ArtifactServlet extends BasicDataServlet {
       resp.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
       resp.setContentType("application/json");
       resp.getWriter().write(
-          responseAsJson("Unable to get artifact with id : %s form %s", id, dbKey.toString()));
+          responseAsJson(GSON, "Unable to get artifact with id : %s form %s", id, dbKey.toString()));
     }
   }
 

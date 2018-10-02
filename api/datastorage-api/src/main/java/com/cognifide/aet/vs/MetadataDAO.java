@@ -64,6 +64,13 @@ public interface MetadataDAO extends Serializable {
   Suite getLatestRun(DBKey dbKey, String name) throws StorageException;
 
   /**
+   * @param oldSuite - Suite to replace in DB
+   * @param newSuite - New suite which will be replace oldSuite
+   * @return New Suite
+   */
+  Suite replaceSuite(Suite oldSuite, Suite newSuite) throws StorageException;
+
+  /**
    * @param dbKey - key with project and company name
    * @return List of suites that were found in database.
    */
