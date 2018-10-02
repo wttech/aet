@@ -55,7 +55,7 @@ public class NuValidatorWrapper {
   private void setupAndValidate(InputStream sourceStream) throws ProcessingException {
     System.setProperty("nu.validator.datatype.warn", "true");
     out = new ByteArrayOutputStream();
-    validator = new SimpleDocumentValidator();
+    validator = createValidatorWithDisabledLanguageDetection();
     try {
       setup();
       validator.checkHtmlInputSource(new InputSource(sourceStream));
@@ -63,6 +63,13 @@ public class NuValidatorWrapper {
     } catch (SAXException | IOException e) {
       throw new ProcessingException(e.getMessage(), e);
     }
+  }
+
+  private SimpleDocumentValidator createValidatorWithDisabledLanguageDetection() {
+    boolean initializeLog4j = true;
+    boolean logUrls = true;
+    boolean enableLanguageDetection = false;
+    return new SimpleDocumentValidator(initializeLog4j, logUrls, enableLanguageDetection);
   }
 
   private void setup() throws ProcessingException, SAXException {
