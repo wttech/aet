@@ -46,7 +46,7 @@ import org.slf4j.LoggerFactory;
 @Component(immediate = true)
 public class MetadataDAOMongoDBImpl implements MetadataDAO {
 
-  private static final long serialVersionUID = 3031952772776598636L;
+  private static final long serialVersionUID = -6059718886350668134L;
 
   private static final Logger LOGGER = LoggerFactory.getLogger(MetadataDAOMongoDBImpl.class);
 

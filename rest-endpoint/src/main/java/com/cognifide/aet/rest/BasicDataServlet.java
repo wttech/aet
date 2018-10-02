@@ -15,9 +15,9 @@
  */
 package com.cognifide.aet.rest;
 
-import com.cognifide.aet.communication.api.metadata.Suite;
+import static com.cognifide.aet.rest.Helper.responseAsJson;
+
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
-import com.cognifide.aet.communication.api.util.ValidatorProvider;
 import com.cognifide.aet.vs.DBKey;
 import com.google.gson.Gson;
 import java.io.IOException;
@@ -82,10 +82,6 @@ public abstract class BasicDataServlet extends HttpServlet {
     setHttpService(null);
   }
 
-  public static boolean isValidName(String suiteName) {
-    return ValidatorProvider.getValidator().validateValue(Suite.class, "name", suiteName).isEmpty();
-  }
-
   boolean isValidVersion(String version) {
     boolean valid = false;
     if (version != null) {
@@ -99,33 +95,11 @@ public abstract class BasicDataServlet extends HttpServlet {
     return valid;
   }
 
-  public static boolean isValidCorrelationId(String correlationId) {
-    return ValidatorProvider.getValidator()
-        .validateValue(Suite.class, "correlationId", correlationId).isEmpty();
-  }
-
   protected abstract void process(DBKey dbKey, HttpServletRequest req, HttpServletResponse resp)
       throws IOException;
-
-  public static String responseAsJson(Gson GSON, String format, Object... args) {
-    return GSON.toJson(new ErrorMessage(format, args));
-  }
 
   protected abstract HttpService getHttpService();
 
   protected abstract void setHttpService(HttpService httpService);
-
-  private static class ErrorMessage {
-
-    private final String message;
-
-    ErrorMessage(String format, Object... args) {
-      message = String.format(format, args);
-    }
-
-    public String getMessage() {
-      return message;
-    }
-  }
 
 }

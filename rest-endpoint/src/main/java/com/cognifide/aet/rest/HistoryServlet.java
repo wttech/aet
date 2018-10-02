@@ -15,6 +15,9 @@
  */
 package com.cognifide.aet.rest;
 
+import static com.cognifide.aet.rest.Helper.isValidName;
+import static com.cognifide.aet.rest.Helper.responseAsJson;
+
 import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.StorageException;

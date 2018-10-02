@@ -43,7 +43,7 @@ This endpoint returns JSON object with following fields:
 
 ###### Request
 
-* **URL**: `/suite-rerun`
+* **URL**: `/api/suite-rerun`
 * **HTTP Method**: POST
 * **Parameters**:
     * `correlationId` - Correlation ID of the suite to rerun, used to get it from the database

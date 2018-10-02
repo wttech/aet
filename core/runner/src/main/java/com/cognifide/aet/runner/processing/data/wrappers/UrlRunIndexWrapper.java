@@ -23,20 +23,23 @@ import com.cognifide.aet.communication.api.wrappers.UrlRunWrapper;
 import java.util.ArrayList;
 import java.util.Optional;
 
-public class UrlRunIndexWrapper extends RunIndexWrapper {
+public class UrlRunIndexWrapper extends RunIndexWrapper<Url> {
 
-  public UrlRunIndexWrapper(Run objectToRunWrapper) {
+  public UrlRunIndexWrapper(Run<Url> objectToRunWrapper) {
     super(objectToRunWrapper);
   }
 
   @Override
-  public ArrayList<MetadataRunDecorator> getUrls() {
-    ArrayList<MetadataRunDecorator> urls = new ArrayList<>();
-    Optional<Test> test = objectToRunWrapper.getRealSuite().getTest(objectToRunWrapper.getTestName());
-    Url url = (Url) objectToRunWrapper.getObjectToRun();
-    cleanUrlFromExecutionData(url);
-    UrlRunWrapper urlRunWrapper = new UrlRunWrapper(url, test.get());
-    urls.add(new MetadataRunDecorator(urlRunWrapper, objectToRunWrapper.getRealSuite()));
+  public ArrayList<MetadataRunDecorator<Url>> getUrls() {
+    ArrayList<MetadataRunDecorator<Url>> urls = new ArrayList<>();
+    Optional<Test> test = objectToRunWrapper.getRealSuite()
+        .getTest(objectToRunWrapper.getTestName());
+    if (test.isPresent()) {
+      Url url = objectToRunWrapper.getObjectToRun();
+      cleanUrlFromExecutionData(url);
+      UrlRunWrapper urlRunWrapper = new UrlRunWrapper(url, test.get());
+      urls.add(new MetadataRunDecorator<>(urlRunWrapper, objectToRunWrapper.getRealSuite()));
+    }
     return urls;
   }
 

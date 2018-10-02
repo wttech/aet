@@ -20,6 +20,7 @@ import com.cognifide.aet.communication.api.wrappers.Run;
 
 public class RunIndexWrapperFactory {
 
+  @SuppressWarnings("unchecked")
   public static RunIndexWrapper createInstance(Run objectToRunWrapper) {
     if(objectToRunWrapper.getType() == RunType.SUITE){
       return new SuiteRunIndexWrapper(objectToRunWrapper);

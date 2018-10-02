@@ -43,7 +43,7 @@ import org.slf4j.LoggerFactory;
 public class SuiteRerunServlet extends HttpServlet {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SuiteRerunServlet.class);
-  private static final String SERVLET_PATH = "/api/suite-rerun";
+  private static final String SERVLET_PATH = Helper.getRerunPath();
   private static final long serialVersionUID = -2644460433789203661L;
 
   @Reference

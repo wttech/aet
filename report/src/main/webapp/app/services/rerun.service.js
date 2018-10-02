@@ -29,6 +29,7 @@
       rerunSuite: rerunSuite,
       rerunTest: rerunTest,
       rerunURL: rerunURL,
+      checkRerunStatus: checkRerunStatus,
     };
 
     return service;
@@ -52,6 +53,7 @@
       $http.post(url, {}).then(function successCallback(response) {
         $rootScope.rerunMsg = 'Suite rerun initialized';
         $rootScope.rerunInProgressSuccessful = true;
+        localStorage.setItem('currentRerunEndpointUrl', response.data.statusUrl);
         $rootScope.rerunProgress = 0;
         checkRerunStatus(response.data.statusUrl);
       }, function errorCallback(response) {
@@ -65,11 +67,11 @@
       var rerunParams = 'company=' + suiteInfo.company + '&' + 'project=' + suiteInfo.project + '&' +
         'suite=' + suiteInfo.name + '&' + 'testName=' + testName;
       var url = endpointConfiguration.getEndpoint().getUrl + 'suite-rerun?' + rerunParams;
-      console.log(url);
       $http.post(url, {}).then(function successCallback(response) {
         $rootScope.rerunMsg = 'Test rerun initialized';
         $rootScope.rerunProgress = 0;
         $rootScope.rerunInProgressSuccessful = true;
+        localStorage.setItem('currentRerunEndpointUrl', response.data.statusUrl);
         checkRerunStatus(response.data.statusUrl);
       }, function errorCallback(response) {
         $rootScope.rerunMsg = response.statusText;
@@ -86,6 +88,7 @@
         $rootScope.rerunMsg = 'URL rerun initialized';
         $rootScope.rerunProgress = 0;
         $rootScope.rerunInProgressSuccessful = true;
+        localStorage.setItem('currentRerunEndpointUrl', response.data.statusUrl);
         checkRerunStatus(response.data.statusUrl);
       }, function errorCallback(response) {
         $rootScope.rerunMsg = response.statusText;
@@ -93,7 +96,8 @@
     }
 
     function checkRerunStatus(statusUrl) {
-      var url = endpointConfiguration.getDomain().getUrl + statusUrl;
+      $rootScope.rerunInProgress = true;
+      var url = statusUrl;
       setTimeout(function () {
         $http.get(url, {}).then(function successCallback(response) {
           if (response.data.status === 'FINISHED') {
@@ -104,6 +108,7 @@
             var linkToLatestSuite = location.protocol + '//' + location.host + location.pathname + linkParams;
             $rootScope.rerunMsg = 'Rerun completed. Page will now refresh.';
             $rootScope.rerunProgress = 100;
+            localStorage.removeItem('currentRerunEndpointUrl');
             if (window.location.href !== linkToLatestSuite) {
               window.location.assign(linkToLatestSuite);
             } else {
@@ -111,6 +116,7 @@
             }
             return;
           } else if (response.data.status === 'PROGRESS') {
+            $rootScope.rerunInProgressSuccessful = true;
             var totalTests = response.data.progressLog.collectLog.toReceiveMessages;
             var completedTests = response.data.progressLog.collectLog.receivedMessagesSuccess;
             $rootScope.rerunProgress = ((completedTests / totalTests) * 90);

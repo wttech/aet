@@ -15,9 +15,12 @@
  */
 package com.cognifide.aet.rest;
 
+import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
+import com.cognifide.aet.communication.api.util.ValidatorProvider;
 import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.SimpleDBKey;
+import com.google.gson.Gson;
 import javax.servlet.http.HttpServletRequest;
 
 public final class Helper {
@@ -25,7 +28,7 @@ public final class Helper {
   static final String REST_PREFIX = "/api";
   static final String ARTIFACT_PART_PATH = "artifact";
   static final String METADATA_PART_PATH = "metadata";
-  static final String RERUN_PART_PATH = "rerun";
+  static final String RERUN_PART_PATH = "suite-rerun";
   static final String HISTORY_PART_PATH = "history";
   static final String REPORT_PART_PATH = "/report";
   static final String CONFIGS_PART_PATH = "/configs";
@@ -89,5 +92,31 @@ public final class Helper {
     SimpleDBKey dbKey = new SimpleDBKey(company, project);
     dbKey.validate(null);
     return dbKey;
+  }
+
+  public static boolean isValidName(String suiteName) {
+    return ValidatorProvider.getValidator().validateValue(Suite.class, "name", suiteName).isEmpty();
+  }
+
+  public static boolean isValidCorrelationId(String correlationId) {
+    return ValidatorProvider.getValidator()
+        .validateValue(Suite.class, "correlationId", correlationId).isEmpty();
+  }
+
+  public static String responseAsJson(Gson GSON, String format, Object... args) {
+    return GSON.toJson(new ErrorMessage(format, args));
+  }
+
+  private static class ErrorMessage {
+
+    private final String message;
+
+    ErrorMessage(String format, Object... args) {
+      message = String.format(format, args);
+    }
+
+    public String getMessage() {
+      return message;
+    }
   }
 }

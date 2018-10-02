@@ -22,27 +22,27 @@ import com.cognifide.aet.communication.api.wrappers.Run;
 import com.cognifide.aet.communication.api.wrappers.UrlRunWrapper;
 import java.util.ArrayList;
 
-public class TestRunIndexWrapper extends RunIndexWrapper {
+public class TestRunIndexWrapper extends RunIndexWrapper<Test> {
 
-  public TestRunIndexWrapper(Run objectToRunWrapper) {
+  public TestRunIndexWrapper(Run<Test> objectToRunWrapper) {
     super(objectToRunWrapper);
   }
 
   @Override
-  public ArrayList<MetadataRunDecorator> getUrls() {
-    ArrayList<MetadataRunDecorator> urls = new ArrayList<>();
-    Test test = (Test) objectToRunWrapper.getObjectToRun();
+  public ArrayList<MetadataRunDecorator<Url>> getUrls() {
+    ArrayList<MetadataRunDecorator<Url>> urls = new ArrayList<>();
+    Test test = objectToRunWrapper.getObjectToRun();
     for (Url url : test.getUrls()) {
       cleanUrlFromExecutionData(url);
       UrlRunWrapper urlRunWrapper = new UrlRunWrapper(url, test);
-      urls.add(new MetadataRunDecorator(urlRunWrapper, objectToRunWrapper.getRealSuite()));
+      urls.add(new MetadataRunDecorator<>(urlRunWrapper, objectToRunWrapper.getRealSuite()));
     }
     return urls;
   }
 
   @Override
   public int countUrls() {
-    Test test = (Test) objectToRunWrapper.getObjectToRun();
+    Test test = objectToRunWrapper.getObjectToRun();
     return test.getUrls().size();
   }
 

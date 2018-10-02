@@ -15,6 +15,8 @@
  */
 package com.cognifide.aet.rest;
 
+import static com.cognifide.aet.rest.Helper.responseAsJson;
+
 import com.cognifide.aet.vs.Artifact;
 import com.cognifide.aet.vs.ArtifactsDAO;
 import com.cognifide.aet.vs.DBKey;

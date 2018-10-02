@@ -17,6 +17,7 @@ package com.cognifide.aet.runner.processing.steps;
 
 import com.cognifide.aet.communication.api.job.CollectorJobData;
 import com.cognifide.aet.communication.api.messages.ProgressLog;
+import com.cognifide.aet.communication.api.metadata.Url;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.communication.api.wrappers.MetadataRunDecorator;
 import com.cognifide.aet.communication.api.wrappers.UrlRunWrapper;
@@ -46,11 +47,11 @@ public class CollectDispatcher extends StepManager {
 
   private final CollectorJobSchedulerService collectorJobScheduler;
 
-  private final RunIndexWrapper runIndexWrapper;
+  private final RunIndexWrapper<?> runIndexWrapper;
 
   public CollectDispatcher(TimeoutWatch timeoutWatch, JmsConnection jmsConnection,
       RunnerConfiguration runnerConfiguration,
-      CollectorJobSchedulerService collectorJobScheduler, RunIndexWrapper runIndexWrapper) throws JMSException {
+      CollectorJobSchedulerService collectorJobScheduler, RunIndexWrapper<?> runIndexWrapper) throws JMSException {
     super(timeoutWatch, jmsConnection, runIndexWrapper.get().getCorrelationId(), runnerConfiguration.getMttl());
     this.urlPackageSize = runnerConfiguration.getUrlPackageSize();
     this.collectorJobScheduler = collectorJobScheduler;
@@ -73,7 +74,7 @@ public class CollectDispatcher extends StepManager {
     Deque<MessageWithDestination> messagesQueue = Queues.newArrayDeque();
     LOGGER.info("Starting processing new Test Suite. CorrelationId: {} ", correlationId);
 
-    for (MetadataRunDecorator metadataRunDecorator : runIndexWrapper.getUrls()) {
+    for (MetadataRunDecorator<Url> metadataRunDecorator : runIndexWrapper.getUrls()) {
       UrlRunWrapper urlRunWrapper = (UrlRunWrapper) metadataRunDecorator.getRun();
       final CollectorJobData data = new CollectorJobData(metadataRunDecorator.getCompany(),
           metadataRunDecorator.getProject(), metadataRunDecorator.getName(), urlRunWrapper.getTestName(),

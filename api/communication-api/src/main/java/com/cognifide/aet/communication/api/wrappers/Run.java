@@ -27,9 +27,11 @@ public interface Run<T> extends Serializable {
 
   void setObjectToRun(T object);
 
-  default void setRealSuite(Suite suite){}
+  default void setRealSuite(Suite suite) {}
 
-  default Suite getRealSuite() { return null; }
+  default Suite getRealSuite() {
+    return null;
+  }
 
   default String getCorrelationId() {
     return null;
@@ -51,5 +53,7 @@ public interface Run<T> extends Serializable {
     return null;
   }
 
-  default String getTestName(){return null;}
+  default String getTestName() {
+    return null;
+  }
 }

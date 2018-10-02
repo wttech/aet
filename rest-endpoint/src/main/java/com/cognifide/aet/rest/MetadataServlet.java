@@ -15,6 +15,10 @@
  */
 package com.cognifide.aet.rest;
 
+import static com.cognifide.aet.rest.Helper.isValidCorrelationId;
+import static com.cognifide.aet.rest.Helper.isValidName;
+import static com.cognifide.aet.rest.Helper.responseAsJson;
+
 import com.cognifide.aet.communication.api.exceptions.AETException;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
