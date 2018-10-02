@@ -77,9 +77,7 @@ public class GetMetadataArtifactsProcessor implements Processor {
     ReferencedArtifactsMessageBody body = new ReferencedArtifactsMessageBody(
         messageBody.getData().getName(),
         messageBody.getDbKey());
-    if (messageBody.shouldBeRemoved()) {
-      body.setArtifactsToRemove(metatadaArtifacts);
-    } else {
+    if (messageBody.shouldBeKept()) {
       body.setArtifactsToKeep(metatadaArtifacts);
     }
 
