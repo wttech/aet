@@ -70,15 +70,18 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
     this.artifactsDAO = artifactsDAO;
   }
 
-  private List<ExcludedElement> getExcludeElementsFromWebElements(
-      List<WebElement> webElements) {
+  private List<ExcludedElement> getExcludeElementsFromWebElements(List<WebElement> webElements) {
     List<ExcludedElement> excludeExcludedElements = new ArrayList<>(webElements.size());
+
+    Point screenshotOffset = isSelectorPresent() ?
+        webDriver.findElement(getLocator()).getLocation() : new Point(0, 0);
     for (WebElement webElement : webElements) {
-      java.awt.Point point = new java.awt.Point(webElement.getLocation().x,
-          webElement.getLocation().y);
-      java.awt.Dimension dimension = new java.awt.Dimension(webElement.getSize().width,
-          webElement.getSize().height);
-      excludeExcludedElements.add(new ExcludedElement(point, dimension));
+      Point point = webElement.getLocation()
+          .moveBy(-screenshotOffset.getX(), -screenshotOffset.getY());
+
+      excludeExcludedElements.add(new ExcludedElement(
+          new java.awt.Point(point.getX(), point.getY()),
+          new java.awt.Dimension(webElement.getSize().width, webElement.getSize().height)));
     }
     return excludeExcludedElements;
   }
