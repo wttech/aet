@@ -17,11 +17,34 @@
     limitations under the License.
 
 --%>
+
+<%--
+    This page simulates a page that takes a long time to load.
+    The final height of the page is above 30k pixels.
+--%>
+
+<script>
+window.onload = function () {
+  var counter = 0;
+  var looper = setInterval(function() {
+      counter++;
+      console.log("Counter is: " + counter);
+
+      var emptyDiv = document.createElement("div");
+      emptyDiv.style = "height: 1000px";
+
+      var src = document.getElementById("enclosingDiv");
+      src.appendChild(emptyDiv);
+
+      if (counter >= 30) {
+          clearInterval(looper);
+      }
+  }, 100);
+};
+</script>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ include file="/includes/header.jsp" %>
-<c:forEach begin="1" end="60" varStatus="loop">
-  <div class="sponsor" style="height: 500px">
-    <img src="/sample-site/assets/demo_files/logo.png" alt="Bootswatch" />
-  </div>
-</c:forEach>
+<div id="enclosingDiv"></div>
 <%@ include file="dynamic_content.jsp" %>
+
