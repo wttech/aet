@@ -479,6 +479,8 @@
 		<collect>
 			<open/>
 			<resolution width="767"/>
+			<!--ToDo: Remove resolution-sleep-resolution workaround after issue #357 is fixed.
+			(https://github.com/Cognifide/aet/issues/357)-->
 			<sleep duration="2000"/>
 			<resolution width="767"/>
 			<screen css=".dynamic2"/>
@@ -495,6 +497,8 @@
 		<collect>
 			<open/>
 			<resolution width="767"/>
+			<!--ToDo: Remove resolution-sleep-resolution workaround after issue #357 is fixed.
+			(https://github.com/Cognifide/aet/issues/357)-->
 			<sleep duration="2000"/>
 			<resolution width="767"/>
 			<screen exclude-elements=".dynamic1,.dynamic2"/>
