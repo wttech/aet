@@ -1,6 +1,5 @@
 
 The following plugin updates are available:
-  org.apache.felix:maven-bundle-plugin ............... 3.5.1 -> 4.0.0
   com.github.ekryd.sortpom:sortpom-maven-plugin ..... 2.8.0 -> 2.10.0
   org.eclipse.jetty:jetty-maven-plugin  9.2.10.v20150310 -> 9.4.12.v20180830
 
