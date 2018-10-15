@@ -35,7 +35,7 @@ class ParametersParser {
   private String jsCommand = BOTTOM;
 
   void setParameters(Map<String, String> parameters) throws ParametersException {
-    jsCommand = getOptionalCommandFromParams(parameters)
+    jsCommand = getOptionalSnippetFromParams(parameters)
         .orElse(BOTTOM);
   }
 
@@ -43,7 +43,7 @@ class ParametersParser {
     return jsCommand;
   }
 
-  private Optional<String> getOptionalCommandFromParams(Map<String, String> parameters)
+  private Optional<String> getOptionalSnippetFromParams(Map<String, String> parameters)
       throws ParametersException {
 
     if (parameters.keySet().size() > 1) {
@@ -51,7 +51,7 @@ class ParametersParser {
           + "position (top/bottom), css, xpath");
     }
 
-    Optional<String> specificPosition = getSpecificPositionCmd(parameters);
+    Optional<String> specificPosition = getSpecificPositionSnippet(parameters);
 
     Optional<String> css = Optional.ofNullable(parameters.get(CSS_PARAM_NAME))
         .map(selector -> String.format(CSS, selector));
@@ -64,30 +64,30 @@ class ParametersParser {
             : xpath;
   }
 
-  private Optional<String> getSpecificPositionCmd(Map<String, String> parameters)
+  private Optional<String> getSpecificPositionSnippet(Map<String, String> parameters)
       throws ParametersException {
 
     String positionParamValue = parameters.get(POSITION_PARAM_NAME);
-    String cmd = null;
+    String snippet = null;
     if (StringUtils.isNotBlank(positionParamValue)) {
-      cmd = getTopBottomPosition(positionParamValue);
+      snippet = getTopBottomPositionSnippet(positionParamValue);
     }
-    return Optional.ofNullable(cmd);
+    return Optional.ofNullable(snippet);
   }
 
-  private String getTopBottomPosition(String position) throws ParametersException {
-    String cmd;
+  private String getTopBottomPositionSnippet(String position) throws ParametersException {
+    String snippet;
     switch (position.toLowerCase()) {
       case "top":
-        cmd = TOP;
+        snippet = TOP;
         break;
       case "bottom":
-        cmd = BOTTOM;
+        snippet = BOTTOM;
         break;
       default:
         throw new ParametersException("Invalid 'position' value, only 'top' / 'bottom' available");
     }
-    return cmd;
+    return snippet;
   }
 
 }

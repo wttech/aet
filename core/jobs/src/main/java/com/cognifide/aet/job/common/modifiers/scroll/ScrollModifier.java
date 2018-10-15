@@ -28,6 +28,7 @@ class ScrollModifier implements CollectorJob {
 
   static final String NAME = "scroll";
   private static final Logger LOGGER = LoggerFactory.getLogger(ScrollModifier.class);
+
   private final ParametersParser parametersParser;
   private final JavascriptExecutor jsExecutor;
   private final String currentUtl;
@@ -54,7 +55,7 @@ class ScrollModifier implements CollectorJob {
     try {
       result = executeJs(jsSnippet);
     } catch (Exception ex) {
-      result = logErrorDuringExecution(jsSnippet, ex);
+      result = handleJsException(jsSnippet, ex);
     }
     return result;
   }
@@ -67,7 +68,7 @@ class ScrollModifier implements CollectorJob {
     return CollectorStepResult.newModifierResult();
   }
 
-  private CollectorStepResult logErrorDuringExecution(String jsSnippet, Exception ex) {
+  private CollectorStepResult handleJsException(String jsSnippet, Exception ex) {
     String message = String
         .format("Can't execute JavaScript command. jsSnippet: \"%s\". Error: %s ",
             jsSnippet, ex.getMessage());
