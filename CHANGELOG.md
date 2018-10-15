@@ -9,7 +9,8 @@ All notable changes to AET will be documented in this file.
 
 ## Unreleased
 **List of changes that are finished but not yet released in any final version.**
-- [PR-387](https://github.com/Cognifide/aet/pull/387) Set max allowed page screenshot height to 35k pixels.
+- [PR-387](https://github.com/Cognifide/aet/pull/387) Set max allowed page screenshot height to 35k pixels
+- [PR-prNumber](https://github.com/Cognifide/aet/pull/prNumber) Add algorithm to enable taking long screenshots without resolution-sleep-resolution workaround 
 
 ## Version 3.0.1
 
