@@ -12,12 +12,11 @@ All notable changes to AET will be documented in this file.
 
 ## Version 3.0.1
 
-
+- [PR-394](https://github.com/Cognifide/aet/pull/394) ([#386](https://github.com/Cognifide/aet/issues/386)) Added scroll modifier
 - [PR-380](https://github.com/Cognifide/aet/pull/380) Exclude elements position calculated with partial screenshot offset ([#379](https://github.com/Cognifide/aet/issues/379))
 - [PR-378](https://github.com/Cognifide/aet/pull/378) OSGI-configurable Chrome options.
 
 ## Version 3.0.0
-
 
 - [PR-359](https://github.com/Cognifide/aet/pull/359) ([#351](https://github.com/Cognifide/aet/issues/351)) Disabled nu.validator language detection to fix random NPE
 - [PR-328](https://github.com/Cognifide/aet/pull/328) Added suite's history
