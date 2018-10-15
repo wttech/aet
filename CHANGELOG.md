@@ -9,13 +9,13 @@ All notable changes to AET will be documented in this file.
 
 ## Unreleased
 **List of changes that are finished but not yet released in any final version.**
+- [PR-387](https://github.com/Cognifide/aet/pull/387) Set max allowed page screenshot height to 35k pixels.
 
 ## Version 3.0.1
 
 
 - [PR-380](https://github.com/Cognifide/aet/pull/380) Exclude elements position calculated with partial screenshot offset ([#379](https://github.com/Cognifide/aet/issues/379))
 - [PR-378](https://github.com/Cognifide/aet/pull/378) OSGI-configurable Chrome options.
-- [PR-387](https://github.com/Cognifide/aet/pull/387) Set max allowed page screenshot height to 35k pixels.
 
 ## Version 3.0.0
 
