@@ -22,13 +22,13 @@ import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.job.common.SeleniumWaitHelper;
 import com.cognifide.aet.job.common.modifiers.WebElementsLocatorParams;
+import com.cognifide.aet.job.common.utils.javaScript.JavaScriptJobExecutor;
+import com.cognifide.aet.job.common.utils.javaScript.JavaScriptJobResult;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -38,21 +38,21 @@ public class ReplaceTextModifier extends WebElementsLocatorParams implements Col
   public static final String NAME = "replaceText";
 
   private static final Logger LOG = LoggerFactory.getLogger(ReplaceTextModifier.class);
-
   private static final String ATTRIBUTE_PARAM = "attributeName";
-
   private static final String VALUE_PARAM = "value";
 
   private final WebDriver webDriver;
-
   private final CollectorProperties properties;
+  private final JavaScriptJobExecutor jsExecutor;
 
   private String attributeName;
   private String value;
 
-  public ReplaceTextModifier(WebDriver webDriver, CollectorProperties properties) {
+  ReplaceTextModifier(WebDriver webDriver, CollectorProperties properties,
+      JavaScriptJobExecutor jsExecutor) {
     this.webDriver = webDriver;
     this.properties = properties;
+    this.jsExecutor = jsExecutor;
   }
 
   @Override
@@ -74,32 +74,23 @@ public class ReplaceTextModifier extends WebElementsLocatorParams implements Col
     value = StringUtils.defaultIfBlank(params.get(VALUE_PARAM), "");
   }
 
-  public CollectorStepResult replaceText() throws ProcessingException {
-    CollectorStepResult result;
-    try {
-      String script = "arguments[0]." + attributeName + "=arguments[1];";
+  private CollectorStepResult replaceText() throws ProcessingException {
+    String script = "arguments[0]." + attributeName + "=arguments[1];";
 
-      By elementLocator = getLocator();
-      SeleniumWaitHelper
-          .waitForElementToBePresent(webDriver, elementLocator, getTimeoutInSeconds());
+    By elementLocator = getLocator();
+    SeleniumWaitHelper
+        .waitForElementToBePresent(webDriver, elementLocator, getTimeoutInSeconds());
 
-      List<WebElement> webElements = webDriver.findElements(elementLocator);
-      for (WebElement element : webElements) {
-        ((JavascriptExecutor) webDriver).executeScript(script, element, value);
+    List<WebElement> webElements = webDriver.findElements(elementLocator);
+    for (WebElement element : webElements) {
+      JavaScriptJobResult result = jsExecutor.execute(script, element, value);
+      if (result.isException()) {
+        throw new ProcessingException(
+            "Can't replace text in +" + attributeName + " attribute in element: " + getLocator()
+                .toString(), (Throwable) result.getExecutionResult());
       }
-      result = CollectorStepResult.newModifierResult();
-    } catch (WebDriverException e) {
-      final String message = String
-          .format("Error while replacing text in element %s. %s", getLocator().toString(),
-              e.getMessage());
-      result = CollectorStepResult.newProcessingErrorResult(message);
-      LOG.warn("Error while trying to find element '{}'", getLocator().toString(), e);
-    } catch (Exception e) {
-      throw new ProcessingException(
-          "Can't replace text in +" + attributeName + " attribute in element: " + getLocator()
-              .toString(), e);
     }
-    return result;
+    return CollectorStepResult.newModifierResult();
   }
 
 }

@@ -20,7 +20,9 @@ import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
+import com.cognifide.aet.job.common.utils.javaScript.JavaScriptJobExecutor;
 import java.util.Map;
+import org.openqa.selenium.WebDriver;
 import org.osgi.service.component.annotations.Component;
 
 @Component
@@ -35,8 +37,9 @@ public class WaitForImageCompletionModifierCollectorFactory implements Collector
   public CollectorJob createInstance(CollectorProperties collectorProperties,
       Map<String, String> parameters,
       WebCommunicationWrapper webCommunicationWrapper) throws ParametersException {
+    WebDriver webDriver = webCommunicationWrapper.getWebDriver();
     WaitForImageCompletionModifier modifier =
-        new WaitForImageCompletionModifier(webCommunicationWrapper.getWebDriver());
+        new WaitForImageCompletionModifier(webDriver, new JavaScriptJobExecutor(webDriver));
     modifier.setParameters(parameters);
     return modifier;
   }

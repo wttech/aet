@@ -19,6 +19,7 @@ import com.cognifide.aet.communication.api.metadata.CollectorStepResult;
 import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.common.utils.javaScript.JavaScriptJobExecutor;
+import com.cognifide.aet.job.common.utils.javaScript.JavaScriptJobResult;
 import java.util.Map;
 import org.openqa.selenium.WebDriver;
 
@@ -42,6 +43,11 @@ class ScrollModifier implements CollectorJob {
   @Override
   public CollectorStepResult collect() {
     String jsSnippet = parametersParser.getJavaScriptSnippet();
-    return jsExecutor.execute(jsSnippet).getCollectorStepResult();
+    JavaScriptJobResult result = jsExecutor.execute(jsSnippet);
+    if (result.isException()) {
+      return CollectorStepResult.newProcessingErrorResult(result.getExceptionMessage());
+    } else {
+      return CollectorStepResult.newModifierResult();
+    }
   }
 }

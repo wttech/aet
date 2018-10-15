@@ -19,11 +19,10 @@ import com.cognifide.aet.communication.api.metadata.CollectorStepResult;
 import com.cognifide.aet.job.api.ParametersValidator;
 import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
-import com.cognifide.aet.job.api.exceptions.ProcessingException;
+import com.cognifide.aet.job.common.utils.javaScript.JavaScriptJobExecutor;
 import java.util.Map;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriver.Window;
 import org.slf4j.Logger;
@@ -34,33 +33,27 @@ public class ResolutionModifier implements CollectorJob {
   public static final String NAME = "resolution";
 
   private static final Logger LOG = LoggerFactory.getLogger(ResolutionModifier.class);
-
   private static final String WIDTH_PARAM = "width";
-
   private static final String HEIGHT_PARAM = "height";
-
   private static final String JAVASCRIPT_GET_BODY_HEIGHT = "return document.body.scrollHeight";
-
   private static final int MAX_SIZE = 15000;
-
   private static final int INITIAL_HEIGHT = 300;
-
   private static final int HEIGHT_NOT_DEFINED = 0;
 
   private final WebDriver webDriver;
+  private final JavaScriptJobExecutor jsExecutor;
 
   private int width;
-
   private int height;
 
-  public ResolutionModifier(WebDriver webDriver) {
+  ResolutionModifier(WebDriver webDriver, JavaScriptJobExecutor jsExecutor) {
     this.webDriver = webDriver;
+    this.jsExecutor = jsExecutor;
   }
 
-
   @Override
-  public CollectorStepResult collect() throws ProcessingException {
-    setResolution(this.webDriver);
+  public CollectorStepResult collect() {
+    setResolution();
     return CollectorStepResult.newModifierResult();
   }
 
@@ -79,13 +72,12 @@ public class ResolutionModifier implements CollectorJob {
     }
   }
 
-  private void setResolution(WebDriver webDriver) {
+  private void setResolution() {
     Window window = webDriver.manage().window();
     if (height == HEIGHT_NOT_DEFINED) {
       window.setSize(new Dimension(width, INITIAL_HEIGHT));
-      JavascriptExecutor js = (JavascriptExecutor) webDriver;
       height = Integer
-          .parseInt(js.executeScript(JAVASCRIPT_GET_BODY_HEIGHT).toString());
+          .parseInt(jsExecutor.execute(JAVASCRIPT_GET_BODY_HEIGHT).getExecutionResult().toString());
       if (height > MAX_SIZE) {
         LOG.warn("Height is over browser limit, changing height to {}", MAX_SIZE);
         height = MAX_SIZE;

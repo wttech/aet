@@ -20,7 +20,9 @@ import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
+import com.cognifide.aet.job.common.utils.javaScript.JavaScriptJobExecutor;
 import java.util.Map;
+import org.openqa.selenium.WebDriver;
 import org.osgi.service.component.annotations.Component;
 
 @Component
@@ -34,7 +36,9 @@ public class HideModifierFactory implements CollectorFactory {
   @Override
   public CollectorJob createInstance(CollectorProperties properties, Map<String, String> parameters,
       WebCommunicationWrapper webCommunicationWrapper) throws ParametersException {
-    HideModifier modifier = new HideModifier(webCommunicationWrapper.getWebDriver(), properties);
+    WebDriver webDriver = webCommunicationWrapper.getWebDriver();
+    HideModifier modifier = new HideModifier(webDriver, properties,
+        new JavaScriptJobExecutor(webDriver));
     modifier.setParameters(parameters);
     return modifier;
   }

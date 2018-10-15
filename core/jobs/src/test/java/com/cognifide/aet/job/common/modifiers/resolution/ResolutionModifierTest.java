@@ -21,7 +21,8 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.cognifide.aet.job.api.exceptions.ParametersException;
-import com.cognifide.aet.job.api.exceptions.ProcessingException;
+import com.cognifide.aet.job.common.utils.javaScript.JavaScriptJobExecutor;
+import com.cognifide.aet.job.common.utils.javaScript.JavaScriptJobResult;
 import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
@@ -73,6 +74,9 @@ public class ResolutionModifierTest {
   @Mock
   private Dimension windowDimension;
 
+  @Mock
+  private JavaScriptJobExecutor jsExecutor;
+
   @InjectMocks
   private ResolutionModifier tested;
 
@@ -119,7 +123,7 @@ public class ResolutionModifierTest {
   }
 
   @Test
-  public void collectTest_setWidthHeight() throws ParametersException, ProcessingException {
+  public void collectTest_setWidthHeight() throws ParametersException {
     when(params.containsKey(HEIGHT_PARAM)).thenReturn(true);
     when(params.containsKey(WIDTH_PARAM)).thenReturn(true);
     when(params.get(HEIGHT_PARAM)).thenReturn("" + CUSTOM_HEIGHT);
@@ -147,10 +151,10 @@ public class ResolutionModifierTest {
   }
 
   @Test
-  public void collectTest_setOnlyWidth() throws ParametersException, ProcessingException {
+  public void collectTest_setOnlyWidth() throws ParametersException {
     setUp_setOnlyWidth();
-    when(webDriver.executeScript(JAVASCRIPT_GET_BODY_HEIGHT))
-        .thenReturn(CUSTOM_HEIGHT);
+    when(jsExecutor.execute(JAVASCRIPT_GET_BODY_HEIGHT))
+        .thenReturn(new JavaScriptJobResult(CUSTOM_HEIGHT));
 
     tested.setParameters(params);
     tested.collect();
@@ -161,10 +165,10 @@ public class ResolutionModifierTest {
   }
 
   @Test
-  public void collectTest_setOnlyWidth_reachedBrowserHeightLimit() throws ParametersException, ProcessingException {
+  public void collectTest_setOnlyWidth_reachedBrowserHeightLimit() throws ParametersException {
     setUp_setOnlyWidth();
-    when(webDriver.executeScript(JAVASCRIPT_GET_BODY_HEIGHT))
-        .thenReturn(BROWSER_HEIGHT_LIMIT + 5000L);
+    when(jsExecutor.execute(JAVASCRIPT_GET_BODY_HEIGHT))
+        .thenReturn(new JavaScriptJobResult(BROWSER_HEIGHT_LIMIT + 5000L));
 
     tested.setParameters(params);
     tested.collect();

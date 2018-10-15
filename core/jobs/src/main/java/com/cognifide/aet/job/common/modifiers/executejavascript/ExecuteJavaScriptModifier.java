@@ -20,12 +20,12 @@ import com.cognifide.aet.job.api.ParametersValidator;
 import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
-import java.io.UnsupportedEncodingException;
+import com.cognifide.aet.job.common.utils.javaScript.JavaScriptJobExecutor;
+import com.cognifide.aet.job.common.utils.javaScript.JavaScriptJobResult;
+import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import org.apache.commons.codec.binary.Base64;
 import org.apache.commons.lang3.StringUtils;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -39,26 +39,28 @@ public class ExecuteJavaScriptModifier implements CollectorJob {
   private static final String BASIC_AUTH_USERNAME = "basicAuthUsername";
   private static final String BASIC_AUTH_PASSWORD = "basicAuthPassword";
 
-  private final WebDriver webDriver;
   private final ExternalSnippetHttpClient httpClient;
+  private final JavaScriptJobExecutor jsExecutor;
 
   private String cmd;
   private String snippetUrl;
   private String basicAuth;
 
-  ExecuteJavaScriptModifier(WebDriver webDriver, ExternalSnippetHttpClient httpClient) {
-    this.webDriver = webDriver;
+  ExecuteJavaScriptModifier(ExternalSnippetHttpClient httpClient,
+      JavaScriptJobExecutor jsExecutor) {
     this.httpClient = httpClient;
+    this.jsExecutor = jsExecutor;
   }
 
   @Override
   public CollectorStepResult collect() throws ProcessingException {
     final String jsSnippet = getJsSnippet();
-    if (LOG.isDebugEnabled()) {
-      LOG.debug("Executing JavaScript command: {} on page: {}", jsSnippet,
-          webDriver.getCurrentUrl());
+    JavaScriptJobResult result = jsExecutor.execute(jsSnippet);
+    if (result.isException()) {
+      return CollectorStepResult.newProcessingErrorResult(result.getExceptionMessage());
+    } else {
+      return CollectorStepResult.newModifierResult();
     }
-    return javaScriptElement(webDriver, jsSnippet);
   }
 
   private String getJsSnippet() throws ProcessingException {
@@ -102,29 +104,9 @@ public class ExecuteJavaScriptModifier implements CollectorJob {
 
     String authString = usernameOrEmpty + ":" + passwordOrEmpty;
     LOG.debug("authentication: '{}'", authString);
-    byte[] encoded = new byte[0];
-    try {
-      encoded = Base64.encodeBase64(authString.getBytes("UTF-8"));
-    } catch (UnsupportedEncodingException uee) {
-      LOG.error("Unsupported encoding: UTF-8", uee);
-    }
+    byte[] encoded = Base64.encodeBase64(authString.getBytes(StandardCharsets.UTF_8));
     LOG.debug("encoded bytes: '{}'", encoded);
     return new String(encoded);
-  }
-
-  private CollectorStepResult javaScriptElement(WebDriver driver, String jsSnippet) {
-    CollectorStepResult result;
-    try {
-      ((JavascriptExecutor) driver).executeScript(jsSnippet);
-      result = CollectorStepResult.newModifierResult();
-    } catch (Exception e) {
-      final String message = String
-          .format("Can't execute JavaScript command. jsSnippet: \"%s\". Error: %s ",
-              jsSnippet, e.getMessage());
-      result = CollectorStepResult.newProcessingErrorResult(message);
-      LOG.warn(message, e);
-    }
-    return result;
   }
 
 }

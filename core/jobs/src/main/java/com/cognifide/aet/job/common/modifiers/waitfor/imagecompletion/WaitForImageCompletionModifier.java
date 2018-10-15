@@ -18,15 +18,13 @@ package com.cognifide.aet.job.common.modifiers.waitfor.imagecompletion;
 import com.cognifide.aet.communication.api.metadata.CollectorStepResult;
 import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
-import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.job.common.modifiers.WebElementsLocatorParams;
 import com.cognifide.aet.job.common.modifiers.waitfor.WaitForHelper;
+import com.cognifide.aet.job.common.utils.javaScript.JavaScriptJobExecutor;
 import java.util.Map;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.ExpectedCondition;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,32 +32,27 @@ import org.slf4j.LoggerFactory;
 public class WaitForImageCompletionModifier extends WebElementsLocatorParams implements
     CollectorJob {
 
+  static final String NAME = "wait-for-image-completion";
   private static final Logger LOGGER = LoggerFactory
       .getLogger(WaitForImageCompletionModifier.class);
 
-  static final String NAME = "wait-for-image-completion";
-
   private final WebDriver webDriver;
+  private final JavaScriptJobExecutor jsExecutor;
 
-  WaitForImageCompletionModifier(WebDriver webDriver) {
+  WaitForImageCompletionModifier(WebDriver webDriver, JavaScriptJobExecutor jsExecutor) {
     this.webDriver = webDriver;
+    this.jsExecutor = jsExecutor;
   }
 
   @Override
-  public CollectorStepResult collect() throws ProcessingException {
+  public CollectorStepResult collect() {
     CollectorStepResult result;
     try {
-      result = WaitForHelper.waitForExpectedCondition(webDriver, getTimeoutInSeconds(),
-          ExpectedConditions.visibilityOfElementLocated(getLocator()),
-          new ExpectedCondition<Boolean>() {
-            public Boolean apply(WebDriver webDriver) {
-              WebElement element = webDriver.findElement(getLocator());
-              Boolean complete = (Boolean) ((JavascriptExecutor) webDriver)
-                  .executeScript("return arguments[0].complete", element);
-              LOGGER.debug("Waiting for image completion. Complete: '{}'", complete);
-              return complete;
-            }
-          });
+      result = WaitForHelper.waitForExpectedCondition(
+          webDriver,
+          getTimeoutInSeconds(),
+          ExpectedConditions.visibilityOfElementLocated(
+              getLocator()), this::waitForImageCompletion);
     } catch (TimeoutException te) {
       final String message =
           String.format("Failed to wait for image to be loaded with provided locator. Error: %s",
@@ -68,6 +61,14 @@ public class WaitForImageCompletionModifier extends WebElementsLocatorParams imp
       LOGGER.warn(message, te);
     }
     return result;
+  }
+
+  private Boolean waitForImageCompletion(WebDriver webDriver) {
+    WebElement element = webDriver.findElement(getLocator());
+    Boolean complete = (Boolean) jsExecutor.execute(
+        "return arguments[0].complete", element).getExecutionResult();
+    LOGGER.debug("Waiting for image completion. Complete: '{}'", complete);
+    return complete;
   }
 
   @Override

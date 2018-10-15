@@ -20,6 +20,7 @@ import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
+import com.cognifide.aet.job.common.utils.javaScript.JavaScriptJobExecutor;
 import com.cognifide.aet.vs.ArtifactsDAO;
 import java.util.Map;
 import org.osgi.framework.BundleContext;
@@ -44,7 +45,7 @@ public class AccessibilityCollectorFactory implements CollectorFactory {
   public CollectorJob createInstance(CollectorProperties properties, Map<String, String> parameters,
       WebCommunicationWrapper webCommunicationWrapper) throws ParametersException {
     AccessibilityCollector collector = new AccessibilityCollector(artifactsDAO, properties,
-        webCommunicationWrapper.getWebDriver(), context);
+        new JavaScriptJobExecutor(webCommunicationWrapper.getWebDriver()), context);
     collector.setParameters(parameters);
     return collector;
   }
