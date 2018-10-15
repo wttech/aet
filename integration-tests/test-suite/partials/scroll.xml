@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    AET
+
+    Copyright (C) 2013 Cognifide Limited
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<suite company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" name="main"
+  project="aet">
+  <!-- Scroll-Modifier BEGIN -->
+  <test name="S-modifier-scroll-default-position-bottom">
+    <collect>
+      <open/>
+      <sleep duration="1500"/>
+      <scroll/>
+      <screen/>
+    </collect>
+    <compare>
+      <screen comparator="layout"/>
+    </compare>
+    <urls>
+      <url href="modifiers/scroll/success.jsp"/>
+    </urls>
+  </test>
+  <test name="S-modifier-scroll-position-top">
+    <collect>
+      <open/>
+      <sleep duration="1500"/>
+      <scroll position="top"/>
+      <screen/>
+    </collect>
+    <compare>
+      <screen comparator="layout"/>
+    </compare>
+    <urls>
+      <url href="modifiers/scroll/success.jsp"/>
+    </urls>
+  </test>
+  <test name="S-modifier-scroll-position-bottom">
+    <collect>
+      <open/>
+      <sleep duration="1500"/>
+      <scroll position="bottom"/>
+      <screen/>
+    </collect>
+    <compare>
+      <screen comparator="layout"/>
+    </compare>
+    <urls>
+      <url href="modifiers/scroll/success.jsp"/>
+    </urls>
+  </test>
+  <test name="S-modifier-scroll-css">
+    <collect>
+      <open/>
+      <sleep duration="1500"/>
+      <scroll css="#type-blockquotes"/>
+      <screen/>
+    </collect>
+    <compare>
+      <screen comparator="layout"/>
+    </compare>
+    <urls>
+      <url href="modifiers/scroll/success.jsp"/>
+    </urls>
+  </test>
+  <test name="S-modifier-scroll-xpath">
+    <collect>
+      <open/>
+      <sleep duration="1500"/>
+      <scroll xpath="//*[@id='type-blockquotes']"/>
+      <screen/>
+    </collect>
+    <compare>
+      <screen comparator="layout"/>
+    </compare>
+    <urls>
+      <url href="modifiers/scroll/success.jsp"/>
+    </urls>
+  </test>
+  <test name="F-modifier-scroll-more-than-one-attribute">
+    <collect>
+      <open/>
+      <sleep duration="1500"/>
+      <scroll css="#type-blockquotes" position="bottom"/>
+      <screen/>
+    </collect>
+    <compare>
+      <screen comparator="layout"/>
+    </compare>
+    <urls>
+      <url href="modifiers/scroll/failed.jsp"/>
+    </urls>
+  </test>
+  <test name="F-modifier-scroll-invalid-position-value">
+    <collect>
+      <open/>
+      <sleep duration="1500"/>
+      <scroll position="middle"/>
+      <screen/>
+    </collect>
+    <compare>
+      <screen comparator="layout"/>
+    </compare>
+    <urls>
+      <url href="modifiers/scroll/failed.jsp"/>
+    </urls>
+  </test>
+  <!-- Scroll-Modifier END -->
+</suite>

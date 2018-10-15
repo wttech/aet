@@ -99,3 +99,9 @@ Feature: Tests Results Filtering
     When I search for tests containing "wait-for-image-completion"
     Then There are 4 tiles visible
     And Statistics text contains "4 ( 1 / 0 / 3 (0) / 0 )"
+
+  Scenario: Filtering Tests Results: scroll-modifier
+    Given I have opened sample tests report page
+    When I search for tests containing "scroll"
+    Then There are 7 tiles visible
+    And Statistics text contains "7 ( 2 / 0 / 5 (0) / 0 )"
