@@ -18,25 +18,20 @@ package com.cognifide.aet.job.common.modifiers.scroll;
 import com.cognifide.aet.communication.api.metadata.CollectorStepResult;
 import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
+import com.cognifide.aet.job.common.utils.javaScript.JavaScriptJobExecutor;
 import java.util.Map;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 class ScrollModifier implements CollectorJob {
 
   static final String NAME = "scroll";
-  private static final Logger LOGGER = LoggerFactory.getLogger(ScrollModifier.class);
 
   private final ParametersParser parametersParser;
-  private final JavascriptExecutor jsExecutor;
-  private final String currentUtl;
+  private final JavaScriptJobExecutor jsExecutor;
 
   ScrollModifier(WebDriver webDriver) {
     this.parametersParser = new ParametersParser();
-    this.jsExecutor = (JavascriptExecutor) webDriver;
-    this.currentUtl = webDriver.getCurrentUrl();
+    this.jsExecutor = new JavaScriptJobExecutor(webDriver);
   }
 
   @Override
@@ -47,32 +42,6 @@ class ScrollModifier implements CollectorJob {
   @Override
   public CollectorStepResult collect() {
     String jsSnippet = parametersParser.getJavaScriptSnippet();
-    return tryToExecuteJs(jsSnippet);
-  }
-
-  private CollectorStepResult tryToExecuteJs(String jsSnippet) {
-    CollectorStepResult result;
-    try {
-      result = executeJs(jsSnippet);
-    } catch (Exception ex) {
-      result = handleJsException(jsSnippet, ex);
-    }
-    return result;
-  }
-
-  private CollectorStepResult executeJs(String jsSnippet) {
-    if (LOGGER.isDebugEnabled()) {
-      LOGGER.debug("Executing JavaScript command: {} on page: {}", jsSnippet, currentUtl);
-    }
-    jsExecutor.executeScript(jsSnippet);
-    return CollectorStepResult.newModifierResult();
-  }
-
-  private CollectorStepResult handleJsException(String jsSnippet, Exception ex) {
-    String message = String
-        .format("Can't execute JavaScript command. jsSnippet: \"%s\". Error: %s ",
-            jsSnippet, ex.getMessage());
-    LOGGER.warn(message, ex);
-    return CollectorStepResult.newProcessingErrorResult(message);
+    return jsExecutor.execute(jsSnippet).getCollectorStepResult();
   }
 }

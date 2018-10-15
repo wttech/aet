@@ -22,7 +22,7 @@ import com.cognifide.aet.job.api.collector.ProxyServerWrapper;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
-import com.cognifide.aet.job.common.utils.JsRuntimeWrapper;
+import com.cognifide.aet.job.common.utils.javaScript.JsRuntimeWrapper;
 import com.cognifide.aet.vs.ArtifactsDAO;
 import java.io.IOException;
 import java.io.StringWriter;

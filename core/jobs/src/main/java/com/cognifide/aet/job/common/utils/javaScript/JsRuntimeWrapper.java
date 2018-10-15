@@ -13,7 +13,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.job.common.utils;
+package com.cognifide.aet.job.common.utils.javaScript;
 
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.google.common.base.Charsets;
