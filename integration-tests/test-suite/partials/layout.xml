@@ -483,7 +483,7 @@
 			(https://github.com/Cognifide/aet/issues/357)-->
 			<sleep duration="2000"/>
 			<resolution width="767"/>
-			<screen css=".dynamic2"/>
+			<screen/>
 		</collect>
 		<compare>
 			<screen comparator="layout"/>
