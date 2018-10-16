@@ -12,7 +12,7 @@ All notable changes to AET will be documented in this file.
 
 ## Version 3.0.1
 
-
+- [PR-396](https://github.com/Cognifide/aet/pull/396) Added horizontal scrollbar for wide pages ([#393](https://github.com/Cognifide/aet/issues/393)) 
 - [PR-380](https://github.com/Cognifide/aet/pull/380) Exclude elements position calculated with partial screenshot offset ([#379](https://github.com/Cognifide/aet/issues/379))
 - [PR-378](https://github.com/Cognifide/aet/pull/378) OSGI-configurable Chrome options.
 
