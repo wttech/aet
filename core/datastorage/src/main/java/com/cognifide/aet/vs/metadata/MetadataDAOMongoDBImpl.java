@@ -46,11 +46,13 @@ import org.slf4j.LoggerFactory;
 @Component(immediate = true)
 public class MetadataDAOMongoDBImpl implements MetadataDAO {
 
-  private static final long serialVersionUID = -6059718886350668134L;
+  public static final String METADATA_COLLECTION_NAME = "metadata";
+
+  private static final String SUITE_HASH_CODE = "projectHashCode";
+
+  private static final long serialVersionUID = -6059718889805538134L;
 
   private static final Logger LOGGER = LoggerFactory.getLogger(MetadataDAOMongoDBImpl.class);
-
-  public static final String METADATA_COLLECTION_NAME = "metadata";
 
   private static final String SUITE_PARAM_NAME = "name";
 
@@ -97,21 +99,6 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
     return latestSuite == null || suite.getVersion().equals(latestSuite.getVersion());
   }
 
-
-  @Override
-  public Suite getSuite(DBKey dbKey, String correlationId) throws StorageException {
-    MongoCollection<Document> metadata = getMetadataCollection(dbKey);
-
-    LOGGER.debug("Fetching suite with correlationId: {} ", correlationId);
-
-    final FindIterable<Document> found = metadata
-        .find(Filters.eq(CORRELATION_ID_PARAM_NAME, correlationId))
-        .sort(Sorts.descending(SUITE_VERSION_PARAM_NAME))
-        .limit(1);
-    final Document result = found.first();
-    return new DocumentConverter(result).toSuite();
-  }
-
   @Override
   public Suite getSuite(DBKey dbKey, String name, String version) throws StorageException {
     MongoCollection<Document> metadata = getMetadataCollection(dbKey);
@@ -126,13 +113,21 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
   }
 
   @Override
-  public Suite getLatestRun(DBKey dbKey, String name) throws StorageException {
-    MongoCollection<Document> metadata = getMetadataCollection(dbKey);
-    LOGGER.debug("Fetching latest suite run for company: `{}`, project: `{}`, name `{}`.",
-        dbKey.getCompany(), dbKey.getProject(), name);
+  public Suite getSuite(DBKey dbKey, String correlationId) throws StorageException {
+    LOGGER.debug("Fetching suite with correlationId: {} ", correlationId);
+    return getLatestSuit(dbKey, CORRELATION_ID_PARAM_NAME, correlationId);
+  }
 
+  @Override
+  public Suite getSuiteByChecksum(DBKey dbKey, String checkSum) throws StorageException {
+    LOGGER.debug("Fetching suite with checksum: {} ", checkSum);
+    return getLatestSuit(dbKey, SUITE_HASH_CODE, checkSum);
+  }
+
+  private Suite getLatestSuit(DBKey dbKey, String fieldName, String value) throws StorageException {
+    MongoCollection<Document> metadata = getMetadataCollection(dbKey);
     final FindIterable<Document> found = metadata
-        .find(Filters.eq("name", name))
+        .find(Filters.eq(fieldName, value))
         .sort(Sorts.descending(SUITE_VERSION_PARAM_NAME))
         .limit(1);
     final Document result = found.first();
@@ -140,10 +135,20 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
   }
 
   @Override
+  public Suite getLatestRun(DBKey dbKey, String name) throws StorageException {
+    MongoCollection<Document> metadata = getMetadataCollection(dbKey);
+    LOGGER.debug("Fetching latest suite run for company: `{}`, project: `{}`, name `{}`.",
+        dbKey.getCompany(), dbKey.getProject(), name);
+
+    return getLatestSuit(dbKey, SUITE_PARAM_NAME, name);
+  }
+
+  @Override
   public Suite replaceSuite(Suite oldSuite, Suite newSuite) throws StorageException {
     MongoCollection<Document> metadata = getMetadataCollection(new SimpleDBKey(oldSuite));
     LOGGER.debug("Replacing suite {} in  metadata collection.", oldSuite);
-    metadata.findOneAndReplace(Document.parse(oldSuite.toJson()),Document.parse(newSuite.toJson()));
+    metadata
+        .findOneAndReplace(Document.parse(oldSuite.toJson()), Document.parse(newSuite.toJson()));
     return newSuite;
   }
 

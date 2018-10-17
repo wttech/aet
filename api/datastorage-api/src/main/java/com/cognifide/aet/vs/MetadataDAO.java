@@ -100,4 +100,10 @@ public interface MetadataDAO extends Serializable {
    * @return list of projects in as DBKeys
    */
   Collection<DBKey> getProjects(String company) throws StorageException;
+  /**
+   * @param dbKey - key with project and company name
+   * @param checkSum - value of checksum source code project
+   * @return Suite object by given criteria.
+   */
+  Suite getSuiteByChecksum(DBKey dbKey,String checkSum) throws StorageException;
 }

@@ -33,6 +33,7 @@ import com.cognifide.aet.executor.xmlparser.api.TestSuiteParser;
 import com.cognifide.aet.executor.xmlparser.xml.XmlTestSuiteParser;
 import com.cognifide.aet.rest.LockService;
 import com.cognifide.aet.rest.helpers.ReportConfigurationManager;
+import com.google.common.base.Strings;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.RemovalListener;
@@ -129,10 +130,11 @@ public class SuiteExecutor {
    * used as patterns sources
    * @param patternSuite - optional collection of names of suites whose latest versions will be used
    * as patterns sources.
+   * @param projectChecksum - defining the project source code checksum
    * @return status of the suite execution
    */
   HttpSuiteExecutionResultWrapper execute(String suiteString, String name, String domain,
-      Set<String> patternCorrelationId, Set<String> patternSuite) {
+      Set<String> patternCorrelationId, Set<String> patternSuite, String projectChecksum) {
     HttpSuiteExecutionResultWrapper result;
     TestSuiteParser xmlFileParser = new XmlTestSuiteParser();
     try {
@@ -144,6 +146,11 @@ public class SuiteExecutor {
       String validationError = suiteValidator.validateTestSuiteRun(testSuiteRun);
       if (validationError == null) {
         final Suite suite = suiteFactory.suiteFromTestSuiteRun(testSuiteRun);
+
+        if (!Strings.isNullOrEmpty(projectChecksum)) {
+          suite.setProjectChecksum(projectChecksum);
+        }
+
         suite.validate(Sets.newHashSet("version", "runTimestamp"));
         Run objectToRunWrapper = new SuiteRunWrapper(suite);
         result = executeSuite(objectToRunWrapper);

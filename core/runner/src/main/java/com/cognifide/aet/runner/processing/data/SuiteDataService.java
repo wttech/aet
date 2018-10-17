@@ -22,9 +22,7 @@ import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.SimpleDBKey;
 import com.cognifide.aet.vs.StorageException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -33,6 +31,13 @@ public class SuiteDataService {
 
   @Reference
   private MetadataDAO metadataDAO;
+
+  public SuiteDataService() {
+  }
+
+  public SuiteDataService(MetadataDAO metadataDAO) {
+    this.metadataDAO = metadataDAO;
+  }
 
   /**
    * @param currentRun - current suite run
@@ -46,18 +51,40 @@ public class SuiteDataService {
 
     List<Suite> patterns = new ArrayList<>();
     if (hasSharedPatterns(currentRun)) {
-      for (String id : currentRun.getPatternCorrelationIds()) {
-        patterns.add(metadataDAO.getSuite(dbKey, id));
-      }
+      getPatternsById(currentRun, dbKey, patterns);
+      getPatternByChecksum(currentRun, dbKey, patterns);
     } else {
       patterns.add(lastVersion);
     }
     return SuiteMergeStrategy.merge(currentRun, lastVersion, patterns);
   }
 
+  private void getPatternsById(Suite currentRun, SimpleDBKey dbKey, List<Suite> patterns)
+      throws StorageException {
+    if (currentRun.getPatternCorrelationIds() != null) {
+      for (String id : currentRun.getPatternCorrelationIds()) {
+        patterns.add(metadataDAO.getSuite(dbKey, id));
+      }
+    }
+  }
+
+  private void getPatternByChecksum(Suite currentRun, SimpleDBKey dbKey, List<Suite> patterns)
+      throws StorageException {
+    if (currentRun.getProjectChecksum() != null) {
+      Suite suiteByChecksum = metadataDAO
+          .getSuiteByChecksum(dbKey, currentRun.getProjectChecksum());
+
+      if (suiteByChecksum != null) {
+        patterns.add(suiteByChecksum);
+      }
+    }
+  }
+
   private boolean hasSharedPatterns(Suite currentRun) {
     return currentRun.getPatternCorrelationIds() != null &&
-        !currentRun.getPatternCorrelationIds().isEmpty();
+        !currentRun.getPatternCorrelationIds().isEmpty() ||
+        currentRun.getProjectChecksum() != null &&
+            !currentRun.getProjectChecksum().isEmpty();
   }
 
   public Suite saveSuite(final Suite suite) throws ValidatorException, StorageException {

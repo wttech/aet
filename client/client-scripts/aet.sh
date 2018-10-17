@@ -44,6 +44,11 @@ function usage {
     exit 1
 }
 
+# todo pass login and password by parameters
+function get_json {
+	curl -u admin:admin -s "$1"
+}
+
 # extracts http status code and response body from curl response string
 function extract_code_and_body {
     local response=$1
@@ -90,7 +95,7 @@ $errorMessage"
 
 # request /suite endpoint
 function start_suite {
-  run_response=$(curl -sw "%{http_code}" -F "suite=@$suite_file_name"$DOMAIN_BODY$SUITE_NAME_BODY$CORRELATION_ID_BODY$PATTERN_SUITE_BODY "$endpoint$SUITE_ENDPOINT")
+  run_response=$(curl -sw "%{http_code}" -F "projectChecksSum=$(get_json $endpoint_check_sum)" -F "suite=@$suite_file_name"$DOMAIN_BODY$SUITE_NAME_BODY$CORRELATION_ID_BODY$PATTERN_SUITE_BODY "$endpoint$SUITE_ENDPOINT")
   extract_code_and_body "$run_response"
 
   if [ $code -eq 200 ]; then
@@ -108,6 +113,7 @@ function start_suite {
 
 endpoint=$1
 suite_file_name=${2-suite.xml}
+endpoint_check_sum=$3
 
 while [[ $# -gt 0 ]]; do
     case "$1" in

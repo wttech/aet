@@ -18,18 +18,14 @@ package com.cognifide.aet.executor;
 import com.cognifide.aet.communication.api.execution.SuiteExecutionResult;
 import com.cognifide.aet.executor.http.HttpSuiteExecutionResultWrapper;
 import com.cognifide.aet.vs.MetadataDAO;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Collection;
-import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map;
 import java.util.NoSuchElementException;
-import java.util.stream.Collectors;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -57,13 +53,22 @@ public class SuiteServlet extends HttpServlet {
   private static final long serialVersionUID = 5266041156537459410L;
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SuiteServlet.class);
+
   private static final String SERVLET_PATH = "/suite";
+
   private static final String SUITE_PARAM = "suite";
+
   private static final String NAME_PARAM = "name";
+
   private static final String DOMAIN_PARAM = "domain";
+
   private static final String PATTERN_CORRELATION_ID_PARAM = "pattern";
+
   private static final String PATTERN_SUITE_PARAM = "patternSuite";
-  private static final String TEST_NAME_PARAM = "testName";
+
+  private static final String PATTERN_PROJECT_CHECKSUM_PARAM = "projectCheckSum";
+
+  private static final Gson GSON = new Gson();
 
   @Reference
   private HttpService httpService;
@@ -89,15 +94,16 @@ public class SuiteServlet extends HttpServlet {
       final String domain = getSingletonParam(requestData, DOMAIN_PARAM);
       final Collection<String> patternCorrelationId = requestData.get(PATTERN_CORRELATION_ID_PARAM);
       final Collection<String> patternSuite = requestData.get(PATTERN_SUITE_PARAM);
+      final String projectChecksumPattern = getSingletonParam(requestData,
+          PATTERN_PROJECT_CHECKSUM_PARAM);
 
       if (StringUtils.isNotBlank(suite)) {
         HttpSuiteExecutionResultWrapper resultWrapper = suiteExecutor
             .execute(suite, name, domain, new HashSet<>(patternCorrelationId),
-                new HashSet<>(patternSuite));
+                new HashSet<>(patternSuite), projectChecksumPattern);
         final SuiteExecutionResult suiteExecutionResult = resultWrapper.getExecutionResult();
-        Gson gson = new Gson();
 
-        String responseBody = gson.toJson(suiteExecutionResult);
+        String responseBody = GSON.toJson(suiteExecutionResult);
 
         response.setStatus(resultWrapper.getStatusCode());
         response.setContentType("application/json");
