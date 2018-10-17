@@ -13,7 +13,10 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.job.common.utils.javaScript;
+package com.cognifide.aet.job.common.utils.javascript;
+
+import java.util.Optional;
+import org.apache.commons.lang3.StringUtils;
 
 public class JavaScriptJobResult {
 
@@ -23,15 +26,14 @@ public class JavaScriptJobResult {
     this.executionResult = executionResult;
   }
 
-  public Object getExecutionResult() {
-    return executionResult;
+  public Optional<Object> getExecutionResult() {
+    return Optional.ofNullable(executionResult);
   }
 
-  public boolean isException() {
-    return executionResult instanceof Throwable;
+  public String getExecutionResultAsString() {
+    return getExecutionResult()
+        .map(Object::toString)
+        .orElse(StringUtils.EMPTY);
   }
 
-  public String getExceptionMessage() {
-    return ((Throwable) executionResult).getMessage();
-  }
 }

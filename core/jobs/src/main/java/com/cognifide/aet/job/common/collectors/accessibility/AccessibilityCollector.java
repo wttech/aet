@@ -20,7 +20,7 @@ import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
-import com.cognifide.aet.job.common.utils.javaScript.JavaScriptJobExecutor;
+import com.cognifide.aet.job.common.utils.javascript.JavaScriptJobExecutor;
 import com.cognifide.aet.vs.ArtifactsDAO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -60,9 +60,9 @@ public class AccessibilityCollector implements CollectorJob {
   @Override
   public CollectorStepResult collect() throws ProcessingException {
     String script = getScriptFromFile();
-    final String html = (String) jsExecutor.execute(DOCUMENT_OUTER_HTML_SCRIPT)
-        .getExecutionResult();
-    final String json = (String) jsExecutor.execute(script, standard).getExecutionResult();
+    final String html = jsExecutor.execute(DOCUMENT_OUTER_HTML_SCRIPT)
+        .getExecutionResultAsString();
+    final String json = jsExecutor.execute(script, standard).getExecutionResultAsString();
     List<AccessibilityIssue> issues = parseIssues(json);
     getElementsPositions(issues, html);
 

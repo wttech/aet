@@ -20,7 +20,7 @@ import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.common.modifiers.WebElementsLocatorParams;
 import com.cognifide.aet.job.common.modifiers.waitfor.WaitForHelper;
-import com.cognifide.aet.job.common.utils.javaScript.JavaScriptJobExecutor;
+import com.cognifide.aet.job.common.utils.javascript.JavaScriptJobExecutor;
 import java.util.Map;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -48,11 +48,9 @@ public class WaitForImageCompletionModifier extends WebElementsLocatorParams imp
   public CollectorStepResult collect() {
     CollectorStepResult result;
     try {
-      result = WaitForHelper.waitForExpectedCondition(
-          webDriver,
-          getTimeoutInSeconds(),
-          ExpectedConditions.visibilityOfElementLocated(
-              getLocator()), this::waitForImageCompletion);
+      result = WaitForHelper.waitForExpectedCondition(webDriver, getTimeoutInSeconds(),
+          ExpectedConditions.visibilityOfElementLocated(getLocator()),
+          this::waitForImageCompletion);
     } catch (TimeoutException te) {
       final String message =
           String.format("Failed to wait for image to be loaded with provided locator. Error: %s",
@@ -64,9 +62,16 @@ public class WaitForImageCompletionModifier extends WebElementsLocatorParams imp
   }
 
   private Boolean waitForImageCompletion(WebDriver webDriver) {
+    Boolean complete;
     WebElement element = webDriver.findElement(getLocator());
-    Boolean complete = (Boolean) jsExecutor.execute(
-        "return arguments[0].complete", element).getExecutionResult();
+    try {
+      complete = (Boolean) jsExecutor.execute("return arguments[0].complete", element)
+          .getExecutionResult()
+          .orElse(false);
+    } catch (Exception ex) {
+      LOGGER.warn("Cannot execute javascript", ex);
+      complete = false;
+    }
     LOGGER.debug("Waiting for image completion. Complete: '{}'", complete);
     return complete;
   }

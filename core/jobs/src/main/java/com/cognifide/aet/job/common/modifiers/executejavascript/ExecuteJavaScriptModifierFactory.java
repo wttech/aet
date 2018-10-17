@@ -20,7 +20,7 @@ import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
-import com.cognifide.aet.job.common.utils.javaScript.JavaScriptJobExecutor;
+import com.cognifide.aet.job.common.utils.javascript.JavaScriptJobExecutor;
 import java.util.Map;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;

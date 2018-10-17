@@ -16,7 +16,7 @@
 package com.cognifide.aet.job.common.modifiers.login;
 
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
-import com.cognifide.aet.job.common.utils.javaScript.JavaScriptJobExecutor;
+import com.cognifide.aet.job.common.utils.javascript.JavaScriptJobExecutor;
 import org.openqa.selenium.By;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
@@ -81,7 +81,7 @@ public class LoginFormComponent {
     submitButton.click();
   }
 
-  private void fill(WebElement input, String value) {
+  private void fill(WebElement input, String value) throws ProcessingException {
     if (!isFilledProperly(input, value)) {
       jsExecutor.execute(SET_VALUE_SCRIPT, input, value);
     }

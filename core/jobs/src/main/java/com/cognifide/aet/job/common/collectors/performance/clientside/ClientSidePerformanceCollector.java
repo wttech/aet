@@ -22,7 +22,7 @@ import com.cognifide.aet.job.api.collector.ProxyServerWrapper;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
-import com.cognifide.aet.job.common.utils.javaScript.JsRuntimeWrapper;
+import com.cognifide.aet.job.common.utils.javascript.JsRuntimeWrapper;
 import com.cognifide.aet.vs.ArtifactsDAO;
 import java.io.IOException;
 import java.io.StringWriter;
@@ -47,7 +47,7 @@ public class ClientSidePerformanceCollector implements CollectorJob {
 
   private final BundleContext bundleContext;
 
-  public ClientSidePerformanceCollector(ArtifactsDAO artifactsDAO,
+  ClientSidePerformanceCollector(ArtifactsDAO artifactsDAO,
       WebCommunicationWrapper webCommunicationWrapper,
       CollectorProperties collectorProperties, BundleContext bundleContext) {
 

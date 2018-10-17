@@ -19,7 +19,8 @@ import com.cognifide.aet.communication.api.metadata.CollectorStepResult;
 import com.cognifide.aet.job.api.ParametersValidator;
 import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
-import com.cognifide.aet.job.common.utils.javaScript.JavaScriptJobExecutor;
+import com.cognifide.aet.job.api.exceptions.ProcessingException;
+import com.cognifide.aet.job.common.utils.javascript.JavaScriptJobExecutor;
 import java.util.Map;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.openqa.selenium.Dimension;
@@ -52,7 +53,7 @@ public class ResolutionModifier implements CollectorJob {
   }
 
   @Override
-  public CollectorStepResult collect() {
+  public CollectorStepResult collect() throws ProcessingException {
     setResolution();
     return CollectorStepResult.newModifierResult();
   }
@@ -72,12 +73,11 @@ public class ResolutionModifier implements CollectorJob {
     }
   }
 
-  private void setResolution() {
+  private void setResolution() throws ProcessingException {
     Window window = webDriver.manage().window();
     if (height == HEIGHT_NOT_DEFINED) {
       window.setSize(new Dimension(width, INITIAL_HEIGHT));
-      height = Integer
-          .parseInt(jsExecutor.execute(JAVASCRIPT_GET_BODY_HEIGHT).getExecutionResult().toString());
+      height = getBodyHeight();
       if (height > MAX_SIZE) {
         LOG.warn("Height is over browser limit, changing height to {}", MAX_SIZE);
         height = MAX_SIZE;
@@ -85,5 +85,16 @@ public class ResolutionModifier implements CollectorJob {
     }
     LOG.info("Setting resolution to  {}x{}  ", width, height);
     window.setSize(new Dimension(width, height));
+  }
+
+  private int getBodyHeight() throws ProcessingException {
+    String result = jsExecutor.execute(JAVASCRIPT_GET_BODY_HEIGHT).getExecutionResultAsString();
+    try {
+      return Integer.parseInt(result);
+    } catch (NumberFormatException ex) {
+      String message = "Cannot parse javascript result to integer, unknown body height";
+      LOG.warn(message);
+      throw new ProcessingException(message, ex);
+    }
   }
 }

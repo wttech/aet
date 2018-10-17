@@ -22,13 +22,14 @@ import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.job.common.SeleniumWaitHelper;
 import com.cognifide.aet.job.common.modifiers.WebElementsLocatorParams;
-import com.cognifide.aet.job.common.utils.javaScript.JavaScriptJobExecutor;
-import com.cognifide.aet.job.common.utils.javaScript.JavaScriptJobResult;
+import com.cognifide.aet.job.common.utils.javascript.JavaScriptJobExecutor;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.lang3.BooleanUtils;
 import org.openqa.selenium.By;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -76,19 +77,36 @@ public class HideModifier extends WebElementsLocatorParams implements CollectorJ
   private CollectorStepResult hideElement(By locator, boolean leaveBlankSpace)
       throws ProcessingException {
 
+    CollectorStepResult result;
+    try {
+      hideElements(locator, leaveBlankSpace);
+      result = CollectorStepResult.newModifierResult();
+    } catch (TimeoutException e) {
+      final String message =
+          String.format("Element not found before timeout (%s seconds): '%s'",
+              getTimeoutInSeconds(), locator.toString());
+      result = CollectorStepResult.newProcessingErrorResult(message);
+      LOG.info(message);
+    } catch (WebDriverException e) {
+      final String message = String
+          .format("Error while hiding element %s. Error: %s",
+              locator.toString(), e.getMessage());
+      result = CollectorStepResult.newProcessingErrorResult(message);
+      LOG.warn(message, e);
+    }
+    return result;
+  }
+
+  private void hideElements(By locator, boolean leaveBlankSpace) throws ProcessingException {
     String script = retrieveHidingScript(leaveBlankSpace);
+
     SeleniumWaitHelper
         .waitForElementToBePresent(webDriver, locator, getTimeoutInSeconds());
 
     List<WebElement> webElements = webDriver.findElements(locator);
     for (WebElement element : webElements) {
-      JavaScriptJobResult result = jsExecutor.execute(script, element);
-      if (result.isException()) {
-        throw new ProcessingException("Can't hide element by " + locator.toString(),
-            (Throwable) result.getExecutionResult());
-      }
+      jsExecutor.execute(script, element);
     }
-    return CollectorStepResult.newModifierResult();
   }
 
   private String retrieveHidingScript(boolean leaveBlankSpace) {

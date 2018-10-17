@@ -21,8 +21,9 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.cognifide.aet.job.api.exceptions.ParametersException;
-import com.cognifide.aet.job.common.utils.javaScript.JavaScriptJobExecutor;
-import com.cognifide.aet.job.common.utils.javaScript.JavaScriptJobResult;
+import com.cognifide.aet.job.api.exceptions.ProcessingException;
+import com.cognifide.aet.job.common.utils.javascript.JavaScriptJobExecutor;
+import com.cognifide.aet.job.common.utils.javascript.JavaScriptJobResult;
 import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
@@ -123,7 +124,7 @@ public class ResolutionModifierTest {
   }
 
   @Test
-  public void collectTest_setWidthHeight() throws ParametersException {
+  public void collectTest_setWidthHeight() throws ParametersException, ProcessingException {
     when(params.containsKey(HEIGHT_PARAM)).thenReturn(true);
     when(params.containsKey(WIDTH_PARAM)).thenReturn(true);
     when(params.get(HEIGHT_PARAM)).thenReturn("" + CUSTOM_HEIGHT);
@@ -151,7 +152,7 @@ public class ResolutionModifierTest {
   }
 
   @Test
-  public void collectTest_setOnlyWidth() throws ParametersException {
+  public void collectTest_setOnlyWidth() throws ParametersException, ProcessingException {
     setUp_setOnlyWidth();
     when(jsExecutor.execute(JAVASCRIPT_GET_BODY_HEIGHT))
         .thenReturn(new JavaScriptJobResult(CUSTOM_HEIGHT));
@@ -165,7 +166,8 @@ public class ResolutionModifierTest {
   }
 
   @Test
-  public void collectTest_setOnlyWidth_reachedBrowserHeightLimit() throws ParametersException {
+  public void collectTest_setOnlyWidth_reachedBrowserHeightLimit()
+      throws ParametersException, ProcessingException {
     setUp_setOnlyWidth();
     when(jsExecutor.execute(JAVASCRIPT_GET_BODY_HEIGHT))
         .thenReturn(new JavaScriptJobResult(BROWSER_HEIGHT_LIMIT + 5000L));

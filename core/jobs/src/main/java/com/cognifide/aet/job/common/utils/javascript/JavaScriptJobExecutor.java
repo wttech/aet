@@ -13,8 +13,9 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.job.common.utils.javaScript;
+package com.cognifide.aet.job.common.utils.javascript;
 
+import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,14 +32,18 @@ public class JavaScriptJobExecutor {
     currentUrl = webDriver.getCurrentUrl();
   }
 
-  public JavaScriptJobResult execute(String jsSnippet, Object... elements) {
-    JavaScriptJobResult result;
+  public JavaScriptJobResult execute(String jsSnippet, Object... elements)
+      throws ProcessingException {
+
     try {
-      result = executeJs(jsSnippet, elements);
+      return executeJs(jsSnippet, elements);
     } catch (Exception ex) {
-      result = handleJsException(jsSnippet, ex);
+      String message = String
+          .format("Can't execute JavaScript command. jsSnippet: \"%s\". Error: %s ",
+              jsSnippet, ex.getMessage());
+      LOGGER.warn(message, ex);
+      throw new ProcessingException(message, ex);
     }
-    return result;
   }
 
   private JavaScriptJobResult executeJs(String jsSnippet, Object... elements) {
@@ -47,14 +52,6 @@ public class JavaScriptJobExecutor {
     }
     Object jsResult = executor.executeScript(jsSnippet, elements);
     return new JavaScriptJobResult(jsResult);
-  }
-
-  private JavaScriptJobResult handleJsException(String jsSnippet, Exception ex) {
-    String message = String
-        .format("Can't execute JavaScript command. jsSnippet: \"%s\". Error: %s ",
-            jsSnippet, ex.getMessage());
-    LOGGER.warn(message, ex);
-    return new JavaScriptJobResult(ex);
   }
 
 }

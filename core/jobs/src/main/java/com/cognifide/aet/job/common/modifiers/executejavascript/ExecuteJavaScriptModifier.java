@@ -20,8 +20,7 @@ import com.cognifide.aet.job.api.ParametersValidator;
 import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
-import com.cognifide.aet.job.common.utils.javaScript.JavaScriptJobExecutor;
-import com.cognifide.aet.job.common.utils.javaScript.JavaScriptJobResult;
+import com.cognifide.aet.job.common.utils.javascript.JavaScriptJobExecutor;
 import java.nio.charset.StandardCharsets;
 import java.util.Map;
 import org.apache.commons.codec.binary.Base64;
@@ -54,13 +53,9 @@ public class ExecuteJavaScriptModifier implements CollectorJob {
 
   @Override
   public CollectorStepResult collect() throws ProcessingException {
-    final String jsSnippet = getJsSnippet();
-    JavaScriptJobResult result = jsExecutor.execute(jsSnippet);
-    if (result.isException()) {
-      return CollectorStepResult.newProcessingErrorResult(result.getExceptionMessage());
-    } else {
-      return CollectorStepResult.newModifierResult();
-    }
+    String jsSnippet = getJsSnippet();
+    jsExecutor.execute(jsSnippet);
+    return CollectorStepResult.newModifierResult();
   }
 
   private String getJsSnippet() throws ProcessingException {
