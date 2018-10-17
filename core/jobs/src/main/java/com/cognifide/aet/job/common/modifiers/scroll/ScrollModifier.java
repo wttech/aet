@@ -27,11 +27,11 @@ class ScrollModifier implements CollectorJob {
 
   static final String NAME = "scroll";
 
-  private final ParametersParser parametersParser;
+  private final ScrollModifierParamsParser parametersParser;
   private final JavaScriptJobExecutor jsExecutor;
 
   ScrollModifier(WebDriver webDriver) {
-    this.parametersParser = new ParametersParser();
+    this.parametersParser = new ScrollModifierParamsParser();
     this.jsExecutor = new JavaScriptJobExecutor(webDriver);
   }
 

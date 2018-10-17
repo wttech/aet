@@ -20,7 +20,7 @@ import java.util.Map;
 import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 
-class ParametersParser {
+class ScrollModifierParamsParser {
 
   private static final String TOP = "window.scrollTo(0, 0);";
   private static final String BOTTOM = "window.scrollTo(0, document.body.scrollHeight);";

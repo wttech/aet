@@ -53,9 +53,15 @@ public class ExecuteJavaScriptModifier implements CollectorJob {
 
   @Override
   public CollectorStepResult collect() throws ProcessingException {
+    CollectorStepResult result;
     String jsSnippet = getJsSnippet();
-    jsExecutor.execute(jsSnippet);
-    return CollectorStepResult.newModifierResult();
+    try {
+      jsExecutor.execute(jsSnippet);
+      result = CollectorStepResult.newModifierResult();
+    } catch (ProcessingException ex) {
+      result = CollectorStepResult.newProcessingErrorResult(ex.getMessage());
+    }
+    return result;
   }
 
   private String getJsSnippet() throws ProcessingException {
