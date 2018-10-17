@@ -19,6 +19,7 @@ import com.cognifide.aet.communication.api.metadata.Comparator;
 import com.cognifide.aet.communication.api.metadata.Operation;
 import com.cognifide.aet.communication.api.metadata.Step;
 import com.cognifide.aet.communication.api.metadata.Suite;
+import com.cognifide.aet.communication.api.metadata.SuiteBuilder;
 import com.cognifide.aet.communication.api.metadata.Test;
 import com.cognifide.aet.communication.api.metadata.Url;
 import com.cognifide.aet.executor.model.CollectorStep;
@@ -118,7 +119,7 @@ public class SuiteFactory {
     String project = testSuiteRun.getProject();
     String name = testSuiteRun.getName();
     String patternCorrelationId = getPatternCorrelationId(testSuiteRun);
-    return new Suite(correlationId, company, project, name, patternCorrelationId);
+    return new SuiteBuilder().setCorrelationId(correlationId).setCompany(company).setProject(project).setName(name).setPatternCorrelationId(patternCorrelationId).createSuite();
   }
 
   private String getPatternCorrelationId(TestSuiteRun testSuiteRun) {

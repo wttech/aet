@@ -25,6 +25,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 import com.cognifide.aet.communication.api.metadata.Suite;
+import com.cognifide.aet.communication.api.metadata.SuiteBuilder;
 import com.cognifide.aet.executor.model.CollectorStep;
 import com.cognifide.aet.executor.model.ComparatorStep;
 import com.cognifide.aet.executor.model.TestRun;
@@ -118,7 +119,8 @@ public class SuiteValidatorTest {
   public void validateTestSuiteRun_whenValidSuiteWithPatternId_expectSuccess()
       throws StorageException {
     String patternCorrelationId = "company-project-suite-name-123456789";
-    Suite patternSuite = new Suite(patternCorrelationId, COMPANY, PROJECT, "suite-name", null);
+    Suite patternSuite = new SuiteBuilder().setCorrelationId(patternCorrelationId).setCompany(COMPANY).setProject(PROJECT).setName("suite-name").setPatternCorrelationId(null)
+        .createSuite();
     when(testSuiteRun.getPatternCorrelationId()).thenReturn(patternCorrelationId);
     when(metadataDAO.getSuite(any(), eq(patternCorrelationId))).thenReturn(patternSuite);
 

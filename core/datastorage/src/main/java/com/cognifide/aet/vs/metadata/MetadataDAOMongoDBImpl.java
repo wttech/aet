@@ -126,6 +126,11 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
   }
 
   @Override
+  public Suite getSuiteByChecksum(String checksum) {
+    return null;//todo
+  }
+
+  @Override
   public Suite getLatestRun(DBKey dbKey, String name) throws StorageException {
     MongoCollection<Document> metadata = getMetadataCollection(dbKey);
     LOGGER.debug("Fetching latest suite run for company: `{}`, project: `{}`, name `{}`.",

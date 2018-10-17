@@ -3,15 +3,12 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
- * in compliance with the License. You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License
- * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
- * or implied. See the License for the specific language governing permissions and limitations under
- * the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 package com.cognifide.aet.communication.api.metadata;
 
@@ -39,21 +36,26 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.NotBlank;
 
 public class Suite implements Serializable, Commentable, Named, Validatable {
 
   private static final long serialVersionUID = 3602287822306302730L;
+
   private static final Gson GSON_FOR_JSON = new GsonBuilder()
       .registerTypeHierarchyAdapter(Collection.class, new CollectionSerializer())
       .registerTypeHierarchyAdapter(Map.class, new MapSerializer())
       .registerTypeAdapter(Suite.Timestamp.class, new TimestampSerializer())
       .create();
+
   private static final Type SUITE_TYPE = new TypeToken<Suite>() {
   }.getType();
 
   @NotBlank
   private final String correlationId;
+
+  private  String projecHashCode = StringUtils.EMPTY;
 
   @NotBlank
   @Size(max = 30)
@@ -69,6 +71,12 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
   private final String name;
 
   @NotNull
+  @Valid
+  private final List<Test> tests = new ArrayList<>();
+
+  private final String patternCorrelationId;
+
+  @NotNull
   @Min(1)
   private Long version;
 
@@ -81,13 +89,11 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
 
   private Statistics statistics;
 
-  @NotNull
-  @Valid
-  private final List<Test> tests = new ArrayList<>();
+  public void setCheckSumProject(String projecHashCode) {
+    this.projecHashCode = projecHashCode;
+  }
 
-  private final String patternCorrelationId;
-
-  public Suite(String correlationId, String company, String project, String name,
+  public Suite(String correlationId, String company, String project, String name,//delete it
       String patternCorrelationId) {
     this.correlationId = correlationId;
     this.company = company;
@@ -95,6 +101,22 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
     this.name = name;
     this.runTimestamp = new Timestamp(System.currentTimeMillis());
     this.patternCorrelationId = patternCorrelationId;
+  }
+
+  public Suite(String correlationId, String company, String project, String name,
+      String patternCorrelationId, String projectHashCode) {
+    this.correlationId = correlationId;
+    this.company = company;
+    this.project = project;
+    this.name = name;
+    this.runTimestamp = new Timestamp(System.currentTimeMillis());
+    this.patternCorrelationId = patternCorrelationId;
+    this.projecHashCode = projectHashCode;
+  }
+
+
+  public static Suite fromJson(Reader jsonReader) {
+    return GSON_FOR_JSON.fromJson(jsonReader, SUITE_TYPE);
   }
 
   public String getCorrelationId() {
@@ -113,6 +135,10 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
     return project;
   }
 
+  public String getCheckSum() {
+    return projecHashCode;
+  }
+
   @Override
   public String getName() {
     return name;
@@ -120,6 +146,11 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
 
   public Long getVersion() {
     return version;
+  }
+
+
+  public void setVersion(long version) {
+    this.version = version;
   }
 
   public Long incrementVersion() {
@@ -191,10 +222,6 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
         .toString();
   }
 
-  public void setVersion(long version) {
-    this.version = version;
-  }
-
   @Override
   public void validate(final Set<String> ignoreFields) throws ValidatorException {
     Set<ConstraintViolation<Suite>> errors = FluentIterable
@@ -212,22 +239,18 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
     }
   }
 
-  public static Suite fromJson(Reader jsonReader) {
-    return GSON_FOR_JSON.fromJson(jsonReader, SUITE_TYPE);
-  }
-
   public String toJson() {
     return GSON_FOR_JSON.toJson(this, SUITE_TYPE);
   }
 
   @Override
-  public void setComment(String comment) {
-    this.comment = comment;
+  public String getComment() {
+    return comment;
   }
 
   @Override
-  public String getComment() {
-    return comment;
+  public void setComment(String comment) {
+    this.comment = comment;
   }
 
   public static class Timestamp implements Serializable {

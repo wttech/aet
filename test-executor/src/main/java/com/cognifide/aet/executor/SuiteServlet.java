@@ -55,6 +55,7 @@ public class SuiteServlet extends HttpServlet {
   private static final String DOMAIN_PARAM = "domain";
   private static final String PATTERN_CORRELATION_ID_PARAM = "pattern";
   private static final String PATTERN_SUITE_PARAM = "patternSuite";
+  private static final String PROJECT_CHECK_SUM = "projectChecksSum";
 
 
   @Reference
@@ -78,10 +79,11 @@ public class SuiteServlet extends HttpServlet {
       final String domain = requestData.get(DOMAIN_PARAM);
       final String patternCorrelationId = requestData.get(PATTERN_CORRELATION_ID_PARAM);
       final String patternSuite = requestData.get(PATTERN_SUITE_PARAM);
+      final String projectCheckSum = requestData.get(PROJECT_CHECK_SUM);
 
       if (StringUtils.isNotBlank(suite)) {
         HttpSuiteExecutionResultWrapper resultWrapper = suiteExecutor
-            .execute(suite, name, domain, patternCorrelationId, patternSuite);
+            .execute(suite, name, domain, patternCorrelationId, patternSuite,projectCheckSum);
         final SuiteExecutionResult suiteExecutionResult = resultWrapper.getExecutionResult();
         Gson gson = new Gson();
 

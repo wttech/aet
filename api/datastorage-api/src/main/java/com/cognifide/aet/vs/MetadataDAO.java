@@ -93,4 +93,6 @@ public interface MetadataDAO extends Serializable {
    * @return list of projects in as DBKeys
    */
   Collection<DBKey> getProjects(String company) throws StorageException;
+
+  Suite getSuiteByChecksum(String hashFromSuite);
 }
