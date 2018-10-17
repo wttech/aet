@@ -15,7 +15,6 @@
  */
 package com.cognifide.aet.job.common.utils;
 
-import com.cognifide.aet.job.common.modifiers.resolution.ResolutionModifier;
 import java.util.LinkedList;
 import java.util.function.Supplier;
 import org.slf4j.Logger;
@@ -23,7 +22,7 @@ import org.slf4j.LoggerFactory;
 
 public class Sampler {
 
-  private static final Logger LOG = LoggerFactory.getLogger(ResolutionModifier.class);
+  private static final Logger LOG = LoggerFactory.getLogger(Sampler.class);
 
   /**
    * Collects values from supplier in specified periods of time, and compares last n samples every
