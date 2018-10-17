@@ -38,8 +38,6 @@ public class HomePageTilesTest {
   private static final int EXPECTED_TESTS_WARN = 5;
 
   private static final int EXPECTED_TESTS_FAIL = 57;
-  
-  private static final int EXPECTED_TESTS_FAIL = 55;
 
   @Inject
   private ReportHomePage page;
