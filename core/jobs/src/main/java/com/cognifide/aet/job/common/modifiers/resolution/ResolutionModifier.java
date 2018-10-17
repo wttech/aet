@@ -37,7 +37,7 @@ public class ResolutionModifier implements CollectorJob {
   private static final String WIDTH_PARAM = "width";
   private static final String HEIGHT_PARAM = "height";
   private static final String JAVASCRIPT_GET_BODY_HEIGHT = "return document.body.scrollHeight";
-  private static final int MAX_SIZE = 15000;
+  private static final int MAX_SIZE = 35000;
   private static final int INITIAL_HEIGHT = 300;
   private static final int HEIGHT_NOT_DEFINED = 0;
 
