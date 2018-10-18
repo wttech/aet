@@ -46,6 +46,8 @@ import org.slf4j.LoggerFactory;
 @Component(immediate = true)
 public class MetadataDAOMongoDBImpl implements MetadataDAO {
 
+  public static final String PROJECT_HASH_CODE = "projectHashCode";
+
   private static final long serialVersionUID = 3031952772776598636L;
 
   private static final Logger LOGGER = LoggerFactory.getLogger(MetadataDAOMongoDBImpl.class);
@@ -126,8 +128,17 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
   }
 
   @Override
-  public Suite getSuiteByChecksum(String checksum) {
-    return null;//todo
+  public Suite getSuiteByChecksum(DBKey dbKey,String checkSum) throws StorageException {
+    MongoCollection<Document> metadata = getMetadataCollection(dbKey);
+
+    LOGGER.debug("Fetching suite with checksum: {} ", checkSum);
+
+    final FindIterable<Document> found = metadata
+        .find(Filters.eq(PROJECT_HASH_CODE, checkSum))
+        .sort(Sorts.descending(SUITE_VERSION_PARAM_NAME))
+        .limit(1);
+    final Document result = found.first();
+    return new DocumentConverter(result).toSuite();
   }
 
   @Override

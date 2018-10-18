@@ -59,7 +59,7 @@ public class SuiteDataService {
       }
       return SuiteMergeStrategy.merge(currentRun, lastVersion, pattern);
     } else {
-      Suite pattern = metadataDAO.getSuiteByChecksum(checkSumCurrentRunProject);
+      Suite pattern = metadataDAO.getSuiteByChecksum(dbKey,checkSumCurrentRunProject);
       if (pattern != null) {
         return SuiteMergeStrategy.merge(currentRun, lastVersion, pattern);
       } else {
@@ -92,26 +92,25 @@ public class SuiteDataService {
     return null;
   }
 
-  private String getProjectChecksum() {
-    Gson gson = new Gson();
-    CloseableHttpClient httpclient = HttpClients.createDefault();
-    String url = "http://localhost:4502/bin/bridge/checksum";// pass by sh script
-    HttpGet httpget = new HttpGet(url);
-    String jsonSting = null;
-    try {
-      CloseableHttpResponse response = httpclient.execute(httpget);
-      jsonSting = EntityUtils.toString(response.getEntity());
-    } catch (IOException e) {
-      e.printStackTrace();//todo
-    }
-    Type emChecksumsType = new TypeToken<ArrayList<AemChecksum>>() {
-    }.getType();
-    List<AemChecksum> aemChecksumList = gson.fromJson(jsonSting, emChecksumsType);
-    List<String> checksums = aemChecksumList.stream().map(aemChecksum -> aemChecksum.getChecksum()).collect(Collectors.toList());
-    String projectChecksum = DigestUtils.md5Hex(checksums.toString());
-    return projectChecksum;
-
-  }
+//  private String getProjectChecksum() {//todo delete?
+//    Gson gson = new Gson();
+//    CloseableHttpClient httpclient = HttpClients.createDefault();
+//    String url = "http://localhost:4502/bin/bridge/checksum";// pass by sh script
+//    HttpGet httpget = new HttpGet(url);
+//    String jsonSting = null;
+//    try {
+//      CloseableHttpResponse response = httpclient.execute(httpget);
+//      jsonSting = EntityUtils.toString(response.getEntity());
+//    } catch (IOException e) {
+//      e.printStackTrace();//todo
+//    }
+//    Type emChecksumsType = new TypeToken<ArrayList<AemChecksum>>() {
+//    }.getType();
+//    List<AemChecksum> aemChecksumList = gson.fromJson(jsonSting, emChecksumsType);
+//    List<String> checksums = aemChecksumList.stream().map(aemChecksum -> aemChecksum.getChecksum()).collect(Collectors.toList());
+//    String projectChecksum = DigestUtils.md5Hex(checksums.toString());
+//    return projectChecksum;
+//  }
 
   public Suite saveSuite(final Suite suite) throws ValidatorException, StorageException {
     return metadataDAO.saveSuite(suite);

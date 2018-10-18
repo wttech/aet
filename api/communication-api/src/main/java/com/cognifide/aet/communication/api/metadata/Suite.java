@@ -55,7 +55,7 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
   @NotBlank
   private final String correlationId;
 
-  private  String projecHashCode = StringUtils.EMPTY;
+  private  String projectHashCode = StringUtils.EMPTY;
 
   @NotBlank
   @Size(max = 30)
@@ -90,7 +90,7 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
   private Statistics statistics;
 
   public void setCheckSumProject(String projecHashCode) {
-    this.projecHashCode = projecHashCode;
+    this.projectHashCode = projecHashCode;
   }
 
   public Suite(String correlationId, String company, String project, String name,//delete it
@@ -111,7 +111,7 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
     this.name = name;
     this.runTimestamp = new Timestamp(System.currentTimeMillis());
     this.patternCorrelationId = patternCorrelationId;
-    this.projecHashCode = projectHashCode;
+    this.projectHashCode = projectHashCode;
   }
 
 
@@ -136,7 +136,7 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
   }
 
   public String getCheckSum() {
-    return projecHashCode;
+    return projectHashCode;
   }
 
   @Override

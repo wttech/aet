@@ -94,5 +94,5 @@ public interface MetadataDAO extends Serializable {
    */
   Collection<DBKey> getProjects(String company) throws StorageException;
 
-  Suite getSuiteByChecksum(String hashFromSuite);
+  Suite getSuiteByChecksum(DBKey dbKey,String checkSum) throws StorageException;
 }
