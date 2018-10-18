@@ -59,28 +59,19 @@ public class SuiteDataService {
       }
       return SuiteMergeStrategy.merge(currentRun, lastVersion, pattern);
     } else {
+
       Suite pattern = metadataDAO.getSuiteByChecksum(dbKey,checkSumCurrentRunProject);
-      if (pattern != null) {
+      if (pattern != null) {//if pattern exist for checksum
         return SuiteMergeStrategy.merge(currentRun, lastVersion, pattern);
       } else {
-        try {
-          metadataDAO.updateSuite(currentRun);
-        } catch (ValidatorException e) {
-          e.printStackTrace();
-        }
-        currentRun.setCheckSumProject(checkSumCurrentRunProject);//todo should by immutable? // it is override?
+        //pattern dont have hash
+        //get actual suit, add checksum
+        //save
+        currentRun.setCheckSumProject(checkSumCurrentRunProject);//todo should by immutable?
         return updateSuit(currentRun);
       }
     }
-//    final SimpleDBKey dbKey = new SimpleDBKey(currentRun);
-//    Suite lastVersion = metadataDAO.getLatestRun(dbKey, currentRun.getName());
-//    Suite pattern;
-//    if (currentRun.getPatternCorrelationId() != null) {
-//      pattern = metadataDAO.getSuite(dbKey, currentRun.getPatternCorrelationId());
-//    } else {
-//      pattern = lastVersion;
-//    }
-//    return SuiteMergeStrategy.merge(currentRun, lastVersion, pattern);
+
   }
 
   private Suite updateSuit(Suite currentRun) throws StorageException {
