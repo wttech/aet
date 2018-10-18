@@ -138,7 +138,9 @@ define(['angularAMD', 'metadataService', 'metadataAccessService'],
 
           if (isCollectorWithPattern(step) && isStepComparatorRebaseable(
                   comparator)) {
-            result = comparator.stepResult.previousStatus === 'FAILED';
+            result = (comparator.stepResult.previousStatus === 'FAILED'
+                || comparator.stepResult.previousStatus
+                === 'CONDITIONALLY_PASSED');
             if (result) {
               step.revertPatternStatistics();
               step.pattern = step.oldPattern;

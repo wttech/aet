@@ -223,7 +223,8 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
           }
         }
 
-        function revertPatternStatistics() {
+        function
+        revertPatternStatistics() {
           decoratedObject.failed++;
           decoratedObject.rebased--;
           if (decoratedParentReference &&
@@ -246,7 +247,8 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
         function hasStepComparatorChangesToAccept(comparator) {
           return comparator && comparator.stepResult &&
               comparator.stepResult.rebaseable &&
-              comparator.stepResult.status === 'FAILED';
+              (comparator.stepResult.status === 'FAILED' ||
+                  comparator.stepResult.status === 'CONDITIONALLY_PASSED');
         }
 
         function hasStepComparatorAcceptedChanges(comparator) {
@@ -324,10 +326,12 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
                 passed();
                 break;
               case 'CONDITIONALLY_PASSED':
+                if (stepResult.rebaseable) {
+                  updatePatternsToAccept(1);
+                }
                 conditionallyPassed();
                 break;
               case 'FAILED':
-                // if `rebaseable` comparator, increment acceptable patterns counter
                 if (stepResult.rebaseable) {
                   updatePatternsToAccept(1);
                 }
