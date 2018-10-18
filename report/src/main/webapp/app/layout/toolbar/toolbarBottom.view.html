@@ -93,8 +93,8 @@
     </h5>
   </div>
   <div class="suite-rerun" ng-if="rerunInProgress">
-    <p class="preformatted suite-rerun-msg-font">Status: {{rerunMsg}}</p>
-    <p class="preformatted suite-rerun-msg-font suite-rerun-progress" ng-if="rerunInProgressSuccessful">Progress: {{rerunProgress | number: 2}}%</p>
+    <p class="suite-rerun-msg">Status: {{rerunMsg}}</p>
+    <p class="suite-rerun-msg" ng-if="rerunInProgressSuccessful">Progress: {{rerunProgress | number: 2}}%</p>
   </div>
   <div class="toolbar-blocks">
     <div class="toolbar-btns is-absolute">

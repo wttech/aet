@@ -275,15 +275,16 @@
   font-family: monospace;
 }
 
-.suite-rerun{
+.suite-rerun {
   margin-top: 24px;
 }
 
-.suite-rerun-msg-font{
-  color: grey;
-  font-size: 16px;
+.suite-rerun-msg {
+  color: $gray_middle;
+  font-size: 12px;
+  font-family: $font_light
 }
 
-.suite-rerun-msg{
-  padding-bottom: 0px;
+.suite-rerun p {
+  margin-bottom: 3px;
 }
