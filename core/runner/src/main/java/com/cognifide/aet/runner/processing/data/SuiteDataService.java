@@ -19,19 +19,6 @@ import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.SimpleDBKey;
 import com.cognifide.aet.vs.StorageException;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.stream.Collectors;
-import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -50,58 +37,44 @@ public class SuiteDataService {
     Suite lastVersion = metadataDAO.getLatestRun(dbKey, currentRun.getName());
     String checkSumCurrentRunProject = currentRun.getCheckSum();
 
-    if (isNullOrEmpty(checkSumCurrentRunProject)) {// run old
+    if (isNullOrEmpty(checkSumCurrentRunProject)) {// run without checksum
       Suite pattern;
+
       if (!isNullOrEmpty(currentRun.getPatternCorrelationId())) {
+        //if exist id
         pattern = metadataDAO.getSuite(dbKey, currentRun.getPatternCorrelationId());
       } else {
         pattern = lastVersion;
       }
       return SuiteMergeStrategy.merge(currentRun, lastVersion, pattern);
-    } else {
 
-      Suite pattern = metadataDAO.getSuiteByChecksum(dbKey,checkSumCurrentRunProject);
-      if (pattern != null) {//if pattern exist for checksum
-        return SuiteMergeStrategy.merge(currentRun, lastVersion, pattern);
+
+    } else {
+      Suite patternByCorrelationId;
+      Suite patternByChecksum = metadataDAO.getSuiteByChecksum(dbKey, checkSumCurrentRunProject);
+      // in db exits checksum
+      if (patternByChecksum != null) {//if pattern exist for checksum
+        return SuiteMergeStrategy.merge(currentRun, lastVersion, patternByChecksum);
       } else {
-        //pattern dont have hash
-        //get actual suit, add checksum
-        //save
-        currentRun.setCheckSumProject(checkSumCurrentRunProject);//todo should by immutable?
-        return updateSuit(currentRun);
+        if (!isNullOrEmpty(currentRun.getPatternCorrelationId())) {//// exist pattern
+          patternByCorrelationId = metadataDAO.getSuite(dbKey, currentRun.getPatternCorrelationId());
+          updateSuit(patternByCorrelationId);
+        } else { //no exist, first time?
+          patternByCorrelationId = lastVersion;
+        }
+        return SuiteMergeStrategy.merge(currentRun, lastVersion, patternByCorrelationId);
       }
     }
-
   }
 
-  private Suite updateSuit(Suite currentRun) throws StorageException {
+  private void updateSuit(Suite currentRun) throws StorageException {
     try {
-      return metadataDAO.updateSuite(currentRun);
+      metadataDAO.updateSuite(currentRun);
     } catch (ValidatorException e) {
       e.printStackTrace();
     }
-    return null;
   }
 
-//  private String getProjectChecksum() {//todo delete?
-//    Gson gson = new Gson();
-//    CloseableHttpClient httpclient = HttpClients.createDefault();
-//    String url = "http://localhost:4502/bin/bridge/checksum";// pass by sh script
-//    HttpGet httpget = new HttpGet(url);
-//    String jsonSting = null;
-//    try {
-//      CloseableHttpResponse response = httpclient.execute(httpget);
-//      jsonSting = EntityUtils.toString(response.getEntity());
-//    } catch (IOException e) {
-//      e.printStackTrace();//todo
-//    }
-//    Type emChecksumsType = new TypeToken<ArrayList<AemChecksum>>() {
-//    }.getType();
-//    List<AemChecksum> aemChecksumList = gson.fromJson(jsonSting, emChecksumsType);
-//    List<String> checksums = aemChecksumList.stream().map(aemChecksum -> aemChecksum.getChecksum()).collect(Collectors.toList());
-//    String projectChecksum = DigestUtils.md5Hex(checksums.toString());
-//    return projectChecksum;
-//  }
 
   public Suite saveSuite(final Suite suite) throws ValidatorException, StorageException {
     return metadataDAO.saveSuite(suite);
