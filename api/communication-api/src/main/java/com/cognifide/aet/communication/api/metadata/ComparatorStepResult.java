@@ -46,6 +46,11 @@ public class ComparatorStepResult extends StepResult {
     return rebaseable;
   }
 
+  public boolean isAcceptable() {
+    return rebaseable &&
+        (Status.FAILED.equals(status) || Status.CONDITIONALLY_PASSED.equals(status));
+  }
+
   public enum Status {
     PASSED,
     FAILED,
