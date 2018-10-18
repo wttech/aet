@@ -10,6 +10,7 @@ All notable changes to AET will be documented in this file.
 ## Unreleased
 **List of changes that are finished but not yet released in any final version.**
 - [PR-399](https://github.com/Cognifide/aet/pull/399) Bug fix on side panel - conditional tests ([#398](https://github.com/Cognifide/aet/issues/398))
+- [PR-387](https://github.com/Cognifide/aet/pull/387) Set max allowed page screenshot height to 35k pixels.
 
 ## Version 3.0.1
 

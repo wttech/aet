@@ -12,8 +12,8 @@ Module name: **resolution**
 
 | Parameter | Value | Description | Mandatory |
 | --------- | ----- | ----------- | --------- |
-| `width` | int (1 to 15000) | Window width | yes |
-| `height` | int (1 to 15000) | Window height | no |
+| `width` | int (1 to 35000) | Window width | yes |
+| `height` | int (1 to 35000) | Window height | no |
 
 | Note |
 |:------ |
