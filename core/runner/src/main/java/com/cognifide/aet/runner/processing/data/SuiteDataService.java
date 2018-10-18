@@ -36,35 +36,42 @@ public class SuiteDataService {
     final SimpleDBKey dbKey = new SimpleDBKey(currentRun);
     Suite lastVersion = metadataDAO.getLatestRun(dbKey, currentRun.getName());
     String checkSumCurrentRunProject = currentRun.getCheckSum();
-
-    if (isNullOrEmpty(checkSumCurrentRunProject)) {// run without checksum
-      Suite pattern;
-
-      if (!isNullOrEmpty(currentRun.getPatternCorrelationId())) {
-        //if exist id
+    Suite pattern;
+    if (isTestRunWithCheckSum(checkSumCurrentRunProject)) {
+      Suite patternByChecksum = metadataDAO.getSuiteByChecksum(dbKey, checkSumCurrentRunProject);
+      if (isChecksumIsAssignedToPathern(patternByChecksum)) {
+        pattern = patternByChecksum;
+      } else {
+        pattern = prepareSuite(currentRun, dbKey, lastVersion, checkSumCurrentRunProject);
+      }
+    } else {
+      if (!isTestRunWithCheckSum(currentRun.getPatternCorrelationId())) {
         pattern = metadataDAO.getSuite(dbKey, currentRun.getPatternCorrelationId());
       } else {
         pattern = lastVersion;
       }
-      return SuiteMergeStrategy.merge(currentRun, lastVersion, pattern);
-
-
-    } else {
-      Suite patternByCorrelationId;
-      Suite patternByChecksum = metadataDAO.getSuiteByChecksum(dbKey, checkSumCurrentRunProject);
-      // in db exits checksum
-      if (patternByChecksum != null) {//if pattern exist for checksum
-        return SuiteMergeStrategy.merge(currentRun, lastVersion, patternByChecksum);
-      } else {
-        if (!isNullOrEmpty(currentRun.getPatternCorrelationId())) {//// exist pattern
-          patternByCorrelationId = metadataDAO.getSuite(dbKey, currentRun.getPatternCorrelationId());
-          updateSuit(patternByCorrelationId);
-        } else { //no exist, first time?
-          patternByCorrelationId = lastVersion;
-        }
-        return SuiteMergeStrategy.merge(currentRun, lastVersion, patternByCorrelationId);
-      }
     }
+    return SuiteMergeStrategy.merge(currentRun, lastVersion, pattern);
+  }
+
+  private Suite prepareSuite(Suite currentRun, SimpleDBKey dbKey, Suite lastVersion, String checkSumCurrentRunProject) throws StorageException {
+    Suite pattern;
+    if (!isTestRunWithCheckSum(currentRun.getPatternCorrelationId())) {//// exist pattern
+      pattern = metadataDAO.getSuite(dbKey, currentRun.getPatternCorrelationId());
+      pattern.setCheckSumProject(checkSumCurrentRunProject);
+      updateSuit(pattern);
+    } else { //no exist, first time?
+      pattern = lastVersion;
+    }
+    return pattern;
+  }
+
+  private boolean isChecksumIsAssignedToPathern(Suite patternByChecksum) {
+    return patternByChecksum != null;
+  }
+
+  private boolean isTestRunWithCheckSum(String checkSumCurrentRunProject) {
+    return isNullOrEmpty(checkSumCurrentRunProject);
   }
 
   private void updateSuit(Suite currentRun) throws StorageException {
