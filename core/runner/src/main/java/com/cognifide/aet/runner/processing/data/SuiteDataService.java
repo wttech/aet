@@ -46,12 +46,11 @@ public class SuiteDataService {
    * @return suite wrapper with all patterns from the last or specified (see Suite.patternCorrelationId) run, if this is the first run of the suite, patterns will be empty.
    */
   public Suite enrichWithPatterns(final Suite currentRun) throws StorageException {
-    String currentChecksum = getProjectChecksum();//todo get json form bash file
     final SimpleDBKey dbKey = new SimpleDBKey(currentRun);
     Suite lastVersion = metadataDAO.getLatestRun(dbKey, currentRun.getName());
-    String checkSumCurrentRunSuite = currentRun.getCheckSum();
+    String checkSumCurrentRunProject = currentRun.getCheckSum();
 
-    if (!isNullOrEmpty(checkSumCurrentRunSuite)) {
+    if (isNullOrEmpty(checkSumCurrentRunProject)) {// run old
       Suite pattern;
       if (!isNullOrEmpty(currentRun.getPatternCorrelationId())) {
         pattern = metadataDAO.getSuite(dbKey, currentRun.getPatternCorrelationId());
@@ -60,9 +59,8 @@ public class SuiteDataService {
       }
       return SuiteMergeStrategy.merge(currentRun, lastVersion, pattern);
     } else {
-      Suite pattern = metadataDAO.getSuiteByChecksum(checkSumCurrentRunSuite);
+      Suite pattern = metadataDAO.getSuiteByChecksum(checkSumCurrentRunProject);
       if (pattern != null) {
-        //
         return SuiteMergeStrategy.merge(currentRun, lastVersion, pattern);
       } else {
         try {
@@ -70,7 +68,7 @@ public class SuiteDataService {
         } catch (ValidatorException e) {
           e.printStackTrace();
         }
-        currentRun.setCheckSumProject(currentChecksum);//todo should by immutable?
+        currentRun.setCheckSumProject(checkSumCurrentRunProject);//todo should by immutable? // it is override?
         return updateSuit(currentRun);
       }
     }
