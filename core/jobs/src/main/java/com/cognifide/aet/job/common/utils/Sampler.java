@@ -17,6 +17,7 @@ package com.cognifide.aet.job.common.utils;
 
 import java.util.LinkedList;
 import java.util.function.Supplier;
+import org.apache.commons.collections.buffer.CircularFifoBuffer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,24 +34,23 @@ public class Sampler {
    * @param samplingPeriod milliseconds period between taking each sample,
    * @param sampleQueueSize defines the last n elements that are to be compared,
    * @param maxSamplesThreshold max number of samples before return
-   * @return true if pattern is empty or if its match with given value, false otherwise
+   * @return last collected sample
    */
   public static <T> T waitForValue(Supplier<T> samplesSupplier, int samplingPeriod,
       int sampleQueueSize, int maxSamplesThreshold) {
-    LinkedList<T> samplesQueue = new LinkedList<>();
+    CircularFifoBuffer samplesQueue = new CircularFifoBuffer(sampleQueueSize);
 
     int samplesTaken = 0;
     while (!isThresholdReached(samplesTaken, maxSamplesThreshold) &&
-        !areAllSamplesEqual(samplesQueue, sampleQueueSize)) {
+        !areAllSamplesEqual(samplesQueue)) {
 
       CurrentThread.sleep(samplingPeriod);
 
       T nextSample = samplesSupplier.get();
-      removeLast(samplesQueue, sampleQueueSize);
-      samplesQueue.addFirst(nextSample);
+      samplesQueue.add(nextSample);
       ++samplesTaken;
     }
-    return samplesQueue.getFirst();
+    return (T) samplesQueue.get();
   }
 
   private static boolean isThresholdReached(int samplesTaken, int maxSamplesThreshold) {
@@ -61,18 +61,9 @@ public class Sampler {
     return false;
   }
 
-  private static boolean areAllSamplesEqual(LinkedList<?> samplesQueue, int sampleSize) {
-    return isQueueFull(samplesQueue, sampleSize) &&
-        samplesQueue.stream().allMatch(sample -> samplesQueue.get(0).equals(sample));
-  }
-
-  private static boolean isQueueFull(LinkedList<?> samplesQueue, int queueSize) {
-    return samplesQueue.size() == queueSize;
-  }
-
-  private static <T> void removeLast(LinkedList<T> samplesQueue, int sampleQueueSize) {
-    if (isQueueFull(samplesQueue, sampleQueueSize)) {
-      samplesQueue.removeLast();
-    }
+  private static boolean areAllSamplesEqual(CircularFifoBuffer samplesQueue) {
+    return samplesQueue.isFull() &&
+        samplesQueue.stream().allMatch(sample -> samplesQueue.get() != null &&
+            samplesQueue.get().equals(sample));
   }
 }
