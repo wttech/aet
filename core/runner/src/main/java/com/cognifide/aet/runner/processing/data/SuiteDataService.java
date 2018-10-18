@@ -37,6 +37,7 @@ public class SuiteDataService {
     Suite lastVersion = metadataDAO.getLatestRun(dbKey, currentRun.getName());
     String checkSumCurrentRunProject = currentRun.getCheckSum();
     Suite pattern;
+
     if (isTestRunWithCheckSum(checkSumCurrentRunProject)) {
       Suite patternByChecksum = metadataDAO.getSuiteByChecksum(dbKey, checkSumCurrentRunProject);
       if (isChecksumIsAssignedToPathern(patternByChecksum)) {
@@ -45,10 +46,10 @@ public class SuiteDataService {
         pattern = prepareSuite(currentRun, dbKey, lastVersion, checkSumCurrentRunProject);
       }
     } else {
-      if (!isTestRunWithCheckSum(currentRun.getPatternCorrelationId())) {
-        pattern = metadataDAO.getSuite(dbKey, currentRun.getPatternCorrelationId());
-      } else {
+      if (currentRun.getPatternCorrelationId() == null) {
         pattern = lastVersion;
+      } else {
+        pattern = metadataDAO.getSuite(dbKey, currentRun.getPatternCorrelationId());
       }
     }
     return SuiteMergeStrategy.merge(currentRun, lastVersion, pattern);
@@ -60,7 +61,7 @@ public class SuiteDataService {
       pattern = metadataDAO.getSuite(dbKey, currentRun.getPatternCorrelationId());
       pattern.setCheckSumProject(checkSumCurrentRunProject);
       updateSuit(pattern);
-    } else { //no exist, first time?
+    } else {
       pattern = lastVersion;
     }
     return pattern;
@@ -81,7 +82,6 @@ public class SuiteDataService {
       e.printStackTrace();
     }
   }
-
 
   public Suite saveSuite(final Suite suite) throws ValidatorException, StorageException {
     return metadataDAO.saveSuite(suite);
