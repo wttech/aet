@@ -32,10 +32,18 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.stream.Collectors;
 import javax.imageio.ImageIO;
 import org.apache.commons.codec.digest.DigestUtils;
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.By;
@@ -56,6 +64,8 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
 
   private static final String PNG_FORMAT = "png";
 
+  private static final String CSS_SELECTOR_SEPARATOR = ",";
+
   private final WebDriver webDriver;
 
   private final ArtifactsDAO artifactsDAO;
@@ -70,22 +80,6 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
     this.artifactsDAO = artifactsDAO;
   }
 
-  private List<ExcludedElement> getExcludeElementsFromWebElements(List<WebElement> webElements) {
-    List<ExcludedElement> excludeExcludedElements = new ArrayList<>(webElements.size());
-
-    Point screenshotOffset = isSelectorPresent() ?
-        webDriver.findElement(getLocator()).getLocation() : new Point(0, 0);
-    for (WebElement webElement : webElements) {
-      Point point = webElement.getLocation()
-          .moveBy(-screenshotOffset.getX(), -screenshotOffset.getY());
-
-      excludeExcludedElements.add(new ExcludedElement(
-          new java.awt.Point(point.getX(), point.getY()),
-          new java.awt.Dimension(webElement.getSize().width, webElement.getSize().height)));
-    }
-    return excludeExcludedElements;
-  }
-
   @Override
   public CollectorStepResult collect() throws ProcessingException {
     byte[] screenshot = takeScreenshot();
@@ -98,11 +92,7 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
         String resultId = artifactsDAO.saveArtifact(properties, screenshotStream, CONTENT_TYPE);
 
         if (excludeCssSelector != null) {
-          List<ExcludedElement> excludeExcludedElements = getExcludeElementsFromWebElements(
-              webDriver.findElements(By.cssSelector(excludeCssSelector)));
-          stepResult = CollectorStepResult
-              .newCollectedResult(resultId,
-                  new Payload((new LayoutExclude(excludeExcludedElements))));
+          stepResult = getResultWithExcludeSelectors(resultId);
         } else {
           stepResult = CollectorStepResult.newCollectedResult(resultId);
         }
@@ -122,6 +112,65 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
     } else {
       return false;
     }
+  }
+
+  private CollectorStepResult getResultWithExcludeSelectors(String resultId) {
+    ArrayList<String> cssSelectors = new ArrayList<>(
+        Arrays.asList(excludeCssSelector.split(CSS_SELECTOR_SEPARATOR)));
+
+    Map<String, List<WebElement>> elements = searchElementsOnPage(cssSelectors);
+
+    List<WebElement> foundExcludeElements = getFoundWebElements(elements);
+    Set<String> notFoundSelectors = getNotFoundSelectors(elements);
+
+    List<ExcludedElement> excludedElements = getExcludeElementsFromWebElements(
+        foundExcludeElements);
+    return CollectorStepResult.newCollectedResult(resultId,
+        new Payload((new LayoutExclude(excludedElements, notFoundSelectors))));
+  }
+
+  private HashMap<String, List<WebElement>> searchElementsOnPage(ArrayList<String> cssSelectors) {
+    HashMap<String, List<WebElement>> elements = new HashMap<>();
+
+    cssSelectors.forEach(selector -> {
+      List<WebElement> foundElements = webDriver.findElements(By.cssSelector(selector));
+      if (!CollectionUtils.isEmpty(foundElements)) {
+        elements.put(selector, foundElements);
+      } else {
+        elements.put(selector, Collections.emptyList());
+      }
+    });
+
+    return elements;
+  }
+
+  private List<WebElement> getFoundWebElements(Map<String, List<WebElement>> elements) {
+    return elements.values().stream()
+        .flatMap(Collection::stream)
+        .collect(Collectors.toList());
+  }
+
+  private Set<String> getNotFoundSelectors(Map<String, List<WebElement>> elements) {
+    return elements.entrySet().stream()
+        .filter(entry -> entry.getValue().isEmpty())
+        .map(Entry::getKey)
+        .collect(Collectors.toSet());
+  }
+
+  private List<ExcludedElement> getExcludeElementsFromWebElements(List<WebElement> webElements) {
+    List<ExcludedElement> excludeExcludedElements = new ArrayList<>(webElements.size());
+
+    Point screenshotOffset = isSelectorPresent() ?
+        webDriver.findElement(getLocator()).getLocation() : new Point(0, 0);
+    for (WebElement webElement : webElements) {
+      Point point = webElement.getLocation()
+          .moveBy(-screenshotOffset.getX(), -screenshotOffset.getY());
+
+      excludeExcludedElements.add(new ExcludedElement(
+          new java.awt.Point(point.getX(), point.getY()),
+          new java.awt.Dimension(webElement.getSize().width, webElement.getSize().height)));
+    }
+    return excludeExcludedElements;
   }
 
   @Override

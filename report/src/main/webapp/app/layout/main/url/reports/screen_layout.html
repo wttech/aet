@@ -28,7 +28,6 @@
         <span>Show Mask</span>
       </label>
     </div>
-    <span ng-if="case.comparator.stepResult.data.excludeMessage" class="checkboxes-inline">Exclude info: {{case.comparator.stepResult.data.excludeMessage}}</span>
   </div>
   <div class="advanced-screen-comparison button button-small button-blue">
   <a ng-if="case.status == 'FAILED' || case.status == 'CONDITIONALLY_PASSED'" data-ng-click="advancedScreenComparison()" data-aet-compare-screens>Advanced Screen Comparison</a>
@@ -38,6 +37,14 @@
       <ng-include src="'app/layout/main/url/navigation/navigation.comments.html'"/>
       <ng-include src="'app/layout/main/url/navigation/navigation.patternButtons.html'"/>
     </div>
+  </div>
+</div>
+<div>
+  <div class="text-center text-danger" ng-if="case.comparator.stepResult.data.excludeMessage">
+    {{case.comparator.stepResult.data.excludeMessage}}
+  </div>
+  <div class="text-center text-danger" ng-if="case.comparator.stepResult.data.notFoundCssElements">
+    {{case.comparator.stepResult.data.notFoundCssElements}}
   </div>
 </div>
 <div>

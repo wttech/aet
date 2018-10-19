@@ -34,9 +34,12 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.security.SecureRandom;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+import java.util.stream.Collectors;
 import javax.imageio.ImageIO;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.IOUtils;
@@ -64,7 +67,7 @@ public class LayoutComparator implements ComparatorJob {
 
   private boolean excludeFunctionIsOn;
 
-  private boolean excludeElementsNotFound;
+  private Set<String> notFoundExcludeElements;
 
   LayoutComparator(ComparatorProperties comparatorProperties, ArtifactsDAO artifactsDAO) {
     this.properties = comparatorProperties;
@@ -105,8 +108,9 @@ public class LayoutComparator implements ComparatorJob {
               if (!CollectionUtils.isEmpty(excludedElements)) {
                 hideElementsInImg(patternImg, excludedElements);
                 hideElementsInImg(collectedImg, excludedElements);
-              } else {
-                excludeElementsNotFound = true;
+              }
+              if (!CollectionUtils.isEmpty(exclude.getNotFoundElements())) {
+                notFoundExcludeElements = exclude.getNotFoundElements();
               }
             });
 
@@ -144,8 +148,10 @@ public class LayoutComparator implements ComparatorJob {
         result = new ComparatorStepResult(maskArtifactId, Status.FAILED, true);
       }
 
-      if (excludeElementsNotFound) {
-        addExcludeMessageToResult(result, "Elements to exclude are not found on page");
+      if (!CollectionUtils.isEmpty(notFoundExcludeElements)) {
+        addExcludeMessageToResult(result,
+            "The following elements to be excluded have not been found on page: ",
+            String.join(", ", notFoundExcludeElements));
       }
 
       addPixelDifferenceDataToResult(result, imageComparisonResult);
@@ -203,8 +209,10 @@ public class LayoutComparator implements ComparatorJob {
         Double.toString(imageComparisonResult.getPercentagePixelDifference()));
   }
 
-  private void addExcludeMessageToResult(ComparatorStepResult result, String message) {
+  private void addExcludeMessageToResult(ComparatorStepResult result, String message,
+      String notFoundCssElements) {
     result.addData("excludeMessage", message);
+    result.addData("notFoundCssElements", notFoundCssElements);
   }
 
   private void addTimestampToResult(ComparatorStepResult result) {
