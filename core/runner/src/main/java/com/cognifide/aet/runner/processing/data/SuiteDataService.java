@@ -76,7 +76,7 @@ public class SuiteDataService {
   }
 
   private boolean isTestRunWithCheckSum(String checkSumCurrentRunProject) {
-    return isNullOrEmpty(checkSumCurrentRunProject);
+    return !isNullOrEmpty(checkSumCurrentRunProject);
   }
 
   private void updateSuit(Suite currentRun) throws StorageException {
