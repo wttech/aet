@@ -21,6 +21,8 @@ import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import java.util.Map;
+import java.util.Optional;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
@@ -29,69 +31,96 @@ import org.openqa.selenium.WebDriver.Window;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class ResolutionModifier implements CollectorJob {
+class ResolutionModifier implements CollectorJob {
 
-  public static final String NAME = "resolution";
+  static final String NAME = "resolution";
 
   private static final Logger LOG = LoggerFactory.getLogger(ResolutionModifier.class);
 
-  private static final String WIDTH_PARAM = "width";
-
-  private static final String HEIGHT_PARAM = "height";
-
   private static final String JAVASCRIPT_GET_BODY_HEIGHT = "return document.body.scrollHeight";
 
-  private static final int MAX_SIZE = 35000;
+  private static final String WIDTH_PARAM = "width";
+  private static final String HEIGHT_PARAM = "height";
 
+  private static final int HEIGHT_MAX_SIZE = 35000;
+  private static final int HEIGHT_MIN_SIZE = 10;
   private static final int INITIAL_HEIGHT = 300;
-
   private static final int HEIGHT_NOT_DEFINED = 0;
 
   private final WebDriver webDriver;
 
   private int width;
-
   private int height;
 
-  public ResolutionModifier(WebDriver webDriver) {
+  ResolutionModifier(WebDriver webDriver) {
     this.webDriver = webDriver;
   }
 
-
   @Override
   public CollectorStepResult collect() throws ProcessingException {
-    setResolution(this.webDriver);
+    setResolution();
     return CollectorStepResult.newModifierResult();
   }
 
   @Override
   public void setParameters(Map<String, String> params) throws ParametersException {
-    if (params.containsKey(WIDTH_PARAM)) {
-      width = NumberUtils.toInt(params.get(WIDTH_PARAM));
-      ParametersValidator.checkRange(width, 1, MAX_SIZE, "Width should be greater than 0");
-      if (params.containsKey(HEIGHT_PARAM)) {
-        height = NumberUtils.toInt(params.get(HEIGHT_PARAM));
-        ParametersValidator
-            .checkRange(height, 1, MAX_SIZE, "Height should be greater than 0 and smaller than " + MAX_SIZE);
-      }
-    } else {
-      throw new ParametersException("You have to specify width, height parameter is optional");
+    setWidth(params);
+    setHeight(params);
+  }
+
+  private void setWidth(Map<String, String> params) throws ParametersException {
+    width = Optional.ofNullable(params.get(WIDTH_PARAM))
+        .map(NumberUtils::toInt)
+        .orElseThrow(() ->
+            new ParametersException("You have to specify width, height parameter is optional"));
+    ParametersValidator.checkRange(width, 1, HEIGHT_MAX_SIZE,
+        "Width should be greater than 0");
+  }
+
+  private void setHeight(Map<String, String> params) throws ParametersException {
+
+    String heightParam = params.get(HEIGHT_PARAM);
+    if (StringUtils.isNotBlank(heightParam)) {
+      height = NumberUtils.toInt(heightParam);
+      ParametersValidator.checkRange(height, 1, HEIGHT_MAX_SIZE,
+          "Height should be greater than 0 and smaller than " + HEIGHT_MAX_SIZE);
     }
   }
 
-  private void setResolution(WebDriver webDriver) {
+  private void setResolution() throws ProcessingException {
     Window window = webDriver.manage().window();
     if (height == HEIGHT_NOT_DEFINED) {
-      window.setSize(new Dimension(width, INITIAL_HEIGHT));
-      JavascriptExecutor js = (JavascriptExecutor) webDriver;
-      height = Integer
-          .parseInt(js.executeScript(JAVASCRIPT_GET_BODY_HEIGHT).toString());
-      if (height > MAX_SIZE) {
-        LOG.warn("Height is over browser limit, changing height to {}", MAX_SIZE);
-        height = MAX_SIZE;
-      }
+      calculateHeight(window);
     }
     LOG.info("Setting resolution to  {}x{}  ", width, height);
     window.setSize(new Dimension(width, height));
+  }
+
+  private void calculateHeight(Window window) throws ProcessingException {
+    window.setSize(new Dimension(width, INITIAL_HEIGHT));
+    getHeightFromDocumentBody();
+    verifyHeight();
+  }
+
+  private void getHeightFromDocumentBody() throws ProcessingException {
+    JavascriptExecutor jsExecutor = (JavascriptExecutor) webDriver;
+    Object jsResult = jsExecutor.executeScript(JAVASCRIPT_GET_BODY_HEIGHT);
+    height = Optional.ofNullable(jsResult)
+        .map(Object::toString)
+        .map(NumberUtils::toInt)
+        .orElseThrow(() ->
+            new ProcessingException("Cannot calculate document height from js command: "
+                + JAVASCRIPT_GET_BODY_HEIGHT));
+
+  }
+
+  private void verifyHeight() {
+    if (height > HEIGHT_MAX_SIZE) {
+      LOG.warn("Height is over browser limit, changing height to {}", HEIGHT_MAX_SIZE);
+      height = HEIGHT_MAX_SIZE;
+    } else if (height < HEIGHT_MIN_SIZE) {
+      LOG.warn("Height is lower than minimum, changing height to {}", HEIGHT_MIN_SIZE);
+      height = HEIGHT_MIN_SIZE;
+    }
   }
 }
