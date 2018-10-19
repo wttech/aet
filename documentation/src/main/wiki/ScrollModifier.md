@@ -1,4 +1,4 @@
-#### Click Modifier
+#### Scroll Modifier
 
 Scroll Modifier allows to scroll page to specific element. <br/>
 If no parameter is provided, then `position="bottom"` is used as default. <br/>
