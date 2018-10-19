@@ -21,9 +21,13 @@ import com.cognifide.aet.vs.SimpleDBKey;
 import com.cognifide.aet.vs.StorageException;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Component(service = SuiteDataService.class)
 public class SuiteDataService {
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(SuiteDataService.class);
 
   @Reference
   private MetadataDAO metadataDAO;
@@ -79,7 +83,7 @@ public class SuiteDataService {
     try {
       metadataDAO.updateSuite(currentRun);
     } catch (ValidatorException e) {
-      e.printStackTrace();
+      LOGGER.error("Invalid json provided by client: {}", e.getIssues(), e);
     }
   }
 
