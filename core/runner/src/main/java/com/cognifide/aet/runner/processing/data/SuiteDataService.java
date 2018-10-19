@@ -19,6 +19,7 @@ import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.SimpleDBKey;
 import com.cognifide.aet.vs.StorageException;
+import java.util.Optional;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
@@ -40,14 +41,17 @@ public class SuiteDataService {
     final SimpleDBKey dbKey = new SimpleDBKey(currentRun);
     Suite lastVersion = metadataDAO.getLatestRun(dbKey, currentRun.getName());
     String checkSumCurrentRunProject = currentRun.getCheckSum();
-    Suite pattern;
+    final Suite pattern;
 
     if (isTestRunWithCheckSum(checkSumCurrentRunProject)) {
+//      Optional<Suite> suiteByChecksum = Optional.ofNullable(metadataDAO.getSuiteByChecksum(dbKey, checkSumCurrentRunProject));//todo
+
       Suite patternByChecksum = metadataDAO.getSuiteByChecksum(dbKey, checkSumCurrentRunProject);
       if (isChecksumIsAssignedToPathern(patternByChecksum)) {
+//      Suite suite = suiteByChecksum.orElse(assignCheckSumToPattern(dbKey, currentRun, lastVersion, checkSumCurrentRunProject));//todo after test will replace to optional
         pattern = patternByChecksum;
       } else {
-        pattern = assignCheckSumToLastPattern(currentRun, dbKey, lastVersion, checkSumCurrentRunProject);
+        pattern = assignCheckSumToPattern(dbKey, currentRun, lastVersion, checkSumCurrentRunProject);
       }
     } else {
       if (currentRun.getPatternCorrelationId() == null) {
@@ -59,7 +63,7 @@ public class SuiteDataService {
     return SuiteMergeStrategy.merge(currentRun, lastVersion, pattern);
   }
 
-  private Suite assignCheckSumToLastPattern(Suite currentRun, SimpleDBKey dbKey, Suite lastVersion, String checkSumCurrentRunProject) throws StorageException {
+  private Suite assignCheckSumToPattern(SimpleDBKey dbKey, Suite currentRun, Suite lastVersion, String checkSumCurrentRunProject) throws StorageException {
     Suite pattern;
     if (isSuitHasPattern(currentRun)) {
       pattern = metadataDAO.getSuite(dbKey, currentRun.getPatternCorrelationId());
