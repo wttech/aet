@@ -74,7 +74,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :chef_solo do |chef|
     chef.json = {
       "java" => {
-        "jdk_version" => "8"
+        "jdk_version" => "8",
         "install_flavor" => "openjdk",
         "oracle" => {
           "accept_oracle_download_terms" => true
