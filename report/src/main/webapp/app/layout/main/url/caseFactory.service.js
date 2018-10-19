@@ -108,8 +108,7 @@ define(['angularAMD', 'artifactsService', 'suiteInfoService'],
           var stepResult = comparator.stepResult;
           caseModel.showAcceptButton =
               stepResult &&
-              stepResult.rebaseable &&
-              stepResult.status === 'FAILED';
+              stepResult.acceptable;
           if (suiteInfoService.getInfo().patternCorrelationId) {
             caseModel.usesCrossSuitePattern = true;
           }
