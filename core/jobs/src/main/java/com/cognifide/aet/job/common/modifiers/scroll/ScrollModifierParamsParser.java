@@ -16,16 +16,17 @@
 package com.cognifide.aet.job.common.modifiers.scroll;
 
 import com.cognifide.aet.job.api.exceptions.ParametersException;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import org.apache.commons.lang3.StringUtils;
 
 class ScrollModifierParamsParser {
 
-  private static final String TOP = "window.scrollTo(0, 0);";
-  private static final String BOTTOM = "window.scrollTo(0, document.body.scrollHeight);";
-  private static final String CSS = "document.querySelector(\"%s\").scrollIntoView();";
-  private static final String XPATH = "document.evaluate(\"%s\", document, null, "
+  static final String TOP = "window.scrollTo(0, 0);";
+  static final String BOTTOM = "window.scrollTo(0, document.body.scrollHeight);";
+  static final String CSS = "document.querySelector(\"%s\").scrollIntoView();";
+  static final String XPATH = "document.evaluate(\"%s\", document, null, "
       + "XPathResult.FIRST_ORDERED_NODE_TYPE, null).singleNodeValue.scrollIntoView();";
 
   private static final String POSITION_PARAM_NAME = "position";
@@ -46,17 +47,20 @@ class ScrollModifierParamsParser {
   private Optional<String> getOptionalSnippetFromParams(Map<String, String> parameters)
       throws ParametersException {
 
-    if (parameters.keySet().size() > 1) {
+    Map<String, String> params = Optional.ofNullable(parameters)
+        .orElse(new HashMap<>());
+
+    if (params.size() > 1) {
       throw new ParametersException("Only one parameter should be provided: "
           + "position (top/bottom), css, xpath");
     }
 
-    Optional<String> specificPosition = getSpecificPositionSnippet(parameters);
+    Optional<String> specificPosition = getSpecificPositionSnippet(params);
 
-    Optional<String> css = Optional.ofNullable(parameters.get(CSS_PARAM_NAME))
+    Optional<String> css = Optional.ofNullable(params.get(CSS_PARAM_NAME))
         .map(selector -> String.format(CSS, selector));
 
-    Optional<String> xpath = Optional.ofNullable(parameters.get(XPATH_PARAM_NAME))
+    Optional<String> xpath = Optional.ofNullable(params.get(XPATH_PARAM_NAME))
         .map(selector -> String.format(XPATH, selector));
 
     return specificPosition.isPresent() ? specificPosition

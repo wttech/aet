@@ -20,7 +20,9 @@ import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
+import com.cognifide.aet.job.common.utils.javascript.JavaScriptJobExecutor;
 import java.util.Map;
+import org.openqa.selenium.WebDriver;
 import org.osgi.service.component.annotations.Component;
 
 @Component
@@ -35,7 +37,8 @@ public class ScrollModifierFactory implements CollectorFactory {
   public CollectorJob createInstance(CollectorProperties properties, Map<String, String> parameters,
       WebCommunicationWrapper webCommunicationWrapper) throws ParametersException {
 
-    ScrollModifier modifier = new ScrollModifier(webCommunicationWrapper.getWebDriver());
+    WebDriver webDriver = webCommunicationWrapper.getWebDriver();
+    ScrollModifier modifier = new ScrollModifier(new JavaScriptJobExecutor(webDriver));
     modifier.setParameters(parameters);
     return modifier;
   }

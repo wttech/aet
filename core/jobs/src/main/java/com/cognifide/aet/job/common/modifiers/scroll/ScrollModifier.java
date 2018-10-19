@@ -21,7 +21,6 @@ import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.job.common.utils.javascript.JavaScriptJobExecutor;
 import java.util.Map;
-import org.openqa.selenium.WebDriver;
 
 class ScrollModifier implements CollectorJob {
 
@@ -30,9 +29,9 @@ class ScrollModifier implements CollectorJob {
   private final ScrollModifierParamsParser parametersParser;
   private final JavaScriptJobExecutor jsExecutor;
 
-  ScrollModifier(WebDriver webDriver) {
+  ScrollModifier(JavaScriptJobExecutor jsExecutor) {
     this.parametersParser = new ScrollModifierParamsParser();
-    this.jsExecutor = new JavaScriptJobExecutor(webDriver);
+    this.jsExecutor = jsExecutor;
   }
 
   @Override
