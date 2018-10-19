@@ -24,7 +24,7 @@
   <test name="S-modifier-scroll-default-position-bottom">
     <collect>
       <open/>
-      <resolution width="800" height="600"/>
+      <resolution height="100" width="800"/>
       <sleep duration="1500"/>
       <scroll/>
       <screen/>
@@ -39,7 +39,7 @@
   <test name="S-modifier-scroll-position-top">
     <collect>
       <open/>
-      <resolution width="800" height="600"/>
+      <resolution height="100" width="800"/>
       <sleep duration="1500"/>
       <scroll position="top"/>
       <screen/>
@@ -54,7 +54,7 @@
   <test name="S-modifier-scroll-position-bottom">
     <collect>
       <open/>
-      <resolution width="800" height="600"/>
+      <resolution height="100" width="800"/>
       <sleep duration="1500"/>
       <scroll position="bottom"/>
       <screen/>
@@ -69,7 +69,7 @@
   <test name="S-modifier-scroll-css">
     <collect>
       <open/>
-      <resolution width="800" height="600"/>
+      <resolution height="100" width="800"/>
       <sleep duration="1500"/>
       <scroll css="#type-blockquotes"/>
       <screen/>
@@ -84,7 +84,7 @@
   <test name="S-modifier-scroll-xpath">
     <collect>
       <open/>
-      <resolution width="800" height="600"/>
+      <resolution height="100" width="800"/>
       <sleep duration="1500"/>
       <scroll xpath="//*[@id='type-blockquotes']"/>
       <screen/>
@@ -99,7 +99,7 @@
   <test name="F-modifier-scroll-more-than-one-attribute">
     <collect>
       <open/>
-      <resolution width="800" height="600"/>
+      <resolution height="100" width="800"/>
       <sleep duration="1500"/>
       <scroll css="#type-blockquotes" position="bottom"/>
       <screen/>
@@ -114,7 +114,7 @@
   <test name="F-modifier-scroll-invalid-position-value">
     <collect>
       <open/>
-      <resolution width="800" height="600"/>
+      <resolution height="100" width="800"/>
       <sleep duration="1500"/>
       <scroll position="middle"/>
       <screen/>
