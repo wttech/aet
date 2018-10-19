@@ -19,6 +19,7 @@ import com.cognifide.aet.job.api.exceptions.ParametersException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+import java.util.stream.Stream;
 import org.apache.commons.lang3.StringUtils;
 
 class ScrollModifierParamsParser {
@@ -63,9 +64,10 @@ class ScrollModifierParamsParser {
     Optional<String> xpath = Optional.ofNullable(params.get(XPATH_PARAM_NAME))
         .map(selector -> String.format(XPATH, selector));
 
-    return specificPosition.isPresent() ? specificPosition
-        : css.isPresent() ? css
-            : xpath;
+    return Stream.of(specificPosition, css, xpath)
+        .filter(Optional::isPresent)
+        .findFirst()
+        .orElse(Optional.empty());
   }
 
   private Optional<String> getSpecificPositionSnippet(Map<String, String> parameters)
