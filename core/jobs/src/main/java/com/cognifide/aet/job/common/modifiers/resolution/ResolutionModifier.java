@@ -78,7 +78,6 @@ class ResolutionModifier implements CollectorJob {
   }
 
   private void setHeight(Map<String, String> params) throws ParametersException {
-
     String heightParam = params.get(HEIGHT_PARAM);
     if (StringUtils.isNotBlank(heightParam)) {
       height = NumberUtils.toInt(heightParam);
