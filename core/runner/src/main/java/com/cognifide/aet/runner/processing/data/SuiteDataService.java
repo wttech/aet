@@ -47,7 +47,7 @@ public class SuiteDataService {
       if (isChecksumIsAssignedToPathern(patternByChecksum)) {
         pattern = patternByChecksum;
       } else {
-        pattern = assignCheckSumToLastPatern(currentRun, dbKey, lastVersion, checkSumCurrentRunProject);
+        pattern = assignCheckSumToLastPattern(currentRun, dbKey, lastVersion, checkSumCurrentRunProject);
       }
     } else {
       if (currentRun.getPatternCorrelationId() == null) {
@@ -59,15 +59,15 @@ public class SuiteDataService {
     return SuiteMergeStrategy.merge(currentRun, lastVersion, pattern);
   }
 
-  private Suite assignCheckSumToLastPatern(Suite currentRun, SimpleDBKey dbKey, Suite lastVersion, String checkSumCurrentRunProject) throws StorageException {
+  private Suite assignCheckSumToLastPattern(Suite currentRun, SimpleDBKey dbKey, Suite lastVersion, String checkSumCurrentRunProject) throws StorageException {
     Suite pattern;
     if (isSuitHasPattern(currentRun)) {
       pattern = metadataDAO.getSuite(dbKey, currentRun.getPatternCorrelationId());
-      pattern.setCheckSumProject(checkSumCurrentRunProject);
-      updateSuit(pattern);
     } else {
       pattern = lastVersion;
     }
+    pattern.setCheckSumProject(checkSumCurrentRunProject);
+    updateSuit(pattern);
     return pattern;
   }
 
