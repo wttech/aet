@@ -21,9 +21,8 @@ import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.job.common.utils.Sampler;
-import java.util.Arrays;
-import java.util.LinkedList;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Supplier;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.openqa.selenium.Dimension;
@@ -57,7 +56,7 @@ public class ResolutionModifier implements CollectorJob {
 
   private static final int MAX_SAMPLES_THRESHOLD = 15;
 
-  public static final int SAMPLE_QUEUE_SIZE = 3;
+  private static final int SAMPLE_QUEUE_SIZE = 3;
 
   private final WebDriver webDriver;
 
@@ -89,8 +88,9 @@ public class ResolutionModifier implements CollectorJob {
             .checkRange(height, 1, MAX_SIZE,
                 "Height should be greater than 0 and smaller than " + MAX_SIZE);
       } else {
-        samplingPeriod = params.containsKey(SAMPLING_PERIOD_PARAM) ? NumberUtils
-            .toInt(params.get(SAMPLING_PERIOD_PARAM)) : DEFAULT_SAMPLING_WAIT_PERIOD;
+        samplingPeriod = Optional.ofNullable(params.get(SAMPLING_PERIOD_PARAM))
+            .map(NumberUtils::toInt)
+            .orElse(DEFAULT_SAMPLING_WAIT_PERIOD);
       }
     } else {
       throw new ParametersException("You have to specify width, height parameter is optional");

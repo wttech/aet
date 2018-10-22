@@ -15,7 +15,6 @@
  */
 package com.cognifide.aet.job.common.utils;
 
-import java.util.LinkedList;
 import java.util.function.Supplier;
 import org.apache.commons.collections.buffer.CircularFifoBuffer;
 import org.slf4j.Logger;
