@@ -49,8 +49,7 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
       .registerTypeAdapter(Suite.Timestamp.class, new TimestampSerializer())
       .create();
 
-  private static final Type SUITE_TYPE = new TypeToken<Suite>() {
-  }.getType();
+  private static final Type SUITE_TYPE = new TypeToken<Suite>() {}.getType();
 
   @NotBlank
   private final String correlationId;
@@ -93,7 +92,7 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
     this.projectHashCode = projecHashCode;
   }
 
-  public Suite(String correlationId, String company, String project, String name,//delete it
+  Suite(String correlationId, String company, String project, String name,
       String patternCorrelationId) {
     this.correlationId = correlationId;
     this.company = company;
@@ -102,18 +101,6 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
     this.runTimestamp = new Timestamp(System.currentTimeMillis());
     this.patternCorrelationId = patternCorrelationId;
   }
-
-  public Suite(String correlationId, String company, String project, String name,
-      String patternCorrelationId, String projectHashCode) {
-    this.correlationId = correlationId;
-    this.company = company;
-    this.project = project;
-    this.name = name;
-    this.runTimestamp = new Timestamp(System.currentTimeMillis());
-    this.patternCorrelationId = patternCorrelationId;
-    this.projectHashCode = projectHashCode;
-  }
-
 
   public static Suite fromJson(Reader jsonReader) {
     return GSON_FOR_JSON.fromJson(jsonReader, SUITE_TYPE);

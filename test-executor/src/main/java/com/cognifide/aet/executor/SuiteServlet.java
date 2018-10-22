@@ -3,21 +3,21 @@
  *
  * Copyright (C) 2013 Cognifide Limited
  *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
- * in compliance with the License. You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
  *
  * http://www.apache.org/licenses/LICENSE-2.0
  *
- * Unless required by applicable law or agreed to in writing, software distributed under the License
- * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
- * or implied. See the License for the specific language governing permissions and limitations under
- * the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  */
 package com.cognifide.aet.executor;
 
 import com.cognifide.aet.communication.api.execution.SuiteExecutionResult;
 import com.cognifide.aet.executor.http.HttpSuiteExecutionResultWrapper;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.HashMap;
@@ -49,12 +49,19 @@ public class SuiteServlet extends HttpServlet {
   private static final long serialVersionUID = 5266041156537459410L;
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SuiteServlet.class);
+
   private static final String SERVLET_PATH = "/suite";
+
   private static final String SUITE_PARAM = "suite";
+
   private static final String NAME_PARAM = "name";
+
   private static final String DOMAIN_PARAM = "domain";
+
   private static final String PATTERN_CORRELATION_ID_PARAM = "pattern";
+
   private static final String PATTERN_SUITE_PARAM = "patternSuite";
+
   private static final String PROJECT_CHECK_SUM = "projectChecksSum";
 
 
@@ -65,27 +72,26 @@ public class SuiteServlet extends HttpServlet {
   private SuiteExecutor suiteExecutor;
 
   /**
-   * Starts processing of the test suite defined in the XML file provided in post body. Overrides
-   * domain specified in the suite file if one has been provided in post body. Returns JSON defined
-   * by {@link SuiteExecutionResult}. The request's content type must be 'multipart/form-data'.
+   * Starts processing of the test suite defined in the XML file provided in post body. Overrides domain specified in the suite file if one has been provided in post body. Returns
+   * JSON defined by {@link SuiteExecutionResult}. The request's content type must be 'multipart/form-data'.
    */
   @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     if (ServletFileUpload.isMultipartContent(request)) {
+      Gson gson = new Gson();
       Map<String, String> requestData = getRequestData(request);
       final String suite = requestData.get(SUITE_PARAM);
       final String name = requestData.get(NAME_PARAM);
       final String domain = requestData.get(DOMAIN_PARAM);
       final String patternCorrelationId = requestData.get(PATTERN_CORRELATION_ID_PARAM);
       final String patternSuite = requestData.get(PATTERN_SUITE_PARAM);
-      final String projectCheckSum = requestData.get(PROJECT_CHECK_SUM);
+      final String projectCheckSum = getChecksumFromJson(requestData);
 
       if (StringUtils.isNotBlank(suite)) {
         HttpSuiteExecutionResultWrapper resultWrapper = suiteExecutor
-            .execute(suite, name, domain, patternCorrelationId, patternSuite,projectCheckSum);
+            .execute(suite, name, domain, patternCorrelationId, patternSuite, projectCheckSum);
         final SuiteExecutionResult suiteExecutionResult = resultWrapper.getExecutionResult();
-        Gson gson = new Gson();
 
         String responseBody = gson.toJson(suiteExecutionResult);
 
@@ -104,6 +110,19 @@ public class SuiteServlet extends HttpServlet {
     } else {
       response.sendError(HttpStatus.SC_BAD_REQUEST, "Request content is incorrect");
     }
+  }
+
+  private String getChecksumFromJson(Map<String, String> requestData) {
+    String checkSum = StringUtils.EMPTY;
+    JsonParser parser = new JsonParser();
+    JsonElement patternSuite = parser.parse(requestData.get(PATTERN_SUITE_PARAM));
+    if (patternSuite.isJsonObject()) {
+      JsonObject patternSuiteJsonObject = patternSuite.getAsJsonObject();
+      if (patternSuiteJsonObject.isJsonObject()) {
+        checkSum = patternSuiteJsonObject.get(PROJECT_CHECK_SUM).getAsString();
+      }
+    }
+    return checkSum;
   }
 
   @Activate

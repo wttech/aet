@@ -46,14 +46,7 @@ public class SuiteDataService {
 
     if (isTestRunWithCheckSum(checkSumCurrentRunProject)) {
       Optional<Suite> suiteByChecksum = Optional.ofNullable(metadataDAO.getSuiteByChecksum(dbKey, checkSumCurrentRunProject));
-
-//      Suite patternByChecksum = metadataDAO.getSuiteByChecksum(dbKey, checkSumCurrentRunProject);
-//      if (isChecksumIsAssignedToPathern(suiteByChecksum)) {
-        pattern = suiteByChecksum.orElse(assignCheckSumToPattern(dbKey, currentRun, lastVersion, checkSumCurrentRunProject));
-//        pattern = patternByChecksum;
-//      } else {
-//        pattern = assignCheckSumToPattern(dbKey, currentRun, lastVersion, checkSumCurrentRunProject);
-//      }
+      pattern = suiteByChecksum.orElse(assignCheckSumToPattern(dbKey, currentRun, lastVersion, checkSumCurrentRunProject));
     } else {
       if (currentRun.getPatternCorrelationId() == null) {
         pattern = lastVersion;
@@ -71,9 +64,9 @@ public class SuiteDataService {
     } else {
       pattern = lastVersion;
     }
-    if (pattern!=null) {
-    pattern.setCheckSumProject(checkSumCurrentRunProject);
-    updateSuit(pattern);
+    if (pattern != null) {
+      pattern.setCheckSumProject(checkSumCurrentRunProject);
+      updateSuit(pattern);
     }
     return pattern;
   }
@@ -82,7 +75,7 @@ public class SuiteDataService {
     return !isNullOrEmpty(currentRun.getPatternCorrelationId());
   }
 
-  private boolean isChecksumIsAssignedToPathern(Optional<Suite> suiteByChecksum ) {
+  private boolean isChecksumIsAssignedToPathern(Optional<Suite> suiteByChecksum) {
     return suiteByChecksum.isPresent();
   }
 

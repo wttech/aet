@@ -123,11 +123,11 @@ public class SuiteExecutor {
    * that will be used as patterns source
    * @param patternSuite - optional pattern to set, this is a name of a suite whose latest version
    * will be used as patterns source. This parameter is ignored if patternCorrelationId is set
-   * @param projectCheckSum
+   * @param projectChecksum - defining the project source code checksum
    * @return status of the suite execution
    */
   HttpSuiteExecutionResultWrapper execute(String suiteString, String name, String domain,
-      String patternCorrelationId, String patternSuite, String projectCheckSum) {
+      String patternCorrelationId, String patternSuite, String projectChecksum) {
     SuiteRunner suiteRunner = null;
     HttpSuiteExecutionResultWrapper result;
 
@@ -141,7 +141,7 @@ public class SuiteExecutor {
       String validationError = suiteValidator.validateTestSuiteRun(testSuiteRun);
       if (validationError == null) {
         final Suite suite = suiteFactory.suiteFromTestSuiteRun(testSuiteRun);
-        suite.setCheckSumProject(projectCheckSum);//todo temporary  for test only!
+        suite.setCheckSumProject(projectChecksum);
         suite.validate(Sets.newHashSet("version", "runTimestamp"));
 
         if (lockTestSuite(suite)) {

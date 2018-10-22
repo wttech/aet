@@ -43,7 +43,7 @@ import org.slf4j.LoggerFactory;
 @Component(immediate = true)
 public class MetadataDAOMongoDBImpl implements MetadataDAO {
 
-  public static final String PROJECT_HASH_CODE = "projectHashCode";
+  private static final String SUITE_SUM_CONTROL = "projectSumControl";
 
   public static final String METADATA_COLLECTION_NAME = "metadata";
 
@@ -96,21 +96,6 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
     return latestSuite == null || suite.getVersion().equals(latestSuite.getVersion());
   }
 
-
-  @Override
-  public Suite getSuite(DBKey dbKey, String correlationId) throws StorageException {
-    MongoCollection<Document> metadata = getMetadataCollection(dbKey);
-
-    LOGGER.debug("Fetching suite with correlationId: {} ", correlationId);
-
-    final FindIterable<Document> found = metadata
-        .find(Filters.eq(CORRELATION_ID_PARAM_NAME, correlationId))
-        .sort(Sorts.descending(SUITE_VERSION_PARAM_NAME))
-        .limit(1);
-    final Document result = found.first();
-    return new DocumentConverter(result).toSuite();
-  }
-
   @Override
   public Suite getSuite(DBKey dbKey, String name, String version) throws StorageException {
     MongoCollection<Document> metadata = getMetadataCollection(dbKey);
@@ -123,15 +108,23 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
     final Document result = found.first();
     return new DocumentConverter(result).toSuite();
   }
-
+  
+  @Override
+  public Suite getSuite(DBKey dbKey, String correlationId) throws StorageException {
+    LOGGER.debug("Fetching suite with correlationId: {} ", correlationId);
+    return getLatestSuit(dbKey, correlationId, CORRELATION_ID_PARAM_NAME);
+  }
+  
   @Override
   public Suite getSuiteByChecksum(DBKey dbKey, String checkSum) throws StorageException {
-    MongoCollection<Document> metadata = getMetadataCollection(dbKey);
-
     LOGGER.debug("Fetching suite with checksum: {} ", checkSum);
+    return getLatestSuit(dbKey, checkSum, SUITE_SUM_CONTROL);
+  }
 
+  private Suite getLatestSuit(DBKey dbKey, String value, String fieldName) throws StorageException {
+    MongoCollection<Document> metadata = getMetadataCollection(dbKey);
     final FindIterable<Document> found = metadata
-        .find(Filters.eq(PROJECT_HASH_CODE, checkSum))
+        .find(Filters.eq(fieldName, value))
         .sort(Sorts.descending(SUITE_VERSION_PARAM_NAME))
         .limit(1);
     final Document result = found.first();

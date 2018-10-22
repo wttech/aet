@@ -17,7 +17,6 @@
 # limitations under the License.
 #
 
-
 POLL_INTERVAL=1
 UNLOCK_TIMEOUT=0
 SUITE_ENDPOINT="/suite"
@@ -93,7 +92,7 @@ function process_locked_suite {
 
 # request /suite endpoint
 function start_suite {
-  run_response=$(curl -sw "%{http_code}" -F "projectChecksSum=$(get_json $endpoint_sum_contr)" -F "suite=@$suite_file_name"$DOMAIN_BODY$SUITE_NAME_BODY$CORRELATION_ID_BODY$PATTERN_SUITE_BODY "$endpoint$SUITE_ENDPOINT")
+  run_response=$(curl -sw "%{http_code}" -F "projectChecksSum=$(get_json $endpoint_check_sum)" -F "suite=@$suite_file_name"$DOMAIN_BODY$SUITE_NAME_BODY$CORRELATION_ID_BODY$PATTERN_SUITE_BODY "$endpoint$SUITE_ENDPOINT")
   extract_code_and_body "$run_response"
 
   if [ $code -eq 200 ]; then
@@ -111,7 +110,7 @@ function start_suite {
 
 endpoint=$1
 suite_file_name=${2-suite.xml}
-endpoint_sum_contr=$3
+endpoint_check_sum=$3
 
 while [[ $# -gt 0 ]]; do
     case "$1" in

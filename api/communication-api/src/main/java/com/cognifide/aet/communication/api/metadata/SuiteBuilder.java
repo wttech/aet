@@ -24,8 +24,6 @@ public class SuiteBuilder {
 
   private String patternCorrelationId;
 
-  private String projectHashCode;
-
   public SuiteBuilder setCorrelationId(String correlationId) {
     this.correlationId = correlationId;
     return this;
@@ -48,11 +46,6 @@ public class SuiteBuilder {
 
   public SuiteBuilder setPatternCorrelationId(String patternCorrelationId) {
     this.patternCorrelationId = patternCorrelationId;
-    return this;
-  }
-
-  public SuiteBuilder setProjectHashCode(String projectHashCode) {
-    this.projectHashCode = projectHashCode;
     return this;
   }
 
