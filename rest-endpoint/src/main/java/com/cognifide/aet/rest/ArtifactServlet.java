@@ -21,6 +21,7 @@ import com.cognifide.aet.vs.DBKey;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
@@ -48,7 +49,9 @@ public class ArtifactServlet extends BasicDataServlet {
     resp.setCharacterEncoding("UTF-8");
     Artifact artifact = artifactsDAO.getArtifact(dbKey, id);
     if (artifact != null) {
-      resp.setContentType(artifact.getContentType());
+      String type = Optional.ofNullable(req.getParameter(Helper.TYPE_PARAM))
+          .orElse(artifact.getContentType());
+      resp.setContentType(type);
       resp.setHeader("Cache-Control", "public, max-age=31536000");
 
       OutputStream output = resp.getOutputStream();
