@@ -19,12 +19,13 @@ import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.SimpleDBKey;
 import com.cognifide.aet.vs.StorageException;
+import java.util.Optional;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@SuppressWarnings("ALL")
+@SuppressWarnings("ALL")//todo Delete beffore pullrequest
 @Component(service = SuiteDataService.class)
 public class SuiteDataService {
 
@@ -44,15 +45,15 @@ public class SuiteDataService {
     final Suite pattern;
 
     if (isTestRunWithCheckSum(checkSumCurrentRunProject)) {
-//      Optional<Suite> suiteByChecksum = Optional.ofNullable(metadataDAO.getSuiteByChecksum(dbKey, checkSumCurrentRunProject));//todo
+      Optional<Suite> suiteByChecksum = Optional.ofNullable(metadataDAO.getSuiteByChecksum(dbKey, checkSumCurrentRunProject));
 
-      Suite patternByChecksum = metadataDAO.getSuiteByChecksum(dbKey, checkSumCurrentRunProject);
-      if (isChecksumIsAssignedToPathern(patternByChecksum)) {
-//      Suite suite = suiteByChecksum.orElse(assignCheckSumToPattern(dbKey, currentRun, lastVersion, checkSumCurrentRunProject));//todo after test will replace to optional
-        pattern = patternByChecksum;
-      } else {
-        pattern = assignCheckSumToPattern(dbKey, currentRun, lastVersion, checkSumCurrentRunProject);
-      }
+//      Suite patternByChecksum = metadataDAO.getSuiteByChecksum(dbKey, checkSumCurrentRunProject);
+//      if (isChecksumIsAssignedToPathern(suiteByChecksum)) {
+        pattern = suiteByChecksum.orElse(assignCheckSumToPattern(dbKey, currentRun, lastVersion, checkSumCurrentRunProject));
+//        pattern = patternByChecksum;
+//      } else {
+//        pattern = assignCheckSumToPattern(dbKey, currentRun, lastVersion, checkSumCurrentRunProject);
+//      }
     } else {
       if (currentRun.getPatternCorrelationId() == null) {
         pattern = lastVersion;
@@ -81,8 +82,8 @@ public class SuiteDataService {
     return !isNullOrEmpty(currentRun.getPatternCorrelationId());
   }
 
-  private boolean isChecksumIsAssignedToPathern(Suite patternByChecksum) {
-    return patternByChecksum != null;
+  private boolean isChecksumIsAssignedToPathern(Optional<Suite> suiteByChecksum ) {
+    return suiteByChecksum.isPresent();
   }
 
   private boolean isTestRunWithCheckSum(String checkSumCurrentRunProject) {
