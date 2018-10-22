@@ -19,12 +19,12 @@ import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.SimpleDBKey;
 import com.cognifide.aet.vs.StorageException;
-import java.util.Optional;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+@SuppressWarnings("ALL")
 @Component(service = SuiteDataService.class)
 public class SuiteDataService {
 
@@ -70,8 +70,10 @@ public class SuiteDataService {
     } else {
       pattern = lastVersion;
     }
+    if (pattern!=null) {
     pattern.setCheckSumProject(checkSumCurrentRunProject);
     updateSuit(pattern);
+    }
     return pattern;
   }
 
