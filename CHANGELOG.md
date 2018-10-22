@@ -9,6 +9,7 @@ All notable changes to AET will be documented in this file.
 
 ## Unreleased
 **List of changes that are finished but not yet released in any final version.**
+- [PR-406](https://github.com/Cognifide/aet/pull/406) ([#384](https://github.com/Cognifide/aet/issues/384)) ResolutionModifier bugfix (minimum window height)
 - [PR-387](https://github.com/Cognifide/aet/pull/387) Set max allowed page screenshot height to 35k pixels.
 
 ## Version 3.0.1
