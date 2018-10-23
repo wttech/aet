@@ -13,15 +13,12 @@ All notable changes to AET will be documented in this file.
 - [PR-396](https://github.com/Cognifide/aet/pull/396) Added horizontal scrollbar for wide pages ([#393](https://github.com/Cognifide/aet/issues/393)) 
 - [PR-403](https://github.com/Cognifide/aet/pull/403) Conditionally passed tests can be accepted ([#400](https://github.com/Cognifide/aet/issues/400))
 - [PR-387](https://github.com/Cognifide/aet/pull/387) Set max allowed page screenshot height to 35k pixels.
+- [PR-]() ([PR-336](https://github.com/Cognifide/aet/pull/336), [PR-337](https://github.com/Cognifide/aet/pull/337), [PR-395](https://github.com/Cognifide/aet/pull/395)) - Added rerun functionality for suite, test and url 
 
 ## Version 3.0.1
 
 - [PR-380](https://github.com/Cognifide/aet/pull/380) Exclude elements position calculated with partial screenshot offset ([#379](https://github.com/Cognifide/aet/issues/379))
 - [PR-378](https://github.com/Cognifide/aet/pull/378) OSGI-configurable Chrome options.
-
-- [PR-336](https://github.com/Cognifide/aet/pull/336) Cleaner will remove artifacts without reference in suites e.g after rerun one test 
-- [PR-337](https://github.com/Cognifide/aet/pull/337) Added rerun one test or whole suite
-- [PR-395](https://github.com/Cognifide/aet/pull/395) Minor frontend changes in rerun feature
 
 ## Version 3.0.0
 
