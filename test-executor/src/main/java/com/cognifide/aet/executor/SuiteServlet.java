@@ -116,8 +116,8 @@ public class SuiteServlet extends HttpServlet {
     String checkSum = StringUtils.EMPTY;
     JsonParser parser = new JsonParser();
     String projectChecksSum = requestData.get(PROJECT_CHECK_SUM);
-    String substring = projectChecksSum.substring(1, projectChecksSum.length() - 1);
-    JsonElement parse = parser.parse(substring);
+//    String substring = projectChecksSum.substring(1, projectChecksSum.length() - 1);//todo what is wrong with  json?
+    JsonElement parse = parser.parse(projectChecksSum);
     if (parse.isJsonObject()) {
       JsonObject asJsonObject = parse.getAsJsonObject();
       if (asJsonObject.isJsonObject()) {
