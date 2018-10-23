@@ -115,7 +115,9 @@ public class SuiteServlet extends HttpServlet {
   private String getChecksumFromJson(Map<String, String> requestData) {
     String checkSum = StringUtils.EMPTY;
     JsonParser parser = new JsonParser();
-    JsonElement parse = parser.parse(requestData.get(PATTERN_SUITE_PARAM));
+    String projectChecksSum = requestData.get("projectChecksSum");
+    String substring = projectChecksSum.substring(1, projectChecksSum.length() - 1);
+    JsonElement parse = parser.parse(substring);
     if (parse.isJsonObject()) {
       JsonObject asJsonObject = parse.getAsJsonObject();
       if (asJsonObject.isJsonObject()) {
