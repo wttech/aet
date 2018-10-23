@@ -16,6 +16,7 @@
 package com.cognifide.aet.job.common.comparators.source;
 
 import com.cognifide.aet.communication.api.metadata.ComparatorStepResult;
+import com.cognifide.aet.communication.api.metadata.ComparatorStepResult.Status;
 import com.cognifide.aet.job.api.comparator.ComparatorJob;
 import com.cognifide.aet.job.api.comparator.ComparatorProperties;
 import com.cognifide.aet.job.api.datafilter.DataFilterJob;
@@ -23,10 +24,12 @@ import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.job.common.comparators.source.diff.DiffParser;
 import com.cognifide.aet.job.common.comparators.source.diff.ResultDelta;
+import com.cognifide.aet.job.common.comparators.source.diff.ResultDelta.TYPE;
 import com.cognifide.aet.job.common.comparators.source.visitors.ContentVisitor;
 import com.cognifide.aet.job.common.comparators.source.visitors.MarkupVisitor;
 import com.cognifide.aet.job.common.comparators.source.visitors.NodeTraversor;
 import com.cognifide.aet.vs.ArtifactsDAO;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -69,7 +72,11 @@ public class SourceComparator implements ComparatorJob {
   @Override
   @SuppressWarnings("unchecked")
   public final ComparatorStepResult compare() throws ProcessingException {
+
     final ComparatorStepResult result;
+    final ComparatorStepResult.Status status;
+    List<ResultDelta> deltas = new ArrayList<>();
+
     try {
       String patternSource = formatCode(
           artifactsDAO.getArtifactAsString(properties, properties.getPatternId()));
@@ -93,21 +100,22 @@ public class SourceComparator implements ComparatorJob {
 
       if (StringUtils.isNotBlank(patternSource)) {
         boolean compareTrimmedLines = shouldCompareTrimmedLines(sourceCompareType);
-        final List<ResultDelta> deltas = diffParser
+        deltas = diffParser
             .generateDiffs(patternSource, dataSource, compareTrimmedLines);
-        if (deltas.isEmpty()) {
-          result = new ComparatorStepResult(null, ComparatorStepResult.Status.PASSED, false);
+        if (deltas.stream().anyMatch(d -> d.getType().equals(TYPE.CHANGE))) {
+          status = Status.FAILED;
         } else {
-          result = new ComparatorStepResult(artifactsDAO.saveArtifactInJsonFormat(properties,
-              Collections.singletonMap("differences", deltas)),
-              ComparatorStepResult.Status.FAILED, true);
-          result.addData("formattedPattern", artifactsDAO.saveArtifact(properties, patternSource));
-          result.addData("formattedSource", artifactsDAO.saveArtifact(properties, dataSource));
-          result.addData("sourceCompareType", sourceCompareType.name());
+          status = Status.PASSED;
         }
       } else {
-        result = new ComparatorStepResult(null, ComparatorStepResult.Status.PASSED);
+        status = Status.PASSED;
       }
+      result = new ComparatorStepResult(artifactsDAO.saveArtifactInJsonFormat(properties,
+          Collections.singletonMap("differences", deltas)),
+          status, Status.FAILED.equals(status));
+      result.addData("formattedPattern", artifactsDAO.saveArtifact(properties, patternSource));
+      result.addData("formattedSource", artifactsDAO.saveArtifact(properties, dataSource));
+      result.addData("sourceCompareType", sourceCompareType.name());
     } catch (Exception e) {
       throw new ProcessingException(e.getMessage(), e);
     }
