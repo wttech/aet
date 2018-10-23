@@ -143,11 +143,11 @@
         <li ng-repeat="url in test.urls | filter: {name: $root.searchText} | aetUrlStatusFilter:$root.activeFilters | orderBy:'name' as filteredUrls"
             ng-class="[url.getStatus()]" class="url-name">
           <div aet-truncate-urls class="text-left nowrap">
-            <div ng-if="test.getStatus() != 'rebased' && test.getStatus() != 'conditionallyPassed'"  class="failed">
-              <i class="fas {{theme.statusClasses[test.getStatus()]}}"></i>
+            <div ng-if="url.getStatus() != 'rebased' && url.getStatus() != 'conditionallyPassed'"  class="failed">
+              <i class="fas {{theme.statusClasses[url.getStatus()]}}"></i>
             </div>
-            <div ng-if="test.getStatus() == 'rebased' || test.getStatus() == 'conditionallyPassed'">
-              <i class="fas {{theme.statusClasses[test.getStatus()]}}"></i>
+            <div ng-if="url.getStatus() == 'rebased' || url.getStatus() == 'conditionallyPassed'">
+              <i class="fas {{theme.statusClasses[url.getStatus()]}}"></i>
             </div>
               <a class="test-url" ui-sref-active="is-active"
                ui-sref="url({'suite':$root.params.project,'test':test.name, 'url':url.name})">
