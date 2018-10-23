@@ -45,7 +45,7 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
 
   public static final String METADATA_COLLECTION_NAME = "metadata";
 
-  private static final String SUITE_SUM_CONTROL = "projectSumControl";
+  private static final String SUITE_HASH_CODE = "projectHashCode";
 
   private static final long serialVersionUID = 3031952772776598636L;
 
@@ -117,7 +117,7 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
   @Override
   public Suite getSuiteByChecksum(DBKey dbKey, String checkSum) throws StorageException {
     LOGGER.debug("Fetching suite with checksum: {} ", checkSum);
-    return getLatestSuit(dbKey, SUITE_SUM_CONTROL, checkSum);
+    return getLatestSuit(dbKey, SUITE_HASH_CODE, checkSum);
   }
 
   private Suite getLatestSuit(DBKey dbKey, String fieldName,String value ) throws StorageException {
