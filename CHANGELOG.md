@@ -12,6 +12,7 @@ All notable changes to AET will be documented in this file.
 
 - [PR-336](https://github.com/Cognifide/aet/pull/336) Cleaner will remove artifacts without reference in suites e.g after rerun one test 
 - [PR-337](https://github.com/Cognifide/aet/pull/337) Added rerun one test or whole suite
+- [PR-395](https://github.com/Cognifide/aet/pull/395) Minor frontend changes in rerun feature
 
 ## Version 3.0.0
 
