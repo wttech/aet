@@ -53,7 +53,7 @@ public class ResolutionModifierTest {
 
   private static final int CUSTOM_HEIGHT = 600;
 
-  private static final int BROWSER_HEIGHT_LIMIT = 15000;
+  private static final int BROWSER_HEIGHT_LIMIT = 35000;
 
   @Mock
   private RemoteWebDriver webDriver;
