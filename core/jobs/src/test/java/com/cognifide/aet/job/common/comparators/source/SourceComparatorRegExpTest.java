@@ -26,12 +26,12 @@ import org.junit.runner.RunWith;
 @RunWith(Theories.class)
 public class SourceComparatorRegExpTest {
 
-  private SourceComparator tested;
+  private CodeFormatter tested;
 
   @Before
   public void setUp() {
     // initialized with nulls as tested method is stateless
-    tested = new SourceComparator(null, null, null, null);
+    tested = new CodeFormatter();
   }
 
   @DataPoints
@@ -53,7 +53,7 @@ public class SourceComparatorRegExpTest {
   }
 
   @Theory
-  public void removeEmptyLines(String[] dataPoint) throws Exception {
+  public void removeEmptyLines(String[] dataPoint) {
     String input = dataPoint[0];
     String expected = dataPoint[1];
 
