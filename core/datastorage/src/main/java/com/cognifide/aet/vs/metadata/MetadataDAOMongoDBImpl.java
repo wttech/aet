@@ -120,7 +120,7 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
     return getLatestSuit(dbKey, SUITE_SUM_CONTROL, checkSum);
   }
 
-  private Suite getLatestSuit(DBKey dbKey, String value, String fieldName) throws StorageException {
+  private Suite getLatestSuit(DBKey dbKey, String fieldName,String value ) throws StorageException {
     MongoCollection<Document> metadata = getMetadataCollection(dbKey);
     final FindIterable<Document> found = metadata
         .find(Filters.eq(fieldName, value))
