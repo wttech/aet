@@ -88,9 +88,8 @@ public class ResolutionModifier implements CollectorJob {
             .checkRange(height, 1, MAX_SIZE,
                 "Height should be greater than 0 and smaller than " + MAX_SIZE);
       } else {
-        samplingPeriod = Optional.ofNullable(params.get(SAMPLING_PERIOD_PARAM))
-            .map(NumberUtils::toInt)
-            .orElse(DEFAULT_SAMPLING_WAIT_PERIOD);
+        samplingPeriod = NumberUtils
+            .toInt(params.get(SAMPLING_PERIOD_PARAM), DEFAULT_SAMPLING_WAIT_PERIOD);
       }
     } else {
       throw new ParametersException("You have to specify width, height parameter is optional");
