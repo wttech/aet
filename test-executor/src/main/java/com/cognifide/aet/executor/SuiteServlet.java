@@ -121,7 +121,7 @@ public class SuiteServlet extends HttpServlet {
     if (parse.isJsonObject()) {
       JsonObject asJsonObject = parse.getAsJsonObject();
       if (asJsonObject.isJsonObject()) {
-        checkSum = asJsonObject.get("PROJECT_CHECK_SUM").getAsString();
+        checkSum = asJsonObject.get("sumcontrolProject").getAsString();
       }
     }
     return checkSum;
