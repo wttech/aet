@@ -43,9 +43,9 @@ import org.slf4j.LoggerFactory;
 @Component(immediate = true)
 public class MetadataDAOMongoDBImpl implements MetadataDAO {
 
-  private static final String SUITE_SUM_CONTROL = "projectSumControl";
-
   public static final String METADATA_COLLECTION_NAME = "metadata";
+
+  private static final String SUITE_SUM_CONTROL = "projectSumControl";
 
   private static final long serialVersionUID = 3031952772776598636L;
 
@@ -70,8 +70,7 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
   }
 
   /**
-   * Updates suite in .metadata collection only if older version exist. Also updates version and
-   * timestamp of a suite.
+   * Updates suite in .metadata collection only if older version exist. Also updates version and timestamp of a suite.
    *
    * @param suite new suite version to save
    * @return updated suite.
@@ -108,17 +107,17 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
     final Document result = found.first();
     return new DocumentConverter(result).toSuite();
   }
-  
+
   @Override
   public Suite getSuite(DBKey dbKey, String correlationId) throws StorageException {
     LOGGER.debug("Fetching suite with correlationId: {} ", correlationId);
-    return getLatestSuit(dbKey, correlationId, CORRELATION_ID_PARAM_NAME);
+    return getLatestSuit(dbKey, CORRELATION_ID_PARAM_NAME, correlationId);
   }
-  
+
   @Override
   public Suite getSuiteByChecksum(DBKey dbKey, String checkSum) throws StorageException {
     LOGGER.debug("Fetching suite with checksum: {} ", checkSum);
-    return getLatestSuit(dbKey, checkSum, SUITE_SUM_CONTROL);
+    return getLatestSuit(dbKey, SUITE_SUM_CONTROL, checkSum);
   }
 
   private Suite getLatestSuit(DBKey dbKey, String value, String fieldName) throws StorageException {
