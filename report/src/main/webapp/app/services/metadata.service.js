@@ -230,6 +230,7 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
             _.forEach(decoratedObject.comparators, function (comparator) {
               if (hasStepComparatorChangesToAccept(comparator)) {
                 comparator.stepResult.previousStatus = comparator.stepResult.status;
+                comparator.stepResult.wasAcceptable = comparator.stepResult.acceptable;
                 comparator.stepResult.status = 'REBASED';
                 acceptedPatterns++;
               }
@@ -260,8 +261,7 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
 
         function hasStepComparatorChangesToAccept(comparator) {
           return comparator && comparator.stepResult &&
-              comparator.stepResult.rebaseable &&
-              comparator.stepResult.status === 'FAILED';
+              comparator.stepResult.acceptable;
         }
 
         function hasStepComparatorAcceptedChanges(comparator) {
@@ -339,10 +339,12 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
                 passed();
                 break;
               case 'CONDITIONALLY_PASSED':
+                if (stepResult.rebaseable) {
+                  updatePatternsToAccept(1);
+                }
                 conditionallyPassed();
                 break;
               case 'FAILED':
-                // if `rebaseable` comparator, increment acceptable patterns counter
                 if (stepResult.rebaseable) {
                   updatePatternsToAccept(1);
                 }

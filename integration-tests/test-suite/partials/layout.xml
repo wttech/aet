@@ -415,5 +415,102 @@
 			<url href="comparators/layout/failed.jsp"/>
 		</urls>
 	</test>
+
+  <test name="S-comparator-Layout-Partial-with-Exclude">
+    <collect>
+      <open/>
+      <resolution width="767" height="300"/>
+      <sleep duration="3000"/>
+      <screen css=".dynamic1" exclude-elements=".dynamic1" />
+    </collect>
+    <compare>
+      <screen comparator="layout"/>
+    </compare>
+    <urls>
+      <url href="comparators/layout/failed.jsp"/>
+    </urls>
+  </test>
+
+  <test name="S-comparator-Layout-Auto-Height-Partial-with-Exclude">
+    <collect>
+      <open/>
+      <resolution width="767"/>
+      <sleep duration="3000"/>
+      <screen css=".space" exclude-elements=".dynamic1,.dynamic2" />
+    </collect>
+    <compare>
+      <screen comparator="layout"/>
+    </compare>
+    <urls>
+      <url href="comparators/layout/height_detection.jsp"/>
+    </urls>
+  </test>
+
+  <test name="F-comparator-Layout-Auto-Height-Partial-with-Exclude">
+    <collect>
+      <open/>
+      <resolution width="767"/>
+      <sleep duration="3000"/>
+      <screen css=".space" exclude-elements=".dynamic2" />
+    </collect>
+    <compare>
+      <screen comparator="layout"/>
+    </compare>
+    <urls>
+      <url href="comparators/layout/height_detection.jsp"/>
+    </urls>
+  </test>
+
+  <test name="F-comparator-Layout-Partial-with-Exclude-outside-partial">
+    <collect>
+      <open/>
+      <resolution width="767" height="300"/>
+      <sleep duration="3000"/>
+      <screen css=".dynamic2" exclude-elements=".dynamic1" />
+    </collect>
+    <compare>
+      <screen comparator="layout"/>
+    </compare>
+    <urls>
+      <url href="comparators/layout/failed.jsp"/>
+    </urls>
+  </test>
+
+	<test name="F-comparator-Layout-dynamic-element-at-bottom-of-long-page">
+		<collect>
+			<open/>
+			<resolution width="767"/>
+			<!--ToDo: Remove resolution-sleep-resolution workaround after issue #357 is fixed.
+			(https://github.com/Cognifide/aet/issues/357)-->
+			<sleep duration="2000"/>
+			<resolution width="767"/>
+			<screen/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/long_page.jsp"/>
+		</urls>
+	</test>
+
+	<test name="S-comparator-Layout-long-page-without-dynamic-at-bottom">
+		<collect>
+			<open/>
+			<resolution width="767"/>
+			<!--ToDo: Remove resolution-sleep-resolution workaround after issue #357 is fixed.
+			(https://github.com/Cognifide/aet/issues/357)-->
+			<sleep duration="2000"/>
+			<resolution width="767"/>
+			<screen exclude-elements=".dynamic1,.dynamic2"/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/long_page.jsp"/>
+		</urls>
+	</test>
+
 	<!-- Layout-Comparator END -->
 </suite>
