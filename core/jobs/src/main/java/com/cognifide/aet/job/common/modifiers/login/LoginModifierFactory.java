@@ -39,8 +39,7 @@ public class LoginModifierFactory implements CollectorFactory {
   @Override
   public CollectorJob createInstance(CollectorProperties properties, Map<String, String> parameters,
       WebCommunicationWrapper webCommunicationWrapper) throws ParametersException {
-    LoginModifier modifier = new LoginModifier(webCommunicationWrapper,
-        validationResultBuilderFactory.createInstance());
+    LoginModifier modifier = new LoginModifier(webCommunicationWrapper);
     modifier.setParameters(parameters);
     return modifier;
   }
