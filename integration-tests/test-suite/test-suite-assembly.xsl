@@ -46,6 +46,7 @@
 			<xsl:apply-templates select="document('partials/executejavascript.xml')/*/test"/>
 			<xsl:apply-templates select="document('partials/wait-for-element-to-be-visible.xml')/*/test"/>
 			<xsl:apply-templates select="document('partials/wait-for-image-completion.xml')/*/test"/>
+			<xsl:apply-templates select="document('partials/scroll.xml')/*/test"/>
 			<xsl:copy-of select="reports"/>
 		</xsl:copy>
 	</xsl:template>

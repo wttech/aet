@@ -16,8 +16,8 @@
 package com.cognifide.aet.job.common.modifiers.login;
 
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
+import com.cognifide.aet.job.common.utils.javascript.JavaScriptJobExecutor;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -27,25 +27,20 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class LoginFormComponent {
 
   private static final int TIMEOUT = 10;
-
   private static final int MAX_ATTEMPTS = 10;
-
   private static final String VALUE_ATTRIBUTE = "value";
-
   private static final String SET_VALUE_SCRIPT = "arguments[0].value=arguments[1]";
 
   private final WebElement loginInput;
-
   private final WebElement passwordInput;
-
   private final WebElement submitButton;
+  private final JavaScriptJobExecutor jsExecutor;
 
-  private final JavascriptExecutor js;
+  LoginFormComponent(WebDriver webDriver, String loginInputSelector,
+      String passwordInputSelector, String submitButtonSelector,
+      JavaScriptJobExecutor jsExecutor) throws ProcessingException {
 
-  public LoginFormComponent(WebDriver webDriver, String loginInputSelector,
-      String passwordInputSelector,
-      String submitButtonSelector) throws ProcessingException {
-    js = (JavascriptExecutor) webDriver;
+    this.jsExecutor = jsExecutor;
     try {
       loginInput = getElementByXpath(webDriver, loginInputSelector);
       passwordInput = getElementByXpath(webDriver, passwordInputSelector);
@@ -74,7 +69,7 @@ public class LoginFormComponent {
     submit();
   }
 
-  public boolean isFormFilledProperly(String login, String password) {
+  private boolean isFormFilledProperly(String login, String password) {
     return isFilledProperly(loginInput, login) && isFilledProperly(passwordInput, password);
   }
 
@@ -86,9 +81,9 @@ public class LoginFormComponent {
     submitButton.click();
   }
 
-  private void fill(WebElement input, String value) {
+  private void fill(WebElement input, String value) throws ProcessingException {
     if (!isFilledProperly(input, value)) {
-      js.executeScript(SET_VALUE_SCRIPT, input, value);
+      jsExecutor.execute(SET_VALUE_SCRIPT, input, value);
     }
   }
 
