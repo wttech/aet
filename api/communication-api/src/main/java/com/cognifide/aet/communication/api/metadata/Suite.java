@@ -54,10 +54,6 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
   private static final Type SUITE_TYPE = new TypeToken<Suite>() {
   }.getType();
 
-  public void setCorrelationId(String correlationId) {
-    this.correlationId = correlationId;
-  }
-
   @NotBlank
   private String correlationId;
 
@@ -210,6 +206,10 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
 
   public void setVersion(Long version) {
     this.version = version;
+  }
+
+  public void setCorrelationId(String correlationId) {
+    this.correlationId = correlationId;
   }
 
   @Override
