@@ -16,6 +16,7 @@
 package com.cognifide.aet.job.common.comparators.source;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import com.cognifide.aet.communication.api.metadata.ComparatorStepResult;
 import com.cognifide.aet.job.api.comparator.ComparatorProperties;
@@ -67,8 +68,9 @@ public class SourceComparatorTest extends AbstractComparatorTest {
     result = compare("pattern-source.html", "data-source.html", new HashMap<>());
 
     assertEquals(ComparatorStepResult.Status.PASSED, result.getStatus());
-    // artifact is saved now - with formatted sources of pattern and tested data, even if they are equals
-    //assertEquals(null, getActual());
+    assertFalse(result.isRebaseable());
+    // artifact is saved - with formatted sources of pattern and tested data, even if they are equal
+    assertEqualsToSavedArtifact("expected-result-with-sources.json");
   }
 
   @Test
