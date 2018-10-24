@@ -27,6 +27,7 @@
 			<xsl:apply-templates select="document('partials/js-errors-filter-by-error.xml')/*/test"/>
 			<xsl:apply-templates select="document('partials/js-errors-filter-by-errorPattern.xml')/*/test"/>
 			<xsl:apply-templates select="document('partials/js-errors-filter-by-source-and-line.xml')/*/test"/>
+			<xsl:apply-templates select="document('partials/js-errors-filter-by-sourcePattern.xml')/*/test"/>
 			<xsl:apply-templates select="document('partials/status-codes.xml')/*/test"/>
 			<xsl:apply-templates select="document('partials/w3c-html5.xml')/*/test"/>
 			<xsl:apply-templates select="document('partials/w3c-html5-filtered.xml')/*/test"/>
