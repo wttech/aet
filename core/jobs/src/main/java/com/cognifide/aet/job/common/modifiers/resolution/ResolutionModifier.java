@@ -19,8 +19,9 @@ import com.cognifide.aet.communication.api.metadata.CollectorStepResult;
 import com.cognifide.aet.job.api.ParametersValidator;
 import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
-import com.cognifide.aet.job.api.exceptions.ProcessingException;
+import com.cognifide.aet.job.common.utils.Sampler;
 import java.util.Map;
+import java.util.function.Supplier;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.JavascriptExecutor;
@@ -39,13 +40,23 @@ public class ResolutionModifier implements CollectorJob {
 
   private static final String HEIGHT_PARAM = "height";
 
+  private static final String SAMPLING_PERIOD_PARAM = "samplingPeriod";
+
   private static final String JAVASCRIPT_GET_BODY_HEIGHT = "return document.body.scrollHeight";
 
-  private static final int MAX_SIZE = 35000;
+  private static final int HEIGHT_MAX_SIZE = 35000;
 
   private static final int INITIAL_HEIGHT = 300;
 
   private static final int HEIGHT_NOT_DEFINED = 0;
+
+  private static final int DEFAULT_SAMPLING_WAIT_PERIOD = 100;
+
+  private static final int MAX_SAMPLES_THRESHOLD = 15;
+
+  private static final int SAMPLE_QUEUE_SIZE = 3;
+
+  private static final int MAX_SAMPLING_PERIOD = 10000;
 
   private final WebDriver webDriver;
 
@@ -53,13 +64,15 @@ public class ResolutionModifier implements CollectorJob {
 
   private int height;
 
+  private int samplingPeriod;
+
   public ResolutionModifier(WebDriver webDriver) {
     this.webDriver = webDriver;
   }
 
 
   @Override
-  public CollectorStepResult collect() throws ProcessingException {
+  public CollectorStepResult collect() {
     setResolution(this.webDriver);
     return CollectorStepResult.newModifierResult();
   }
@@ -68,30 +81,52 @@ public class ResolutionModifier implements CollectorJob {
   public void setParameters(Map<String, String> params) throws ParametersException {
     if (params.containsKey(WIDTH_PARAM)) {
       width = NumberUtils.toInt(params.get(WIDTH_PARAM));
-      ParametersValidator.checkRange(width, 1, MAX_SIZE, "Width should be greater than 0");
+      ParametersValidator.checkRange(width, 1, HEIGHT_MAX_SIZE, "Width should be greater than 0");
       if (params.containsKey(HEIGHT_PARAM)) {
-        height = NumberUtils.toInt(params.get(HEIGHT_PARAM));
-        ParametersValidator
-            .checkRange(height, 1, MAX_SIZE, "Height should be greater than 0 and smaller than " + MAX_SIZE);
+        setHeight(params);
+      } else {
+        setHeightSamplingPeriod(params);
       }
     } else {
       throw new ParametersException("You have to specify width, height parameter is optional");
     }
   }
 
+  private void setHeight(Map<String, String> params) throws ParametersException {
+    height = NumberUtils.toInt(params.get(HEIGHT_PARAM));
+    ParametersValidator
+        .checkRange(height, 1, HEIGHT_MAX_SIZE,
+            "Height should be greater than 0 and smaller than " + HEIGHT_MAX_SIZE);
+  }
+
+  private void setHeightSamplingPeriod(Map<String, String> params) throws ParametersException {
+    samplingPeriod = NumberUtils
+        .toInt(params.get(SAMPLING_PERIOD_PARAM), DEFAULT_SAMPLING_WAIT_PERIOD);
+    ParametersValidator
+        .checkRange(samplingPeriod, 0, MAX_SAMPLING_PERIOD,
+            "samplingPeriod should be greater than or equal 0 and smaller or equal "
+                + MAX_SAMPLING_PERIOD);
+  }
+
   private void setResolution(WebDriver webDriver) {
-    Window window = webDriver.manage().window();
     if (height == HEIGHT_NOT_DEFINED) {
-      window.setSize(new Dimension(width, INITIAL_HEIGHT));
-      JavascriptExecutor js = (JavascriptExecutor) webDriver;
-      height = Integer
-          .parseInt(js.executeScript(JAVASCRIPT_GET_BODY_HEIGHT).toString());
-      if (height > MAX_SIZE) {
-        LOG.warn("Height is over browser limit, changing height to {}", MAX_SIZE);
-        height = MAX_SIZE;
+      height = calculateWindowHeight(webDriver);
+      if (height > HEIGHT_MAX_SIZE) {
+        LOG.warn("Height is over browser limit, changing height to {}", HEIGHT_MAX_SIZE);
+        height = HEIGHT_MAX_SIZE;
       }
     }
     LOG.info("Setting resolution to  {}x{}  ", width, height);
-    window.setSize(new Dimension(width, height));
+    webDriver.manage().window().setSize(new Dimension(width, height));
+  }
+
+  private int calculateWindowHeight(WebDriver webDriver) {
+    Window window = webDriver.manage().window();
+    window.setSize(new Dimension(width, INITIAL_HEIGHT));
+
+    Supplier<Integer> heightSupplier = () -> Integer.parseInt(
+        ((JavascriptExecutor) webDriver).executeScript(JAVASCRIPT_GET_BODY_HEIGHT).toString());
+    return Sampler
+        .waitForValue(heightSupplier, samplingPeriod, SAMPLE_QUEUE_SIZE, MAX_SAMPLES_THRESHOLD);
   }
 }
