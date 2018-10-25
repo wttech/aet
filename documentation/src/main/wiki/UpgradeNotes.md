@@ -27,6 +27,11 @@ the width of collected screenshot could be different that the width set in the `
 (see "Notes" section in [[Resolution Modifier|ResolutionModifier]] wiki). This issue doesn't occur when using AET 3.0 with Chrome browser - make
 sure to adjust the resolution `width` value when updating your suite from previous AET versions.
 
+##### Known issues
+
+* [#357](https://github.com/Cognifide/aet/issues/357) - see Known issues section in [[Resolution Modifier|ResolutionModifier]] wiki
+for possible workarounds.
+
 #### `aet-maven-plugin` marked as deprecated
 That means it will be no longer supported after release of this version and expect it will be removed soon.
 Please use [[client script|ClientScripts]] instead or simply communicate with AET Web API to schedule your suite.
