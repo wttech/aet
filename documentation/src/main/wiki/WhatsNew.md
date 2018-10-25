@@ -3,6 +3,8 @@ To see the full list of changes, please refer to [CHANGELOG](https://github.com/
 
 ### `master` branch version (not released yet)
 
+### Version 3.1.0
+
 #### JS Error Data Filter with regex param
 New param `sourcePattern` was added to [[JS Error Data Filter|JSErrorsDataFilter#parameters]].
 
