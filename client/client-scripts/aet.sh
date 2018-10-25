@@ -43,8 +43,10 @@ function usage {
     echo
     exit 1
 }
+
+# todo pass login and password by parameters
 function get_json {
-	curl -s "$1"
+	curl -u admin:admin -s "$1"
 }
 
 # extracts http status code and response body from curl response string
