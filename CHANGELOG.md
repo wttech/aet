@@ -10,10 +10,14 @@ All notable changes to AET will be documented in this file.
 ## Unreleased
 **List of changes that are finished but not yet released in any final version.**
 - [PR-404](https://github.com/Cognifide/aet/pull/404) Added missing tooltip for conditional tests
+- [PR-409](https://github.com/Cognifide/aet/pull/409) Added sources link in "view source" url
+- [PR-394](https://github.com/Cognifide/aet/pull/394) Added scroll modifier
 - [PR-399](https://github.com/Cognifide/aet/pull/399) Bug fix on side panel - conditional tests ([#398](https://github.com/Cognifide/aet/issues/398))
 - [PR-396](https://github.com/Cognifide/aet/pull/396) Added horizontal scrollbar for wide pages ([#393](https://github.com/Cognifide/aet/issues/393)) 
 - [PR-403](https://github.com/Cognifide/aet/pull/403) Conditionally passed tests can be accepted ([#400](https://github.com/Cognifide/aet/issues/400))
 - [PR-387](https://github.com/Cognifide/aet/pull/387) Set max allowed page screenshot height to 35k pixels.
+- [PR-401](https://github.com/Cognifide/aet/pull/401) Added new regex param `sourcePattern` to [JS Errors Data Filter](https://github.com/Cognifide/aet/wiki/JSErrorsDataFilter)
+- [PR-397](https://github.com/Cognifide/aet/pull/397) Add algorithm to enable taking long screenshots without resolution-sleep-resolution workaround 
 
 ## Version 3.0.1
 
@@ -21,7 +25,6 @@ All notable changes to AET will be documented in this file.
 - [PR-378](https://github.com/Cognifide/aet/pull/378) OSGI-configurable Chrome options.
 
 ## Version 3.0.0
-
 
 - [PR-359](https://github.com/Cognifide/aet/pull/359) ([#351](https://github.com/Cognifide/aet/issues/351)) Disabled nu.validator language detection to fix random NPE
 - [PR-328](https://github.com/Cognifide/aet/pull/328) Added suite's history
