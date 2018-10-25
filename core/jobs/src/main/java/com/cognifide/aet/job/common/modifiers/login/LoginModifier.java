@@ -20,7 +20,7 @@ import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
-import com.cognifide.aet.validation.ValidationResultBuilder;
+import com.cognifide.aet.job.common.utils.javascript.JavaScriptJobExecutor;
 import java.util.Map;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
@@ -37,15 +37,11 @@ public class LoginModifier implements CollectorJob {
 
   private final WebDriver webDriver;
 
-  private final ValidationResultBuilder validationResultBuilder;
-
   private LoginModifierConfig config;
 
-  LoginModifier(WebCommunicationWrapper webCommunicationWrapper,
-      ValidationResultBuilder validationResultBuilder) {
+  LoginModifier(WebCommunicationWrapper webCommunicationWrapper) {
     this.webCommunicationWrapper = webCommunicationWrapper;
     this.webDriver = webCommunicationWrapper.getWebDriver();
-    this.validationResultBuilder = validationResultBuilder;
   }
 
   @Override
@@ -98,7 +94,8 @@ public class LoginModifier implements CollectorJob {
         .info("Attempting to login user: {} on site {}", config.getLogin(), config.getLoginPage());
     webDriver.get(config.getLoginPage());
     LoginFormComponent form = new LoginFormComponent(webDriver, config.getLoginInputSelector(),
-        config.getPasswordInputSelector(), config.getSubmitButtonSelector());
+        config.getPasswordInputSelector(), config.getSubmitButtonSelector(),
+        new JavaScriptJobExecutor(webDriver));
     form.login(config.getLogin(), config.getPassword());
   }
 

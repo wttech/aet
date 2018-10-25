@@ -20,6 +20,7 @@ import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
+import com.cognifide.aet.job.common.utils.javascript.JavaScriptJobExecutor;
 import java.util.Map;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -39,7 +40,7 @@ public class ExecuteJavaScriptModifierFactory implements CollectorFactory {
   public CollectorJob createInstance(CollectorProperties properties, Map<String, String> parameters,
       WebCommunicationWrapper webCommunicationWrapper) throws ParametersException {
     ExecuteJavaScriptModifier modifier = new ExecuteJavaScriptModifier(
-        webCommunicationWrapper.getWebDriver(), httpClient);
+        httpClient, new JavaScriptJobExecutor(webCommunicationWrapper.getWebDriver()));
     modifier.setParameters(parameters);
     return modifier;
   }
