@@ -5,6 +5,7 @@
 [![][gitter img]][gitter]
 
 # AET
+#### Automated Exploratory Tests
 <p align="center">
   <img src="https://github.com/Cognifide/aet/blob/master/misc/img/aet-logo-black.png?raw=true"
          alt="AET Logo"/>
