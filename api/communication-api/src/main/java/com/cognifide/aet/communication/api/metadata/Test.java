@@ -118,14 +118,9 @@ public class Test implements Serializable, Commentable, Named {
   }
 
   public Optional<Url> getUrl(String urlName) {
-    Url urlToReturn = null;
-    for (Url url: this.urls) {
-      if(url.getName().equals(urlName)){
-        urlToReturn = url;
-        break;
-      }
-    }
-    return Optional.ofNullable(urlToReturn);
+    return this.urls.stream()
+            .filter(url -> url.getName().equals(urlName))
+            .findFirst();
   }
 
   public void setUrls(Set<Url> urls) {
