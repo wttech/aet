@@ -21,6 +21,7 @@
 - [ ] My code follows the [code style](https://github.com/Cognifide/aet/blob/master/CONTRIBUTING.md#coding-conventions) of this project.
 - [ ] My change requires a change to the documentation.
 - [ ] I have updated the documentation accordingly.
+- [ ] This change needs to be tested.
 
 ---
 I hereby agree to the terms of the AET Contributor License Agreement.
