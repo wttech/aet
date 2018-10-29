@@ -42,6 +42,7 @@ public final class Helper {
   public static final String SUITE_PARAM = "suite";
   public static final String VERSION_PARAM = "version";
   public static final String ID_PARAM = "id";
+  public static final String TYPE_PARAM = "type";
   public static final String REPORT_PART_PATH_DEFAULT_PAGE = "index.html";
   public static final String TEST_RERUN_PARAM = "testName";
   public static final String URL_RERUN_PARAM = "testUrl";
