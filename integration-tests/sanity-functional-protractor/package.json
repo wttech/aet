@@ -6,20 +6,14 @@
     "postinstall": "npm run webdriver-manager-update",
     "test": "protractor ./protractor-conf.js",
     "test:reportTests": "protractor ./protractor-conf.js --suite=reportTests",
-    "test:apiTests": "protractor ./protractor-conf.js --suite=apiTests",
     "webdriver-manager-start": "webdriver-manager start",
     "webdriver-manager-update": "webdriver-manager update"
   },
   "devDependencies": {
-    "atob": "^2.0.3",
-    "chakram": "^1.5.0",
-    "jasmine-json-test-reporter": "^1.0.0-beta",
     "jasmine-reporters": "^2.2.1",
     "jasmine-spec-reporter": "^3.2.0",
-    "jasmine-terminal-reporter": "^1.0.3",
     "protractor": "^5.1.1",
     "protractor-jasmine2-screenshot-reporter": "^0.3.3",
-    "sg-protractor-tools": "^1.0.4",
     "webdriver-manager": "^12.0.4"
   },
   "engines": {

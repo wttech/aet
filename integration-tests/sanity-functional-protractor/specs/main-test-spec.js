@@ -1,16 +1,16 @@
 'use strict';
 
-//npm test -- --specs specs/main-test.js
+//npm test -- --specs specs/main-test-spec.js
 
-const PublishPage = require('../page_objects/abstract-po.js');
-const ReportPage = require('../page_objects/report-page-po.js');
+const publishPage = require('../page_objects/abstract-po.js');
+const reportPage = require('../page_objects/report-page-po.js');
 let expectedSuccess, expectedFailed, expectedWarnings, expectedTotal;
 let currentNoOfPassedTests, currentNoOfConditionalyPassedTests, currentNoOfFailedTests, currentNoOfWarnedTests;
 
 describe('AET reports web application - main report results validation', () => {
 
     beforeAll((done) => {
-        PublishPage.open("reportHome");
+        publishPage.open("reportHome");
         countExpectedTestsResults()
             .then(() => countActualTestsResults())
             .then(() => done());
@@ -33,8 +33,8 @@ describe('AET reports web application - main report results validation', () => {
     });
 });
 
-const countExpectedTestsResults = () => {
-    return ReportPage.getTestLinksTitles().then((linksTitles) => {
+function countExpectedTestsResults() {
+    return reportPage.getTestLinksTitles().then((linksTitles) => {
         let linksFirstLetters = [];
         linksTitles.forEach(title => {
             linksFirstLetters.push(title.slice(0, 1));
@@ -46,19 +46,19 @@ const countExpectedTestsResults = () => {
     })
 };
 
-const countActualTestsResults = () => {
-    return ReportPage.getCurrentNoOfPassedTests()
+function countActualTestsResults() {
+    return reportPage.getCurrentNoOfPassedTests()
         .then((tmp) => {
             currentNoOfPassedTests = tmp;
-            return ReportPage.getCurrentNoOfConditionalyPassedTests();
+            return reportPage.getCurrentNoOfConditionalyPassedTests();
         })
         .then((tmp) => {
             currentNoOfConditionalyPassedTests = tmp;
-            return ReportPage.getCurrentNoOfFailedTests();
+            return reportPage.getCurrentNoOfFailedTests();
         })
         .then((tmp) => {
             currentNoOfFailedTests = tmp;
-            return ReportPage.getCurrentNoOfWarnedTests();
+            return reportPage.getCurrentNoOfWarnedTests();
         })
         .then((tmp) => {
             currentNoOfWarnedTests = tmp;

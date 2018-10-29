@@ -1,7 +1,7 @@
 'use strict';
 
 const envData = require('../data/env.json');
-const waitHelper = require('../helpers/wait-helper');
+const waitHelper = require('../helpers/wait-helper.js');
 const testPages = require('../data/pages_list.json');
 
 function AbstractPage() {

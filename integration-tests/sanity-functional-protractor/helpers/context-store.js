@@ -6,16 +6,15 @@
  * This class allows developers i.e. to get rid of tightly coupled page objects. Instead of referencing previus page of
  * the journey you should add value to context store.
  */
-module.exports = (function ContextStore() {
+function ContextStore() {
 
-    var api = {},
-        store = {};
+    var store = {};
     /**
      * Puts value into key-value store
      * @param key
      * @param value
      */
-    api.put = function(key, value) {
+    this.put = function (key, value) {
         store[key] = value;
     };
 
@@ -24,9 +23,9 @@ module.exports = (function ContextStore() {
      * @param key
      * @returns {*}
      */
-    api.get = function(key) {
+    this.get = function (key) {
         return store[key];
     };
+}
 
-    return api;
-})();
+module.exports = new ContextStore();

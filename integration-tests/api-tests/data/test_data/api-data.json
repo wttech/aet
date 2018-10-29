@@ -1,33 +1,33 @@
 {
-  "get_metadata_by_suite_name": {
+  "getMetadataBySuiteName": {
     "parameters": {
       "company": "aet",
       "project": "aet",
       "suite": "main"
     },
-    "json_schema_path": "../data/test_data/json_schema/get-metadata-by-suite-name-json-schema.json",
-    "error_message": {
+    "jsonSchemaPath": "../data/test_data/json_schema/get-metadata-by-suite-name-json-schema.json",
+    "errorMessage": {
       "message": "Unable to get Suite Metadata for {company='aet', project='aet'}"
     }
   },
-  "get_metadata_by_correlationId": {
+  "getMetadataByCorrelationId": {
     "parameters": {
       "company": "aet",
       "project": "aet",
       "correlationId": ""
     },
-    "json_schema_path": "../data/test_data/json_schema/get-metadata-by-suite-name-json-schema.json",
-    "error_message": {
+    "jsonSchemaPath": "../data/test_data/json_schema/get-metadata-by-suite-name-json-schema.json",
+    "errorMessage": {
       "message": "Unable to get Suite Metadata for {company='aet', project='aet'}"
     }
   },
-  "get_artifact_by_artifact_Id": {
+  "getArtifactByArtifactId": {
     "parameters": {
       "company": "aet",
       "project": "aet",
       "id": ""
     },
-    "error_message": {
+    "errorMessage": {
       "message": "Unable to get Suite Metadata for {company='aet', project='aet'}"
     }
   }

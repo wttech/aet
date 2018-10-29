@@ -7,10 +7,6 @@ var JasmineReporter = require('jasmine-reporters');
 
 var htmlReporter = new HtmlScreenshotReporter({
     dest: 'reports',
-    userCss: [
-        '../assets/css/report-styles.css',
-        'https://fonts.googleapis.com/css?family=Open+Sans'
-    ],
     cleanDestination: true,
     showSummary: true,
     showQuickLinks: true,
@@ -28,18 +24,15 @@ exports.config = {
     capabilities: {
         browserName: 'chrome',
         shardTestFiles: true,
-        maxInstances: 1
+        maxInstances: 2
     },
 
     // Spec patterns are relative to the location of the spec file. They may
     // include glob patterns.
     suites: {
         reportTests: [
-            'specs/main-test.js',
-            'specs/filtering-feature.js'
-        ],
-        apiTests: [
-            'specs/api-spec.js'
+            'specs/main-test-spec.js',
+            'specs/filtering-feature-spec.js'
         ]
     },
 
@@ -68,7 +61,6 @@ exports.config = {
     // // Assign the test reporter to each running instance
     onPrepare: function () {
         var env = jasmine.getEnv();
-        env.clearReporters();
         env.addReporter(htmlReporter);
         env.addReporter(specReporter);
         env.addReporter(jasmineReporter);

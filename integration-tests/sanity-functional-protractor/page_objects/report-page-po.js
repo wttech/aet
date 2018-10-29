@@ -1,6 +1,6 @@
 'use strict';
 
-const waitHelper = require('../helpers/wait-helper');
+const waitHelper = require('../helpers/wait-helper.js');
 
 function ReportPage() {
 

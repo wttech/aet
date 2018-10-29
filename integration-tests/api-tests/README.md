@@ -11,7 +11,7 @@
 - Create new branch and start automating the tests :)
 
 ## Running the tests on local machine
-- To run Protractor tests you can simply run `npm test`. This will run all available tests in '/specs' directory and on default environment which is local instance
+- To run Protractor tests you can simply run `npm test`. This will run all available tests in '/specs' directory and on default environment which is live instance
 - To run specific tests suite or few suites just add the parameter `--suite [suite-name]`. The suite names can be found in the `protractor-conf.js` file. Example:
 ```
 npm test -- --suite reportTests
