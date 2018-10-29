@@ -403,6 +403,12 @@
         <version>${project.version}</version>
         <scope>provided</scope>
       </dependency>
+      <dependency>
+        <groupId>com.cognifide.aet</groupId>
+        <artifactId>jobs</artifactId>
+        <version>${project.version}</version>
+        <scope>provided</scope>
+      </dependency>
 
       <dependency>
         <groupId>com.cognifide.aet</groupId>

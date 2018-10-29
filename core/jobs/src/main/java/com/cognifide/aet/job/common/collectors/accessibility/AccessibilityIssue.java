@@ -36,6 +36,8 @@ public class AccessibilityIssue implements Serializable, Excludable {
 
   private int columnNumber;
 
+  private String url;
+
   /**
    * If issue is excluded from results, i.e. is listed but not taken into account when computed
    * results.
@@ -85,6 +87,14 @@ public class AccessibilityIssue implements Serializable, Excludable {
 
   public void setColumnNumber(int columnNumber) {
     this.columnNumber = columnNumber;
+  }
+
+  public String getUrl() {
+    return url;
+  }
+
+  public void setUrl(String url) {
+    this.url = url;
   }
 
   @Override

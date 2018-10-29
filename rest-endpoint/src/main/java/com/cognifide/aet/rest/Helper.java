@@ -25,6 +25,7 @@ public final class Helper {
   static final String REST_PREFIX = "/api";
   static final String ARTIFACT_PART_PATH = "artifact";
   static final String METADATA_PART_PATH = "metadata";
+  static final String REPORTERS_PART_PATH = "reporters";
   static final String HISTORY_PART_PATH = "history";
   static final String REPORT_PART_PATH = "/report";
   static final String CONFIGS_PART_PATH = "/configs";
@@ -43,6 +44,10 @@ public final class Helper {
 
   private Helper() {
     //private helper constructor
+  }
+
+  public static String getReportersPath() {
+    return REST_PREFIX + PATH_SEPARATOR + REPORTERS_PART_PATH;
   }
 
   public static String getMetadataPath() {

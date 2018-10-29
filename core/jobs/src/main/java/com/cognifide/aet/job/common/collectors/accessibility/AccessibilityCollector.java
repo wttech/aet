@@ -65,10 +65,15 @@ public class AccessibilityCollector implements CollectorJob {
     final String json = jsExecutor.execute(script, standard).getExecutionResultAsString();
     List<AccessibilityIssue> issues = parseIssues(json);
     getElementsPositions(issues, html);
+    supplyUrl(issues);
 
     String resultId = artifactsDAO.saveArtifactInJsonFormat(properties, issues);
 
     return CollectorStepResult.newCollectedResult(resultId);
+  }
+
+  private void supplyUrl(List<AccessibilityIssue> issues) {
+    issues.forEach(issue -> issue.setUrl(properties.getUrl()));
   }
 
   private String getScriptFromFile() throws ProcessingException {
