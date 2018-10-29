@@ -7,6 +7,18 @@ To see the full list of changes, please refer to [CHANGELOG](https://github.com/
 Now it is possible to schedule AET task from the report directly.
 Read more about this feature [[here|SuiteReportFeatures#rerun]].
 
+### Version 3.1.0
+
+#### JS Error Data Filter with regex param
+New param `sourcePattern` was added to [[JS Error Data Filter|JSErrorsDataFilter#parameters]].
+
+#### Max page length
+Taking screenshots of very long pages was optimised and it is possible now to capture even `35000 px`
+long pages.
+
+#### Scroll - new modifier
+Scroll Modifier allows to scroll page to specific element. Read more about it [[in the wiki docs|ScrollModifier]].
+
 ### Version 3.0.0
 
 #### Upgrade for our virtualization tool set
