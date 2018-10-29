@@ -109,9 +109,7 @@ public class LayoutComparator implements ComparatorJob {
                 hideElementsInImg(patternImg, excludedElements);
                 hideElementsInImg(collectedImg, excludedElements);
               }
-              if (!CollectionUtils.isEmpty(exclude.getNotFoundElements())) {
-                notFoundExcludeElements = exclude.getNotFoundElements();
-              }
+              notFoundExcludeElements = exclude.getNotFoundElements();
             });
 
         imageComparisonResult = ImageComparison.compare(patternImg, collectedImg);
