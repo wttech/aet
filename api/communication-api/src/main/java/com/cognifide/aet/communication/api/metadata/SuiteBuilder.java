@@ -59,10 +59,12 @@ public class SuiteBuilder {
   }
 
   public Suite createSuite() {
+    Suite suite;
     if (Strings.isNullOrEmpty(projectHashCode)) {
-      return new Suite(correlationId, company, project, name, patternCorrelationId);
+      suite = new Suite(correlationId, company, project, name, patternCorrelationId);
     } else {
-      return new Suite(correlationId, company, project, name, patternCorrelationId, projectHashCode);
+      suite = new Suite(correlationId, company, project, name, patternCorrelationId, projectHashCode);
     }
+    return suite;
   }
 }
