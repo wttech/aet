@@ -12,6 +12,8 @@
  */
 package com.cognifide.aet.communication.api.metadata;
 
+import com.google.common.base.Strings;
+
 public class SuiteBuilder {
 
   private String correlationId;
@@ -24,8 +26,15 @@ public class SuiteBuilder {
 
   private String patternCorrelationId;
 
+  private String projectHashCode;
+
   public SuiteBuilder setCorrelationId(String correlationId) {
     this.correlationId = correlationId;
+    return this;
+  }
+
+  public SuiteBuilder setProjectHashCode(String projectHashCode) {
+    this.projectHashCode = projectHashCode;
     return this;
   }
 
@@ -50,6 +59,10 @@ public class SuiteBuilder {
   }
 
   public Suite createSuite() {
-    return new Suite(correlationId, company, project, name, patternCorrelationId);
+    if (Strings.isNullOrEmpty(projectHashCode)) {
+      return new Suite(correlationId, company, project, name, patternCorrelationId);
+    } else {
+      return new Suite(correlationId, company, project, name, patternCorrelationId, projectHashCode);
+    }
   }
 }

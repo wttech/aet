@@ -25,7 +25,6 @@ import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@SuppressWarnings("ALL")//todo Delete beffore pullrequest
 @Component(service = SuiteDataService.class)
 public class SuiteDataService {
 
@@ -34,6 +33,13 @@ public class SuiteDataService {
   @Reference
   private MetadataDAO metadataDAO;
 
+  public SuiteDataService() {
+  }
+
+  public SuiteDataService(MetadataDAO metadataDAO) {
+    this.metadataDAO = metadataDAO;
+  }
+
   /**
    * @param currentRun - current suite run
    * @return suite wrapper with all patterns from the last or specified (see Suite.patternCorrelationId) run, if this is the first run of the suite, patterns will be empty.
@@ -41,12 +47,12 @@ public class SuiteDataService {
   public Suite enrichWithPatterns(final Suite currentRun) throws StorageException {
     final SimpleDBKey dbKey = new SimpleDBKey(currentRun);
     Suite lastVersion = metadataDAO.getLatestRun(dbKey, currentRun.getName());
-    String checkSumCurrentRunProject = currentRun.getCheckSum();
+    String checkSumCurrentRunProject = currentRun.getCheckSumProject();
     final Suite pattern;
 
     if (isTestRunWithCheckSum(checkSumCurrentRunProject)) {
       Optional<Suite> suiteByChecksum = Optional.ofNullable(metadataDAO.getSuiteByChecksum(dbKey, checkSumCurrentRunProject));
-      pattern = suiteByChecksum.orElse(assignCheckSumToPattern(dbKey, currentRun, lastVersion, checkSumCurrentRunProject));
+      pattern = suiteByChecksum.orElseGet(() -> assignCheckSumToPattern(dbKey, currentRun, lastVersion, checkSumCurrentRunProject));
     } else {
       if (currentRun.getPatternCorrelationId() == null) {
         pattern = lastVersion;
@@ -57,26 +63,26 @@ public class SuiteDataService {
     return SuiteMergeStrategy.merge(currentRun, lastVersion, pattern);
   }
 
-  private Suite assignCheckSumToPattern(SimpleDBKey dbKey, Suite currentRun, Suite lastVersion, String checkSumCurrentRunProject) throws StorageException {
-    Suite pattern;
-    if (isSuitHasPattern(currentRun)) {
-      pattern = metadataDAO.getSuite(dbKey, currentRun.getPatternCorrelationId());
-    } else {
-      pattern = lastVersion;
-    }
-    if (pattern != null) {
-      pattern.setCheckSumProject(checkSumCurrentRunProject);
-      updateSuit(pattern);
+  private Suite assignCheckSumToPattern(SimpleDBKey dbKey, Suite currentRun, Suite lastVersion, String checkSumCurrentRunProject) {
+    Suite pattern = null;
+    try {
+      if (isSuitHasPattern(currentRun)) {
+        pattern = metadataDAO.getSuite(dbKey, currentRun.getPatternCorrelationId());
+      } else {
+        pattern = lastVersion;
+      }
+      if (pattern != null) {
+        pattern.setCheckSumProject(checkSumCurrentRunProject);
+        updateSuit(pattern);
+      }
+    } catch (StorageException e) {
+      LOGGER.error("Error during processing suite {}", currentRun, e);
     }
     return pattern;
   }
 
   private boolean isSuitHasPattern(Suite currentRun) {
     return !isNullOrEmpty(currentRun.getPatternCorrelationId());
-  }
-
-  private boolean isChecksumIsAssignedToPathern(Optional<Suite> suiteByChecksum) {
-    return suiteByChecksum.isPresent();
   }
 
   private boolean isTestRunWithCheckSum(String checkSumCurrentRunProject) {

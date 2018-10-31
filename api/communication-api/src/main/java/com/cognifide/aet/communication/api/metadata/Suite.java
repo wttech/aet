@@ -49,12 +49,11 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
       .registerTypeAdapter(Suite.Timestamp.class, new TimestampSerializer())
       .create();
 
-  private static final Type SUITE_TYPE = new TypeToken<Suite>() {}.getType();
+  private static final Type SUITE_TYPE = new TypeToken<Suite>() {
+  }.getType();
 
   @NotBlank
   private final String correlationId;
-
-  private  String projectHashCode = StringUtils.EMPTY;
 
   @NotBlank
   @Size(max = 30)
@@ -75,6 +74,8 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
 
   private final String patternCorrelationId;
 
+  private String projectHashCode = StringUtils.EMPTY;
+
   @NotNull
   @Min(1)
   private Long version;
@@ -88,10 +89,6 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
 
   private Statistics statistics;
 
-  public void setCheckSumProject(String projecHashCode) {
-    this.projectHashCode = projecHashCode;
-  }
-
   Suite(String correlationId, String company, String project, String name,
       String patternCorrelationId) {
     this.correlationId = correlationId;
@@ -102,9 +99,19 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
     this.patternCorrelationId = patternCorrelationId;
   }
 
+   Suite(String correlationId, String company, String project, String name, String patternCorrelationId, String projectHashCode) {
+    this.correlationId = correlationId;
+    this.company = company;
+    this.project = project;
+    this.name = name;
+    this.patternCorrelationId = patternCorrelationId;
+    this.projectHashCode = projectHashCode;
+  }
+
   public static Suite fromJson(Reader jsonReader) {
     return GSON_FOR_JSON.fromJson(jsonReader, SUITE_TYPE);
   }
+
 
   public String getCorrelationId() {
     return correlationId;
@@ -122,8 +129,12 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
     return project;
   }
 
-  public String getCheckSum() {
+  public String getCheckSumProject() {
     return projectHashCode;
+  }
+
+  public void setCheckSumProject(String projectHashCode) {
+    this.projectHashCode = projectHashCode;
   }
 
   @Override
@@ -190,6 +201,7 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
         java.util.Objects.equals(company, suite.company) &&
         java.util.Objects.equals(project, suite.project) &&
         java.util.Objects.equals(name, suite.name) &&
+        java.util.Objects.equals(projectHashCode, suite.projectHashCode) &&
         java.util.Objects.equals(version, suite.version);
   }
 
