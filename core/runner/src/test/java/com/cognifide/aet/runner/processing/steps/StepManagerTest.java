@@ -96,7 +96,7 @@ public abstract class StepManagerTest {
     when(suiteIndexWrapper.get()).thenReturn(suite);
     when(suite.getCorrelationId()).thenReturn(CORRELATION_ID);
     when(runnerConfiguration.getMttl()).thenReturn(100L);
-    when(runnerConfiguration.getUrlPackageSize()).thenReturn(2);
+    when(runnerConfiguration.getUrlPackageSize()).thenReturn(1);
     tested = createTested();
     tested.addObserver(observer);
   }
