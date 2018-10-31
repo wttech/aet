@@ -1,7 +1,11 @@
 {
-  "spec_dir": "spec",
+  "spec_dir": "specs",
   "spec_files": [
-    "*[sS]pec.js"
+    "api-artifact-spec.js",
+    "api-history-spec.js",
+    "api-metadata-spec.js",
+    "configs-communicationSettings-spec.js",
+    "lock-spec.js"
   ],
   "helpers": [
     "helpers/**/*.js"

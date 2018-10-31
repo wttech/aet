@@ -1,0 +1,47 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "object",
+  "required": [
+    "jmsEndpointConfig",
+    "reportDomain"
+  ],
+  "properties": {
+    "jmsEndpointConfig": {
+      "$id": "#/properties/jmsEndpointConfig",
+      "type": "object",
+      "required": [
+        "uri",
+        "user",
+        "pass"
+      ],
+      "properties": {
+        "uri": {
+          "$id": "#/properties/jmsEndpointConfig/properties/uri",
+          "type": "string",
+          "pattern": "^(?!\\s*$).+",
+          "format": "uri"
+        },
+        "user": {
+          "$id": "#/properties/jmsEndpointConfig/properties/user",
+          "type": "string",
+          "pattern": "^(?!\\s*$).+",
+          "format": "regex"
+        },
+        "pass": {
+          "$id": "#/properties/jmsEndpointConfig/properties/pass",
+          "type": "string",
+          "pattern": "^(?!\\s*$).+",
+          "format": "regex"
+        }
+      }
+    },
+    "reportDomain": {
+      "$id": "#/properties/reportDomain",
+      "type": "string",
+      "pattern": "^(?!\\s*$).+",
+      "format": "uri"
+    }
+  }
+}

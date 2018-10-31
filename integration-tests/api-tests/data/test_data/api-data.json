@@ -1,13 +1,20 @@
 {
-  "getMetadataBySuiteName": {
+  "getArtifactByArtifactId": {
     "parameters": {
       "company": "aet",
       "project": "aet",
-      "suite": "main"
+      "id": ""
     },
-    "jsonSchemaPath": "../data/test_data/json_schema/get-metadata-by-suite-name-json-schema.json",
-    "errorMessage": {
-      "message": "Unable to get Suite Metadata for {company='aet', project='aet'}"
+    "errorPath": {
+      "parameters": {
+        "company": "aet",
+        "project": "aet",
+        "id": 99999999
+      },
+      "code": 400,
+      "errorMessage": {
+        "message": "//FIXME: fill in proper message "
+      }
     }
   },
   "getMetadataByCorrelationId": {
@@ -17,18 +24,86 @@
       "correlationId": ""
     },
     "jsonSchemaPath": "../data/test_data/json_schema/get-metadata-by-suite-name-json-schema.json",
-    "errorMessage": {
-      "message": "Unable to get Suite Metadata for {company='aet', project='aet'}"
+    "errorPath": {
+      "parameters": {
+        "company": "aet",
+        "project": "aet",
+        "correlationId": 99999999
+      },
+      "code": 400,
+      "errorMessage": {
+        "message": "//FIXME: fill in proper message "
+      }
     }
   },
-  "getArtifactByArtifactId": {
+  "getMetadataBySuiteName": {
     "parameters": {
       "company": "aet",
       "project": "aet",
-      "id": ""
+      "suite": "main"
     },
-    "errorMessage": {
-      "message": "Unable to get Suite Metadata for {company='aet', project='aet'}"
+    "jsonSchemaPath": "../data/test_data/json_schema/get-metadata-by-suite-name-json-schema.json",
+    "errorPath": {
+      "parameters": {
+        "company": "aet",
+        "project": "aet",
+        "suite": "no_existing_suite"
+      },
+      "code": 400,
+      "errorMessage": {
+        "message": "Unable to get Suite Metadata for no_existing_suite {company='aet', project='aet'}"
+      }
     }
+  },
+  "getMetadataBySuiteNameAndVersion": {
+    "parameters": {
+      "company": "aet",
+      "project": "aet",
+      "suite": "main",
+      "version": ""
+    },
+    "jsonSchemaPath": "../data/test_data/json_schema/get-metadata-by-suite-name-json-schema.json",
+    "errorCode": 400,
+    "errorMessage": {
+      "message": "//FIXME: fill in proper message "
+    }
+  },
+  "getCorrelationIdsAndVersionsBySuiteName": {
+    "parameters": {
+      "company": "aet",
+      "project": "aet",
+      "suite": "main"
+    },
+    "jsonSchemaPath": "../data/test_data/json_schema/get-correlationIds-and-versions-by-suite-name-json-schema.json",
+    "errorPath": {
+      "parameters": {
+        "company": "aet",
+        "project": "aet",
+        "suite": "no_existing_suite"
+      },
+      "code": 400,
+      "errorMessage": {
+        "message": "History not found for suite: no_existing_suite {company='aet', project='aet'}"
+      }
+    }
+  },
+  "getLockForSuite": {
+    "parameters": "aet-aet-main",
+    "jsonSchemaPath": "../data/test_data/json_schema/get-lock-for-suite-json-schema.json"
+  },
+  "tryToSetLock": {
+    "parameters": "aet-aet-main",
+    "mainSuiteParameters": {
+      "company": "aet",
+      "project": "aet",
+      "suite": "main"
+    },
+    "jsonSchemaPath": "../data/test_data/json_schema/get-lock-for-suite-json-schema.json"
+  },
+  "getAllLockedSuites": {
+    "jsonSchemaPath": "../data/test_data/json_schema/get-lock-for-suite-json-schema.json"
+  },
+  "getCommunicationSettings": {
+    "jsonSchemaPath": "../data/test_data/json_schema/get-communication-settings-json-schema.json"
   }
 }

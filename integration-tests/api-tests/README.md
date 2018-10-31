@@ -1,26 +1,25 @@
-**Protractor documentation:** [tutorial](http://www.protractortest.org/#/tutorial), [API](http://www.protractortest.org/#/api)
+**Jasmine documentation:** [DOCS](https://jasmine.github.io/index.html)
+**Chakram documentation:** [DOCS](http://dareid.github.io/chakram/jsdoc/index.html)
 
-## Protractor setup on local machine
+## Setup on local machine
 - Download and install Node.js runtime from [here](https://nodejs.org/en/)
 - Check if Node.js (at least v6.9.2) is available by typing in console: `node -v`
   - alternatively use [Node Version Manager (NVM)](https://github.com/creationix/nvm/blob/master/README.markdown) to install proper version of Node.js for this project
   - `nvm install`
   - `nvm use`
 - Clone the  repository to your local machine
-- Run `npm install` in `/integration-tests/sanity-functional-protractor`
-- Create new branch and start automating the tests :)
+- Run `npm install` in `integration-tests\api-tests`
 
 ## Running the tests on local machine
-- To run Protractor tests you can simply run `npm test`. This will run all available tests in '/specs' directory and on default environment which is live instance
-- To run specific tests suite or few suites just add the parameter `--suite [suite-name]`. The suite names can be found in the `protractor-conf.js` file. Example:
+- To run API tests you can simply run `npm test`. This will run tests, added to jasmine.json configuration file, on local instance
 ```
-npm test -- --suite reportTests
+npm test
 ```
 
-- To run a single test, use the `--specs` parameter
+- To run a single test, use jasmine directly:
 
 ```
-npm test -- --specs specs/file-name.js
+jasmine specs/file-name.js
 ```
 
 ## Troubleshooting
@@ -30,6 +29,5 @@ npm test -- --specs specs/file-name.js
 
 ## Useful plugins
 * JS-CSS-HTML Formatter
-* Protractor Snippets
 * JShint
 * ESlint
