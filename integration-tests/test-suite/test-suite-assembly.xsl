@@ -27,6 +27,7 @@
 			<xsl:apply-templates select="document('partials/js-errors-filter-by-error.xml')/*/test"/>
 			<xsl:apply-templates select="document('partials/js-errors-filter-by-errorPattern.xml')/*/test"/>
 			<xsl:apply-templates select="document('partials/js-errors-filter-by-source-and-line.xml')/*/test"/>
+			<xsl:apply-templates select="document('partials/js-errors-filter-by-sourcePattern.xml')/*/test"/>
 			<xsl:apply-templates select="document('partials/status-codes.xml')/*/test"/>
 			<xsl:apply-templates select="document('partials/w3c-html5.xml')/*/test"/>
 			<xsl:apply-templates select="document('partials/w3c-html5-filtered.xml')/*/test"/>
@@ -45,6 +46,7 @@
 			<xsl:apply-templates select="document('partials/executejavascript.xml')/*/test"/>
 			<xsl:apply-templates select="document('partials/wait-for-element-to-be-visible.xml')/*/test"/>
 			<xsl:apply-templates select="document('partials/wait-for-image-completion.xml')/*/test"/>
+			<xsl:apply-templates select="document('partials/scroll.xml')/*/test"/>
 			<xsl:copy-of select="reports"/>
 		</xsl:copy>
 	</xsl:template>
