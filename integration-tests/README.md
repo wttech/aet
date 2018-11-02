@@ -61,3 +61,33 @@ or in `.../config/common/webdriver.properties` file.
 To start the Bobcat tests, run `mvn clean test` from the `sanity-functional` directory level
 
 [Chromedriver]: https://sites.google.com/a/chromium.org/chromedriver/
+
+### sanity-functional-protractor
+
+Protractor tests for AET reports web application - same scope as in Bobcat tests.
+
+Prerequisities:
+
+* AET instance running
+* Sample test suite: `test-suite` already executed (at least twice) against `sample-site` site.
+Default report URL is [http://aet-vagrant/report.html?company=aet&project=aet&suite=main](http://aet-vagrant/report.html?company=aet&project=aet&suite=main)
+* Chrome browser installed
+* Node.js (at least v6.9.2)
+* Run `npm install` in `/integration-tests/sanity-functional-protractor` to download and install all dependencies
+
+To start the tests, run `npm test` from the `sanity-functional-protractor` directory level
+
+### api-tests
+
+API tests for AET Web API validation: [https://github.com/Cognifide/aet/wiki/WebAPI](https://github.com/Cognifide/aet/wiki/WebAPI).
+
+Prerequisities:
+
+* AET instance running
+* Sample test suite: `test-suite` already executed (at least twice) against `sample-site` site.
+Default report URL is [http://aet-vagrant/report.html?company=aet&project=aet&suite=main](http://aet-vagrant/report.html?company=aet&project=aet&suite=main)
+* Chrome browser installed
+* Node.js (at least v6.9.2)
+* Run `npm install` in `/integration-tests/api-tests` to download and install all dependencies
+
+To start api tests, run `npm test` from the `api-tests` directory level
