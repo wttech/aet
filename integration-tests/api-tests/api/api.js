@@ -2,7 +2,6 @@
 
 const envData = require('../data/env.json');
 const qs = require('querystring');
-const dashify = require('dashify');
 const chakram = require('chakram');
 
 const domain = envData.env.local.AET;

@@ -20,7 +20,7 @@ describe('Get, set, update lock - tests', () => {
     describe('Get lock for suite - validation', () => {
 
         it('Status code and JSON schema validation', () => {
-            aetsApi.getLock(getLockForSuiteData.parameters).then((response) => {
+            return aetsApi.getLock(getLockForSuiteData.parameters).then((response) => {
                 chakramExpect(response).to.have.status(HTTP_200_OK);
                 chakramExpect(response).to.have.schema(getLockForSuiteJsonSchemaPath);
             });
@@ -37,7 +37,7 @@ describe('Get, set, update lock - tests', () => {
         });
 
         it('Check suite status, if this test fails suite is probably already locked and test can\'t be perform. Try to wait 20s and run tests ones again', () => {
-            aetsApi.getLock(getLockForSuiteData.parameters).then((response) => {
+            return aetsApi.getLock(getLockForSuiteData.parameters).then((response) => {
                 chakramExpect(response).to.have.status(HTTP_200_OK);
                 chakramExpect(response.body).equals(false);
 
@@ -45,20 +45,20 @@ describe('Get, set, update lock - tests', () => {
         });
 
         it('set Lock', () => {
-            aetsApi.setLock(getLockForSuiteData.parameters, `value=${mainSuiteCorrelationId}`).then((response) => {
+            return aetsApi.setLock(getLockForSuiteData.parameters, `value=${mainSuiteCorrelationId}`).then((response) => {
                 chakramExpect(response).to.have.status(HTTP_200_OK);
             });
         });
 
         it('Check suite status', () => {
-            aetsApi.getLock(getLockForSuiteData.parameters).then((response) => {
+            return aetsApi.getLock(getLockForSuiteData.parameters).then((response) => {
                 chakramExpect(response).to.have.status(HTTP_200_OK);
                 chakramExpect(response.body).equals(true);
             });
         });
 
         it('set Lock one more time ', () => {
-            aetsApi.setLock(getLockForSuiteData.parameters, `value=${mainSuiteCorrelationId}`).then((response) => {
+            return aetsApi.setLock(getLockForSuiteData.parameters, `value=${mainSuiteCorrelationId}`).then((response) => {
                 chakramExpect(response).to.have.status(409);
             });
         });
