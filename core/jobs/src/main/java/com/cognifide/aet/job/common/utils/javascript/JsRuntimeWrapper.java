@@ -13,7 +13,7 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.job.common.utils;
+package com.cognifide.aet.job.common.utils.javascript;
 
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.google.common.base.Charsets;
@@ -22,11 +22,9 @@ import java.io.PrintStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import net.sourceforge.htmlunit.corejs.javascript.Callable;
 import net.sourceforge.htmlunit.corejs.javascript.Context;
 import net.sourceforge.htmlunit.corejs.javascript.ContextFactory;
 import net.sourceforge.htmlunit.corejs.javascript.NativeJSON;
-import net.sourceforge.htmlunit.corejs.javascript.Scriptable;
 import net.sourceforge.htmlunit.corejs.javascript.ScriptableObject;
 import net.sourceforge.htmlunit.corejs.javascript.tools.shell.Global;
 import net.sourceforge.htmlunit.corejs.javascript.tools.shell.Main;
@@ -69,19 +67,13 @@ public class JsRuntimeWrapper {
     Main.setErr(printStream);
   }
 
-  public void putProperty(String name, Object value) {
+  private void putProperty(String name, Object value) {
     ScriptableObject.putProperty(global, name, value);
   }
 
   public void putJsonProperty(String name, String json) {
     ScriptableObject.putProperty(global, name, NativeJSON.parse(cx,
-        global, json, new Callable() {
-          @Override
-          public Object call(Context context, Scriptable scope, Scriptable
-              holdable, Object[] objects) {
-            return objects[1];
-          }
-        }));
+        global, json, (context, scope, holdable, objects) -> objects[1]));
   }
 
   public void putBundledFilePathAsProperty(String name, String path) {
@@ -89,8 +81,8 @@ public class JsRuntimeWrapper {
     putProperty(name, resourceUrl != null ? resourceUrl.toString() : "");
   }
 
-  public String executeScript(String fileName) throws ProcessingException {
-    String result = null;
+  private String executeScript(String fileName) throws ProcessingException {
+    String result;
     try {
       Main.processSource(cx, fileName);
       result = out.toString(Charsets.UTF_8.name());

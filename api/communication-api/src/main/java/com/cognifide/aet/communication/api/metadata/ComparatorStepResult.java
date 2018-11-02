@@ -23,6 +23,8 @@ public class ComparatorStepResult extends StepResult {
 
   private final boolean rebaseable;
 
+  private final boolean acceptable;
+
   public ComparatorStepResult(String artifactId, Status status) {
     this(artifactId, status, false);
   }
@@ -31,6 +33,8 @@ public class ComparatorStepResult extends StepResult {
     super(artifactId);
     this.status = status;
     this.rebaseable = rebaseable;
+    this.acceptable = rebaseable &&
+        (Status.FAILED.equals(status) || Status.CONDITIONALLY_PASSED.equals(status));
   }
 
   @Override
@@ -44,6 +48,10 @@ public class ComparatorStepResult extends StepResult {
 
   public boolean isRebaseable() {
     return rebaseable;
+  }
+
+  public boolean isAcceptable() {
+    return acceptable;
   }
 
   public enum Status {
