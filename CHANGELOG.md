@@ -10,6 +10,8 @@ All notable changes to AET will be documented in this file.
 ## Unreleased
 **List of changes that are finished but not yet released in any final version.**
 
+- [PR-422](https://github.com/Cognifide/aet/pull/422) RunnerConfiguration's urlPackageSize property got set to 1
+
 ## Version 3.1.0
 
 - [PR-409](https://github.com/Cognifide/aet/pull/409) Added sources link in "view source" url
