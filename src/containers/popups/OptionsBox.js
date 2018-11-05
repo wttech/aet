@@ -23,12 +23,6 @@ class OptionsBox extends Component {
       this.props.hideEditBox();
     }
   }
-
-  handleScrolling() {
-    console.log(this.props.optionsBox.isVisible);
-  }
-
-  //fix scrolling when optionsbox window is open
   
   componentDidUpdate() {
     this.updateOptionsBox();
@@ -36,12 +30,12 @@ class OptionsBox extends Component {
 
   componentWillUnmount() {
     window.removeEventListener("scroll", (ev) => this.handleScrolling(ev), false);
-    document.getElementsByClassName("tests-wrapper")[0].removeEventListener("scroll", (ev) => this.handleScrolling(ev), false);
+    document.getElementsByClassName("tests-wrapper")[0].removeEventListener("scroll", (ev) => this.updateOptionsBox(), false);
   }
 
   componentDidMount() {
     window.removeEventListener("scroll", (ev) => this.handleScrolling(ev), false);
-    document.getElementsByClassName("tests-wrapper")[0].addEventListener("scroll", (ev) => this.handleScrolling(ev), false);
+    document.getElementsByClassName("tests-wrapper")[0].addEventListener("scroll", (ev) => this.updateOptionsBox(), false);
     this.updateOptionsBox();
   }
 
@@ -50,9 +44,6 @@ class OptionsBox extends Component {
   }
 
   deleteItem(item, itemID, parentItem) {
-    console.log(item);
-    console.log(itemID);
-    console.log(parentItem);
     if(item.type === "URL") {
       this.props.removeUrlFromTest(item, parentItem);
     } else {

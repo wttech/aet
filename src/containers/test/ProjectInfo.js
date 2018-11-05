@@ -5,8 +5,10 @@ import { connect } from 'react-redux';
 class ProjectInfo extends Component {
 
   createNewProject() {
-    window.localStorage.clear();
-    document.location.reload();
+    if (confirm('Are you sure you want to create a new project?')) { // eslint-disable-line
+      window.localStorage.clear();
+      document.location.reload();
+    } 
   }
 
   render() {

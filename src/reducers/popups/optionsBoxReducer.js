@@ -31,7 +31,6 @@ export default function (state = {}, action = null) {
           }
         }
       }
-      console.log(newState);
       return newState;
     }
 
@@ -42,7 +41,6 @@ export default function (state = {}, action = null) {
         optionsBoxItemID: null,
         optionsBoxParentItem: null,
       } 
-      console.log(newState);
       return newState;
     }
 

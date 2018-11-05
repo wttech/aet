@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import {initLists, toggleCollectorsList, toggleComparatorsList, toggleUrlsList} from "../../actions";
+import {initLists, toggleCollectorsList, toggleComparatorsList, toggleUrlsList, hideOptionsBox} from "../../actions";
 
 class StaticBlock extends Component {
 
@@ -19,6 +19,8 @@ class StaticBlock extends Component {
       } else {
         this.props.toggleUrlsList();
       }
+
+      this.props.hideOptionsBox();
     }
   }
 
@@ -53,7 +55,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators({initLists, toggleCollectorsList, toggleComparatorsList, toggleUrlsList}, dispatch);
+  return bindActionCreators({initLists, toggleCollectorsList, toggleComparatorsList, toggleUrlsList, hideOptionsBox}, dispatch);
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(StaticBlock);
