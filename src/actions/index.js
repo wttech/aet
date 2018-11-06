@@ -202,3 +202,8 @@ export const setTestAsInvalid = (test) => ({
   type: "TEST_SET_AS_INVALID",
   payload: test,
 });
+
+export const handleDomainChange = (newDomain) => ({
+  type: "DOMAIN_CHANGED",
+  payload: newDomain,
+});

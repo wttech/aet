@@ -91,6 +91,13 @@ export default function (state = {}, action = null) {
       return newState;
     }
 
+    case "DOMAIN_CHANGED": {
+      let newState = [...state];
+      newState[0].domain = action.payload;
+      localStorage.setItem("domain", action.payload);
+      return newState;
+    }
+
     default: {
       return state;
     }

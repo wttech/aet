@@ -7,7 +7,7 @@
 
   .tests-wrapper {
     position: relative;
-    height: 88%;
+    height: calc(100% - 125px);
     padding-right: 17px;
     right: -17px;
     overflow-y: scroll;

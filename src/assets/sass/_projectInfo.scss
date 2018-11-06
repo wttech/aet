@@ -57,5 +57,58 @@
         }
       }
     }
+
+    
+    .edit-domain-visible {
+      display: block;
+    }
+
+    .edit-domain-hidden {
+      display: none;
+    }
+
+    .edit-domain-input {
+      width: 90%;
+      margin: 0 auto;
+      font-size: 16px;
+      text-align: center;
+      background-color: rgba(0, 0, 0, 0.02);
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      border-radius: 5px;
+      resize: none;
+    }
+
+    .domain-icons-container {
+      width: 44px;
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+
+      .domain-icon-grouped {
+        width: 22px;
+        float: left;
+      }
+    }
+
+    .domain-icon {
+      width: 22px;
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      float: left;
+    }
+
+    .edit-domain,
+    .edit-domain-save {
+      width: 20px;
+      color: rgba(0, 0, 0, 0.25);
+      transition: color 0.3s ease-in-out;
+      font-size: 16px;
+
+      &:hover {
+        cursor: pointer;  
+        color: rgba(0, 0, 0, 0.9);
+      }
+    }
   }
 }
