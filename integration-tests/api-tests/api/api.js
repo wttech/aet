@@ -49,10 +49,10 @@ function Api() {
         return sendGet(communicationSettings);
     };
 
-    const sendGet = (apiPath, queryParams = "") => {
+    const sendGet = (apiPath, queryParams = null) => {
         const serviceUrl = `${domain}:${port}${apiPath}`;
         let fullUrl;
-        (queryParams !== "") ? fullUrl = `${serviceUrl}?${qs.stringify(queryParams)}` : fullUrl = `${serviceUrl}`;
+        (queryParams !== null) ? fullUrl = `${serviceUrl}?${qs.stringify(queryParams)}` : fullUrl = `${serviceUrl}`;
         return chakram.get(fullUrl, {
             headers: {
                 'Cache-Control': 'no-cache',

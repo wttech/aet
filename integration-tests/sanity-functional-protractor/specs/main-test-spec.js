@@ -34,16 +34,17 @@ describe('AET reports web application - main report results validation', () => {
 });
 
 function countExpectedTestsResults() {
-    return reportPage.getTestLinksTitles().then((linksTitles) => {
-        let linksFirstLetters = [];
-        linksTitles.forEach(title => {
-            linksFirstLetters.push(title.slice(0, 1));
-        });
-        expectedTotal = linksFirstLetters.length;
-        expectedSuccess = linksFirstLetters.filter((x) => x === "S").length;
-        expectedFailed = linksFirstLetters.filter((x) => x === "F").length;
-        expectedWarnings = linksFirstLetters.filter((x) => x === "W").length;
-    })
+    return reportPage.getTestLinksTitles()
+        .then((linksTitles) => {
+            let linksFirstLetters = [];
+            linksTitles.forEach(title => {
+                linksFirstLetters.push(title.slice(0, 1));
+            });
+            expectedTotal = linksFirstLetters.length;
+            expectedSuccess = linksFirstLetters.filter((x) => x === "S").length;
+            expectedFailed = linksFirstLetters.filter((x) => x === "F").length;
+            expectedWarnings = linksFirstLetters.filter((x) => x === "W").length;
+        })
 };
 
 function countActualTestsResults() {

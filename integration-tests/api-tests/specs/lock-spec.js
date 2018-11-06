@@ -20,47 +20,52 @@ describe('Get, set, update lock - tests', () => {
     describe('Get lock for suite - validation', () => {
 
         it('Status code and JSON schema validation', () => {
-            return aetsApi.getLock(getLockForSuiteData.parameters).then((response) => {
-                chakramExpect(response).to.have.status(HTTP_200_OK);
-                chakramExpect(response).to.have.schema(getLockForSuiteJsonSchemaPath);
-            });
+            return aetsApi.getLock(getLockForSuiteData.parameters)
+                .then((response) => {
+                    chakramExpect(response).to.have.status(HTTP_200_OK);
+                    chakramExpect(response).to.have.schema(getLockForSuiteJsonSchemaPath);
+                });
         });
     });
 
     describe('Try to set lock - validation', () => {
 
         beforeAll((done) => {
-            aetsApi.getMetadata(tryToSetLockData.mainSuiteParameters).then((response) => {
-                mainSuiteCorrelationId = response.body.correlationId;
-                done();
-            })
+            aetsApi.getMetadata(tryToSetLockData.mainSuiteParameters)
+                .then((response) => {
+                    mainSuiteCorrelationId = response.body.correlationId;
+                    done();
+                })
         });
 
         it('Check suite status, if this test fails suite is probably already locked and test can\'t be perform. Try to wait 20s and run tests ones again', () => {
-            return aetsApi.getLock(getLockForSuiteData.parameters).then((response) => {
-                chakramExpect(response).to.have.status(HTTP_200_OK);
-                chakramExpect(response.body).equals(false);
-
-            });
+            return aetsApi.getLock(getLockForSuiteData.parameters)
+                .then((response) => {
+                    chakramExpect(response).to.have.status(HTTP_200_OK);
+                    chakramExpect(response.body).equals(false);
+                });
         });
 
-        it('set Lock', () => {
-            return aetsApi.setLock(getLockForSuiteData.parameters, `value=${mainSuiteCorrelationId}`).then((response) => {
-                chakramExpect(response).to.have.status(HTTP_200_OK);
-            });
+        it('Set Lock on suite', () => {
+            return aetsApi.setLock(getLockForSuiteData.parameters, `value=${mainSuiteCorrelationId}`)
+                .then((response) => {
+                    chakramExpect(response).to.have.status(HTTP_200_OK);
+                });
         });
 
-        it('Check suite status', () => {
-            return aetsApi.getLock(getLockForSuiteData.parameters).then((response) => {
-                chakramExpect(response).to.have.status(HTTP_200_OK);
-                chakramExpect(response.body).equals(true);
-            });
+        it('Check suite lock status', () => {
+            return aetsApi.getLock(getLockForSuiteData.parameters)
+                .then((response) => {
+                    chakramExpect(response).to.have.status(HTTP_200_OK);
+                    chakramExpect(response.body).equals(true);
+                });
         });
 
-        it('set Lock one more time ', () => {
-            return aetsApi.setLock(getLockForSuiteData.parameters, `value=${mainSuiteCorrelationId}`).then((response) => {
-                chakramExpect(response).to.have.status(409);
-            });
+        it('Try to set lock on already locked suite - 409 code validation', () => {
+            return aetsApi.setLock(getLockForSuiteData.parameters, `value=${mainSuiteCorrelationId}`)
+                .then((response) => {
+                    chakramExpect(response).to.have.status(409);
+                });
         });
 
     });

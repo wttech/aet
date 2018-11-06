@@ -15,9 +15,10 @@ const getCommunicationSettingsJsonSchemaPath = require(testDataJson.getCommunica
 describe('Get communication settings - validation', () => {
 
     it('Status code and JSON schema validation', () => {
-        return aetsApi.getCommunicationSettings().then((response) => {
-            chakramExpect(response).to.have.status(HTTP_200_OK);
-            chakramExpect(response).to.have.schema(getCommunicationSettingsJsonSchemaPath);
-        });
+        return aetsApi.getCommunicationSettings()
+            .then((response) => {
+                chakramExpect(response).to.have.status(HTTP_200_OK);
+                chakramExpect(response).to.have.schema(getCommunicationSettingsJsonSchemaPath);
+            });
     });
 });

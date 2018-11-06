@@ -18,17 +18,19 @@ const getCorrelationIdsAndVersionsBySuiteNameNoExistingSuiteData = getCorrelatio
 describe('Get correlationIds and versions by suite name - validation', () => {
 
     it('Status code and JSON schema validation', () => {
-        return aetsApi.getHistory(getCorrelationIdsAndVersionsBySuiteNameData.parameters).then((response) => {
-            chakramExpect(response).to.have.status(HTTP_200_OK);
-            chakramExpect(response).to.have.schema(getCorrelationIdsAndVersionsBySuiteNameJsonSchemaPath);
-        });
+        return aetsApi.getHistory(getCorrelationIdsAndVersionsBySuiteNameData.parameters)
+            .then((response) => {
+                chakramExpect(response).to.have.status(HTTP_200_OK);
+                chakramExpect(response).to.have.schema(getCorrelationIdsAndVersionsBySuiteNameJsonSchemaPath);
+            });
     });
 
     // FIXME: Api returns wrong status code (404 instead of 400), turn test on after fix
     xit('Error message validation', () => {
-        return aetsApi.getHistory(getCorrelationIdsAndVersionsBySuiteNameNoExistingSuiteData.parameters).then((response) => {
-            chakramExpect(response).to.have.status(getCorrelationIdsAndVersionsBySuiteNameNoExistingSuiteData.code);
-            jasmineExpect(response.body).toEqual(getCorrelationIdsAndVersionsBySuiteNameNoExistingSuiteData.errorMessage);
-        });
+        return aetsApi.getHistory(getCorrelationIdsAndVersionsBySuiteNameNoExistingSuiteData.parameters)
+            .then((response) => {
+                chakramExpect(response).to.have.status(getCorrelationIdsAndVersionsBySuiteNameNoExistingSuiteData.code);
+                jasmineExpect(response.body).toEqual(getCorrelationIdsAndVersionsBySuiteNameNoExistingSuiteData.errorMessage);
+            });
     });
 });

@@ -17,20 +17,23 @@ const NoExistingSuiteData = testDataJson.getArtifactByArtifactId.errorPath;
 describe('Get artifact by artifact Id - validation', () => {
 
     it('Status code and JSON schema validation', () => {
-        return aetsApi.getMetadata(getMetadataBySuiteNameData.parameters).then((response) => {
-            getArtifactByArtifactIdData.parameters.id = helper.recursiveKeySearch("artifactId", response.body)[1];
-        }).then(() => {
-            return aetsApi.getArtifact(getArtifactByArtifactIdData.parameters).then((response) => {
-                chakramExpect(response).to.have.status(HTTP_200_OK);
+        return aetsApi.getMetadata(getMetadataBySuiteNameData.parameters)
+            .then((response) => {
+                getArtifactByArtifactIdData.parameters.id = helper.recursiveKeySearch("artifactId", response.body)[0];
+            }).then(() => {
+                return aetsApi.getArtifact(getArtifactByArtifactIdData.parameters)
+                    .then((response) => {
+                        chakramExpect(response).to.have.status(HTTP_200_OK);
+                    });
             });
-        });
     });
 
     // FIXME: Api returns wrong code (500 instead of 400), turn test on after fix
     xit('Error message validation', () => {
-        return aetsApi.getArtifact(NoExistingSuiteData.parameters).then((response) => {
-            chakramExpect(response).to.have.status(NoExistingSuiteData.code);
-            jasmineExpect(response.body).toEqual(NoExistingSuiteData.errorMessage);
-        });
+        return aetsApi.getArtifact(NoExistingSuiteData.parameters)
+            .then((response) => {
+                chakramExpect(response).to.have.status(NoExistingSuiteData.code);
+                jasmineExpect(response.body).toEqual(NoExistingSuiteData.errorMessage);
+            });
     });
 });
