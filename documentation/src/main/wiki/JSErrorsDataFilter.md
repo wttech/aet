@@ -17,6 +17,7 @@ Resource name: js-errors
 | --------- | ----- | ----------- | --------- |
 |`error`|string error|Exact error message|At least one of parameter is required|
 |`source`|JavaScript filename suffix (see notes) below|Source file name in which error occurred|At least one of parameter is required|
+|`sourcePattern`|JavaScript filename pattern|Regular expression that matches source file name in which error occurred|At least one of parameter is required|
 |`errorPattern` | pattern error text | Regular expression that matches message text of issue to be filter out|At least one parameter is required|
 |`line`  integer line number|Line number in file in which error occurred| |At least one of parameter is required|
 

@@ -35,6 +35,7 @@
             * [[Execute Java Script|ExecuteJavaScriptModifier]]
             * [[Wait For Element To Be Visible|WaitForElementToBeVisibleModifier]]
             * [[Wait For Image Completion|WaitForImageCompletionModifier]]
+            * [[Scroll|ScrollModifier]]
         * [[Comparators|Comparators]]
             * [[Accessibility|AccessibilityComparator]]
             * [[Client Side Performance|ClientSidePerformanceComparator]]
