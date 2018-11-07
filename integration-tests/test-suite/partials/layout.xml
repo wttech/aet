@@ -474,5 +474,63 @@
       <url href="comparators/layout/failed.jsp"/>
     </urls>
   </test>
+
+	<test name="F-comparator-Layout-dynamic-element-at-bottom-of-long-page">
+		<collect>
+			<open/>
+			<resolution width="767"/>
+			<screen/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/long_page.jsp"/>
+		</urls>
+	</test>
+
+	<test name="S-comparator-Layout-long-page-without-dynamic-at-bottom">
+		<collect>
+			<open/>
+			<resolution width="767"/>
+			<screen exclude-elements=".dynamic1,.dynamic2"/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/long_page.jsp"/>
+		</urls>
+	</test>
+
+
+	<test name="S-comparator-Layout-long-expanding-page-without-dynamic-at-bottom">
+		<collect>
+			<open/>
+			<resolution width="767" samplingPeriod="200"/>
+			<screen exclude-elements=".dynamic1,.dynamic2"/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/long_expanding_page.jsp"/>
+		</urls>
+	</test>
+
+	<test name="F-comparator-Layout-dynamic-element-at-bottom-of-long-expanding-page">
+		<collect>
+			<open/>
+			<resolution width="767" samplingPeriod="200"/>
+			<screen/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/long_expanding_page.jsp"/>
+		</urls>
+	</test>
+
 	<!-- Layout-Comparator END -->
 </suite>
