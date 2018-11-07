@@ -81,3 +81,7 @@ of Apache server which hosts the AET Report application - e.g. `http://aet-repor
 | Consumer queue name | Fixed value `AET.comparatorJobs` |
 | Producer queue name | Fixed value `AET.comparatorResults` |
 
+##### Chrome options configuration
+
+The `AET Chrome WebDriver Factory` component configuration (`chromeOptions` property) allows you to configure a list of options/arguments 
+which will be passed to the Chrome browser binary. The default list of Chrome options is: `--disable-plugins`, `--headless`, `--hide-scrollbars`, `--disable-gpu`.

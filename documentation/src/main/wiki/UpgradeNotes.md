@@ -7,6 +7,9 @@ You may see all changes in the [Changelog](https://github.com/Cognifide/aet/blob
 
 ## Unreleased
 
+
+## Version 3.0.0
+
 ### Users
 
 #### Suite update guide
@@ -19,6 +22,15 @@ If you want to take a partial screenshot (specified by xpath/css selector), then
 Please see latest [[Screen Collector|ScreenCollector]] and [[Resolution Modifier|ResolutionModifier]] documentation in the wiki for details.
 * The [[Open|Open]] may take more time to complete now, because it waits for all images to be loaded.
 [[Wait For Image Completion Modifier|WaitForImageCompletionModifier]] is no longer needed, unless you want to wait for an image which is loaded asynchronously (e.g. by an AJAX call)
+* [[Resolution Modifier|ResolutionModifier]] width accuracy - in previous AET versions, 
+the width of collected screenshot could be different that the width set in the `<resolution>` tag because of the Firefox's scrollbar 
+(see "Notes" section in [[Resolution Modifier|ResolutionModifier]] wiki). This issue doesn't occur when using AET 3.0 with Chrome browser - make
+sure to adjust the resolution `width` value when updating your suite from previous AET versions.
+
+##### Known issues
+
+* [#357](https://github.com/Cognifide/aet/issues/357) - see Known issues section in [[Resolution Modifier|ResolutionModifier]] wiki
+for possible workarounds.
 
 #### `aet-maven-plugin` marked as deprecated
 That means it will be no longer supported after release of this version and expect it will be removed soon.

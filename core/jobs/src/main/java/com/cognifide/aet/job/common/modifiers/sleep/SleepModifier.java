@@ -20,6 +20,7 @@ import com.cognifide.aet.job.api.ParametersValidator;
 import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
+import com.cognifide.aet.job.common.utils.CurrentThread;
 import java.util.Map;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.slf4j.Logger;
@@ -53,11 +54,7 @@ public class SleepModifier implements CollectorJob {
   }
 
   private void sleepInMillis(int ms) {
-    try {
-      Thread.sleep(ms);
-    } catch (InterruptedException e) {
-      Thread.currentThread().interrupt();
-    }
+    CurrentThread.sleep(ms);
   }
 
 }

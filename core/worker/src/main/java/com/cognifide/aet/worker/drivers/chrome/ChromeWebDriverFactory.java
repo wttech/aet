@@ -112,9 +112,7 @@ public class ChromeWebDriverFactory implements WebDriverFactory {
     capabilities.setCapability(CapabilityType.LOGGING_PREFS, loggingPreferences);
 
     ChromeOptions options = new ChromeOptions();
-    options.addArguments("--disable-plugins");
-    options.addArguments("--headless");
-    options.addArguments("--hide-scrollbars");
+    options.addArguments(config.chromeOptions());
     options.setAcceptInsecureCerts(true);
 
     capabilities.setCapability(ChromeOptions.CAPABILITY, options);
