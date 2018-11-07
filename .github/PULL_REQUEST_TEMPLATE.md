@@ -7,7 +7,10 @@
 <!--- Why is this change required? What problem does it solve? -->
 <!--- If it fixes an open issue, please link to the issue here. -->
 
-## Screenshots (if appropriate):
+## Screenshots (if appropriate)
+
+## Upgrade notes (if appropriate)
+<!-- What changes user have to do in order to migrate from the previous version to the version with this feature -->
 
 ## Types of changes
 <!--- What types of changes does your code introduce? Put an `x` in all the boxes that apply: -->
@@ -18,7 +21,7 @@
 ## Checklist:
 <!--- Go over all the following points, and put an `x` in all the boxes that apply. -->
 <!--- If you're unsure about any of these, don't hesitate to ask. We're here to help! -->
-- [ ] My code follows the [code style](https://github.com/Cognifide/aet/blob/master/CONTRIBUTING.md#coding-conventions) of this project.
+- [ ] My code follows the [code style](/CONTRIBUTING.md#coding-conventions) of this project.
 - [ ] My change requires a change to the documentation.
 - [ ] I have updated the documentation accordingly.
 
