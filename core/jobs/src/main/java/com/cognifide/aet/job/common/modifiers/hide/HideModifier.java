@@ -22,11 +22,11 @@ import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.job.common.SeleniumWaitHelper;
 import com.cognifide.aet.job.common.modifiers.WebElementsLocatorParams;
+import com.cognifide.aet.job.common.utils.javascript.JavaScriptJobExecutor;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.lang3.BooleanUtils;
 import org.openqa.selenium.By;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
@@ -39,24 +39,22 @@ public class HideModifier extends WebElementsLocatorParams implements CollectorJ
   public static final String NAME = "hide";
 
   private static final Logger LOG = LoggerFactory.getLogger(HideModifier.class);
-
   private static final String LEAVE_BLANK_SPACE_PARAM = "leaveBlankSpace";
-
   private static final boolean LEAVE_BLANK_SPACE_DEFAULT = true;
-
   private static final String DISPLAY_NONE_SCRIPT = "arguments[0].style.display='none'";
-
   private static final String VISIBILITY_FALSE_SCRIPT = "arguments[0].style.visibility='hidden'";
 
   private final WebDriver webDriver;
-
   private final CollectorProperties properties;
+  private final JavaScriptJobExecutor jsExecutor;
 
   private boolean leaveBlankSpace;
 
-  HideModifier(WebDriver webDriver, CollectorProperties properties) {
+  HideModifier(WebDriver webDriver, CollectorProperties properties,
+      JavaScriptJobExecutor jsExecutor) {
     this.webDriver = webDriver;
     this.properties = properties;
+    this.jsExecutor = jsExecutor;
   }
 
   @Override
@@ -78,17 +76,10 @@ public class HideModifier extends WebElementsLocatorParams implements CollectorJ
 
   private CollectorStepResult hideElement(By locator, boolean leaveBlankSpace)
       throws ProcessingException {
+
     CollectorStepResult result;
     try {
-      String script = retrieveHidingScript(leaveBlankSpace);
-
-      SeleniumWaitHelper
-          .waitForElementToBePresent(webDriver, locator, getTimeoutInSeconds());
-
-      List<WebElement> webElements = webDriver.findElements(locator);
-      for (WebElement element : webElements) {
-        ((JavascriptExecutor) webDriver).executeScript(script, element);
-      }
+      hideElements(locator, leaveBlankSpace);
       result = CollectorStepResult.newModifierResult();
     } catch (TimeoutException e) {
       final String message =
@@ -102,10 +93,20 @@ public class HideModifier extends WebElementsLocatorParams implements CollectorJ
               locator.toString(), e.getMessage());
       result = CollectorStepResult.newProcessingErrorResult(message);
       LOG.warn(message, e);
-    } catch (Exception e) {
-      throw new ProcessingException("Can't hide element by " + locator.toString(), e);
     }
     return result;
+  }
+
+  private void hideElements(By locator, boolean leaveBlankSpace) throws ProcessingException {
+    String script = retrieveHidingScript(leaveBlankSpace);
+
+    SeleniumWaitHelper
+        .waitForElementToBePresent(webDriver, locator, getTimeoutInSeconds());
+
+    List<WebElement> webElements = webDriver.findElements(locator);
+    for (WebElement element : webElements) {
+      jsExecutor.execute(script, element);
+    }
   }
 
   private String retrieveHidingScript(boolean leaveBlankSpace) {
