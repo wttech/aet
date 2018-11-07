@@ -26,6 +26,10 @@ require.config({
     'angularAMD': '../assets/libs/angularAMD/angularAMD',
     'lodash': '../assets/libs/lodash/dist/lodash',
     'angular-bootstrap': '../assets/libs/angular-bootstrap/ui-bootstrap-tpls',
+    'pdfkit': '../assets/libs/pdfkit/pdfkit-0.7.1',
+    'filesaver': '../assets/libs/FileSaver/index',
+    'canvas2pdf': '../assets/libs/canvas2pdf/index',
+    'blob-stream': '../assets/libs/pdfkit/blob-stream-v0.1.3',
     'snowfall': '../assets/js/snowfall/snowfall.min',
     // **************** AET custom ********************
     //components
@@ -34,6 +38,7 @@ require.config({
     'urlSearchFilter': 'components/urlSearch.filter',
     'urlStatusFilter': 'components/urlStatus.filter',
     'keyboardShortcutsDirective': 'components/keyboardShortcuts.directive',
+    'generatePDFDirective': 'components/generatePdf.directive',
     'hidePopoversDirective': 'components/hidePopovers.directive',
     'compareScreensDirective': 'components/compareScreens.directive',
     'winterEdition': 'themes/winterEdition.directive',
@@ -47,6 +52,8 @@ require.config({
     'metadataCacheService': 'services/metadataCache.service',
     'metadataService': 'services/metadata.service',
     'metadataAccessService': 'services/metadataAccess.service',
+    'generatePdfDataService': 'services/generatePdfData.service',
+    'generatePdfDrawService': 'services/generatePdfDraw.service',
     'notesService': 'services/notes.service',
     'historyService': 'services/history.service',
     'suiteInfoService': 'services/suiteInfo.service',

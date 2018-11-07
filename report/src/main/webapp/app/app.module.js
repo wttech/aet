@@ -20,12 +20,17 @@
 define(['angularAMD',
   // **** LIBRARIES ****
   'lodash',
+  'pdfkit',
   'angular-bootstrap',
   'angular-ui-router',
   'jquery',
   'bootstrap',
+  'filesaver',
+  'canvas2pdf',
+  'blob-stream',
   'snowfall',
   // components
+  'generatePDFDirective',
   'hidePopoversDirective',
   'keyboardShortcutsDirective',
   'compareScreensDirective',
@@ -44,6 +49,8 @@ define(['angularAMD',
   'metadataCacheService',
   'metadataService',
   'metadataAccessService',
+  'generatePdfDataService',
+  'generatePdfDrawService',
   'notesService',
   'historyService',
   'suiteInfoService',
@@ -69,7 +76,7 @@ define(['angularAMD',
   'unsavedChangesModalController'], function (angularAMD, _) {
 
   var app = angular.module('app', ['ui.router', 'ui.bootstrap']);
-
+  
   app.run([
     '$rootScope',
     '$state',

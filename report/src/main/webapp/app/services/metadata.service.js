@@ -31,6 +31,7 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
               getTest: getTest,
               getUrl: getUrl,
               getStep: getStep,
+              getTestStatistics: getTestStatistics,
               notifyMetadataChanged: notifyMetadataChanged,
               saveChangesLocally: saveChangesLocally,
               discardLocalChanges: discardLocalChanges,
@@ -38,7 +39,8 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
             },
             suite,
             testsByName,
-            urlsByTestAndName;
+            urlsByTestAndName,
+            testResultsByCategories = [];
 
         return service;
 
@@ -57,6 +59,8 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
                 var decoratedStep = new StatisticsDecorator(step, decoratedUrl);
                 _.forEach(step.comparators, function (comparator) {
                   decoratedStep.updateStatistics(comparator.stepResult);
+                  var categoryTest = decoratedStep.getTestResultAndCategory();
+                  testResultsByCategories.push(categoryTest);
                 });
               });
               urlsByTestAndName[getKeyByTestAndUrlName(test.name,
@@ -78,6 +82,10 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
 
         function getUrl(testName, urlName) {
           return urlsByTestAndName[getKeyByTestAndUrlName(testName, urlName)];
+        }
+
+        function getTestStatistics() {
+          return testResultsByCategories;
         }
 
         function getStep(testName, urlName, stepIndex) {
@@ -168,7 +176,9 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
               updatePatternStatistics: updatePatternStatistics,
               revertPatternStatistics: revertPatternStatistics,
               updatePatternsToAccept: updatePatternsToAccept,
-              updateAcceptedPatterns: updateAcceptedPatterns
+              updateAcceptedPatterns: updateAcceptedPatterns,
+              updateTestCategories: updateTestCategories,
+              getTestResultAndCategory: getTestResultAndCategory,
             };
 
         setup();
@@ -185,8 +195,13 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
           decoratedObject.patternsToAccept = 0;
           decoratedObject.acceptedPatterns = 0;
           decoratedObject.getStatus = getStatus;
+          decoratedObject.testResultByCategory = {category: null, result: null};
           decoratedObject.updatePatternStatistics = updatePatternStatistics;
           decoratedObject.revertPatternStatistics = revertPatternStatistics;
+        }
+
+        function getTestResultAndCategory() {
+          return decoratedObject.testResultByCategory;
         }
 
         function getStatus() {
@@ -262,6 +277,9 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
         function passed() {
           decoratedObject.total++;
           decoratedObject.passed++;
+          if(typeof decoratedObject.type != 'undefined') {
+            updateTestCategories(decoratedObject, 'passed');
+          } 
           if (decoratedParentReference && decoratedParentReference.passed) {
             decoratedParentReference.passed();
           }
@@ -270,6 +288,9 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
         function failed() {
           decoratedObject.total++;
           decoratedObject.failed++;
+          if(typeof decoratedObject.type != 'undefined') {
+            updateTestCategories(decoratedObject, 'failed');
+          } 
           if (decoratedParentReference && decoratedParentReference.failed) {
             decoratedParentReference.failed();
           }
@@ -278,6 +299,9 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
         function warning() {
           decoratedObject.total++;
           decoratedObject.warning++;
+          if(typeof decoratedObject.type != 'undefined') {
+            updateTestCategories(decoratedObject, 'warning');
+          } 
           if (decoratedParentReference && decoratedParentReference.warning) {
             decoratedParentReference.warning();
           }
@@ -286,6 +310,9 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
         function rebased() {
           decoratedObject.total++;
           decoratedObject.rebased++;
+          if(typeof decoratedObject.type != 'undefined') {
+            updateTestCategories(decoratedObject, 'rebased');
+          } 
           if (decoratedParentReference && decoratedParentReference.rebased) {
             decoratedParentReference.rebased();
           }
@@ -315,6 +342,12 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
             decoratedParentReference.updateAcceptedPatterns(
                 numberOfAcceptedPatterns);
           }
+        }
+
+
+        function updateTestCategories(testCategory, result) {
+          decoratedObject.testResultByCategory.category = testCategory.type;
+          decoratedObject.testResultByCategory.result = result;
         }
 
         function updateStatistics(stepResult) {
