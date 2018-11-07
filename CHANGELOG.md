@@ -9,7 +9,11 @@ All notable changes to AET will be documented in this file.
 
 ## Unreleased
 **List of changes that are finished but not yet released in any final version.**
+
 - [PR-404](https://github.com/Cognifide/aet/pull/404) Added missing tooltip for conditional tests
+
+## Version 3.1.0
+
 - [PR-409](https://github.com/Cognifide/aet/pull/409) Added sources link in "view source" url
 - [PR-394](https://github.com/Cognifide/aet/pull/394) Added scroll modifier
 - [PR-399](https://github.com/Cognifide/aet/pull/399) Bug fix on side panel - conditional tests ([#398](https://github.com/Cognifide/aet/issues/398))
