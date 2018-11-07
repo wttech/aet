@@ -37,14 +37,14 @@ Feature: Tests Results Filtering
   Scenario: Filtering Tests Results: layout
     Given I have opened sample tests report page
     When I search for tests containing "layout"
-    Then There are 35 tiles visible
-    And Statistics text contains "35 ( 15 / 0 / 20 (9) / 0 )"
+    Then There are 39 tiles visible
+    And Statistics text contains "39 ( 17 / 0 / 22 (11) / 0 )"
 
    Scenario: Filtering Tests Results: jserrors
     Given I have opened sample tests report page
     When I search for tests containing "jserrors"
-    Then There are 14 tiles visible
-    And Statistics text contains "14 ( 6 / 0 / 8 (0) / 0 )"
+    Then There are 16 tiles visible
+    And Statistics text contains "16 ( 7 / 0 / 9 (0) / 0 )"
     
   Scenario: Filtering Tests Results: source
     Given I have opened sample tests report page
@@ -99,3 +99,9 @@ Feature: Tests Results Filtering
     When I search for tests containing "wait-for-image-completion"
     Then There are 4 tiles visible
     And Statistics text contains "4 ( 1 / 0 / 3 (0) / 0 )"
+
+  Scenario: Filtering Tests Results: scroll-modifier
+    Given I have opened sample tests report page
+    When I search for tests containing "scroll"
+    Then There are 7 tiles visible
+    And Statistics text contains "7 ( 2 / 0 / 5 (0) / 0 )"

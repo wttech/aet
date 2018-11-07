@@ -27,7 +27,8 @@ define(['angularAMD', 'endpointConfiguration', 'requestParametersService'],
           requestParametersService) {
         var service = {
               getArtifactUrl: getArtifactUrl,
-              getArtifact: getArtifact
+              getArtifact: getArtifact,
+              getArtifactAsTextUrl: getArtifactAsTextUrl
             },
             requestParams = requestParametersService.get(),
             endpoint = endpointConfiguration.getEndpoint();
@@ -39,6 +40,11 @@ define(['angularAMD', 'endpointConfiguration', 'requestParametersService'],
               'company=' + requestParams.company +
               '&project=' + requestParams.project +
               '&id=' + artifactId;
+        }
+
+        function getArtifactAsTextUrl(artifactId) {
+          return getArtifactUrl(artifactId) +
+              '&type=text/plain';
         }
 
         function getArtifact(artifactId) {
