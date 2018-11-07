@@ -14,6 +14,7 @@
 - [ ] Bug fix (non-breaking change which fixes an issue)
 - [ ] New feature (non-breaking change which adds functionality)
 - [ ] Breaking change (fix or feature that would cause existing functionality to not work as expected)
+- [ ] This change needs to be tested manually.
 
 ## Checklist:
 <!--- Go over all the following points, and put an `x` in all the boxes that apply. -->
@@ -21,7 +22,6 @@
 - [ ] My code follows the [code style](https://github.com/Cognifide/aet/blob/master/CONTRIBUTING.md#coding-conventions) of this project.
 - [ ] My change requires a change to the documentation.
 - [ ] I have updated the documentation accordingly.
-- [ ] This change needs to be tested.
 
 ---
 I hereby agree to the terms of the AET Contributor License Agreement.
