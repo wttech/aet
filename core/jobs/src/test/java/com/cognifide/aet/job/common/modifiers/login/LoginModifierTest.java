@@ -28,7 +28,6 @@ import com.cognifide.aet.job.api.collector.HttpRequestExecutor;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
-import com.cognifide.aet.validation.ValidationResultBuilder;
 import java.util.Collections;
 import java.util.Map;
 import org.junit.Before;
@@ -88,9 +87,6 @@ public class LoginModifierTest {
   @Mock
   private CollectorProperties properties;
 
-  @Mock
-  private ValidationResultBuilder validationResultBuilder;
-
   private final Map<String, String> params = Collections.singletonMap("login-page", LOGIN_PAGE_URL);
 
   private LoginModifier tested;
@@ -115,7 +111,7 @@ public class LoginModifierTest {
     when(submitButton.isDisplayed()).thenReturn(true);
 
     when(properties.getUrl()).thenReturn("http://example.url.com");
-    tested = new LoginModifier(webCommunicationWrapper, validationResultBuilder);
+    tested = new LoginModifier(webCommunicationWrapper);
 
     tested.setParameters(params);
   }

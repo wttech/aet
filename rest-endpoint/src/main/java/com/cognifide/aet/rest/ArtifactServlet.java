@@ -21,6 +21,7 @@ import com.cognifide.aet.vs.DBKey;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
+import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.io.IOUtils;
@@ -47,19 +48,32 @@ public class ArtifactServlet extends BasicDataServlet {
     String id = req.getParameter(Helper.ID_PARAM);
     resp.setCharacterEncoding("UTF-8");
     Artifact artifact = artifactsDAO.getArtifact(dbKey, id);
+    artifactsDAO.getArtifact(dbKey, id);
     if (artifact != null) {
-      resp.setContentType(artifact.getContentType());
-      resp.setHeader("Cache-Control", "public, max-age=31536000");
-
-      OutputStream output = resp.getOutputStream();
-      IOUtils.copy(artifact.getArtifactStream(), output);
-      output.flush();
+      sendArtifact(req, resp, artifact);
     } else {
-      resp.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
-      resp.setContentType("application/json");
-      resp.getWriter().write(
-          responseAsJson("Unable to get artifact with id : %s form %s", id, dbKey.toString()));
+      sendErrorMessage(dbKey, resp, id);
     }
+  }
+
+  private void sendArtifact(HttpServletRequest req, HttpServletResponse resp, Artifact artifact)
+      throws IOException {
+    String type = Optional.ofNullable(req.getParameter(Helper.TYPE_PARAM))
+        .orElse(artifact.getContentType());
+    resp.setContentType(type);
+    resp.setHeader("Cache-Control", "public, max-age=31536000");
+
+    OutputStream output = resp.getOutputStream();
+    IOUtils.copy(artifact.getArtifactStream(), output);
+    output.flush();
+  }
+
+  private void sendErrorMessage(DBKey dbKey, HttpServletResponse resp, String id)
+      throws IOException {
+    resp.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
+    resp.setContentType("application/json");
+    resp.getWriter().write(
+        responseAsJson("Unable to get artifact with id : %s form %s", id, dbKey.toString()));
   }
 
   @Override
