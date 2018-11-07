@@ -26,7 +26,7 @@ class TestContainer extends Component {
   render () {
     if(Object.keys(this.props.project).length > 0) {
       return (
-      <div>
+      <div className="middle-section-container">
           <NewTestGenerator/>
           <div className="buttons-container">
             <ToggleTestOptions />
