@@ -53,6 +53,7 @@ define(['angularAMD', 'artifactsService', 'suiteInfoService'],
           update: update,
           getPatternUrl: getPatternUrl,
           getDataUrl: getDataUrl,
+          getPlainDataUrl: getPlainDataUrl,
           getResultUrl: getResultUrl
         }, templateProvider = new ExtensionsTemplateProvider();
 
@@ -76,6 +77,11 @@ define(['angularAMD', 'artifactsService', 'suiteInfoService'],
 
         function getDataUrl() {
           return hasData() ? artifactsService.getArtifactUrl(
+              caseModel.step.stepResult.artifactId) : null;
+        }
+
+        function getPlainDataUrl() {
+          return hasData() ? artifactsService.getArtifactAsTextUrl(
               caseModel.step.stepResult.artifactId) : null;
         }
 
@@ -108,8 +114,7 @@ define(['angularAMD', 'artifactsService', 'suiteInfoService'],
           var stepResult = comparator.stepResult;
           caseModel.showAcceptButton =
               stepResult &&
-              stepResult.rebaseable &&
-              stepResult.status === 'FAILED';
+              stepResult.acceptable;
           if (suiteInfoService.getInfo().patternCorrelationId) {
             caseModel.usesCrossSuitePattern = true;
           }

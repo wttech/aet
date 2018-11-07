@@ -17,6 +17,7 @@ package com.cognifide.aet.job.common.datafilters.jserrorsfilter;
 
 import static java.util.stream.Collectors.toSet;
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.hasSize;
 
@@ -45,11 +46,15 @@ public class JsErrorsFilterTest {
 
   private static final String PARAM_SOURCE = "source";
 
+  private static final String PARAM_SOURCE_PATTERN = "sourcePattern";
+
   private static final String PARAM_LINE = "line";
 
   private static final String PARAM_ERROR_VALUE = "Error message";
 
   private static final String PARAM_SOURCE_VALUE = "Source Value";
+
+  private static final String PARAM_SOURCE_PATTERN_VALUE = "(?i)^Source Value$";
 
   private static final String PARAM_SOURCE_VALUE_SHORT = "source";
 
@@ -64,6 +69,7 @@ public class JsErrorsFilterTest {
   private static final String INFO_PATTERN = JsErrorsFilter.NAME + " DataModifier with parameters: "
       + PARAM_ERROR_PATTERN + ": %s "
       + PARAM_SOURCE + ": %s "
+      + PARAM_SOURCE_PATTERN + ": %s "
       + PARAM_LINE + ": %s";
   @Mock
   private Set<JsErrorLog> data;
@@ -83,14 +89,14 @@ public class JsErrorsFilterTest {
   @Test
   public void setParametersTest() throws ParametersException {
     params = createParams(PARAM_LINE_VALUE, PARAM_ERROR_PATTERN_VALUE, PARAM_SOURCE_VALUE,
-        PARAM_ERROR_VALUE);
+        PARAM_SOURCE_PATTERN_VALUE, PARAM_ERROR_VALUE);
     // no exceptions should occur
     tested.setParameters(params);
   }
 
   @Test
   public void setParametersTest_onlyOneSet() throws ParametersException {
-    params = createParams(null, null, PARAM_SOURCE_VALUE, null);
+    params = createParams(null, null, PARAM_SOURCE_VALUE, null, null);
     tested.setParameters(params);
     String expected = String.format(INFO_PATTERN, null, PARAM_SOURCE_VALUE, null, null);
     assertThat(tested.getInfo(), is(expected));
@@ -98,20 +104,20 @@ public class JsErrorsFilterTest {
 
   @Test(expected = ParametersException.class)
   public void setParametersTest_allEmpty() throws ParametersException {
-    params = createParams(null, null, null, null);
+    params = createParams(null, null, null, null, null);
     tested.setParameters(params);
   }
 
   @Test(expected = ParametersException.class)
   public void setParametersTest_lineNotANumber() throws ParametersException {
-    params = createParams(PARAM_LINE_VALUE_NAN, null, null, null);
+    params = createParams(PARAM_LINE_VALUE_NAN, null, null, null, null);
     tested.setParameters(params);
   }
 
   @Test
   public void modifyDataTest_excludeByErrorMessage()
       throws ParametersException {
-    params = createParams(null, null, null, PARAM_ERROR_VALUE);
+    params = createParams(null, null, null, null, PARAM_ERROR_VALUE);
     tested.setParameters(params);
     Set<JsErrorLog> result = tested.modifyData(data);
     Set<JsErrorLog> ignored = result.stream().filter(JsErrorLog::isIgnored).collect(toSet());
@@ -123,7 +129,7 @@ public class JsErrorsFilterTest {
   @Test
   public void modifyDataTest_filterByErrorMessagePattern()
       throws ProcessingException, ParametersException {
-    params = createParams(null, PARAM_ERROR_PATTERN_VALUE, null, null);
+    params = createParams(null, PARAM_ERROR_PATTERN_VALUE, null, null, null);
     tested.setParameters(params);
     Set<JsErrorLog> result = tested.modifyData(data);
     Set<JsErrorLog> ignored = result.stream().filter(JsErrorLog::isIgnored).collect(toSet());
@@ -134,7 +140,7 @@ public class JsErrorsFilterTest {
 
   @Test
   public void modifyDataTest_filterBySource() throws ProcessingException, ParametersException {
-    params = createParams(null, null, PARAM_SOURCE_VALUE_SHORT, null);
+    params = createParams(null, null, PARAM_SOURCE_VALUE_SHORT, null, null);
     tested.setParameters(params);
     Set<JsErrorLog> result = tested.modifyData(data);
     Set<JsErrorLog> ignored = result.stream().filter(JsErrorLog::isIgnored).collect(toSet());
@@ -144,8 +150,20 @@ public class JsErrorsFilterTest {
   }
 
   @Test
+  public void modifyDataTest_filterBySourcePattern()
+      throws ProcessingException, ParametersException {
+    params = createParams(null, null, null, PARAM_SOURCE_PATTERN_VALUE, null);
+    tested.setParameters(params);
+    Set<JsErrorLog> result = tested.modifyData(data);
+    Set<JsErrorLog> ignored = result.stream().filter(JsErrorLog::isIgnored).collect(toSet());
+
+    assertSize(result, data.size());
+    assertSize(ignored, 2);
+  }
+
+  @Test
   public void modifyDataTest_filterByLine() throws ProcessingException, ParametersException {
-    params = createParams(PARAM_LINE_VALUE, null, null, null);
+    params = createParams(PARAM_LINE_VALUE, null, null, null, null);
     tested.setParameters(params);
     Set<JsErrorLog> result = tested.modifyData(data);
     Set<JsErrorLog> ignored = result.stream().filter(JsErrorLog::isIgnored).collect(toSet());
@@ -157,7 +175,7 @@ public class JsErrorsFilterTest {
   @Test
   public void modifyDataTest_excludeByLineAndErrorMessagePattern()
       throws ProcessingException, ParametersException {
-    params = createParams(PARAM_LINE_VALUE, PARAM_ERROR_PATTERN_VALUE, null, null);
+    params = createParams(PARAM_LINE_VALUE, PARAM_ERROR_PATTERN_VALUE, null, null, null);
     tested.setParameters(params);
     Set<JsErrorLog> result = tested.modifyData(data);
     Set<JsErrorLog> ignored = result.stream().filter(JsErrorLog::isIgnored).collect(toSet());
@@ -182,7 +200,7 @@ public class JsErrorsFilterTest {
   }
 
   private Map<String, String> createParams(String line, String errorPattern, String source,
-      String error) {
+      String sourcePattern, String error) {
     Map<String, String> params = new HashMap<>();
     if (StringUtils.isNotBlank(line)) {
       params.put(PARAM_LINE, line);
@@ -192,6 +210,9 @@ public class JsErrorsFilterTest {
     }
     if (StringUtils.isNotBlank(source)) {
       params.put(PARAM_SOURCE, source);
+    }
+    if (StringUtils.isNotBlank(sourcePattern)) {
+      params.put(PARAM_SOURCE_PATTERN, sourcePattern);
     }
     if (StringUtils.isNotBlank(error)) {
       params.put(PARAM_ERROR, error);
