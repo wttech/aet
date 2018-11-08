@@ -37,6 +37,7 @@ import java.util.Set;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.ObjectMessage;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Matchers;
@@ -60,10 +61,11 @@ public class CollectionResultsRouterTest extends StepManagerTest {
             .metadata.Test.class);
     when(mockedTest.getUrls()).thenReturn(Collections.singleton(Mockito.mock(Url.class)));
     when(suite.getTests()).thenReturn(Collections.singletonList(mockedTest));
-    when(suiteIndexWrapper.getTest(anyString())).thenReturn(mockedTest);
+    when(runIndexWrapper.getTest(anyString())).thenReturn(java.util.Optional.ofNullable(mockedTest));
+    when(runIndexWrapper.countUrls()).thenReturn(1);
     CollectionResultsRouter collectionResultsRouter = new CollectionResultsRouter(timeoutWatch,
         connection, runnerConfiguration,
-        scheduler, suiteIndexWrapper);
+        scheduler, runIndexWrapper);
     collectionResultsRouter.addChangeObserver(changeObserver);
     return collectionResultsRouter;
   }

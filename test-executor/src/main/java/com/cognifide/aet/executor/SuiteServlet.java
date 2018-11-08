@@ -17,6 +17,7 @@ package com.cognifide.aet.executor;
 
 import com.cognifide.aet.communication.api.execution.SuiteExecutionResult;
 import com.cognifide.aet.executor.http.HttpSuiteExecutionResultWrapper;
+import com.cognifide.aet.vs.MetadataDAO;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.InputStream;
@@ -55,13 +56,16 @@ public class SuiteServlet extends HttpServlet {
   private static final String DOMAIN_PARAM = "domain";
   private static final String PATTERN_CORRELATION_ID_PARAM = "pattern";
   private static final String PATTERN_SUITE_PARAM = "patternSuite";
-
+  private static final String TEST_NAME_PARAM = "testName";
 
   @Reference
   private HttpService httpService;
 
   @Reference
   private SuiteExecutor suiteExecutor;
+
+  @Reference
+  private transient MetadataDAO metadataDAO;
 
   /**
    * Starts processing of the test suite defined in the XML file provided in post body. Overrides

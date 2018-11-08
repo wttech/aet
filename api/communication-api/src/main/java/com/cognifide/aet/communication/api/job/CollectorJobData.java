@@ -42,8 +42,7 @@ public class CollectorJobData extends JobData {
    * @param preferredBrowserId - id of preferred browser or null if the default one should be used
    */
   public CollectorJobData(String company, String project, String suiteName, String testName,
-      List<Url> urls,
-      String proxy, String preferredBrowserId) {
+      List<Url> urls, String proxy, String preferredBrowserId) {
     super(company, project, suiteName, testName);
     this.urls = urls;
     this.proxy = proxy;

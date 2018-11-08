@@ -15,6 +15,10 @@
  */
 package com.cognifide.aet.rest;
 
+import static com.cognifide.aet.rest.Helper.isValidCorrelationId;
+import static com.cognifide.aet.rest.Helper.isValidName;
+import static com.cognifide.aet.rest.Helper.responseAsJson;
+
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.exceptions.RestServiceException;
 import com.cognifide.aet.vs.DBKey;
@@ -82,7 +86,7 @@ public class XUnitServlet extends BasicDataServlet {
     } catch (RestServiceException e) {
       LOGGER.error("Failed to process request!", e);
       response.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
-      response.getWriter().write(responseAsJson(e.getMessage()));
+      response.getWriter().write(responseAsJson(GSON, e.getMessage()));
     }
   }
 
@@ -123,7 +127,7 @@ public class XUnitServlet extends BasicDataServlet {
     } catch (IOException | JAXBException e) {
       LOGGER.error("Fatal exception while generating xUnit xml", e);
       response.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
-      response.getWriter().write(responseAsJson("Unable to get xUnit for %s", dbKey.toString()));
+      response.getWriter().write(responseAsJson(GSON,"Unable to get xUnit for %s", dbKey.toString()));
     }
   }
 
