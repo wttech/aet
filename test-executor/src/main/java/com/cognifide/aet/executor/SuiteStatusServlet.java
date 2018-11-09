@@ -37,7 +37,7 @@ public class SuiteStatusServlet extends HttpServlet {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SuiteStatusServlet.class);
 
-  public static final String SERVLET_PATH = "/suitestatus";
+  public static final String SERVLET_PATH = "/api/suitestatus";
 
   @Reference
   private HttpService httpService;
@@ -55,7 +55,7 @@ public class SuiteStatusServlet extends HttpServlet {
     String correlationId = StringUtils.substringAfter(request.getRequestURI(), SERVLET_PATH)
         .replace("/", "");
     SuiteStatusResult suiteStatusResult = suiteExecutor.getExecutionStatus(correlationId);
-
+    addCors(response);
     if (suiteStatusResult != null) {
       Gson gson = new Gson();
       String responseBody = gson.toJson(suiteStatusResult);
@@ -76,6 +76,19 @@ public class SuiteStatusServlet extends HttpServlet {
     } catch (ServletException | NamespaceException e) {
       LOGGER.error("Failed to register servlet at " + SERVLET_PATH, e);
     }
+  }
+
+  @Override
+  protected void doOptions(HttpServletRequest req, HttpServletResponse resp)
+      throws ServletException, IOException {
+    addCors(resp);
+  }
+
+  private void addCors(HttpServletResponse response) {
+    response.setHeader("Access-Control-Allow-Origin", "*");
+    response.setHeader("Access-Control-Allow-Headers",
+        "Origin, X-Requested-With, Content-Type, Accept");
+    response.setHeader("Access-Control-Allow-Methods", "POST");
   }
 
   @Deactivate

@@ -45,6 +45,7 @@
 			<screen comparator="layout" />
 		</compare>
 		<urls>
+			<url href="comparators/layout/success.jsp" />
 			<url href="comparators/layout/failed.jsp" />
 		</urls>
 	</test>
