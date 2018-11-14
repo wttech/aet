@@ -10,6 +10,7 @@ All notable changes to AET will be documented in this file.
 ## Unreleased
 **List of changes that are finished but not yet released in any final version.**
 - [PR-412](https://github.com/Cognifide/aet/pull/412) ([PR-336](https://github.com/Cognifide/aet/pull/336), [PR-337](https://github.com/Cognifide/aet/pull/337), [PR-395](https://github.com/Cognifide/aet/pull/395)) - Added rerun functionality for suite, test and url 
+- [PR-430](https://github.com/Cognifide/aet/pull/430) Upgraded HTML codesniffer to latest release (3.2.0)
 
 ## Version 3.1.0
 
