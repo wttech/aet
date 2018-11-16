@@ -17,8 +17,6 @@ package com.cognifide.aet.rest;
 
 
 import com.cognifide.aet.communication.api.CommunicationSettings;
-import com.cognifide.aet.communication.api.queues.JmsConnection;
-import com.cognifide.aet.communication.api.queues.JmsEndpointConfig;
 import com.cognifide.aet.rest.helpers.ReportConfigurationManager;
 import com.cognifide.aet.rest.helpers.SuitesListProvider;
 import com.cognifide.aet.vs.MetadataDAO;
@@ -57,9 +55,6 @@ public class ConfigsServlet extends HttpServlet {
   private transient HttpService httpService;
 
   @Reference
-  private transient JmsConnection jmsConnection;
-
-  @Reference
   private transient MetadataDAO metadataDAO;
 
   @Reference
@@ -86,9 +81,7 @@ public class ConfigsServlet extends HttpServlet {
       String reportDomain = reportConfigurationManager.getReportDomain();
 
       if (COMMUNICATION_SETTINGS_PARAM.equals(configType)) {
-        JmsEndpointConfig jmsEndpointConfig = jmsConnection.getEndpointConfig();
-        CommunicationSettings communicationSettings = new CommunicationSettings(jmsEndpointConfig,
-            reportDomain);
+        CommunicationSettings communicationSettings = new CommunicationSettings(reportDomain);
         responseWriter.write(new Gson().toJson(communicationSettings));
       } else if (LIST_PARAM.equals(configType)) {
         resp.setContentType("text/html; charset=utf-8");

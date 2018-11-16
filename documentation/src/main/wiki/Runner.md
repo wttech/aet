@@ -21,6 +21,6 @@ Use OSGi configuration console and edit `RunnerConfiguration` to change Runner s
 | --------- | ------------- | ----------- |
 | Failure timeout `ft` | `120 seconds` | Time in seconds, after which suite processing will be interrupted if no notification was received in duration of this parameter. That means if Runner will be not updated by any collection or comparison result in that time it will decide to force stop suite processing. |
 | Message ttl `mttl` | `300 seconds` | Time in seconds after which messages will be thrown out of queues. |
-| URL Package Size `urlPackageSize` | `5` | Defines how many urls are being sent in one message. Each message is being processed by single CollectorListener. |
+| URL Package Size `urlPackageSize` | `1` | Defines how many urls are being sent in one message. Each message is being processed by single CollectorListener. |
 | Max Messages in Collector Queue `maxMessagesInCollectorQueue` | `20` | Defines the maximum amount of messages in the collector queue. This is defined for each runner instance separately, that means if you have more than one Runner instance in the system configured, the global number of messages in the queue is the sum of all Runners `maxMessagesInCollectorQueue` values. |
 | Max Concurrent Suites Count `maxConcurrentSuitesCount` | `5` | Defines the maximum number of suites processed concurrently byt the Runner. If more suites will come to the system, they will be scheduled for later processing. |
