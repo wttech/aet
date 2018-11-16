@@ -19,30 +19,43 @@ define([], function () {
   'use strict';
   return ['$scope', '$rootScope', '$uibModal', '$stateParams',
     'patternsService', 'metadataAccessService', 'notesService',
-    'viewModeService', 'suiteInfoService',
-    ToolbarBottomController];
+    'viewModeService', 'suiteInfoService', 'rerunService', 'historyService',
+    ToolbarBottomController
+  ];
 
   function ToolbarBottomController($scope, $rootScope, $uibModal, $stateParams,
-      patternsService, metadataAccessService, notesService, viewModeService,
-      suiteInfoService) {
+    patternsService, metadataAccessService, notesService, viewModeService,
+    suiteInfoService, rerunService, historyService) {
     var vm = this;
 
     // disables accept button if compared against another suite patterns
     if (suiteInfoService.getInfo().patternCorrelationId) {
       vm.usesCrossSuitePattern = true;
     }
+
     vm.showAcceptButton = patternsMayBeUpdated;
     vm.showRevertButton = patternsMarkedForUpdateMayBeReverted;
     vm.displayCommentModal = displayCommentModal;
     vm.scrollSidepanel = scrollSidepanel;
+    vm.rerunSuite = rerunSuite;
+    vm.rerunTest = rerunTest;
+    vm.rerunURL = rerunURL;
+    vm.rerunService = rerunService;
+    vm.suiteInfoService = suiteInfoService;
+    vm.checkRerunStatus = rerunService.checkRerunStatus;
+
+    historyService.fetchHistory(suiteInfoService.getInfo().version, function() {
+      var currentVersion = suiteInfoService.getInfo().version;
+      vm.isLastSuiteVersion = historyService.getNextVersion(currentVersion) == null;
+    });
 
     $rootScope.$on('metadata:changed', updateToolbar);
-    $scope.$watch('viewMode', function() {
-        setTimeout(function() {
-          $('[data-toggle="popover"]').not('.pre-initialized-popover').popover({
-                placement: 'bottom'
-          });
-        }, 0);
+    $scope.$watch('viewMode', function () {
+      setTimeout(function () {
+        $('[data-toggle="popover"]').not('.pre-initialized-popover').popover({
+          placement: 'bottom'
+        });
+      }, 0);
     });
 
     $('[data-toggle="popover"]').popover({
@@ -76,7 +89,7 @@ define([], function () {
       var result = false;
       if (vm.model) {
         var patternsToAcceptLeft =
-            vm.model.patternsToAccept - vm.model.acceptedPatterns;
+          vm.model.patternsToAccept - vm.model.acceptedPatterns;
         result = patternsToAcceptLeft > 0;
       }
       if (vm.usesCrossSuitePattern) {
@@ -90,8 +103,8 @@ define([], function () {
       var result = false;
       if (vm.model) {
         result =
-            vm.model.acceptedPatterns > 0 &&
-            vm.model.acceptedPatterns <= vm.model.patternsToAccept;
+          vm.model.acceptedPatterns > 0 &&
+          vm.model.acceptedPatterns <= vm.model.patternsToAccept;
       }
       if (vm.usesCrossSuitePattern) {
         result = false;
@@ -120,28 +133,55 @@ define([], function () {
     }
 
     function scrollSidepanel(findParentGroup) {
-        var $currentElement = $('a.test-name.is-active, a.test-url.is-active');
-        var $reportGroup = $currentElement.closest('.aside-report.is-visible');
-        var $parentElement = $reportGroup.find('.test-name');
+      var $currentElement = $('a.test-name.is-active, a.test-url.is-active');
+      var $reportGroup = $currentElement.closest('.aside-report.is-visible');
+      var $parentElement = $reportGroup.find('.test-name');
 
-        if (findParentGroup) {
-            $parentElement.click();
-            performScroll($parentElement);
-            $reportGroup.addClass('is-expanded');
-        } else {
-            $reportGroup.addClass('is-expanded');
-            performScroll($currentElement);
-        }
+      if (findParentGroup) {
+        $parentElement.click();
+        performScroll($parentElement);
+        $reportGroup.addClass('is-expanded');
+      } else {
+        $reportGroup.addClass('is-expanded');
+        performScroll($currentElement);
+      }
     }
 
-    function performScroll (element) {
-        element[0].scrollIntoView({behavior: 'smooth', block: 'center', inline: 'nearest'});
+    function rerunTest() {
+      var testName = vm.model.name;
+      if (vm.model.testGroupName) {
+        testName = vm.model.testGroupName;
+      }
+      rerunService.rerunTest(testName);
+    }
+
+    function rerunSuite() {
+      rerunService.rerunSuite();
+    }
+
+    function rerunURL(testUrl) {
+      var testName = vm.model.name;
+      if (vm.model.testGroupName) {
+        testName = vm.model.testGroupName;
+      }
+      rerunService.rerunURL(testName, testUrl);
+    }
+
+    function performScroll(element) {
+      element[0].scrollIntoView({
+        behavior: 'smooth',
+        block: 'center',
+        inline: 'nearest'
+      });
     }
 
     /***************************************
      ***********  SUITE VIEW PART  *********
      ***************************************/
     function setupSuiteToolbarModel() {
+      if (localStorage.getItem('currentRerunEndpointUrl')) {
+        vm.checkRerunStatus(localStorage.getItem('currentRerunEndpointUrl'));
+      }
       vm.model = metadataAccessService.getSuite();
       vm.updatePatterns = function () {
         patternsService.updateSuite();
@@ -155,6 +195,9 @@ define([], function () {
      ***********  TEST VIEW PART  *********
      ***************************************/
     function setupTestToolbarModel() {
+      if (localStorage.getItem('currentRerunEndpointUrl')) {
+        vm.checkRerunStatus(localStorage.getItem('currentRerunEndpointUrl'));
+      }
       var testName = $stateParams.test;
       vm.model = metadataAccessService.getTest(testName);
       vm.updatePatterns = function () {
@@ -169,10 +212,12 @@ define([], function () {
      ***********  URL VIEW PART  *********
      ***************************************/
     function setupUrlToolbarModel() {
+      if (localStorage.getItem('currentRerunEndpointUrl')) {
+        vm.checkRerunStatus(localStorage.getItem('currentRerunEndpointUrl'));
+      }
       var testName = $stateParams.test;
-
       vm.model = metadataAccessService.getUrl($stateParams.test,
-          $stateParams.url);
+        $stateParams.url);
       vm.model.testGroupName = metadataAccessService.getTest(testName).name;
       vm.updatePatterns = function () {
         patternsService.updateUrl($stateParams.test, $stateParams.url, true);

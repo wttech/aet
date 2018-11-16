@@ -13,29 +13,10 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.communication.api.queues;
+package com.cognifide.aet.communication.api.metadata;
 
-public class JmsEndpointConfig {
-
-  private final String uri;
-  private final String user;
-  private final String pass;
-
-  public JmsEndpointConfig(String uri, String user, String pass) {
-    this.uri = uri;
-    this.user = user;
-    this.pass = pass;
-  }
-
-  public String getUri() {
-    return uri;
-  }
-
-  public String getUser() {
-    return user;
-  }
-
-  public String getPass() {
-    return pass;
-  }
+public enum RunType {
+  SUITE,
+  TEST,
+  URL,
 }

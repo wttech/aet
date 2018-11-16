@@ -15,6 +15,10 @@
  */
 package com.cognifide.aet.rest;
 
+import static com.cognifide.aet.rest.Helper.isValidCorrelationId;
+import static com.cognifide.aet.rest.Helper.isValidName;
+import static com.cognifide.aet.rest.Helper.responseAsJson;
+
 import com.cognifide.aet.communication.api.exceptions.AETException;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
@@ -86,13 +90,13 @@ public class MetadataServlet extends BasicDataServlet {
       } else {
         resp.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
         resp.getWriter()
-            .write(responseAsJson("Neither valid correlationId or suite param was specified."));
+            .write(responseAsJson(GSON, "Neither valid correlationId or suite param was specified."));
         return;
       }
     } catch (StorageException e) {
       LOGGER.error("Failed to get suite", e);
       resp.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
-      resp.getWriter().write(responseAsJson("Failed to get suite: %s", e.getMessage()));
+      resp.getWriter().write(responseAsJson(GSON,"Failed to get suite: %s", e.getMessage()));
       return;
     }
 
@@ -106,7 +110,7 @@ public class MetadataServlet extends BasicDataServlet {
     } else {
       resp.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
       resp.getWriter()
-          .write(responseAsJson("Unable to get Suite Metadata for %s", dbKey.toString()));
+          .write(responseAsJson(GSON,"Unable to get Suite Metadata for %s", dbKey.toString()));
     }
   }
 
@@ -142,23 +146,23 @@ public class MetadataServlet extends BasicDataServlet {
     } catch (AETException e) {
       LOGGER.debug("Suite is locked.", e);
       resp.setStatus(HttpURLConnection.HTTP_CONFLICT);
-      resp.getWriter().write(responseAsJson(e.getMessage()));
+      resp.getWriter().write(responseAsJson(GSON, e.getMessage()));
     } catch (JsonSyntaxException | JsonIOException jsonSyntaxException) {
       LOGGER.error("Invalid json provided by client", jsonSyntaxException);
       resp.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
-      resp.getWriter().write(responseAsJson("Error: Invalid format of provided Json %s",
+      resp.getWriter().write(responseAsJson(GSON,"Error: Invalid format of provided Json %s",
           jsonSyntaxException.getMessage()));
     } catch (ValidatorException validatorException) {
       LOGGER.error("Invalid json provided by client: {}", validatorException.getIssues(),
           validatorException);
       resp.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
       resp.getWriter().write(
-          responseAsJson("Invalid Suite representation : %s", validatorException.getIssues()));
+          responseAsJson(GSON,"Invalid Suite representation : %s", validatorException.getIssues()));
     } catch (StorageException e) {
       LOGGER.error("Failed to save suite", e);
       resp.setStatus(HttpURLConnection.HTTP_INTERNAL_ERROR);
       resp.getWriter()
-          .write(responseAsJson("ERROR: Unable to save provided Suite. %s", e.getMessage()));
+          .write(responseAsJson(GSON,"ERROR: Unable to save provided Suite. %s", e.getMessage()));
     } finally {
       resp.flushBuffer();
     }
