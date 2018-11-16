@@ -9,7 +9,6 @@ All notable changes to AET will be documented in this file.
 
 ## Unreleased
 **List of changes that are finished but not yet released in any final version.**
-- [PR-412](https://github.com/Cognifide/aet/pull/412) ([PR-336](https://github.com/Cognifide/aet/pull/336), [PR-337](https://github.com/Cognifide/aet/pull/337), [PR-395](https://github.com/Cognifide/aet/pull/395)) - Added rerun functionality for suite, test and url
 - [PR-430](https://github.com/Cognifide/aet/pull/430) Upgraded HTML codesniffer to latest release (3.2.0)
 - [PR-354](https://github.com/Cognifide/aet/pull/354) Remove jmsEndpointConfig information from communication settings endpoint ([#352](https://github.com/Cognifide/aet/issues/352))
 - [PR-412](https://github.com/Cognifide/aet/pull/412) ([PR-336](https://github.com/Cognifide/aet/pull/336), [PR-337](https://github.com/Cognifide/aet/pull/337), [PR-395](https://github.com/Cognifide/aet/pull/395)) - Added rerun functionality for suite, test and url
@@ -22,11 +21,11 @@ All notable changes to AET will be documented in this file.
 - [PR-409](https://github.com/Cognifide/aet/pull/409) Added sources link in "view source" url
 - [PR-394](https://github.com/Cognifide/aet/pull/394) Added scroll modifier
 - [PR-399](https://github.com/Cognifide/aet/pull/399) Bug fix on side panel - conditional tests ([#398](https://github.com/Cognifide/aet/issues/398))
-- [PR-396](https://github.com/Cognifide/aet/pull/396) Added horizontal scrollbar for wide pages ([#393](https://github.com/Cognifide/aet/issues/393)) 
+- [PR-396](https://github.com/Cognifide/aet/pull/396) Added horizontal scrollbar for wide pages ([#393](https://github.com/Cognifide/aet/issues/393))
 - [PR-403](https://github.com/Cognifide/aet/pull/403) Conditionally passed tests can be accepted ([#400](https://github.com/Cognifide/aet/issues/400))
 - [PR-387](https://github.com/Cognifide/aet/pull/387) Set max allowed page screenshot height to 35k pixels.
 - [PR-401](https://github.com/Cognifide/aet/pull/401) Added new regex param `sourcePattern` to [JS Errors Data Filter](https://github.com/Cognifide/aet/wiki/JSErrorsDataFilter)
-- [PR-397](https://github.com/Cognifide/aet/pull/397) Add algorithm to enable taking long screenshots without resolution-sleep-resolution workaround 
+- [PR-397](https://github.com/Cognifide/aet/pull/397) Add algorithm to enable taking long screenshots without resolution-sleep-resolution workaround
 
 ## Version 3.0.1
 
@@ -126,7 +125,7 @@ All notable changes to AET will be documented in this file.
 ## Version 2.0.2
 - [PR-44](https://github.com/Cognifide/aet/pull/44) [ScreenCollector](https://github.com/Cognifide/aet/wiki/ScreenCollector) enhancement: added ability to take screenshots of parts of the page by using css or xpath element selectors
 - [PR-41](https://github.com/Cognifide/aet/pull/41) Added new [Replace Text](https://github.com/Cognifide/aet/wiki/ReplaceTextModifier) modifier and  [Click](https://github.com/Cognifide/aet/wiki/ClickModifier)
- and [Hide](https://github.com/Cognifide/aet/wiki/HideModifier) Modifiers allows to use css selectors as parameters. 
+ and [Hide](https://github.com/Cognifide/aet/wiki/HideModifier) Modifiers allows to use css selectors as parameters.
 - [PR-39](https://github.com/Cognifide/aet/pull/39) Fixed filtering w3cHtml issues and update nuvalidator to the newest version
 - [PR-31](https://github.com/Cognifide/aet/pull/31) Fixed source report artifact error
 - [PR-30](https://github.com/Cognifide/aet/pull/30) Fixed cookie report display in 'test' action mode
