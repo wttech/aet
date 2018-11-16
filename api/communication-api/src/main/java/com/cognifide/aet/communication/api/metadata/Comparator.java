@@ -21,6 +21,7 @@ import com.google.common.base.Objects;
 import com.google.common.collect.ImmutableList;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Collections;
 
 public class Comparator extends Operation implements Commentable, Named {
 
@@ -30,7 +31,7 @@ public class Comparator extends Operation implements Commentable, Named {
 
   private ComparatorStepResult stepResult;
 
-  private final List<Operation> filters = new ArrayList<>();
+  private List<Operation> filters = new ArrayList<>();
 
   private String comment;
 
@@ -49,6 +50,9 @@ public class Comparator extends Operation implements Commentable, Named {
   }
 
   public List<Operation> getFilters() {
+    if(filters == null){
+      return Collections.emptyList();
+    }
     return ImmutableList.copyOf(filters);
   }
 
@@ -66,6 +70,10 @@ public class Comparator extends Operation implements Commentable, Named {
 
   public void setStatistics(Statistics statistics) {
     this.statistics = statistics;
+  }
+
+  public void setFilters(List<Operation> filters) {
+    this.filters = filters;
   }
 
   @Override

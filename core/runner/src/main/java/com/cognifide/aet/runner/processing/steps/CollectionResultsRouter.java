@@ -28,9 +28,10 @@ import com.cognifide.aet.communication.api.util.ExecutionTimer;
 import com.cognifide.aet.runner.MessagesManager;
 import com.cognifide.aet.runner.RunnerConfiguration;
 import com.cognifide.aet.runner.processing.TimeoutWatch;
-import com.cognifide.aet.runner.processing.data.SuiteIndexWrapper;
+import com.cognifide.aet.runner.processing.data.wrappers.RunIndexWrapper;
 import com.cognifide.aet.runner.scheduler.CollectorJobSchedulerService;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.CopyOnWriteArrayList;
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -53,29 +54,21 @@ public class CollectionResultsRouter extends StepManager implements TaskFinishPo
 
   private final CollectorJobSchedulerService collectorJobScheduler;
 
-  private final SuiteIndexWrapper suite;
+  private RunIndexWrapper runIndexWrapper;
 
   private final ExecutionTimer timer;
 
   public CollectionResultsRouter(TimeoutWatch timeoutWatch, JmsConnection jmsConnection,
       RunnerConfiguration runnerConfiguration,
-      CollectorJobSchedulerService collectorJobScheduler, SuiteIndexWrapper suite)
+      CollectorJobSchedulerService collectorJobScheduler, RunIndexWrapper runIndexWrapper)
       throws JMSException {
-    super(timeoutWatch, jmsConnection, suite.get().getCorrelationId(),
+    super(timeoutWatch, jmsConnection, runIndexWrapper.get().getCorrelationId(),
         runnerConfiguration.getMttl());
     this.collectorJobScheduler = collectorJobScheduler;
-    this.suite = suite;
-    this.messagesToReceive.getAndSet(countUrls());
+    this.runIndexWrapper = runIndexWrapper;
+    this.messagesToReceive.getAndSet(runIndexWrapper.countUrls());
     this.changeListeners = new CopyOnWriteArrayList<>();
     timer = ExecutionTimer.createAndRun("collection");
-  }
-
-  private int countUrls() {
-    int urlsCount = 0;
-    for (Test test : suite.get().getTests()) {
-      urlsCount += test.getUrls().size();
-    }
-    return urlsCount;
   }
 
   @Override
@@ -124,7 +117,7 @@ public class CollectionResultsRouter extends StepManager implements TaskFinishPo
     for (ChangeObserver changeListener : changeListeners) {
       changeListener.informChangesCompleted();
     }
-    timer.finishAndLog(suite.get().getName());
+    timer.finishAndLog(runIndexWrapper.get().getName());
     LOGGER.debug("Closing consumer!");
     consumer.close();
   }
@@ -165,8 +158,8 @@ public class CollectionResultsRouter extends StepManager implements TaskFinishPo
   private void createAndSendComparatorJobData(Step step, String testName, String urlName)
       throws JMSException {
     ObjectMessage message = session.createObjectMessage(
-        new ComparatorJobData(suite.get().getCompany(), suite.get().getProject(),
-            suite.get().getName(), testName, urlName, step));
+        new ComparatorJobData(runIndexWrapper.get().getCompany(), runIndexWrapper.get().getProject(),
+            runIndexWrapper.get().getName(), testName, urlName, step));
     message.setJMSCorrelationID(correlationId);
     sender.send(message);
   }
@@ -176,8 +169,8 @@ public class CollectionResultsRouter extends StepManager implements TaskFinishPo
   }
 
   private void updateSuiteUrl(String testName, Url processedUrl) {
-    final Test test = suite.getTest(testName);
-    test.addUrl(processedUrl);
+    final Optional<Test> test = runIndexWrapper.getTest(testName);
+    test.get().addUrl(processedUrl);
   }
 
   public void addChangeObserver(ChangeObserver observer) {
