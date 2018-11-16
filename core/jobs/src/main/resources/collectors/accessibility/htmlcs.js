@@ -20,7 +20,7 @@
 * changed scope of variable to window
 * added HTMLCS.getMessagesJSON()
 */
-<<<<<<< Updated upstream:core/jobs/src/main/resources/collectors/accessibility/htmlcs.min.js
+(function(arguments){
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         define(['htmlcs'], factory);
@@ -616,36 +616,6 @@ _global.HTMLCS_Section508_Sniffs_A = {
             'bgsound',
             'audio'
         ];
-=======
-(function(arguments){
-function Runner() {
-    this.run = function(standard) {
-        var _this = this;
-        HTMLCS.process(standard, document, function() {
-            var messages = HTMLCS.getMessages();
-            messages.forEach(function(message) {
-                message.elementString = message.element.outerHTML, _this.output(message);
-            }), console.log("done");
-        });
-    }, this.output = function(msg) {
-        var typeName = "UNKNOWN";
-        switch (msg.type) {
-          case HTMLCS.ERROR:
-            typeName = "ERROR";
-            break;
-
-          case HTMLCS.WARNING:
-            typeName = "WARNING";
-            break;
-
-          case HTMLCS.NOTICE:
-            typeName = "NOTICE";
-        }
-        var message = typeName + "|" + msg.code + "|" + msg.msg + "|" + msg.elementString + "|" + msg.element.className + "|" + msg.element.id;
-        console.log(message);
-    };
-}
->>>>>>> Stashed changes:core/jobs/src/main/resources/collectors/accessibility/htmlcs.js
 
     },
 
@@ -1605,7 +1575,7 @@ _global.HTMLCS_Section508_Sniffs_P = {
     }
 
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_1_1_1_1 = {
     /**
@@ -2078,7 +2048,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_1_1_1_1 = {
         return alt;
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_2_1_2_1 = {
     /**
@@ -2122,7 +2092,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_2_1_2_1 = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_2_1_2_2 = {
     /**
@@ -2156,7 +2126,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_2_1_2_2 = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_2_1_2_3 = {
     /**
@@ -2190,7 +2160,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_2_1_2_3 = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_2_1_2_4 = {
     /**
@@ -2224,7 +2194,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_2_1_2_4 = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_2_1_2_5 = {
     /**
@@ -2258,7 +2228,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_2_1_2_5 = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_2_1_2_6 = {
     /**
@@ -2292,7 +2262,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_2_1_2_6 = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_2_1_2_7 = {
     /**
@@ -2327,7 +2297,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_2_1_2_7 = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_2_1_2_8 = {
     /**
@@ -2361,7 +2331,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_2_1_2_8 = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_2_1_2_9 = {
     /**
@@ -2396,7 +2366,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_2_1_2_9 = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_3_1_3_1 = {
 	_labelNames: null,
@@ -3238,7 +3208,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_3_1_3_1 = {
 		}
 	}
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_3_1_3_1_A = {
     _labelNames: null,
@@ -3267,7 +3237,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_3_1_3_1_A = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_3_1_3_1_AAA = {
     _labelNames: null,
@@ -3296,7 +3266,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_3_1_3_1_AAA = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_3_1_3_2 = {
     /**
@@ -3325,7 +3295,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_3_1_3_2 = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_3_1_3_3 = {
     /**
@@ -3354,7 +3324,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_3_1_3_3 = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_4_1_4_1 = {
     /**
@@ -3383,7 +3353,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_4_1_4_1 = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_4_1_4_2 = {
     /**
@@ -3419,7 +3389,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_4_1_4_2 = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_4_1_4_3 = {
     /**
@@ -3449,7 +3419,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_4_1_4_3 = {
 
             for (var i = 0; i < failures.length; i++) {
                 var element   = failures[i].element;
-                
+
                 var decimals  = 2;
                 var value     = (Math.round(failures[i].value * Math.pow(10, decimals)) / Math.pow(10, decimals));
                 var required  = failures[i].required;
@@ -3463,7 +3433,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_4_1_4_3 = {
                     decimals++;
                     value = (Math.round(failures[i].value * Math.pow(10, decimals)) / Math.pow(10, decimals));
                 }
-                
+
                 if (required === 4.5) {
                     var code = 'G18';
                 } else if (required === 3.0) {
@@ -3542,11 +3512,11 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_4_1_4_3_Contrast = {
                         var bgElement  = node;
                         var hasBgImg   = false;
                         var isAbsolute = false;
-                        
+
 			if (style.backgroundImage !== 'none') {
                             hasBgImg = true;
                         }
-                        
+
                         if (style.position == 'absolute') {
                             isAbsolute = true;
                         }
@@ -3763,7 +3733,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_4_1_4_3_Contrast = {
         return newColour;
     }
 }
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_4_1_4_3_F24 = {
     /**
@@ -3846,7 +3816,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_4_1_4_3_F24 = {
         }
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_4_1_4_4 = {
     /**
@@ -3875,7 +3845,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_4_1_4_4 = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_4_1_4_5 = {
     /**
@@ -3908,7 +3878,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_4_1_4_5 = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_4_1_4_6 = {
     /**
@@ -3938,7 +3908,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_4_1_4_6 = {
 
             for (var i = 0; i < failures.length; i++) {
                 var element   = failures[i].element;
-                
+
                 var decimals  = 2;
                 var value     = (Math.round(failures[i].value * Math.pow(10, decimals)) / Math.pow(10, decimals));
                 var required  = failures[i].required;
@@ -3986,7 +3956,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_4_1_4_6 = {
         }//end if
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_4_1_4_7 = {
     /**
@@ -4021,7 +3991,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_4_1_4_7 = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_4_1_4_8 = {
     /**
@@ -4056,7 +4026,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_4_1_4_8 = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_4_1_4_9 = {
     /**
@@ -4088,7 +4058,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle1_Guideline1_4_1_4_9 = {
         }
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle2_Guideline2_1_2_1_1 = {
     /**
@@ -4164,7 +4134,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle2_Guideline2_1_2_1_1 = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle2_Guideline2_1_2_1_2 = {
     /**
@@ -4197,7 +4167,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle2_Guideline2_1_2_1_2 = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle2_Guideline2_3_2_3_1 = {
     /**
@@ -4233,7 +4203,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle2_Guideline2_3_2_3_1 = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle2_Guideline2_3_2_3_2 = {
     /**
@@ -4262,7 +4232,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle2_Guideline2_3_2_3_2 = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle2_Guideline2_2_2_2_1 = {
     /**
@@ -4307,7 +4277,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle2_Guideline2_2_2_2_1 = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle2_Guideline2_2_2_2_2 = {
     /**
@@ -4354,7 +4324,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle2_Guideline2_2_2_2_2 = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle2_Guideline2_2_2_2_3 = {
     /**
@@ -4383,7 +4353,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle2_Guideline2_2_2_2_3 = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle2_Guideline2_2_2_2_4 = {
     /**
@@ -4412,7 +4382,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle2_Guideline2_2_2_2_4 = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle2_Guideline2_2_2_2_5 = {
     /**
@@ -4441,7 +4411,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle2_Guideline2_2_2_2_5 = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle2_Guideline2_4_2_4_1 = {
     /**
@@ -4582,7 +4552,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle2_Guideline2_4_2_4_1 = {
         }
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle2_Guideline2_4_2_4_2 = {
     /**
@@ -4644,7 +4614,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle2_Guideline2_4_2_4_2 = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle2_Guideline2_4_2_4_3 = {
     /**
@@ -4678,7 +4648,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle2_Guideline2_4_2_4_3 = {
         }
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle2_Guideline2_4_2_4_4 = {
     /**
@@ -4711,7 +4681,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle2_Guideline2_4_2_4_4 = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle2_Guideline2_4_2_4_5 = {
     /**
@@ -4740,7 +4710,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle2_Guideline2_4_2_4_5 = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle2_Guideline2_4_2_4_6 = {
     /**
@@ -4769,7 +4739,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle2_Guideline2_4_2_4_6 = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle2_Guideline2_4_2_4_7 = {
     /**
@@ -4805,7 +4775,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle2_Guideline2_4_2_4_7 = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle2_Guideline2_4_2_4_8 = {
     /**
@@ -4849,7 +4819,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle2_Guideline2_4_2_4_8 = {
         }
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle2_Guideline2_4_2_4_9 = {
     /**
@@ -4878,7 +4848,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle2_Guideline2_4_2_4_9 = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle3_Guideline3_1_3_1_1 = {
     /**
@@ -4981,7 +4951,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle3_Guideline3_1_3_1_1 = {
         return valid;
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle3_Guideline3_1_3_1_2 = {
     /**
@@ -5044,7 +5014,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle3_Guideline3_1_3_1_2 = {
         }//end for
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle3_Guideline3_1_3_1_3 = {
     /**
@@ -5073,7 +5043,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle3_Guideline3_1_3_1_3 = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle3_Guideline3_1_3_1_4 = {
     /**
@@ -5102,7 +5072,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle3_Guideline3_1_3_1_4 = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle3_Guideline3_1_3_1_5 = {
     /**
@@ -5131,7 +5101,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle3_Guideline3_1_3_1_5 = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle3_Guideline3_1_3_1_6 = {
     /**
@@ -5177,7 +5147,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle3_Guideline3_1_3_1_6 = {
         }
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle3_Guideline3_2_3_2_1 = {
     /**
@@ -5211,7 +5181,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle3_Guideline3_2_3_2_1 = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle3_Guideline3_2_3_2_2 = {
     /**
@@ -5277,7 +5247,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle3_Guideline3_2_3_2_2 = {
         }
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle3_Guideline3_2_3_2_3 = {
     /**
@@ -5306,7 +5276,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle3_Guideline3_2_3_2_3 = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle3_Guideline3_2_3_2_4 = {
     /**
@@ -5335,7 +5305,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle3_Guideline3_2_3_2_4 = {
 
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle3_Guideline3_2_3_2_5 = {
     /**
@@ -5384,7 +5354,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle3_Guideline3_2_3_2_5 = {
         }
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle3_Guideline3_3_3_3_1 = {
     /**
@@ -5412,7 +5382,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle3_Guideline3_3_3_3_1 = {
         HTMLCS.addMessage(HTMLCS.NOTICE, element, 'If an input error is automatically detected in this form, check that the item(s) in error are identified and the error(s) are described to the user in text.', 'G83,G84,G85');
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle3_Guideline3_3_3_3_2 = {
     /**
@@ -5443,7 +5413,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle3_Guideline3_3_3_3_2 = {
         HTMLCS.addMessage(HTMLCS.NOTICE, element, 'Check that descriptive labels or instructions (including for required fields) are provided for user input in this form.', 'G131,G89,G184,H90');
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle3_Guideline3_3_3_3_3 = {
     /**
@@ -5473,7 +5443,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle3_Guideline3_3_3_3_3 = {
         HTMLCS.addMessage(HTMLCS.NOTICE, element, 'Check that this form provides suggested corrections to errors in user input, unless it would jeopardize the security or purpose of the content.', 'G177');
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle3_Guideline3_3_3_3_4 = {
     /**
@@ -5501,7 +5471,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle3_Guideline3_3_3_3_4 = {
         HTMLCS.addMessage(HTMLCS.NOTICE, element, 'If this form would bind a user to a financial or legal commitment, modify/delete user-controllable data, or submit test responses, ensure that submissions are either reversible, checked for input errors, and/or confirmed by the user.', 'G98,G99,G155,G164,G168.LegalForms');
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle3_Guideline3_3_3_3_5 = {
     /**
@@ -5529,7 +5499,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle3_Guideline3_3_3_3_5 = {
         HTMLCS.addMessage(HTMLCS.NOTICE, element, 'Check that context-sensitive help is available for this form, at a Web-page and/or control level.', 'G71,G184,G193');
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle3_Guideline3_3_3_3_6 = {
     /**
@@ -5557,7 +5527,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle3_Guideline3_3_3_3_6 = {
         HTMLCS.addMessage(HTMLCS.NOTICE, element, 'Check that submissions to this form are either reversible, checked for input errors, and/or confirmed by the user.', 'G98,G99,G155,G164,G168.AllForms');
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle4_Guideline4_1_4_1_1 = {
     /**
@@ -5606,7 +5576,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle4_Guideline4_1_4_1_1 = {
         }
     }
 };
- 
+
 
 _global.HTMLCS_WCAG2AAA_Sniffs_Principle4_Guideline4_1_4_1_2 = {
     /**
@@ -5961,7 +5931,7 @@ _global.HTMLCS_WCAG2AAA_Sniffs_Principle4_Guideline4_1_4_1_2 = {
         };
     }
 };
- 
+
 
 _global.HTMLCS = new function()
 {
@@ -6548,7 +6518,7 @@ _global.HTMLCS = new function()
         }
     };
 };
- 
+
 _global.HTMLCS.util = function() {
     var self = {};
 
@@ -6779,7 +6749,7 @@ _global.HTMLCS.util = function() {
      * Returns true if the element is deliberately hidden from Accessibility APIs using ARIA hidden.
      *
      * Not: This is separate to isAccessibilityHidden() due to a need to check specifically for aria hidden.
-     * 
+     *
      * @param {Node} element The element to check.
      *
      * @return {Boolean}
@@ -6936,7 +6906,7 @@ _global.HTMLCS.util = function() {
      * Returns all elements that are visible to the accessibility API.
      *
      * @param {Node}   element  The parent element to search.
-     * @param {String} selector Optional selector to pass to 
+     * @param {String} selector Optional selector to pass to
      *
      * @return {Array}
      */
@@ -7871,4 +7841,4 @@ var Runner = function () {
 var HTMLCS_RUNNER = new Runner();
 HTMLCS.process(arguments[0], window.document);
 return HTMLCS.getMessagesJSON();
-})(arguments);
+})();
