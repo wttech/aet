@@ -20,6 +20,7 @@
 * changed scope of variable to window
 * added HTMLCS.getMessagesJSON()
 */
+<<<<<<< Updated upstream:core/jobs/src/main/resources/collectors/accessibility/htmlcs.min.js
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         define(['htmlcs'], factory);
@@ -615,6 +616,36 @@ _global.HTMLCS_Section508_Sniffs_A = {
             'bgsound',
             'audio'
         ];
+=======
+(function(arguments){
+function Runner() {
+    this.run = function(standard) {
+        var _this = this;
+        HTMLCS.process(standard, document, function() {
+            var messages = HTMLCS.getMessages();
+            messages.forEach(function(message) {
+                message.elementString = message.element.outerHTML, _this.output(message);
+            }), console.log("done");
+        });
+    }, this.output = function(msg) {
+        var typeName = "UNKNOWN";
+        switch (msg.type) {
+          case HTMLCS.ERROR:
+            typeName = "ERROR";
+            break;
+
+          case HTMLCS.WARNING:
+            typeName = "WARNING";
+            break;
+
+          case HTMLCS.NOTICE:
+            typeName = "NOTICE";
+        }
+        var message = typeName + "|" + msg.code + "|" + msg.msg + "|" + msg.elementString + "|" + msg.element.className + "|" + msg.element.id;
+        console.log(message);
+    };
+}
+>>>>>>> Stashed changes:core/jobs/src/main/resources/collectors/accessibility/htmlcs.js
 
     },
 
@@ -7840,3 +7871,4 @@ var Runner = function () {
 var HTMLCS_RUNNER = new Runner();
 HTMLCS.process(arguments[0], window.document);
 return HTMLCS.getMessagesJSON();
+})(arguments);
