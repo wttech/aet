@@ -19,6 +19,7 @@
 * based on https://github.com/yargalot/AccessSniff version 3.2.0
 * changed scope of variable to window
 * added HTMLCS.getMessagesJSON()
+* wrapped everything in IIFE to fix minifier syntax errors
 */
 (function(arguments){
 (function (root, factory) {
@@ -7841,4 +7842,4 @@ var Runner = function () {
 var HTMLCS_RUNNER = new Runner();
 HTMLCS.process(arguments[0], window.document);
 return HTMLCS.getMessagesJSON();
-})();
+})(arguments);
