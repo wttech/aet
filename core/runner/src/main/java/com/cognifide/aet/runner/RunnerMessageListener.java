@@ -20,6 +20,7 @@ import com.cognifide.aet.communication.api.messages.FatalErrorMessage;
 import com.cognifide.aet.communication.api.messages.TaskMessage;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
+import com.cognifide.aet.communication.api.wrappers.Run;
 import com.cognifide.aet.queues.JmsUtils;
 import com.cognifide.aet.runner.scheduler.CollectorJobSchedulerService;
 import javax.jms.Destination;
@@ -120,11 +121,11 @@ public class RunnerMessageListener implements MessageListener {
   }
 
   private void processTestSuite(Message wrapperMessage, TaskMessage message) {
-    Suite suite = (Suite) message.getData();
+    Run objectToRunWrapper  = (Run) message.getData();
     try {
-      suiteExecutorService.scheduleSuite(suite, wrapperMessage.getJMSReplyTo());
+      suiteExecutorService.scheduleSuite(objectToRunWrapper, wrapperMessage.getJMSReplyTo());
     } catch (JMSException e) {
-      LOGGER.error("Error wile processing RUN {}: ", suite.getCorrelationId(), e);
+      LOGGER.error("Error wile processing RUN {}: ", objectToRunWrapper.getCorrelationId(), e);
       sendFatalMessage(wrapperMessage, e.getMessage());
     }
   }
