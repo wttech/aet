@@ -24,7 +24,7 @@
 ENV["GEM_PATH"] = nil
 ENV["GEM_HOME"] = nil
 
-AET_VERSION = '3.0.0'
+AET_VERSION = '3.1.0'
 
 VAGRANTFILE_API_VERSION = '2'
 
@@ -74,17 +74,10 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :chef_solo do |chef|
     chef.json = {
       "java" => {
-        "install_flavor" => "oracle",
+        "jdk_version" => "8",
+        "install_flavor" => "openjdk",
         "oracle" => {
           "accept_oracle_download_terms" => true
-        },
-        "jdk" => {
-          "8" => {
-            "x86_64" => {
-              "url" => "http://download.oracle.com/otn-pub/java/jdk/8u181-b13/96a7b8442fe848ef90c96a2fad6ed6d1/jdk-8u181-linux-x64.tar.gz",
-              "checksum" => "1845567095bfbfebd42ed0d09397939796d05456290fb20a83c476ba09f991d3"
-            }
-          }
         }
       },
       "aet" => {

@@ -28,4 +28,5 @@ public class SuiteAggregationCounter {
   public int getSuitesToAggregate() {
     return suitesToAggregate;
   }
+
 }

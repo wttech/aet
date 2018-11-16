@@ -18,7 +18,7 @@ package com.cognifide.aet.cleaner.processors;
 import com.cognifide.aet.cleaner.context.CleanerContext;
 import com.cognifide.aet.cleaner.processors.exchange.ReferencedArtifactsMessageBody;
 import com.cognifide.aet.vs.ArtifactsDAO;
-import com.google.common.collect.Sets;
+import java.util.Set;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.osgi.service.component.annotations.Component;
@@ -34,6 +34,15 @@ public class RemoveArtifactsProcessor implements Processor {
   @Reference
   private ArtifactsDAO artifactsDAO;
 
+  public RemoveArtifactsProcessor() {
+    //default constructor
+  }
+
+  // for unit tests
+  public RemoveArtifactsProcessor(ArtifactsDAO artifactsDAO) {
+    this.artifactsDAO = artifactsDAO;
+  }
+
   @Override
   @SuppressWarnings("unchecked")
   public void process(Exchange exchange) throws Exception {
@@ -42,8 +51,7 @@ public class RemoveArtifactsProcessor implements Processor {
     final ReferencedArtifactsMessageBody messageBody = exchange.getIn()
         .getBody(ReferencedArtifactsMessageBody.class);
 
-    final Sets.SetView<String> artifactsToRemove =
-        Sets.difference(messageBody.getArtifactsToRemove(), messageBody.getArtifactsToKeep());
+    Set<String> artifactsToRemove = getArtifactsIdsToRemove(artifactsDAO, messageBody);
 
     LOGGER.debug("Artifacts that will be removed: {}", artifactsToRemove);
     if (!cleanerContext.isDryRun()) {
@@ -56,5 +64,12 @@ public class RemoveArtifactsProcessor implements Processor {
           "Dry run completed! {} unreferenced artifacts should be removed from {} after cleaning suite `{}`",
           artifactsToRemove.size(), messageBody.getDbKey(), messageBody.getData());
     }
+  }
+
+  static Set<String> getArtifactsIdsToRemove(ArtifactsDAO artifactsDAO,
+      ReferencedArtifactsMessageBody messageBody) {
+    Set<String> artifactsToRemove = artifactsDAO.getArtifactsIds(messageBody.getDbKey());
+    artifactsToRemove.removeAll(messageBody.getArtifactsToKeep());
+    return artifactsToRemove;
   }
 }
