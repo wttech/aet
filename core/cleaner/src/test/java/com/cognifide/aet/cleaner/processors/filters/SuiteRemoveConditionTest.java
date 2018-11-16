@@ -17,17 +17,17 @@ package com.cognifide.aet.cleaner.processors.filters;
 
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.powermock.api.mockito.PowerMockito.when;
+import static org.mockito.Mockito.when;
 
 import com.cognifide.aet.cleaner.context.CleanerContext;
 import com.cognifide.aet.communication.api.metadata.Suite;
-import com.google.common.base.Function;
-import com.google.common.collect.FluentIterable;
+import com.cognifide.aet.communication.api.metadata.Suite.Timestamp;
 import com.googlecode.zohhak.api.Configure;
 import com.googlecode.zohhak.api.TestWith;
 import com.googlecode.zohhak.api.runners.ZohhakRunner;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 import org.joda.time.DateTime;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
@@ -48,8 +48,7 @@ public class SuiteRemoveConditionTest {
       "A-1 ; 100 ; null ; A-1 ; 10"
   })
   public void evaluate_whenOnlyOneSuite_expectFalseNoMatterConditions(String allSuitesVersions,
-      Long removeOlderThan,
-      Long keepNVersions, String evaluatedSuite, Integer createdDaysAgo) throws Exception {
+      Long removeOlderThan, Long keepNVersions, String evaluatedSuite, Integer createdDaysAgo) {
     final List<Suite> suites = SUITES_LIST_COERCER.toList(allSuitesVersions);
 
     SuiteRemoveCondition condition = new SuiteRemoveCondition(suites,
@@ -79,9 +78,7 @@ public class SuiteRemoveConditionTest {
       "A-1,A-2,B-3,B-4,C-5,C-6,D-7,E-8 ; null ; 5 ; B-3 ; 10"
   })
   public void evaluate_when8SuitesVersionsRemoveOldVersions_expectTrue(String allSuitesVersions,
-      Long
-          removeOlderThan, Long keepNVersions, String evaluatedSuite, Integer createdDaysAgo)
-      throws Exception {
+      Long removeOlderThan, Long keepNVersions, String evaluatedSuite, Integer createdDaysAgo) {
     final List<Suite> suites = SUITES_LIST_COERCER.toList(allSuitesVersions);
 
     SuiteRemoveCondition condition = new SuiteRemoveCondition(suites,
@@ -107,9 +104,7 @@ public class SuiteRemoveConditionTest {
       "A-1,A-2,B-3,B-4,C-5,C-6,D-7,E-8 ; null ; 5 ; E-8 ; 10"
   })
   public void evaluate_when8SuitesVersionsKeepLastVersions_expectFalse(String allSuitesVersions,
-      Long
-          removeOlderThan, Long keepNVersions, String evaluatedSuite, Integer createdDaysAgo)
-      throws Exception {
+      Long removeOlderThan, Long keepNVersions, String evaluatedSuite, Integer createdDaysAgo) {
     final List<Suite> suites = SUITES_LIST_COERCER.toList(allSuitesVersions);
 
     SuiteRemoveCondition condition = new SuiteRemoveCondition(suites,
@@ -136,9 +131,8 @@ public class SuiteRemoveConditionTest {
       "A-1,A-2,B-3,B-4,C-5,C-6,D-7,E-8 ; 1 ; null ; D-7 ; 2"
   })
   public void evaluate_when8SuitesRemoveOlderThanButAlwaysKeepLatestVersion_expectTrue(
-      String allSuitesVersions, Long
-      removeOlderThan, Long keepNVersions, String evaluatedSuite, Integer createdDaysAgo)
-      throws Exception {
+      String allSuitesVersions,
+      Long removeOlderThan, Long keepNVersions, String evaluatedSuite, Integer createdDaysAgo) {
     final List<Suite> suites = SUITES_LIST_COERCER.toList(allSuitesVersions);
 
     SuiteRemoveCondition condition = new SuiteRemoveCondition(suites,
@@ -156,9 +150,8 @@ public class SuiteRemoveConditionTest {
       //8 suites, remove older than 1 day but keep at least one version
       "A-1,A-2,B-3,B-4,C-5,C-6,D-7,E-8 ; 1 ; null ; E-8 ; 1"
   })
-  public void evaluate_when8SuitesKeepNewerThan_expectFalse(String allSuitesVersions, Long
-      removeOlderThan, Long keepNVersions, String evaluatedSuite, Integer createdDaysAgo)
-      throws Exception {
+  public void evaluate_when8SuitesKeepNewerThan_expectFalse(String allSuitesVersions,
+      Long removeOlderThan, Long keepNVersions, String evaluatedSuite, Integer createdDaysAgo) {
     final List<Suite> suites = SUITES_LIST_COERCER.toList(allSuitesVersions);
 
     SuiteRemoveCondition condition = new SuiteRemoveCondition(suites,
@@ -176,9 +169,8 @@ public class SuiteRemoveConditionTest {
       "A-1,A-2,B-3,B-4,C-5,C-6,D-7,E-8 ; 4 ; 4 ; B-4 ; 5"
   })
   public void evaluate_when8SuitesKeepNewerThanAndAtLeastXVersions_expectTrue(
-      String allSuitesVersions, Long
-      removeOlderThan, Long keepNVersions, String evaluatedSuite, Integer createdDaysAgo)
-      throws Exception {
+      String allSuitesVersions,
+      Long removeOlderThan, Long keepNVersions, String evaluatedSuite, Integer createdDaysAgo) {
     final List<Suite> suites = SUITES_LIST_COERCER.toList(allSuitesVersions);
 
     SuiteRemoveCondition condition = new SuiteRemoveCondition(suites,
@@ -197,8 +189,7 @@ public class SuiteRemoveConditionTest {
   })
   public void evaluate_when8SuitesKeepNewerThanAndAtLeastXVersions_expectFalse(
       String allSuitesVersions,
-      Long removeOlderThan, Long keepNVersions, String evaluatedSuite, Integer createdDaysAgo)
-      throws Exception {
+      Long removeOlderThan, Long keepNVersions, String evaluatedSuite, Integer createdDaysAgo) {
     final List<Suite> suites = SUITES_LIST_COERCER.toList(allSuitesVersions);
 
     SuiteRemoveCondition condition = new SuiteRemoveCondition(suites,
@@ -213,8 +204,7 @@ public class SuiteRemoveConditionTest {
       "A-1,A-2,B-2 ; null ; 1 ; A-1 ; 10"
   })
   public void evaluate_whenDuplicatedVersion_expectRemoveOnlyOldVersions(String allSuitesVersions,
-      Long removeOlderThan,
-      Long keepNVersions, String evaluatedSuite, Integer createdDaysAgo) throws Exception {
+      Long removeOlderThan, Long keepNVersions, String evaluatedSuite, Integer createdDaysAgo) {
     final List<Suite> suites = SUITES_LIST_COERCER.toList(allSuitesVersions);
 
     SuiteRemoveCondition condition = new SuiteRemoveCondition(suites,
@@ -230,8 +220,7 @@ public class SuiteRemoveConditionTest {
       "A-1,A-2,B-2 ; null ; 1 ; B-2 ; 10"
   })
   public void evaluate_whenDuplicatedVersion_expectKeepNewestVersion(String allSuitesVersions,
-      Long removeOlderThan,
-      Long keepNVersions, String evaluatedSuite, Integer createdDaysAgo) throws Exception {
+      Long removeOlderThan, Long keepNVersions, String evaluatedSuite, Integer createdDaysAgo) {
     final List<Suite> suites = SUITES_LIST_COERCER.toList(allSuitesVersions);
 
     SuiteRemoveCondition condition = new SuiteRemoveCondition(suites,
@@ -261,7 +250,7 @@ public class SuiteRemoveConditionTest {
 
   private Suite mockSuiteVersionAndCreatedDate(String input, int createdDaysAgo) {
     Suite suite = mockSuiteVersion(input);
-    Suite.Timestamp timestamp = Mockito.mock(Suite.Timestamp.class);
+    Timestamp timestamp = Mockito.mock(Timestamp.class);
     //substract one hour for test purposes accuracy
     when(timestamp.get())
         .thenReturn(new DateTime().minusDays(createdDaysAgo).getMillis() - ONE_HOUR);
@@ -273,12 +262,9 @@ public class SuiteRemoveConditionTest {
 
     List<Suite> toList(String input) {
       final String[] split = input.split(",");
-      return FluentIterable.from(Arrays.asList(split)).transform(new Function<String, Suite>() {
-        @Override
-        public Suite apply(String input) {
-          return mockSuiteVersion(input);
-        }
-      }).toList();
+      return Arrays.stream(split)
+          .map(SuiteRemoveConditionTest::mockSuiteVersion)
+          .collect(Collectors.toList());
     }
   }
 }

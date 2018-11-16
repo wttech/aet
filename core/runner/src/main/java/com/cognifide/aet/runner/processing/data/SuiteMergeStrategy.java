@@ -76,11 +76,19 @@ final class SuiteMergeStrategy {
   }
 
   private static void setVersion(Suite current, Suite lastVersion) {
-    if (lastVersion != null) {
-      current.setVersion(lastVersion.getVersion() + 1);
-    } else {
+    if(isFirstRun(lastVersion)){
       current.setVersion(1L);
+    } else if(isNotTestOrUrlRerun(current)){
+      current.setVersion(lastVersion.getVersion() + 1);
     }
+  }
+
+  private static boolean isNotTestOrUrlRerun(Suite current) {
+    return current.getVersion() == null;
+  }
+
+  private static boolean isFirstRun(Suite lastVersion) {
+    return lastVersion == null;
   }
 
   private static void setPatterns(Suite current, Suite pattern) {
