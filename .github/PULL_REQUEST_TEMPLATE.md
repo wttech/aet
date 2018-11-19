@@ -22,8 +22,7 @@
 <!--- Go over all the following points, and put an `x` in all the boxes that apply. -->
 <!--- If you're unsure about any of these, don't hesitate to ask. We're here to help! -->
 - [ ] My code follows the [code style](/CONTRIBUTING.md#coding-conventions) of this project.
-- [ ] My change requires a change to the documentation.
-- [ ] I have updated the documentation accordingly.
+- [ ] I have reviewed (and updated if needed) the documentation regarding this change
 
 ---
 I hereby agree to the terms of the AET Contributor License Agreement.
