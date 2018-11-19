@@ -8,7 +8,6 @@ The following dependencies in Dependency Management have newer versions:
   org.apache.felix:org.osgi.compendium .................. 1.0.1 -> 1.4.0
   org.apache.httpcomponents:httpclient .................. 4.3.3 -> 4.5.5
   org.apache.sling:org.apache.sling.commons.osgi ........ 2.2.2 -> 2.4.0
-  org.apache.sling:org.apache.sling.commons.testing ..... 2.0.6 -> 2.1.2
   org.hibernate:hibernate-validator ........ 4.3.2.Final -> 6.0.10.Final
   org.mockito:mockito-all .......................... 1.9.5 -> 2.0.2-beta
   org.ops4j.pax.web:pax-web-runtime .................... 1.1.17 -> 7.2.1

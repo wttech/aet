@@ -15,8 +15,8 @@
  */
 package com.cognifide.aet.runner.processing;
 
-import static com.google.common.testing.GuavaAsserts.assertTrue;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 
 import org.junit.Before;
 import org.junit.Test;

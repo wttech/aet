@@ -38,7 +38,7 @@ public @interface RunnerConfigurationConf {
 
   int DEFAULT_MESSAGE_TIME_TO_LIVE_SECONDS = 300;
 
-  int DEFAULT_URL_PACKAGE_SIZE = 5;
+  int DEFAULT_URL_PACKAGE_SIZE = 1;
 
   int DEFAULT_MAX_MESSAGES_IN_COLLECTOR_QUEUE = 20;
 
