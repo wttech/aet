@@ -91,17 +91,10 @@ public class SuiteServlet extends HttpServlet {
 
         String responseBody = gson.toJson(suiteExecutionResult);
 
-        if (resultWrapper.hasError()) {
-          response.setStatus(resultWrapper.getStatusCode());
-          response.setContentType("application/json");
-          response.setCharacterEncoding(CharEncoding.UTF_8);
-          response.getWriter().write(responseBody);
-        } else {
-          response.setStatus(HttpStatus.SC_OK);
-          response.setContentType("application/json");
-          response.setCharacterEncoding(CharEncoding.UTF_8);
-          response.getWriter().write(responseBody);
-        }
+        response.setStatus(resultWrapper.getStatusCode());
+        response.setContentType("application/json");
+        response.setCharacterEncoding(CharEncoding.UTF_8);
+        response.getWriter().write(responseBody);
       } else {
         response.sendError(HttpStatus.SC_BAD_REQUEST, "Request does not contain the test suite");
       }
