@@ -25,6 +25,10 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * This class can generate pattern source and tested data source from artifact. It will also format
+ * and filter sources.
+ */
 class Sources {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(Sources.class);

@@ -45,10 +45,10 @@
       </div>
     </div>
     <div ng-hide="!$root.fullSourceVisible">
-      <ng-include src="'app/layout/main/url/reports/source.diff.html'"/>
+      <ng-include src="'app/layout/main/url/reports/source-diff.html'"/>
     </div>
   </div>
   <div ng-if="case.status == 'FAILED' || case.status == 'WARNING'">
-    <ng-include src="'app/layout/main/url/reports/source.diff.html'"/>
+    <ng-include src="'app/layout/main/url/reports/source-diff.html'"/>
   </div>
 </div>

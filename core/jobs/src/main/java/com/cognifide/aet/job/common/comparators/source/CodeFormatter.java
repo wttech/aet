@@ -18,11 +18,14 @@ package com.cognifide.aet.job.common.comparators.source;
 import com.cognifide.aet.job.common.comparators.source.visitors.ContentVisitor;
 import com.cognifide.aet.job.common.comparators.source.visitors.MarkupVisitor;
 import com.cognifide.aet.job.common.comparators.source.visitors.NodeTraversor;
+import java.util.regex.Pattern;
 import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 class CodeFormatter {
+
+  private static final Pattern EMPTY_LINES_PATTERN = Pattern.compile("^[\\s]+", Pattern.MULTILINE);
 
   String format(String code, SourceCompareType sourceCompareType) {
     String result;
@@ -67,7 +70,7 @@ class CodeFormatter {
   String removeEmptyLines(String source) {
     String result = source;
     if (StringUtils.isNotBlank(source)) {
-      result = result.replaceAll("(?m)^[ \t]*[\r\n]+", "");
+      result = EMPTY_LINES_PATTERN.matcher(result).replaceAll("");
     }
     return result;
   }

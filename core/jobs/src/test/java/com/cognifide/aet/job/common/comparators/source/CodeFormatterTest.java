@@ -24,7 +24,7 @@ import org.junit.experimental.theories.Theory;
 import org.junit.runner.RunWith;
 
 @RunWith(Theories.class)
-public class SourceComparatorRegExpTest {
+public class CodeFormatterTest {
 
   private CodeFormatter tested;
 
@@ -49,6 +49,10 @@ public class SourceComparatorRegExpTest {
         {"Crlf lineB\r\n\r\nsecond line\r\n\r\n", "Crlf lineB\r\nsecond line\r\n"},
         // mixed
         {"Crlf lineC\n\n\nsecond line\r\n\r\n", "Crlf lineC\nsecond line\r\n"},
+        {" ", " "},
+        {" \t", " \t"},
+        {" \t   ", " \t   "},
+        {"   \t   trimmed\t", "trimmed\t"},
     };
   }
 
