@@ -274,3 +274,17 @@
 .preformatted {
   font-family: monospace;
 }
+
+.suite-rerun {
+  margin-top: 24px;
+}
+
+.suite-rerun-msg {
+  color: $gray_middle;
+  font-size: 12px;
+  font-family: $font_light
+}
+
+.suite-rerun p {
+  margin-bottom: 3px;
+}
