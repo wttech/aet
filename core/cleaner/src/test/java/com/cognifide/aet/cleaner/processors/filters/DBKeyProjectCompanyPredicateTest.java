@@ -15,15 +15,15 @@
  */
 package com.cognifide.aet.cleaner.processors.filters;
 
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-import static org.powermock.api.mockito.PowerMockito.when;
-
 import com.cognifide.aet.vs.DBKey;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 public class DBKeyProjectCompanyPredicateTest {
@@ -32,30 +32,30 @@ public class DBKeyProjectCompanyPredicateTest {
   private DBKey dbKey;
 
   @Test
-  public void apply_whenProjectAndCompanyFiltersAreBlank_expectTrue() throws Exception {
+  public void apply_whenProjectAndCompanyFiltersAreBlank_expectTrue() {
     assertTrue(new DBKeyProjectCompanyPredicate(null, null).apply(dbKey));
   }
 
   @Test
-  public void apply_whenProjectMatchDbKeyAndCompanyBlank_expectTrue() throws Exception {
+  public void apply_whenProjectMatchDbKeyAndCompanyBlank_expectTrue() {
     when(dbKey.getProject()).thenReturn("filterP");
     assertTrue(new DBKeyProjectCompanyPredicate(null, "filterP").apply(dbKey));
   }
 
   @Test
-  public void apply_whenCompanyMatchDbKeyAndProjectBlank_expectTrue() throws Exception {
+  public void apply_whenCompanyMatchDbKeyAndProjectBlank_expectTrue() {
     when(dbKey.getCompany()).thenReturn("filterC");
     assertTrue(new DBKeyProjectCompanyPredicate("filterC", null).apply(dbKey));
   }
 
   @Test
-  public void apply_whenProjectDoesNotMatchDbKey_expectFalse() throws Exception {
+  public void apply_whenProjectDoesNotMatchDbKey_expectFalse() {
     when(dbKey.getProject()).thenReturn("filterA");
     assertFalse(new DBKeyProjectCompanyPredicate(null, "filterB").apply(dbKey));
   }
 
   @Test
-  public void apply_whenCompanyDoesNotMatchDbKey_expectFalse() throws Exception {
+  public void apply_whenCompanyDoesNotMatchDbKey_expectFalse() {
     when(dbKey.getCompany()).thenReturn("filterA");
     assertFalse(new DBKeyProjectCompanyPredicate("filterB", null).apply(dbKey));
   }

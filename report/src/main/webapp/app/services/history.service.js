@@ -49,25 +49,29 @@ define(['angularAMD', 'endpointConfiguration', 'suiteInfoService'], function (an
 
     function getPreviousVersion(currentVersion) {
       var prevVersion = null;
-      $rootScope.suiteHeaders.forEach(function(suiteHeader, index) {
-        if(suiteHeader.version === currentVersion) {
-          if($rootScope.suiteHeaders[index + 1]) {
-            prevVersion =  $rootScope.suiteHeaders[index + 1].version;
+      if($rootScope.suiteHeaders) {
+        $rootScope.suiteHeaders.forEach(function(suiteHeader, index) {
+          if(suiteHeader.version === currentVersion) {
+            if($rootScope.suiteHeaders[index + 1]) {
+              prevVersion =  $rootScope.suiteHeaders[index + 1].version;
+            }
           }
-        }
-      });
+        });
+      }
       return prevVersion;
     }
 
     function getNextVersion(currentVersion) {
       var nextVersion = null;
-      $rootScope.suiteHeaders.forEach(function(suiteHeader, index) {
-        if(suiteHeader.version === currentVersion) {
-          if($rootScope.suiteHeaders[index - 1]) {
-            nextVersion =  $rootScope.suiteHeaders[index - 1].version;
+      if($rootScope.suiteHeaders) {
+        $rootScope.suiteHeaders.forEach(function(suiteHeader, index) {
+          if(suiteHeader.version === currentVersion) {
+            if($rootScope.suiteHeaders[index - 1]) {
+              nextVersion =  $rootScope.suiteHeaders[index - 1].version;
+            }
           }
-        }
-      });
+        });
+      }
       return nextVersion;
     }
 

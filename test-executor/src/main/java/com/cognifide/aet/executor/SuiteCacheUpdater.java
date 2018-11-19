@@ -15,13 +15,13 @@
  */
 package com.cognifide.aet.executor;
 
-import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.executor.common.RunnerTerminator;
+import com.cognifide.aet.communication.api.wrappers.Run;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * This class runs a thread which updates the caches for given suite run.
+ * This class runs a thread which updates the caches for given objectToRun run.
  */
 class SuiteCacheUpdater implements Runnable {
 
@@ -33,25 +33,25 @@ class SuiteCacheUpdater implements Runnable {
 
   private final RunnerTerminator runnerTerminator;
 
-  private final Suite suite;
+  private final Run objectToRun;
 
-  SuiteCacheUpdater(CacheUpdater cacheUpdater, RunnerTerminator runnerTerminator, Suite suite) {
+  SuiteCacheUpdater(CacheUpdater cacheUpdater, RunnerTerminator runnerTerminator, Run objectToRun) {
     this.cacheUpdater = cacheUpdater;
     this.runnerTerminator = runnerTerminator;
-    this.suite = suite;
+    this.objectToRun = objectToRun;
   }
 
   /**
-   * Updates caches for suite.
+   * Updates caches for objectToRun.
    */
   @Override
   public void run() {
     while (runnerTerminator.isActive()) {
       try {
         Thread.sleep(CACHE_UPDATE_INTERVAL_MILLIS);
-        cacheUpdater.update(suite.getCorrelationId(), suite.getSuiteIdentifier());
+        cacheUpdater.update(objectToRun.getCorrelationId(), objectToRun.getSuiteIdentifier());
       } catch (InterruptedException e) {
-        LOGGER.error("Failed to update cache for suite: '{}'.", suite.getCorrelationId(), e);
+        LOGGER.error("Failed to update cache for objectToRun: '{}'.", objectToRun.getCorrelationId(), e);
         Thread.currentThread().interrupt();
       }
     }

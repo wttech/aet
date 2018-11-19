@@ -46,7 +46,7 @@ import org.slf4j.LoggerFactory;
 @Component(immediate = true)
 public class MetadataDAOMongoDBImpl implements MetadataDAO {
 
-  private static final long serialVersionUID = 3031952772776598636L;
+  private static final long serialVersionUID = -6059718886350668134L;
 
   private static final Logger LOGGER = LoggerFactory.getLogger(MetadataDAOMongoDBImpl.class);
 
@@ -137,6 +137,14 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
         .limit(1);
     final Document result = found.first();
     return new DocumentConverter(result).toSuite();
+  }
+
+  @Override
+  public Suite replaceSuite(Suite oldSuite, Suite newSuite) throws StorageException {
+    MongoCollection<Document> metadata = getMetadataCollection(new SimpleDBKey(oldSuite));
+    LOGGER.debug("Replacing suite {} in  metadata collection.", oldSuite);
+    metadata.findOneAndReplace(Document.parse(oldSuite.toJson()),Document.parse(newSuite.toJson()));
+    return newSuite;
   }
 
   @Override
