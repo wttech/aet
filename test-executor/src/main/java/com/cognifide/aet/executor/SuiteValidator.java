@@ -57,7 +57,7 @@ public class SuiteValidator {
     if (!patternFromSameProject) {
       return String
           .format("Incorrect pattern: '%s'. Must belong to same company (%s) and project (%s).",
-              testSuiteRun.getPatternCorrelationId(),
+              testSuiteRun.getPatternsCorrelationIds(),
               testSuiteRun.getCompany(),
               testSuiteRun.getProject());
     }
@@ -65,7 +65,7 @@ public class SuiteValidator {
     if (!patternValid) {
       return String
           .format("Incorrect pattern: correlationId='%s', suiteName='%s'. Not found in database.",
-              testSuiteRun.getPatternCorrelationId(), testSuiteRun.getPatternSuite());
+              testSuiteRun.getPatternsCorrelationIds(), testSuiteRun.getPatternsSuite());
     }
     for (TestRun testRun : testSuiteRun.getTestRunMap().values()) {
       if (hasScreenCollector(testRun) && !hasScreenComparator(testRun)) {
@@ -86,7 +86,7 @@ public class SuiteValidator {
    */
   private boolean isPatternFromSameProject(TestSuiteRun testSuiteRun) {
     boolean sameProject;
-    String pattern = testSuiteRun.getPatternCorrelationId();
+    String pattern = testSuiteRun.getPatternsCorrelationIds();
     if (pattern == null) {
       // patterns will be taken from same suite automatically
       sameProject = true;
@@ -124,8 +124,8 @@ public class SuiteValidator {
   private boolean isPatternInDatabase(TestSuiteRun testSuiteRun) {
     boolean valid = false;
     SimpleDBKey dbKey = new SimpleDBKey(testSuiteRun.getCompany(), testSuiteRun.getProject());
-    String patternCorrelationId = testSuiteRun.getPatternCorrelationId();
-    String patternSuiteName = testSuiteRun.getPatternSuite();
+    String patternCorrelationId = testSuiteRun.getPatternsCorrelationIds();
+    String patternSuiteName = testSuiteRun.getPatternsSuite();
     if (patternCorrelationId == null && patternSuiteName == null) {
       valid = true;
     } else {

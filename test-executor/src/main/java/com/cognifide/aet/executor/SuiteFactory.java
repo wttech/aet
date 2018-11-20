@@ -30,8 +30,11 @@ import com.cognifide.aet.executor.model.TestSuiteRun;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.SimpleDBKey;
 import com.cognifide.aet.vs.StorageException;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 import org.osgi.service.component.annotations.Component;
@@ -117,23 +120,42 @@ public class SuiteFactory {
     String company = testSuiteRun.getCompany();
     String project = testSuiteRun.getProject();
     String name = testSuiteRun.getName();
-    String patternCorrelationId = getPatternCorrelationId(testSuiteRun);
+    Set<String> patternCorrelationId = getPatternCorrelationIds(testSuiteRun);
     return new Suite(correlationId, company, project, name, patternCorrelationId);
   }
 
-  private String getPatternCorrelationId(TestSuiteRun testSuiteRun) {
-    String result = testSuiteRun.getPatternCorrelationId();
-    if (result == null && testSuiteRun.getPatternSuite() != null) {
-      SimpleDBKey dbKey = new SimpleDBKey(testSuiteRun.getCompany(), testSuiteRun.getProject());
-      try {
-        Suite patternSuite = metadataDao.getLatestRun(dbKey, testSuiteRun.getPatternSuite());
-        result = patternSuite != null ? patternSuite.getCorrelationId() : null;
-      } catch (StorageException e) {
-        LOG.error("Error while retrieving suite from mongo db: '{}', suiteName: '{}'",
-            dbKey, testSuiteRun.getPatternSuite(), e);
-      }
+  private Set<String> getPatternCorrelationIds(TestSuiteRun testSuiteRun) {
+    final Set<String> patternIds = new HashSet<>();
+
+    if (testSuiteRun.getPatternsCorrelationIds() != null) {
+      patternIds.addAll(testSuiteRun.getPatternsCorrelationIds());
     }
-    return result;
+
+    if (testSuiteRun.getPatternsSuite() != null) {
+      patternIds.addAll(getPatternIdsByLatestRunNames(testSuiteRun));
+    }
+
+    return patternIds;
+  }
+
+  private Set<String> getPatternIdsByLatestRunNames(TestSuiteRun testSuiteRun) {
+    return testSuiteRun.getPatternsSuite().stream()
+        .map(name -> getLatestRunByName(testSuiteRun, name))
+        .filter(Optional::isPresent)
+        .map(Optional::get)
+        .map(Suite::getCorrelationId)
+        .collect(Collectors.toSet());
+  }
+
+  private Optional<Suite> getLatestRunByName(TestSuiteRun testSuiteRun, String name) {
+    SimpleDBKey dbKey = new SimpleDBKey(testSuiteRun.getCompany(), testSuiteRun.getProject());
+    try {
+      return Optional.ofNullable(metadataDao.getLatestRun(dbKey, name));
+    } catch (StorageException e) {
+      LOG.error("Error while retrieving suite from mongo db: '{}', suiteName: '{}'",
+          dbKey, testSuiteRun.getPatternsSuite(), e);
+      return Optional.empty();
+    }
   }
 
   private boolean comparatorMatchesCollector(CollectorStep collectorStep,

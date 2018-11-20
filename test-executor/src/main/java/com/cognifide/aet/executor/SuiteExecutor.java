@@ -40,6 +40,7 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
 import java.util.List;
 import java.util.Queue;
+import java.util.Set;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.TimeUnit;
 import javax.jms.JMSException;
@@ -123,21 +124,21 @@ public class SuiteExecutor {
    *
    * @param suiteString - content of the test suite XML file
    * @param domain - overrides domain defined in the suite file
-   * @param patternCorrelationId - optional pattern to set, this is a correlation ID of a suite that
-   * will be used as patterns source
-   * @param patternSuite - optional pattern to set, this is a name of a suite whose latest version
-   * will be used as patterns source. This parameter is ignored if patternCorrelationId is set
+   * @param patternCorrelationId - optional collection of correlation IDs of suites that will be
+   * used as patterns sources
+   * @param patternSuite - optional collection of names of suites whose latest versions will be used
+   * as patterns sources.
    * @return status of the suite execution
    */
   HttpSuiteExecutionResultWrapper execute(String suiteString, String name, String domain,
-      String patternCorrelationId, String patternSuite) {
+      Set<String> patternCorrelationId, Set<String> patternSuite) {
     HttpSuiteExecutionResultWrapper result;
     TestSuiteParser xmlFileParser = new XmlTestSuiteParser();
     try {
       TestSuiteRun testSuiteRun = xmlFileParser.parse(suiteString);
       testSuiteRun = overrideDomainOrNameIfDefined(testSuiteRun, name, domain);
-      testSuiteRun.setPatternCorrelationId(patternCorrelationId);
-      testSuiteRun.setPatternSuite(patternSuite);
+      testSuiteRun.setPatternsCorrelationIds(patternCorrelationId);
+      testSuiteRun.setPatternsSuite(patternSuite);
 
       String validationError = suiteValidator.validateTestSuiteRun(testSuiteRun);
       if (validationError == null) {
@@ -177,7 +178,8 @@ public class SuiteExecutor {
       String statusUrl = getStatusUrl(objectToRunWrapper);
       String htmlReportUrl = getReportUrl(HTML_REPORT_URL_FORMAT,
           reportConfigurationManager.getReportDomain(), objectToRunWrapper);
-      String xunitReportUrl = getReportUrl(XUNIT_REPORT_URL_FORMAT, StringUtils.EMPTY, objectToRunWrapper);
+      String xunitReportUrl = getReportUrl(XUNIT_REPORT_URL_FORMAT, StringUtils.EMPTY,
+          objectToRunWrapper);
       return HttpSuiteExecutionResultWrapper.wrap(
           SuiteExecutionResult.createSuccessResult(objectToRunWrapper.getCorrelationId(), statusUrl,
               htmlReportUrl, xunitReportUrl));

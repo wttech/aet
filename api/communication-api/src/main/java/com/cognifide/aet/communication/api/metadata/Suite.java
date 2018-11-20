@@ -87,16 +87,16 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
   @Valid
   private final List<Test> tests = new ArrayList<>();
 
-  private final String patternCorrelationId;
+  private final Set<String> patternCorrelationIds;
 
   public Suite(String correlationId, String company, String project, String name,
-      String patternCorrelationId) {
+      Set<String> patternCorrelationIds) {
     this.correlationId = correlationId;
     this.company = company;
     this.project = project;
     this.name = name;
     this.runTimestamp = new Timestamp(System.currentTimeMillis());
-    this.patternCorrelationId = patternCorrelationId;
+    this.patternCorrelationIds = patternCorrelationIds;
   }
 
   public String getCorrelationId() {
@@ -132,10 +132,10 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
     return tests;
   }
 
-  public Optional<Test> getTest(String testName){
+  public Optional<Test> getTest(String testName) {
     Test testToReturn = null;
-    for (Test test: this.tests) {
-      if(test.getName().equals(testName)){
+    for (Test test : this.tests) {
+      if (test.getName().equals(testName)) {
         testToReturn = test;
         break;
       }
@@ -155,8 +155,8 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
     this.runTimestamp = runTimestamp;
   }
 
-  public String getPatternCorrelationId() {
-    return patternCorrelationId;
+  public Set<String> getPatternCorrelationIds() {
+    return patternCorrelationIds;
   }
 
   public void setStatistics(Statistics statistics) {

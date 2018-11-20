@@ -20,6 +20,7 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Represents whole test suite. Consists of tests and list of reports that will be generated after
@@ -43,9 +44,9 @@ public class TestSuiteRun implements Serializable {
 
   private Long version;
 
-  private String patternCorrelationId;
+  private Set<String> patternsCorrelationIds;
 
-  private String patternSuite;
+  private Set<String> patternsSuite;
 
   /**
    * Parameters: name, company, project are part of identifier of test suite.
@@ -152,19 +153,19 @@ public class TestSuiteRun implements Serializable {
         .add("version", version).toString();
   }
 
-  public void setPatternCorrelationId(String patternCorrelationId) {
-    this.patternCorrelationId = patternCorrelationId;
+  public void setPatternsCorrelationIds(Set<String> patternsCorrelationIds) {
+    this.patternsCorrelationIds = patternsCorrelationIds;
   }
 
-  public String getPatternCorrelationId() {
-    return patternCorrelationId;
+  public Set<String> getPatternsCorrelationIds() {
+    return patternsCorrelationIds;
   }
 
-  public String getPatternSuite() {
-    return patternSuite;
+  public Set<String> getPatternsSuite() {
+    return patternsSuite;
   }
 
-  public void setPatternSuite(String patternSuite) {
-    this.patternSuite = patternSuite;
+  public void setPatternsSuite(Set<String> patternSuite) {
+    this.patternsSuite = patternSuite;
   }
 }
