@@ -37,22 +37,27 @@ public class CodeFormatterTest {
   @DataPoints
   public static String[][] getSampleData() {
     return new String[][]{
+        {"\n\n\n\n", ""},
         {"lineA", "lineA"},
-        {"lineB\n", "lineB\n"},
-        {"\nlineC\n", "lineC\n"},
-        {"\n\n\nlineD\n", "lineD\n"},
+        {"lineB\n", "lineB"},
+        {"\nlineC\n", "lineC"},
+        {"\n\n\nlineD\n", "lineD"},
         {"firstA\n\n\nlast", "firstA\nlast"},
         {"firstB\n\n\nsecond\n\n\n\n\n\nlast", "firstB\nsecond\nlast"},
-        {"firstC\n\n\nlast\n\n", "firstC\nlast\n"},
+        {"firstC\n\n\nlast\n\n", "firstC\nlast"},
+        {"   \t   indented \t ", "   \t   indented \t "},
+        {"first line\r\n\r\n  third line  ", "first line\n  third line  "},
+        {" one \n two \n\n three \n\n\n    ", " one \n two \n three "},
         // CRLF
-        {"Crlf lineA\r\n\r\nsecond line", "Crlf lineA\r\nsecond line"},
-        {"Crlf lineB\r\n\r\nsecond line\r\n\r\n", "Crlf lineB\r\nsecond line\r\n"},
+        {"Crlf lineA\r\n\r\nsecond line", "Crlf lineA\nsecond line"},
+        {"Crlf lineB\r\n\r\nsecond line\r\n\r\n", "Crlf lineB\nsecond line"},
         // mixed
-        {"Crlf lineC\n\n\nsecond line\r\n\r\n", "Crlf lineC\nsecond line\r\n"},
-        {" ", " "},
-        {" \t", " \t"},
-        {" \t   ", " \t   "},
-        {"   \t   trimmed\t", "trimmed\t"},
+        {"Crlf lineC\n\n\nsecond line\r\n\r\n", "Crlf lineC\nsecond line"},
+        // if we only have single blank line, we should also remove it
+        {" ", ""},
+        {" \t", ""},
+        {" \t   ", ""},
+        {"  \t\t  ", ""}
     };
   }
 
