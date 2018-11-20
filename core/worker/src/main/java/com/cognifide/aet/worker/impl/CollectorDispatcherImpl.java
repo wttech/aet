@@ -110,7 +110,7 @@ public class CollectorDispatcherImpl implements CollectorDispatcher {
     final String collectorType = currentStep.getType();
     if (jobRegistry.hasJob(collectorType)) {
       CollectorProperties collectorProperties = new CollectorProperties(urlWithDomain,
-          jobData.getCompany(), jobData.getProject(), currentStep.getPattern());
+          jobData.getCompany(), jobData.getProject(), currentStep.getPatterns());
       return jobRegistry.getCollectorFactory(collectorType)
           .createInstance(collectorProperties, currentStep.getParameters(),
               webCommunicationWrapper);

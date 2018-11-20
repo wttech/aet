@@ -68,7 +68,7 @@ public class SuiteValidatorTest {
   @Test
   public void validateTestSuiteRun_whenPatternIdFromDifferentProject_expectError() {
     String patternCorrelationId = "company1-project1-suite-name-123456789";
-    when(testSuiteRun.getPatternCorrelationId()).thenReturn(patternCorrelationId);
+    when(testSuiteRun.getPatternsCorrelationIds()).thenReturn(patternCorrelationId);
 
     String errorMessage = String.format(
         "Incorrect pattern: '%s'. Must belong to same company (%s) and project (%s).",
@@ -79,7 +79,7 @@ public class SuiteValidatorTest {
   @Test
   public void validateTestSuiteRun_whenPatternIdNotInDb_expectError() throws StorageException {
     String patternCorrelationId = "company-project-suite-name-123456789";
-    when(testSuiteRun.getPatternCorrelationId()).thenReturn(patternCorrelationId);
+    when(testSuiteRun.getPatternsCorrelationIds()).thenReturn(patternCorrelationId);
 
     String errorMessage = String.format(
         "Incorrect pattern: correlationId='%s', suiteName='%s'. Not found in database.",
@@ -91,7 +91,7 @@ public class SuiteValidatorTest {
   @Test
   public void validateTestSuiteRun_whenPatternSuiteNotInDb_expectError() throws StorageException {
     String patternSuite = "suite-name";
-    when(testSuiteRun.getPatternSuite()).thenReturn(patternSuite);
+    when(testSuiteRun.getPatternsSuite()).thenReturn(patternSuite);
 
     String errorMessage = String.format(
         "Incorrect pattern: correlationId='%s', suiteName='%s'. Not found in database.",
@@ -119,7 +119,7 @@ public class SuiteValidatorTest {
       throws StorageException {
     String patternCorrelationId = "company-project-suite-name-123456789";
     Suite patternSuite = new Suite(patternCorrelationId, COMPANY, PROJECT, "suite-name", null);
-    when(testSuiteRun.getPatternCorrelationId()).thenReturn(patternCorrelationId);
+    when(testSuiteRun.getPatternsCorrelationIds()).thenReturn(patternCorrelationId);
     when(metadataDAO.getSuite(any(), eq(patternCorrelationId))).thenReturn(patternSuite);
 
     assertNull(suiteValidator.validateTestSuiteRun(testSuiteRun));

@@ -130,12 +130,12 @@ while [[ $# -gt 0 ]]; do
             ;;
         -c | --correlationId )
             CORRELATION_ID=$2
-            CORRELATION_ID_BODY=" -F pattern=$CORRELATION_ID"
+            CORRELATION_ID_BODY="$CORRELATION_ID_BODY -F pattern=$CORRELATION_ID"
             shift 2
             ;;
         -p | --patternSuite )
             PATTERN_SUITE=$2
-            PATTERN_SUITE_BODY=" -F patternSuite=$PATTERN_SUITE"
+            PATTERN_SUITE_BODY="$PATTERN_SUITE_BODY -F patternSuite=$PATTERN_SUITE"
             shift 2
             ;;
         -v | --verbose )

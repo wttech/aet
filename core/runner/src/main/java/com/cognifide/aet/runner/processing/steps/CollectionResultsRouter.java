@@ -131,8 +131,8 @@ public class CollectionResultsRouter extends StepManager implements TaskFinishPo
         LOGGER.error("Step {} finished with errors: {}!", step, step.getStepResult());
         onError(ProcessingError.collectingError(step.getStepResult().getErrors().toString()));
       } else if (hasComparators(step)) {
-        if (StringUtils.isEmpty(step.getPattern())) {
-          step.updatePattern(step.getStepResult().getArtifactId());
+        if (step.getPatterns().isEmpty()) {
+          step.addPatterns(step.getStepResult().getArtifactId());
         }
         int scheduledMessagesNo = dispatch(step, testName, processedUrl.getName());
         LOGGER
@@ -158,7 +158,8 @@ public class CollectionResultsRouter extends StepManager implements TaskFinishPo
   private void createAndSendComparatorJobData(Step step, String testName, String urlName)
       throws JMSException {
     ObjectMessage message = session.createObjectMessage(
-        new ComparatorJobData(runIndexWrapper.get().getCompany(), runIndexWrapper.get().getProject(),
+        new ComparatorJobData(runIndexWrapper.get().getCompany(),
+            runIndexWrapper.get().getProject(),
             runIndexWrapper.get().getName(), testName, urlName, step));
     message.setJMSCorrelationID(correlationId);
     sender.send(message);

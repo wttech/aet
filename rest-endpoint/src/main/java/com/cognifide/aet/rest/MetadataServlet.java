@@ -35,6 +35,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.nio.charset.StandardCharsets;
+import java.util.Set;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -174,11 +175,11 @@ public class MetadataServlet extends BasicDataServlet {
         new InputStreamReader(req.getInputStream(), StandardCharsets.UTF_8));
     Suite suite = Suite.fromJson(reader);
     checkLock(suite.getSuiteIdentifier());
-    checkAnotherSuitePattern(suite.getPatternCorrelationId());
+    checkAnotherSuitePatterns(suite.getPatternCorrelationIds());
     metadataDAO.updateSuite(suite);
   }
 
-  private void checkAnotherSuitePattern(String patternCorrelationId) throws AETException {
+  private void checkAnotherSuitePatterns(Set<String> patternCorrelationId) throws AETException {
     if (patternCorrelationId != null) {
       String msg = "Accepting changes not allowed as comparison was done against another suite: '";
       msg += patternCorrelationId + "'.";

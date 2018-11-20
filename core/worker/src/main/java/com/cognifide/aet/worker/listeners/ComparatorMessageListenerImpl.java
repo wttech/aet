@@ -84,7 +84,7 @@ public class ComparatorMessageListenerImpl extends AbstractTaskMessageListener {
       final Step step = comparatorJobData.getStep();
       final ComparatorProperties properties = new ComparatorProperties(
           comparatorJobData.getCompany(),
-          comparatorJobData.getProject(), step.getPattern(), step.getStepResult().getArtifactId(), step.getStepResult().getPayload());
+          comparatorJobData.getProject(), step.getPatterns(), step.getStepResult().getArtifactId(), step.getStepResult().getPayload());
 
       for (Comparator comparator : step.getComparators()) {
         LOGGER.info("Start comparison for comparator {} in step {}", comparator, step);

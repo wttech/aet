@@ -25,6 +25,9 @@ import com.cognifide.aet.communication.api.metadata.Url;
 import com.google.common.base.Predicate;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableMap;
+import java.util.Collections;
+import java.util.List;
+import java.util.function.BiConsumer;
 
 final class SuiteMergeStrategy {
 
@@ -35,6 +38,12 @@ final class SuiteMergeStrategy {
   private static final NamedToMapFunction<Step> STEP_TO_MAP = new NamedToMapFunction<>();
 
   private static final NamedToMapFunction<Comparator> COMPARATOR_TO_MAP = new NamedToMapFunction<>();
+
+  private static final BiConsumer<Step, Step> ERASE_PATTERNS_IN_CURRENT = (current, pattern) -> current
+      .erasePatterns();
+
+  private static final BiConsumer<Step, Step> COPY_PATTERNS_TO_CURRENT = (current, pattern) -> current
+      .addPatterns(pattern.getPatterns());
 
   private static final Predicate<Step> COMPARATORS_FILTER = new Predicate<Step>() {
     @Override
@@ -53,32 +62,44 @@ final class SuiteMergeStrategy {
    *
    * @param current - current run suite.
    * @param lastVersion - latest version of this suite execution, treated also as a pattern suite.
-   * @return merged suite.
+   * @return current suite after merge.
    */
   public static Suite merge(Suite current, Suite lastVersion) {
-    return merge(current, lastVersion, lastVersion);
-  }
-
-  /**
-   * Merges current and pattern suite. All comments, version and patterns in current suite are
-   * overwritten from pattern suite. Last version suite is used only to update current version
-   * number.
-   *
-   * @param current - current run suite.
-   * @param lastVersion - latest suite run version.
-   * @param pattern - pattern suite.
-   * @return merged suite.
-   */
-  public static Suite merge(Suite current, Suite lastVersion, Suite pattern) {
-    setVersion(current, lastVersion);
-    setPatterns(current, pattern);
+    merge(current, lastVersion, Collections.singletonList(lastVersion));
     return current;
   }
 
+  /**
+   * Merges current and patterns suites. All comments, version and patterns in current suite are
+   * overwritten from patterns suites. If multiple pattern suites have the same test, all patterns
+   * from these tests will be placed in current run suite test. Last version suite is used only to
+   * update current version number.
+   *
+   * @param current - current run suite.
+   * @param lastVersion - latest suite run version.
+   * @param patterns - patterns suites.
+   * @return current suite after merge.
+   */
+  public static Suite merge(Suite current, Suite lastVersion, List<Suite> patterns) {
+    erasePatterns(current, patterns);
+    setVersion(current, lastVersion);
+    setPatterns(current, patterns);
+    return current;
+  }
+
+  private static void erasePatterns(Suite current, List<Suite> patterns) {
+    patterns.forEach(pattern -> modifyStep(current, pattern, ERASE_PATTERNS_IN_CURRENT));
+  }
+
+  private static void setPatterns(Suite current, List<Suite> patterns) {
+    patterns.forEach(pattern -> modifyStep(current, pattern, COPY_PATTERNS_TO_CURRENT));
+
+  }
+
   private static void setVersion(Suite current, Suite lastVersion) {
-    if(isFirstRun(lastVersion)){
+    if (isFirstRun(lastVersion)) {
       current.setVersion(1L);
-    } else if(isNotTestOrUrlRerun(current)){
+    } else if (isNotTestOrUrlRerun(current)) {
       current.setVersion(lastVersion.getVersion() + 1);
     }
   }
@@ -91,33 +112,36 @@ final class SuiteMergeStrategy {
     return lastVersion == null;
   }
 
-  private static void setPatterns(Suite current, Suite pattern) {
+
+  private static void modifyStep(Suite current, Suite pattern,
+      BiConsumer<Step, Step> stepModifier) {
     if (pattern != null) {
       final ImmutableMap<String, Test> tests = FluentIterable.from(current.getTests())
           .uniqueIndex(TEST_TO_MAP);
       updateComment(current, pattern);
       for (Test patternTest : pattern.getTests()) {
         if (tests.containsKey(patternTest.getName())) {
-          mergeTest(tests.get(patternTest.getName()), patternTest);
+          mergeTest(tests.get(patternTest.getName()), patternTest, stepModifier);
         }
       }
     }
   }
 
-  private static void mergeTest(Test currentTest, Test patternTest) {
+  private static void mergeTest(Test currentTest, Test patternTest,
+      BiConsumer<Step, Step> stepModifier) {
     updateComment(currentTest, patternTest);
-    currentTest.setComment(patternTest.getComment());
     final ImmutableMap<String, Url> urlsMap = FluentIterable.from(currentTest.getUrls())
         .uniqueIndex(URL_TO_MAP);
 
     for (Url patternUrl : patternTest.getUrls()) {
       if (urlsMap.containsKey(patternUrl.getName())) {
-        mergeUrl(urlsMap.get(patternUrl.getName()), patternUrl);
+        mergeUrl(urlsMap.get(patternUrl.getName()), patternUrl, stepModifier);
       }
     }
   }
 
-  private static void mergeUrl(Url currentUrl, Url patternUrl) {
+  private static void mergeUrl(Url currentUrl, Url patternUrl,
+      BiConsumer<Step, Step> stepModifier) {
     updateComment(currentUrl, patternUrl);
     final ImmutableMap<String, Step> collectors =
         FluentIterable.from(currentUrl.getSteps()).filter(COMPARATORS_FILTER)
@@ -125,14 +149,16 @@ final class SuiteMergeStrategy {
 
     for (Step patternStep : patternUrl.getSteps()) {
       if (isCollector(patternStep) && collectors.containsKey(patternStep.getName())) {
-        mergeStep(collectors.get(patternStep.getName()), patternStep);
+        mergeStep(collectors.get(patternStep.getName()), patternStep, stepModifier);
       }
     }
   }
 
-  private static void mergeStep(Step currentStep, Step patternStep) {
+  private static void mergeStep(Step currentStep, Step patternStep,
+      BiConsumer<Step, Step> stepModifier) {
     updateComment(currentStep, patternStep);
-    currentStep.updatePattern(patternStep.getPattern());
+
+    stepModifier.accept(currentStep, patternStep);
 
     final ImmutableMap<String, Comparator> comparators = FluentIterable
         .from(currentStep.getComparators())
