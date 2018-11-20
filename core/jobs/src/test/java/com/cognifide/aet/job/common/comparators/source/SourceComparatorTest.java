@@ -19,6 +19,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 import com.cognifide.aet.communication.api.metadata.ComparatorStepResult;
+import com.cognifide.aet.communication.api.metadata.ComparatorStepResult.Status;
 import com.cognifide.aet.job.api.comparator.ComparatorProperties;
 import com.cognifide.aet.job.common.ArtifactDAOMock;
 import com.cognifide.aet.job.common.comparators.AbstractComparatorTest;
@@ -95,6 +96,35 @@ public class SourceComparatorTest extends AbstractComparatorTest {
         "markup/data-source-with-different-attribute-value.html",
         ImmutableMap.of("compareType", "markup"));
     assertEquals(ComparatorStepResult.Status.FAILED, result.getStatus());
+  }
 
+  @Test
+  public void shouldRecognizeLineEndings() throws Exception {
+    //When
+    result = compare("formatting/empty-lines-windows.html",
+        "formatting/empty-lines-linux.html",
+        ImmutableMap.of("compareType", "all"));
+    //Then
+    assertEquals(Status.FAILED, result.getStatus());
+  }
+
+  @Test
+  public void shouldIgnoreLineEndingsForAllFormatted() throws Exception {
+    //When
+    result = compare("formatting/empty-lines-windows.html",
+        "formatting/empty-lines-linux.html",
+        ImmutableMap.of("compareType", "allformatted"));
+    //Then
+    assertEquals(Status.PASSED, result.getStatus());
+  }
+
+  @Test
+  public void shouldIgnoreWhitespacesForAllFormatted() throws Exception {
+    //When
+    result = compare("formatting/formatted.html",
+        "formatting/not-formatted.html",
+        ImmutableMap.of("compareType", "allformatted"));
+    //Then
+    assertEquals(Status.PASSED, result.getStatus());
   }
 }
