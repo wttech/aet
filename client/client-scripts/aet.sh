@@ -82,7 +82,7 @@ function process_locked_suite {
       start_suite
   else
     errorMessage=$(echo $body | jq -r ".errorMessage")
-    echo "Unsuccessful Request to \"$endpoint$SUITE_ENDPOINT\", status: $code
+    echo "Unsuccessful Request to \"$endpoint$SUITE_ENDPOINT\", status: $code, error:
 $errorMessage"
     exit 1
   fi
