@@ -12,8 +12,8 @@ All notable changes to AET will be documented in this file.
 - [PR-354](https://github.com/Cognifide/aet/pull/354) Remove jmsEndpointConfig information from communication settings endpoint ([#352](https://github.com/Cognifide/aet/issues/352))
 - [PR-412](https://github.com/Cognifide/aet/pull/412) ([PR-336](https://github.com/Cognifide/aet/pull/336), [PR-337](https://github.com/Cognifide/aet/pull/337), [PR-395](https://github.com/Cognifide/aet/pull/395)) - Added rerun functionality for suite, test and url 
 - [PR-429](https://github.com/Cognifide/aet/pull/429) - `aet-cookbook` version updated to [`v5.1.1`](https://github.com/Cognifide/aet-cookbook/blob/master/CHANGELOG.md#511) in Vagrant. **Important**: please follow the instructions from [PR-43 description](https://github.com/Cognifide/aet-cookbook/pull/43) in order to keep the MongoDB data on your local environment.
-
 - [PR-422](https://github.com/Cognifide/aet/pull/422) RunnerConfiguration's urlPackageSize property got set to 1
+- [PR-427](https://github.com/Cognifide/aet/pull/427) Added .htaccess file to prevent directory listing ([#152](https://github.com/Cognifide/aet/issues/152))
 
 ## Version 3.1.0
 
@@ -56,7 +56,6 @@ All notable changes to AET will be documented in this file.
 - [PR-338](https://github.com/Cognifide/aet/pull/338) Enable creating new dbs by default
 - [PR-345](https://github.com/Cognifide/aet/pull/345) Deprecate AET maven plugin
 - [PR-301](https://github.com/Cognifide/aet/pull/301) New versions of virtualization tools used with new AET cookbook
-- [PR-376](https://github.com/Cognifide/aet/pull/376) Added .htaccess file to prevent directory listing ([#152](https://github.com/Cognifide/aet/issues/152))
 
 ## Version 2.1.6
 

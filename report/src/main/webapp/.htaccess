@@ -16,5 +16,11 @@
 # limitations under the License.
 #
 
-Options -Indexes
-DirectoryIndex report.html
+RewriteEngine On
+# If an existing asset or directory is requested go to it as it is
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
+RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
+RewriteRule ^ - [L]
+
+# If the requested resource doesn't exist, use report.html
+RewriteRule ^$ /report.html
