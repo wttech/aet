@@ -20,6 +20,7 @@ import static junit.framework.TestCase.fail;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
@@ -76,7 +77,8 @@ public class SuiteFactoryTest {
     assertThat(suite.getProject(), equalTo(PROJECT));
     assertThat(suite.getName(), equalTo(SUITE_NAME));
     assertThat(suite.getCorrelationId(), equalTo(CORRELATION_ID));
-    assertThat(suite.getPatternCorrelationIds(), equalTo(patternCorrelationId));
+    assertThat(suite.getPatternCorrelationIds().iterator().next(), equalTo(patternCorrelationId));
+    assertThat(suite.getPatternCorrelationIds(), hasSize(1));
   }
 
   @Test
@@ -99,8 +101,8 @@ public class SuiteFactoryTest {
     String patternCorrelationId2 = "company-project-other-suite-123456789";
     String patternSuiteName = "other-suite";
 
-    when(patternSuite.getPatternCorrelationIds())
-        .thenReturn(Collections.singleton(patternCorrelationId1));
+    when(testSuiteRun.getPatternsCorrelationIds()).thenReturn(
+        Collections.singleton(patternCorrelationId1));
     when(testSuiteRun.getPatternsSuite()).thenReturn(Collections.singleton(patternSuiteName));
     when(metadataDAO.getLatestRun(any(), eq(patternSuiteName))).thenReturn(patternSuite);
     when(patternSuite.getCorrelationId()).thenReturn(patternCorrelationId2);
@@ -108,6 +110,6 @@ public class SuiteFactoryTest {
     Suite suite = suiteFactory.suiteFromTestSuiteRun(testSuiteRun);
 
     assertThat(suite.getPatternCorrelationIds(),
-        contains(new HashSet<>(Arrays.asList(patternCorrelationId1, patternCorrelationId2))));
+        contains(patternCorrelationId1, patternCorrelationId2));
   }
 }

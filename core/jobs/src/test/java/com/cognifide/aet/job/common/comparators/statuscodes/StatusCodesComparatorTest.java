@@ -84,7 +84,8 @@ public class StatusCodesComparatorTest extends AbstractComparatorTest {
     tested = createNewStatusCodesComparator("expected-data-200-result.json");
 
     result = tested.compare();
-    assertEquals(ComparatorStepResult.Status.PASSED, result.getStatus());
+    assertEquals(1, result.size());
+    assertEquals(ComparatorStepResult.Status.PASSED, result.get(0).getStatus());
   }
 
   @Test
@@ -96,7 +97,8 @@ public class StatusCodesComparatorTest extends AbstractComparatorTest {
     tested.setParameters(params);
 
     result = tested.compare();
-    assertEquals(ComparatorStepResult.Status.FAILED, result.getStatus());
+    assertEquals(1, result.size());
+    assertEquals(ComparatorStepResult.Status.FAILED, result.get(0).getStatus());
   }
 
   @Test
@@ -109,7 +111,8 @@ public class StatusCodesComparatorTest extends AbstractComparatorTest {
     tested.setParameters(params);
 
     result = tested.compare();
-    assertEquals(ComparatorStepResult.Status.PASSED, result.getStatus());
+    assertEquals(1, result.size());
+    assertEquals(ComparatorStepResult.Status.PASSED, result.get(0).getStatus());
   }
 
   @Test
@@ -122,7 +125,8 @@ public class StatusCodesComparatorTest extends AbstractComparatorTest {
     tested.setParameters(params);
 
     result = tested.compare();
-    assertEquals(ComparatorStepResult.Status.FAILED, result.getStatus());
+    assertEquals(1, result.size());
+    assertEquals(ComparatorStepResult.Status.FAILED, result.get(0).getStatus());
   }
 
   @Test
@@ -136,7 +140,8 @@ public class StatusCodesComparatorTest extends AbstractComparatorTest {
     tested.setParameters(params);
 
     result = tested.compare();
-    assertEquals(ComparatorStepResult.Status.PASSED, result.getStatus());
+    assertEquals(1, result.size());
+    assertEquals(ComparatorStepResult.Status.PASSED, result.get(0).getStatus());
   }
 
   @Test
@@ -150,7 +155,8 @@ public class StatusCodesComparatorTest extends AbstractComparatorTest {
     tested.setParameters(params);
 
     result = tested.compare();
-    assertEquals(ComparatorStepResult.Status.FAILED, result.getStatus());
+    assertEquals(1, result.size());
+    assertEquals(ComparatorStepResult.Status.FAILED, result.get(0).getStatus());
   }
 
   @Test
@@ -164,7 +170,8 @@ public class StatusCodesComparatorTest extends AbstractComparatorTest {
     tested.setParameters(params);
 
     result = tested.compare();
-    assertEquals(ComparatorStepResult.Status.FAILED, result.getStatus());
+    assertEquals(1, result.size());
+    assertEquals(ComparatorStepResult.Status.FAILED, result.get(0).getStatus());
 
     params = ImmutableMap
         .of(PARAM_FILTER_CODES, FILTER_CODES_MULTIPLE,
@@ -172,7 +179,8 @@ public class StatusCodesComparatorTest extends AbstractComparatorTest {
     tested.setParameters(params);
 
     result = tested.compare();
-    assertEquals(ComparatorStepResult.Status.FAILED, result.getStatus());
+    assertEquals(1, result.size());
+    assertEquals(ComparatorStepResult.Status.FAILED, result.get(0).getStatus());
 
     params = ImmutableMap
         .of(PARAM_FILTER_CODES, FILTER_CODES_MULTIPLE,
@@ -180,7 +188,8 @@ public class StatusCodesComparatorTest extends AbstractComparatorTest {
     tested.setParameters(params);
 
     result = tested.compare();
-    assertEquals(ComparatorStepResult.Status.FAILED, result.getStatus());
+    assertEquals(1, result.size());
+    assertEquals(ComparatorStepResult.Status.FAILED, result.get(0).getStatus());
   }
 
   @Test
@@ -194,7 +203,8 @@ public class StatusCodesComparatorTest extends AbstractComparatorTest {
     tested.setParameters(params);
 
     result = tested.compare();
-    assertEquals(Status.PASSED, result.getStatus());
+    assertEquals(1, result.size());
+    assertEquals(Status.PASSED, result.get(0).getStatus());
   }
 
   @Test
@@ -208,7 +218,8 @@ public class StatusCodesComparatorTest extends AbstractComparatorTest {
     tested.setParameters(params);
 
     result = tested.compare();
-    assertEquals(ComparatorStepResult.Status.PASSED, result.getStatus());
+    assertEquals(1, result.size());
+    assertEquals(ComparatorStepResult.Status.PASSED, result.get(0).getStatus());
   }
 
   @Test
@@ -216,7 +227,8 @@ public class StatusCodesComparatorTest extends AbstractComparatorTest {
     tested = createNewStatusCodesComparator("default-range-399-601-errors-result.json");
 
     result = tested.compare();
-    assertEquals(ComparatorStepResult.Status.PASSED, result.getStatus());
+    assertEquals(1, result.size());
+    assertEquals(ComparatorStepResult.Status.PASSED, result.get(0).getStatus());
   }
 
   @Test
@@ -224,7 +236,8 @@ public class StatusCodesComparatorTest extends AbstractComparatorTest {
     tested = createNewStatusCodesComparator("default-range-400-600-errors-result.json");
 
     result = tested.compare();
-    assertEquals(ComparatorStepResult.Status.FAILED, result.getStatus());
+    assertEquals(1, result.size());
+    assertEquals(ComparatorStepResult.Status.FAILED, result.get(0).getStatus());
   }
 
   @Test

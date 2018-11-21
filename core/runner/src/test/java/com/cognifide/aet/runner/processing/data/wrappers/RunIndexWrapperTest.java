@@ -35,6 +35,7 @@ import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.Url;
 import com.cognifide.aet.communication.api.wrappers.Run;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -68,7 +69,7 @@ public class RunIndexWrapperTest {
     runIndexWrapper = new SuiteRunIndexWrapper(objectToRunWrapper);
     test = Optional
         .of(new com.cognifide.aet.communication.api.metadata.Test("testName", "proxy", "chrome"));
-    url = Optional.of(new Url("urlName","urlUrl","urlDomain"));
+    url = Optional.of(new Url("urlName", "urlUrl", "urlDomain"));
     test.get().addUrl(url.get());
   }
 
@@ -80,7 +81,8 @@ public class RunIndexWrapperTest {
     realUrl.addStep(step);
 
     Comparator comparator = new Comparator("comparatorType");
-    comparator.setStepResult(new ComparatorStepResult("comparatorStepResultName", Status.PASSED));
+    comparator.setStepResult(Collections.singletonList(
+        new ComparatorStepResult("comparatorStepResultName", Status.PASSED)));
     ArrayList<Operation> listOperation = new ArrayList<>();
     listOperation.add(new Operation("operationType"));
     comparator.setFilters(listOperation);

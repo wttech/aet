@@ -19,6 +19,7 @@ import com.cognifide.aet.communication.api.metadata.ComparatorStepResult;
 import com.cognifide.aet.job.api.comparator.ComparatorProperties;
 import com.cognifide.aet.job.common.ArtifactDAOMock;
 import java.io.IOException;
+import java.util.List;
 import org.json.JSONException;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
@@ -33,7 +34,7 @@ public abstract class AbstractComparatorTest {
 
   protected static final String TEST_PROJECT = "aet";
 
-  protected ComparatorStepResult result;
+  protected List<ComparatorStepResult> result;
 
   protected String getExpectedString(String filename) throws IOException {
     return artifactDaoMock.getArtifactAsUTF8String(null, filename);

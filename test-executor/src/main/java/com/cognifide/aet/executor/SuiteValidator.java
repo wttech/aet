@@ -25,6 +25,8 @@ import com.cognifide.aet.vs.SimpleDBKey;
 import com.cognifide.aet.vs.StorageException;
 import com.google.common.base.Joiner;
 import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 import org.apache.commons.lang3.StringUtils;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -53,19 +55,18 @@ public class SuiteValidator {
   }
 
   public String validateTestSuiteRun(TestSuiteRun testSuiteRun) {
-    boolean patternFromSameProject = isPatternFromSameProject(testSuiteRun);
-    if (!patternFromSameProject) {
+    Set<String> differentProjectPatterns = getAnyPatternsFromDifferentProject(testSuiteRun);
+    if (!differentProjectPatterns.isEmpty()) {
       return String
-          .format("Incorrect pattern: '%s'. Must belong to same company (%s) and project (%s).",
-              testSuiteRun.getPatternsCorrelationIds(),
+          .format("Incorrect patterns: '%s'. Must belong to same company (%s) and project (%s).",
+              differentProjectPatterns.toString(),
               testSuiteRun.getCompany(),
               testSuiteRun.getProject());
     }
-    boolean patternValid = isPatternInDatabase(testSuiteRun);
-    if (!patternValid) {
+    Set<String> notFoundPatterns = anyPatternsNotInDatabase(testSuiteRun);
+    if (!notFoundPatterns.isEmpty()) {
       return String
-          .format("Incorrect pattern: correlationId='%s', suiteName='%s'. Not found in database.",
-              testSuiteRun.getPatternsCorrelationIds(), testSuiteRun.getPatternsSuite());
+          .format("Incorrect patterns: '%s'. Not found in database.", notFoundPatterns.toString());
     }
     for (TestRun testRun : testSuiteRun.getTestRunMap().values()) {
       if (hasScreenCollector(testRun) && !hasScreenComparator(testRun)) {
@@ -78,15 +79,20 @@ public class SuiteValidator {
   }
 
   /**
-   * Validates if the pattern is from the same project and company. This is because currently AET is
+   * Validates if patterns are from the same project and company. This is because currently AET is
    * not supporting cross-projects patterns.
    *
    * @param testSuiteRun suite to be tested
    * @return true if suite is OK
    */
-  private boolean isPatternFromSameProject(TestSuiteRun testSuiteRun) {
+  private Set<String> getAnyPatternsFromDifferentProject(TestSuiteRun testSuiteRun) {
+    return testSuiteRun.getPatternsCorrelationIds().stream()
+        .filter(pattern -> !isPatternFromSameProject(testSuiteRun, pattern))
+        .collect(Collectors.toSet());
+  }
+
+  private boolean isPatternFromSameProject(TestSuiteRun testSuiteRun, String pattern) {
     boolean sameProject;
-    String pattern = testSuiteRun.getPatternsCorrelationIds();
     if (pattern == null) {
       // patterns will be taken from same suite automatically
       sameProject = true;
@@ -121,30 +127,45 @@ public class SuiteValidator {
     return false;
   }
 
-  private boolean isPatternInDatabase(TestSuiteRun testSuiteRun) {
-    boolean valid = false;
+  private Set<String> anyPatternsNotInDatabase(TestSuiteRun testSuiteRun) {
+    Set<String> notFoundPatterns = testSuiteRun.getPatternsCorrelationIds().stream()
+        .filter(id -> !isPatternCorrelationIdInDatabase(testSuiteRun, id))
+        .collect(Collectors.toSet());
+
+    notFoundPatterns.addAll(testSuiteRun.getPatternsSuite().stream()
+        .filter(pattern -> !isPatternSuiteInDatabase(testSuiteRun, pattern))
+        .collect(Collectors.toSet()));
+
+    return notFoundPatterns;
+  }
+
+
+  private boolean isPatternCorrelationIdInDatabase(TestSuiteRun testSuiteRun,
+      String patternCorrelationId) {
     SimpleDBKey dbKey = new SimpleDBKey(testSuiteRun.getCompany(), testSuiteRun.getProject());
-    String patternCorrelationId = testSuiteRun.getPatternsCorrelationIds();
-    String patternSuiteName = testSuiteRun.getPatternsSuite();
-    if (patternCorrelationId == null && patternSuiteName == null) {
-      valid = true;
-    } else {
-      Suite patternSuite = null;
-      try {
-        if (patternCorrelationId != null) {
-          patternSuite = metadataDAO.getSuite(dbKey, patternCorrelationId);
-        } else {
-          patternSuite = metadataDAO.getLatestRun(dbKey, patternSuiteName);
-        }
-      } catch (StorageException se) {
-        LOG.error(
-            "error while retrieving suite from mongo db: '{}', correlationId: '{}', suiteName: '{}'",
-            dbKey, patternCorrelationId, patternSuiteName, se);
-      }
-      if (patternSuite != null) {
-        valid = true;
-      }
+    try {
+      Suite patternSuite = metadataDAO.getSuite(dbKey, patternCorrelationId);
+      return patternSuite != null;
+
+    } catch (StorageException se) {
+      LOG.error(
+          "error while retrieving suite from mongo db: '{}', correlationId: '{}'", dbKey,
+          patternCorrelationId, se);
+      return false;
     }
-    return valid;
+  }
+
+  private boolean isPatternSuiteInDatabase(TestSuiteRun testSuiteRun, String patternSuiteName) {
+    SimpleDBKey dbKey = new SimpleDBKey(testSuiteRun.getCompany(), testSuiteRun.getProject());
+    try {
+      Suite patternSuite = metadataDAO.getLatestRun(dbKey, patternSuiteName);
+      return patternSuite != null;
+
+    } catch (StorageException se) {
+      LOG.error(
+          "error while retrieving suite from mongo db: '{}', suiteName: '{}'", dbKey,
+          patternSuiteName, se);
+      return false;
+    }
   }
 }

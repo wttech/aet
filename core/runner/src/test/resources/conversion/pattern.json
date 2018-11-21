@@ -51,9 +51,11 @@
               "comparators": [
                 {
                   "comment": "screen comparator level comment",
-                  "stepResult": {
-                    "status": "PASSED"
-                  },
+                  "stepResult": [
+                    {
+                      "status": "PASSED"
+                    }
+                  ],
                   "type": "screen",
                   "parameters": {
                     "comparator": "layout"
@@ -90,9 +92,11 @@
               },
               "comparators": [
                 {
-                  "stepResult": {
-                    "status": "PASSED"
-                  },
+                  "stepResult": [
+                    {
+                      "status": "PASSED"
+                    }
+                  ],
                   "filters": [
                     {
                       "type": "extract-element",
