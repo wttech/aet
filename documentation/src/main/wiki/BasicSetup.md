@@ -26,7 +26,7 @@ you have enough memory on your machine (16 GB is recommended).
 You need to download and install the following software:
    * [VirtualBox 5.2.18](https://www.virtualbox.org/wiki/Downloads)
    * [Vagrant 2.1.2](https://releases.hashicorp.com/vagrant/)
-   * [ChefDK 3.1.0](https://downloads.chef.io/chefdk/stable)
+   * [ChefDK 3.3.23](https://downloads.chef.io/chefdk/stable/3.3.23)
    * [JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
    * [Chrome browser](https://www.google.com/chrome/browser/desktop/) to view reports
    * [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/downloads) (at least version 2.40)
@@ -38,7 +38,7 @@ You need to download and install the following software:
 
 Open a command prompt **as the administrator** and execute the following commands:
 * `vagrant plugin install vagrant-omnibus`
-* `vagrant plugin install vagrant-berkshelf`
+* `vagrant plugin install vagrant-berkshelf --plugin-version 5.1.2`
 * `vagrant plugin install vagrant-hostmanager`
 
 > Note Whenever you'd like to keep all Vagrant related data and virtual machine disks in non-standard directories please
