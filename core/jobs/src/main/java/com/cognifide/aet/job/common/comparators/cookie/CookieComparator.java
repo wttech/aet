@@ -16,6 +16,8 @@
 package com.cognifide.aet.job.common.comparators.cookie;
 
 import com.cognifide.aet.communication.api.metadata.ComparatorStepResult;
+import com.cognifide.aet.communication.api.metadata.ComparatorStepResult.Status;
+import com.cognifide.aet.communication.api.metadata.Pattern;
 import com.cognifide.aet.job.api.comparator.ComparatorJob;
 import com.cognifide.aet.job.api.comparator.ComparatorProperties;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
@@ -27,7 +29,9 @@ import com.google.common.collect.Sets;
 import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.openqa.selenium.Cookie;
@@ -79,10 +83,10 @@ public class CookieComparator implements ComparatorJob {
   }
 
   @SuppressWarnings("unchecked")
-  private ComparatorStepResult compareCookies(Set<Cookie> cookies) throws IOException {
+  private ComparatorStepResult compareCookies(Set<Cookie> cookies, Pattern pattern)
+      throws IOException {
     final Set<Cookie> cookiesPattern = artifactsDAO
-        .getJsonFormatArtifact(properties, properties.getPatternId(),
-            COOKIES_SET_TYPE);
+        .getJsonFormatArtifact(properties, pattern.getPattern(), COOKIES_SET_TYPE);
 
     final Set<String> collectedCookiesNames = FluentIterable.from(cookies)
         .transform(COOKIE_STRING_FUNCTION).toSet();
@@ -101,9 +105,12 @@ public class CookieComparator implements ComparatorJob {
         additionalCookies, foundCookies);
 
     final String artifactId = artifactsDAO.saveArtifactInJsonFormat(properties, result);
-    return new ComparatorStepResult(artifactId,
-        compareResult ? ComparatorStepResult.Status.PASSED : ComparatorStepResult.Status.FAILED,
+
+    ComparatorStepResult stepResult = new ComparatorStepResult(artifactId,
+        compareResult ? Status.PASSED : Status.FAILED,
         !compareResult);
+    stepResult.addData("compareAction", compareAction.name());
+    return stepResult;
   }
 
   private ComparatorStepResult testCookie(Set<Cookie> cookies) {
@@ -118,41 +125,54 @@ public class CookieComparator implements ComparatorJob {
     CookieTestComparatorResult result = new CookieTestComparatorResult(compareAction, cookies, name,
         value);
     final String artifactId = artifactsDAO.saveArtifactInJsonFormat(properties, result);
-    return new ComparatorStepResult(artifactId,
-        testResult ? ComparatorStepResult.Status.PASSED : ComparatorStepResult.Status.FAILED);
+    ComparatorStepResult stepResult = new ComparatorStepResult(artifactId,
+        testResult ? Status.PASSED : Status.FAILED);
+
+    stepResult.addData("compareAction", compareAction.name());
+
+    return stepResult;
   }
 
   private ComparatorStepResult listCookies(Set<Cookie> cookies) {
     CookieComparatorResult result = new CookieComparatorResult(compareAction, cookies);
     final String artifactId = artifactsDAO.saveArtifactInJsonFormat(properties, result);
-    return new ComparatorStepResult(artifactId, ComparatorStepResult.Status.PASSED);
+    ComparatorStepResult stepResult = new ComparatorStepResult(artifactId, Status.PASSED);
+    stepResult.addData("compareAction", compareAction.name());
+    return stepResult;
   }
 
   @Override
   @SuppressWarnings("unchecked")
-  public ComparatorStepResult compare() throws ProcessingException {
-    ComparatorStepResult result;
+  public List<ComparatorStepResult> compare() throws ProcessingException {
+    List<ComparatorStepResult> result;
     try {
       final Set<Cookie> cookies = artifactsDAO
           .getJsonFormatArtifact(properties, properties.getCollectedId(),
               COOKIES_SET_TYPE);
       switch (compareAction) {
         case TEST:
-          result = testCookie(cookies);
+          result = Collections.singletonList(testCookie(cookies));
           break;
         case COMPARE:
           result = compareCookies(cookies);
           break;
         case LIST:
         default:
-          result = listCookies(cookies);
+          result = Collections.singletonList(listCookies(cookies));
           break;
       }
-      result.addData("compareAction", compareAction.name());
     } catch (IOException e) {
       throw new ProcessingException("Error while obtaining cookies from " + properties, e);
     }
     return result;
+  }
+
+  private List<ComparatorStepResult> compareCookies(Set<Cookie> cookies) throws IOException {
+    List<ComparatorStepResult> results = new ArrayList<>();
+    for (Pattern pattern : properties.getPatternsIds()) {
+      results.add(compareCookies(cookies, pattern));
+    }
+    return results;
   }
 
   @Override

@@ -23,11 +23,11 @@ import com.cognifide.aet.communication.api.metadata.CollectorStepResult;
 import com.cognifide.aet.communication.api.metadata.Comparator;
 import com.cognifide.aet.communication.api.metadata.Pattern;
 import com.cognifide.aet.communication.api.metadata.Step;
+import com.cognifide.aet.communication.api.metadata.StepResult;
 import com.cognifide.aet.communication.api.metadata.Test;
 import com.cognifide.aet.communication.api.metadata.Url;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
-import com.google.common.collect.FluentIterable;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.Objects;
@@ -49,16 +49,20 @@ public class GetMetadataArtifactsProcessor implements Processor {
   private static final Predicate<Comparator> STEP_RESULTS_WITH_ARTIFACT_ID = new Predicate<Comparator>() {
     @Override
     public boolean apply(Comparator comparator) {
-      return comparator.getStepResult() != null && StringUtils
-          .isNotBlank(comparator.getStepResult().getArtifactId());
+      return comparator.getStepResults() != null
+          && !comparator.getStepResults().isEmpty()
+          && comparator.getStepResults().stream()
+          .anyMatch(result -> StringUtils.isNotBlank(result.getArtifactId()));
     }
   };
 
-  private static final Function<Comparator, String> COMPARATOR_TO_ARTIFACT_ID = new Function<Comparator, String>() {
+  private static final Function<Comparator, Set<String>> COMPARATOR_TO_ARTIFACT_ID = new Function<Comparator, Set<String>>() {
     @Nullable
     @Override
-    public String apply(Comparator comparator) {
-      return comparator.getStepResult().getArtifactId();
+    public Set<String> apply(Comparator comparator) {
+      return comparator.getStepResults().stream()
+          .map(StepResult::getArtifactId)
+          .collect(Collectors.toSet());
     }
   };
 
@@ -120,10 +124,11 @@ public class GetMetadataArtifactsProcessor implements Processor {
   private Set<String> traverseComparators(Step step) {
     Set<String> stepArtifacts = Collections.emptySet();
     if (step.getComparators() != null) {
-      stepArtifacts = FluentIterable.from(step.getComparators())
+      stepArtifacts = step.getComparators().stream()
           .filter(STEP_RESULTS_WITH_ARTIFACT_ID)
-          .transform(COMPARATOR_TO_ARTIFACT_ID)
-          .toSet();
+          .flatMap(comparator -> comparator.getStepResults().stream()
+              .map(StepResult::getArtifactId))
+          .collect(Collectors.toSet());
     }
     return stepArtifacts;
   }

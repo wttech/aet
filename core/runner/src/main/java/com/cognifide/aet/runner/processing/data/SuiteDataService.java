@@ -37,22 +37,22 @@ public class SuiteDataService {
   /**
    * @param currentRun - current suite run
    * @return suite wrapper with all patterns from the last or specified (see
-   * Suite.patternCorrelationId) run, if this is the first run of the suite, patterns will be
+   * Suite.patternCorrelationIds) runs, if this is the first run of the suite, patterns will be
    * empty.
    */
   public Suite enrichWithPatterns(final Suite currentRun) throws StorageException {
     final SimpleDBKey dbKey = new SimpleDBKey(currentRun);
     Suite lastVersion = metadataDAO.getLatestRun(dbKey, currentRun.getName());
 
-    List<Suite> pattern = new ArrayList<>();
+    List<Suite> patterns = new ArrayList<>();
     if (hasSharedPatterns(currentRun)) {
       for (String id : currentRun.getPatternCorrelationIds()) {
-        pattern.add(metadataDAO.getSuite(dbKey, id));
+        patterns.add(metadataDAO.getSuite(dbKey, id));
       }
     } else {
-      pattern.add(lastVersion);
+      patterns.add(lastVersion);
     }
-    return SuiteMergeStrategy.merge(currentRun, lastVersion, pattern);
+    return SuiteMergeStrategy.merge(currentRun, lastVersion, patterns);
   }
 
   private boolean hasSharedPatterns(Suite currentRun) {

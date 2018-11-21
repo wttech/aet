@@ -28,6 +28,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -118,7 +119,7 @@ public class SuiteServlet extends HttpServlet {
   private String getSingletonParam(Multimap<String, String> data, String paramName) {
     try {
       return data.get(paramName).iterator().next();
-    } catch (NullPointerException e) {
+    } catch (NoSuchElementException | NullPointerException e) {
       return null;
     }
   }

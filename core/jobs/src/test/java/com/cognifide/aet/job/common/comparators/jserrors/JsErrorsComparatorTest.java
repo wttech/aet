@@ -49,7 +49,8 @@ public class JsErrorsComparatorTest extends AbstractComparatorTest {
     result = tested.compare();
 
     assertEqualsToSavedArtifact("expected-result.json");
-    assertEquals(ComparatorStepResult.Status.FAILED, result.getStatus());
+    assertEquals(ComparatorStepResult.Status.FAILED, result.get(0).getStatus());
+    assertEquals(1, result.size());
   }
 
   @Test
@@ -61,6 +62,7 @@ public class JsErrorsComparatorTest extends AbstractComparatorTest {
     result = tested.compare();
 
     assertEquals(null, getActual());
-    assertEquals(ComparatorStepResult.Status.PASSED, result.getStatus());
+    assertEquals(ComparatorStepResult.Status.PASSED, result.get(0).getStatus());
+    assertEquals(1, result.size());
   }
 }

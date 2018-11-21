@@ -16,8 +16,10 @@
 package com.cognifide.aet.job.api;
 
 
+import com.cognifide.aet.communication.api.metadata.Pattern;
 import com.cognifide.aet.vs.DBKey;
 import com.google.common.base.MoreObjects;
+import java.util.Set;
 
 /**
  * POJO used to pass properties to Collectors/Comparators on worker.
@@ -30,12 +32,12 @@ public abstract class StepProperties implements DBKey {
 
   private final String project;
 
-  private final String patternId;
+  private final Set<Pattern> patternsIds;
 
-  public StepProperties(String company, String project, String patternId) {
+  public StepProperties(String company, String project, Set<Pattern> patternsIds) {
     this.company = company;
     this.project = project;
-    this.patternId = patternId;
+    this.patternsIds = patternsIds;
   }
 
   @Override
@@ -48,8 +50,8 @@ public abstract class StepProperties implements DBKey {
     return project;
   }
 
-  public String getPatternId() {
-    return patternId;
+  public Set<Pattern> getPatternsIds() {
+    return patternsIds;
   }
 
   @Override
@@ -57,7 +59,7 @@ public abstract class StepProperties implements DBKey {
     return MoreObjects.toStringHelper(this)
         .add("company", company)
         .add("project", project)
-        .add("patternId", patternId)
+        .add("patternsIds", patternsIds)
         .toString();
   }
 }
