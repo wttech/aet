@@ -18,6 +18,7 @@ package com.cognifide.aet.job.api.comparator;
 import com.cognifide.aet.communication.api.metadata.ComparatorStepResult;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
+import java.util.List;
 import java.util.Map;
 
 public interface ComparatorJob {
@@ -27,7 +28,7 @@ public interface ComparatorJob {
    *
    * @return comparison result with details.
    */
-  ComparatorStepResult compare() throws ProcessingException;
+  List<ComparatorStepResult> compare() throws ProcessingException;
 
   /**
    * Setup all parameters necessary to perform comparison. Method is invoked before compare method.

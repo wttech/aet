@@ -29,7 +29,7 @@ public class Comparator extends Operation implements Commentable, Named {
 
   public static final String COMPARATOR_PARAMETER = "comparator";
 
-  private ComparatorStepResult stepResult;
+  private List<ComparatorStepResult> stepResults;
 
   private List<Operation> filters = new ArrayList<>();
 
@@ -41,16 +41,16 @@ public class Comparator extends Operation implements Commentable, Named {
     super(type);
   }
 
-  public ComparatorStepResult getStepResult() {
-    return stepResult;
+  public List<ComparatorStepResult> getStepResults() {
+    return stepResults;
   }
 
-  public void setStepResult(ComparatorStepResult stepResult) {
-    this.stepResult = stepResult;
+  public void setStepResults(List<ComparatorStepResult> stepResults) {
+    this.stepResults = stepResults;
   }
 
   public List<Operation> getFilters() {
-    if(filters == null){
+    if (filters == null) {
       return Collections.emptyList();
     }
     return ImmutableList.copyOf(filters);

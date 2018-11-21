@@ -24,6 +24,7 @@ import com.cognifide.aet.job.common.comparators.w3chtml5.parser.W3cHtml5Validati
 import com.cognifide.aet.job.common.comparators.w3chtml5.wrapper.NuValidatorWrapper;
 import com.cognifide.aet.vs.ArtifactsDAO;
 import java.io.InputStream;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.io.IOUtils;
@@ -57,13 +58,13 @@ class W3cHtml5Comparator extends W3cHtml5ComparatorJob {
   }
 
   @Override
-  public ComparatorStepResult compare() throws ProcessingException {
+  public List<ComparatorStepResult> compare() throws ProcessingException {
     ComparatorStepResult comparatorStepResult;
     InputStream sourceStream = null;
     try {
       LOGGER.info("Checking w3c for artifact {} in {} {} using validator: {}.",
           properties.getCompany(),
-          properties.getProject(), properties.getPatternId(), properties);
+          properties.getProject(), properties.getPatternsIds(), properties);
       sourceStream = artifactsDAO.getArtifact(properties, properties.getCollectedId())
           .getArtifactStream();
 
@@ -76,7 +77,7 @@ class W3cHtml5Comparator extends W3cHtml5ComparatorJob {
     } finally {
       IOUtils.closeQuietly(sourceStream);
     }
-    return comparatorStepResult;
+    return Collections.singletonList(comparatorStepResult);
   }
 
   @Override

@@ -49,7 +49,8 @@ public class AccessibilityComparatorTest extends AbstractComparatorTest {
     accessibilityComparator.setParameters(ImmutableMap.of("report-level", "WARN"));
     result = accessibilityComparator.compare();
     assertEqualsToSavedArtifact("report-level-warn-result.json");
-    assertEquals(ComparatorStepResult.Status.FAILED, result.getStatus());
+    assertEquals(ComparatorStepResult.Status.FAILED, result.get(0).getStatus());
+    assertEquals(1, result.size());
   }
 
   @Test
@@ -57,6 +58,6 @@ public class AccessibilityComparatorTest extends AbstractComparatorTest {
     accessibilityComparator.setParameters(ImmutableMap.of("report-level", "ERROR"));
     result = accessibilityComparator.compare();
     assertEqualsToSavedArtifact("report-level-error-result.json");
-    assertEquals(ComparatorStepResult.Status.FAILED, result.getStatus());
+    assertEquals(ComparatorStepResult.Status.FAILED, result.get(0).getStatus());
   }
 }
