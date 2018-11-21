@@ -18,14 +18,17 @@ package com.cognifide.aet.job.common.comparators.source;
 import com.cognifide.aet.job.common.comparators.source.visitors.ContentVisitor;
 import com.cognifide.aet.job.common.comparators.source.visitors.MarkupVisitor;
 import com.cognifide.aet.job.common.comparators.source.visitors.NodeTraversor;
+import java.util.Arrays;
 import java.util.regex.Pattern;
-import org.apache.commons.lang3.StringUtils;
+import java.util.stream.Collectors;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 
 class CodeFormatter {
 
-  private static final Pattern EMPTY_LINES_PATTERN = Pattern.compile("^[\\s]+", Pattern.MULTILINE);
+  private static final Pattern EMPTY_LINE_PATTERN = Pattern.compile("^[\\s]*$");
+
+  private static final String NEWLINE = "\\r?\\n";
 
   String format(String code, SourceCompareType sourceCompareType) {
     String result;
@@ -68,11 +71,11 @@ class CodeFormatter {
 
   // package scoped for unit test
   String removeEmptyLines(String source) {
-    String result = source;
-    if (StringUtils.isNotBlank(source)) {
-      result = EMPTY_LINES_PATTERN.matcher(result).replaceAll("");
-    }
-    return result;
+    String[] lines = source.split(NEWLINE);
+    return Arrays
+        .stream(lines)
+        .filter(line -> !EMPTY_LINE_PATTERN.matcher(line).matches())
+        .collect(Collectors.joining("\n"));
   }
 
 }
