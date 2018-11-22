@@ -28,6 +28,8 @@ import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.io.IOUtils;
@@ -64,6 +66,7 @@ public class AccessibilityCollector implements CollectorJob {
         .getExecutionResultAsString();
     final String json = jsExecutor.execute(script, standard).getExecutionResultAsString();
     List<AccessibilityIssue> issues = parseIssues(json);
+    HashMap<AccessibilityIssue, Integer> issuesCount = fetchIssuesCount(issues);
     getElementsPositions(issues, html);
 
     String resultId = artifactsDAO.saveArtifactInJsonFormat(properties, issues);
@@ -100,6 +103,12 @@ public class AccessibilityCollector implements CollectorJob {
     Type list = new TypeToken<List<AccessibilityIssue>>() {
     }.getType();
     return gson.fromJson(json, list);
+  }
+
+  private HashMap<AccessibilityIssue, Integer> fetchIssuesCount(List<AccessibilityIssue> issues) {
+    HashMap<AccessibilityIssue, Integer> map = new LinkedHashMap<>();
+    issues.forEach(issue -> map.put(issue, map.getOrDefault(issue, 0) + 1));
+    return map;
   }
 
   private void getElementsPositions(List<AccessibilityIssue> issues, final String html) {
