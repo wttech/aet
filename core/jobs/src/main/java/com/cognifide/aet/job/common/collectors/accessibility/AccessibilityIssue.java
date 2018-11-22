@@ -17,6 +17,7 @@ package com.cognifide.aet.job.common.collectors.accessibility;
 
 import com.cognifide.aet.job.common.Excludable;
 import java.io.Serializable;
+import java.util.Objects;
 
 public class AccessibilityIssue implements Serializable, Excludable {
 
@@ -95,6 +96,27 @@ public class AccessibilityIssue implements Serializable, Excludable {
   @Override
   public void exclude() {
     this.excluded = true;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    AccessibilityIssue that = (AccessibilityIssue) o;
+    return type == that.type &&
+        Objects.equals(message, that.message) &&
+        Objects.equals(code, that.code) &&
+        Objects.equals(elementString, that.elementString) &&
+        Objects.equals(elementStringAbbreviated, that.elementStringAbbreviated);
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(type, message, code, elementString, elementStringAbbreviated);
   }
 
   public enum IssueType {
