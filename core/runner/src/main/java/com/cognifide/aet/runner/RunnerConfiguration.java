@@ -16,6 +16,7 @@
 package com.cognifide.aet.runner;
 
 import com.cognifide.aet.runner.configuration.RunnerConfigurationConf;
+import java.util.concurrent.TimeUnit;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
@@ -33,13 +34,13 @@ public class RunnerConfiguration {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(RunnerConfiguration.class);
 
-  private static RunnerConfigurationConf config;
+  private RunnerConfigurationConf config;
 
   @Activate
   public void activate(RunnerConfigurationConf config) {
     this.config = config;
     LOGGER.info(
-        "Runner configured with parameters: [ft: {} sec ; mttl: {} ; urlPackageSize: {} ; maxMessagesInCollectorQueue: {}; maxConcurrentSuitesCount: {}.]",
+        "Runner configured with parameters: [ft: {} sec ; mttl: {} sec ; urlPackageSize: {} ; maxMessagesInCollectorQueue: {}; maxConcurrentSuitesCount: {}.]",
         config.ft(), config.mttl(), config.urlPackageSize(), config.maxMessagesInCollectorQueue(),
         config.maxConcurrentSuitesCount());
 
@@ -55,10 +56,10 @@ public class RunnerConfiguration {
 
 
   /**
-   * @return time in seconds after which messages will be thrown out of queues.
+   * @return time in milliseconds after which messages will be thrown out of queues.
    */
   public long getMttl() {
-    return config.mttl();
+    return TimeUnit.SECONDS.toMillis(config.mttl());
   }
 
 

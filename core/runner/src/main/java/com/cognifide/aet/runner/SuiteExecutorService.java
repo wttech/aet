@@ -15,16 +15,22 @@
  */
 package com.cognifide.aet.runner;
 
-import com.cognifide.aet.communication.api.metadata.Suite;
+import com.cognifide.aet.communication.api.metadata.RunType;
+import com.cognifide.aet.communication.api.wrappers.Run;
 import com.cognifide.aet.runner.processing.SuiteExecutionFactory;
-import com.cognifide.aet.runner.processing.SuiteExecutionTask;
 import com.cognifide.aet.runner.processing.data.SuiteDataService;
+import com.cognifide.aet.runner.processing.processors.ProcessorStrategy;
+import com.cognifide.aet.runner.processing.processors.SuiteExecutionProcessorStrategy;
+import com.cognifide.aet.runner.processing.processors.TestExecutionProcessorStrategy;
+import com.cognifide.aet.runner.processing.processors.UrlExecutionProcessorStrategy;
 import com.google.common.collect.Sets;
 import com.google.common.util.concurrent.FutureCallback;
 import com.google.common.util.concurrent.Futures;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.ListeningExecutorService;
 import com.google.common.util.concurrent.MoreExecutors;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -78,14 +84,27 @@ public class SuiteExecutorService {
     scheduledSuites.clear();
   }
 
-  void scheduleSuite(Suite suite, Destination jmsReplyTo) {
-    LOGGER.debug("Scheduling {}!", suite);
-    final ListenableFuture<String> suiteExecutionTask = executor
-        .submit(new SuiteExecutionTask(suite, jmsReplyTo, suiteDataService, runnerConfiguration,
-            suiteExecutionFactory));
-    scheduledSuites.add(suite.getCorrelationId());
-    Futures.addCallback(suiteExecutionTask, new SuiteFinishedCallback(suite.getCorrelationId()),
-        callbackExecutor);
+  void scheduleSuite(Run objectToRun, Destination jmsReplyTo) {
+    LOGGER.debug("Scheduling {}!", objectToRun.getObjectToRun());
+    final ListenableFuture<String> suiteExecutionTask;
+
+    ProcessorStrategy processorStrategy = null;
+    if(objectToRun.getType() == RunType.SUITE){
+      processorStrategy = new SuiteExecutionProcessorStrategy();
+    } else if (objectToRun.getType() == RunType.TEST) {
+      processorStrategy = new TestExecutionProcessorStrategy();
+    } else if (objectToRun.getType() == RunType.URL){
+      processorStrategy = new UrlExecutionProcessorStrategy();
+    }
+
+    processorStrategy.setParameters(objectToRun, jmsReplyTo, suiteDataService,
+        runnerConfiguration, suiteExecutionFactory);
+    suiteExecutionTask = executor.submit(processorStrategy);
+
+    scheduledSuites.add(objectToRun.getCorrelationId());
+    Futures
+        .addCallback(suiteExecutionTask, new SuiteFinishedCallback(objectToRun.getCorrelationId()),
+            callbackExecutor);
     LOGGER.debug(
         "Currently {} suites are scheduled in the system (max number of concurrent suites: {})",
         scheduledSuites.size(), runnerConfiguration.getMaxConcurrentSuitesCount());

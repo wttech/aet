@@ -24,7 +24,7 @@
   <parent>
     <artifactId>core</artifactId>
     <groupId>com.cognifide.aet</groupId>
-    <version>3.0.0-SNAPSHOT</version>
+    <version>3.1.1-SNAPSHOT</version>
   </parent>
 
   <artifactId>cleaner</artifactId>
@@ -107,10 +107,6 @@
     <dependency>
       <groupId>com.googlecode.zohhak</groupId>
       <artifactId>zohhak</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.powermock</groupId>
-      <artifactId>powermock-api-mockito</artifactId>
     </dependency>
     <dependency>
       <groupId>com.google.code.gson</groupId>

@@ -63,3 +63,17 @@ Blue version means that it is a rebased version of previous suite - this is also
 * use **[** / **]** to navigate between test's urls
 * press **m** to show/hide layout mask (when available)
 * press **←** / **→** to navigate between url's tabs
+
+#### Rerun
+ 
+This feature is called `rerun` and may be invoked for the whole suite:
+![Suite rerun](assets/suiteReport/rerun-suite.png)
+
+Single test:
+![Test rerun](assets/suiteReport/rerun-test.png)
+
+Or just one url:
+![Url rerun](assets/suiteReport/rerun-url.png)
+
+After scheduling task from the report progress bar will be presented. 
+When the task is finished, result will be presented on the report.

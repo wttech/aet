@@ -9,7 +9,34 @@ All notable changes to AET will be documented in this file.
 
 ## Unreleased
 **List of changes that are finished but not yet released in any final version.**
+- [PR-354](https://github.com/Cognifide/aet/pull/354) Remove jmsEndpointConfig information from communication settings endpoint ([#352](https://github.com/Cognifide/aet/issues/352))
+- [PR-412](https://github.com/Cognifide/aet/pull/412) ([PR-336](https://github.com/Cognifide/aet/pull/336), [PR-337](https://github.com/Cognifide/aet/pull/337), [PR-395](https://github.com/Cognifide/aet/pull/395)) - Added rerun functionality for suite, test and url 
+- [PR-429](https://github.com/Cognifide/aet/pull/429) - `aet-cookbook` version updated to [`v5.1.1`](https://github.com/Cognifide/aet-cookbook/blob/master/CHANGELOG.md#511) in Vagrant. **Important**: please follow the instructions from [PR-43 description](https://github.com/Cognifide/aet-cookbook/pull/43) in order to keep the MongoDB data on your local environment.
 
+- [PR-422](https://github.com/Cognifide/aet/pull/422) RunnerConfiguration's urlPackageSize property got set to 1
+- [PR-430](https://github.com/Cognifide/aet/pull/430) Upgraded HTML codesniffer to latest release (3.2.0)
+
+- [PR-385](https://github.com/Cognifide/aet/pull/385) Fixed ChefDK and vagrant-berkshelf versions
+
+## Version 3.1.0
+
+- [PR-409](https://github.com/Cognifide/aet/pull/409) Added sources link in "view source" url
+- [PR-394](https://github.com/Cognifide/aet/pull/394) Added scroll modifier
+- [PR-399](https://github.com/Cognifide/aet/pull/399) Bug fix on side panel - conditional tests ([#398](https://github.com/Cognifide/aet/issues/398))
+- [PR-396](https://github.com/Cognifide/aet/pull/396) Added horizontal scrollbar for wide pages ([#393](https://github.com/Cognifide/aet/issues/393)) 
+- [PR-403](https://github.com/Cognifide/aet/pull/403) Conditionally passed tests can be accepted ([#400](https://github.com/Cognifide/aet/issues/400))
+- [PR-387](https://github.com/Cognifide/aet/pull/387) Set max allowed page screenshot height to 35k pixels.
+- [PR-401](https://github.com/Cognifide/aet/pull/401) Added new regex param `sourcePattern` to [JS Errors Data Filter](https://github.com/Cognifide/aet/wiki/JSErrorsDataFilter)
+- [PR-397](https://github.com/Cognifide/aet/pull/397) Add algorithm to enable taking long screenshots without resolution-sleep-resolution workaround 
+
+## Version 3.0.1
+
+- [PR-380](https://github.com/Cognifide/aet/pull/380) Exclude elements position calculated with partial screenshot offset ([#379](https://github.com/Cognifide/aet/issues/379))
+- [PR-378](https://github.com/Cognifide/aet/pull/378) OSGI-configurable Chrome options.
+
+## Version 3.0.0
+
+- [PR-359](https://github.com/Cognifide/aet/pull/359) ([#351](https://github.com/Cognifide/aet/issues/351)) Disabled nu.validator language detection to fix random NPE
 - [PR-328](https://github.com/Cognifide/aet/pull/328) Added suite's history
 - [PR-303](https://github.com/Cognifide/aet/pull/303) Added `exclude-elements` parameter to [ScreenCollector](https://github.com/Cognifide/aet/wiki/ScreenCollector)
 - [PR-327](https://github.com/Cognifide/aet/pull/327) Default web driver changed from Firefox to Chrome

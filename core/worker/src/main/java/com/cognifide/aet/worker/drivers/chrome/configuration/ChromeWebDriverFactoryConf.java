@@ -37,4 +37,8 @@ public @interface ChromeWebDriverFactoryConf {
       name = SELENIUM_GRID_URL_LABEL,
       description = SELENIUM_GRID_URL_LABEL)
   String seleniumGridUrl() default DEFAULT_SELENIUM_GRID_URL;
+
+  @AttributeDefinition(name = "Chrome options")
+  String[] chromeOptions() default
+      { "--disable-plugins", "--headless", "--hide-scrollbars", "--disable-gpu" } ;
 }

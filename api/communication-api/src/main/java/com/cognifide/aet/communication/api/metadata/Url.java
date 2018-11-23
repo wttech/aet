@@ -15,6 +15,7 @@
  */
 package com.cognifide.aet.communication.api.metadata;
 
+import com.cognifide.aet.communication.api.metadata.Suite.Timestamp;
 import com.google.common.base.MoreObjects;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -25,7 +26,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class Url implements Serializable, Commentable, Named {
 
-  private static final long serialVersionUID = -8235442513988955778L;
+  private static final long serialVersionUID = -8223780516461495807L;
 
   @NotBlank
   private final String name;
@@ -44,6 +45,10 @@ public class Url implements Serializable, Commentable, Named {
   @Valid
   @NotNull
   private final List<Step> steps = new ArrayList<>();
+
+  private boolean isReran;
+
+  private Timestamp rerunTimestamp;
 
   public Url(String name, String url, String domain) {
     this.name = name;
@@ -123,4 +128,10 @@ public class Url implements Serializable, Commentable, Named {
   public int hashCode() {
     return java.util.Objects.hash(name);
   }
+
+  public void setReran() {
+    isReran = true;
+    rerunTimestamp = new Timestamp(System.currentTimeMillis());
+  }
+
 }

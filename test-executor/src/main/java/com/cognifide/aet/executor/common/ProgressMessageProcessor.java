@@ -21,18 +21,13 @@ import com.cognifide.aet.communication.api.messages.ProgressMessage;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import org.apache.commons.lang3.StringUtils;
 
 class ProgressMessageProcessor implements MessageProcessor {
 
   private static final String DATE_FORMAT = "HH:mm:ss.SSS";
 
-  private static final ThreadLocal<DateFormat> DATE_FORMATTER = new ThreadLocal<DateFormat>() {
-    @Override
-    protected DateFormat initialValue() {
-      return new SimpleDateFormat(DATE_FORMAT);
-    }
-  };
+  private static final ThreadLocal<DateFormat> DATE_FORMATTER = ThreadLocal
+      .withInitial(() -> new SimpleDateFormat(DATE_FORMAT));
 
   private final ProgressMessage progressMessage;
 
@@ -42,11 +37,14 @@ class ProgressMessageProcessor implements MessageProcessor {
 
   @Override
   public SuiteStatusResult process() {
-    String message = null;
-    if (progressMessage != null && StringUtils.isNotEmpty(progressMessage.getData())) {
-      message = String.format("[%s]: %s", DATE_FORMATTER.get().format(new Date()),
-          progressMessage.getData());
+    SuiteStatusResult result;
+    if (progressMessage != null && progressMessage.getData() != null) {
+      String message = String.format("[%s]: %s", DATE_FORMATTER.get().format(new Date()),
+          progressMessage.getData().toString());
+      result = new SuiteStatusResult(ProcessingStatus.PROGRESS, message, progressMessage.getData());
+    } else {
+      result = new SuiteStatusResult(ProcessingStatus.PROGRESS);
     }
-    return new SuiteStatusResult(ProcessingStatus.PROGRESS, message);
+    return result;
   }
 }
