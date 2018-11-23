@@ -78,6 +78,7 @@ public class AccessibilityCollector implements CollectorJob {
       URL entry = context.getBundle().getEntry("/collectors/accessibility/htmlcs.min.js");
       if (entry != null) {
         script = IOUtils.toString(entry.openStream(), StandardCharsets.UTF_8);
+        script = "return " + script;
       } else {
         throw new ProcessingException("Can't find accessibility htmlcs scripts in bundle context!");
       }
