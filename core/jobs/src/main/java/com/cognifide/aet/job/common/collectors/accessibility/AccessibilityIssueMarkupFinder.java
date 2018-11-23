@@ -15,6 +15,7 @@
  */
 package com.cognifide.aet.job.common.collectors.accessibility;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,7 @@ class AccessibilityIssueMarkupFinder {
 
   AccessibilityIssueMarkupFinder(String html, List<AccessibilityIssue> issues) {
     this.html = html;
-    this.issues = issues;
+    this.issues = new ArrayList<>(issues);
   }
 
   List<AccessibilityIssue> getIssuesWithPositions(){
