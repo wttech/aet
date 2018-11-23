@@ -36,7 +36,7 @@ public class AccessibilityIssueMarkupFinderTest {
   }
 
   @Test
-  public void testOneLineSingleIssue() {
+  public void testSingleIssueNoOffset() {
     String html ="<a/>";
     issues.add(new AccessibilityIssue(IssueType.ERROR,"","","<a/>",""));
     issues = new AccessibilityIssueMarkupFinder(html,issues).getIssuesWithPositions();
@@ -44,11 +44,49 @@ public class AccessibilityIssueMarkupFinderTest {
   }
 
   @Test
-  public void testOneLineSingleIssueOffset(){
+  public void testSingleIssueColOffset(){
     String html="xxxx<a/>";
     issues.add(new AccessibilityIssue(IssueType.ERROR,"","","<a/>",""));
     issues = new AccessibilityIssueMarkupFinder(html,issues).getIssuesWithPositions();
     verifySingleIssue(issues.get(0),1,5);
+  }
+
+  @Test
+  public void testSingleIssueLineColOffset(){
+    String html="\nxx\n\nxx<a/>xx";
+    issues.add(new AccessibilityIssue(IssueType.ERROR,"","","<a/>",""));
+    issues = new AccessibilityIssueMarkupFinder(html,issues).getIssuesWithPositions();
+    verifySingleIssue(issues.get(0),4,3);
+  }
+
+  @Test
+  public void testOneMarkupDifferentTypeIssues(){
+    String html="\n\nx<a/>";
+    issues.add(new AccessibilityIssue(IssueType.ERROR,"","","<a/>",""));
+    issues.add(new AccessibilityIssue(IssueType.NOTICE,"","","<a/>",""));
+    issues = new AccessibilityIssueMarkupFinder(html,issues).getIssuesWithPositions();
+    verifySingleIssue(issues.get(0),3,2);
+    verifySingleIssue(issues.get(1),3,2);
+  }
+
+  @Test
+  public void testManySameIssues(){
+    String html="\nxx\n\nxx<a/>xx\n\n\n<a/>xxx";
+    issues.add(new AccessibilityIssue(IssueType.ERROR,"","","<a/>",""));
+    issues.add(new AccessibilityIssue(IssueType.ERROR,"","","<a/>",""));
+    issues = new AccessibilityIssueMarkupFinder(html,issues).getIssuesWithPositions();
+    verifySingleIssue(issues.get(0),4,3);
+    verifySingleIssue(issues.get(1),7,1);
+  }
+
+  @Test
+  public void testNestedIssues(){
+    String html="\nx\nxxx\n<div id=\"footer\"><a href=\"test\"></a></div>";
+    issues.add(new AccessibilityIssue(IssueType.ERROR,"","","<div id=\"footer\"><a href=\"test\"></a></div>",""));
+    issues.add(new AccessibilityIssue(IssueType.ERROR,"","","<a href=\"test\"></a>",""));
+    issues = new AccessibilityIssueMarkupFinder(html,issues).getIssuesWithPositions();
+    verifySingleIssue(issues.get(0),4,1);
+    verifySingleIssue(issues.get(1),4,18);
   }
 
   public void verifySingleIssue(AccessibilityIssue issue, int expectedLineNumber, int expectedColumnNumber){
