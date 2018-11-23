@@ -108,7 +108,6 @@ public class AccessibilityIssue implements Serializable, Excludable {
     }
     AccessibilityIssue that = (AccessibilityIssue) o;
     return type == that.type &&
-        Objects.equals(message, that.message) &&
         Objects.equals(code, that.code) &&
         Objects.equals(elementString, that.elementString) &&
         Objects.equals(elementStringAbbreviated, that.elementStringAbbreviated);
@@ -116,7 +115,7 @@ public class AccessibilityIssue implements Serializable, Excludable {
 
   @Override
   public int hashCode() {
-    return Objects.hash(type, message, code, elementString, elementStringAbbreviated);
+    return Objects.hash(type, code, elementString, elementStringAbbreviated);
   }
 
   public enum IssueType {
