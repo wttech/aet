@@ -46,7 +46,7 @@ class AccessibilityIssueMarkupFinder {
         int columnNumber = getColumnNumber(lineBreaks, beforeOccurrence);
 
         issue.setLineNumber(lineBreaks + 1);
-        issue.setColumnNumber(columnNumber);
+        issue.setColumnNumber(columnNumber + 1);
         lastOccurrences.put(issue, indexOfElement);
       }
     }
