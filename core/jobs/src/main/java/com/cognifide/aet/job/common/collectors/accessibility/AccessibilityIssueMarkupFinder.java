@@ -15,39 +15,25 @@
  */
 package com.cognifide.aet.job.common.collectors.accessibility;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.lang3.StringUtils;
 
-public class AccessibilityIssuesProcessor {
+class AccessibilityIssueMarkupFinder {
 
   private final String html;
   private final List<AccessibilityIssue> issues;
 
-  AccessibilityIssuesProcessor(String html, String json) {
+  AccessibilityIssueMarkupFinder(String html, List<AccessibilityIssue> issues) {
     this.html = html;
-    this.issues = parseIssues(json);
+    this.issues = issues;
   }
 
-  public List<AccessibilityIssue> getIssues(){
+  List<AccessibilityIssue> getIssuesWithPositions(){
     fetchElementPositions();
     return issues;
   }
-
-  private List<AccessibilityIssue> parseIssues(String json) {
-    Gson gson = new GsonBuilder()
-        .registerTypeAdapter(AccessibilityIssue.class, new AccessibilityIssueDeserializer())
-        .create();
-    Type list = new TypeToken<List<AccessibilityIssue>>() {
-    }.getType();
-    return gson.fromJson(json, list);
-  }
-
 
   private void fetchElementPositions() {
     Map<AccessibilityIssue, Integer> lastOccurrences = new HashMap<>();
