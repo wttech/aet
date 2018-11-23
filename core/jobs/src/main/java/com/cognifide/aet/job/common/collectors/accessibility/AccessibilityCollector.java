@@ -22,17 +22,11 @@ import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.job.common.utils.javascript.JavaScriptJobExecutor;
 import com.cognifide.aet.vs.ArtifactsDAO;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import java.lang.reflect.Type;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.osgi.framework.BundleContext;
 
 public class AccessibilityCollector implements CollectorJob {
@@ -64,9 +58,9 @@ public class AccessibilityCollector implements CollectorJob {
     final String html = jsExecutor.execute(DOCUMENT_OUTER_HTML_SCRIPT)
         .getExecutionResultAsString();
     final String json = jsExecutor.execute(script, standard).getExecutionResultAsString();
-    List<AccessibilityIssue> issues = parseIssues(json);
-    getElementsPositions(issues, html);
 
+    AccessibilityIssuesProcessor issuesProcessor = new AccessibilityIssuesProcessor(html,json);
+    List<AccessibilityIssue> issues  = issuesProcessor.getIssues();
     String resultId = artifactsDAO.saveArtifactInJsonFormat(properties, issues);
 
     return CollectorStepResult.newCollectedResult(resultId);
@@ -93,51 +87,5 @@ public class AccessibilityCollector implements CollectorJob {
     if (params.containsKey(PARAM_STANDARD)) {
       standard = params.get(PARAM_STANDARD);
     }
-  }
-
-  private List<AccessibilityIssue> parseIssues(String json) {
-    Gson gson = new GsonBuilder()
-        .registerTypeAdapter(AccessibilityIssue.class, new AccessibilityIssueDeserializer())
-        .create();
-    Type list = new TypeToken<List<AccessibilityIssue>>() {
-    }.getType();
-    return gson.fromJson(json, list);
-  }
-
-  private void getElementsPositions(List<AccessibilityIssue> issues, final String html) {
-    Map<AccessibilityIssue, Integer> lastOccurrences = new HashMap<>();
-    for (AccessibilityIssue issue : issues) {
-      int searchStartIndex = getSearchStartIndex(lastOccurrences, issue);
-      int indexOfElement = html.indexOf(issue.getElementString(), searchStartIndex);
-      if (indexOfElement >= 0) {
-        String beforeOccurrence = html.substring(0, indexOfElement);
-        int lineBreaks = StringUtils.countMatches(beforeOccurrence, "\n");
-        int columnNumber = getColumnNumber(lineBreaks, beforeOccurrence);
-
-        issue.setLineNumber(lineBreaks + 1);
-        issue.setColumnNumber(columnNumber);
-        lastOccurrences.put(issue, indexOfElement);
-      }
-    }
-  }
-
-  private int getSearchStartIndex(Map<AccessibilityIssue, Integer> lastOccurrences,
-      AccessibilityIssue issue) {
-    int startIndex = 0;
-    if (lastOccurrences.containsKey(issue)) {
-      startIndex = lastOccurrences.get(issue) + issue.getElementString().length();
-    }
-    return startIndex;
-  }
-
-  private int getColumnNumber(int lineBreaks, String beforeOccurrence) {
-    int columnNumber;
-    if (lineBreaks > 0) {
-      int indexOfLastLineBreak = beforeOccurrence.lastIndexOf('\n');
-      columnNumber = beforeOccurrence.substring(indexOfLastLineBreak).length();
-    } else {
-      columnNumber = beforeOccurrence.length();
-    }
-    return columnNumber;
   }
 }
