@@ -29,7 +29,6 @@ import java.lang.reflect.Type;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.io.IOUtils;
@@ -66,7 +65,6 @@ public class AccessibilityCollector implements CollectorJob {
         .getExecutionResultAsString();
     final String json = jsExecutor.execute(script, standard).getExecutionResultAsString();
     List<AccessibilityIssue> issues = parseIssues(json);
-    HashMap<AccessibilityIssue, Integer> issuesCount = fetchIssuesCount(issues);
     getElementsPositions(issues, html);
 
     String resultId = artifactsDAO.saveArtifactInJsonFormat(properties, issues);
@@ -105,29 +103,40 @@ public class AccessibilityCollector implements CollectorJob {
     return gson.fromJson(json, list);
   }
 
-  private HashMap<AccessibilityIssue, Integer> fetchIssuesCount(List<AccessibilityIssue> issues) {
-    HashMap<AccessibilityIssue, Integer> map = new LinkedHashMap<>();
-    issues.forEach(issue -> map.put(issue, map.getOrDefault(issue, 0) + 1));
-    return map;
-  }
-
   private void getElementsPositions(List<AccessibilityIssue> issues, final String html) {
+    Map<AccessibilityIssue, Integer> lastOccurrences = new HashMap<>();
     for (AccessibilityIssue issue : issues) {
-      int indexOfElement = html.indexOf(issue.getElementString());
+      int searchStartIndex = getSearchStartIndex(lastOccurrences, issue);
+      int indexOfElement = html.indexOf(issue.getElementString(), searchStartIndex);
       if (indexOfElement >= 0) {
         String beforeOccurrence = html.substring(0, indexOfElement);
         int lineBreaks = StringUtils.countMatches(beforeOccurrence, "\n");
-        int columnNumber;
-        if (lineBreaks > 0) {
-          int indexOfLastLineBreak = beforeOccurrence.lastIndexOf('\n');
-          columnNumber = beforeOccurrence.substring(indexOfLastLineBreak).length();
-        } else {
-          columnNumber = beforeOccurrence.length();
-        }
+        int columnNumber = getColumnNumber(lineBreaks, beforeOccurrence);
+
         issue.setLineNumber(lineBreaks + 1);
         issue.setColumnNumber(columnNumber);
+        lastOccurrences.put(issue, indexOfElement);
       }
     }
   }
 
+  private int getSearchStartIndex(Map<AccessibilityIssue, Integer> lastOccurrences,
+      AccessibilityIssue issue) {
+    int startIndex = 0;
+    if (lastOccurrences.containsKey(issue)) {
+      startIndex = lastOccurrences.get(issue) + issue.getElementString().length();
+    }
+    return startIndex;
+  }
+
+  private int getColumnNumber(int lineBreaks, String beforeOccurrence) {
+    int columnNumber;
+    if (lineBreaks > 0) {
+      int indexOfLastLineBreak = beforeOccurrence.lastIndexOf('\n');
+      columnNumber = beforeOccurrence.substring(indexOfLastLineBreak).length();
+    } else {
+      columnNumber = beforeOccurrence.length();
+    }
+    return columnNumber;
+  }
 }
