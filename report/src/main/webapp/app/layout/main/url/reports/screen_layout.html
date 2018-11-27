@@ -30,11 +30,11 @@
     </div>
     <span ng-if="case.comparator.stepResult.data.excludeMessage" class="checkboxes-inline">Exclude info: {{case.comparator.stepResult.data.excludeMessage}}</span>
   </div>
-  <div class="advanced-screen-comparison button button-small button-blue">
-  <a ng-if="case.status == 'FAILED' || case.status == 'CONDITIONALLY_PASSED'" data-ng-click="advancedScreenComparison()" data-aet-compare-screens>Advanced Screen Comparison</a>
-  </div>
   <div class="toolbar-blocks">
     <div class="toolbar-btns pull-right">
+      <div class="advanced-screen-comparison button button-small button-blue">
+        <a ng-if="case.status == 'FAILED' || case.status == 'CONDITIONALLY_PASSED'" data-ng-click="advancedScreenComparison()" data-aet-compare-screens>Advanced Screen Comparison</a>
+      </div>
       <ng-include src="'app/layout/main/url/navigation/navigation.comments.html'"/>
       <ng-include src="'app/layout/main/url/navigation/navigation.patternButtons.html'"/>
     </div>
