@@ -19,10 +19,10 @@ import com.cognifide.aet.communication.api.execution.ProcessingStatus;
 import com.cognifide.aet.communication.api.execution.SuiteStatusResult;
 import com.cognifide.aet.communication.api.messages.MessageType;
 import com.cognifide.aet.communication.api.messages.TaskMessage;
-import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.executor.common.MessageProcessor;
 import com.cognifide.aet.executor.common.ProcessorFactory;
 import com.cognifide.aet.executor.common.RunnerTerminator;
+import com.cognifide.aet.communication.api.wrappers.Run;
 import javax.jms.Destination;
 import javax.jms.JMSException;
 import javax.jms.Message;
@@ -52,22 +52,24 @@ public class SuiteRunner implements Runnable {
 
   private SuiteCacheUpdater suiteCacheUpdater;
 
-  private Suite suite;
+  private Run objectToRunWrapper;
 
   private String inQueueName;
 
   private long messageReceiveTimeout;
 
-  public SuiteRunner(Session session, CacheUpdater cacheUpdater,
-      SuiteStatusHandler suiteStatusHandler, Suite suite, String inQueueName,
+  public SuiteRunner(
+      Session session, CacheUpdater cacheUpdater,
+      SuiteStatusHandler suiteStatusHandler, Run objectToRunWrapper, String inQueueName,
       long messageReceiveTimeout) {
     this.session = session;
     this.suiteStatusHandler = suiteStatusHandler;
+
     this.runnerTerminator = new RunnerTerminator();
-    this.suite = suite;
+    this.objectToRunWrapper = objectToRunWrapper;
     this.inQueueName = inQueueName;
     this.messageReceiveTimeout = messageReceiveTimeout;
-    this.suiteCacheUpdater = new SuiteCacheUpdater(cacheUpdater, runnerTerminator, suite);
+    this.suiteCacheUpdater = new SuiteCacheUpdater(cacheUpdater, runnerTerminator, objectToRunWrapper);
   }
 
   /**
@@ -78,7 +80,7 @@ public class SuiteRunner implements Runnable {
     Destination outRunnerDestination = session.createTemporaryQueue();
     messageConsumer = session.createConsumer(outRunnerDestination);
 
-    TaskMessage taskMessage = new TaskMessage<>(MessageType.RUN, suite);
+    TaskMessage taskMessage = new TaskMessage<>(MessageType.RUN, objectToRunWrapper);
     ObjectMessage message = session.createObjectMessage(taskMessage);
     message.setJMSReplyTo(outRunnerDestination);
     messageProducer.send(message);
@@ -122,7 +124,7 @@ public class SuiteRunner implements Runnable {
       try {
         SuiteStatusResult status = getSuiteStatus();
         if (status != null) {
-          suiteStatusHandler.handle(suite.getCorrelationId(), status);
+          suiteStatusHandler.handle(objectToRunWrapper.getCorrelationId(), status);
         } else {
           handleFatalError("Timeout was reached while receiving status message");
         }
@@ -155,7 +157,7 @@ public class SuiteRunner implements Runnable {
 
   private void handleFatalError(String errorMessage) {
     SuiteStatusResult status = new SuiteStatusResult(ProcessingStatus.FATAL_ERROR, errorMessage);
-    suiteStatusHandler.handle(suite.getCorrelationId(), status);
+    suiteStatusHandler.handle(objectToRunWrapper.getCorrelationId(), status);
     runnerTerminator.finish();
   }
 }

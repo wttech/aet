@@ -18,7 +18,7 @@ package com.cognifide.aet.runner.processing;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.runner.MessagesManager;
 import com.cognifide.aet.runner.RunnerConfiguration;
-import com.cognifide.aet.runner.processing.data.SuiteIndexWrapper;
+import com.cognifide.aet.runner.processing.data.wrappers.RunIndexWrapper;
 import com.cognifide.aet.runner.processing.steps.CollectDispatcher;
 import com.cognifide.aet.runner.processing.steps.CollectionResultsRouter;
 import com.cognifide.aet.runner.processing.steps.ComparisonResultsRouter;
@@ -44,26 +44,26 @@ public class SuiteExecutionFactory {
   private JmsConnection jmsConnection;
 
   CollectDispatcher newCollectDispatcher(TimeoutWatch timeoutWatch,
-      SuiteIndexWrapper suite)
+      RunIndexWrapper suite)
       throws JMSException {
     return new CollectDispatcher(timeoutWatch, jmsConnection, runnerConfiguration,
         collectorJobSchedulerService, suite);
   }
 
   CollectionResultsRouter newCollectionResultsRouter(TimeoutWatch timeoutWatch,
-      SuiteIndexWrapper suite)
+      RunIndexWrapper runIndexWrapper)
       throws JMSException {
     return new CollectionResultsRouter(timeoutWatch, jmsConnection,
-        runnerConfiguration, collectorJobSchedulerService, suite);
+        runnerConfiguration, collectorJobSchedulerService, runIndexWrapper);
   }
 
   ComparisonResultsRouter newComparisonResultsRouter(TimeoutWatch timeoutWatch,
-      SuiteIndexWrapper suite) throws JMSException {
+      RunIndexWrapper runIndexWrapper) throws JMSException {
     return new ComparisonResultsRouter(timeoutWatch, jmsConnection,
-        runnerConfiguration, suite);
+        runnerConfiguration, runIndexWrapper);
   }
 
-  MessagesSender newMessagesSender(Destination jmsReplyTo) throws JMSException {
+  public MessagesSender newMessagesSender(Destination jmsReplyTo) throws JMSException {
     return new MessagesSender(jmsReplyTo, jmsConnection);
   }
 }
