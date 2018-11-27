@@ -1,10 +1,6 @@
-#### Accessibility Collector BETA
+#### Accessibility Collector
 
-| ! Beta Version |
-|:------------   |
-| This AET Plugin is currently in a BETA version. |
-
-Accessibility Collector is responsible for collecting validation results containing violations of the defined coding standard found on the page. It makes use of the [HTML_CodeSniffer](http://squizlabs.github.io/HTML_CodeSniffer/) tool to find violations.
+Accessibility Collector is responsible for collecting validation results containing violations of the defined coding standard found on the page. The plugin is based on [AccessSniff](https://github.com/yargalot/AccessSniff/) v. 3.2.0, which uses the [HTML_CodeSniffer](http://squizlabs.github.io/HTML_CodeSniffer/) tool to find violations.
 
 Module name: **accessibility**
 
