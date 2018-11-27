@@ -15,6 +15,7 @@
  */
 package com.cognifide.aet.communication.api.execution;
 
+import com.cognifide.aet.communication.api.messages.FullProgressLog;
 import org.apache.commons.lang3.StringUtils;
 
 /**
@@ -26,13 +27,20 @@ public class SuiteStatusResult {
 
   private String message;
 
+  private FullProgressLog progressLog;
+
   public SuiteStatusResult(ProcessingStatus status) {
     this(status, StringUtils.EMPTY);
   }
 
   public SuiteStatusResult(ProcessingStatus status, String message) {
+    this(status, message, null);
+  }
+
+  public SuiteStatusResult(ProcessingStatus status, String message, FullProgressLog progressLog) {
     this.status = status;
     this.message = message;
+    this.progressLog = progressLog;
   }
 
   /**
@@ -47,5 +55,9 @@ public class SuiteStatusResult {
    */
   public String getMessage() {
     return message;
+  }
+
+  public FullProgressLog getProgressLog() {
+    return progressLog;
   }
 }

@@ -15,7 +15,7 @@
  */
 package com.cognifide.aet.executor.model;
 
-final class CorrelationIdGenerator {
+final public class CorrelationIdGenerator {
 
   private static final String CORRELATION_ID_SEPARATOR = "-";
 

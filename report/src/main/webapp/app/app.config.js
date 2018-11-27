@@ -49,6 +49,7 @@ require.config({
     'metadataAccessService': 'services/metadataAccess.service',
     'notesService': 'services/notes.service',
     'historyService': 'services/history.service',
+    'rerunService': 'services/rerun.service',
     'suiteInfoService': 'services/suiteInfo.service',
     'patternsService': 'services/patterns.service',
     'userSettingsService': 'services/userSettings.service',
