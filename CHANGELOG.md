@@ -19,6 +19,8 @@ All notable changes to AET will be documented in this file.
 - [PR-385](https://github.com/Cognifide/aet/pull/385) Fixed ChefDK and vagrant-berkshelf versions
 - [PR-404](https://github.com/Cognifide/aet/pull/404) Added missing tooltip for conditional tests
 
+- [PR-408](https://github.com/Cognifide/aet/pull/408) Advanced Screen Comparision button layout fix
+
 ## Version 3.1.0
 
 - [PR-409](https://github.com/Cognifide/aet/pull/409) Added sources link in "view source" url
