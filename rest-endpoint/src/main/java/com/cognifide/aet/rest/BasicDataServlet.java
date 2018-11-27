@@ -15,9 +15,9 @@
  */
 package com.cognifide.aet.rest;
 
-import com.cognifide.aet.communication.api.metadata.Suite;
+import static com.cognifide.aet.rest.Helper.responseAsJson;
+
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
-import com.cognifide.aet.communication.api.util.ValidatorProvider;
 import com.cognifide.aet.vs.DBKey;
 import com.google.gson.Gson;
 import java.io.IOException;
@@ -30,13 +30,13 @@ import org.osgi.service.http.HttpService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-abstract class BasicDataServlet extends HttpServlet {
+public abstract class BasicDataServlet extends HttpServlet {
 
   private static final long serialVersionUID = -5819760668750910009L;
 
   private static final Logger LOGGER = LoggerFactory.getLogger(BasicDataServlet.class);
 
-  private static final Gson GSON = new Gson();
+  protected static final Gson GSON = new Gson();
 
   /***
    * Returns JSON representation of Suite based correlationId or suite name
@@ -60,7 +60,7 @@ abstract class BasicDataServlet extends HttpServlet {
     } catch (ValidatorException e) {
       LOGGER.error("Validation problem!", e);
       resp.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
-      resp.getWriter().write(responseAsJson("There were validation errors when parsing suite: %s",
+      resp.getWriter().write(responseAsJson(GSON,"There were validation errors when parsing suite: %s",
           e.getAllViolationMessages()));
       return;
     }
@@ -82,10 +82,6 @@ abstract class BasicDataServlet extends HttpServlet {
     setHttpService(null);
   }
 
-  boolean isValidName(String suiteName) {
-    return ValidatorProvider.getValidator().validateValue(Suite.class, "name", suiteName).isEmpty();
-  }
-
   boolean isValidVersion(String version) {
     boolean valid = false;
     if (version != null) {
@@ -99,33 +95,11 @@ abstract class BasicDataServlet extends HttpServlet {
     return valid;
   }
 
-  boolean isValidCorrelationId(String correlationId) {
-    return ValidatorProvider.getValidator()
-        .validateValue(Suite.class, "correlationId", correlationId).isEmpty();
-  }
-
   protected abstract void process(DBKey dbKey, HttpServletRequest req, HttpServletResponse resp)
       throws IOException;
-
-  protected String responseAsJson(String format, Object... args) {
-    return GSON.toJson(new ErrorMessage(format, args));
-  }
 
   protected abstract HttpService getHttpService();
 
   protected abstract void setHttpService(HttpService httpService);
-
-  private static class ErrorMessage {
-
-    private final String message;
-
-    ErrorMessage(String format, Object... args) {
-      message = String.format(format, args);
-    }
-
-    public String getMessage() {
-      return message;
-    }
-  }
 
 }

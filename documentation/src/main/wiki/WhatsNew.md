@@ -3,6 +3,10 @@ To see the full list of changes, please refer to [CHANGELOG](https://github.com/
 
 ### `master` branch version (not released yet)
 
+#### Rerun
+Now it is possible to schedule AET task from the report directly.
+Read more about this feature [[here|SuiteReportFeatures#rerun]].
+
 ### Version 3.1.0
 
 #### JS Error Data Filter with regex param
