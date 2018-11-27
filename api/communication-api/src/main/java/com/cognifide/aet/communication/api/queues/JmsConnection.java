@@ -35,9 +35,4 @@ public interface JmsConnection {
    */
   Connection getJmsConnection();
 
-  /**
-   * @return broker connection configuration.
-   */
-  JmsEndpointConfig getEndpointConfig();
-
 }

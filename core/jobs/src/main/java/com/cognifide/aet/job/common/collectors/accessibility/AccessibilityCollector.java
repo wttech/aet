@@ -20,47 +20,49 @@ import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
+import com.cognifide.aet.job.common.utils.javascript.JavaScriptJobExecutor;
 import com.cognifide.aet.vs.ArtifactsDAO;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.net.URL;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
-import org.apache.commons.io.Charsets;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
-import org.openqa.selenium.JavascriptExecutor;
-import org.openqa.selenium.WebDriver;
 import org.osgi.framework.BundleContext;
 
 public class AccessibilityCollector implements CollectorJob {
 
-  private static final String DOCUMENT_OUTER_HTML_SCRIPT = "return document.documentElement.outerHTML;";
   public static final String NAME = "accessibility";
+
+  private static final String DOCUMENT_OUTER_HTML_SCRIPT = "return document.documentElement.outerHTML;";
   private static final String PARAM_STANDARD = "standard";
   private static final String DEFAULT_STANDARD = "WCAG2AA";
+
   private final ArtifactsDAO artifactsDAO;
-  private final WebDriver webDriver;
   private final BundleContext context;
   private final CollectorProperties properties;
+  private final JavaScriptJobExecutor jsExecutor;
+
   private String standard = DEFAULT_STANDARD;
 
-  public AccessibilityCollector(ArtifactsDAO artifactsDAO, CollectorProperties collectorProperties,
-      WebDriver webDriver, BundleContext context) {
+  AccessibilityCollector(ArtifactsDAO artifactsDAO, CollectorProperties collectorProperties,
+      JavaScriptJobExecutor jsExecutor, BundleContext context) {
     this.artifactsDAO = artifactsDAO;
-    this.webDriver = webDriver;
     this.context = context;
     this.properties = collectorProperties;
+    this.jsExecutor = jsExecutor;
   }
 
   @Override
   public CollectorStepResult collect() throws ProcessingException {
     String script = getScriptFromFile();
-    final String html = (String) ((JavascriptExecutor) webDriver)
-        .executeScript(DOCUMENT_OUTER_HTML_SCRIPT);
-    final String json = (String) ((JavascriptExecutor) webDriver).executeScript(script, standard);
+    final String html = jsExecutor.execute(DOCUMENT_OUTER_HTML_SCRIPT)
+        .getExecutionResultAsString();
+    final String json = jsExecutor.execute(script, standard).getExecutionResultAsString();
     List<AccessibilityIssue> issues = parseIssues(json);
     getElementsPositions(issues, html);
 
@@ -74,7 +76,8 @@ public class AccessibilityCollector implements CollectorJob {
     try {
       URL entry = context.getBundle().getEntry("/collectors/accessibility/htmlcs.min.js");
       if (entry != null) {
-        script = IOUtils.toString(entry.openStream(), Charsets.UTF_8);
+        script = IOUtils.toString(entry.openStream(), StandardCharsets.UTF_8);
+        script = "return " + script;
       } else {
         throw new ProcessingException("Can't find accessibility htmlcs scripts in bundle context!");
       }

@@ -15,21 +15,12 @@
  */
 package com.cognifide.aet.communication.api;
 
-import com.cognifide.aet.communication.api.queues.JmsEndpointConfig;
-
 public class CommunicationSettings {
-
-  private final JmsEndpointConfig jmsEndpointConfig;
 
   private final String reportDomain;
 
-  public CommunicationSettings(JmsEndpointConfig jmsEndpointConfig, String reportDomain) {
-    this.jmsEndpointConfig = jmsEndpointConfig;
+  public CommunicationSettings(String reportDomain) {
     this.reportDomain = reportDomain;
-  }
-
-  public JmsEndpointConfig getJmsEndpointConfig() {
-    return jmsEndpointConfig;
   }
 
   public String getReportDomain() {

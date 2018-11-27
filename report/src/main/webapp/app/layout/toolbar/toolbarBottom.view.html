@@ -20,22 +20,56 @@
 <div class="toolbar-bottom">
   <div class="toolbar-link">
     <h4 class="toolbar-link-header ellipsis">
-        <div ng-if="toolbarBottom.viewMode != 'suite'"class="fontawesome-link"
+      <div ng-if="toolbarBottom.viewMode != 'suite'" class="fontawesome-link"
+         data-toggle="popover"
+         data-content="Localize the currently opened url on side panel"
+         data-trigger="hover"
+         data-container="body"
+         data-ng-click="toolbarBottom.scrollSidepanel(false)">
+        <i class="fas fa-crosshairs fa-sm"></i>
+      </div>
+      <div 
+        ng-if="toolbarBottom.viewMode != 'suite' && toolbarBottom.viewMode != 'test' && toolbarBottom.isLastSuiteVersion"
+        class="fontawesome-link"
+        data-toggle="popover"
+        data-content="Rerun current URL"
+        data-trigger="hover"
+        data-container="body"
+        data-ng-click="toolbarBottom.rerunURL(toolbarBottom.model.url)">
+        <i class="far fa-play-circle fa-sm"></i>
+      </div>
+      <div ng-if="toolbarBottom.viewMode == 'suite' && toolbarBottom.isLastSuiteVersion"
+           class="fontawesome-link"
            data-toggle="popover"
-           data-content="Localize the currently opened url on side panel"
+           data-content="Rerun current suite"
            data-trigger="hover"
            data-container="body"
-           data-ng-click="toolbarBottom.scrollSidepanel(false)">
-            <i class="fas fa-crosshairs fa-sm"></i>
-        </div>
-        <span class="preformatted">{{toolbarBottom.viewMode}}:</span>
-        <span ng-if="toolbarBottom.viewMode != 'url'">{{toolbarBottom.model.name}}</span>
+           data-ng-click="toolbarBottom.rerunSuite()">
+        <i class="far fa-play-circle fa-sm"></i>
+      </div>
+      <div ng-if="toolbarBottom.viewMode != 'url' && toolbarBottom.viewMode != 'suite' && toolbarBottom.isLastSuiteVersion" class="fontawesome-link"
+           data-toggle="popover"
+           data-content="Rerun current test"
+           data-trigger="hover"
+           data-container="body"
+           data-ng-click="toolbarBottom.rerunTest()">
+        <i class="far fa-play-circle fa-sm"></i>
+      </div>
+      <span class="preformatted">{{toolbarBottom.viewMode}}:</span>
+      <span ng-if="toolbarBottom.viewMode != 'url'">{{toolbarBottom.model.name}}</span>
+      <div ng-if="toolbarBottom.viewMode != 'url' && toolbarBottom.model.lastRerunTimestamp()">
+        <h5>Last rerun of URL in this test: {{toolbarBottom.model.lastRerunTimestamp() | date:'yyyy-MM-dd HH:mm' }}</h5>
+      </div>
         <a ng-if="toolbarBottom.viewMode == 'url'"
             href="{{toolbarBottom.model.domain + toolbarBottom.model.url}}" target="_blank"
             data-toggle="popover"
             data-content="Click to navigate to url"
             data-trigger="hover"
-            data-container="body">{{toolbarBottom.model.name}}</a>
+            data-container="body"> {{toolbarBottom.model.name}}
+        </a>
+      <span ng-if="toolbarBottom.viewMode == 'url' && toolbarBottom.model.isReran">
+        <h5>Last rerun: {{toolbarBottom.model.rerunTimestamp | date:'yyyy-MM-dd HH:mm' }}</h5>
+      </span>
     </h4>
     <h5 ng-if="toolbarBottom.viewMode == 'url'">
       <div class="fontawesome-link"
@@ -44,11 +78,23 @@
          data-trigger="hover"
          data-container="body"
          data-ng-click="toolbarBottom.scrollSidepanel(true)">
-          <i class="fas fa-crosshairs"></i>
+        <i class="fas fa-crosshairs"></i>
       </div>
-        </i>
-    <span class="preformatted">test:</span><span>{{toolbarBottom.model.testGroupName}}</span>
+      <div class="fontawesome-link"
+        data-toggle="popover"
+        data-content="Rerun current test"
+        data-trigger="hover"
+        data-container="body"
+        data-ng-click="toolbarBottom.rerunTest()"
+        ng-if="toolbarBottom.isLastSuiteVersion">
+      <i class="far fa-play-circle fa-sm"></i>
+      </div>
+      <span class="preformatted">test:</span><span>{{toolbarBottom.model.testGroupName}}</span>
     </h5>
+  </div>
+  <div class="suite-rerun" ng-if="rerunInProgress">
+    <p class="suite-rerun-msg">Status: {{rerunMsg}}</p>
+    <p class="suite-rerun-msg" ng-if="rerunInProgressSuccessful">Progress: {{rerunProgress | number: 2}}%</p>
   </div>
   <div class="toolbar-blocks">
     <div class="toolbar-btns is-absolute">
@@ -69,18 +115,18 @@
         </a>
       </div>
       <span class="comments-status pull-left"
-            data-toggle="popover"
-            data-ng-class="toolbarBottom.model.comment ? 'present' : 'absent'"
-            data-content="{{toolbarBottom.model.comment && '<span>' + toolbarBottom.model.comment + '</span>' || !toolbarBottom.model.comment && '<span>Click to update this ' + toolbarBottom.viewMode + ' note</span>'}}"
-            data-html="true" data-trigger="hover"
-            data-ng-click="toolbarBottom.displayCommentModal()">
-                <div ng-if="toolbarBottom.model.comment">
-                    <i class="fas fa-ellipsis-h" data-fa-transform="shrink-10 up-.5" data-fa-mask="fas fa-comment"></i>
-                </div>
-                <div ng-if="!toolbarBottom.model.comment">
-                    <i class="fas fa-pencil-alt" data-fa-transform="shrink-10 up-.5" data-fa-mask="fas fa-comment"></i>
-                </div>
-            </span>
+        data-toggle="popover"
+        data-ng-class="toolbarBottom.model.comment ? 'present' : 'absent'"
+        data-content="{{toolbarBottom.model.comment && '<span>' + toolbarBottom.model.comment + '</span>' || !toolbarBottom.model.comment && '<span>Click to update this ' + toolbarBottom.viewMode + ' note</span>'}}"
+        data-html="true" data-trigger="hover"
+        data-ng-click="toolbarBottom.displayCommentModal()">
+          <div ng-if="toolbarBottom.model.comment">
+            <i class="fas fa-ellipsis-h" data-fa-transform="shrink-10 up-.5" data-fa-mask="fas fa-comment"></i>
+          </div>
+          <div ng-if="!toolbarBottom.model.comment">
+            <i class="fas fa-pencil-alt" data-fa-transform="shrink-10 up-.5" data-fa-mask="fas fa-comment"></i>
+          </div>
+      </span>
 
       <span class="button button-dark button-disabled"
             data-ng-if="toolbarBottom.usesCrossSuitePattern"
@@ -90,20 +136,20 @@
             data-html="true"
             data-trigger="hover"></i>
         Accept {{toolbarBottom.viewMode}}
-            </span>
-
+      </span>
+    
       <span id="accept-test" class="button js-rebase-suite button-blue"
             data-ng-if="toolbarBottom.showAcceptButton()"
             data-ng-click="toolbarBottom.updatePatterns()"></i>
         Accept {{toolbarBottom.viewMode}}
-            </span>
+      </span>
 
       <span id="revert-test" class="button js-rebase-suite button-red"
             data-ng-if="toolbarBottom.showRevertButton()"
             data-ng-click="toolbarBottom.revertAcceptedPatterns()">
-                <i class="fas {{theme.statusClasses['unrebased']}}"></i>
-                Revert {{toolbarBottom.viewMode}}
-            </span>
+        <i class="fas {{theme.statusClasses['unrebased']}}"></i>
+        Revert {{toolbarBottom.viewMode}}
+      </span>
     </div>
   </div>
 </div>
