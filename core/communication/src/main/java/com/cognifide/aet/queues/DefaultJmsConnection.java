@@ -16,7 +16,6 @@
 package com.cognifide.aet.queues;
 
 import com.cognifide.aet.communication.api.queues.JmsConnection;
-import com.cognifide.aet.communication.api.queues.JmsEndpointConfig;
 import com.cognifide.aet.queues.configuration.DefaultJmsConnectionConf;
 import javax.jms.Connection;
 import javax.jms.JMSException;
@@ -54,11 +53,6 @@ public class DefaultJmsConnection implements JmsConnection {
   @Override
   public Connection getJmsConnection() {
     return connection;
-  }
-
-  @Override
-  public JmsEndpointConfig getEndpointConfig() {
-    return new JmsEndpointConfig(config.url(), config.username(), config.password());
   }
 
   @Activate

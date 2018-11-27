@@ -99,10 +99,6 @@
       <artifactId>mockito-all</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.google.guava</groupId>
-      <artifactId>guava-testlib</artifactId>
-    </dependency>
-    <dependency>
       <groupId>com.googlecode.zohhak</groupId>
       <artifactId>zohhak</artifactId>
     </dependency>
