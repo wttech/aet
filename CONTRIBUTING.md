@@ -67,7 +67,7 @@ Please do so, we believe that having good an up-to-date documentation is as impo
 
 ## Changelog
 When changing or fixing some important part of AET, please remember to update [Changelog](https://github.com/Cognifide/aet/blob/master/CHANGELOG.md).
-Your entry should be enlisted in `Unreleased` section. It will be moved to appropriate release notes during release process.
+Your entry should be enlisted **at the end** of the `Unreleased` section. It will be moved to appropriate release notes during release process.
 Please use convention `- [PR-ABC](https://github.com/Cognifide/aet/pull/ABC) - short description of the PR.`.
 
 ## Tests naming convention
