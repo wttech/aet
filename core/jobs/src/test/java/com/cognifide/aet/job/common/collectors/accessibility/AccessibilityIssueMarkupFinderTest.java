@@ -35,7 +35,7 @@ public class AccessibilityIssueMarkupFinderTest {
   }
 
   @Test
-  public void testSingleIssueNoOffset() {
+  public void get_SingleIssueWithNoOffset() {
     String html = "<a/>";
     String issuesJson = "[{\"code\":\"1\",\"message\":\"m\",\"type\":1,\"elementString\":\"<a/>\"}]";
     issues = new AccessibilityIssueMarkupFinder(html, issuesJson).get();
@@ -43,7 +43,7 @@ public class AccessibilityIssueMarkupFinderTest {
   }
 
   @Test
-  public void testSingleIssueColOffset() {
+  public void get_SingleIssueWithColOffset() {
     String html = "xxxx<a/>";
     String issuesJson = "[{\"code\":\"1\",\"message\":\"m\",\"type\":1,\"elementString\":\"<a/>\"}]";
     issues = new AccessibilityIssueMarkupFinder(html, issuesJson).get();
@@ -51,7 +51,7 @@ public class AccessibilityIssueMarkupFinderTest {
   }
 
   @Test
-  public void testSingleIssueLineColOffset() {
+  public void get_SingleIssueWithColLineOffset() {
     String html = "\nxx\n\nxx<a/>xx";
     String issuesJson = "[{\"code\":\"1\",\"message\":\"m\",\"type\":1,\"elementString\":\"<a/>\"}]";
     issues = new AccessibilityIssueMarkupFinder(html, issuesJson).get();
@@ -59,7 +59,7 @@ public class AccessibilityIssueMarkupFinderTest {
   }
 
   @Test
-  public void testOneMarkupDifferentTypeIssues() {
+  public void get_OneElementDifferentIssueTypes() {
     String html = "\n\nx<a/>";
     String issuesJson =
         "[{\"code\":\"1\",\"message\":\"m\",\"type\":1,\"elementString\":\"<a/>\"}," +
@@ -70,7 +70,7 @@ public class AccessibilityIssueMarkupFinderTest {
   }
 
   @Test
-  public void testManySameIssues() {
+  public void get_ManySameIssues() {
     String html = "\nxx\n\nxx<a/>xx\n\n\n<a/>xxx";
     String issuesJson =
         "[{\"code\":\"1\",\"message\":\"m\",\"type\":1,\"elementString\":\"<a/>\"},"
@@ -81,7 +81,7 @@ public class AccessibilityIssueMarkupFinderTest {
   }
 
   @Test
-  public void testNestedIssues() {
+  public void get_NestedIssues() {
     String html = "\nx\nxxx\n<div id=\"footer\"><a href=\"test\"></a></div>";
     String issuesJson =
         "[{\"code\":\"1\",\"message\":\"m\",\"type\":1,\"elementString\":\"<div id=\\\"footer\\\"><a href=\\\"test\\\"></a></div>\"},"
