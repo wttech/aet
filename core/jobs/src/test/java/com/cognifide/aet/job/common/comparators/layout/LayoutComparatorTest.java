@@ -52,9 +52,9 @@ import org.mockito.runners.MockitoJUnitRunner;
 @RunWith(MockitoJUnitRunner.class)
 public class LayoutComparatorTest {
 
-  private static final Pattern PATTERN_1 = new Pattern("1");
+  private static final Pattern PATTERN_1 = new Pattern("1", null);
 
-  private static final Pattern PATTERN_2 = new Pattern("2");
+  private static final Pattern PATTERN_2 = new Pattern("2", null);
 
   private static final String ARTIFACT_MD5_1 = "1";
 

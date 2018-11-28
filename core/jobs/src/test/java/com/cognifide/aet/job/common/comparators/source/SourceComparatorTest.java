@@ -58,7 +58,7 @@ public class SourceComparatorTest extends AbstractComparatorTest {
       Map<String, String> comparatorParams)
       throws Exception {
     ComparatorProperties properties = new ComparatorProperties(TEST_COMPANY, TEST_PROJECT,
-        Collections.singleton(new Pattern(patternFilename)), dataFilename);
+        Collections.singleton(new Pattern(patternFilename, null)), dataFilename);
     tested = new SourceComparator(artifactDaoMock, properties, new DiffParser(),
         new ArrayList<DataFilterJob>());
     tested.setParameters(comparatorParams);

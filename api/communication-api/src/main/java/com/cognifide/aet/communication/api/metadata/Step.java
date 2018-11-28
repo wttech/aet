@@ -108,18 +108,15 @@ public class Step extends Operation implements Commentable, Named {
     comparators.add(comparator);
   }
 
-  public void addPatterns(String... artifactId) {
-    Set<Pattern> patterns = Arrays.stream(artifactId)
-        .map(Pattern::new)
-        .collect(Collectors.toSet());
-    addPatterns(patterns);
+  public void addPattern(String artifactId, String patternSuiteCorrelationId) {
+    Pattern pattern = new Pattern(artifactId, patternSuiteCorrelationId);
+    addPatterns(Collections.singleton(pattern));
   }
 
   public void addPatterns(Set<Pattern> patterns) {
     if (this.patterns == null) {
       this.patterns = new HashSet<>();
     }
-
     this.patterns.addAll(patterns);
   }
 

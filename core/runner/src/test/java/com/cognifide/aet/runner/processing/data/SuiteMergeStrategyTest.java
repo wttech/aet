@@ -124,8 +124,10 @@ public class SuiteMergeStrategyTest {
     final Suite pattern1 = readSuite(patternResource);
     final Suite pattern2 = readSuite(patternResource);
 
-    pattern1.getTests().get(0).getUrls().iterator().next().getSteps().get(2).addPatterns("foo");
-    pattern2.getTests().get(0).getUrls().iterator().next().getSteps().get(2).addPatterns("zoo");
+    pattern1.getTests().get(0).getUrls().iterator().next().getSteps().get(2)
+        .addPattern("foo", null);
+    pattern2.getTests().get(0).getUrls().iterator().next().getSteps().get(2)
+        .addPattern("zoo", null);
     List<Suite> patterns = Arrays.asList(pattern1, pattern2);
 
     final Suite merged = SuiteMergeStrategy.merge(current, pattern1, patterns);
@@ -147,7 +149,7 @@ public class SuiteMergeStrategyTest {
     final Suite pattern = readSuite(patternResource);
     List<Suite> patterns = Arrays.asList(pattern);
 
-    current.getTests().get(0).getUrls().iterator().next().getSteps().get(4).addPatterns("foo");
+    current.getTests().get(0).getUrls().iterator().next().getSteps().get(4).addPattern("foo", null);
 
     final Suite merged = SuiteMergeStrategy.merge(current, pattern, patterns);
 

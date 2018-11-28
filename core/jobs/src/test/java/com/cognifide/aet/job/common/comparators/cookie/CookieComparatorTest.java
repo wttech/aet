@@ -38,7 +38,7 @@ public class CookieComparatorTest extends AbstractComparatorTest {
   public void setUp() throws Exception {
     artifactDaoMock = new ArtifactDAOMock(CookieComparator.class);
     comparatorProperties = new ComparatorProperties(TEST_COMPANY, TEST_PROJECT,
-        Collections.singleton(new Pattern("pattern-result.json")), "data-result.json");
+        Collections.singleton(new Pattern("pattern-result.json", null)), "data-result.json");
     tested = new CookieComparator(comparatorProperties, artifactDaoMock);
   }
 
@@ -75,7 +75,8 @@ public class CookieComparatorTest extends AbstractComparatorTest {
   @Test
   public void testCompare_compareSuccess() throws Exception {
     comparatorProperties = new ComparatorProperties(TEST_COMPANY, TEST_PROJECT,
-        Collections.singleton(new Pattern("identical-pattern-result.json")), "data-result.json");
+        Collections.singleton(new Pattern("identical-pattern-result.json", null)),
+        "data-result.json");
     tested = new CookieComparator(comparatorProperties, artifactDaoMock);
     tested.setParameters(ImmutableMap.of("action", "compare", "showMatched", "true"));
     result = tested.compare();

@@ -95,7 +95,7 @@ public class ScreenCollectorTest {
       throws ProcessingException {
     when(webDriver.getScreenshotAs(any())).thenReturn(SCREENSHOT);
     when(collectorProperties.getPatternsIds()).thenReturn(
-        Collections.singleton(new Pattern(PATTERN_ARTIFACT_ID)));
+        Collections.singleton(new Pattern(PATTERN_ARTIFACT_ID, null)));
     when(artifactsDAO.getArtifactMD5(any(), eq(PATTERN_ARTIFACT_ID))).thenReturn(PATTERN_MD5);
 
     CollectorStepResult stepResult = screenCollector.collect();

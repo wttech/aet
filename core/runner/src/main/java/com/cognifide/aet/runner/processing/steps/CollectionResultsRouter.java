@@ -94,7 +94,7 @@ public class CollectionResultsRouter extends StepManager implements TaskFinishPo
             getTotalTasksCount(), correlationId);
 
         if (collectorResultData.getStatus() == JobStatus.SUCCESS) {
-          onSuccess(collectorResultData, testName);
+          onSuccess(collectorResultData, testName, correlationId);
         } else {
           final Url failedUrl = collectorResultData.getUrl();
           failedUrl.setErrorMessage(collectorResultData.getProcessingError().getDescription());
@@ -122,8 +122,8 @@ public class CollectionResultsRouter extends StepManager implements TaskFinishPo
     consumer.close();
   }
 
-  private void onSuccess(CollectorResultData collectorResultData, String testName)
-      throws JMSException {
+  private void onSuccess(CollectorResultData collectorResultData, String testName,
+      String correlationId) throws JMSException {
     final Url processedUrl = collectorResultData.getUrl();
     updateSuiteUrl(collectorResultData.getTestName(), processedUrl);
     for (Step step : processedUrl.getSteps()) {
@@ -132,12 +132,12 @@ public class CollectionResultsRouter extends StepManager implements TaskFinishPo
         onError(ProcessingError.collectingError(step.getStepResult().getErrors().toString()));
       } else if (hasComparators(step)) {
         if (step.getPatterns().isEmpty()) {
-          step.addPatterns(step.getStepResult().getArtifactId());
+          step.addPattern(step.getStepResult().getArtifactId(), correlationId);
         }
         int scheduledMessagesNo = dispatch(step, testName, processedUrl.getName());
         LOGGER
             .info("{} ComparatorJobData messages send to queue {}. CorrelationId: {} TestName: {}",
-                scheduledMessagesNo, getQueueOutName(), correlationId, testName);
+                scheduledMessagesNo, getQueueOutName(), this.correlationId, testName);
         for (ChangeObserver changeListener : changeListeners) {
           changeListener.updateAmountToReceive(scheduledMessagesNo);
         }
