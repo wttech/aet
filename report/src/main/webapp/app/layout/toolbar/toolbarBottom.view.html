@@ -128,16 +128,6 @@
           </div>
       </span>
 
-      <span class="button button-dark button-disabled"
-            data-ng-if="toolbarBottom.usesCrossSuitePattern"
-            data-aet-included-comment-popover
-            data-toggle="popover"
-            data-content="May not be accepted because compared against another suite patterns."
-            data-html="true"
-            data-trigger="hover"></i>
-        Accept {{toolbarBottom.viewMode}}
-      </span>
-    
       <span class="button js-rebase-suite button-blue"
             data-ng-if="toolbarBottom.showAcceptButton()"
             data-ng-click="toolbarBottom.updatePatterns()"></i>

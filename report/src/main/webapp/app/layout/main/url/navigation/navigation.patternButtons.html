@@ -17,19 +17,7 @@
     limitations under the License.
 
 -->
-<div class="toolbar-btns pull-right" data-ng-if=" case.usesCrossSuitePattern ">
-  <div class="button button-small button-dark button-disabled"
-       ng-if="case.showAcceptButton"
-       data-aet-included-comment-popover
-       data-toggle="popover"
-       data-content="May not be accepted because compared against another suite patterns."
-       data-html="true"
-       data-trigger="hover">
-    <i class="icon icon-rebase"></i>
-    Accept test case
-  </div>
-</div>
-<div class="toolbar-btns pull-right" data-ng-if=" !case.usesCrossSuitePattern ">
+<div class="toolbar-btns pull-right">
   <div class="button button-small js-test-rebase button-blue" ng-click="urlView.acceptCase(case)"
        ng-if="case.showAcceptButton">
     <i class="icon icon-rebase"></i>
