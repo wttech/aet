@@ -16,18 +16,27 @@
 package com.cognifide.aet.communication.api.metadata;
 
 import java.util.Objects;
+import org.hibernate.validator.constraints.NotBlank;
 
 public class Pattern {
 
   @javax.validation.constraints.Pattern(regexp = "^[0-9a-fA-F]{24}$", message = "Invalid objectID")
   private final String pattern;
 
-  public Pattern(String pattern) {
+  @NotBlank
+  private final String patternSuiteCorrelationId;
+
+  public Pattern(String pattern, String patternSuiteCorrelationId) {
     this.pattern = pattern;
+    this.patternSuiteCorrelationId = patternSuiteCorrelationId;
   }
 
   public String getPattern() {
     return pattern;
+  }
+
+  public String getPatternSuiteCorrelationId() {
+    return patternSuiteCorrelationId;
   }
 
   @Override
