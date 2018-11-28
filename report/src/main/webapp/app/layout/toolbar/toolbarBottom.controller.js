@@ -28,11 +28,6 @@ define([], function () {
     suiteInfoService, rerunService, historyService) {
     var vm = this;
 
-    // disables accept button if compared against another suite patterns
-    if (suiteInfoService.getInfo().patternCorrelationId) {
-      vm.usesCrossSuitePattern = true;
-    }
-
     vm.showAcceptButton = patternsMayBeUpdated;
     vm.showRevertButton = patternsMarkedForUpdateMayBeReverted;
     vm.displayCommentModal = displayCommentModal;
@@ -92,9 +87,6 @@ define([], function () {
           vm.model.patternsToAccept - vm.model.acceptedPatterns;
         result = patternsToAcceptLeft > 0;
       }
-      if (vm.usesCrossSuitePattern) {
-        result = false;
-      }
       return result;
 
     }
@@ -105,9 +97,6 @@ define([], function () {
         result =
           vm.model.acceptedPatterns > 0 &&
           vm.model.acceptedPatterns <= vm.model.patternsToAccept;
-      }
-      if (vm.usesCrossSuitePattern) {
-        result = false;
       }
       return result;
     }
