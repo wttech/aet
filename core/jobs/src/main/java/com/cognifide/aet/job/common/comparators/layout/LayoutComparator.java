@@ -155,9 +155,10 @@ public class LayoutComparator implements ComparatorJob {
         result = getPassedStepResult(pattern);
       } else if (hasMaskThresholdWithAcceptableDifference(imageComparisonResult)
           || isMaskWithoutDifference(imageComparisonResult)) {
-        result = new ComparatorStepResult(maskArtifactId, Status.CONDITIONALLY_PASSED, true);
+        result = new ComparatorStepResult(maskArtifactId, pattern, Status.CONDITIONALLY_PASSED,
+            true);
       } else {
-        result = new ComparatorStepResult(maskArtifactId, Status.FAILED, true);
+        result = new ComparatorStepResult(maskArtifactId, pattern, Status.FAILED, true);
       }
 
       if (!CollectionUtils.isEmpty(notFoundExcludeElements)) {
@@ -234,10 +235,7 @@ public class LayoutComparator implements ComparatorJob {
   }
 
   private ComparatorStepResult getPassedStepResult(Pattern pattern) {
-    ComparatorStepResult result = new ComparatorStepResult(null, ComparatorStepResult.Status.PASSED,
-        false);
-    addTimestampToResult(result, pattern);
-    return result;
+    return new ComparatorStepResult(null, Status.PASSED);
   }
 
   @Override
