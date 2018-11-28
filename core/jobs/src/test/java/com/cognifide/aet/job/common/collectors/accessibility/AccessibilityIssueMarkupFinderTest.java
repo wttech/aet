@@ -17,7 +17,6 @@ package com.cognifide.aet.job.common.collectors.accessibility;
 
 import static org.junit.Assert.assertEquals;
 
-import com.cognifide.aet.job.common.collectors.accessibility.AccessibilityIssue.IssueType;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Before;
@@ -37,61 +36,65 @@ public class AccessibilityIssueMarkupFinderTest {
 
   @Test
   public void testSingleIssueNoOffset() {
-    String html ="<a/>";
-    issues.add(new AccessibilityIssue(IssueType.ERROR,"","","<a/>",""));
-    issues = new AccessibilityIssueMarkupFinder(html,issues).getIssuesWithPositions();
-    verifySingleIssue(issues.get(0),1,1);
+    String html = "<a/>";
+    String issuesJson = "[{\"code\":\"1\",\"message\":\"m\",\"type\":1,\"elementString\":\"<a/>\"}]";
+    issues = new AccessibilityIssueMarkupFinder(html, issuesJson).get();
+    verifySingleIssue(issues.get(0), 1, 1);
   }
 
   @Test
-  public void testSingleIssueColOffset(){
-    String html="xxxx<a/>";
-    issues.add(new AccessibilityIssue(IssueType.ERROR,"","","<a/>",""));
-    issues = new AccessibilityIssueMarkupFinder(html,issues).getIssuesWithPositions();
-    verifySingleIssue(issues.get(0),1,5);
+  public void testSingleIssueColOffset() {
+    String html = "xxxx<a/>";
+    String issuesJson = "[{\"code\":\"1\",\"message\":\"m\",\"type\":1,\"elementString\":\"<a/>\"}]";
+    issues = new AccessibilityIssueMarkupFinder(html, issuesJson).get();
+    verifySingleIssue(issues.get(0), 1, 5);
   }
 
   @Test
-  public void testSingleIssueLineColOffset(){
-    String html="\nxx\n\nxx<a/>xx";
-    issues.add(new AccessibilityIssue(IssueType.ERROR,"","","<a/>",""));
-    issues = new AccessibilityIssueMarkupFinder(html,issues).getIssuesWithPositions();
-    verifySingleIssue(issues.get(0),4,3);
+  public void testSingleIssueLineColOffset() {
+    String html = "\nxx\n\nxx<a/>xx";
+    String issuesJson = "[{\"code\":\"1\",\"message\":\"m\",\"type\":1,\"elementString\":\"<a/>\"}]";
+    issues = new AccessibilityIssueMarkupFinder(html, issuesJson).get();
+    verifySingleIssue(issues.get(0), 4, 3);
   }
 
   @Test
-  public void testOneMarkupDifferentTypeIssues(){
-    String html="\n\nx<a/>";
-    issues.add(new AccessibilityIssue(IssueType.ERROR,"","","<a/>",""));
-    issues.add(new AccessibilityIssue(IssueType.NOTICE,"","","<a/>",""));
-    issues = new AccessibilityIssueMarkupFinder(html,issues).getIssuesWithPositions();
-    verifySingleIssue(issues.get(0),3,2);
-    verifySingleIssue(issues.get(1),3,2);
+  public void testOneMarkupDifferentTypeIssues() {
+    String html = "\n\nx<a/>";
+    String issuesJson =
+        "[{\"code\":\"1\",\"message\":\"m\",\"type\":1,\"elementString\":\"<a/>\"}," +
+            "{\"code\":\"1\",\"message\":\"m\",\"type\":2,\"elementString\":\"<a/>\"}]";
+    issues = new AccessibilityIssueMarkupFinder(html, issuesJson).get();
+    verifySingleIssue(issues.get(0), 3, 2);
+    verifySingleIssue(issues.get(1), 3, 2);
   }
 
   @Test
-  public void testManySameIssues(){
-    String html="\nxx\n\nxx<a/>xx\n\n\n<a/>xxx";
-    issues.add(new AccessibilityIssue(IssueType.ERROR,"","","<a/>",""));
-    issues.add(new AccessibilityIssue(IssueType.ERROR,"","","<a/>",""));
-    issues = new AccessibilityIssueMarkupFinder(html,issues).getIssuesWithPositions();
-    verifySingleIssue(issues.get(0),4,3);
-    verifySingleIssue(issues.get(1),7,1);
+  public void testManySameIssues() {
+    String html = "\nxx\n\nxx<a/>xx\n\n\n<a/>xxx";
+    String issuesJson =
+        "[{\"code\":\"1\",\"message\":\"m\",\"type\":1,\"elementString\":\"<a/>\"},"
+            + "{\"code\":\"1\",\"message\":\"m\",\"type\":1,\"elementString\":\"<a/>\"}]";
+    issues = new AccessibilityIssueMarkupFinder(html, issuesJson).get();
+    verifySingleIssue(issues.get(0), 4, 3);
+    verifySingleIssue(issues.get(1), 7, 1);
   }
 
   @Test
-  public void testNestedIssues(){
-    String html="\nx\nxxx\n<div id=\"footer\"><a href=\"test\"></a></div>";
-    issues.add(new AccessibilityIssue(IssueType.ERROR,"","","<div id=\"footer\"><a href=\"test\"></a></div>",""));
-    issues.add(new AccessibilityIssue(IssueType.ERROR,"","","<a href=\"test\"></a>",""));
-    issues = new AccessibilityIssueMarkupFinder(html,issues).getIssuesWithPositions();
-    verifySingleIssue(issues.get(0),4,1);
-    verifySingleIssue(issues.get(1),4,18);
+  public void testNestedIssues() {
+    String html = "\nx\nxxx\n<div id=\"footer\"><a href=\"test\"></a></div>";
+    String issuesJson =
+        "[{\"code\":\"1\",\"message\":\"m\",\"type\":1,\"elementString\":\"<div id=\\\"footer\\\"><a href=\\\"test\\\"></a></div>\"},"
+            + "{\"code\":\"1\",\"message\":\"m\",\"type\":1,\"elementString\":\"<a href=\\\"test\\\"></a>\"}]";
+    issues = new AccessibilityIssueMarkupFinder(html, issuesJson).get();
+    verifySingleIssue(issues.get(0), 4, 1);
+    verifySingleIssue(issues.get(1), 4, 18);
   }
 
-  public void verifySingleIssue(AccessibilityIssue issue, int expectedLineNumber, int expectedColumnNumber){
-    assertEquals(expectedLineNumber,issue.getLineNumber());
-    assertEquals(expectedColumnNumber,expectedColumnNumber);
+  public void verifySingleIssue(AccessibilityIssue issue, int expectedLineNumber,
+      int expectedColumnNumber) {
+    assertEquals(expectedLineNumber, issue.getLineNumber());
+    assertEquals(expectedColumnNumber, expectedColumnNumber);
   }
 
 }
