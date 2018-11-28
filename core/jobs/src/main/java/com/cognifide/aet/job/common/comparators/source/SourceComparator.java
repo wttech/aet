@@ -108,10 +108,10 @@ public class SourceComparator implements ComparatorJob {
         final List<ResultDelta> deltas = diffParser
             .generateDiffs(patternSource, dataSource, compareTrimmedLines);
         if (deltas.isEmpty()) {
-          result = new ComparatorStepResult(null, ComparatorStepResult.Status.PASSED, false);
+          result = new ComparatorStepResult(null, ComparatorStepResult.Status.PASSED);
         } else {
           result = new ComparatorStepResult(artifactsDAO.saveArtifactInJsonFormat(properties,
-              Collections.singletonMap("differences", deltas)),
+              Collections.singletonMap("differences", deltas)), pattern,
               ComparatorStepResult.Status.FAILED, true);
           result.addData("formattedPattern", artifactsDAO.saveArtifact(properties, patternSource));
           result.addData("formattedSource", artifactsDAO.saveArtifact(properties, dataSource));

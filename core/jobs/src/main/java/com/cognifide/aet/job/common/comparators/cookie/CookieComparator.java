@@ -83,7 +83,7 @@ public class CookieComparator implements ComparatorJob {
   }
 
   @SuppressWarnings("unchecked")
-  private ComparatorStepResult compareCookies(Set<Cookie> cookies, Pattern pattern)
+  private ComparatorStepResult compare(Set<Cookie> cookies, Pattern pattern)
       throws IOException {
     final Set<Cookie> cookiesPattern = artifactsDAO
         .getJsonFormatArtifact(properties, pattern.getPattern(), COOKIES_SET_TYPE);
@@ -106,9 +106,9 @@ public class CookieComparator implements ComparatorJob {
 
     final String artifactId = artifactsDAO.saveArtifactInJsonFormat(properties, result);
 
-    ComparatorStepResult stepResult = new ComparatorStepResult(artifactId,
-        compareResult ? Status.PASSED : Status.FAILED,
-        !compareResult);
+    ComparatorStepResult stepResult = new ComparatorStepResult(artifactId, pattern,
+        compareResult ? Status.PASSED : Status.FAILED, !compareResult);
+
     stepResult.addData("compareAction", compareAction.name());
     return stepResult;
   }
@@ -154,7 +154,7 @@ public class CookieComparator implements ComparatorJob {
           result = Collections.singletonList(testCookie(cookies));
           break;
         case COMPARE:
-          result = compareCookies(cookies);
+          result = compare(cookies);
           break;
         case LIST:
         default:
@@ -167,10 +167,10 @@ public class CookieComparator implements ComparatorJob {
     return result;
   }
 
-  private List<ComparatorStepResult> compareCookies(Set<Cookie> cookies) throws IOException {
+  private List<ComparatorStepResult> compare(Set<Cookie> cookies) throws IOException {
     List<ComparatorStepResult> results = new ArrayList<>();
     for (Pattern pattern : properties.getPatternsIds()) {
-      results.add(compareCookies(cookies, pattern));
+      results.add(compare(cookies, pattern));
     }
     return results;
   }

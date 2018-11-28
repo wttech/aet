@@ -32,7 +32,6 @@ public abstract class StepResult implements Serializable {
   private static final long serialVersionUID = 7757386595499766654L;
 
   @Pattern(regexp = "^[0-9a-fA-F]{24}$", message = "Invalid objectID")
-
   private final String artifactId;
 
   private final Payload payload;
