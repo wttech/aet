@@ -19,7 +19,7 @@ import javax.validation.Valid;
 
 public class ComparatorStepResult extends StepResult {
 
-  private static final long serialVersionUID = 4112741834952534050L;
+  private static final long serialVersionUID = 4112700984952534120L;
 
   private final Status status;
 

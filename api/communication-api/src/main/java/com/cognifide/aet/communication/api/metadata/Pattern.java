@@ -15,10 +15,14 @@
  */
 package com.cognifide.aet.communication.api.metadata;
 
+import java.io.Serializable;
 import java.util.Objects;
 import org.hibernate.validator.constraints.NotBlank;
 
-public class Pattern {
+public class Pattern implements Serializable {
+
+  private static final long serialVersionUID = 4009233984951235127L;
+
 
   @javax.validation.constraints.Pattern(regexp = "^[0-9a-fA-F]{24}$", message = "Invalid objectID")
   private final String pattern;

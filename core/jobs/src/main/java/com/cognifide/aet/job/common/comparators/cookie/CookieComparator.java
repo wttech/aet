@@ -65,6 +65,8 @@ public class CookieComparator implements ComparatorJob {
   private static final Type COOKIES_SET_TYPE = new TypeToken<Set<Cookie>>() {
   }.getType();
 
+  private static final String COMPARE_ACTION_PARAM = "compareAction";
+
   private final ComparatorProperties properties;
 
   private final ArtifactsDAO artifactsDAO;
@@ -109,11 +111,11 @@ public class CookieComparator implements ComparatorJob {
     ComparatorStepResult stepResult = new ComparatorStepResult(artifactId, pattern,
         compareResult ? Status.PASSED : Status.FAILED, !compareResult);
 
-    stepResult.addData("compareAction", compareAction.name());
+    stepResult.addData(COMPARE_ACTION_PARAM, compareAction.name());
     return stepResult;
   }
 
-  private ComparatorStepResult testCookie(Set<Cookie> cookies) {
+  private List<ComparatorStepResult> testCookie(Set<Cookie> cookies) {
     boolean testResult = false;
     for (Cookie cookie : cookies) {
       if (cookie.getName().equals(name) && (value == null || value.equals(cookie.getValue()))) {
@@ -128,17 +130,17 @@ public class CookieComparator implements ComparatorJob {
     ComparatorStepResult stepResult = new ComparatorStepResult(artifactId,
         testResult ? Status.PASSED : Status.FAILED);
 
-    stepResult.addData("compareAction", compareAction.name());
+    stepResult.addData(COMPARE_ACTION_PARAM, compareAction.name());
 
-    return stepResult;
+    return Collections.singletonList(stepResult);
   }
 
-  private ComparatorStepResult listCookies(Set<Cookie> cookies) {
+  private List<ComparatorStepResult> listCookies(Set<Cookie> cookies) {
     CookieComparatorResult result = new CookieComparatorResult(compareAction, cookies);
     final String artifactId = artifactsDAO.saveArtifactInJsonFormat(properties, result);
     ComparatorStepResult stepResult = new ComparatorStepResult(artifactId, Status.PASSED);
-    stepResult.addData("compareAction", compareAction.name());
-    return stepResult;
+    stepResult.addData(COMPARE_ACTION_PARAM, compareAction.name());
+    return Collections.singletonList(stepResult);
   }
 
   @Override
@@ -151,14 +153,14 @@ public class CookieComparator implements ComparatorJob {
               COOKIES_SET_TYPE);
       switch (compareAction) {
         case TEST:
-          result = Collections.singletonList(testCookie(cookies));
+          result = testCookie(cookies);
           break;
         case COMPARE:
-          result = compare(cookies);
+          result = compareCookies(cookies);
           break;
         case LIST:
         default:
-          result = Collections.singletonList(listCookies(cookies));
+          result = listCookies(cookies);
           break;
       }
     } catch (IOException e) {
@@ -167,7 +169,7 @@ public class CookieComparator implements ComparatorJob {
     return result;
   }
 
-  private List<ComparatorStepResult> compare(Set<Cookie> cookies) throws IOException {
+  private List<ComparatorStepResult> compareCookies(Set<Cookie> cookies) throws IOException {
     List<ComparatorStepResult> results = new ArrayList<>();
     for (Pattern pattern : properties.getPatternsIds()) {
       results.add(compare(cookies, pattern));

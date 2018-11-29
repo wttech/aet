@@ -106,21 +106,20 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
   }
 
   private boolean isPatternsAndResultMD5Identical(byte[] screenshot) {
-    if (properties.getPatternsIds() == null || properties.getPatternsIds().isEmpty()) {
-      return false;
-    }
+    final boolean isCollectedIdentical;
 
-    return properties.getPatternsIds().stream()
-        .allMatch(pattern -> {
-          if (properties.getPatternsIds() != null && !properties.getPatternsIds().isEmpty()) {
+    if (properties.getPatternsIds() == null || properties.getPatternsIds().isEmpty()) {
+      isCollectedIdentical = false;
+    } else {
+      isCollectedIdentical = properties.getPatternsIds().stream()
+          .allMatch(pattern -> {
             final String screenshotMD5 = DigestUtils.md5Hex(screenshot);
             final String patternMD5 = artifactsDAO
                 .getArtifactMD5(properties, pattern.getPattern());
             return StringUtils.equalsIgnoreCase(patternMD5, screenshotMD5);
-          } else {
-            return false;
-          }
-        });
+          });
+    }
+    return isCollectedIdentical;
   }
 
   private CollectorStepResult getResultWithExcludeSelectors(String resultId) {

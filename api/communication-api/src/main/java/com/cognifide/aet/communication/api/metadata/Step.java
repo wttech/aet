@@ -28,7 +28,7 @@ import org.hibernate.validator.constraints.NotBlank;
 
 public class Step extends Operation implements Commentable, Named {
 
-  private static final long serialVersionUID = 3123747091786941360L;
+  private static final long serialVersionUID = 3437740998451941360L;
 
   @NotNull
   private final Integer index;

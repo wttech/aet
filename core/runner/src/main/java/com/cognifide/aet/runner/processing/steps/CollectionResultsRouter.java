@@ -123,7 +123,7 @@ public class CollectionResultsRouter extends StepManager implements TaskFinishPo
   }
 
   private void onSuccess(CollectorResultData collectorResultData, String testName,
-      String correlationId) throws JMSException {
+      String patternSuiteCorrelationId) throws JMSException {
     final Url processedUrl = collectorResultData.getUrl();
     updateSuiteUrl(collectorResultData.getTestName(), processedUrl);
     for (Step step : processedUrl.getSteps()) {
@@ -132,7 +132,7 @@ public class CollectionResultsRouter extends StepManager implements TaskFinishPo
         onError(ProcessingError.collectingError(step.getStepResult().getErrors().toString()));
       } else if (hasComparators(step)) {
         if (step.getPatterns().isEmpty()) {
-          step.addPattern(step.getStepResult().getArtifactId(), correlationId);
+          step.addPattern(step.getStepResult().getArtifactId(), patternSuiteCorrelationId);
         }
         int scheduledMessagesNo = dispatch(step, testName, processedUrl.getName());
         LOGGER

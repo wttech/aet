@@ -25,7 +25,7 @@ import java.util.Collections;
 
 public class Comparator extends Operation implements Commentable, Named {
 
-  private static final long serialVersionUID = -2641455400847109851L;
+  private static final long serialVersionUID = -2641455409327109851L;
 
   public static final String COMPARATOR_PARAMETER = "comparator";
 
