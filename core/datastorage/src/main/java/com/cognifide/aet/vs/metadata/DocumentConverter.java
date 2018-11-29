@@ -15,18 +15,34 @@
  */
 package com.cognifide.aet.vs.metadata;
 
+import com.cognifide.aet.communication.api.metadata.Comparator;
+import com.cognifide.aet.communication.api.metadata.Step;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonDeserializer;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.Map;
 import org.bson.Document;
 
 class DocumentConverter {
 
-  private static final Gson GSON_FOR_MONGO_JSON = new GsonBuilder()
-      .registerTypeAdapter(Suite.Timestamp.class, new TimestampDeserializer())
-      .create();
+  private static final Gson GSON_FOR_MONGO_JSON;
+
+  static final Map<Class, JsonDeserializer> DESERIALIZERS = new HashMap<>();
+
+  static {
+    DESERIALIZERS.put(Suite.Timestamp.class, new TimestampDeserializer());
+    DESERIALIZERS.put(Step.class, new StepDeserializer());
+    DESERIALIZERS.put(Comparator.class, new ComparatorDeserializer());
+
+    GsonBuilder builder = new GsonBuilder();
+    DESERIALIZERS.forEach(builder::registerTypeAdapter);
+
+    GSON_FOR_MONGO_JSON = builder.create();
+  }
 
   private static final Type SUITE_TYPE = new TypeToken<Suite>() {
   }.getType();

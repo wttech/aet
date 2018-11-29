@@ -51,7 +51,7 @@
               "comparators": [
                 {
                   "comment": "screen comparator level comment",
-                  "stepResult": [
+                  "stepResults": [
                     {
                       "status": "PASSED"
                     }
@@ -92,7 +92,7 @@
               },
               "comparators": [
                 {
-                  "stepResult": [
+                  "stepResults": [
                     {
                       "status": "PASSED"
                     }
