@@ -9,6 +9,8 @@ You may see all changes in the [Changelog](https://github.com/Cognifide/aet/blob
 Changes:
 * Counting line and column number of an accessibility issue occurrence in [[Accessibility Collector|AccessibilityCollector]] has been improved. 
 Columns are now indexed starting from 1. Bug with two identical issues on a single page yielding the same line and column number has been fixed.
+When upgrading from previous AET version you may need to increase `column` values by 1. Pay special attention to issues that occur more than once on a single page. In new AET version they will be listed twice, each with its exact column and line number.
+Related issue: [#438](https://github.com/Cognifide/aet/issues/438)
 
 
 ## Version 3.0.0
