@@ -27,6 +27,9 @@ the width of collected screenshot could be different that the width set in the `
 (see "Notes" section in [[Resolution Modifier|ResolutionModifier]] wiki). This issue doesn't occur when using AET 3.0 with Chrome browser - make
 sure to adjust the resolution `width` value when updating your suite from previous AET versions.
 
+Other changes:
+* Counting line and column number of an accessibility issue occurrence in [[Accessibility Collector|AccessibilityCollector]] has been improved. 
+Columns are now indexed starting from 1. Bug with two identical issues on a single page yielding the same line and column number has been fixed.
 ##### Known issues
 
 * [#357](https://github.com/Cognifide/aet/issues/357) - see Known issues section in [[Resolution Modifier|ResolutionModifier]] wiki
