@@ -54,8 +54,11 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
             _.forEach(test.urls, function (url) {
               var decoratedUrl = new StatisticsDecorator(url, decoratedTest);
               _.forEach(url.steps, function (step) {
+                step.suiteCottelationId = suiteData.correlationId;
                 var decoratedStep = new StatisticsDecorator(step, decoratedUrl);
                 _.forEach(step.comparators, function (comparator) {
+                  comparator.stepResult = new ComparatorStepResultsWrapper(
+                      comparator.stepResults);
                   decoratedStep.updateStatistics(comparator.stepResult);
                 });
               });
@@ -149,6 +152,85 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
 
       }
 
+      function ComparatorStepResultsWrapper(comparatorStepResults) {
+        var stepResults = comparatorStepResults,
+            resultsWrapper = {
+              getStepResults: getStepResults,
+              getStatus: getStatus,
+              setStatus: setStatus,
+              isAcceptable: isAcceptable,
+              isRebaseable: isRebaseable
+            };
+
+        return resultsWrapper;
+
+        function getStepResults() {
+          return stepResults;
+        }
+
+        function getStatus() {
+          var statusesBySeverity = [
+            'PROCESSING_ERROR',
+            'REBASED',
+            'FAILED',
+            'WARNING',
+            'CONDITIONALLY_PASSED',
+            'PASSED'];
+
+          var foundStatus;
+
+          _.forEach(statusesBySeverity, function (status) {
+            if (!foundStatus && anyResultHasStatus(status)) {
+              foundStatus = status;
+            }
+          });
+
+          return foundStatus;
+        }
+
+        function anyResultHasStatus(status) {
+          var hasStatus = false;
+
+          _.forEach(stepResults, function (stepResult) {
+            if (stepResult.status === status) {
+              hasStatus = true;
+            }
+          });
+
+          return hasStatus;
+        }
+
+        function setStatus(newStatus) {
+          _.forEach(stepResults, function (stepResult) {
+            stepResult.status = newStatus;
+          });
+        }
+
+        function isAcceptable() {
+          var isAnyAcceptable = false;
+
+          _.forEach(stepResults, function (stepResult) {
+            if (stepResult.acceptable) {
+              isAnyAcceptable = true;
+            }
+          });
+
+          return isAnyAcceptable;
+        }
+
+        function isRebaseable() {
+          var isAnyRebaseable = false;
+
+          _.forEach(stepResults, function (stepResult) {
+            if (stepResult.rebaseable) {
+              isAnyRebaseable = true;
+            }
+          });
+
+          return isAnyRebaseable;
+        }
+      }
+
       /**
        * Decorator pattern that counts all statuses for metadata tree nodes.
        * @param objectToDecorate - object that should be decorated.
@@ -206,11 +288,11 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
 
         function lastRerunTimestamp() {
           var timestamp = false;
-          if (typeof(this.urls) !== 'undefined'){
-            this.urls.forEach(function(url){
-              if(url.isReran){
-                if(timestamp == false || timestamp < url.rerunTimestamp){
-                timestamp = url.rerunTimestamp;
+          if (typeof(this.urls) !== 'undefined') {
+            this.urls.forEach(function (url) {
+              if (url.isReran) {
+                if (timestamp == false || timestamp < url.rerunTimestamp) {
+                  timestamp = url.rerunTimestamp;
                 }
               }
             });
@@ -229,9 +311,9 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
             var acceptedPatterns = 0;
             _.forEach(decoratedObject.comparators, function (comparator) {
               if (hasStepComparatorChangesToAccept(comparator)) {
-                comparator.stepResult.previousStatus = comparator.stepResult.status;
-                comparator.stepResult.wasAcceptable = comparator.stepResult.acceptable;
-                comparator.stepResult.status = 'REBASED';
+                comparator.stepResult.previousStatus = comparator.stepResult.getStatus();
+                comparator.stepResult.wasAcceptable = comparator.stepResult.isAcceptable();
+                comparator.stepResult.setStatus('REBASED');
                 acceptedPatterns++;
               }
             });
@@ -246,11 +328,13 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
               decoratedParentReference.revertPatternStatistics) {
             decoratedParentReference.revertPatternStatistics();
           }
+
           if (decoratedObject.comparators) {
             var revertedPatterns = 0;
             _.forEach(decoratedObject.comparators, function (comparator) {
               if (hasStepComparatorAcceptedChanges(comparator)) {
-                comparator.stepResult.status = comparator.stepResult.previousStatus;
+                comparator.stepResult.setStatus(
+                    comparator.stepResult.previousStatus);
                 comparator.stepResult.previousStatus = null;
                 revertedPatterns--;
               }
@@ -261,13 +345,13 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
 
         function hasStepComparatorChangesToAccept(comparator) {
           return comparator && comparator.stepResult &&
-              comparator.stepResult.acceptable;
+              comparator.stepResult.isAcceptable();
         }
 
         function hasStepComparatorAcceptedChanges(comparator) {
           return comparator && comparator.stepResult &&
-              comparator.stepResult.rebaseable  &&
-              comparator.stepResult.status === 'REBASED';
+              comparator.stepResult.isRebaseable() &&
+              comparator.stepResult.getStatus() === 'REBASED';
         }
 
         function getDecoratedObject() {
@@ -309,7 +393,8 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
         function conditionallyPassed() {
           decoratedObject.total++;
           decoratedObject.conditionallyPassed++;
-          if (decoratedParentReference && decoratedParentReference.conditionallyPassed) {
+          if (decoratedParentReference
+              && decoratedParentReference.conditionallyPassed) {
             decoratedParentReference.conditionallyPassed();
           }
         }
@@ -333,8 +418,8 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
         }
 
         function updateStatistics(stepResult) {
-          if (stepResult && stepResult.status) {
-            switch (stepResult.status) {
+          if (stepResult && stepResult.getStatus()) {
+            switch (stepResult.getStatus()) {
               case 'PASSED':
                 passed();
                 break;
@@ -371,4 +456,5 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
           }
         }
       }
-    });
+    }
+);
