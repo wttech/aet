@@ -119,12 +119,21 @@ define(['angularAMD', 'metadataService', 'metadataAccessService'],
           var result = false;
 
           if (isCollectorWithPattern(step) && isStepComparatorRebaseable(
-                  comparator)) {
+              comparator)) {
+
             result = !comparator.stepResult.previousStatus;
+
             if (result) {
               step.updatePatternStatistics();
-              step.oldPattern = step.pattern;
-              step.pattern = step.stepResult.artifactId;
+
+              step.oldPatterns = step.patterns;
+              step.patterns = [step.stepResult.artifactId];
+
+              var newPattern = {
+                pattern: step.stepResult.artifactId,
+                patternSuiteCorrelationId: step.suiteCottelationId
+              };
+              step.patterns = [newPattern];
               comparator.hasNotSavedChanges = true;
             }
 
@@ -137,11 +146,11 @@ define(['angularAMD', 'metadataService', 'metadataAccessService'],
           var result = false;
 
           if (isCollectorWithPattern(step) && isStepComparatorRebaseable(
-                  comparator)) {
+              comparator)) {
             if (comparator.stepResult.wasAcceptable) {
               step.revertPatternStatistics();
-              step.pattern = step.oldPattern;
-              delete step.oldPattern;
+              step.patterns = step.oldPatterns;
+              delete step.oldPatterns;
               delete comparator.hasNotSavedChanges;
             }
 
@@ -151,13 +160,15 @@ define(['angularAMD', 'metadataService', 'metadataAccessService'],
         }
 
         function isCollectorWithPattern(step) {
-          return step && step.comparators && step.pattern;
+          return step && step.comparators &&
+              step.patterns &&
+              step.patterns.length > 0;
         }
 
         function isStepComparatorRebaseable(comparator) {
           return comparator &&
               comparator.stepResult &&
-              comparator.stepResult.rebaseable;
+              comparator.stepResult.isRebaseable();
         }
 
         function notifyMetadataUpdated(shouldNotify) {
