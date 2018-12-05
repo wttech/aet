@@ -39,12 +39,21 @@ define(['angularAMD'], function (angularAMD) {
       };
       var TODAY = new Date();
       var CHRISTMAS_DATE = new Date(TODAY.getFullYear(), 11, 25);
-      var DAY_MARGIN = 14;
+      var DAY_MARGIN = 30;
       var isChristmas = isDateWithinMargin(TODAY, CHRISTMAS_DATE, DAY_MARGIN);
 
+      function ifPageLoaded() {
+        var sidePanel = document.querySelector('.aside');
+
+        if (sidePanel !== null) {
+          clearInterval(snowfall);
+          snowFall.snow(sidePanel, {flakeCount: 40, maxSpeed: 5});
+        }
+      }
+
       if (isChristmas) {
+        var snowfall = setInterval(ifPageLoaded, 500);
         _.merge($scope.theme, WINTER_THEME);
-        snowFall.snow(document.body, {flakeCount: 200, maxSpeed: 20});
       }
     }
 
