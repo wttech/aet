@@ -39,7 +39,7 @@ define(['angularAMD'], function (angularAMD) {
       };
       var TODAY = new Date();
       var CHRISTMAS_DATE = new Date(TODAY.getFullYear(), 11, 25);
-      var DAY_MARGIN = 30;
+      var DAY_MARGIN = 14;
       var isChristmas = isDateWithinMargin(TODAY, CHRISTMAS_DATE, DAY_MARGIN);
 
       function ifPageLoaded() {
