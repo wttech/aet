@@ -65,9 +65,11 @@ define(['angularAMD', 'artifactsService', 'suiteInfoService'],
           return caseModel.step && caseModel.step.pattern;
         }
 
-        function getPatternUrl() {
-          return hasPattern() ? artifactsService.getArtifactUrl(
-              caseModel.step.pattern) : null;
+        function getPatternUrl(pattern) {
+          if (!pattern) {
+            return null;
+          }
+          return artifactsService.getArtifactUrl(pattern);
         }
 
         function hasData() {
@@ -90,9 +92,11 @@ define(['angularAMD', 'artifactsService', 'suiteInfoService'],
               caseModel.comparator.stepResult.artifactId;
         }
 
-        function getResultUrl() {
-          return hasResult() ? artifactsService.getArtifactUrl(
-              caseModel.comparator.stepResult.artifactId) : null;
+        function getResultUrl(artifactId) {
+          if (!artifactId) {
+            return null;
+          }
+          return artifactsService.getArtifactUrl(artifactId);
         }
 
         function getResultArtifact() {
@@ -161,7 +165,8 @@ define(['angularAMD', 'artifactsService', 'suiteInfoService'],
           var status;
           if (comparator.stepResult) {
             status =
-                comparator.stepResult.status ? comparator.stepResult.status
+                comparator.stepResult.getStatus()
+                    ? comparator.stepResult.getStatus()
                     : step.stepResult.status;
           } else {
             status = step.stepResult ? step.stepResult.status

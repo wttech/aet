@@ -17,63 +17,107 @@
     limitations under the License.
 
 -->
+<div data-aet-choose-layout>
 
-<div class="tab-content-toolbar">
-  <span class="tab-content-toolbar-header">Settings</span>
-  <div class="checkboxes-inline">
-    <div class="checkbox">
-      <input type="checkbox" id="toggleMask" ng-click="urlView.toggleMask()"
-             ng-checked="$root.maskVisible">
-      <label for="toggleMask">
-        <span>Show Mask</span>
-      </label>
-    </div>
-  </div>
-  <div class="toolbar-blocks">
-    <div class="toolbar-btns pull-right">
-      <div class="advanced-screen-comparison button button-small button-blue">
-        <a ng-if="case.status == 'FAILED' || case.status == 'CONDITIONALLY_PASSED'" data-ng-click="advancedScreenComparison()" data-aet-compare-screens>Advanced Screen Comparison</a>
+  <div class="toolbar-patterns-list"
+       ng-if="case.comparator.stepResults && case.comparator.stepResults.length > 1">
+    <span class="toolbar-patterns-header pull-left">Patterns: </span>
+    <div class="toolbar-patterns-list">
+      <div class="toolbar-patterns-pattern"
+           ng-repeat="comparatorStepResult in case.comparator.stepResults">
+        <div class="toolbar-patterns-container">
+          <a data-ng-click="layoutIndex($index)">
+            <img ng-class="patternStatus(case.comparator.stepResults[layoutIndex()].status)"
+                 class="img-responsive toolbar-patterns-image-mask toolbar-pattern-status"/>
+            <img
+                ng-src="{{case.getPatternUrl(case.comparator.stepResults[layoutIndex()].pattern.pattern)}}"
+                class="img-responsive toolbar-patterns-image"/>
+          </a>
+        </div>
+        <div ng-class="patternStatus(case.comparator.stepResults[layoutIndex()].status)"
+             class="fontawesome toolbar-patterns-icon toolbar-pattern-status">
+          {{$index + 1}}
+        </div>
       </div>
-      <ng-include src="'app/layout/main/url/navigation/navigation.comments.html'"/>
-      <ng-include src="'app/layout/main/url/navigation/navigation.patternButtons.html'"/>
     </div>
   </div>
-</div>
-<div>
-  <div class="text-center text-danger" ng-if="case.comparator.stepResult.data.excludeMessage">
-    {{case.comparator.stepResult.data.excludeMessage}}
+
+  <div class="tab-content-toolbar">
+    <span class="tab-content-toolbar-header">Settings</span>
+    <div class="checkboxes-inline">
+      <div class="checkbox">
+        <input type="checkbox" id="toggleMask" ng-click="urlView.toggleMask()"
+               ng-checked="$root.maskVisible">
+        <label for="toggleMask">
+          <span>Show Mask</span>
+        </label>
+      </div>
+    </div>
+    <div class="toolbar-blocks">
+      <div class="toolbar-btns pull-right">
+        <div class="advanced-screen-comparison button button-small button-blue">
+          <a ng-if="case.status == 'FAILED' || case.status == 'CONDITIONALLY_PASSED'"
+             data-ng-click="advancedScreenComparison()" data-aet-compare-screens>Advanced Screen
+            Comparison</a>
+        </div>
+        <ng-include src="'app/layout/main/url/navigation/navigation.comments.html'"/>
+        <ng-include src="'app/layout/main/url/navigation/navigation.patternButtons.html'"/>
+      </div>
+    </div>
   </div>
-  <div class="text-center text-danger" ng-if="case.comparator.stepResult.data.notFoundCssElements">
-    {{case.comparator.stepResult.data.notFoundCssElements}}
+
+  <div>
+    <div class="text-center text-danger"
+         ng-if="case.comparator.stepResults[layoutIndex()].data.excludeMessage">
+      {{case.comparator.stepResults[layoutIndex()].data.excludeMessage}}
+    </div>
+    <div class="text-center text-danger"
+         ng-if="case.comparator.stepResults[layoutIndex()].data.notFoundCssElements">
+      {{case.comparator.stepResults[layoutIndex()].data.notFoundCssElements}}
+    </div>
   </div>
-</div>
-<div>
+
   <div class="layout-compare">
+
     <div class="layout-compare-item pull-left">
-      <p class="layout-compare-description">Pattern
-        <span class="label label-info">{{case.comparator.stepResult.data.patternTimestamp | date:'yyyy-MM-dd HH:mm'}}</span><br>
-        <span class="label-spacer"></span>
+      <p class="layout-compare-description">Pattern {{layoutIndex() + 1}}
+        <span class="label label-info">
+          {{case.comparator.stepResults[layoutIndex()].data.patternTimestamp | date:'yyyy-MM-dd HH:mm'}}
+        </span><br>
+        <span ng-if="!case.comparator.stepResults[layoutIndex()].pattern.patternSuiteCorrelationId"
+              class="label-spacer">
+        </span>
+        <span ng-if="case.comparator.stepResults[layoutIndex()].pattern.patternSuiteCorrelationId">
+          {{case.comparator.stepResults[layoutIndex()].pattern.patternSuiteCorrelationId}}
+        </span>
       </p>
       <div class="mask-container">
-        <img ng-src="{{case.getResultUrl()}}"
+        <img ng-src="{{case.getResultUrl(case.comparator.stepResults[layoutIndex()].artifactId)}}"
              class="mask img-responsive"
              ng-class="($root.maskVisible == true ? 'is-visible' : '')"
-             ng-if="case.status == 'FAILED'"/>
+             ng-if="case.comparator.stepResults[layoutIndex()].status == 'FAILED'"/>
 
-        <a href="{{case.getPatternUrl()}}" target="_blank">
-          <img ng-src="{{case.getPatternUrl()}}" class="img-responsive"/>
+        <a href="{{case.getPatternUrl(case.comparator.stepResults[layoutIndex()].pattern.pattern)}}"
+           target="_blank">
+          <img
+              ng-src="{{case.getPatternUrl(case.comparator.stepResults[layoutIndex()].pattern.pattern)}}"
+              class="img-responsive"/>
         </a>
       </div>
     </div>
-    <div class="layout-compare-item pull-left" ng-if="case.status == 'FAILED' || case.status == 'CONDITIONALLY_PASSED'">
+
+    <div class="layout-compare-item pull-left"
+         ng-if="case.status == 'FAILED' || case.status == 'CONDITIONALLY_PASSED'">
       <p class="layout-compare-description">Collected
-        <span class="label label-info">{{case.comparator.stepResult.data.collectTimestamp | date:'yyyy-MM-dd HH:mm'}}</span><br>
-        <span>Difference: {{case.comparator.stepResult.data.percentagePixelDifference | number: 2}}%,
-          {{case.comparator.stepResult.data.pixelDifference}}px</span>
+        <span class="label label-info">
+          {{case.comparator.stepResults[layoutIndex()].data.collectTimestamp | date:'yyyy-MM-dd HH:mm'}}
+        </span><br>
+        <span>Difference: {{case.comparator.stepResults[layoutIndex()].data.percentagePixelDifference | number: 2}}%,
+          {{case.comparator.stepResults[layoutIndex()].data.pixelDifference}}px</span>
       </p>
 
       <div class="mask-container">
-        <img ng-src="{{case.getResultUrl()}}"
+        <img ng-src="{{case.getResultUrl(case.comparator.stepResults[layoutIndex()].artifactId)}}"
              class="mask img-responsive"
              ng-class="($root.maskVisible == true ? 'is-visible' : '')"/>
 
@@ -82,8 +126,11 @@
         </a>
       </div>
     </div>
-    <div class="layout-compare-item pull-left" ng-if="case.status != 'FAILED' && case.status != 'CONDITIONALLY_PASSED'">
+
+    <div class="layout-compare-item pull-left"
+         ng-if="case.status != 'FAILED' && case.status != 'CONDITIONALLY_PASSED'">
       <p class="layout-compare-description">No difference was detected!</p>
     </div>
+
   </div>
 </div>
