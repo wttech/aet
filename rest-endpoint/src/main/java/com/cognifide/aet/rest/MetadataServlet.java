@@ -175,16 +175,7 @@ public class MetadataServlet extends BasicDataServlet {
         new InputStreamReader(req.getInputStream(), StandardCharsets.UTF_8));
     Suite suite = Suite.fromJson(reader);
     checkLock(suite.getSuiteIdentifier());
-    checkAnotherSuitePatterns(suite.getPatternCorrelationIds());
     metadataDAO.updateSuite(suite);
-  }
-
-  private void checkAnotherSuitePatterns(Set<String> patternCorrelationId) throws AETException {
-    if (patternCorrelationId != null) {
-      String msg = "Accepting changes not allowed as comparison was done against another suite: '";
-      msg += patternCorrelationId + "'.";
-      throw new AETException(msg);
-    }
   }
 
   private void checkLock(String suiteIdentifier) throws AETException {
