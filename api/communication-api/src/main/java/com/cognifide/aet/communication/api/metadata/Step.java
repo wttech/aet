@@ -17,16 +17,18 @@ package com.cognifide.aet.communication.api.metadata;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import org.hibernate.validator.constraints.NotBlank;
 
 public class Step extends Operation implements Commentable, Named {
 
-  private static final long serialVersionUID = 3123747091786941360L;
+  private static final long serialVersionUID = 3437740998451941360L;
 
   @NotNull
   private final Integer index;
@@ -34,8 +36,8 @@ public class Step extends Operation implements Commentable, Named {
   @NotBlank
   private String name;
 
-  @Pattern(regexp = "^[0-9a-fA-F]{24}$", message = "Invalid objectID")
-  private String pattern;
+  @Valid
+  private Set<Pattern> patterns;
 
   @Valid
   private CollectorStepResult stepResult;
@@ -51,7 +53,7 @@ public class Step extends Operation implements Commentable, Named {
     super(builder.type);
     index = builder.index;
     name = builder.name;
-    pattern = builder.pattern;
+    patterns = builder.patterns;
     stepResult = builder.stepResult;
     setComment(builder.comment);
     comparators = builder.comparators;
@@ -70,8 +72,15 @@ public class Step extends Operation implements Commentable, Named {
     return index;
   }
 
-  public String getPattern() {
-    return pattern;
+  public Set<Pattern> getPatterns() {
+    if (patterns == null) {
+      patterns = new HashSet<>();
+    }
+    return patterns;
+  }
+
+  public void erasePatterns() {
+    patterns = null;
   }
 
   public void setStepResult(CollectorStepResult stepResult) {
@@ -99,8 +108,16 @@ public class Step extends Operation implements Commentable, Named {
     comparators.add(comparator);
   }
 
-  public void updatePattern(String artifactId) {
-    this.pattern = artifactId;
+  public void addPattern(String artifactId, String patternSuiteCorrelationId) {
+    Pattern pattern = new Pattern(artifactId, patternSuiteCorrelationId);
+    addPatterns(Collections.singleton(pattern));
+  }
+
+  public void addPatterns(Set<Pattern> patterns) {
+    if (this.patterns == null) {
+      this.patterns = new HashSet<>();
+    }
+    this.patterns.addAll(patterns);
   }
 
   @Override
@@ -156,12 +173,11 @@ public class Step extends Operation implements Commentable, Named {
 
     private final String type;
     private String name;
-    private String pattern;
+    private Set<Pattern> patterns;
     private CollectorStepResult stepResult;
     private String comment;
     private Set<Comparator> comparators = new HashSet<>();
     private Integer index;
-
 
     private Builder(String type, Integer index) {
       this.type = type;
@@ -173,8 +189,8 @@ public class Step extends Operation implements Commentable, Named {
       return this;
     }
 
-    public Builder withPattern(String val) {
-      pattern = val;
+    public Builder withPatterns(Set<Pattern> val) {
+      patterns = val;
       return this;
     }
 

@@ -21,15 +21,18 @@ import com.cognifide.aet.cleaner.processors.exchange.ReferencedArtifactsMessageB
 import com.cognifide.aet.cleaner.processors.exchange.SuiteMessageBody;
 import com.cognifide.aet.communication.api.metadata.CollectorStepResult;
 import com.cognifide.aet.communication.api.metadata.Comparator;
+import com.cognifide.aet.communication.api.metadata.Pattern;
 import com.cognifide.aet.communication.api.metadata.Step;
+import com.cognifide.aet.communication.api.metadata.StepResult;
 import com.cognifide.aet.communication.api.metadata.Test;
 import com.cognifide.aet.communication.api.metadata.Url;
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
-import com.google.common.collect.FluentIterable;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
+import java.util.stream.Collectors;
 import javax.annotation.Nullable;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
@@ -46,16 +49,20 @@ public class GetMetadataArtifactsProcessor implements Processor {
   private static final Predicate<Comparator> STEP_RESULTS_WITH_ARTIFACT_ID = new Predicate<Comparator>() {
     @Override
     public boolean apply(Comparator comparator) {
-      return comparator.getStepResult() != null && StringUtils
-          .isNotBlank(comparator.getStepResult().getArtifactId());
+      return comparator.getStepResults() != null
+          && !comparator.getStepResults().isEmpty()
+          && comparator.getStepResults().stream()
+          .anyMatch(result -> StringUtils.isNotBlank(result.getArtifactId()));
     }
   };
 
-  private static final Function<Comparator, String> COMPARATOR_TO_ARTIFACT_ID = new Function<Comparator, String>() {
+  private static final Function<Comparator, Set<String>> COMPARATOR_TO_ARTIFACT_ID = new Function<Comparator, Set<String>>() {
     @Nullable
     @Override
-    public String apply(Comparator comparator) {
-      return comparator.getStepResult().getArtifactId();
+    public Set<String> apply(Comparator comparator) {
+      return comparator.getStepResults().stream()
+          .map(StepResult::getArtifactId)
+          .collect(Collectors.toSet());
     }
   };
 
@@ -66,19 +73,19 @@ public class GetMetadataArtifactsProcessor implements Processor {
     final CleanerContext cleanerContext = exchange.getIn()
         .getHeader(CleanerContext.KEY_NAME, CleanerContext.class);
 
-    final Set<String> metatadaArtifacts = new HashSet<>();
+    final Set<String> metadataArtifacts = new HashSet<>();
 
     LOGGER.info("Processing suite {}", messageBody.getData());
 
     for (Test test : messageBody.getData().getTests()) {
-      metatadaArtifacts.addAll(traverseTest(test));
+      metadataArtifacts.addAll(traverseTest(test));
     }
 
     ReferencedArtifactsMessageBody body = new ReferencedArtifactsMessageBody(
         messageBody.getData().getName(),
         messageBody.getDbKey());
     if (messageBody.shouldBeKept()) {
-      body.setArtifactsToKeep(metatadaArtifacts);
+      body.setArtifactsToKeep(metadataArtifacts);
     }
 
     exchange.getOut().setBody(body);
@@ -104,8 +111,12 @@ public class GetMetadataArtifactsProcessor implements Processor {
       stepArtifacts.add(stepResult.getArtifactId());
       stepArtifacts.addAll(traverseComparators(step));
     }
-    if (step.getPattern() != null) {
-      stepArtifacts.add(step.getPattern());
+    if (step.getPatterns() != null) {
+      Set<String> patterns = step.getPatterns().stream()
+          .filter(Objects::nonNull)
+          .map(Pattern::getPattern)
+          .collect(Collectors.toSet());
+      stepArtifacts.addAll(patterns);
     }
     return stepArtifacts;
   }
@@ -113,10 +124,11 @@ public class GetMetadataArtifactsProcessor implements Processor {
   private Set<String> traverseComparators(Step step) {
     Set<String> stepArtifacts = Collections.emptySet();
     if (step.getComparators() != null) {
-      stepArtifacts = FluentIterable.from(step.getComparators())
+      stepArtifacts = step.getComparators().stream()
           .filter(STEP_RESULTS_WITH_ARTIFACT_ID)
-          .transform(COMPARATOR_TO_ARTIFACT_ID)
-          .toSet();
+          .flatMap(comparator -> comparator.getStepResults().stream()
+              .map(StepResult::getArtifactId))
+          .collect(Collectors.toSet());
     }
     return stepArtifacts;
   }

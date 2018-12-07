@@ -23,6 +23,8 @@ import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.job.common.comparators.permormance.clientside.parser.ClientSidePerformanceComparatorResultData;
 import com.cognifide.aet.job.common.comparators.permormance.clientside.parser.ClientSidePerformanceParser;
 import com.cognifide.aet.vs.ArtifactsDAO;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 public class ClientSidePerformanceComparator implements ComparatorJob {
@@ -46,7 +48,7 @@ public class ClientSidePerformanceComparator implements ComparatorJob {
   }
 
   @Override
-  public ComparatorStepResult compare() throws ProcessingException {
+  public List<ComparatorStepResult> compare() throws ProcessingException {
     final ComparatorStepResult result;
     try {
       String collectedData = artifactsDAO
@@ -61,7 +63,7 @@ public class ClientSidePerformanceComparator implements ComparatorJob {
     } catch (Exception e) {
       throw new ProcessingException(e.getMessage(), e);
     }
-    return result;
+    return Collections.singletonList(result);
   }
 
   @Override

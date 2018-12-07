@@ -18,6 +18,7 @@ package com.cognifide.aet.executor;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
@@ -68,10 +69,11 @@ public class SuiteValidatorTest {
   @Test
   public void validateTestSuiteRun_whenPatternIdFromDifferentProject_expectError() {
     String patternCorrelationId = "company1-project1-suite-name-123456789";
-    when(testSuiteRun.getPatternCorrelationId()).thenReturn(patternCorrelationId);
+    when(testSuiteRun.getPatternsCorrelationIds()).thenReturn(
+        Collections.singleton(patternCorrelationId));
 
     String errorMessage = String.format(
-        "Incorrect pattern: '%s'. Must belong to same company (%s) and project (%s).",
+        "Incorrect patterns: '[%s]'. Must belong to same company (%s) and project (%s).",
         patternCorrelationId, COMPANY, PROJECT);
     assertThat(suiteValidator.validateTestSuiteRun(testSuiteRun), equalTo(errorMessage));
   }
@@ -79,11 +81,11 @@ public class SuiteValidatorTest {
   @Test
   public void validateTestSuiteRun_whenPatternIdNotInDb_expectError() throws StorageException {
     String patternCorrelationId = "company-project-suite-name-123456789";
-    when(testSuiteRun.getPatternCorrelationId()).thenReturn(patternCorrelationId);
+    when(testSuiteRun.getPatternsCorrelationIds()).thenReturn(
+        Collections.singleton(patternCorrelationId));
 
     String errorMessage = String.format(
-        "Incorrect pattern: correlationId='%s', suiteName='%s'. Not found in database.",
-        patternCorrelationId, null);
+        "Incorrect patterns: '[%s]'. Not found in database.", patternCorrelationId);
     assertThat(suiteValidator.validateTestSuiteRun(testSuiteRun), equalTo(errorMessage));
     verify(metadataDAO).getSuite(any(), eq(patternCorrelationId));
   }
@@ -91,11 +93,10 @@ public class SuiteValidatorTest {
   @Test
   public void validateTestSuiteRun_whenPatternSuiteNotInDb_expectError() throws StorageException {
     String patternSuite = "suite-name";
-    when(testSuiteRun.getPatternSuite()).thenReturn(patternSuite);
+    when(testSuiteRun.getPatternsSuite()).thenReturn(Collections.singleton(patternSuite));
 
     String errorMessage = String.format(
-        "Incorrect pattern: correlationId='%s', suiteName='%s'. Not found in database.",
-        null, patternSuite);
+        "Incorrect patterns: '[%s]'. Not found in database.", patternSuite);
     assertThat(suiteValidator.validateTestSuiteRun(testSuiteRun), equalTo(errorMessage));
     verify(metadataDAO).getLatestRun(any(), eq(patternSuite));
   }
@@ -119,7 +120,8 @@ public class SuiteValidatorTest {
       throws StorageException {
     String patternCorrelationId = "company-project-suite-name-123456789";
     Suite patternSuite = new Suite(patternCorrelationId, COMPANY, PROJECT, "suite-name", null);
-    when(testSuiteRun.getPatternCorrelationId()).thenReturn(patternCorrelationId);
+    when(testSuiteRun.getPatternsCorrelationIds()).thenReturn(
+        Collections.singleton(patternCorrelationId));
     when(metadataDAO.getSuite(any(), eq(patternCorrelationId))).thenReturn(patternSuite);
 
     assertNull(suiteValidator.validateTestSuiteRun(testSuiteRun));
@@ -143,5 +145,4 @@ public class SuiteValidatorTest {
     when(testRun.getCollectorSteps()).thenReturn(Collections.singletonList(screenCollectorStep));
     when(testRun.getComparatorSteps()).thenReturn(Collections.emptyMap());
   }
-
 }

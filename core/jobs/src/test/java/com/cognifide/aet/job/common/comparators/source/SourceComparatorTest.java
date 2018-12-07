@@ -18,6 +18,7 @@ package com.cognifide.aet.job.common.comparators.source;
 import static org.junit.Assert.assertEquals;
 
 import com.cognifide.aet.communication.api.metadata.ComparatorStepResult;
+import com.cognifide.aet.communication.api.metadata.Pattern;
 import com.cognifide.aet.job.api.comparator.ComparatorProperties;
 import com.cognifide.aet.job.api.datafilter.DataFilterJob;
 import com.cognifide.aet.job.common.ArtifactDAOMock;
@@ -25,7 +26,9 @@ import com.cognifide.aet.job.common.comparators.AbstractComparatorTest;
 import com.cognifide.aet.job.common.comparators.source.diff.DiffParser;
 import com.google.common.collect.ImmutableMap;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
@@ -51,11 +54,11 @@ public class SourceComparatorTest extends AbstractComparatorTest {
    * @return result of comparison
    * @throws Exception for incorrect parameters
    */
-  protected ComparatorStepResult compare(String patternFilename, String dataFilename,
+  protected List<ComparatorStepResult> compare(String patternFilename, String dataFilename,
       Map<String, String> comparatorParams)
       throws Exception {
     ComparatorProperties properties = new ComparatorProperties(TEST_COMPANY, TEST_PROJECT,
-        patternFilename, dataFilename);
+        Collections.singleton(new Pattern(patternFilename, null)), dataFilename);
     tested = new SourceComparator(artifactDaoMock, properties, new DiffParser(),
         new ArrayList<DataFilterJob>());
     tested.setParameters(comparatorParams);
@@ -66,7 +69,8 @@ public class SourceComparatorTest extends AbstractComparatorTest {
   public void testCompareOfValidInput() throws Exception {
     result = compare("pattern-source.html", "data-source.html", new HashMap<String, String>());
 
-    assertEquals(ComparatorStepResult.Status.PASSED, result.getStatus());
+    assertEquals(ComparatorStepResult.Status.PASSED, result.get(0).getStatus());
+    assertEquals(1, result.size());
     assertEquals(null, getActual());
   }
 
@@ -75,7 +79,8 @@ public class SourceComparatorTest extends AbstractComparatorTest {
     result = compare("pattern-source.html", "data-invalid-source.html",
         new HashMap<String, String>());
 
-    assertEquals(ComparatorStepResult.Status.FAILED, result.getStatus());
+    assertEquals(ComparatorStepResult.Status.FAILED, result.get(0).getStatus());
+    assertEquals(1, result.size());
     assertEqualsToSavedArtifact("expected-invalid-result.json");
   }
 
@@ -83,7 +88,8 @@ public class SourceComparatorTest extends AbstractComparatorTest {
   public void testCompareMarkupWithDifferentText() throws Exception {
     result = compare("markup/pattern-source.html", "markup/data-source.html",
         ImmutableMap.of("compareType", "markup"));
-    assertEquals(ComparatorStepResult.Status.PASSED, result.getStatus());
+    assertEquals(ComparatorStepResult.Status.PASSED, result.get(0).getStatus());
+    assertEquals(1, result.size());
   }
 
   @Test
@@ -91,7 +97,8 @@ public class SourceComparatorTest extends AbstractComparatorTest {
     result = compare("markup/pattern-source.html",
         "markup/data-source-with-different-attribute-value.html",
         ImmutableMap.of("compareType", "markup"));
-    assertEquals(ComparatorStepResult.Status.FAILED, result.getStatus());
+    assertEquals(ComparatorStepResult.Status.FAILED, result.get(0).getStatus());
+    assertEquals(1, result.size());
 
   }
 }

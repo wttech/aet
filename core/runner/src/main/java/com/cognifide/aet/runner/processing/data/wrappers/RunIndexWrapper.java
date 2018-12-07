@@ -38,7 +38,7 @@ public abstract class RunIndexWrapper<T> {
           if (step.getComparators() != null) {
             step.getComparators()
                 .forEach(comparator ->
-                    comparator.setStepResult(null)
+                    comparator.setStepResults(null)
                 );
           }
         });

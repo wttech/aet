@@ -18,6 +18,7 @@ package com.cognifide.aet.worker.impl;
 import com.cognifide.aet.communication.api.exceptions.AETException;
 import com.cognifide.aet.communication.api.metadata.Comparator;
 import com.cognifide.aet.communication.api.metadata.ComparatorStepResult;
+import com.cognifide.aet.communication.api.metadata.ComparatorStepResult.Status;
 import com.cognifide.aet.communication.api.metadata.Operation;
 import com.cognifide.aet.communication.api.util.ExecutionTimer;
 import com.cognifide.aet.job.api.comparator.ComparatorFactory;
@@ -31,6 +32,7 @@ import com.cognifide.aet.worker.api.JobRegistry;
 import com.google.common.base.Function;
 import com.google.common.base.Predicates;
 import com.google.common.collect.FluentIterable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.annotation.Nullable;
 import org.apache.commons.lang3.StringUtils;
@@ -61,17 +63,17 @@ public class ComparatorDispatcherImpl implements ComparatorDispatcher {
     LOGGER.info("Starting comparison of {}", comparator);
 
     ExecutionTimer timer = ExecutionTimer.createAndRun(COMPARATOR_PARAMETER);
-    ComparatorStepResult comparisonResult = null;
+    List<ComparatorStepResult> comparisonResult = new ArrayList<>();
     try {
-      comparisonResult = comparatorJob.compare();
+      comparisonResult.addAll(comparatorJob.compare());
     } catch (AETException e) {
       LOGGER.error(comparator + " throw error:", comparator, e);
-      comparisonResult = new ComparatorStepResult(null,
-          ComparatorStepResult.Status.PROCESSING_ERROR);
-      comparisonResult.addError(getCause(e));
+      ComparatorStepResult errorResult = new ComparatorStepResult(null, Status.PROCESSING_ERROR);
+      errorResult.addError(getCause(e));
+      comparisonResult.add(errorResult);
     } finally {
       timer.finishAndLog(comparator.getType());
-      comparator.setStepResult(comparisonResult);
+      comparator.setStepResults(comparisonResult);
       comparator.setStatistics(timer.toStatistics());
     }
     return comparator;

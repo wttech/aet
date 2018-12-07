@@ -26,6 +26,7 @@ import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.job.api.comparator.ComparatorProperties;
 import com.cognifide.aet.queues.JmsUtils;
 import com.cognifide.aet.worker.api.ComparatorDispatcher;
+import java.util.Collections;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import org.apache.commons.lang3.StringUtils;
@@ -64,8 +65,8 @@ class ComparatorMessageListener extends WorkerMessageListener {
           comparatorJobData.getUrlName());
       final Step step = comparatorJobData.getStep();
       final ComparatorProperties properties = new ComparatorProperties(
-          comparatorJobData.getCompany(),
-          comparatorJobData.getProject(), step.getPattern(), step.getStepResult().getArtifactId(),
+          comparatorJobData.getCompany(), comparatorJobData.getProject(), step.getPatterns(),
+          step.getStepResult().getArtifactId(),
           step.getStepResult().getPayload());
 
       for (Comparator comparator : step.getComparators()) {
@@ -90,7 +91,7 @@ class ComparatorMessageListener extends WorkerMessageListener {
           final ComparatorStepResult errorResult =
               new ComparatorStepResult(null, ComparatorStepResult.Status.PROCESSING_ERROR);
           errorResult.addError(e.getMessage());
-          comparator.setStepResult(errorResult);
+          comparator.setStepResults(Collections.singletonList(errorResult));
           resultBuilder.withStatus(JobStatus.ERROR)
               .withComparisonResult(comparator)
               .withProcessingError(ProcessingError.comparingError(e.getMessage()));

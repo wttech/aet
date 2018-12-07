@@ -26,6 +26,7 @@ import com.cognifide.aet.vs.ArtifactsDAO;
 import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 import java.lang.reflect.Type;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -57,7 +58,7 @@ public class JsErrorsComparator implements ComparatorJob {
 
   @Override
   @SuppressWarnings("unchecked")
-  public ComparatorStepResult compare() throws ProcessingException {
+  public List<ComparatorStepResult> compare() throws ProcessingException {
     final ComparatorStepResult result;
     LOGGER.info("Starting JS Error Comparison with parameters {}.", comparatorProperties);
     try {
@@ -80,7 +81,7 @@ public class JsErrorsComparator implements ComparatorJob {
     } catch (Exception e) {
       throw new ProcessingException("Failed to obtain Js Errors Collection Result!", e);
     }
-    return result;
+    return Collections.singletonList(result);
   }
 
   private boolean noErrorsOrIgnoredOnly(Set<JsErrorLog> jsErrorLogs) {

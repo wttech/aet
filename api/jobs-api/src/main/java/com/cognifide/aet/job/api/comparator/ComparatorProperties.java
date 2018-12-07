@@ -15,9 +15,11 @@
  */
 package com.cognifide.aet.job.api.comparator;
 
+import com.cognifide.aet.communication.api.metadata.Pattern;
 import com.cognifide.aet.communication.api.metadata.Payload;
 import com.cognifide.aet.job.api.StepProperties;
 import com.google.common.base.MoreObjects;
+import java.util.Set;
 
 public class ComparatorProperties extends StepProperties {
 
@@ -27,14 +29,14 @@ public class ComparatorProperties extends StepProperties {
 
   private final Payload payload;
 
-  public ComparatorProperties(String company, String project, String patternId,
+  public ComparatorProperties(String company, String project, Set<Pattern> patternsIds,
       String collectedId, Payload payload) {
-    super(company, project, patternId);
+    super(company, project, patternsIds);
     this.collectedId = collectedId;
     this.payload = payload;
   }
 
-  public ComparatorProperties(String company, String project, String patternId,
+  public ComparatorProperties(String company, String project, Set<Pattern> patternId,
       String collectedId) {
     this(company, project, patternId, collectedId, null);
   }
@@ -53,7 +55,7 @@ public class ComparatorProperties extends StepProperties {
         .add("collectedId", collectedId)
         .add("company", getCompany())
         .add("project", getProject())
-        .add("patternId", getPatternId())
+        .add("patternId", getPatternsIds())
         .toString();
   }
 }

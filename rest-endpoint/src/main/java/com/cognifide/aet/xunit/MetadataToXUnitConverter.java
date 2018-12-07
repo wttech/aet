@@ -32,6 +32,7 @@ import java.util.EnumSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class MetadataToXUnitConverter {
 
@@ -131,26 +132,44 @@ public class MetadataToXUnitConverter {
         errors = stepResult.getErrors();
       }
 
-      final Failure failure = buildFailure(errors, stepStatus.name());
+      final Failure failure = buildFailure(errors.toString(), stepStatus.name());
       xUnitCaseFailure.add(failure);
       xUnitFailedTotal++;
 
     } else {
-      final ComparatorStepResult.Status comparatorStatus = comparator.getStepResult().getStatus();
-      if (COMPARATOR_FAILURE_STATUSES.contains(comparatorStatus)) {
-        final Failure failure = buildFailure(comparator.getStepResult().getErrors(),
-            comparatorStatus.name());
+      if (isComparatorsFailedStatus(comparator)) {
+        final Failure failure = buildFailure(comparator.getStepResults());
         xUnitCaseFailure.add(failure);
         xUnitFailedTotal++;
       }
     }
   }
 
-  private Failure buildFailure(List<String> errors, String type) {
+  private boolean isComparatorsFailedStatus(Comparator comparator) {
+    return comparator.getStepResults().stream()
+        .map(ComparatorStepResult::getStatus)
+        .anyMatch(status -> COMPARATOR_FAILURE_STATUSES.contains(status));
+  }
+
+  private Failure buildFailure(List<ComparatorStepResult> steps) {
+    Set<ComparatorStepResult> failedSteps = steps.stream()
+        .filter(step -> COMPARATOR_FAILURE_STATUSES.contains(step.getStatus()))
+        .collect(Collectors.toSet());
+
+    Set<String> errors = failedSteps.stream()
+        .flatMap(step -> step.getErrors().stream())
+        .collect(Collectors.toSet());
+
+    Set<ComparatorStepResult.Status> types = failedSteps.stream()
+        .map(step -> step.getStatus())
+        .collect(Collectors.toSet());
+
+    return buildFailure(errors.toString(), types.toString());
+  }
+
+  private Failure buildFailure(String errors, String type) {
     final Failure failure = new Failure();
-    if (!errors.isEmpty()) {
-      failure.setMessage(errors.toString());
-    }
+    failure.setMessage(errors);
     failure.setType(type);
     return failure;
   }

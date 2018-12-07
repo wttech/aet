@@ -16,6 +16,7 @@
 package com.cognifide.aet.job.common.comparators.source;
 
 import com.cognifide.aet.communication.api.metadata.ComparatorStepResult;
+import com.cognifide.aet.communication.api.metadata.Pattern;
 import com.cognifide.aet.job.api.comparator.ComparatorJob;
 import com.cognifide.aet.job.api.comparator.ComparatorProperties;
 import com.cognifide.aet.job.api.datafilter.DataFilterJob;
@@ -27,6 +28,7 @@ import com.cognifide.aet.job.common.comparators.source.visitors.ContentVisitor;
 import com.cognifide.aet.job.common.comparators.source.visitors.MarkupVisitor;
 import com.cognifide.aet.job.common.comparators.source.visitors.NodeTraversor;
 import com.cognifide.aet.vs.ArtifactsDAO;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
@@ -68,11 +70,21 @@ public class SourceComparator implements ComparatorJob {
 
   @Override
   @SuppressWarnings("unchecked")
-  public final ComparatorStepResult compare() throws ProcessingException {
+  public final List<ComparatorStepResult> compare() throws ProcessingException {
+    List<ComparatorStepResult> results = new ArrayList<>();
+
+    for (Pattern pattern : properties.getPatternsIds()) {
+      results.add(compare(pattern));
+    }
+
+    return results;
+  }
+
+  public final ComparatorStepResult compare(Pattern pattern) throws ProcessingException {
     final ComparatorStepResult result;
     try {
       String patternSource = formatCode(
-          artifactsDAO.getArtifactAsString(properties, properties.getPatternId()));
+          artifactsDAO.getArtifactAsString(properties, pattern.getPattern()));
       String dataSource = formatCode(
           artifactsDAO.getArtifactAsString(properties, properties.getCollectedId()));
 
@@ -96,10 +108,10 @@ public class SourceComparator implements ComparatorJob {
         final List<ResultDelta> deltas = diffParser
             .generateDiffs(patternSource, dataSource, compareTrimmedLines);
         if (deltas.isEmpty()) {
-          result = new ComparatorStepResult(null, ComparatorStepResult.Status.PASSED, false);
+          result = new ComparatorStepResult(null, ComparatorStepResult.Status.PASSED);
         } else {
           result = new ComparatorStepResult(artifactsDAO.saveArtifactInJsonFormat(properties,
-              Collections.singletonMap("differences", deltas)),
+              Collections.singletonMap("differences", deltas)), pattern,
               ComparatorStepResult.Status.FAILED, true);
           result.addData("formattedPattern", artifactsDAO.saveArtifact(properties, patternSource));
           result.addData("formattedSource", artifactsDAO.saveArtifact(properties, dataSource));

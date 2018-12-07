@@ -94,7 +94,7 @@ public class CollectionResultsRouter extends StepManager implements TaskFinishPo
             getTotalTasksCount(), correlationId);
 
         if (collectorResultData.getStatus() == JobStatus.SUCCESS) {
-          onSuccess(collectorResultData, testName);
+          onSuccess(collectorResultData, testName, correlationId);
         } else {
           final Url failedUrl = collectorResultData.getUrl();
           failedUrl.setErrorMessage(collectorResultData.getProcessingError().getDescription());
@@ -122,8 +122,8 @@ public class CollectionResultsRouter extends StepManager implements TaskFinishPo
     consumer.close();
   }
 
-  private void onSuccess(CollectorResultData collectorResultData, String testName)
-      throws JMSException {
+  private void onSuccess(CollectorResultData collectorResultData, String testName,
+      String patternSuiteCorrelationId) throws JMSException {
     final Url processedUrl = collectorResultData.getUrl();
     updateSuiteUrl(collectorResultData.getTestName(), processedUrl);
     for (Step step : processedUrl.getSteps()) {
@@ -131,13 +131,13 @@ public class CollectionResultsRouter extends StepManager implements TaskFinishPo
         LOGGER.error("Step {} finished with errors: {}!", step, step.getStepResult());
         onError(ProcessingError.collectingError(step.getStepResult().getErrors().toString()));
       } else if (hasComparators(step)) {
-        if (StringUtils.isEmpty(step.getPattern())) {
-          step.updatePattern(step.getStepResult().getArtifactId());
+        if (step.getPatterns().isEmpty()) {
+          step.addPattern(step.getStepResult().getArtifactId(), patternSuiteCorrelationId);
         }
         int scheduledMessagesNo = dispatch(step, testName, processedUrl.getName());
         LOGGER
             .info("{} ComparatorJobData messages send to queue {}. CorrelationId: {} TestName: {}",
-                scheduledMessagesNo, getQueueOutName(), correlationId, testName);
+                scheduledMessagesNo, getQueueOutName(), this.correlationId, testName);
         for (ChangeObserver changeListener : changeListeners) {
           changeListener.updateAmountToReceive(scheduledMessagesNo);
         }
@@ -158,7 +158,8 @@ public class CollectionResultsRouter extends StepManager implements TaskFinishPo
   private void createAndSendComparatorJobData(Step step, String testName, String urlName)
       throws JMSException {
     ObjectMessage message = session.createObjectMessage(
-        new ComparatorJobData(runIndexWrapper.get().getCompany(), runIndexWrapper.get().getProject(),
+        new ComparatorJobData(runIndexWrapper.get().getCompany(),
+            runIndexWrapper.get().getProject(),
             runIndexWrapper.get().getName(), testName, urlName, step));
     message.setJMSCorrelationID(correlationId);
     sender.send(message);

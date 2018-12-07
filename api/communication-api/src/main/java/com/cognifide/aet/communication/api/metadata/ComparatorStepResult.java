@@ -15,9 +15,11 @@
  */
 package com.cognifide.aet.communication.api.metadata;
 
+import javax.validation.Valid;
+
 public class ComparatorStepResult extends StepResult {
 
-  private static final long serialVersionUID = 4112741834952534050L;
+  private static final long serialVersionUID = 4112700984952534120L;
 
   private final Status status;
 
@@ -25,16 +27,21 @@ public class ComparatorStepResult extends StepResult {
 
   private final boolean acceptable;
 
+  @Valid
+  private final Pattern pattern;
+
   public ComparatorStepResult(String artifactId, Status status) {
-    this(artifactId, status, false);
+    this(artifactId, null, status, false);
   }
 
-  public ComparatorStepResult(String artifactId, Status status, Boolean rebaseable) {
+  public ComparatorStepResult(String artifactId, Pattern pattern, Status status,
+      Boolean rebaseable) {
     super(artifactId);
     this.status = status;
     this.rebaseable = rebaseable;
     this.acceptable = rebaseable &&
         (Status.FAILED.equals(status) || Status.CONDITIONALLY_PASSED.equals(status));
+    this.pattern = pattern;
   }
 
   @Override

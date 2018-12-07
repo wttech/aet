@@ -17,6 +17,7 @@ package com.cognifide.aet.job.common.comparators.layout;
 
 import com.cognifide.aet.communication.api.metadata.ComparatorStepResult;
 import com.cognifide.aet.communication.api.metadata.ComparatorStepResult.Status;
+import com.cognifide.aet.communication.api.metadata.Pattern;
 import com.cognifide.aet.communication.api.metadata.Payload;
 import com.cognifide.aet.communication.api.metadata.exclude.ExcludedElement;
 import com.cognifide.aet.job.api.ParametersValidator;
@@ -34,6 +35,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.security.SecureRandom;
 import java.util.List;
 import java.util.Map;
@@ -86,16 +88,26 @@ public class LayoutComparator implements ComparatorJob {
   }
 
   @Override
-  public ComparatorStepResult compare() throws ProcessingException {
+  public List<ComparatorStepResult> compare() throws ProcessingException {
+    List<ComparatorStepResult> results = new ArrayList<>();
+
+    for (Pattern pattern : properties.getPatternsIds()) {
+      results.add(compareToPattern(pattern));
+    }
+
+    return results;
+  }
+
+  private ComparatorStepResult compareToPattern(Pattern pattern) throws ProcessingException {
     final ComparatorStepResult stepResult;
     ImageComparisonResult imageComparisonResult;
-    if (areInputsIdentical(artifactsDAO, properties)) {
-      stepResult = getPassedStepResult();
+    if (areInputsIdentical(artifactsDAO, properties, pattern)) {
+      stepResult = getPassedStepResult(pattern);
     } else {
       try (InputStream collectedArtifact = artifactsDAO
           .getArtifact(properties, properties.getCollectedId()).getArtifactStream();
           InputStream patternArtifact = artifactsDAO
-              .getArtifact(properties, properties.getPatternId()).getArtifactStream()) {
+              .getArtifact(properties, pattern.getPattern()).getArtifactStream()) {
 
         BufferedImage patternImg = ImageIO.read(patternArtifact);
         BufferedImage collectedImg = ImageIO.read(collectedArtifact);
@@ -113,7 +125,7 @@ public class LayoutComparator implements ComparatorJob {
             });
 
         imageComparisonResult = ImageComparison.compare(patternImg, collectedImg);
-        stepResult = saveArtifacts(imageComparisonResult);
+        stepResult = saveArtifacts(imageComparisonResult, pattern);
       } catch (IOException e) {
         throw new ProcessingException("Error while obtaining artifacts!", e);
       }
@@ -122,13 +134,15 @@ public class LayoutComparator implements ComparatorJob {
     return stepResult;
   }
 
-  private boolean areInputsIdentical(ArtifactsDAO artifactsDAO, ComparatorProperties properties) {
+  private boolean areInputsIdentical(ArtifactsDAO artifactsDAO, ComparatorProperties properties,
+      Pattern pattern) {
     String collectedMD5 = artifactsDAO.getArtifactMD5(properties, properties.getCollectedId());
-    String patternMD5 = artifactsDAO.getArtifactMD5(properties, properties.getPatternId());
+    String patternMD5 = artifactsDAO.getArtifactMD5(properties, pattern.getPattern());
     return StringUtils.equalsIgnoreCase(collectedMD5, patternMD5);
   }
 
-  private ComparatorStepResult saveArtifacts(ImageComparisonResult imageComparisonResult)
+  private ComparatorStepResult saveArtifacts(ImageComparisonResult imageComparisonResult,
+      Pattern pattern)
       throws ProcessingException {
     final ComparatorStepResult result;
     InputStream mask = null;
@@ -138,12 +152,13 @@ public class LayoutComparator implements ComparatorJob {
       String maskArtifactId = artifactsDAO.saveArtifact(properties, mask, CONTENT_TYPE);
 
       if (!excludeFunctionIsOn && isMaskWithoutDifference(imageComparisonResult)) {
-        result = getPassedStepResult();
+        result = getPassedStepResult(pattern);
       } else if (hasMaskThresholdWithAcceptableDifference(imageComparisonResult)
           || isMaskWithoutDifference(imageComparisonResult)) {
-        result = new ComparatorStepResult(maskArtifactId, Status.CONDITIONALLY_PASSED, true);
+        result = new ComparatorStepResult(maskArtifactId, pattern, Status.CONDITIONALLY_PASSED,
+            true);
       } else {
-        result = new ComparatorStepResult(maskArtifactId, Status.FAILED, true);
+        result = new ComparatorStepResult(maskArtifactId, pattern, Status.FAILED, true);
       }
 
       if (!CollectionUtils.isEmpty(notFoundExcludeElements)) {
@@ -153,7 +168,7 @@ public class LayoutComparator implements ComparatorJob {
       }
 
       addPixelDifferenceDataToResult(result, imageComparisonResult);
-      addTimestampToResult(result);
+      addTimestampToResult(result, pattern);
     } catch (Exception e) {
       throw new ProcessingException(e.getMessage(), e);
     } finally {
@@ -213,17 +228,14 @@ public class LayoutComparator implements ComparatorJob {
     result.addData("notFoundCssElements", notFoundCssElements);
   }
 
-  private void addTimestampToResult(ComparatorStepResult result) {
+  private void addTimestampToResult(ComparatorStepResult result, Pattern pattern) {
     result.addData("patternTimestamp", Long.toString(
-        artifactsDAO.getArtifactUploadDate(properties, properties.getPatternId()).getTime()));
+        artifactsDAO.getArtifactUploadDate(properties, pattern.getPattern()).getTime()));
     result.addData("collectTimestamp", Long.toString(System.currentTimeMillis()));
   }
 
-  private ComparatorStepResult getPassedStepResult() {
-    ComparatorStepResult result = new ComparatorStepResult(null, ComparatorStepResult.Status.PASSED,
-        false);
-    addTimestampToResult(result);
-    return result;
+  private ComparatorStepResult getPassedStepResult(Pattern pattern) {
+    return new ComparatorStepResult(null, Status.PASSED);
   }
 
   @Override

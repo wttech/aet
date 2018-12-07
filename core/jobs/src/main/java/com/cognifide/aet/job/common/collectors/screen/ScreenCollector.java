@@ -16,6 +16,7 @@
 package com.cognifide.aet.job.common.collectors.screen;
 
 import com.cognifide.aet.communication.api.metadata.CollectorStepResult;
+import com.cognifide.aet.communication.api.metadata.Pattern;
 import com.cognifide.aet.communication.api.metadata.Payload;
 import com.cognifide.aet.communication.api.metadata.exclude.ExcludedElement;
 import com.cognifide.aet.communication.api.metadata.exclude.LayoutExclude;
@@ -85,8 +86,9 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
     byte[] screenshot = takeScreenshot();
 
     CollectorStepResult stepResult;
-    if (isPatternAndResultMD5Identical(screenshot)) {
-      stepResult = CollectorStepResult.newResultThatDuplicatesPattern(properties.getPatternId());
+    if (isPatternsAndResultMD5Identical(screenshot)) {
+      String firstMatchingPattern = properties.getPatternsIds().iterator().next().getPattern();
+      stepResult = CollectorStepResult.newResultThatDuplicatesPattern(firstMatchingPattern);
     } else {
       try (final InputStream screenshotStream = new ByteArrayInputStream(screenshot)) {
         String resultId = artifactsDAO.saveArtifact(properties, screenshotStream, CONTENT_TYPE);
@@ -103,15 +105,21 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
     return stepResult;
   }
 
-  private boolean isPatternAndResultMD5Identical(byte[] screenshot) {
-    if (properties.getPatternId() != null) {
-      final String screenshotMD5 = DigestUtils.md5Hex(screenshot);
-      final String patternMD5 = artifactsDAO
-          .getArtifactMD5(properties, properties.getPatternId());
-      return StringUtils.equalsIgnoreCase(patternMD5, screenshotMD5);
+  private boolean isPatternsAndResultMD5Identical(byte[] screenshot) {
+    final boolean isCollectedIdentical;
+
+    if (properties.getPatternsIds() == null || properties.getPatternsIds().isEmpty()) {
+      isCollectedIdentical = false;
     } else {
-      return false;
+      isCollectedIdentical = properties.getPatternsIds().stream()
+          .allMatch(pattern -> {
+            final String screenshotMD5 = DigestUtils.md5Hex(screenshot);
+            final String patternMD5 = artifactsDAO
+                .getArtifactMD5(properties, pattern.getPattern());
+            return StringUtils.equalsIgnoreCase(patternMD5, screenshotMD5);
+          });
     }
+    return isCollectedIdentical;
   }
 
   private CollectorStepResult getResultWithExcludeSelectors(String resultId) {

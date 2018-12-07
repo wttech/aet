@@ -18,11 +18,18 @@ package com.cognifide.aet.executor;
 import com.cognifide.aet.communication.api.execution.SuiteExecutionResult;
 import com.cognifide.aet.executor.http.HttpSuiteExecutionResultWrapper;
 import com.cognifide.aet.vs.MetadataDAO;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -76,16 +83,17 @@ public class SuiteServlet extends HttpServlet {
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     if (ServletFileUpload.isMultipartContent(request)) {
-      Map<String, String> requestData = getRequestData(request);
-      final String suite = requestData.get(SUITE_PARAM);
-      final String name = requestData.get(NAME_PARAM);
-      final String domain = requestData.get(DOMAIN_PARAM);
-      final String patternCorrelationId = requestData.get(PATTERN_CORRELATION_ID_PARAM);
-      final String patternSuite = requestData.get(PATTERN_SUITE_PARAM);
+      Multimap<String, String> requestData = getRequestData(request);
+      final String suite = getSingletonParam(requestData, SUITE_PARAM);
+      final String name = getSingletonParam(requestData, NAME_PARAM);
+      final String domain = getSingletonParam(requestData, DOMAIN_PARAM);
+      final Collection<String> patternCorrelationId = requestData.get(PATTERN_CORRELATION_ID_PARAM);
+      final Collection<String> patternSuite = requestData.get(PATTERN_SUITE_PARAM);
 
       if (StringUtils.isNotBlank(suite)) {
         HttpSuiteExecutionResultWrapper resultWrapper = suiteExecutor
-            .execute(suite, name, domain, patternCorrelationId, patternSuite);
+            .execute(suite, name, domain, new HashSet<>(patternCorrelationId),
+                new HashSet<>(patternSuite));
         final SuiteExecutionResult suiteExecutionResult = resultWrapper.getExecutionResult();
         Gson gson = new Gson();
 
@@ -100,6 +108,14 @@ public class SuiteServlet extends HttpServlet {
       }
     } else {
       response.sendError(HttpStatus.SC_BAD_REQUEST, "Request content is incorrect");
+    }
+  }
+
+  private String getSingletonParam(Multimap<String, String> data, String paramName) {
+    try {
+      return data.get(paramName).iterator().next();
+    } catch (NoSuchElementException | NullPointerException e) {
+      return null;
     }
   }
 
@@ -118,8 +134,8 @@ public class SuiteServlet extends HttpServlet {
     httpService = null;
   }
 
-  private Map<String, String> getRequestData(HttpServletRequest request) {
-    Map<String, String> requestData = new HashMap<>();
+  private Multimap<String, String> getRequestData(HttpServletRequest request) {
+    Multimap<String, String> requestData = ArrayListMultimap.create();
 
     ServletFileUpload upload = new ServletFileUpload();
     try {

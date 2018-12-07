@@ -15,8 +15,12 @@
  */
 package com.cognifide.aet.executor;
 
+import static junit.framework.TestCase.assertEquals;
+import static junit.framework.TestCase.fail;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.contains;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.when;
@@ -25,6 +29,9 @@ import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.executor.model.TestSuiteRun;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.StorageException;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -62,14 +69,16 @@ public class SuiteFactoryTest {
   @Test
   public void suiteFromTestSuiteRun_whenValidTestSuite_expectSameFieldsInResult() {
     String patternCorrelationId = "company-project-other-suite-012345678";
-    when(testSuiteRun.getPatternCorrelationId()).thenReturn(patternCorrelationId);
+    when(testSuiteRun.getPatternsCorrelationIds()).thenReturn(
+        Collections.singleton(patternCorrelationId));
 
     Suite suite = suiteFactory.suiteFromTestSuiteRun(testSuiteRun);
     assertThat(suite.getCompany(), equalTo(COMPANY));
     assertThat(suite.getProject(), equalTo(PROJECT));
     assertThat(suite.getName(), equalTo(SUITE_NAME));
     assertThat(suite.getCorrelationId(), equalTo(CORRELATION_ID));
-    assertThat(suite.getPatternCorrelationId(), equalTo(patternCorrelationId));
+    assertThat(suite.getPatternCorrelationIds().iterator().next(), equalTo(patternCorrelationId));
+    assertThat(suite.getPatternCorrelationIds(), hasSize(1));
   }
 
   @Test
@@ -77,12 +86,30 @@ public class SuiteFactoryTest {
       throws StorageException {
     String patternCorrelationId = "company-project-other-suite-012345678";
     String patternSuiteName = "other-suite";
-    when(testSuiteRun.getPatternSuite()).thenReturn(patternSuiteName);
+    when(testSuiteRun.getPatternsSuite()).thenReturn(Collections.singleton(patternSuiteName));
     when(metadataDAO.getLatestRun(any(), eq(patternSuiteName))).thenReturn(patternSuite);
     when(patternSuite.getCorrelationId()).thenReturn(patternCorrelationId);
 
     Suite suite = suiteFactory.suiteFromTestSuiteRun(testSuiteRun);
-    assertThat(suite.getPatternCorrelationId(), equalTo(patternCorrelationId));
+    assertThat(suite.getPatternCorrelationIds(), contains(patternCorrelationId));
   }
 
+  @Test
+  public void suiteFromTestSuiteRun_whenCorrelationIdAndSuiteNameProvided_expectBothToBeFetched()
+      throws StorageException {
+    String patternCorrelationId1 = "company-project-other-suite-012345678";
+    String patternCorrelationId2 = "company-project-other-suite-123456789";
+    String patternSuiteName = "other-suite";
+
+    when(testSuiteRun.getPatternsCorrelationIds()).thenReturn(
+        Collections.singleton(patternCorrelationId1));
+    when(testSuiteRun.getPatternsSuite()).thenReturn(Collections.singleton(patternSuiteName));
+    when(metadataDAO.getLatestRun(any(), eq(patternSuiteName))).thenReturn(patternSuite);
+    when(patternSuite.getCorrelationId()).thenReturn(patternCorrelationId2);
+
+    Suite suite = suiteFactory.suiteFromTestSuiteRun(testSuiteRun);
+
+    assertThat(suite.getPatternCorrelationIds(),
+        contains(patternCorrelationId1, patternCorrelationId2));
+  }
 }

@@ -21,6 +21,10 @@ import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.SimpleDBKey;
 import com.cognifide.aet.vs.StorageException;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -33,19 +37,27 @@ public class SuiteDataService {
   /**
    * @param currentRun - current suite run
    * @return suite wrapper with all patterns from the last or specified (see
-   * Suite.patternCorrelationId) run, if this is the first run of the suite, patterns will be
+   * Suite.patternCorrelationIds) runs, if this is the first run of the suite, patterns will be
    * empty.
    */
   public Suite enrichWithPatterns(final Suite currentRun) throws StorageException {
     final SimpleDBKey dbKey = new SimpleDBKey(currentRun);
     Suite lastVersion = metadataDAO.getLatestRun(dbKey, currentRun.getName());
-    Suite pattern;
-    if (currentRun.getPatternCorrelationId() != null) {
-      pattern = metadataDAO.getSuite(dbKey, currentRun.getPatternCorrelationId());
+
+    List<Suite> patterns = new ArrayList<>();
+    if (hasSharedPatterns(currentRun)) {
+      for (String id : currentRun.getPatternCorrelationIds()) {
+        patterns.add(metadataDAO.getSuite(dbKey, id));
+      }
     } else {
-      pattern = lastVersion;
+      patterns.add(lastVersion);
     }
-    return SuiteMergeStrategy.merge(currentRun, lastVersion, pattern);
+    return SuiteMergeStrategy.merge(currentRun, lastVersion, patterns);
+  }
+
+  private boolean hasSharedPatterns(Suite currentRun) {
+    return currentRun.getPatternCorrelationIds() != null &&
+        !currentRun.getPatternCorrelationIds().isEmpty();
   }
 
   public Suite saveSuite(final Suite suite) throws ValidatorException, StorageException {
@@ -53,7 +65,7 @@ public class SuiteDataService {
   }
 
   public Suite replaceSuite(final Suite oldSuite, final Suite newSuite) throws StorageException {
-    metadataDAO.replaceSuite(oldSuite,newSuite);
+    metadataDAO.replaceSuite(oldSuite, newSuite);
     return newSuite;
   }
 

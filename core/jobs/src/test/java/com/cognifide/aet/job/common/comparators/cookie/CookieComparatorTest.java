@@ -18,10 +18,12 @@ package com.cognifide.aet.job.common.comparators.cookie;
 import static org.junit.Assert.assertEquals;
 
 import com.cognifide.aet.communication.api.metadata.ComparatorStepResult;
+import com.cognifide.aet.communication.api.metadata.Pattern;
 import com.cognifide.aet.job.api.comparator.ComparatorProperties;
 import com.cognifide.aet.job.common.ArtifactDAOMock;
 import com.cognifide.aet.job.common.comparators.AbstractComparatorTest;
 import com.google.common.collect.ImmutableMap;
+import java.util.Collections;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,7 +38,7 @@ public class CookieComparatorTest extends AbstractComparatorTest {
   public void setUp() throws Exception {
     artifactDaoMock = new ArtifactDAOMock(CookieComparator.class);
     comparatorProperties = new ComparatorProperties(TEST_COMPANY, TEST_PROJECT,
-        "pattern-result.json", "data-result.json");
+        Collections.singleton(new Pattern("pattern-result.json", null)), "data-result.json");
     tested = new CookieComparator(comparatorProperties, artifactDaoMock);
   }
 
@@ -46,7 +48,8 @@ public class CookieComparatorTest extends AbstractComparatorTest {
     result = tested.compare();
 
     assertEqualsToSavedArtifact("expected-list-result.json");
-    assertEquals(ComparatorStepResult.Status.PASSED, result.getStatus());
+    assertEquals(ComparatorStepResult.Status.PASSED, result.get(0).getStatus());
+    assertEquals(1, result.size());
   }
 
   @Test
@@ -55,7 +58,8 @@ public class CookieComparatorTest extends AbstractComparatorTest {
     result = tested.compare();
 
     assertEqualsToSavedArtifact("expected-test-success-result.json");
-    assertEquals(ComparatorStepResult.Status.PASSED, result.getStatus());
+    assertEquals(ComparatorStepResult.Status.PASSED, result.get(0).getStatus());
+    assertEquals(1, result.size());
   }
 
   @Test
@@ -64,19 +68,22 @@ public class CookieComparatorTest extends AbstractComparatorTest {
     result = tested.compare();
 
     assertEqualsToSavedArtifact("expected-test-failed-result.json");
-    assertEquals(result.getStatus(), ComparatorStepResult.Status.FAILED);
+    assertEquals(result.get(0).getStatus(), ComparatorStepResult.Status.FAILED);
+    assertEquals(1, result.size());
   }
 
   @Test
   public void testCompare_compareSuccess() throws Exception {
     comparatorProperties = new ComparatorProperties(TEST_COMPANY, TEST_PROJECT,
-        "identical-pattern-result.json", "data-result.json");
+        Collections.singleton(new Pattern("identical-pattern-result.json", null)),
+        "data-result.json");
     tested = new CookieComparator(comparatorProperties, artifactDaoMock);
     tested.setParameters(ImmutableMap.of("action", "compare", "showMatched", "true"));
     result = tested.compare();
 
     assertEqualsToSavedArtifact("expected-compare-success-result.json");
-    assertEquals(ComparatorStepResult.Status.PASSED, result.getStatus());
+    assertEquals(ComparatorStepResult.Status.PASSED, result.get(0).getStatus());
+    assertEquals(1, result.size());
   }
 
   @Test
@@ -85,7 +92,8 @@ public class CookieComparatorTest extends AbstractComparatorTest {
     result = tested.compare();
 
     assertEqualsToSavedArtifact("expected-compare-failed-result.json");
-    assertEquals(ComparatorStepResult.Status.FAILED, result.getStatus());
+    assertEquals(ComparatorStepResult.Status.FAILED, result.get(0).getStatus());
+    assertEquals(1, result.size());
   }
 
 }

@@ -29,6 +29,7 @@ import com.google.common.collect.Collections2;
 import com.google.common.collect.Lists;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -82,7 +83,7 @@ public class StatusCodesComparator implements ComparatorJob {
 
   @Override
   @SuppressWarnings("unchecked")
-  public ComparatorStepResult compare() throws ProcessingException {
+  public List<ComparatorStepResult> compare() throws ProcessingException {
     final ComparatorStepResult result;
     LOGGER.info("Starting comparison phase for  status codes for Company: {} Project: {}",
         properties.getCompany(), properties.getProject());
@@ -128,7 +129,7 @@ public class StatusCodesComparator implements ComparatorJob {
     } catch (Exception e) {
       throw new ProcessingException(e.getMessage(), e);
     }
-    return result;
+    return Collections.singletonList(result);
   }
 
   @Override
