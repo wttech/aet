@@ -21,52 +21,35 @@ import com.cognifide.aet.communication.api.job.CollectorResultData;
 import com.cognifide.aet.communication.api.metadata.CollectorStepResult;
 import com.cognifide.aet.communication.api.metadata.Step;
 import com.cognifide.aet.communication.api.metadata.Url;
-import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.communication.api.util.ExecutionTimer;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.queues.JmsUtils;
 import com.cognifide.aet.worker.api.CollectorDispatcher;
 import com.cognifide.aet.worker.drivers.WebDriverProvider;
 import com.cognifide.aet.worker.exceptions.WorkerException;
+import com.cognifide.aet.worker.results.FeedbackQueue;
 import javax.jms.JMSException;
 import javax.jms.Message;
+import javax.jms.MessageListener;
 import org.apache.commons.lang3.StringUtils;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.metatype.annotations.Designate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Component(
-    service = CollectorMessageListenerImpl.class,
-    immediate = true)
-@Designate(ocd = CollectorMessageListenerImplConfig.class, factory = true)
-public class CollectorMessageListenerImpl extends AbstractTaskMessageListener {
+class CollectorMessageListener implements MessageListener {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(CollectorMessageListenerImpl.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(CollectorMessageListener.class);
 
-  @Reference
-  private JmsConnection jmsConnection;
+  private final String name;
+  private final CollectorDispatcher dispatcher;
+  private final FeedbackQueue feedbackQueue;
+  private final WebDriverProvider webDriverProvider;
 
-  @Reference
-  private CollectorDispatcher dispatcher;
-
-  @Reference
-  private WebDriverProvider webDriverProvider;
-
-  private CollectorMessageListenerImplConfig config;
-
-  @Activate
-  void activate(CollectorMessageListenerImplConfig config) {
-    this.config = config;
-    super.doActivate(config.consumerQueueName(), config.producerQueueName(), config.pf());
-  }
-
-  @Deactivate
-  void deactivate() {
-    super.doDeactivate();
+  CollectorMessageListener(String name, CollectorDispatcher dispatcher, FeedbackQueue feedbackQueue,
+      WebDriverProvider webDriverProvider) {
+    this.name = name;
+    this.dispatcher = dispatcher;
+    this.feedbackQueue = feedbackQueue;
+    this.webDriverProvider = webDriverProvider;
   }
 
   @Override
@@ -75,15 +58,15 @@ public class CollectorMessageListenerImpl extends AbstractTaskMessageListener {
     try {
       collectorJobData = JmsUtils.getFromMessage(message, CollectorJobData.class);
     } catch (JMSException e) {
-      LOGGER.error("Invalid message obtained!", e);
+      LOGGER.error("[{}] Invalid message obtained!", name, e);
     }
     String correlationId = JmsUtils.getJMSCorrelationID(message);
     String requestMessageId = JmsUtils.getJMSMessageID(message);
     if (collectorJobData != null && StringUtils.isNotBlank(correlationId)
         && requestMessageId != null) {
       LOGGER.info(
-          "CollectorJobData [{}] message arrived with {} urls. CorrelationId: {} RequestMessageId: {}",
-          config.name(), collectorJobData.getUrls().size(), correlationId,
+          "[{}] CollectorJobData message arrived with {} urls. CorrelationId: {} RequestMessageId: {}",
+          name, collectorJobData.getUrls().size(), correlationId,
           requestMessageId);
       WebCommunicationWrapper webCommunicationWrapper = null;
       int collected = 0;
@@ -101,7 +84,7 @@ public class CollectorMessageListenerImpl extends AbstractTaskMessageListener {
       } catch (WorkerException e) {
         for (Url url : collectorJobData.getUrls()) {
           String errorMessage = String.format(
-              "Couldn't process following url `%s` because of error: %s", url.getUrl(),
+              "[%s] Couldn't process following url `%s` because of error: %s", name, url.getUrl(),
               e.getMessage());
           LOGGER.error(errorMessage, e);
           // updates all steps with worker exception
@@ -118,7 +101,7 @@ public class CollectorMessageListenerImpl extends AbstractTaskMessageListener {
       } finally {
         quitWebDriver(webCommunicationWrapper);
       }
-      LOGGER.info("Successfully collected from {}/{} urls.", collected,
+      LOGGER.info("[{}] Successfully collected from {}/{} urls.", name, collected,
           collectorJobData.getUrls().size());
     }
 
@@ -140,9 +123,8 @@ public class CollectorMessageListenerImpl extends AbstractTaskMessageListener {
         processedUrl.setCollectionStats(timer.toStatistics());
         feedbackQueue.sendObjectMessageWithCorrelationID(collectorResultData, correlationId);
       } catch (Exception e) {
-        LOGGER.error("Unrecognized collector error", e);
+        LOGGER.error("[{}] Unrecognized collector error", name, e);
         final String message = "Unrecognized collector error: " + e.getMessage();
-
         CollectorStepResult collectorStepProcessingError =
             CollectorStepResult.newProcessingErrorResult(message);
         for (Step step : url.getSteps()) {
@@ -173,11 +155,6 @@ public class CollectorMessageListenerImpl extends AbstractTaskMessageListener {
         }
       }
     }
-  }
-
-  @Override
-  protected JmsConnection getJmsConnection() {
-    return jmsConnection;
   }
 
 }

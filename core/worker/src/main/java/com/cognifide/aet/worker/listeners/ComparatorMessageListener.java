@@ -22,46 +22,30 @@ import com.cognifide.aet.communication.api.job.ComparatorResultData;
 import com.cognifide.aet.communication.api.metadata.Comparator;
 import com.cognifide.aet.communication.api.metadata.ComparatorStepResult;
 import com.cognifide.aet.communication.api.metadata.Step;
-import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.job.api.comparator.ComparatorProperties;
 import com.cognifide.aet.queues.JmsUtils;
 import com.cognifide.aet.worker.api.ComparatorDispatcher;
+import com.cognifide.aet.worker.results.FeedbackQueue;
 import javax.jms.JMSException;
 import javax.jms.Message;
+import javax.jms.MessageListener;
 import org.apache.commons.lang3.StringUtils;
-import org.osgi.service.component.annotations.Activate;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Deactivate;
-import org.osgi.service.component.annotations.Reference;
-import org.osgi.service.metatype.annotations.Designate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Component(
-    service = ComparatorMessageListenerImpl.class,
-    immediate = true)
-@Designate(ocd = ComparatorMessageListenerImplConfig.class, factory = true)
-public class ComparatorMessageListenerImpl extends AbstractTaskMessageListener {
+class ComparatorMessageListener implements MessageListener {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(ComparatorMessageListenerImpl.class);
+  private static final Logger LOGGER = LoggerFactory.getLogger(ComparatorMessageListener.class);
 
-  @Reference
-  private JmsConnection jmsConnection;
+  private final String name;
+  private final ComparatorDispatcher dispatcher;
+  private final FeedbackQueue feedbackQueue;
 
-  @Reference
-  private ComparatorDispatcher dispatcher;
-
-  private ComparatorMessageListenerImplConfig config;
-
-  @Activate
-  void activate(ComparatorMessageListenerImplConfig config) {
-    this.config = config;
-    super.doActivate(config.consumerQueueName(), config.producerQueueName(), config.pf());
-  }
-
-  @Deactivate
-  void deactivate() {
-    super.doDeactivate();
+  ComparatorMessageListener(String name,
+      ComparatorDispatcher dispatcher, FeedbackQueue feedbackQueue) {
+    this.name = name;
+    this.dispatcher = dispatcher;
+    this.feedbackQueue = feedbackQueue;
   }
 
   @Override
@@ -76,7 +60,8 @@ public class ComparatorMessageListenerImpl extends AbstractTaskMessageListener {
 
     if (comparatorJobData != null && StringUtils.isNotBlank(jmsCorrelationId)) {
       LOGGER.info(
-          "ComparatorJobData [{}] message arrived. CorrelationId: {} TestName: {} UrlName: {}",
+          "[{}] ComparatorJobData [{}] message arrived. CorrelationId: {} TestName: {} UrlName: {}",
+          name,
           comparatorJobData,
           jmsCorrelationId,
           comparatorJobData.getTestName(),
@@ -84,17 +69,19 @@ public class ComparatorMessageListenerImpl extends AbstractTaskMessageListener {
       final Step step = comparatorJobData.getStep();
       final ComparatorProperties properties = new ComparatorProperties(
           comparatorJobData.getCompany(),
-          comparatorJobData.getProject(), step.getPattern(), step.getStepResult().getArtifactId(), step.getStepResult().getPayload());
+          comparatorJobData.getProject(), step.getPattern(), step.getStepResult().getArtifactId(),
+          step.getStepResult().getPayload());
 
       for (Comparator comparator : step.getComparators()) {
-        LOGGER.info("Start comparison for comparator {} in step {}", comparator, step);
+        LOGGER.info("[{}] Start comparison for comparator {} in step {}", name, comparator, step);
         ComparatorResultData.Builder resultBuilder = ComparatorResultData
             .newBuilder(comparatorJobData.getTestName(), comparatorJobData.getUrlName(),
                 step.getIndex());
         try {
           Comparator processedComparator = dispatcher.run(comparator, properties);
           LOGGER.info(
-              "Comparison successfully ended. CorrelationId: {} TestName: {} Url: {} Comparator: {}",
+              "[{}] Comparison successfully ended. CorrelationId: {} TestName: {} Url: {} Comparator: {}",
+              name,
               jmsCorrelationId,
               comparatorJobData.getTestName(),
               comparatorJobData.getUrlName(),
@@ -102,7 +89,7 @@ public class ComparatorMessageListenerImpl extends AbstractTaskMessageListener {
           resultBuilder.withComparisonResult(processedComparator)
               .withStatus(JobStatus.SUCCESS);
         } catch (Exception e) {
-          LOGGER.error("Exception during compare. CorrelationId: {}", jmsCorrelationId, e);
+          LOGGER.error("[{}] Exception during compare. CorrelationId: {}", name, jmsCorrelationId, e);
           final ComparatorStepResult errorResult =
               new ComparatorStepResult(null, ComparatorStepResult.Status.PROCESSING_ERROR);
           errorResult.addError(e.getMessage());
@@ -115,11 +102,6 @@ public class ComparatorMessageListenerImpl extends AbstractTaskMessageListener {
       }
 
     }
-  }
-
-  @Override
-  protected JmsConnection getJmsConnection() {
-    return jmsConnection;
   }
 
 }
