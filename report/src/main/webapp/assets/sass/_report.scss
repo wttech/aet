@@ -226,6 +226,91 @@
   }
 }
 
+.toolbar-patterns-list {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 5px;
+  padding-right: 5px;
+  padding-bottom: 10px;
+}
+
+.toolbar-patterns-base {
+  border-bottom: 2px solid #dcdce5;
+  padding: 10px;
+  margin: 0 -25px 10px -25px;
+  width: 110%;
+}
+
+.toolbar-patterns-header {
+  font-family: montserratlight, sans-serif;
+  color: #77777c;
+  display: inline-block;
+  padding: 0 20px;
+  line-height: 31px;
+  margin: 8px 0;
+  vertical-align: middle;
+  margin-top: 45px;
+}
+
+.toolbar-patterns-pattern {
+  height: 130px;
+  width: 100px;
+  margin: 3px;
+  cursor: pointer;
+  overflow: hidden;
+  position: relative;
+}
+
+.toolbar-patterns-container {
+  height: 100px;
+  overflow: hidden;
+  position: relative;
+}
+
+.toolbar-patterns-image {
+  width: 100px;
+  position: absolute;
+  top: 0;
+  opacity: 0.5;
+}
+
+.toolbar-patterns-image-mask {
+  width: 100px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+}
+
+.toolbar-patterns-icon {
+  color: #77777c;
+  font-size: 20px;
+  font-family: montserratlight, sans-serif;
+  text-align: center;
+  position: relative;
+}
+
+.toolbar-pattern-status {
+  &.passed {
+    background: $passed_bg;
+  }
+
+  &.failed {
+    background: $failed_bg;
+  }
+
+  &.rebased {
+    background: $rebased_bg;
+  }
+
+  &.warning {
+    background: $warning_bg;
+  }
+
+  &.conditionallyPassed {
+    background: $passed_bg;
+  }
+}
+
 .test-icons {
   @include transition(all .3s);
   position: absolute;
@@ -267,6 +352,7 @@ ul {
     }
   }
 }
+
 ul {
   li.passed {
     a.nav-link,

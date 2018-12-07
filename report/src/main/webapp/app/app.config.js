@@ -36,6 +36,7 @@ require.config({
     'keyboardShortcutsDirective': 'components/keyboardShortcuts.directive',
     'hidePopoversDirective': 'components/hidePopovers.directive',
     'compareScreensDirective': 'components/compareScreens.directive',
+    'chooseLayoutDirective': 'components/chooseLayout.directive',
     'winterEdition': 'themes/winterEdition.directive',
     //services
     'endpointConfiguration': 'services/endpointConfiguration.service',

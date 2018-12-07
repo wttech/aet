@@ -178,11 +178,6 @@
         display: block;
       }
     }
-
-    .label-spacer:before {
-      content: "\200b"; // unicode zero width space character
-    }
-
   }
 
   &-description {
