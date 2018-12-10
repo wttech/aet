@@ -29,14 +29,16 @@ public @interface WorkersListenersServiceConfig {
   String COLLECTOR_PREFETCH_SIZE_DESC = "http://activemq.apache.org/what-is-the-prefetch-limit-for.html";
   String COLLECTOR_PREFETCH_SIZE_DEFAULT_VALUE = "1";
 
-  String COLLECTOR_INSTANCES_NO_LABEL = "Number of collector instances, might be overwritten by env variable " + COLLECTORS_NO_ENV;
+  String COLLECTOR_INSTANCES_NO_LABEL = "Number of collector instances";
+  String COLLECTOR_INSTANCES_NO_DESC = "Might be overwritten by env variable" + COLLECTORS_NO_ENV;
   int COLLECTOR_INSTANCES_NO_DEFAULT_VALUE = 5;
 
   String COMPARATOR_PREFETCH_SIZE_LABEL = "Comparators prefetch size";
   String COMPARATOR_PREFETCH_SIZE_DESC = "http://activemq.apache.org/what-is-the-prefetch-limit-for.html";
   String COMPARATOR_PREFETCH_SIZE_DEFAULT_VALUE = "1";
 
-  String COMPARATOR_INSTANCES_NO_LABEL = "Number of comparator instances, might be overwritten by env variable " + COMPARATORS_NO_ENV;
+  String COMPARATOR_INSTANCES_NO_LABEL = "Number of comparator instances";
+  String COMPARATOR_INSTANCES_NO_DESC = "Might be overwritten by env variable" + COMPARATORS_NO_ENV;
   int COMPARATOR_INSTANCES_NO_DEFAULT_VALUE = 5;
 
   @AttributeDefinition(
@@ -44,7 +46,9 @@ public @interface WorkersListenersServiceConfig {
       description = COLLECTOR_PREFETCH_SIZE_DESC)
   String collectorPrefetchSize() default COLLECTOR_PREFETCH_SIZE_DEFAULT_VALUE;
 
-  @AttributeDefinition(name = COLLECTOR_INSTANCES_NO_LABEL, type = AttributeType.INTEGER)
+  @AttributeDefinition(name = COLLECTOR_INSTANCES_NO_LABEL,
+      description = COLLECTOR_INSTANCES_NO_DESC,
+      type = AttributeType.INTEGER)
   int collectorInstancesNo() default COLLECTOR_INSTANCES_NO_DEFAULT_VALUE;
 
   @AttributeDefinition(
@@ -52,7 +56,9 @@ public @interface WorkersListenersServiceConfig {
       description = COMPARATOR_PREFETCH_SIZE_DESC)
   String comparatorPrefetchSize() default COMPARATOR_PREFETCH_SIZE_DEFAULT_VALUE;
 
-  @AttributeDefinition(name = COMPARATOR_INSTANCES_NO_LABEL, type = AttributeType.INTEGER)
+  @AttributeDefinition(name = COMPARATOR_INSTANCES_NO_LABEL,
+      description = COMPARATOR_INSTANCES_NO_DESC,
+      type = AttributeType.INTEGER)
   int comparatorInstancesNo() default COMPARATOR_INSTANCES_NO_DEFAULT_VALUE;
 
 }
