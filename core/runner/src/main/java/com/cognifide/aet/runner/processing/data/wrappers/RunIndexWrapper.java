@@ -64,4 +64,11 @@ public abstract class RunIndexWrapper<T> {
   public abstract List<MetadataRunDecorator<Url>> getUrls();
 
   public abstract int countUrls();
+
+  @Override
+  public String toString() {
+    return "RunIndexWrapper{" +
+        "objectToRunWrapper=" + objectToRunWrapper +
+        '}';
+  }
 }
