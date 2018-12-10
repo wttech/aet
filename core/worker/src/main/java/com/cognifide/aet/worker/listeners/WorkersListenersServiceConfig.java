@@ -25,24 +25,12 @@ public @interface WorkersListenersServiceConfig {
   String COLLECTORS_NO_ENV = "COLLECTORS_NO";
   String COMPARATORS_NO_ENV = "COMPARATORS_NO";
 
-  String COLLECTOR_CONSUMER_QUEUE_NAME_LABEL = "Collectors consumer queue name";
-  String COLLECTOR_CONSUMER_QUEUE_NAME_DEFAULT_VALUE = "AET.collectorJobs";
-
-  String COLLECTOR_PRODUCER_QUEUE_NAME_LABEL = "Collectors producer queue name";
-  String COLLECTOR_PRODUCER_QUEUE_NAME_DEFAULT_VALUE = "AET.collectorResults";
-
   String COLLECTOR_PREFETCH_SIZE_LABEL = "Collectors prefetch size";
   String COLLECTOR_PREFETCH_SIZE_DESC = "http://activemq.apache.org/what-is-the-prefetch-limit-for.html";
   String COLLECTOR_PREFETCH_SIZE_DEFAULT_VALUE = "1";
 
   String COLLECTOR_INSTANCES_NO_LABEL = "Number of collector instances, might be overwritten by env variable " + COLLECTORS_NO_ENV;
   int COLLECTOR_INSTANCES_NO_DEFAULT_VALUE = 5;
-
-  String COMPARATOR_CONSUMER_QUEUE_NAME_LABEL = "Comparator consumer queue name";
-  String COMPARATOR_CONSUMER_QUEUE_NAME_DEFAULT_VALUE = "AET.comparatorJobs";
-
-  String COMPARATOR_PRODUCER_QUEUE_NAME_LABEL = "Comparator producer queue name";
-  String COMPARATOR_PRODUCER_QUEUE_NAME_DEFAULT_VALUE = "AET.comparatorResults";
 
   String COMPARATOR_PREFETCH_SIZE_LABEL = "Comparators prefetch size";
   String COMPARATOR_PREFETCH_SIZE_DESC = "http://activemq.apache.org/what-is-the-prefetch-limit-for.html";
@@ -52,28 +40,12 @@ public @interface WorkersListenersServiceConfig {
   int COMPARATOR_INSTANCES_NO_DEFAULT_VALUE = 5;
 
   @AttributeDefinition(
-      name = COLLECTOR_CONSUMER_QUEUE_NAME_LABEL)
-  String collectorConsumerQueueName() default COLLECTOR_CONSUMER_QUEUE_NAME_DEFAULT_VALUE;
-
-  @AttributeDefinition(
-      name = COLLECTOR_PRODUCER_QUEUE_NAME_LABEL)
-  String collectorProducerQueueName() default COLLECTOR_PRODUCER_QUEUE_NAME_DEFAULT_VALUE;
-
-  @AttributeDefinition(
       name = COLLECTOR_PREFETCH_SIZE_LABEL,
       description = COLLECTOR_PREFETCH_SIZE_DESC)
   String collectorPrefetchSize() default COLLECTOR_PREFETCH_SIZE_DEFAULT_VALUE;
 
   @AttributeDefinition(name = COLLECTOR_INSTANCES_NO_LABEL, type = AttributeType.INTEGER)
   int collectorInstancesNo() default COLLECTOR_INSTANCES_NO_DEFAULT_VALUE;
-
-  @AttributeDefinition(
-      name = COMPARATOR_CONSUMER_QUEUE_NAME_LABEL)
-  String comparatorConsumerQueueName() default COMPARATOR_CONSUMER_QUEUE_NAME_DEFAULT_VALUE;
-
-  @AttributeDefinition(
-      name = COMPARATOR_PRODUCER_QUEUE_NAME_LABEL)
-  String comparatorProducerQueueName() default COMPARATOR_PRODUCER_QUEUE_NAME_DEFAULT_VALUE;
 
   @AttributeDefinition(
       name = COMPARATOR_PREFETCH_SIZE_LABEL,

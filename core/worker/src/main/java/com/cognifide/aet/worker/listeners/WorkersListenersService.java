@@ -16,6 +16,7 @@
 package com.cognifide.aet.worker.listeners;
 
 import com.cognifide.aet.communication.api.queues.JmsConnection;
+import com.cognifide.aet.queues.QueuesConstant;
 import com.cognifide.aet.worker.api.CollectorDispatcher;
 import com.cognifide.aet.worker.api.ComparatorDispatcher;
 import com.cognifide.aet.worker.drivers.WebDriverProvider;
@@ -53,12 +54,11 @@ public class WorkersListenersService {
   @Reference
   private ComparatorDispatcher comparatorDispatcher;
 
-  private WorkersListenersServiceConfig config;
-
   private Set<WorkerMessageListener> consumers;
 
   @Activate
   void activate(WorkersListenersServiceConfig config) {
+    LOGGER.info("Starting Workers Listeners Service with {}", config);
     consumers = new HashSet<>();
     consumers.addAll(spawnCollectors(config));
     consumers.addAll(spawnComparators(config));
@@ -84,22 +84,23 @@ public class WorkersListenersService {
 
   private Set<WorkerMessageListener> spawnCollectors(WorkersListenersServiceConfig config) {
     final String queueName =
-        config.collectorConsumerQueueName() + "?consumer.prefetchSize=" + config
+        QueuesConstant.COLLECTOR.getJobsQueueName() + "?consumer.prefetchSize=" + config
             .collectorPrefetchSize();
     return spawnListeners(getenvOrDefault(WorkersListenersServiceConfig.COLLECTORS_NO_ENV,
         config.collectorInstancesNo()),
         no -> new CollectorMessageListener("Collector-" + no, collectorDispatcher,
-            webDriverProvider, jmsConnection, queueName, config.collectorProducerQueueName()));
+            webDriverProvider, jmsConnection, queueName,
+            QueuesConstant.COLLECTOR.getResultsQueueName()));
   }
 
   private Set<WorkerMessageListener> spawnComparators(WorkersListenersServiceConfig config) {
     final String queueName =
-        config.comparatorConsumerQueueName() + "?consumer.prefetchSize=" + config
+        QueuesConstant.COMPARATOR.getJobsQueueName() + "?consumer.prefetchSize=" + config
             .comparatorPrefetchSize();
     return spawnListeners(getenvOrDefault(WorkersListenersServiceConfig.COMPARATORS_NO_ENV,
         config.comparatorInstancesNo()),
         no -> new ComparatorMessageListener("Comparator-" + no, comparatorDispatcher,
-            jmsConnection, queueName, config.comparatorProducerQueueName()));
+            jmsConnection, queueName, QueuesConstant.COMPARATOR.getResultsQueueName()));
   }
 
   @Deactivate
