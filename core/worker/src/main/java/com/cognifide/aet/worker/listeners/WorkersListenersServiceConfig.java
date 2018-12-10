@@ -20,7 +20,7 @@ import org.osgi.service.metatype.annotations.AttributeType;
 import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 
 @ObjectClassDefinition(name = "AET Workers Listener Factory")
-public @interface WorkersListenersFactoryConfig {
+public @interface WorkersListenersServiceConfig {
 
   String COLLECTORS_NO_ENV = "COLLECTORS_NO";
   String COMPARATORS_NO_ENV = "COMPARATORS_NO";

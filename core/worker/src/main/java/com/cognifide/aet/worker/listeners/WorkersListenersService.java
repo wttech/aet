@@ -16,21 +16,14 @@
 package com.cognifide.aet.worker.listeners;
 
 import com.cognifide.aet.communication.api.queues.JmsConnection;
-import com.cognifide.aet.queues.JmsUtils;
 import com.cognifide.aet.worker.api.CollectorDispatcher;
 import com.cognifide.aet.worker.api.ComparatorDispatcher;
 import com.cognifide.aet.worker.drivers.WebDriverProvider;
-import com.cognifide.aet.worker.exceptions.ConsumerInitException;
-import com.cognifide.aet.worker.results.FeedbackQueue;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.function.Function;
 import java.util.stream.IntStream;
-import javax.jms.JMSException;
-import javax.jms.MessageConsumer;
-import javax.jms.MessageListener;
-import javax.jms.Session;
 import org.apache.commons.lang3.StringUtils;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -43,7 +36,7 @@ import org.slf4j.LoggerFactory;
 @Component(
     service = WorkersListenersService.class,
     immediate = true)
-@Designate(ocd = WorkersListenersFactoryConfig.class)
+@Designate(ocd = WorkersListenersServiceConfig.class)
 public class WorkersListenersService {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(WorkersListenersService.class);
@@ -60,46 +53,24 @@ public class WorkersListenersService {
   @Reference
   private ComparatorDispatcher comparatorDispatcher;
 
-  private WorkersListenersFactoryConfig config;
+  private WorkersListenersServiceConfig config;
 
-  private Session jmsSession;
-  private FeedbackQueue collectorFeedbackQueue;
-  private FeedbackQueue comparatorFeedbackQueue;
-  private Set<MessageConsumer> consumers;
+  private Set<WorkerMessageListener> consumers;
 
   @Activate
-  void activate(WorkersListenersFactoryConfig config) {
-    this.config = config;
-    try {
-      jmsSession = jmsConnection.getJmsSession();
-      collectorFeedbackQueue = new FeedbackQueue(jmsSession, config.collectorProducerQueueName());
-      comparatorFeedbackQueue = new FeedbackQueue(jmsSession, config.comparatorProducerQueueName());
-      consumers = new HashSet<>();
-      consumers.addAll(spawnCollectors(config));
-      consumers.addAll(spawnComparators(config));
-    } catch (JMSException e) {
-      LOGGER.error("Failed to activate WorkersListenersService", e);
-      throw new IllegalStateException(e.getMessage(), e);
-    }
+  void activate(WorkersListenersServiceConfig config) {
+    consumers = new HashSet<>();
+    consumers.addAll(spawnCollectors(config));
+    consumers.addAll(spawnComparators(config));
   }
 
-  private Set<MessageConsumer> spawnListeners(String consumerQueueName, String prefetchSize,
-      int noOfInstances,
-      Function<Integer, MessageListener> getListenerInstance) {
-    final Set<MessageConsumer> consumersSet = new HashSet<>();
-    final String queueName = consumerQueueName + "?consumer.prefetchSize=" + prefetchSize;
-    IntStream.of(noOfInstances)
+  private Set<WorkerMessageListener> spawnListeners(int noOfInstances,
+      Function<Integer, WorkerMessageListener> getListenerInstance) {
+    final Set<WorkerMessageListener> consumersSet = new HashSet<>();
+    IntStream.rangeClosed(1, noOfInstances)
         .forEach(no -> {
-          try {
-            MessageConsumer consumer = jmsSession.createConsumer(jmsSession.createQueue(queueName));
-            MessageListener messageListener = getListenerInstance.apply(no);
-            consumer.setMessageListener(messageListener);
-            consumersSet.add(consumer);
-          } catch (JMSException e) {
-            LOGGER.error("Failed to create consumer {} for {}", no, consumerQueueName, e);
-            throw new ConsumerInitException(
-                String.format("Failed to create consumer %s for %s", no, consumerQueueName), e);
-          }
+          WorkerMessageListener listener = getListenerInstance.apply(no);
+          consumersSet.add(listener);
         });
     return consumersSet;
   }
@@ -111,32 +82,30 @@ public class WorkersListenersService {
         .orElse(defaultValue);
   }
 
-  private Set<MessageConsumer> spawnCollectors(WorkersListenersFactoryConfig config) {
-    return spawnListeners(config.collectorConsumerQueueName(), config.collectorPrefetchSize(),
-        getenvOrDefault(WorkersListenersFactoryConfig.COLLECTORS_NO_ENV,
-            config.collectorInstancesNo()),
-        no -> new CollectorMessageListener("Collector" + no, collectorDispatcher,
-            collectorFeedbackQueue, webDriverProvider));
+  private Set<WorkerMessageListener> spawnCollectors(WorkersListenersServiceConfig config) {
+    final String queueName =
+        config.collectorConsumerQueueName() + "?consumer.prefetchSize=" + config
+            .collectorPrefetchSize();
+    return spawnListeners(getenvOrDefault(WorkersListenersServiceConfig.COLLECTORS_NO_ENV,
+        config.collectorInstancesNo()),
+        no -> new CollectorMessageListener("Collector-" + no, collectorDispatcher,
+            webDriverProvider, jmsConnection, queueName, config.collectorProducerQueueName()));
   }
 
-  private Set<MessageConsumer> spawnComparators(WorkersListenersFactoryConfig config) {
-    return spawnListeners(config.comparatorConsumerQueueName(), config.comparatorPrefetchSize(),
-        getenvOrDefault(WorkersListenersFactoryConfig.COMPARATORS_NO_ENV,
-            config.comparatorInstancesNo()),
-        no -> new ComparatorMessageListener("Comparator" + no, comparatorDispatcher,
-            comparatorFeedbackQueue));
+  private Set<WorkerMessageListener> spawnComparators(WorkersListenersServiceConfig config) {
+    final String queueName =
+        config.comparatorConsumerQueueName() + "?consumer.prefetchSize=" + config
+            .comparatorPrefetchSize();
+    return spawnListeners(getenvOrDefault(WorkersListenersServiceConfig.COMPARATORS_NO_ENV,
+        config.comparatorInstancesNo()),
+        no -> new ComparatorMessageListener("Comparator-" + no, comparatorDispatcher,
+            jmsConnection, queueName, config.comparatorProducerQueueName()));
   }
 
   @Deactivate
   void deactivate() {
-    if (collectorFeedbackQueue != null) {
-      collectorFeedbackQueue.close();
-    }
-    if (comparatorFeedbackQueue != null) {
-      comparatorFeedbackQueue.close();
-    }
-    consumers.forEach(JmsUtils::closeQuietly);
-    JmsUtils.closeQuietly(jmsSession);
+    LOGGER.info("Closing Workers Listeners with: {}", consumers);
+    consumers.forEach(WorkerMessageListener::close);
   }
 
 }

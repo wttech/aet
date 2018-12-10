@@ -22,30 +22,26 @@ import com.cognifide.aet.communication.api.job.ComparatorResultData;
 import com.cognifide.aet.communication.api.metadata.Comparator;
 import com.cognifide.aet.communication.api.metadata.ComparatorStepResult;
 import com.cognifide.aet.communication.api.metadata.Step;
+import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.job.api.comparator.ComparatorProperties;
 import com.cognifide.aet.queues.JmsUtils;
 import com.cognifide.aet.worker.api.ComparatorDispatcher;
-import com.cognifide.aet.worker.results.FeedbackQueue;
 import javax.jms.JMSException;
 import javax.jms.Message;
-import javax.jms.MessageListener;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-class ComparatorMessageListener implements MessageListener {
+class ComparatorMessageListener extends WorkerMessageListener {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(ComparatorMessageListener.class);
 
-  private final String name;
   private final ComparatorDispatcher dispatcher;
-  private final FeedbackQueue feedbackQueue;
 
-  ComparatorMessageListener(String name,
-      ComparatorDispatcher dispatcher, FeedbackQueue feedbackQueue) {
-    this.name = name;
+  ComparatorMessageListener(String name, ComparatorDispatcher dispatcher,
+      JmsConnection jmsConnection, String consumerQueueName, String producerQueueName) {
+    super(name, jmsConnection, consumerQueueName, producerQueueName);
     this.dispatcher = dispatcher;
-    this.feedbackQueue = feedbackQueue;
   }
 
   @Override
@@ -89,7 +85,8 @@ class ComparatorMessageListener implements MessageListener {
           resultBuilder.withComparisonResult(processedComparator)
               .withStatus(JobStatus.SUCCESS);
         } catch (Exception e) {
-          LOGGER.error("[{}] Exception during compare. CorrelationId: {}", name, jmsCorrelationId, e);
+          LOGGER
+              .error("[{}] Exception during compare. CorrelationId: {}", name, jmsCorrelationId, e);
           final ComparatorStepResult errorResult =
               new ComparatorStepResult(null, ComparatorStepResult.Status.PROCESSING_ERROR);
           errorResult.addError(e.getMessage());

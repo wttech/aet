@@ -21,34 +21,31 @@ import com.cognifide.aet.communication.api.job.CollectorResultData;
 import com.cognifide.aet.communication.api.metadata.CollectorStepResult;
 import com.cognifide.aet.communication.api.metadata.Step;
 import com.cognifide.aet.communication.api.metadata.Url;
+import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.communication.api.util.ExecutionTimer;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.queues.JmsUtils;
 import com.cognifide.aet.worker.api.CollectorDispatcher;
 import com.cognifide.aet.worker.drivers.WebDriverProvider;
 import com.cognifide.aet.worker.exceptions.WorkerException;
-import com.cognifide.aet.worker.results.FeedbackQueue;
 import javax.jms.JMSException;
 import javax.jms.Message;
-import javax.jms.MessageListener;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-class CollectorMessageListener implements MessageListener {
+class CollectorMessageListener extends WorkerMessageListener {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(CollectorMessageListener.class);
 
-  private final String name;
   private final CollectorDispatcher dispatcher;
-  private final FeedbackQueue feedbackQueue;
   private final WebDriverProvider webDriverProvider;
 
-  CollectorMessageListener(String name, CollectorDispatcher dispatcher, FeedbackQueue feedbackQueue,
-      WebDriverProvider webDriverProvider) {
-    this.name = name;
+  CollectorMessageListener(String name, CollectorDispatcher dispatcher,
+      WebDriverProvider webDriverProvider, JmsConnection jmsConnection, String consumerQueueName,
+      String producerQueueName) {
+    super(name, jmsConnection, consumerQueueName, producerQueueName);
     this.dispatcher = dispatcher;
-    this.feedbackQueue = feedbackQueue;
     this.webDriverProvider = webDriverProvider;
   }
 
