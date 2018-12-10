@@ -45,7 +45,7 @@ define(['angularAMD'], function (angularAMD) {
       var DAY_MARGIN = 14;
       var isChristmas = isDateWithinMargin(TODAY, CHRISTMAS_DATE, DAY_MARGIN);
 
-      if (isChristmas && winterEditionEnabled) {
+      if (winterEditionEnabled && isChristmas) {
         _.merge($scope.theme, WINTER_THEME);
         $scope.$on('$viewContentLoaded', function() {
           snowFall.snow(document.querySelector('.aside'), {flakeCount: 15, maxSpeed: 5});
