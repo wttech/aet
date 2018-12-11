@@ -125,7 +125,7 @@
     </div>
   </div>
 
-  <div class="aside-report-container">
+  <div class="aside-report-container" ng-class="sidepanel.thereAreChangesToSave() ? 'aside-report-container_short' : ''">
     <div ng-repeat="test in sidepanel.tests | orderBy:'name'"
          class="aside-report {{filteredUrls.length > 0 ? 'is-visible' : 'is-hidden'}}">
       <a ui-sref="test({'suite':$root.params.project, 'test':test.name})" ui-sref-active="is-active"

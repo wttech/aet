@@ -75,7 +75,7 @@
       height: calc(100vh - #{$side_bar_header_height});
       overflow: auto;
 
-      &:not(:last-child) {
+      &.aside-report-container_short {
         height: calc(100vh - #{$side_bar_header_height} - #{$side_bar_manage_changes_wrapper_height});
       }
     }
