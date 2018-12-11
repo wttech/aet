@@ -189,15 +189,12 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
         }
 
         function anyResultHasStatus(status) {
-          var hasStatus = false;
+          var firstResultWithStatus =
+              _.find(stepResults, function (stepResult) {
+                return stepResult.status === status;
+              });
 
-          _.forEach(stepResults, function (stepResult) {
-            if (stepResult.status === status) {
-              hasStatus = true;
-            }
-          });
-
-          return hasStatus;
+          return !!firstResultWithStatus;
         }
 
         function setStatus(newStatus) {
@@ -207,27 +204,19 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
         }
 
         function isAcceptable() {
-          var isAnyAcceptable = false;
-
-          _.forEach(stepResults, function (stepResult) {
-            if (stepResult.acceptable) {
-              isAnyAcceptable = true;
-            }
-          });
-
-          return isAnyAcceptable;
+          var firstAcceptableStepResult =
+              _.find(stepResults, function (stepResult) {
+                return stepResult.acceptable;
+              });
+          return !!firstAcceptableStepResult;
         }
 
         function isRebaseable() {
-          var isAnyRebaseable = false;
-
-          _.forEach(stepResults, function (stepResult) {
-            if (stepResult.rebaseable) {
-              isAnyRebaseable = true;
-            }
-          });
-
-          return isAnyRebaseable;
+          var firstRebaseableStepResult =
+              _.find(stepResults, function (stepResult) {
+                return stepResult.rebaseable;
+              });
+          return !!firstRebaseableStepResult;
         }
       }
 
