@@ -13,15 +13,16 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.queues;
+package com.cognifide.aet.communication.api.queues;
 
 public enum QueuesConstant implements WorkerConfig {
   COLLECTOR("collectorJobs", "collectorResults"),
   COMPARATOR("comparatorJobs", "comparatorResults");
 
+  public static final String NAMESPACE = "AET.";
+
   final String jobsQueueName;
   final String resultsQueueName;
-  private static final String NAMESPACE = "AET.";
 
   QueuesConstant(String jobsQueueName, String resultsQueueName) {
     this.jobsQueueName = jobsQueueName;
