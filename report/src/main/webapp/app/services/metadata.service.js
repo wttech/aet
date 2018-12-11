@@ -159,6 +159,7 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
               getStatus: getStatus,
               setStatus: setStatus,
               hasPreviousStatus: hasPreviousStatus,
+              getErrors: getErrors,
               isAcceptable: isAcceptable,
               wasAcceptable: wasAcceptable,
               isRebaseable: isRebaseable
@@ -211,6 +212,18 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
                 return stepResult.previousStatus;
               });
           return !!firstStepResultWithPreviousStatus;
+        }
+
+        function getErrors() {
+          var errors = [];
+
+          _.forEach(stepResults, function (stepResult) {
+            if (stepResult.errors) {
+              errors.concat(stepResult.errors);
+            }
+          });
+
+          return errors;
         }
 
         function isAcceptable() {
