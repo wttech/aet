@@ -27,14 +27,14 @@
            ng-repeat="comparatorStepResult in case.comparator.stepResults">
         <div class="toolbar-patterns-container">
           <a data-ng-click="layoutIndex($index)">
-            <img ng-class="patternStatus(case.comparator.stepResults[layoutIndex()].status)"
+            <img ng-class="patternStatus(comparatorStepResult.status)"
                  class="img-responsive toolbar-patterns-image-mask toolbar-pattern-status"/>
             <img
-                ng-src="{{case.getPatternUrl(case.comparator.stepResults[layoutIndex()].pattern.pattern)}}"
+                ng-src="{{case.getPatternUrl(comparatorStepResult.pattern.pattern)}}"
                 class="img-responsive toolbar-patterns-image"/>
           </a>
         </div>
-        <div ng-class="patternStatus(case.comparator.stepResults[layoutIndex()].status)"
+        <div ng-class="patternStatus(comparatorStepResult.status)"
              class="fontawesome toolbar-patterns-icon toolbar-pattern-status">
           {{$index + 1}}
         </div>
