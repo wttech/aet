@@ -16,7 +16,7 @@
 package com.cognifide.aet.worker.listeners;
 
 import com.cognifide.aet.communication.api.queues.JmsConnection;
-import com.cognifide.aet.queues.QueuesConstant;
+import com.cognifide.aet.communication.api.queues.QueuesConstant;
 import com.cognifide.aet.worker.api.CollectorDispatcher;
 import com.cognifide.aet.worker.api.ComparatorDispatcher;
 import com.cognifide.aet.worker.drivers.WebDriverProvider;
