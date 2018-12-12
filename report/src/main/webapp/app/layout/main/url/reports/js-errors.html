@@ -25,7 +25,7 @@
     </div>
   </div>
 </div>
-<div>
+<div data-aet-choose-step-result>
   <span ng-if="!case.collectorResult || case.collectorResult.length === 0" class="test-no-issues">
       No issues found
   </span>
@@ -42,7 +42,7 @@
       </tr>
       </thead>
       <tbody>
-      <tr ng-repeat="item in case.result track by $index"
+      <tr ng-repeat="item in case.results[singletonStepResultIndex()] track by $index"
           ng-class="{ 'ignored': item.ignored, 'error': !item.ignored }">
         <td>{{$index+1}}</td>
         <td>{{item.errorMessage}}</td>
