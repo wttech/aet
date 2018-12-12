@@ -17,99 +17,105 @@
     limitations under the License.
 
 -->
+<div data-aet-choose-step-result>
 
-<div class="tab-content-toolbar">
-  <span class="tab-content-toolbar-header">Settings</span>
-  <div class="checkboxes-inline">
-    <div class="checkbox">
-      <input type="checkbox" id="fullSource" ng-click="urlView.toggleFullSource()"
-             ng-checked="$root.fullSourceVisible">
-      <label for="fullSource">
-        <span>Show Full Source</span>
-      </label>
+  <ng-include src="'app/layout/main/url/patterns/patternsToolbar.html'"/>
+
+  <div class="tab-content-toolbar">
+    <span class="tab-content-toolbar-header">Settings</span>
+    <div class="checkboxes-inline">
+      <div class="checkbox">
+        <input type="checkbox" id="fullSource" ng-click="urlView.toggleFullSource()"
+               ng-checked="$root.fullSourceVisible">
+        <label for="fullSource">
+          <span>Show Full Source</span>
+        </label>
+      </div>
+    </div>
+    <div class="toolbar-blocks">
+      <div class="toolbar-btns pull-right">
+        <ng-include src="'app/layout/main/url/navigation/navigation.comments.html'"/>
+        <ng-include src="'app/layout/main/url/navigation/navigation.patternButtons.html'"/>
+      </div>
     </div>
   </div>
-  <div class="toolbar-blocks">
-    <div class="toolbar-btns pull-right">
-      <ng-include src="'app/layout/main/url/navigation/navigation.comments.html'"/>
-      <ng-include src="'app/layout/main/url/navigation/navigation.patternButtons.html'"/>
-    </div>
-  </div>
-</div>
-<div class="diff-report">
+  <div class="diff-report">
 
-  <div ng-if="case.status == 'PASSED' || case.status == 'REBASED'" class="test-no-issues">
-    <div>No issues found</div>
-    <div>
-      View source:<br/>
-      <a href="{{case.getPlainDataUrl()}}" target="_blank">{{case.getDataUrl()}}</a>
+    <div ng-if="case.status == 'PASSED' || case.status == 'REBASED'" class="test-no-issues">
+      <div>No issues found</div>
+      <div>
+        View source:<br/>
+        <a href="{{case.getPlainDataUrl()}}" target="_blank">{{case.getDataUrl()}}</a>
+      </div>
     </div>
-  </div>
 
-  <div ng-if="case.status == 'FAILED' || case.status == 'WARNING'">
-    <div class="clearfix"></div>
-    <div class="col-xs-6">
+    <div ng-if="case.status == 'FAILED' || case.status == 'WARNING'">
+      <div class="clearfix"></div>
+      <div class="col-xs-6">
 
-      <table class="table table-striped table-condensed">
-        <thead>
-        <tr>
-          <th class="num" title="Line Number">#</th>
-          <th class="code">Pattern</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-class="code.type.toLowerCase()"
-            ng-hide="!$root.fullSourceVisible && code.type == 'NO_CHANGE'"
-            ng-repeat="code in case.result.differences track by $index"
-            ng-if="case.result.differences">
-          <td class="num"><span ng-if="code.type != 'NO_CHANGE'">{{code.original.position}}</span>
-          </td>
-          <td class="code">
-            <p ng-bind-html="code.original.prettyHtml | to_trusted"></p>
-          </td>
-        </tr>
-        <tr ng-class="code.type.toLowerCase()"
-            ng-hide="!$root.fullSourceVisible && code.type == 'NO_CHANGE'"
-            ng-repeat="code in case.result track by $index" ng-if="!case.result.differences">
-          <td class="num"><span ng-if="code.type != 'NO_CHANGE'">{{code.original.position}}</span>
-          </td>
-          <td class="code">
-            <p ng-bind-html="code.original.prettyHtml | to_trusted"></p>
-          </td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-    <div class="col-xs-6">
-      <table class="table table-striped table-condensed">
-        <thead>
-        <tr>
-          <th class="num" title="Line Number">#</th>
-          <th class="code">Source</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-class="code.type.toLowerCase()"
-            ng-hide="!$root.fullSourceVisible && code.type == 'NO_CHANGE'"
-            ng-repeat="code in case.result track by $index" ng-if="!case.result.differences">
-          <td class="num"><span ng-if="code.type != 'NO_CHANGE'">{{code.original.position}}</span>
-          </td>
-          <td class="code">
-            <p ng-bind-html="code.revised.prettyHtml | to_trusted"></p>
-          </td>
-        </tr>
-        <tr ng-class="code.type.toLowerCase()"
-            ng-hide="!$root.fullSourceVisible && code.type == 'NO_CHANGE'"
-            ng-repeat="code in case.result.differences track by $index"
-            ng-if="case.result.differences">
-          <td class="num"><span ng-if="code.type != 'NO_CHANGE'">{{code.original.position}}</span>
-          </td>
-          <td class="code">
-            <p ng-bind-html="code.revised.prettyHtml | to_trusted"></p>
-          </td>
-        </tr>
-        </tbody>
-      </table>
+        <table class="table table-striped table-condensed">
+          <thead>
+          <tr>
+            <th class="num" title="Line Number">#</th>
+            <th class="code">Pattern {{stepResultIndex() + 1}}</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-class="code.type.toLowerCase()"
+              ng-hide="!$root.fullSourceVisible && code.type == 'NO_CHANGE'"
+              ng-repeat="code in case.results[stepResultIndex()].differences track by $index"
+              ng-if="case.results[stepResultIndex()].differences">
+            <td class="num"><span ng-if="code.type != 'NO_CHANGE'">{{code.original.position}}</span>
+            </td>
+            <td class="code">
+              <p ng-bind-html="code.original.prettyHtml | to_trusted"></p>
+            </td>
+          </tr>
+          <tr ng-class="code.type.toLowerCase()"
+              ng-hide="!$root.fullSourceVisible && code.type == 'NO_CHANGE'"
+              ng-repeat="code in case.results[stepResultIndex()] track by $index"
+              ng-if="!case.results[stepResultIndex()].differences">
+            <td class="num"><span ng-if="code.type != 'NO_CHANGE'">{{code.original.position}}</span>
+            </td>
+            <td class="code">
+              <p ng-bind-html="code.original.prettyHtml | to_trusted"></p>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="col-xs-6">
+        <table class="table table-striped table-condensed">
+          <thead>
+          <tr>
+            <th class="num" title="Line Number">#</th>
+            <th class="code">Source</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-class="code.type.toLowerCase()"
+              ng-hide="!$root.fullSourceVisible && code.type == 'NO_CHANGE'"
+              ng-repeat="code in case.results[stepResultIndex()] track by $index"
+              ng-if="!case.results[stepResultIndex()].differences">
+            <td class="num"><span ng-if="code.type != 'NO_CHANGE'">{{code.original.position}}</span>
+            </td>
+            <td class="code">
+              <p ng-bind-html="code.revised.prettyHtml | to_trusted"></p>
+            </td>
+          </tr>
+          <tr ng-class="code.type.toLowerCase()"
+              ng-hide="!$root.fullSourceVisible && code.type == 'NO_CHANGE'"
+              ng-repeat="code in case.results[stepResultIndex()].differences track by $index"
+              ng-if="case.results[stepResultIndex()].differences">
+            <td class="num"><span ng-if="code.type != 'NO_CHANGE'">{{code.original.position}}</span>
+            </td>
+            <td class="code">
+              <p ng-bind-html="code.revised.prettyHtml | to_trusted"></p>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>
