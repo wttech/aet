@@ -121,7 +121,7 @@ define(['angularAMD', 'metadataService', 'metadataAccessService'],
           if (isCollectorWithPattern(step) && isStepComparatorRebaseable(
               comparator)) {
 
-            result = !comparator.stepResult.previousStatus;
+            result = !comparator.stepResult.hasPreviousStatus();
 
             if (result) {
               step.updatePatternStatistics();
@@ -147,7 +147,7 @@ define(['angularAMD', 'metadataService', 'metadataAccessService'],
 
           if (isCollectorWithPattern(step) && isStepComparatorRebaseable(
               comparator)) {
-            if (comparator.stepResult.wasAcceptable) {
+            if (comparator.stepResult.wasAcceptable()) {
               step.revertPatternStatistics();
               step.patterns = step.oldPatterns;
               delete step.oldPatterns;

@@ -158,7 +158,9 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
               getStepResults: getStepResults,
               getStatus: getStatus,
               setStatus: setStatus,
+              hasPreviousStatus: hasPreviousStatus,
               isAcceptable: isAcceptable,
+              wasAcceptable: wasAcceptable,
               isRebaseable: isRebaseable
             };
 
@@ -203,12 +205,28 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
           });
         }
 
+        function hasPreviousStatus() {
+          var firstStepResultWithPreviousStatus =
+              _.find(stepResults, function (stepResult) {
+                return stepResult.previousStatus;
+              });
+          return !!firstStepResultWithPreviousStatus;
+        }
+
         function isAcceptable() {
           var firstAcceptableStepResult =
               _.find(stepResults, function (stepResult) {
                 return stepResult.acceptable;
               });
           return !!firstAcceptableStepResult;
+        }
+
+        function wasAcceptable() {
+          var firstWasAcceptableStepResult =
+              _.find(stepResults, function (stepResult) {
+                return stepResult.wasAcceptable;
+              });
+          return !!firstWasAcceptableStepResult;
         }
 
         function isRebaseable() {
@@ -300,9 +318,12 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
             var acceptedPatterns = 0;
             _.forEach(decoratedObject.comparators, function (comparator) {
               if (hasStepComparatorChangesToAccept(comparator)) {
-                comparator.stepResult.previousStatus = comparator.stepResult.getStatus();
-                comparator.stepResult.wasAcceptable = comparator.stepResult.isAcceptable();
-                comparator.stepResult.setStatus('REBASED');
+                _.forEach(comparator.stepResult.getStepResults(),
+                    function (stepResult) {
+                      stepResult.previousStatus = stepResult.status;
+                      stepResult.wasAcceptable = stepResult.acceptable;
+                      stepResult.status = 'REBASED';
+                    });
                 acceptedPatterns++;
               }
             });
@@ -322,9 +343,14 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
             var revertedPatterns = 0;
             _.forEach(decoratedObject.comparators, function (comparator) {
               if (hasStepComparatorAcceptedChanges(comparator)) {
-                comparator.stepResult.setStatus(
-                    comparator.stepResult.previousStatus);
-                comparator.stepResult.previousStatus = null;
+                _.forEach(comparator.stepResult.getStepResults(),
+                    function (stepResult) {
+                      console.log("Accepting comparator changes");
+                      console.log(comparator);
+                      stepResult.status = stepResult.previousStatus;
+                      stepResult.previousStatus = null;
+
+                    });
                 revertedPatterns--;
               }
             });
@@ -413,13 +439,13 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
                 passed();
                 break;
               case 'CONDITIONALLY_PASSED':
-                if (stepResult.rebaseable) {
+                if (stepResult.isRebaseable()) {
                   updatePatternsToAccept(1);
                 }
                 conditionallyPassed();
                 break;
               case 'FAILED':
-                if (stepResult.rebaseable) {
+                if (stepResult.isRebaseable()) {
                   updatePatternsToAccept(1);
                 }
                 failed();
@@ -429,7 +455,7 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
                 break;
               case 'REBASED':
                 rebased();
-                if (stepResult.previousStatus) {
+                if (stepResult.hasPreviousStatus()) {
                   updatePatternsToAccept(1);
                   updateAcceptedPatterns(1);
                 }
