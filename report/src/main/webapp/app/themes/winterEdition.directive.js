@@ -28,7 +28,7 @@ define(['angularAMD'], function (angularAMD) {
 
     function linkFunc($scope) {
       // change to true to enable Winter Theme
-      var winterEditionEnabled = true;
+      var winterEditionEnabled = false;
 
       var WINTER_THEME = {
         name: 'winter',
