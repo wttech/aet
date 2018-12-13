@@ -345,8 +345,6 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
               if (hasStepComparatorAcceptedChanges(comparator)) {
                 _.forEach(comparator.stepResult.getStepResults(),
                     function (stepResult) {
-                      console.log("Accepting comparator changes");
-                      console.log(comparator);
                       stepResult.status = stepResult.previousStatus;
                       stepResult.previousStatus = null;
 

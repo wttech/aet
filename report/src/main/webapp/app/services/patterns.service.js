@@ -160,15 +160,13 @@ define(['angularAMD', 'metadataService', 'metadataAccessService'],
         }
 
         function isCollectorWithPattern(step) {
-          return step && step.comparators &&
-              step.patterns &&
-              step.patterns.length > 0;
+          return step && step.comparators && step.patterns
+              && step.patterns.length > 0;
         }
 
         function isStepComparatorRebaseable(comparator) {
-          return comparator &&
-              comparator.stepResult &&
-              comparator.stepResult.isRebaseable();
+          return comparator && comparator.stepResult
+              && comparator.stepResult.isRebaseable();
         }
 
         function notifyMetadataUpdated(shouldNotify) {
