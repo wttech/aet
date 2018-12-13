@@ -25,7 +25,7 @@
     </div>
   </div>
 </div>
-<div class="diff-report">
+<div class="diff-report" data-aet-choose-step-result>
   <span ng-if="case.status == 'PASSED' || case.status == 'REBASED'" class="test-no-issues">No issues found</span>
   <div ng-if="case.status == 'FAILED' || case.status == 'WARNING'">
     <table class="table table-condensed table-w3c">
@@ -37,12 +37,12 @@
       </thead>
       <tbody>
       <tr ng-class="code.issueType.toLowerCase()"
-          ng-repeat="code in case.result.issues track by $index">
+          ng-repeat="code in case.results[singletonStepResultIndex()].issues track by $index">
         <td class="num">
           {{ $index+1 }}
         </td>
         <td class="code">
-          <small ng-if="code.line || case.result.column">
+          <small ng-if="code.line || case.results[singletonStepResultIndex].column">
             Line {{code.line}}, column {{code.column}}
           </small>
           <span ng-bind-html="code.message | to_trusted"></span>
