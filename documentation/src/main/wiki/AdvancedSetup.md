@@ -68,7 +68,7 @@ To enable proper working of AET instance, you should configure at least 1 collec
 
 | Property name | Default value | Comment |
 | ------------- | ----- | ----- |
-| Number of collector instances | `6` | Might be overwritten by env variable `COLLECTORS_NO` |
+| Number of collector instances | `5` | Might be overwritten by env variable `COLLECTORS_NO` |
 | Collectors prefetch size | `1` | Read more [here](http://activemq.apache.org/what-is-the-prefetch-limit-for.html) |
 | Number of comparator instances | `5` | Might be overwritten by env variable `COMPARATORS_NO` |
 | Comparators prefetch size | `1` | Read more [here](http://activemq.apache.org/what-is-the-prefetch-limit-for.html) |
