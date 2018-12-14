@@ -47,8 +47,10 @@ define(['angularAMD'], function (angularAMD) {
 
       if (winterEditionEnabled && isChristmas) {
         _.merge($scope.theme, WINTER_THEME);
-        $scope.$on('$viewContentLoaded', function() {
-          snowFall.snow(document.querySelector('.aside'), {flakeCount: 15, maxSpeed: 5});
+
+        var removeListener = $scope.$on('$viewContentLoaded', function() {
+          snowFall.snow(document.querySelector('.aside'), {flakeCount: 60, maxSpeed: 5});
+          removeListener();
         });
       }
     }
