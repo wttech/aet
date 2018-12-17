@@ -36,7 +36,7 @@ function usage {
     echo -e "\t-d --domain <DOMAIN>                 - Override domain attribute defined in suite file"
     echo -e "\t-n --name <SUITE_NAME>               - Override name attribute defined in suite file"
     echo -e "\t-c --correlationId <CORRELATION_ID>  - Set id of patterns to run test against."
-    echo -e "\t-p --patternSuite <SUITE_NAME>       - Set the suite name to run test against its latest pattern (only used if -c is not set)"
+    echo -e "\t-p --patternSuite <SUITE_NAME>       - Set the suite name to run test against its latest pattern"
     echo -e "\t-i --interval <POLL_INTERVAL>        - Set interval in seconds for polling suite status. Default interval : 1 sec."
     echo -e "\t-w --waitForUnlock <TIMEOUT>         - Set timeout for the script to wait for unlocked suite. Default timeout: 0 sec."
     echo -e "\t-v --verbose                         - Make it more descriptive"
