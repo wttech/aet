@@ -18,7 +18,7 @@
 
 --%>
 <%@ include file="/includes/header.jsp" %>
-<img src="http://www.cognifide.com/~/media/Cognifide2015/int/header-logo.png" alt="ExpertlyDone">
+<img src="/assets/demo_files/logo.png" alt="Bootswatch" />
 <img src="/sample-site/NonExistingResourceFile.png" alt="NonExistingResourceFile">
 <img src="/sample-site/NonExistingResourceFile.jpg" alt="NonExistingResourceFile">
 <%@ include file="/includes/bodyContent.jsp" %>
