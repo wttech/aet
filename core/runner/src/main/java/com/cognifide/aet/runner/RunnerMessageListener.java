@@ -46,7 +46,7 @@ public class RunnerMessageListener implements MessageListener {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(RunnerMessageListener.class);
 
-  private static final String API_QUEUE_IN = QueuesConstant.NAMESPACE + ".runner-in";
+  private static final String API_QUEUE_IN = QueuesConstant.NAMESPACE + "runner-in";
 
   private static final String MAINTENANCE_QUEUE_IN = QueuesConstant.NAMESPACE + "maintenance-in";
 
