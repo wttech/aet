@@ -23,6 +23,8 @@ Options:
 	-d --domain <DOMAIN>                 - Override domain attribute defined in suite file
 	-c --correlationId <CORRELATION_ID>  - Set id of patterns to run test against
 	-p --patternSuite <SUITE_NAME>       - Set the suite name to run test against its latest pattern
+	-h --projectChecksum <SUITE_NAME>    - Provide url to servlet which will return checksum of a project. If this is the first usage of checksum, it will be associated with patterns collected in this run"
+	-l --userLogin <SUITE_NAME>          - Provide user login to be used in server authentication when calling endpoint using -h param. Defaults to 'admin'"
 	-i --interval <POLL_INTERVAL>        - Set interval in seconds for polling suite status. Default interval : 1 sec
 	-w --waitForUnlock <TIMEOUT>         - Set timeout for the script to wait for unlocked suite. Default timeout: 0 sec
 	-v --verbose                         - Make it more descriptive
