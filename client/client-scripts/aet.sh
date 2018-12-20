@@ -131,11 +131,13 @@ while [[ $# -gt 0 ]]; do
             ;;
         -c | --correlationId )
             CORRELATION_ID=$2
+            CORRELATION_IDS_COLLECTION="$CORRELATION_IDS_COLLECTION $CORRELATION_ID"
             CORRELATION_ID_BODY="$CORRELATION_ID_BODY -F pattern=$CORRELATION_ID"
             shift 2
             ;;
         -p | --patternSuite )
             PATTERN_SUITE=$2
+            PATTERN_SUITES_COLLECTION="$PATTERN_SUITES_COLLECTION $PATTERN_SUITE"
             PATTERN_SUITE_BODY="$PATTERN_SUITE_BODY -F patternSuite=$PATTERN_SUITE"
             shift 2
             ;;
@@ -155,8 +157,8 @@ if [[ $VERBOSE -eq 1 ]]; then
   echo -e "\tSuite:                 $suite_file_name"
   echo -e "\tOverridden domain:     ${DOMAIN-not set}"
   echo -e "\tOverridden suite name: ${SUITE_NAME-not set}"
-  echo -e "\tPattern id:            ${CORRELATION_ID-not set}"
-  echo -e "\tPattern suite:         ${PATTERN_SUITE-not set}"
+  echo -e "\tPattern ids:           ${CORRELATION_IDS_COLLECTION-not set}"
+  echo -e "\tPattern suites:        ${PATTERN_SUITES_COLLECTION-not set}"
   echo ""
 fi
 
