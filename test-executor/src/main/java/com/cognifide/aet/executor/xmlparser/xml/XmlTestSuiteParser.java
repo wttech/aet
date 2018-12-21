@@ -53,7 +53,7 @@ public class XmlTestSuiteParser implements TestSuiteParser {
           .read(TestSuite.class, EscapeUtils.escapeUrls(testSuiteString));
       return testSuite.adaptToTestSuiteRun();
     } catch (Exception e) {
-      String message = "Something is wrong with your suite definition!";
+      String message = String.format("Something is wrong with your suite definition! Detected errors: %n");
       if (e.getCause() != null && StringUtils.isNotBlank(e.getCause().getMessage())) {
         message += " " + e.getCause().getMessage();
       }
