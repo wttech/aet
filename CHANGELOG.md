@@ -11,6 +11,9 @@ All notable changes to AET will be documented in this file.
 
 **List of changes that are finished but not yet released in any final version.**
 
+## Version 3.2.0
+
+
 - [PR-451](https://github.com/Cognifide/aet/pull/451) Collectors and comparators configured by single config number
 - [PR-449](https://github.com/Cognifide/aet/pull/449) Improvements to the Winter Edition Theme
 - [PR-354](https://github.com/Cognifide/aet/pull/354) Remove jmsEndpointConfig information from communication settings endpoint ([#352](https://github.com/Cognifide/aet/issues/352))
