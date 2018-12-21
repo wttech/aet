@@ -24,7 +24,7 @@
   <parent>
     <artifactId>api</artifactId>
     <groupId>com.cognifide.aet</groupId>
-    <version>3.2.0</version>
+    <version>3.2.1-SNAPSHOT</version>
   </parent>
 
   <artifactId>communication-api</artifactId>
