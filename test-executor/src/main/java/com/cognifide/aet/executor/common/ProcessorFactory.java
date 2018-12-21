@@ -19,6 +19,7 @@ import com.cognifide.aet.communication.api.messages.FatalErrorMessage;
 import com.cognifide.aet.communication.api.messages.FinishedSuiteProcessingMessage;
 import com.cognifide.aet.communication.api.messages.ProcessingErrorMessage;
 import com.cognifide.aet.communication.api.messages.ProgressMessage;
+import com.cognifide.aet.communication.api.messages.ValidationMessage;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.ObjectMessage;
@@ -44,6 +45,8 @@ public final class ProcessorFactory {
         processor = new ProgressMessageProcessor((ProgressMessage) object);
       } else if (object instanceof FatalErrorMessage) {
         processor = new FatalErrorMessageProcessor((FatalErrorMessage) object, runnerTerminator);
+      } else if (object instanceof ValidationMessage) {
+        processor = new ValidationMessageProcessor(((ValidationMessage) object).getData());
       } else {
         processor = new UnexpectedMessageProcessor(object);
       }

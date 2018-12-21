@@ -15,14 +15,22 @@
  */
 package com.cognifide.aet.runner.processing.data;
 
+import com.cognifide.aet.communication.api.messages.ValidationMessage;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
+import com.cognifide.aet.runner.processing.MessagesSender;
 import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.SimpleDBKey;
 import com.cognifide.aet.vs.StorageException;
+import com.google.common.collect.Sets;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
 import java.util.Objects;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
