@@ -18,33 +18,40 @@ package com.cognifide.aet.worker.listeners;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.queues.JmsUtils;
 import com.cognifide.aet.worker.results.FeedbackQueue;
+import java.util.Objects;
 import javax.jms.JMSException;
 import javax.jms.MessageConsumer;
 import javax.jms.MessageListener;
 import javax.jms.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-public abstract class AbstractTaskMessageListener implements MessageListener {
+abstract class WorkerMessageListener implements MessageListener {
 
-  private Session jmsSession;
+  private static final Logger LOGGER = LoggerFactory.getLogger(WorkerMessageListener.class);
 
-  private MessageConsumer consumer;
+  private final Session jmsSession;
+  private final MessageConsumer consumer;
 
-  FeedbackQueue feedbackQueue;
+  final String name;
+  final FeedbackQueue feedbackQueue;
 
-  void doActivate(String consumerQueueName, String producerQueueName, String prefetchSize) {
-
-    String queueName = consumerQueueName + "?consumer.prefetchSize=" + prefetchSize;
+  WorkerMessageListener(String name, JmsConnection jmsConnection,
+      String consumerQueueName,
+      String producerQueueName) {
+    LOGGER.info("Starting {}", name);
+    this.name = name;
     try {
-      jmsSession = getJmsConnection().getJmsSession();
-      consumer = jmsSession.createConsumer(jmsSession.createQueue(queueName));
-      consumer.setMessageListener(this);
+      jmsSession = jmsConnection.getJmsSession();
       feedbackQueue = new FeedbackQueue(jmsSession, producerQueueName);
+      consumer = jmsSession.createConsumer(jmsSession.createQueue(consumerQueueName));
+      consumer.setMessageListener(this);
     } catch (JMSException e) {
       throw new IllegalStateException(e.getMessage(), e);
     }
   }
 
-  void doDeactivate() {
+  void close() {
     if (feedbackQueue != null) {
       feedbackQueue.close();
     }
@@ -52,6 +59,27 @@ public abstract class AbstractTaskMessageListener implements MessageListener {
     JmsUtils.closeQuietly(jmsSession);
   }
 
-  protected abstract JmsConnection getJmsConnection();
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+    WorkerMessageListener that = (WorkerMessageListener) o;
+    return Objects.equals(name, that.name);
+  }
 
+  @Override
+  public int hashCode() {
+    return Objects.hash(name);
+  }
+
+  @Override
+  public String toString() {
+    return this.getClass().getSimpleName() + "{" +
+        "name='" + name + '\'' +
+        '}';
+  }
 }

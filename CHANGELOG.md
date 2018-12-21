@@ -11,6 +11,7 @@ All notable changes to AET will be documented in this file.
 
 **List of changes that are finished but not yet released in any final version.**
 
+- [PR-451](https://github.com/Cognifide/aet/pull/451) Collectors and comparators configured by single config number
 - [PR-449](https://github.com/Cognifide/aet/pull/449) Improvements to the Winter Edition Theme
 - [PR-354](https://github.com/Cognifide/aet/pull/354) Remove jmsEndpointConfig information from communication settings endpoint ([#352](https://github.com/Cognifide/aet/issues/352))
 - [PR-412](https://github.com/Cognifide/aet/pull/412) ([PR-336](https://github.com/Cognifide/aet/pull/336), [PR-337](https://github.com/Cognifide/aet/pull/337), [PR-395](https://github.com/Cognifide/aet/pull/395)) - Added rerun functionality for suite, test and url 

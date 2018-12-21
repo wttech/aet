@@ -21,6 +21,7 @@ import com.cognifide.aet.communication.api.execution.SuiteStatusResult;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
+import com.cognifide.aet.communication.api.queues.QueuesConstant;
 import com.cognifide.aet.executor.configuration.SuiteExecutorConf;
 import com.cognifide.aet.executor.http.HttpSuiteExecutionResultWrapper;
 import com.cognifide.aet.executor.model.TestRun;
@@ -64,7 +65,7 @@ public class SuiteExecutor {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(SuiteExecutor.class);
 
-  private static final String RUNNER_IN_QUEUE = "AET.runner-in";
+  private static final String RUNNER_IN_QUEUE = QueuesConstant.NAMESPACE + "runner-in";
 
   private static final String HTML_REPORT_URL_FORMAT = "%s/report.html?company=%s&project=%s&correlationId=%s";
 

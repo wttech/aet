@@ -7,6 +7,17 @@ You may see all changes in the [Changelog](https://github.com/Cognifide/aet/blob
 
 ## Unreleased
 
+### Users
+
+### Admins
+
+#### [PR-451](https://github.com/Cognifide/aet/pull/451) Collectors and comparators configured by single config number
+
+Remove all `CollectorMessageListenerImpl` and `ComparatorMessageListenerImpl` config files.
+Create `com.cognifide.aet.worker.listeners.WorkersListenersService.cfg` and configure proper 
+number of collectors and comparators there.
+You can find example config file [here](https://github.com/Cognifide/aet/blob/master/osgi-dependencies/configs/src/main/resources/com.cognifide.aet.worker.listeners.WorkersListenersService.cfg).
+
 
 ## Version 3.0.0
 
