@@ -49,7 +49,7 @@ public final class EscapeUtils {
 
         if (attr.startsWith("href=")) {
           attr = String.format("href=\"%s\"",
-              StringEscapeUtils.escapeXml11(attr.substring(6, attr.length() - 1)));
+              StringEscapeUtils.escapeXml11(StringEscapeUtils.unescapeXml(attr.substring(6, attr.length() - 1))));
         }
         attrMatcher.appendReplacement(attrsStringBuffer, attr + " ");
       }
