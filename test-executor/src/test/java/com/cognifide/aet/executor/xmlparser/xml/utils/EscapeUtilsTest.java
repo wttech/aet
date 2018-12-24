@@ -27,7 +27,7 @@ import org.junit.Test;
 public class EscapeUtilsTest {
 
   @Test
-  public void escapeUrls_expectEscapedResults() throws IOException {
+  public void givenUnescapedUrls_whenEscape_expectEscapedResults() throws IOException {
     String xmlString = readContentFromFile("/testSuite_unescapedUrls.xml");
     String escapedXmlString = EscapeUtils.escapeUrls(xmlString);
     String resultString = readContentFromFile("/testSuite_escapedUrls_result.xml");
@@ -35,7 +35,7 @@ public class EscapeUtilsTest {
   }
 
   @Test
-  public void escapeUrls_alreadyEscaped_expectUnchangedResults() throws IOException{
+  public void givenEscapedUrls_whenEscape_expectUnchangedResults() throws IOException{
     String xmlString = readContentFromFile("/testSuite_escapedUrls.xml");
     String escapedXmlString = EscapeUtils.escapeUrls(xmlString);
     String resultString = readContentFromFile("/testSuite_escapedUrls_result.xml");
