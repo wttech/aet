@@ -28,6 +28,14 @@ public class EscapeUtilsTest {
 
   @Test
   public void escapeUrls_expectEscapedResults() throws IOException {
+    String xmlString = readContentFromFile("/testSuite_unescapedUrls.xml");
+    String escapedXmlString = EscapeUtils.escapeUrls(xmlString);
+    String resultString = readContentFromFile("/testSuite_escapedUrls_result.xml");
+    assertThat(escapedXmlString, is(resultString));
+  }
+
+  @Test
+  public void escapeUrls_alreadyEscaped_expectUnchangedResults() throws IOException{
     String xmlString = readContentFromFile("/testSuite_escapedUrls.xml");
     String escapedXmlString = EscapeUtils.escapeUrls(xmlString);
     String resultString = readContentFromFile("/testSuite_escapedUrls_result.xml");

@@ -31,9 +31,9 @@
 			<source comparator="w3c"/>
 		</compare>
 		<urls>
-			<url  name="value" href="http://www.google.pl&" 	name1="value1" name2="value2"/>
-			<url href="https://www.google.pl/search?q=googe&oq=googe&aqs=chrome..69i57j0l5.767j0j7&sourceid=chrome&es_sm=93&ie=UTF-8"/>
-			<url href="http://www.google.pl/search?g=<>'"/>
+			<url name="value" href="http://www.google.pl&amp;" name1="value1" name2="value2" />
+			<url href="https://www.google.pl/search?q=googe&amp;oq=googe&amp;aqs=chrome..69i57j0l5.767j0j7&amp;sourceid=chrome&amp;es_sm=93&amp;ie=UTF-8" />
+			<url href="http://www.google.pl/search?g=&lt;&gt;&apos;" />
 		</urls>
 	</test>
 </suite>
