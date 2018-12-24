@@ -71,7 +71,7 @@ public class TestSuiteRun implements Serializable {
     this.company = testSuiteRun.getCompany();
     this.project = testSuiteRun.getProject();
     this.domain = domain;
-    this.correlationId = testSuiteRun.getCorrelationId();
+    this.correlationId = CorrelationIdGenerator.generateCorrelationId(company, project, name);
     this.testRunMap = getMap(tests);
   }
 
