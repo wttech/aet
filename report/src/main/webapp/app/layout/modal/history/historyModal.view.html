@@ -19,31 +19,31 @@
 -->
 <div class="suite-history-container">
   <div class="modal-header">
-    <button type="button" class="close" ng-click="historyModal.hideSuiteHistory()"
+    <button type="button" class="close" data-ng-click="historyModal.hideSuiteHistory()"
             aria-label="Close"><span
         aria-hidden="true"><i class="fas fa-times"></i></span></button>
     <h3 class="modal-title">Suite's History</h3>
   </div>
   <div class="modal-body">
-    <div ng-repeat="suiteHeader in suiteHeaders track by $index">
-      <a href="{{reportPath}}&version={{suiteHeader.version}}" ng-if="suiteHeader.isRebased">
+    <div data-ng-repeat="suiteHeader in suiteHeaders track by $index">
+      <a href="{{reportPath}}&version={{suiteHeader.version}}" data-ng-if="suiteHeader.isRebased">
         <div class="suite-history-item suite-history-rebased"
-             ng-if="selectedVersion === suiteHeader.version">
+             data-ng-if="selectedVersion === suiteHeader.version">
           <i class="fas fa-angle-right suite-history-arrow"></i><span
             class="suite-history-rebased-bold">v{{suiteHeader.version}} | {{suiteHeader.timestamp | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
         </div>
         <div class="suite-history-item suite-history-rebased"
-             ng-if="selectedVersion !== suiteHeader.version">
+             data-ng-if="selectedVersion !== suiteHeader.version">
           <i class="fas fa-angle-right suite-history-arrow"></i>v{{suiteHeader.version}} |
           {{suiteHeader.timestamp | date: 'yyyy-MM-dd HH:mm:ss'}}
         </div>
       </a>
-      <a href="{{reportPath}}&version={{suiteHeader.version}}" ng-if="!suiteHeader.isRebased">
-        <div class="suite-history-item" ng-if="selectedVersion === suiteHeader.version">
+      <a href="{{reportPath}}&version={{suiteHeader.version}}" data-ng-if="!suiteHeader.isRebased">
+        <div class="suite-history-item" data-ng-if="selectedVersion === suiteHeader.version">
           <i class="fas fa-angle-right suite-history-arrow"></i><span
             class="suite-history-bold">v{{suiteHeader.version}} | {{suiteHeader.timestamp | date: 'yyyy-MM-dd HH:mm:ss'}}</span>
         </div>
-        <div class="suite-history-item" ng-if="selectedVersion !== suiteHeader.version">
+        <div class="suite-history-item" data-ng-if="selectedVersion !== suiteHeader.version">
           <i class="fas fa-angle-right suite-history-arrow"></i>v{{suiteHeader.version}} |
           {{suiteHeader.timestamp | date: 'yyyy-MM-dd HH:mm:ss'}}
         </div>
