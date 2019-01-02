@@ -93,7 +93,7 @@ public abstract class ProcessorStrategy<T> implements Callable<String> {
 
     if (!comparisonWarnings.isEmpty()) {
       StringJoiner warningsJoiner = new StringJoiner("\n");
-      comparisonWarnings.forEach(warningsJoiner::add);
+      comparisonWarnings.forEach(msg -> warningsJoiner.add(String.format("[INFO]: %s", msg)));
 
       messagesSender.sendMessage(new ValidationMessage(warningsJoiner.toString()));
     }
