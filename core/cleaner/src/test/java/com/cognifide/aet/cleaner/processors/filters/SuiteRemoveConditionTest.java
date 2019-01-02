@@ -25,10 +25,11 @@ import com.cognifide.aet.communication.api.metadata.Suite.Timestamp;
 import com.googlecode.zohhak.api.Configure;
 import com.googlecode.zohhak.api.TestWith;
 import com.googlecode.zohhak.api.runners.ZohhakRunner;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.joda.time.DateTime;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
@@ -253,7 +254,12 @@ public class SuiteRemoveConditionTest {
     Timestamp timestamp = Mockito.mock(Timestamp.class);
     //substract one hour for test purposes accuracy
     when(timestamp.get())
-        .thenReturn(new DateTime().minusDays(createdDaysAgo).getMillis() - ONE_HOUR);
+        .thenReturn(
+            LocalDateTime
+                .now(ZoneOffset.UTC)
+                .minusDays(createdDaysAgo)
+                .toInstant(ZoneOffset.UTC).toEpochMilli()
+        );
     when(suite.getRunTimestamp()).thenReturn(timestamp);
     return suite;
   }
