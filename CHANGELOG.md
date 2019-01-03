@@ -11,6 +11,8 @@ All notable changes to AET will be documented in this file.
 
 **List of changes that are finished but not yet released in any final version.**
 
+- [PR-463](https://github.com/Cognifide/aet/pull/463) Removed dependency to Joda time library
+
 ## Version 3.2.0
 
 
