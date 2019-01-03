@@ -39,8 +39,6 @@ public class SuiteRemoveConditionTest {
 
   private static final SuitesListCoercer SUITES_LIST_COERCER = new SuitesListCoercer();
 
-  private static final long ONE_HOUR = 3600000L;
-
   @TestWith({
       //1 suite, remove all but last version in all cases
       "A-1 ; null ; 1 ; A-1 ; 10",
@@ -252,14 +250,13 @@ public class SuiteRemoveConditionTest {
   private Suite mockSuiteVersionAndCreatedDate(String input, int createdDaysAgo) {
     Suite suite = mockSuiteVersion(input);
     Timestamp timestamp = Mockito.mock(Timestamp.class);
-    //substract one hour for test purposes accuracy
-    when(timestamp.get())
-        .thenReturn(
-            LocalDateTime
-                .now(ZoneOffset.UTC)
-                .minusDays(createdDaysAgo)
-                .toInstant(ZoneOffset.UTC).toEpochMilli()
-        );
+
+    long timestampDaysAgo = LocalDateTime
+        .now(ZoneOffset.UTC)
+        .minusDays(createdDaysAgo)
+        .toInstant(ZoneOffset.UTC).toEpochMilli();
+
+    when(timestamp.get()).thenReturn(timestampDaysAgo);
     when(suite.getRunTimestamp()).thenReturn(timestamp);
     return suite;
   }
