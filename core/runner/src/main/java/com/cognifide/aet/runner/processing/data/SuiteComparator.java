@@ -38,7 +38,6 @@ import java.util.stream.Stream;
 
 class SuiteComparator {
 
-
   /**
    * Takes collection of suites and generates info messages if provided suites differ from each
    * other. Compares each suite with all other suites. Compares tests (by count and names), and
@@ -82,7 +81,7 @@ class SuiteComparator {
   }
 
   private static void compareTests(Suite first, Suite second, List<String> comparisonMessages) {
-    if (suitesHaveDifferentTests(first, second)) {
+    if (suitesHaveDifferentTests(first.getTests(), second.getTests())) {
       comparisonMessages.add(
           String.format("Suite: %s, with id: %s and suite: %s, with id: %s have different tests.",
               first.getName(), first.getCorrelationId(), second.getName(),
@@ -90,33 +89,32 @@ class SuiteComparator {
     }
   }
 
-  private static boolean suitesHaveDifferentTests(Suite first, Suite second) {
-    if (isNullOrEmpty(first.getTests(), second.getTests())) {
-      return false;
-    }
+  private static boolean suitesHaveDifferentTests(List<Test> firstTests, List<Test> secondTests) {
+    return areCollectionsDifferent(firstTests, secondTests, SuiteComparator::areTestsDifferent);
+  }
 
-    if (isNullOrEmpty(first.getTests()) ^ isNullOrEmpty(second.getTests())) {
-      return true;
-    }
-
-    List<String> firstTestsNames = first.getTests().stream()
+  private static boolean areTestsDifferent(Collection<Test> firstTests,
+      Collection<Test> secondTests) {
+    List<String> firstTestsNames = firstTests.stream()
         .map(Test::getName)
         .filter(Objects::nonNull)
         .collect(Collectors.toList());
-    List<String> secondTestsNames = second.getTests().stream()
+    List<String> secondTestsNames = secondTests.stream()
         .map(Test::getName)
         .filter(Objects::nonNull)
         .collect(Collectors.toList());
 
-    boolean suitesHaveDifferentNumberOfTests = firstTestsNames.size() != secondTestsNames.size();
+    boolean suitesHaveDifferentTestsCount = firstTestsNames.size() != secondTestsNames.size();
 
-    boolean suitesHaveDifferentTests =
-        Sets.difference(new HashSet<>(firstTestsNames), new HashSet<>(secondTestsNames)).size() != 0
-            ||
-            Sets.difference(new HashSet<>(secondTestsNames), new HashSet<>(firstTestsNames)).size()
-                != 0;
+    boolean firstHasUniqueTests =
+        Sets.difference(new HashSet<>(firstTestsNames),
+            new HashSet<>(secondTestsNames)).size() != 0;
+    boolean secondHasUniqueTests = Sets.difference(new HashSet<>(secondTestsNames),
+        new HashSet<>(firstTestsNames)).size() != 0;
 
-    return suitesHaveDifferentNumberOfTests || suitesHaveDifferentTests;
+    boolean suitesHaveDifferentTests = firstHasUniqueTests || secondHasUniqueTests;
+
+    return suitesHaveDifferentTestsCount || suitesHaveDifferentTests;
   }
 
   private static void compareSteps(Suite first, Suite second, List<String> comparisonMessages) {
@@ -130,7 +128,6 @@ class SuiteComparator {
           .findFirst();
 
       if (secondTest.isPresent()) {
-
         if (testsHaveDifferentSteps(firstTest, secondTest.get())) {
           comparisonMessages.add(String.format(
               "Tests: %s in suite: %s, with id: %s and suite: %s, with id: %s have different structure.",
@@ -151,70 +148,67 @@ class SuiteComparator {
         .collect(Collectors.groupingBy(Url::getName))
         .values();
 
-    if (anyHasNoPair(urlPairs)) {
+    if (anyHasMissingPair(urlPairs)) {
       return true;
     }
 
-    List<Url> urlPair = urlPairs.iterator().next();
+    List<Url> firstUrlPair = urlPairs.iterator().next();
 
-    return stepsHaveDifferentCollectorsOrComparators(urlPair.get(0).getSteps(),
-        urlPair.get(1).getSteps());
+    return stepsHaveDifferentCollectorsOrComparators(firstUrlPair.get(0).getSteps(),
+        firstUrlPair.get(1).getSteps());
   }
 
   private static boolean stepsHaveDifferentCollectorsOrComparators(
       List<Step> firstStep, List<Step> secondStep) {
-    if (isNullOrEmpty(firstStep, secondStep)) {
-      return false;
-    }
-
-    if (isNullOrEmpty(firstStep) ^ isNullOrEmpty(secondStep) ||
-        firstStep.size() != secondStep.size()) {
-      return true;
-    }
-
-    return compareOperations(new HashSet<>(firstStep), new HashSet<>(secondStep));
+    return areCollectionsDifferent(firstStep, secondStep, SuiteComparator::areOperationsDifferent);
   }
 
-  private static boolean compareOperations(Set<Operation> first, Set<Operation> second) {
-    return forEachFindFirst(first, second,
-        (operation1, operation2) -> {
-          boolean typeAndParamsDifferent = !areTypeAndParamsEqual(operation1, operation2);
-
-          if (operation1 instanceof Step && operation2 instanceof Step) {
-            return typeAndParamsDifferent ||
-                areComparatorsDifferent(((Step) operation1).getComparators(),
-                    ((Step) operation2).getComparators());
-          }
-
-          return typeAndParamsDifferent;
-        });
-  }
-
-  private static boolean areComparatorsDifferent(Set<Comparator> first,
-      Set<Comparator> second) {
-
+  private static <T> boolean areCollectionsDifferent(Collection<T> first, Collection<T> second,
+      BiFunction<Collection<T>, Collection<T>, Boolean> compareDifference) {
     if (isNullOrEmpty(first, second)) {
       return false;
     }
 
-    if (isNullOrEmpty(first) ^ isNullOrEmpty(second) ||
-        first.size() != second.size()) {
+    if (isNullOrEmpty(first) ^ isNullOrEmpty(second) || first.size() != second.size()) {
       return true;
     }
 
-    return compareOperations(new HashSet<>(first), new HashSet<>(second));
+    return compareDifference.apply(first, second);
   }
 
-  private static boolean areTypeAndParamsEqual(Operation operation1, Operation operation2) {
-    return operation1.getType().equals(operation2.getType()) &&
-        operation1.getParameters().equals(operation2.getParameters());
+  private static <T extends Operation> boolean areOperationsDifferent(Collection<T> first,
+      Collection<T> second) {
+    return first.size() != second.size() ||
+        forEachFindFirst(first, second,
+            (operation1, operation2) -> {
+              boolean typeAndParamsDifferent = !areTypeAndParamsEqual(operation1, operation2);
+
+              if (operation1 instanceof Step && operation2 instanceof Step) {
+                return typeAndParamsDifferent ||
+                    areComparatorsDifferent(((Step) operation1).getComparators(),
+                        ((Step) operation2).getComparators());
+              }
+
+              return typeAndParamsDifferent;
+            });
   }
 
-  private static <T> boolean anyHasNoPair(Collection<List<T>> pairs) {
+  private static boolean areComparatorsDifferent(Set<Comparator> first, Set<Comparator> second) {
+    return areCollectionsDifferent(first, second,
+        (a, b) -> areOperationsDifferent(new HashSet<>(a), new HashSet<>(b)));
+  }
+
+  private static boolean areTypeAndParamsEqual(Operation first, Operation second) {
+    return first.getType().equals(second.getType()) &&
+        first.getParameters().equals(second.getParameters());
+  }
+
+  private static <T> boolean anyHasMissingPair(Collection<List<T>> pairs) {
     return pairs.stream().anyMatch(list -> list.size() != 2);
   }
 
-  private static <T> boolean forEachFindFirst(Iterable<T> first, Iterable<T> second,
+  private static <T extends Operation> boolean forEachFindFirst(Iterable<T> first,
+      Iterable<T> second,
       BiFunction<T, T, Boolean> predicate) {
     Iterator<T> i1 = first.iterator();
     Iterator<T> i2 = second.iterator();
