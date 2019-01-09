@@ -122,14 +122,6 @@
       <artifactId>zohhak</artifactId>
     </dependency>
     <dependency>
-      <groupId>xmlunit</groupId>
-      <artifactId>xmlunit</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>uk.co.jemos.podam</groupId>
-      <artifactId>podam</artifactId>
-    </dependency>
-    <dependency>
       <groupId>com.googlecode.catch-exception</groupId>
       <artifactId>catch-exception</artifactId>
     </dependency>

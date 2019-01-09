@@ -163,7 +163,7 @@
       <dependency>
         <groupId>org.apache.commons</groupId>
         <artifactId>commons-lang3</artifactId>
-        <version>3.7</version>
+        <version>3.8.1</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
@@ -292,7 +292,7 @@
       <dependency>
         <groupId>commons-fileupload</groupId>
         <artifactId>commons-fileupload</artifactId>
-        <version>1.3.3</version>
+        <version>1.4</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
@@ -310,7 +310,7 @@
       <dependency>
         <groupId>org.json</groupId>
         <artifactId>json</artifactId>
-        <version>20180130</version>
+        <version>20180813</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
@@ -489,18 +489,6 @@
         <scope>test</scope>
       </dependency>
       <dependency>
-        <groupId>xmlunit</groupId>
-        <artifactId>xmlunit</artifactId>
-        <version>1.2</version>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
-        <groupId>uk.co.jemos.podam</groupId>
-        <artifactId>podam</artifactId>
-        <version>3.6.0.RELEASE</version>
-        <scope>test</scope>
-      </dependency>
-      <dependency>
         <groupId>org.slf4j</groupId>
         <artifactId>slf4j-simple</artifactId>
         <!-- let's just use the same version as api -->
@@ -516,7 +504,7 @@
       <dependency>
         <groupId>org.skyscreamer</groupId>
         <artifactId>jsonassert</artifactId>
-        <version>1.3.0</version>
+        <version>1.5.0</version>
         <scope>test</scope>
       </dependency>
       <dependency>
@@ -579,12 +567,12 @@
             <dependency>
               <groupId>org.codehaus.mojo</groupId>
               <artifactId>extra-enforcer-rules</artifactId>
-              <version>1.0-beta-9</version>
+              <version>1.1</version>
             </dependency>
             <dependency>
               <groupId>com.github.ferstl</groupId>
               <artifactId>pedantic-pom-enforcers</artifactId>
-              <version>1.3.1</version>
+              <version>1.3.2</version>
             </dependency>
           </dependencies>
         </plugin>
