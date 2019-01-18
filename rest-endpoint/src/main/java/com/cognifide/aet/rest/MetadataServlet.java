@@ -108,9 +108,9 @@ public class MetadataServlet extends BasicDataServlet {
       resp.setContentType("application/json");
       resp.getWriter().write(result);
     } else {
-      resp.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
+      resp.setStatus(HttpURLConnection.HTTP_NOT_FOUND);
       resp.getWriter()
-          .write(responseAsJson(GSON,"Unable to get Suite Metadata for %s", dbKey.toString()));
+          .write(responseAsJson(GSON,"Unable to get Suite Metadata with correlationId : %s and %s", correlationId, dbKey.toString()));
     }
   }
 
