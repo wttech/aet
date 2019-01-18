@@ -108,9 +108,11 @@ public class MetadataServlet extends BasicDataServlet {
       resp.setContentType("application/json");
       resp.getWriter().write(result);
     } else {
+      String fieldName = suiteName != null ? "suite name" : "correlationId";
+      String fieldValue = suiteName != null ? suiteName : correlationId;
       resp.setStatus(HttpURLConnection.HTTP_NOT_FOUND);
       resp.getWriter()
-          .write(responseAsJson(GSON,"Unable to get Suite Metadata with correlationId : %s and %s", correlationId, dbKey.toString()));
+          .write(responseAsJson(GSON, "Unable to get Suite Metadata with %s : %s and %s", fieldName, fieldValue, dbKey.toString()));
     }
   }
 
