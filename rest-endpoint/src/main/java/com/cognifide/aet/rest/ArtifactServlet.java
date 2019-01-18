@@ -50,7 +50,6 @@ public class ArtifactServlet extends BasicDataServlet {
     String id = req.getParameter(Helper.ID_PARAM);
     resp.setCharacterEncoding("UTF-8");
     Artifact artifact = artifactsDAO.getArtifact(dbKey, id);
-    artifactsDAO.getArtifact(dbKey, id);
     if (artifact != null) {
       sendArtifact(req, resp, artifact);
     } else {
