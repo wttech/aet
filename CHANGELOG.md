@@ -25,7 +25,8 @@ All notable changes to AET will be documented in this file.
 - [PR-404](https://github.com/Cognifide/aet/pull/404) Added missing tooltip for conditional tests
 - [PR-408](https://github.com/Cognifide/aet/pull/408) Advanced Screen Comparision button layout fix
 - [PR-410](https://github.com/Cognifide/aet/pull/410) Notification that displays when exclude-elements are not found on page now shows what specific elements were not found([#372](https://github.com/Cognifide/aet/issues/372)) 
-
+- [PR-468](https://github.com/Cognifide/aet/pull/468) Add loggers in collector/modifier([#446](https://github.com/Cognifide/aet/issues/446)) 
+ 
 ## Version 3.1.0
 
 - [PR-409](https://github.com/Cognifide/aet/pull/409) Added sources link in "view source" url
