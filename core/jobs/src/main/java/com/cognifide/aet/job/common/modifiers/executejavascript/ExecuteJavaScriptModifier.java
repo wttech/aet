@@ -56,6 +56,7 @@ public class ExecuteJavaScriptModifier implements CollectorJob {
     CollectorStepResult result;
     String jsSnippet = getJsSnippet();
     try {
+      LOG.debug("Executing Java Script Modifier");
       jsExecutor.execute(jsSnippet);
       result = CollectorStepResult.newModifierResult();
     } catch (ProcessingException ex) {
