@@ -13,30 +13,18 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.communication.api.metadata.exclude;
+package com.cognifide.aet.communication.api.queues;
 
-import java.awt.Dimension;
-import java.awt.Point;
-import java.io.Serializable;
+public interface WorkerConfig {
 
-public class ExcludedElement implements Serializable {
+  /**
+   * @return name of the jobs queue
+   */
+  String getJobsQueueName();
 
-  private static final long serialVersionUID = 692282363549228800L;
+  /**
+   * @return name of the results queue name
+   */
+  String getResultsQueueName();
 
-  private final Point point;
-
-  private final Dimension dimension;
-
-  public ExcludedElement(Point point, Dimension dimension) {
-    this.point = point;
-    this.dimension = dimension;
-  }
-
-  public Point getPoint() {
-    return point;
-  }
-
-  public Dimension getDimension() {
-    return dimension;
-  }
 }

@@ -63,23 +63,18 @@ of Apache server which hosts the AET Report application - e.g. `http://aet-repor
 
 ##### Collectors and comparators configuration
 
- The services are **AET Collector Message Listener** and **AET Comparator Message Listener**. There must be at least one of each of those services configured. Below there are listed the properties of each of above mentioned services with required values.
+The service is **AET Workers Listeners Service**.  
+To enable proper working of AET instance, you should configure at least 1 collector and 1 comparator.
 
-###### AET Collector Message Listener
+| Property name | Default value | Comment |
+| ------------- | ----- | ----- |
+| Number of collector instances | `5` | Might be overwritten by env variable `COLLECTORS_NO` |
+| Collectors prefetch size | `1` | Read more [here](http://activemq.apache.org/what-is-the-prefetch-limit-for.html) |
+| Number of comparator instances | `5` | Might be overwritten by env variable `COMPARATORS_NO` |
+| Comparators prefetch size | `1` | Read more [here](http://activemq.apache.org/what-is-the-prefetch-limit-for.html) |
 
-| Property name | Value |
-| ------------- | ----- |
-| Collector name | Has to be unique within Collector Message Listeners. |
-| Consumer queue name | Fixed value `AET.collectorJobs` |
-| Producer queue name | Fixed value `AET.collectorResults` |
-| Embedded Proxy Server Port | Has to be unique within Collector Message Listeners. |
-
-###### AET Comparator Message Listener
-| Property name | Value |
-| ------------- | ----- |
-| Comparator name | Has to be unique within Comparator Message Listeners. |
-| Consumer queue name | Fixed value `AET.comparatorJobs` |
-| Producer queue name | Fixed value `AET.comparatorResults` |
+> **Important note**
+> Number of collector instances should be the number of browsers available through all Selenium Grid Nodes.
 
 ##### Chrome options configuration
 

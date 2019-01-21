@@ -13,30 +13,14 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.communication.api.metadata.exclude;
+package com.cognifide.aet.worker.exceptions;
 
-import java.awt.Dimension;
-import java.awt.Point;
-import java.io.Serializable;
+/**
+ * Thrown when failed to create consumer.
+ */
+public class ConsumerInitException extends RuntimeException {
 
-public class ExcludedElement implements Serializable {
-
-  private static final long serialVersionUID = 692282363549228800L;
-
-  private final Point point;
-
-  private final Dimension dimension;
-
-  public ExcludedElement(Point point, Dimension dimension) {
-    this.point = point;
-    this.dimension = dimension;
-  }
-
-  public Point getPoint() {
-    return point;
-  }
-
-  public Dimension getDimension() {
-    return dimension;
+  public ConsumerInitException(String message, Throwable cause) {
+    super(message, cause);
   }
 }

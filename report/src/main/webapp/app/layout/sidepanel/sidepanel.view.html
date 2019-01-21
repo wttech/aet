@@ -116,14 +116,16 @@
             data-trigger="hover" data-container="body">{{sidepanel.testsStats.warning}}</span> /
       <span class="status passed" data-toggle="popover" data-content="Passed tests"
             data-trigger="hover" data-container="body">
-        {{sidepanel.testsStats.passed + sidepanel.testsStats.conditionallyPassed}}
+        {{sidepanel.testsStats.passed + sidepanel.testsStats.conditionallyPassed}} </span>
+      <span class="status passed" data-toggle="popover" data-content="Conditionally passed tests"
+            data-trigger="hover" data-container="body">
         ({{sidepanel.testsStats.conditionallyPassed}})</span> /
       <span class="status rebased" data-toggle="popover" data-content="Accepted tests"
             data-trigger="hover" data-container="body">{{sidepanel.testsStats.rebased}}</span> )
     </div>
   </div>
 
-  <div class="aside-report-container">
+  <div class="aside-report-container" ng-class="sidepanel.thereAreChangesToSave() ? 'aside-report-container_short' : ''">
     <div ng-repeat="test in sidepanel.tests | orderBy:'name'"
          class="aside-report {{filteredUrls.length > 0 ? 'is-visible' : 'is-hidden'}}">
       <a ui-sref="test({'suite':$root.params.project, 'test':test.name})" ui-sref-active="is-active"

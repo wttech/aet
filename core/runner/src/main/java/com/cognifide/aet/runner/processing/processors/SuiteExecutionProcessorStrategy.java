@@ -41,7 +41,7 @@ public class SuiteExecutionProcessorStrategy extends ProcessorStrategy {
       SuiteRunWrapper suiteRunWrapper = new SuiteRunWrapper(mergedSuite);
       runIndexWrapper = RunIndexWrapperFactory.createInstance(suiteRunWrapper);
     } catch (StorageException e) {
-      e.printStackTrace();
+      LOGGER.error("Failed to fetch suite {}", objectToRunWrapper.getRealSuite(), e);
     }
   }
 
@@ -50,7 +50,7 @@ public class SuiteExecutionProcessorStrategy extends ProcessorStrategy {
     try {
       suiteDataService.saveSuite(objectToRunWrapper.getRealSuite());
     } catch (ValidatorException | StorageException e) {
-      e.printStackTrace();
+      LOGGER.error("Failed to save suite {}", objectToRunWrapper.getRealSuite(), e);
     }
     messagesSender.sendMessage(
         new FinishedSuiteProcessingMessage(FinishedSuiteProcessingMessage.Status.OK,
