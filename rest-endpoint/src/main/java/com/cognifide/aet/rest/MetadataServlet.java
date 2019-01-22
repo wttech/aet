@@ -194,11 +194,11 @@ public class MetadataServlet extends BasicDataServlet {
     response.setStatus(HttpURLConnection.HTTP_NOT_FOUND);
     String paramsValuesMessage = "";
     if (correlationId != null) {
-      paramsValuesMessage = String.format("correlationId : %s", correlationId);
+      paramsValuesMessage = String.format("correlationId: %s", correlationId);
     } else if (suiteName != null) {
-      paramsValuesMessage = String.format("suite name : %s", suiteName);
+      paramsValuesMessage = String.format("suite name: %s", suiteName);
       if (suiteVersion != null) {
-        paramsValuesMessage = String.format("%s, version : %s", paramsValuesMessage, suiteVersion);
+        paramsValuesMessage = String.format("%s, version: %s", paramsValuesMessage, suiteVersion);
       }
     }
     response.getWriter()

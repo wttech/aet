@@ -74,7 +74,7 @@ public class ArtifactServlet extends BasicDataServlet {
     resp.setStatus(HttpURLConnection.HTTP_NOT_FOUND);
     resp.setContentType("application/json");
     resp.getWriter().write(
-        responseAsJson(GSON, "Unable to get artifact with id : %s for %s", id, dbKey.toString()));
+        responseAsJson(GSON, "Unable to get artifact with id: %s for %s", id, dbKey.toString()));
   }
 
   @Override
