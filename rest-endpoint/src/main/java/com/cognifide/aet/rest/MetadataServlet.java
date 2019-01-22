@@ -202,7 +202,7 @@ public class MetadataServlet extends BasicDataServlet {
       }
     }
     response.getWriter()
-        .write(responseAsJson(GSON, "Unable to get Suite Metadata with %s from %s", paramsValuesMessage, dbKey.toString()));
+        .write(responseAsJson(GSON, "Unable to get Suite Metadata with %s for %s", paramsValuesMessage, dbKey.toString()));
   }
 
   @Activate
