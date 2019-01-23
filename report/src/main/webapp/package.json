@@ -8,7 +8,17 @@
   },
   "author": "Cognifide",
   "license": "Apache-2.0",
-  "dependencies": {},
+  "dependencies": {
+    "jquery": "^2.2.3",
+    "requirejs": "~2.1.8",
+    "requirejs-text": "~2.0.10",
+    "bootstrap-sass": "~3.3.5",
+    "angular": "1.5.5",
+    "angular-ui-router": "^0.2.18",
+    "angular-ui-bootstrap": "^1.1.0",
+    "angular-amd": "^0.2.1",
+    "lodash": "^4.11.0"
+  },
   "devDependencies": {
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
@@ -31,6 +41,7 @@
     "gulp-concat": "^2.6.1",
     "gulp-csslint": "^1.0.1",
     "gulp-jshint": "^2.1.0",
+    "gulp-npm-copy-deps": "^1.0.2",
     "gulp-sass": "^4.0.1",
     "gulp-sourcemaps": "^2.6.4",
     "gulp-uglify": "^3.0.0",
