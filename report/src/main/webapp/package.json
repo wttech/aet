@@ -36,7 +36,6 @@
     "glob": "^7.1.2",
     "gulp": "3.9.1",
     "gulp-autoprefixer": "^5.0.0",
-    "gulp-bower": "0.0.14",
     "gulp-clean-css": "^3.9.4",
     "gulp-concat": "^2.6.1",
     "gulp-csslint": "^1.0.1",
