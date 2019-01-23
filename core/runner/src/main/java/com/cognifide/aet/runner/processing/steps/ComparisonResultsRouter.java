@@ -25,7 +25,7 @@ import com.cognifide.aet.communication.api.metadata.Suite.Timestamp;
 import com.cognifide.aet.communication.api.metadata.Url;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.communication.api.util.ExecutionTimer;
-import com.cognifide.aet.runner.MessagesManager;
+import com.cognifide.aet.communication.api.queues.QueuesConstant;
 import com.cognifide.aet.runner.RunnerConfiguration;
 import com.cognifide.aet.runner.processing.TimeoutWatch;
 import com.cognifide.aet.runner.processing.data.wrappers.RunIndexWrapper;
@@ -150,7 +150,7 @@ public class ComparisonResultsRouter extends StepManager implements ChangeObserv
 
   @Override
   protected String getQueueInName() {
-    return MessagesManager.createFullQueueName("comparatorResults");
+    return QueuesConstant.COMPARATOR.getResultsQueueName();
   }
 
   @Override

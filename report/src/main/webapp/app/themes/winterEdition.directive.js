@@ -27,6 +27,9 @@ define(['angularAMD'], function (angularAMD) {
     };
 
     function linkFunc($scope) {
+      // change to true to enable Winter Theme
+      var winterEditionEnabled = false;
+
       var WINTER_THEME = {
         name: 'winter',
         statusClasses: {
@@ -42,9 +45,13 @@ define(['angularAMD'], function (angularAMD) {
       var DAY_MARGIN = 14;
       var isChristmas = isDateWithinMargin(TODAY, CHRISTMAS_DATE, DAY_MARGIN);
 
-      if (isChristmas) {
+      if (winterEditionEnabled && isChristmas) {
         _.merge($scope.theme, WINTER_THEME);
-        snowFall.snow(document.body, {flakeCount: 200, maxSpeed: 20});
+
+        var removeListener = $scope.$on('$viewContentLoaded', function() {
+          snowFall.snow(document.querySelector('.aside'), {flakeCount: 60, maxSpeed: 5});
+          removeListener();
+        });
       }
     }
 

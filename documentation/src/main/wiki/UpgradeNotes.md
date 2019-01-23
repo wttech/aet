@@ -12,6 +12,19 @@ Columns are now indexed starting from 1. Bug with two identical issues on a sing
 When upgrading from previous AET version you may need to increase `column` values by 1. Pay special attention to issues that occur more than once on a single page. In new AET version they will be listed twice, each with its exact column and line number.
 Related issue: [#438](https://github.com/Cognifide/aet/issues/438)
 
+## Version 3.2.0
+
+### Users
+
+### Admins
+
+#### [PR-451](https://github.com/Cognifide/aet/pull/451) Collectors and comparators configured by single config number
+
+Remove all `CollectorMessageListenerImpl` and `ComparatorMessageListenerImpl` config files.
+Create `com.cognifide.aet.worker.listeners.WorkersListenersService.cfg` and configure proper 
+number of collectors and comparators there.
+You can find example config file [here](https://github.com/Cognifide/aet/blob/master/osgi-dependencies/configs/src/main/resources/com.cognifide.aet.worker.listeners.WorkersListenersService.cfg).
+
 
 ## Version 3.0.0
 

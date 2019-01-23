@@ -16,6 +16,7 @@
 package com.cognifide.aet.runner;
 
 import com.cognifide.aet.communication.api.exceptions.AETException;
+import com.cognifide.aet.communication.api.queues.QueuesConstant;
 import com.cognifide.aet.runner.configuration.MessagesManagerConf;
 import java.io.IOException;
 import java.util.HashSet;
@@ -25,7 +26,6 @@ import javax.management.ObjectName;
 import javax.management.remote.JMXConnector;
 import javax.management.remote.JMXConnectorFactory;
 import javax.management.remote.JMXServiceURL;
-import org.apache.commons.lang3.StringUtils;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.metatype.annotations.Designate;
@@ -47,8 +47,6 @@ public class MessagesManager {
   private static final String BROKER_OBJECT_NAME = "org.apache.activemq:type=Broker,brokerName=localhost";
 
   private static final String QUEUES_ATTRIBUTE = "Queues";
-
-  private static final String AET_QUEUE_DOMAIN = "AET.";
 
   static final String DESTINATION_NAME_PROPERTY = "destinationName";
 
@@ -83,13 +81,6 @@ public class MessagesManager {
     }
   }
 
-  public static String createFullQueueName(String name) {
-    if (StringUtils.isBlank(name)) {
-      throw new IllegalArgumentException("Queue name can't be null or empty string!");
-    }
-    return AET_QUEUE_DOMAIN + name;
-  }
-
   protected Set<ObjectName> getAetQueuesObjects(MBeanServerConnection connection)
       throws AETException {
     ObjectName[] queues;
@@ -106,7 +97,8 @@ public class MessagesManager {
   private Set<ObjectName> filter(ObjectName[] queuesObjects) {
     Set<ObjectName> queues = new HashSet<>();
     for (ObjectName queueObject : queuesObjects) {
-      if (queueObject.getKeyProperty(DESTINATION_NAME_PROPERTY).startsWith(AET_QUEUE_DOMAIN)) {
+      // filters all with the AET queue namespace
+      if (queueObject.getKeyProperty(DESTINATION_NAME_PROPERTY).startsWith(QueuesConstant.NAMESPACE)) {
         queues.add(queueObject);
       }
     }

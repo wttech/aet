@@ -11,6 +11,11 @@ All notable changes to AET will be documented in this file.
 
 **List of changes that are finished but not yet released in any final version.**
 
+## Version 3.2.0
+
+
+- [PR-451](https://github.com/Cognifide/aet/pull/451) Collectors and comparators configured by single config number
+- [PR-449](https://github.com/Cognifide/aet/pull/449) Improvements to the Winter Edition Theme
 - [PR-354](https://github.com/Cognifide/aet/pull/354) Remove jmsEndpointConfig information from communication settings endpoint ([#352](https://github.com/Cognifide/aet/issues/352))
 - [PR-412](https://github.com/Cognifide/aet/pull/412) ([PR-336](https://github.com/Cognifide/aet/pull/336), [PR-337](https://github.com/Cognifide/aet/pull/337), [PR-395](https://github.com/Cognifide/aet/pull/395)) - Added rerun functionality for suite, test and url 
 - [PR-429](https://github.com/Cognifide/aet/pull/429) - `aet-cookbook` version updated to [`v5.1.1`](https://github.com/Cognifide/aet-cookbook/blob/master/CHANGELOG.md#511) in Vagrant. **Important**: please follow the instructions from [PR-43 description](https://github.com/Cognifide/aet-cookbook/pull/43) in order to keep the MongoDB data on your local environment.
@@ -64,6 +69,7 @@ All notable changes to AET will be documented in this file.
 - [PR-338](https://github.com/Cognifide/aet/pull/338) Enable creating new dbs by default
 - [PR-345](https://github.com/Cognifide/aet/pull/345) Deprecate AET maven plugin
 - [PR-301](https://github.com/Cognifide/aet/pull/301) New versions of virtualization tools used with new AET cookbook
+- [PR-360](https://github.com/Cognifide/aet/pull/360) Keyboard shortcuts for 'Accept/Revert url/test' buttons ([#317](https://github.com/Cognifide/aet/issues/317))
 
 ## Version 2.1.6
 
