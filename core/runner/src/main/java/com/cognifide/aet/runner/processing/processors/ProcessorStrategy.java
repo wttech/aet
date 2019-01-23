@@ -33,7 +33,7 @@ import javax.jms.Destination;
 
 public abstract class ProcessorStrategy<T> implements Callable<String> {
 
-  protected Logger logger;
+  protected Logger internalLogger;
   protected Destination jmsReplyTo;
   protected SuiteDataService suiteDataService;
   protected RunnerConfiguration runnerConfiguration;
@@ -51,7 +51,7 @@ public abstract class ProcessorStrategy<T> implements Callable<String> {
       process();
       save();
     } catch (StorageException | JMSException | ValidatorException e) {
-      logger.error("Error during processing suite {}", getObjectToRun(), e);
+      internalLogger.error("Error during processing suite {}", getObjectToRun(), e);
       FinishedSuiteProcessingMessage message = new FinishedSuiteProcessingMessage(Status.FAILED,
           objectToRunWrapper.getCorrelationId());
       message.addError(e.getMessage());
@@ -73,7 +73,7 @@ public abstract class ProcessorStrategy<T> implements Callable<String> {
   }
 
   protected void init() throws JMSException {
-    logger.debug("Initializing suite processors {}", getObjectToRun());
+    internalLogger.debug("Initializing suite processors {}", getObjectToRun());
     messagesSender = suiteExecutionFactory.newMessagesSender(jmsReplyTo);
     if (suiteProcessor == null) {
       suiteProcessor = new SuiteProcessor(suiteExecutionFactory, runIndexWrapper, runnerConfiguration,
@@ -82,12 +82,12 @@ public abstract class ProcessorStrategy<T> implements Callable<String> {
   }
 
   protected void process() throws JMSException {
-    logger.info("Start processing: {}", runIndexWrapper.get());
+    internalLogger.info("Start processing: {}", runIndexWrapper);
     suiteProcessor.startProcessing();
   }
 
   protected void cleanup() {
-    logger.debug("Cleaning up suite {}", runIndexWrapper.get());
+    internalLogger.debug("Cleaning up {}", runIndexWrapper);
     if(messagesSender != null){
       messagesSender.close();
     }
@@ -102,7 +102,7 @@ public abstract class ProcessorStrategy<T> implements Callable<String> {
   }
 
   protected void setLogger(Logger logger) {
-    this.logger = logger;
+    this.internalLogger = logger;
   }
 
   protected abstract T getObjectToRun();

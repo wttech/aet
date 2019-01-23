@@ -15,8 +15,6 @@
  */
 package com.cognifide.aet.runner;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.times;
@@ -40,22 +38,6 @@ public class MessagesManagerTest {
 
   @Mock
   private MessagesManagerConf config;
-
-  @Test(expected = IllegalArgumentException.class)
-  public void createFullQueueName_whenNameIsNull_expectException() throws Exception {
-    MessagesManager.createFullQueueName(null);
-  }
-
-  @Test(expected = IllegalArgumentException.class)
-  public void createFullQueueName_whenNameIsEmpty_expectException() throws Exception {
-    MessagesManager.createFullQueueName("");
-  }
-
-  @Test
-  public void createFullQueueName_expectFullName() throws Exception {
-    String fullQueueName = MessagesManager.createFullQueueName("test");
-    assertThat(fullQueueName, is("AET.test"));
-  }
 
   @Test
   public void remove_ExpectRemovingInvoked() throws Exception {
