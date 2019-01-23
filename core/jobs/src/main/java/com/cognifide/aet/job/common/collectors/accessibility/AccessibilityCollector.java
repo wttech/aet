@@ -22,16 +22,11 @@ import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.job.common.utils.javascript.JavaScriptJobExecutor;
 import com.cognifide.aet.vs.ArtifactsDAO;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.reflect.TypeToken;
-import java.lang.reflect.Type;
 import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.Map;
 import org.apache.commons.io.IOUtils;
-import org.apache.commons.lang3.StringUtils;
 import org.osgi.framework.BundleContext;
 
 public class AccessibilityCollector implements CollectorJob {
@@ -63,8 +58,7 @@ public class AccessibilityCollector implements CollectorJob {
     final String html = jsExecutor.execute(DOCUMENT_OUTER_HTML_SCRIPT)
         .getExecutionResultAsString();
     final String json = jsExecutor.execute(script, standard).getExecutionResultAsString();
-    List<AccessibilityIssue> issues = parseIssues(json);
-    getElementsPositions(issues, html);
+    List<AccessibilityIssue> issues = new AccessibilityIssueMarkupFinder(html, json).get();
 
     String resultId = artifactsDAO.saveArtifactInJsonFormat(properties, issues);
 
@@ -93,33 +87,4 @@ public class AccessibilityCollector implements CollectorJob {
       standard = params.get(PARAM_STANDARD);
     }
   }
-
-  private List<AccessibilityIssue> parseIssues(String json) {
-    Gson gson = new GsonBuilder()
-        .registerTypeAdapter(AccessibilityIssue.class, new AccessibilityIssueDeserializer())
-        .create();
-    Type list = new TypeToken<List<AccessibilityIssue>>() {
-    }.getType();
-    return gson.fromJson(json, list);
-  }
-
-  private void getElementsPositions(List<AccessibilityIssue> issues, final String html) {
-    for (AccessibilityIssue issue : issues) {
-      int indexOfElement = html.indexOf(issue.getElementString());
-      if (indexOfElement >= 0) {
-        String beforeOccurrence = html.substring(0, indexOfElement);
-        int lineBreaks = StringUtils.countMatches(beforeOccurrence, "\n");
-        int columnNumber;
-        if (lineBreaks > 0) {
-          int indexOfLastLineBreak = beforeOccurrence.lastIndexOf('\n');
-          columnNumber = beforeOccurrence.substring(indexOfLastLineBreak).length();
-        } else {
-          columnNumber = beforeOccurrence.length();
-        }
-        issue.setLineNumber(lineBreaks + 1);
-        issue.setColumnNumber(columnNumber);
-      }
-    }
-  }
-
 }
