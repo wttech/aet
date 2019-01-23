@@ -30,7 +30,7 @@ import browserSync      from 'browser-sync';
 import jshint           from 'gulp-jshint';
 import csslint          from 'gulp-csslint';
 import jshintSummary    from 'jshint-summary';
-import bower            from 'gulp-bower';
+import gncd             from 'gulp-npm-copy-deps'
 
 
 
@@ -70,8 +70,8 @@ gulp.task('lintJS', function() {
 });
 
 gulp.task('installLibs', function() {
-    return bower({ directory: 'assets/libs'});
-})
+    return gncd('./node_modules', 'assets/libs');
+});
 
 gulp.task('lintCSS', function() {
     gulp.src('./assets/css/main.css')
