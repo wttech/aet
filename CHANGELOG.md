@@ -17,6 +17,7 @@ All notable changes to AET will be documented in this file.
 - [PR-430](https://github.com/Cognifide/aet/pull/430) Upgraded HTML codesniffer to latest release (3.2.0)
 
 - [PR-385](https://github.com/Cognifide/aet/pull/385) Fixed ChefDK and vagrant-berkshelf versions
+- [PR-413](https://github.com/Cognifide/aet/pull/413) Feature/source comparator passed test code compare ([#369](https://github.com/Cognifide/aet/issues/369))
 
 ## Version 3.1.0
 
