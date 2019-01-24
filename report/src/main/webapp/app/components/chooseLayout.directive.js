@@ -48,6 +48,10 @@ define(['angularAMD'], function (angularAMD) {
       return scope.layoutScreenIndex;
     };
 
+    scope.singletonStepResultIndex = function () {
+      return 0;
+    };
+
     scope.stepResultStatus = function (status) {
       return statuses[status];
     }

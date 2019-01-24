@@ -25,7 +25,7 @@
     </div>
   </div>
 </div>
-<div>
+<div data-aet-choose-step-result>
   <table class="table table-hover">
     <thead>
     <tr>
@@ -35,25 +35,29 @@
     </tr>
     </thead>
     <tbody>
-    <tr class="divider-row" ng-if="case.result.filteredStatusCodes.length > 0">
+    <tr class="divider-row"
+        ng-if="case.results[singletonStepResultIndex()].filteredStatusCodes.length > 0">
       <td colspan="3">
         Unexpected status codes:
       </td>
     </tr>
     <tr class="danger"
-        ng-repeat="item in case.result.filteredStatusCodes">
+        ng-repeat="item in case.results[singletonStepResultIndex()].filteredStatusCodes">
       <td>{{$index+1}}</td>
       <td>{{item.code}}</td>
       <td><a href="{{item.url}}" title="{{item.url}}">{{item.url}}</a></td>
     </tr>
     <tr class="divider-row"
-        ng-if="case.comparator.parameters.showExcluded && case.result.excludedStatusCodes.length > 0">
+        ng-if="case.comparator.parameters.showExcluded &&
+        case.results[singletonStepResultIndex()].excludedStatusCodes.length > 0">
       <td colspan="3">
         Excluded status codes:
       </td>
     </tr>
-    <tr class="ignored" ng-repeat="item in case.result.excludedStatusCodes"
-        ng-if="case.comparator.parameters.showExcluded && case.result.excludedStatusCodes.length > 0">
+    <tr class="ignored"
+        ng-repeat="item in case.results[singletonStepResultIndex()].excludedStatusCodes"
+        ng-if="case.comparator.parameters.showExcluded &&
+         case.results[singletonStepResultIndex()].excludedStatusCodes.length > 0">
       <td>{{$index+1}}</td>
       <td>{{item.code}}</td>
       <td><a href="{{item.url}}" title="{{item.url}}">{{item.url}}</a></td>
@@ -63,7 +67,7 @@
         All gathered status codes:
       </td>
     </tr>
-    <tr class="info" ng-repeat="item in case.result.statusCodes">
+    <tr class="info" ng-repeat="item in case.results[singletonStepResultIndex()].statusCodes">
       <td>{{$index+1}}</td>
       <td>{{item.code}}</td>
       <td><a href="{{item.url}}" title="{{item.url}}">{{item.url}}</a></td>

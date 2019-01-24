@@ -38,8 +38,8 @@ mvn aet:run -DtestSuite=FULL_PATH_TO_TEST_SUITE
 | `name` | Overrides the *name* parameter value from the test suite definition. | - | no |
 | `domain` | Overrides the *domain* parameter value from the test suite definition. | - | no |
 | `timeout` | Milliseconds to detect the timeout since the last status received from AET. This is useful to abort the test run if there is no activity for a long time. | 300000 (5 minutes) | no |
-| `pattern` | Correlation ID of suite that will be used as patterns source. Identical structure of pattern and current suites is assumed. If you want to use latest patterns of given suite without specifying full correlation ID, use `patternSuite` parameter instead. | - | no |
-| `patternSuite` | Name of the suite, whose latest version will be used as patterns source. Identical structure of pattern and current suites is assumed. This parameter is ignored if `pattern` parameter is already specified. | - | no |
+| `pattern` | Correlation ID of suite that will be used as patterns source. Identical structure of pattern and current suites is assumed. If you want to use latest patterns of given suite without specifying full correlation ID, use `patternSuite` parameter instead. You can specify more than one `pattern` params (works only when using `aet.sh` script).| - | no |
+| `patternSuite` | Name of the suite, whose latest version will be used as patterns source. Identical structure of pattern and current suite is assumed. You can specify more than one `patternSuite` params (works only when using `aet.sh` script). | - | no |
 | `xUnit` | The flag that indicates whether the xUnit report should be generated and downloaded or not.| false | no |
 
 ##### Test results

@@ -25,25 +25,35 @@
     </div>
   </div>
 </div>
-<div>
-  <span ng-if="!case.result.nonExcludedIssues.length && !case.result.excludedIssues.length">
+<div aet-choose-step-result>
+  <span
+      ng-if="!case.results[singletonStepResultIndex()].nonExcludedIssues.length &&
+      !case.results[singletonStepResultIndex()].excludedIssues.length">
       No issues found
   </span>
-  <p ng-if="case.result.errorCount >= 0">
-    Validation errors count: <span class="badge alert-danger">{{case.result.errorCount}}</span>
+  <p ng-if="case.results[singletonStepResultIndex()].errorCount >= 0">
+    Validation errors count:
+    <span class="badge alert-danger">
+      {{case.results[singletonStepResultIndex()].errorCount}}
+    </span>
   </p>
-  <p ng-if="case.result.warningCount >= 0">
-    Validation warnings count: <span class="badge alert-warning">{{case.result.warningCount}}</span>
+  <p ng-if="case.results[singletonStepResultIndex()].warningCount >= 0">
+    Validation warnings count:
+    <span class="badge alert-warning">
+      {{case.results[singletonStepResultIndex()].warningCount}}
+    </span>
   </p>
-  <p ng-if="case.result.noticeCount >= 0">
-    Validation notices count: <span class="badge alert-info">{{case.result.noticeCount}}</span>
+  <p ng-if="case.results[singletonStepResultIndex()].noticeCount >= 0">
+    Validation notices count: <span class="badge alert-info">
+    {{case.results[singletonStepResultIndex()].noticeCount}}</span>
   </p>
 
   <div class="clearfix"></div>
   <div>
 
     <table class="table table-condensed table-bordered"
-           ng-if="case.result.nonExcludedIssues.length || case.result.excludedIssues.length">
+           ng-if="case.results[singletonStepResultIndex()].nonExcludedIssues.length ||
+           case.results[singletonStepResultIndex()].excludedIssues.length">
       <thead>
       <tr>
         <th>No.</th>
@@ -51,8 +61,9 @@
       </tr>
       </thead>
       <tbody>
-      <tr ng-class="item.type.toLowerCase()" ng-repeat="item in case.result.nonExcludedIssues"
-          ng-if="case.result.nonExcludedIssues">
+      <tr ng-class="item.type.toLowerCase()"
+          ng-repeat="item in case.results[singletonStepResultIndex()].nonExcludedIssues"
+          ng-if="case.results[singletonStepResultIndex()].nonExcludedIssues">
         <td>{{$index+1}}</td>
         <td>
           <p>
@@ -64,13 +75,14 @@
           <p></p>
         </td>
       </tr>
-      <tr ng-if="case.result.excludedIssues.length">
+      <tr ng-if="case.results[singletonStepResultIndex()].excludedIssues.length">
         <td colspan="3" class="info">
           Excluded issues:
         </td>
       </tr>
-      <tr ng-class="item.type.toLowerCase()" ng-repeat="item in case.result.excludedIssues"
-          ng-if="case.result.excludedIssues.length">
+      <tr ng-class="item.type.toLowerCase()"
+          ng-repeat="item in case.results[singletonStepResultIndex()].excludedIssues"
+          ng-if="case.results[singletonStepResultIndex()].excludedIssues.length">
         <td>{{$index+1}}</td>
         <td>
           <p>
@@ -85,7 +97,11 @@
     </table>
 
     <table class="table table-condensed table-bordered"
-           ng-if="!case.result.nonExcludedIssues.length && !case.result.excludedIssues.length && (case.result.noticeCount != 0 || case.result.warningCount != 0 || case.result.errorCount != 0)">
+           ng-if="!case.results[singletonStepResultIndex()].nonExcludedIssues.length &&
+            !case.results[singletonStepResultIndex()].excludedIssues.length &&
+            (case.results[singletonStepResultIndex()].noticeCount != 0 ||
+            case.results[singletonStepResultIndex()].warningCount != 0 ||
+            case.results[singletonStepResultIndex()].errorCount != 0)">
       <thead>
       <tr>
         <th>No.</th>
@@ -93,7 +109,8 @@
       </tr>
       </thead>
       <tbody>
-      <tr ng-class="item.type.toLowerCase()" ng-repeat="item in case.result">
+      <tr ng-class="item.type.toLowerCase()"
+          ng-repeat="item in case.results[singletonStepResultIndex()]">
         <td>{{$index+1}}</td>
         <td>
           <p>

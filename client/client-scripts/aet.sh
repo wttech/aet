@@ -36,7 +36,7 @@ function usage {
     echo -e "\t-d --domain <DOMAIN>                 - Override domain attribute defined in suite file"
     echo -e "\t-n --name <SUITE_NAME>               - Override name attribute defined in suite file"
     echo -e "\t-c --correlationId <CORRELATION_ID>  - Set id of patterns to run test against."
-    echo -e "\t-p --patternSuite <SUITE_NAME>       - Set the suite name to run test against its latest pattern (only used if -c is not set)"
+    echo -e "\t-p --patternSuite <SUITE_NAME>       - Set the suite name to run test against its latest pattern"
     echo -e "\t-i --interval <POLL_INTERVAL>        - Set interval in seconds for polling suite status. Default interval : 1 sec."
     echo -e "\t-w --waitForUnlock <TIMEOUT>         - Set timeout for the script to wait for unlocked suite. Default timeout: 0 sec."
     echo -e "\t-v --verbose                         - Make it more descriptive"
@@ -131,11 +131,13 @@ while [[ $# -gt 0 ]]; do
             ;;
         -c | --correlationId )
             CORRELATION_ID=$2
+            CORRELATION_IDS_COLLECTION="$CORRELATION_IDS_COLLECTION $CORRELATION_ID"
             CORRELATION_ID_BODY="$CORRELATION_ID_BODY -F pattern=$CORRELATION_ID"
             shift 2
             ;;
         -p | --patternSuite )
             PATTERN_SUITE=$2
+            PATTERN_SUITES_COLLECTION="$PATTERN_SUITES_COLLECTION $PATTERN_SUITE"
             PATTERN_SUITE_BODY="$PATTERN_SUITE_BODY -F patternSuite=$PATTERN_SUITE"
             shift 2
             ;;
@@ -155,8 +157,8 @@ if [[ $VERBOSE -eq 1 ]]; then
   echo -e "\tSuite:                 $suite_file_name"
   echo -e "\tOverridden domain:     ${DOMAIN-not set}"
   echo -e "\tOverridden suite name: ${SUITE_NAME-not set}"
-  echo -e "\tPattern id:            ${CORRELATION_ID-not set}"
-  echo -e "\tPattern suite:         ${PATTERN_SUITE-not set}"
+  echo -e "\tPattern ids:           ${CORRELATION_IDS_COLLECTION-not set}"
+  echo -e "\tPattern suites:        ${PATTERN_SUITES_COLLECTION-not set}"
   echo ""
 fi
 
