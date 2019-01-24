@@ -8,16 +8,27 @@
 All notable changes to AET will be documented in this file.
 
 ## Unreleased
+
 **List of changes that are finished but not yet released in any final version.**
+- [PR-439](https://github.com/Cognifide/aet/pull/439) Fixed duplicating line and column numbers in accessibility tab
+- [PR-360](https://github.com/Cognifide/aet/pull/360) Keyboard shortcuts for 'Accept/Revert url/test' buttons ([#317](https://github.com/Cognifide/aet/issues/317))
+- [PR-432](https://github.com/Cognifide/aet/pull/432) Fixed issue with lack of clear message for erroneous suite definition.
+- [PR-413](https://github.com/Cognifide/aet/pull/413) Added ability to show full page source when there has been no difference discovered ([#369](https://github.com/Cognifide/aet/issues/369))
+
+## Version 3.2.0
+
+
+- [PR-451](https://github.com/Cognifide/aet/pull/451) Collectors and comparators configured by single config number
+- [PR-449](https://github.com/Cognifide/aet/pull/449) Improvements to the Winter Edition Theme
 - [PR-354](https://github.com/Cognifide/aet/pull/354) Remove jmsEndpointConfig information from communication settings endpoint ([#352](https://github.com/Cognifide/aet/issues/352))
 - [PR-412](https://github.com/Cognifide/aet/pull/412) ([PR-336](https://github.com/Cognifide/aet/pull/336), [PR-337](https://github.com/Cognifide/aet/pull/337), [PR-395](https://github.com/Cognifide/aet/pull/395)) - Added rerun functionality for suite, test and url 
 - [PR-429](https://github.com/Cognifide/aet/pull/429) - `aet-cookbook` version updated to [`v5.1.1`](https://github.com/Cognifide/aet-cookbook/blob/master/CHANGELOG.md#511) in Vagrant. **Important**: please follow the instructions from [PR-43 description](https://github.com/Cognifide/aet-cookbook/pull/43) in order to keep the MongoDB data on your local environment.
-
 - [PR-422](https://github.com/Cognifide/aet/pull/422) RunnerConfiguration's urlPackageSize property got set to 1
 - [PR-430](https://github.com/Cognifide/aet/pull/430) Upgraded HTML codesniffer to latest release (3.2.0)
-
 - [PR-385](https://github.com/Cognifide/aet/pull/385) Fixed ChefDK and vagrant-berkshelf versions
-- [PR-413](https://github.com/Cognifide/aet/pull/413) Feature/source comparator passed test code compare ([#369](https://github.com/Cognifide/aet/issues/369))
+- [PR-404](https://github.com/Cognifide/aet/pull/404) Added missing tooltip for conditional tests
+- [PR-408](https://github.com/Cognifide/aet/pull/408) Advanced Screen Comparision button layout fix
+- [PR-410](https://github.com/Cognifide/aet/pull/410) Notification that displays when exclude-elements are not found on page now shows what specific elements were not found([#372](https://github.com/Cognifide/aet/issues/372)) 
 
 ## Version 3.1.0
 

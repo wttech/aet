@@ -29,45 +29,41 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
 
     function linkFunc(scope) {
 
-      /*
-       code 37 - arrow left
-       code 39 - arrow right
-       code 69 - e
-       code 77 - m
-       code 81 - q
-       code 219 - [
-       code 221 - ]
-       */
-
       var shortcuts = {
-        '37': function () {
-          goToTab('prev');
-        },
-        '39': function () {
-          goToTab('next');
-        },
-        '69': function () {
-          toggleErrors();
-        },
-        '77': function () {
-          toggleMask();
-        },
-        '81': function () {
-          toggleAll();
-        },
-        '219': function () {
+        'ArrowLeft': goToTab,
+        'ArrowRight': goToTab,
+        'e': toggleErrors,
+        'm': toggleMask,
+        'q': toggleAll,
+        '[': function () {
           scope.traverseTree('up');
         },
-        '221': function () {
+        ']': function () {
           scope.traverseTree('down');
+        },
+        'a': function () {
+          clickById('#accept-test');
+        },
+        'r': function () {
+          clickById('#revert-test');
+        },
+        'A': function (event) {
+          if (!event.ctrlKey) {} {
+            clickById('#accept-test-case');
+          }
+        },
+        'R': function (event) {
+          if (!event.ctrlKey) {} {
+            clickById('#revert-test-case');
+          }
         }
       };
 
       $(document).on('keydown', function (e) {
-        if ($('body').hasClass('modal-open')) {
+        if ($('body').hasClass('modal-open') || $(e.target).hasClass('search-input')) {
           return true;
-        } else if (shortcuts[e.keyCode]) {
-          shortcuts[e.keyCode]();
+        } else if (shortcuts[e.key]) {
+          shortcuts[e.key](e);
         }
       });
 
@@ -86,11 +82,15 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
         }
       };
 
-      function goToTab(direction) {
+      function clickById(id) {
+        $(id).click();
+      }
+
+      function goToTab(event) {
         var $tabs = $('.test-tabs'),
             $active = $tabs.find('.active');
 
-        if (direction === 'prev') {
+        if (event.key === 'ArrowLeft') {
           $active.prev().find('a').click();
         } else {
           $active.next().find('a').click();
@@ -251,7 +251,7 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
         var $nextTestTabs = $('.nav-tabs').children();
         $nextTestTabs.each(function() {
           if($(this).text().replace(/\s/g, '') === currentTabLabel) {
-            $(this).find('a').click(); 
+            $(this).find('a').click();
             currentTabLabel = null;
           }
         });
@@ -260,7 +260,7 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
       //MutationObserver fires a callback every time something changes on the page
       //and here it's used to click a tab before the page is actually rendered to get rid of flickering effect
       var mutationObserver = new MutationObserver(callback);
-      
+
       function callback(mutList) {
         function findElement(element) {
           if($(element.target).hasClass('nav-tabs')) {
@@ -268,7 +268,7 @@ define(['angularAMD', 'userSettingsService'], function (angularAMD) {
             return true;
           }
         }
-        mutList.find(findElement);     
+        mutList.find(findElement);
       }
 
       mutationObserver.observe(document, {
