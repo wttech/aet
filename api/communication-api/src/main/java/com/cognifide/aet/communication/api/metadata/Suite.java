@@ -51,6 +51,7 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
       .registerTypeHierarchyAdapter(Map.class, new MapSerializer())
       .registerTypeAdapter(Suite.Timestamp.class, new TimestampSerializer())
       .create();
+
   private static final Type SUITE_TYPE = new TypeToken<Suite>() {
   }.getType();
 
@@ -71,6 +72,10 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
   private final String name;
 
   @NotNull
+  @Valid
+  private final List<Test> tests = new ArrayList<>();
+
+  @NotNull
   @Min(1)
   private Long version;
 
@@ -83,11 +88,9 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
 
   private Statistics statistics;
 
-  @NotNull
-  @Valid
-  private final List<Test> tests = new ArrayList<>();
-
   private final Set<String> patternCorrelationIds;
+
+  private String projectChecksum;
 
   public Suite(String correlationId, String company, String project, String name,
       Set<String> patternCorrelationIds) {
@@ -97,6 +100,20 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
     this.name = name;
     this.runTimestamp = new Timestamp(System.currentTimeMillis());
     this.patternCorrelationIds = patternCorrelationIds;
+  }
+
+  Suite(String correlationId, String company, String project, String name,
+      Set<String> patternCorrelationIds, String projectChecksum) {
+    this.correlationId = correlationId;
+    this.company = company;
+    this.project = project;
+    this.name = name;
+    this.patternCorrelationIds = patternCorrelationIds;
+    this.projectChecksum = projectChecksum;
+  }
+
+  public static Suite fromJson(Reader jsonReader) {
+    return GSON_FOR_JSON.fromJson(jsonReader, SUITE_TYPE);
   }
 
   public String getCorrelationId() {
@@ -115,6 +132,14 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
     return project;
   }
 
+  public String getProjectChecksum() {
+    return projectChecksum;
+  }
+
+  public void setProjectChecksum(String projectChecksum) {
+    this.projectChecksum = projectChecksum;
+  }
+
   @Override
   public String getName() {
     return name;
@@ -122,6 +147,11 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
 
   public Long getVersion() {
     return version;
+  }
+
+
+  public void setVersion(long version) {
+    this.version = version;
   }
 
   public Long incrementVersion() {
@@ -185,6 +215,7 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
         java.util.Objects.equals(company, suite.company) &&
         java.util.Objects.equals(project, suite.project) &&
         java.util.Objects.equals(name, suite.name) &&
+        java.util.Objects.equals(projectChecksum, suite.projectChecksum) &&
         java.util.Objects.equals(version, suite.version);
   }
 
@@ -229,22 +260,18 @@ public class Suite implements Serializable, Commentable, Named, Validatable {
     }
   }
 
-  public static Suite fromJson(Reader jsonReader) {
-    return GSON_FOR_JSON.fromJson(jsonReader, SUITE_TYPE);
-  }
-
   public String toJson() {
     return GSON_FOR_JSON.toJson(this, SUITE_TYPE);
   }
 
   @Override
-  public void setComment(String comment) {
-    this.comment = comment;
+  public String getComment() {
+    return comment;
   }
 
   @Override
-  public String getComment() {
-    return comment;
+  public void setComment(String comment) {
+    this.comment = comment;
   }
 
   public static class Timestamp implements Serializable {

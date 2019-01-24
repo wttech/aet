@@ -24,6 +24,11 @@ DOMAIN_BODY=""
 SUITE_NAME_BODY=""
 CORRELATION_ID_BODY=""
 PATTERN_SUITE_BODY=""
+PROJECT_CHECKSUM=""
+PROJECT_CHECKSUM_BODY=""
+
+USER_LOGIN="admin"
+
 function usage {
     echo
     echo "AET Test executor"
@@ -37,11 +42,17 @@ function usage {
     echo -e "\t-n --name <SUITE_NAME>               - Override name attribute defined in suite file"
     echo -e "\t-c --correlationId <CORRELATION_ID>  - Set id of patterns to run test against."
     echo -e "\t-p --patternSuite <SUITE_NAME>       - Set the suite name to run test against its latest pattern"
+    echo -e "\t-h --projectChecksum <SUITE_NAME>    - Provide url to servlet which will return checksum of a project. If this is the first usage of checksum, it will be associated with patterns collected in this run"
+    echo -e "\t-l --userLogin <SUITE_NAME>          - Provide user login to be used in server authentication when calling endpoint using -h param. Defaults to 'admin'"
     echo -e "\t-i --interval <POLL_INTERVAL>        - Set interval in seconds for polling suite status. Default interval : 1 sec."
     echo -e "\t-w --waitForUnlock <TIMEOUT>         - Set timeout for the script to wait for unlocked suite. Default timeout: 0 sec."
     echo -e "\t-v --verbose                         - Make it more descriptive"
     echo
     exit 1
+}
+
+function get_project_checksum {
+	curl -u ${USER_LOGIN} -s "$1" | jq -r '.projectCheckSum'
 }
 
 # extracts http status code and response body from curl response string
@@ -90,7 +101,7 @@ $errorMessage"
 
 # request /suite endpoint
 function start_suite {
-  run_response=$(curl -sw "%{http_code}" -F "suite=@$suite_file_name"$DOMAIN_BODY$SUITE_NAME_BODY$CORRELATION_ID_BODY$PATTERN_SUITE_BODY "$endpoint$SUITE_ENDPOINT")
+  run_response=$(curl -sw "%{http_code}" -F "suite=@$suite_file_name"$DOMAIN_BODY$SUITE_NAME_BODY$CORRELATION_ID_BODY$PATTERN_SUITE_BODY$PROJECT_CHECKSUM_BODY "$endpoint$SUITE_ENDPOINT")
   extract_code_and_body "$run_response"
 
   if [ $code -eq 200 ]; then
@@ -141,6 +152,16 @@ while [[ $# -gt 0 ]]; do
             PATTERN_SUITE_BODY="$PATTERN_SUITE_BODY -F patternSuite=$PATTERN_SUITE"
             shift 2
             ;;
+        -h | --projectChecksum )
+            PROJECT_CHECKSUM_URL=$2
+            PROJECT_CHECKSUM=$(get_project_checksum ${PROJECT_CHECKSUM_URL})
+            PROJECT_CHECKSUM_BODY=" -F projectCheckSum=$PROJECT_CHECKSUM"
+            shift 2
+            ;;
+        -l | --userLogin )
+            USER_LOGIN=$2
+            shift 2
+            ;;
         -v | --verbose )
             VERBOSE=1
             shift 1
@@ -159,6 +180,9 @@ if [[ $VERBOSE -eq 1 ]]; then
   echo -e "\tOverridden suite name: ${SUITE_NAME-not set}"
   echo -e "\tPattern ids:           ${CORRELATION_IDS_COLLECTION-not set}"
   echo -e "\tPattern suites:        ${PATTERN_SUITES_COLLECTION-not set}"
+  echo -e "\tProject checksum url:  ${PROJECT_CHECKSUM_URL-not set}"
+  echo -e "\tProject checksum:      ${PROJECT_CHECKSUM-not set}"
+  echo -e "\tUser login:            ${USER_LOGIN-not set}"
   echo ""
 fi
 

@@ -101,7 +101,7 @@ This option will enforce AET to use patterns from latest version of `master` sui
 **Remember that `master` suite must be run before running `green` suite with `pattern` or `patternSuite` option.**
  In other case, running `green` suite will be treated as running it for the first time.
  
-###It is possible to provide multiple shared patterns during suite run.
+#### It is possible to provide multiple shared patterns during suite run.
  You can provide any number of `-c` and/or `-p` arguments.
  
 **Multiple shared patterns is only supported when starting tests with `aet.sh` script.**
@@ -116,3 +116,26 @@ This option will enforce AET to use patterns from latest version of `master` sui
  
  `./aet.sh http://url:port suite.xml -p aet-suite-1-name -p aet-suite-2-name -c aet-suite-3-correlation-id`
 
+## Using shared patterns with checksum parameter
+
+You can connect aet patterns with the state of your code in the project you want to test.
+
+In order to do that, you have to implement in your project a mechanism that would calculate a checksum
+of your project and return it to AET [provide link to aet checksum generator project here] 
+(AET expects a json response with a param named `projectCheckSum`). 
+
+When running suite with `aet.sh` script, you can provice `-h` parameter, which should be an 
+url to an endpoint which will return calculated checksum of your project. Example:
+
+`./aet.sh http://url:port suite.xml -h http://urlToEndpointWithChecksum`
+ 
+ If this is the first time the checksum is provided (i.e a suite with such
+ checksum assigned is not present in db), this checksum will be assigned to this current suite run.
+ If it is not the first time, the suite with provided checksum will be retrieved from db, and its 
+ patterns will be used in current run.
+ 
+ An example scenario for the usage of checksum feature is when there are multiple vertical 
+ environments, (e.g development -> integration -> UAT), and the code does not change between 
+ these environments (which means that checksum does not change). Using checksum, new patterns/changes have to be accepted only during the run on 
+ first env, and the patterns will be carried over to higher environments through checksum.
+ 
