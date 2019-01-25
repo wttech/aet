@@ -10,6 +10,8 @@ All notable changes to AET will be documented in this file.
 ## Unreleased
 
 **List of changes that are finished but not yet released in any final version.**
+- [PR-470](https://github.com/Cognifide/aet/pull/470) Security vulnerabilities fix ([#407](https://github.com/Cognifide/aet/issues/407))
+
 
 ## Version 3.2.0
 
