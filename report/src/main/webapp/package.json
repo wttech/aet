@@ -41,7 +41,7 @@
     "gulp-csslint": "^1.0.1",
     "gulp-jshint": "^2.1.0",
     "gulp-npm-copy-deps": "^1.0.2",
-    "gulp-sass": "^4.0.1",
+    "gulp-sass": "^4.0.2",
     "gulp-sourcemaps": "^2.6.4",
     "gulp-uglify": "^3.0.0",
     "gulp-webserver": "^0.9.1",
