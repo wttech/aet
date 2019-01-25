@@ -9,15 +9,15 @@
   "author": "Cognifide",
   "license": "Apache-2.0",
   "dependencies": {
-    "jquery": "^2.2.3",
-    "requirejs": "~2.1.8",
-    "requirejs-text": "~2.0.10",
-    "bootstrap-sass": "~3.3.5",
     "angular": "1.5.5",
-    "angular-ui-router": "^0.2.18",
-    "angular-ui-bootstrap": "^1.1.0",
     "angular-amd": "^0.2.1",
-    "lodash": "^4.11.0"
+    "angular-ui-bootstrap": "^1.1.0",
+    "angular-ui-router": "^0.2.18",
+    "bootstrap-sass": "~3.3.5",
+    "jquery": "^2.2.3",
+    "lodash": "^4.11.0",
+    "requirejs": "~2.1.8",
+    "requirejs-text": "~2.0.10"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
@@ -27,7 +27,7 @@
     "babel-register": "^6.26.0",
     "babelify": "^8.0.0",
     "browser-sync": "^2.24.5",
-    "browserify": "^16.2.2",
+    "browserify": "^16.2.3",
     "eslint": "^5.1.0",
     "eslint-config-standard": "^11.0.0",
     "eslint-loader": "^2.0.0",
