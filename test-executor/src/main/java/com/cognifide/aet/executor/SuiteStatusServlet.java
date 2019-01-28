@@ -63,8 +63,10 @@ public class SuiteStatusServlet extends HttpServlet {
       response.setStatus(200);
       response.setContentType("application/json");
       response.setCharacterEncoding("UTF-8");
-      response.getWriter().write(responseBody);
+//      response.getWriter().write(responseBody);
+      response.sendError(404, responseBody);
     } else {
+      //Cache<String, Queue<SuiteStatusResult>> suiteStatusResult2 = suiteExecutor.getSuiteStatusCache();
       response.sendError(404, "Suite status not found");
     }
   }
