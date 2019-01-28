@@ -147,4 +147,19 @@ public class SuiteValidator {
     }
     return valid;
   }
+
+  public String validateDatabase(TestSuiteRun testSuiteRun) {
+    boolean databaseValid = isDatabase(testSuiteRun);
+    if (!databaseValid) {
+      return String
+              .format("No database found for company='%s' project='%s'.",
+                      testSuiteRun.getCompany(), testSuiteRun.getProject());
+    }
+    return null;
+  }
+
+  private boolean isDatabase(TestSuiteRun testSuiteRun) {
+    SimpleDBKey dbKey = new SimpleDBKey(testSuiteRun.getCompany(), testSuiteRun.getProject());
+    return metadataDAO.isDatabase(dbKey);
+  }
 }
