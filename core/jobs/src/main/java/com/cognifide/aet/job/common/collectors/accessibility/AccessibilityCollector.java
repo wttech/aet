@@ -67,7 +67,6 @@ public class AccessibilityCollector implements CollectorJob {
     LOGGER.debug("Executing Accessibility Collector");
     final String html = jsExecutor.execute(DOCUMENT_OUTER_HTML_SCRIPT)
         .getExecutionResultAsString();
-    LOGGER.debug("Executing Accessibility Collector");
     final String json = jsExecutor.execute(script, standard).getExecutionResultAsString();
     List<AccessibilityIssue> issues = parseIssues(json);
     getElementsPositions(issues, html);
