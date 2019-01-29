@@ -140,22 +140,22 @@ public class SuiteExecutor {
       testSuiteRun.setPatternCorrelationId(patternCorrelationId);
       testSuiteRun.setPatternSuite(patternSuite);
 
-//      String databaseError = suiteValidator.validateDatabase(testSuiteRun);
-//      if (databaseError != null) {
-//        suiteStatusHandler.handle(testSuiteRun.getCorrelationId(),
-//                new SuiteStatusResult(ProcessingStatus.PROCESSING_ERROR));
-//      }
+      String databaseError = suiteValidator.validateDatabase(testSuiteRun);
+      if (databaseError != null) {
+        suiteStatusHandler.handle(testSuiteRun.getCorrelationId(),
+                new SuiteStatusResult(ProcessingStatus.PROCESSING_ERROR));
+      }
       String validationError = suiteValidator.validateTestSuiteRun(testSuiteRun);
       if (validationError == null) {
         final Suite suite = suiteFactory.suiteFromTestSuiteRun(testSuiteRun);
         suite.validate(Sets.newHashSet("version", "runTimestamp"));
         Run objectToRunWrapper = new SuiteRunWrapper(suite);
         result = executeSuite(objectToRunWrapper);
-        String databaseError = suiteValidator.validateDatabase(testSuiteRun);
-        if (databaseError != null) {
-          suiteStatusHandler.handle(suite.getCorrelationId(),
-                  new SuiteStatusResult(ProcessingStatus.PROCESSING_ERROR, databaseError));
-        }
+//        String databaseError = suiteValidator.validateDatabase(testSuiteRun);
+//        if (databaseError != null) {
+//          suiteStatusHandler.handle(suite.getCorrelationId(),
+//                  new SuiteStatusResult(ProcessingStatus.PROCESSING_ERROR, databaseError));
+//        }
       } else {
         result = HttpSuiteExecutionResultWrapper
             .wrapError(SuiteExecutionResult.createErrorResult(validationError),

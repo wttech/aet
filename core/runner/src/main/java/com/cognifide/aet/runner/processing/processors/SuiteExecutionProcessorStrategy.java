@@ -15,9 +15,7 @@
  */
 package com.cognifide.aet.runner.processing.processors;
 
-import com.cognifide.aet.communication.api.ProcessingError;
 import com.cognifide.aet.communication.api.messages.FinishedSuiteProcessingMessage;
-import com.cognifide.aet.communication.api.messages.ProcessingErrorMessage;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.communication.api.wrappers.SuiteRunWrapper;
@@ -43,9 +41,6 @@ public class SuiteExecutionProcessorStrategy extends ProcessorStrategy {
       SuiteRunWrapper suiteRunWrapper = new SuiteRunWrapper(mergedSuite);
       runIndexWrapper = RunIndexWrapperFactory.createInstance(suiteRunWrapper);
     } catch (StorageException e) {
-//      messagesSender.sendMessage(
-//              new ProcessingErrorMessage(ProcessingError.collectingError("no db"),
-//                      runIndexWrapper.get().getCorrelationId()));
       LOGGER.error("Failed to fetch suite {}", objectToRunWrapper.getRealSuite(), e);
     }
   }

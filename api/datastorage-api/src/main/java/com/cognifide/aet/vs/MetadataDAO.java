@@ -101,5 +101,9 @@ public interface MetadataDAO extends Serializable {
    */
   Collection<DBKey> getProjects(String company) throws StorageException;
 
+  /**
+   * @param dbKey - key with project and company name
+   * @return true when database for given dbKey exists
+   */
   boolean isDatabase(DBKey dbKey);
 }
