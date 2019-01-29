@@ -152,7 +152,7 @@ public class SuiteValidator {
     boolean databaseValid = isDatabase(testSuiteRun);
     if (!databaseValid) {
       return String
-              .format("No database found for company='%s' project='%s'.",
+              .format("No database found for company: '%s', project: '%s'.",
                       testSuiteRun.getCompany(), testSuiteRun.getProject());
     }
     return null;

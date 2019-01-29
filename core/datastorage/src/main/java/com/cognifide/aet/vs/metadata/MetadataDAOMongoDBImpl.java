@@ -230,9 +230,6 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
   public boolean isDatabase(DBKey dbKey) {
     final String dbName = MongoDBClient.getDbName(dbKey.getCompany(), dbKey.getProject());
     final MongoDatabase database = client.getDatabase(dbName, true);
-    if (database == null) {
-      return false;
-    }
-    return true;
+    return database != null ? true : false;
   }
 }
