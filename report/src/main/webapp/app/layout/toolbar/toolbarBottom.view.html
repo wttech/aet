@@ -138,13 +138,13 @@
         Accept {{toolbarBottom.viewMode}}
       </span>
     
-      <span class="button js-rebase-suite button-blue"
+      <span id="accept-test" class="button js-rebase-suite button-blue"
             data-ng-if="toolbarBottom.showAcceptButton()"
             data-ng-click="toolbarBottom.updatePatterns()"></i>
         Accept {{toolbarBottom.viewMode}}
       </span>
 
-      <span class="button js-rebase-suite button-red"
+      <span id="revert-test" class="button js-rebase-suite button-red"
             data-ng-if="toolbarBottom.showRevertButton()"
             data-ng-click="toolbarBottom.revertAcceptedPatterns()">
         <i class="fas {{theme.statusClasses['unrebased']}}"></i>

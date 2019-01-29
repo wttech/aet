@@ -81,8 +81,9 @@ function process_locked_suite {
       ((UNLOCK_TIMEOUT-=5))
       start_suite
   else
-    echo "Unsuccessful Request to \"$endpoint$SUITE_ENDPOINT\", status: $code
-    $body"
+    errorMessage=$(echo $body | jq -r ".errorMessage")
+    echo "Unsuccessful Request to \"$endpoint$SUITE_ENDPOINT\", status: $code, error:
+$errorMessage"
     exit 1
   fi
 }
