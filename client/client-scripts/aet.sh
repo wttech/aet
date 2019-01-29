@@ -184,7 +184,8 @@ while $process_status; do
             "ERROR"|"PROGRESS")
                 echo "$message"
                 ;;
-            "FATAL_ERROR")
+            "FATAL_ERROR"|"PROCESSING_ERROR")
+                echo "$status"
                 echo "$message"
                 exit 1
                 ;;
