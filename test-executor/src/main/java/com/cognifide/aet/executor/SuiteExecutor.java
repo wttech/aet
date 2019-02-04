@@ -146,10 +146,14 @@ public class SuiteExecutor {
         suite.validate(Sets.newHashSet("version", "runTimestamp"));
         Run objectToRunWrapper = new SuiteRunWrapper(suite);
         result = executeSuite(objectToRunWrapper);
+
         String databaseError = suiteValidator.validateDatabase(testSuiteRun);
         if (databaseError != null) {
           suiteStatusHandler.handle(suite.getCorrelationId(),
                   new SuiteStatusResult(ProcessingStatus.PROCESSING_ERROR, databaseError));
+          result = HttpSuiteExecutionResultWrapper
+                  .wrapError(SuiteExecutionResult.createErrorResult(databaseError),
+                          HttpStatus.SC_NOT_FOUND);
         }
       } else {
         result = HttpSuiteExecutionResultWrapper
