@@ -13,6 +13,7 @@ All notable changes to AET will be documented in this file.
 - [PR-439](https://github.com/Cognifide/aet/pull/439) Fixed duplicating line and column numbers in accessibility tab
 - [PR-360](https://github.com/Cognifide/aet/pull/360) Keyboard shortcuts for 'Accept/Revert url/test' buttons ([#317](https://github.com/Cognifide/aet/issues/317))
 - [PR-432](https://github.com/Cognifide/aet/pull/432) Fixed issue with lack of clear message for erroneous suite definition.
+- [PR-479](https://github.com/Cognifide/aet/pull/479) Added Secure and HttpOnly flags for cookies. ([#477](https://github.com/Cognifide/aet/issues/477))
 
 ## Version 3.2.0
 
