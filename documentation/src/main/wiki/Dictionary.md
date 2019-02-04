@@ -1,5 +1,14 @@
 ## Dictionary
 
+*Accessibility Collector*  
+a collector responsible for collecting validation results containing violations of the defined coding standard found on the page.
+
+*Accessibility Comparator*  
+a comparator responsible for validating a collected page source against Accessibility Standards.
+
+*Accessibility Data Filter*  
+a filter that removes the matched accessibility issues from the AET report.
+
 *Active MQ*  
 a *JMS (Java Message Service)* Server which is a basic communication channel between AET System components.
 
@@ -13,19 +22,14 @@ a set of system modules that are crucial for the whole system to work. The AET s
 implementations of jobs that can perform a particular task (e.g. collect screenshots, compare sources, validate a page against *W3C HTML5*).
 
 *AET Maven Plugin*  
-a default client application for the AET system that is used to trigger the execution of the *Test Suite*.
-
-*Amazon Web Services*  
-cloud computing services where the AET environment can be deployed to.
+a default client application for the AET system that was used to trigger the execution of the *Test Suite*.
+The Plugin has been deprecated and will be no longer supported.
 
 *Apache Karaf*  
 see *Karaf*.
 
 *Artifact*  
 usually used in the context of a small piece of data, the result of some operation (e.g. a collected screenshot or a list of *W3C HTML5* validation errors).
-
-*AWS*  
-see *Amazon Web Services*.
 
 *Baseline*  
 a snapshot of the page, stored in a file, against which future versions will be compared. It is called also a **Pattern**.
@@ -35,6 +39,12 @@ a proxy server used by AET to collect some kinds of data from tested pages.
 
 *Cleaner*  
 a module responsible for removing old and unused artifacts from the database.
+
+*Click Modifier*  
+a modifier that allows to perform the click action on the defined element on the page.
+
+*Client Script*  
+a shell script to execute AET tests.
 
 *Collector*  
 a module responsible for gathering data necessary for its further processing (e.g. validation, comparison).
@@ -63,19 +73,28 @@ a module responsible for filtering the collected data before performing comparis
 *Data Storage*  
 a database abstraction layer which contains versioned data (data grid).
 
+*Execute Java Script Modifier*  
+a modifier that allows to execute JavaScript code.
+
+*Executor*  
+see *Test Executor*.
+
+*Extract Element Data Filter*  
+a filter that allows to extract an element from the html source.
+
 *Extract Element Modifier*  
 a modifier that allows to extract an element from the html source (collected by the Screen Collector) by providing the id attribute or the class attribute.
 
 *Feature*  
 a part of the AET system which covers a full testing case e.g. layout - this feature consists of the Screen Collector, the screen comparator and the layout reporter module.
 
-*Firefox*  
-a browser the AET tool makes use of, currently the version that is used is 38.6.0 ESR (en-US).
+*Filter*  
+see *Data Filter*
 
 *Header Modifier*  
 a modifier responsible for adding additional headers to a page.
 
-*Hide Modifiers*  
+*Hide Modifier*  
 a modifier responsible for hiding an element on a page that is unnecessary for a given test.
 
 *Html-report*  
@@ -99,9 +118,6 @@ see *JS*.
 *JDK*  
 the *Java Development Kit* is a program development environment for developing Java applications.
 
-*Jenkins*  
-a continuous Integration (CI) server which is used as the user interface wrapper for the *AET Maven Plugin*.
-
 *Jetty*  
 a simple Http Server, used as a container for web applications.
 
@@ -123,7 +139,7 @@ a collector responsible for collecting JavaScript errors occurring on a given pa
 *JS Errors Comparator*  
 a comparator responsible for processing the collected JavaScript error resource.
 
-*JS Errors Filter*  
+*JS Errors Data Filter*  
 a filter that filters the results returned by the JS Errors Collector. It removes matched JavaScript errors from reports.
 
 *JUnit*  
@@ -135,11 +151,12 @@ in fact *Apache Karaf* is an OSGi container that provides a basic configuration 
 *Layout Comparator*  
 a comparator responsible for comparing a collected screenshot of page to its pattern.
 
+*Lock Mechanism*  
+a mechanism that blocks concurrent modification of the suite.
+It prevents overriding changes (e.g. rebasing, comments) introduced by user by re-runing the suite.
+
 *Login Modifier*  
 a modifier that allows to log in into the application and access secured sites.
-
-*Maven*  
-a software project management and comprehension tool. It used as a base for the *AET Maven Plugin*.
 
 *Modifier*  
 a module responsible for converting the target before the data collection process is performed e.g. modifying a requested header, adding a new cookie, hiding a visible element.
@@ -156,9 +173,6 @@ a modular system and services platform for Java. It is used as an application en
 *Pattern*  
 a sample model of data. Collection results are compared to their patterns to discover potential differences.
 
-*pom.xml*  
-a Maven tool configuration file that contains information about the project and configuration details used by Maven to build the project.
-
 *Rebasing*  
 an operation changing the existing pattern to the current result.
 
@@ -171,11 +185,20 @@ a modifier that allows to remove lines from the source (data or pattern) that a 
 *Remove Nodes Data Modifier*  
 a modifier that allows to delete some node(s) from a html tree. Node(s) are defined by the xpath selector.
 
-*Report (Web application)*  
+*Remove Regex Data Filter*  
+a data filter that allows to remove parts of the source based on regex expressions from the compared source.
+
+*Replace Text Modifier*  
+a modifier that allows to replace text inside html tags or in tags attributes.
+
+*Report (Web Application)*  
 a web application for viewing / browsing AET test results. (At the moment the Google Chrome browser is supported).
 
 *Representational State Transfer API*  
 see *Rest API*.
+
+*Rerun*  
+a feature that allows the user to schedule AET task (suite, test or URL) from the report.
 
 *Resolution Modifier*  
 a modifier responsible for changing the size of the browser screen.
@@ -194,6 +217,9 @@ a data structure storing metadata for a set of files that is managed by a source
 
 *Screen Collector*  
 a collector responsible for collecting a screenshot of the page under a given URL.
+
+*Scroll Modifier*  
+a modifier that allows to scroll the page to a specific element
 
 *Selenium*  
 a portable software testing framework for web applications. At the moment AET makes use of Selenium 3.8.1.
@@ -219,11 +245,17 @@ a collector responsible for collecting status codes for links to resources on a 
 *Status Codes Comparator*  
 a comparator responsible for processing collected *Status Codes*.
 
+*Status Codes Data Filter*  
+a data filter that allows to exclude defined status codes.
+
 *Step*  
 a single operation performed on the url defined in the `<collect>` phase of the suite.
 
 *Test*  
 a definition of logical set of *Test Cases* performed on a set of URLs.
+
+*Test Executor*  
+a module that is a part of Web API and that is an entry point of the test suite processing.
 
 *Test Suite*  
 a set of *Tests* (at least one) finished with the *Report*.
@@ -231,11 +263,23 @@ a set of *Tests* (at least one) finished with the *Report*.
 *Test Case*  
 a single URL *Test* against a feature, e.g. a *W3C HTML* page test, a screenshot for the resolution 800x600 test.
 
+*Test URL*  
+a single URL that a number of test cases can be run against.
+
 *Thresholds*  
 a feature allowing to declare a Jenkins build as ‘success’, ‘unstable’ or ‘failed’ depending on the number of *Tests* that failed or were skipped.
 
+*Wait For Element To Be Visible Modifier*  
+a modifier that allows to wait until a given element appears on the page.
+
+*Wait For Image Completion Modifier*  
+a modifier that allows to wait until a given image appears and loads on the page.
+
 *Wait For Page Loaded Modifier*  
 a modifier that waits until a page is loaded or a fixed amount of time is up.
+
+*Web API*  
+a part of the AET system that allows to access and modify data stored in the AET Database.
 
 *Web Console*  
 the OSGi console installed on Apache Karaf. By default it is accessible via a browser: http://localhost:8181/system/console/configMgr. The default user/password are: karaf/karaf.
@@ -244,7 +288,10 @@ the OSGi console installed on Apache Karaf. By default it is accessible via a br
 a single processing unit that can perform a defined amount of tasks (e.g. collect a screenshot, compare a source).
 
 *W3C HTML5 Comparator*  
-a comparator responsible for validating a collected page source against *W3C HTML5* standards.
+a comparator responsible for validating a collected page source against W3C HTML5 standards.
+
+*W3C HTML5 Issues Data Filter*  
+a data filter that allows to exclude defined W3C HTML5 issues from the result.
 
 *xunit-report*  
 a *Report* that visualizes risks on the Jenkins job board and that contains information about the number of performed tests and the number of failures (potential threats).
