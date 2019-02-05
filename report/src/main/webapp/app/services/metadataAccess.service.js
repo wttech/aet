@@ -30,7 +30,6 @@ define(['angularAMD', 'metadataService'], function (angularAMD) {
       getUrl: getUrl,
       getTestUrls: getTestUrls,
       getStep: getStep,
-      getStepComparator:getStepComparator,
       getUrlSteps: getUrlSteps
     };
 
@@ -64,9 +63,6 @@ define(['angularAMD', 'metadataService'], function (angularAMD) {
 
     function getStep(testName, urlName, stepIndex) {
       return metadataService.getStep(testName, urlName, stepIndex);
-    }
-    function getStepComparator(testName, urlName, stepIndex) {
-      return metadataService.getStepComparator(testName, urlName, stepIndex);
     }
   }
 });
