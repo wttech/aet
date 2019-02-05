@@ -22,6 +22,7 @@ import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.communication.api.wrappers.Run;
 import com.cognifide.aet.queues.JmsUtils;
+import com.cognifide.aet.communication.api.queues.QueuesConstant;
 import com.cognifide.aet.runner.scheduler.CollectorJobSchedulerService;
 import javax.jms.Destination;
 import javax.jms.JMSException;
@@ -45,11 +46,9 @@ public class RunnerMessageListener implements MessageListener {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(RunnerMessageListener.class);
 
-  private static final String API_QUEUE_IN = MessagesManager
-      .createFullQueueName("runner-in");
+  private static final String API_QUEUE_IN = QueuesConstant.NAMESPACE + "runner-in";
 
-  private static final String MAINTENANCE_QUEUE_IN = MessagesManager
-      .createFullQueueName("maintenance-in");
+  private static final String MAINTENANCE_QUEUE_IN = QueuesConstant.NAMESPACE + "maintenance-in";
 
   private MessageConsumer inConsumer;
 

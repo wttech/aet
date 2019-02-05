@@ -30,12 +30,12 @@
   </div>
 </div>
 <div class="toolbar-btns pull-right" data-ng-if=" !case.usesCrossSuitePattern ">
-  <div class="button button-small js-test-rebase button-blue" ng-click="urlView.acceptCase(case)"
+  <div id="accept-test-case" class="button button-small js-test-rebase button-blue" ng-click="urlView.acceptCase(case)"
        ng-if="case.showAcceptButton">
     <i class="icon icon-rebase"></i>
     Accept test case
   </div>
-  <div class="button button-small js-test-rebase button-red" ng-click="urlView.revertCase(case)"
+  <div id="revert-test-case" class="button button-small js-test-rebase button-red" ng-click="urlView.revertCase(case)"
        ng-if="case.showRevertButton">
     <i class="icon icon-unrebase"></i>
     Revert test case
