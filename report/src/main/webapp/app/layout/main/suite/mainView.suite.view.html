@@ -23,7 +23,7 @@
          ng-repeat="testWrapper in suiteView.testWrappers | aetTestStatusFilter:$root.activeFilters | aetTestSearchFilter:$root.searchText | orderBy:'name'"
          ng-init="test = testWrapper.test; stats = testWrapper.stats;"
          ng-class="test.getStatus()">
-      <a ui-sref="test({'suite':data.project,'test':testWrapper.test.name})">
+      <a ui-sref="test({'suite':data.project,'test':test.name})">
         <div class="inner">
           <div ng-class="test.getStatus()">
             <div class="test-count test-count-dashboard">
