@@ -94,20 +94,16 @@ public class MongoDBClientTest {
   }
 
   @Test
-  public void isDatabase_whenAllowAutoCreateAndAutoCreateIsTrue_expectDatabase() {
+  public void isDatabase_whenAutoCreateIsTrue_expectDatabase() {
     final String dbName = MongoDBClient.getDbName("company", "project");
-    when(config.allowAutoCreate()).thenReturn(true);
-    mockDBClient.setupConfiguration(config);
     when(mockDBClient.getDatabase(dbName,true)).thenReturn(mockDB);
     SimpleDBKey dbKey = new SimpleDBKey("company", "project");
     assertThat(mockMetadataImpl.isDatabase(dbKey), is(true));
   }
 
   @Test
-  public void isDatabase_whenNotAllowAutoCreateAndAutoCreateIsFalse_noDatabase() {
+  public void isDatabase_whenAutoCreateIsFalse_noDatabase() {
     final String dbName = MongoDBClient.getDbName("company", "project");
-    when(config.allowAutoCreate()).thenReturn(false);
-    mockDBClient.setupConfiguration(config);
     when(mockDBClient.getDatabase(dbName,false)).thenReturn(null);
     SimpleDBKey dbKey = new SimpleDBKey("company", "project");
     assertThat(mockMetadataImpl.isDatabase(dbKey), is(false));
