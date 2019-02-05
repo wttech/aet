@@ -53,7 +53,6 @@ define(['angularAMD', 'metadataService'], function (angularAMD) {
     function deleteNote(object) {
       var text = object.comment;
       if (object.comment) {
-        text = object.comment;
         delete object.comment;
       } else {
         text = object.comparator.comment;
