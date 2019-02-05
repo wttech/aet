@@ -38,7 +38,7 @@ public enum ProcessingStatus {
   /**
    * An error occured when accessing database.
    */
-  PROCESSING_ERROR,
+  MISSING_DATABASE,
 
   /**
    * Suite processing has finished successfully.

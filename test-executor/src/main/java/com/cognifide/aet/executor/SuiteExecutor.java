@@ -150,7 +150,7 @@ public class SuiteExecutor {
         String databaseError = suiteValidator.validateDatabase(testSuiteRun);
         if (databaseError != null) {
           suiteStatusHandler.handle(suite.getCorrelationId(),
-                  new SuiteStatusResult(ProcessingStatus.PROCESSING_ERROR, databaseError));
+                  new SuiteStatusResult(ProcessingStatus.MISSING_DATABASE, databaseError));
           result = HttpSuiteExecutionResultWrapper
                   .wrapError(SuiteExecutionResult.createErrorResult(databaseError),
                           HttpStatus.SC_NOT_FOUND);
