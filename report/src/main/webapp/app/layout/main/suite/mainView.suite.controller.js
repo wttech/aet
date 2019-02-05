@@ -34,18 +34,14 @@ define([], function () {
       var tests = metadataAccessService.getTests();
       vm.testWrappers = [];
       _.forEach(tests, function (test) {
-        var testStats = {};
+        var urlStats = {};
         _.forEach(test.urls, function (url) {
           var status = url.getStatus();
-          if (testStats[status]) {
-            testStats[status]++;
-          } else {
-            testStats[status] = 1;
-          }
+          urlStats[status] = urlStats[status] ? urlStats[status] + 1 : 1;
         });
         vm.testWrappers.push({
           test: test,
-          stats: testStats
+          stats: urlStats
         });
       });
     }
