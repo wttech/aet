@@ -33,21 +33,13 @@ define(['angularAMD', 'metadataService'], function (angularAMD) {
 
     function updateNote(vm) {
       if (vm.viewMode === viewModeService.COMPARATOR) {
-        updateComparatorComment(vm);
+        vm.model.comparator.comment = vm.noteText;
       } else {
-        updateUrlComment(vm);
+        vm.model.comment = vm.noteText;
       }
       updateUnsavedNotesFlag();
       metadataService.saveChangesLocally();
       metadataService.notifyMetadataChanged();
-    }
-
-    function updateUrlComment(vm) {
-      vm.model.comment = vm.noteText;
-    }
-
-    function updateComparatorComment(vm) {
-      vm.model.comparator.comment = vm.noteText;
     }
 
     function deleteNote(object) {
