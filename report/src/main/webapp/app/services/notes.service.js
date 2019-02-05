@@ -31,9 +31,9 @@ define(['angularAMD', 'metadataService'], function (angularAMD) {
 
     return service;
 
-    function updateNote(vm, param) {
+    function updateNote(vm) {
       if (vm.viewMode === viewModeService.COMPARATOR) {
-        updateComparatorComment(vm, param);
+        updateComparatorComment(vm);
       } else {
         updateUrlComment(vm);
       }
@@ -46,8 +46,8 @@ define(['angularAMD', 'metadataService'], function (angularAMD) {
       vm.model.comment = vm.noteText;
     }
 
-    function updateComparatorComment(vm, param) {
-      metadataService.updateComment(vm, param);
+    function updateComparatorComment(vm) {
+      vm.model.comparator.comment = vm.noteText;
     }
 
     function deleteNote(object) {

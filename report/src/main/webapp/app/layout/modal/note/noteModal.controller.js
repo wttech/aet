@@ -48,7 +48,7 @@ define(['angularAMD'], function (angularAMD) {
     }
 
     function updateNote() {
-      notesService.updateNote(vm, $stateParams);
+      notesService.updateNote(vm);
       $uibModalInstance.close();
     }
 

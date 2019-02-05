@@ -32,7 +32,6 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
               getUrl: getUrl,
               getStep: getStep,
               notifyMetadataChanged: notifyMetadataChanged,
-              updateComment: updateComment,
               saveChangesLocally: saveChangesLocally,
               discardLocalChanges: discardLocalChanges,
               commitLocalChanges: commitLocalChanges
@@ -92,10 +91,6 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
 
         function notifyMetadataChanged() {
           $rootScope.$emit('metadata:changed');
-        }
-
-        function updateComment(vm) {
-          vm.model.comparator.comment = vm.noteText;
         }
 
         function saveChangesLocally() {
