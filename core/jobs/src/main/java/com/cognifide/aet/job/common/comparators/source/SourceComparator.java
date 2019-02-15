@@ -16,164 +16,107 @@
 package com.cognifide.aet.job.common.comparators.source;
 
 import com.cognifide.aet.communication.api.metadata.ComparatorStepResult;
+import com.cognifide.aet.communication.api.metadata.ComparatorStepResult.Status;
 import com.cognifide.aet.job.api.comparator.ComparatorJob;
 import com.cognifide.aet.job.api.comparator.ComparatorProperties;
-import com.cognifide.aet.job.api.datafilter.DataFilterJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.job.common.comparators.source.diff.DiffParser;
 import com.cognifide.aet.job.common.comparators.source.diff.ResultDelta;
-import com.cognifide.aet.job.common.comparators.source.visitors.ContentVisitor;
-import com.cognifide.aet.job.common.comparators.source.visitors.MarkupVisitor;
-import com.cognifide.aet.job.common.comparators.source.visitors.NodeTraversor;
+import com.cognifide.aet.job.common.comparators.source.diff.ResultDelta.TYPE;
 import com.cognifide.aet.vs.ArtifactsDAO;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import org.apache.commons.lang3.StringUtils;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.Optional;
 
-public class SourceComparator implements ComparatorJob {
-
-  private static final Logger LOGGER = LoggerFactory.getLogger(SourceComparator.class);
-
-  public static final String COMPARATOR_TYPE = "source";
-
-  public static final String COMPARATOR_NAME = "source";
+class SourceComparator implements ComparatorJob {
 
   private static final String SOURCE_COMPARE_TYPE = "compareType";
 
   private final ComparatorProperties properties;
-
   private final DiffParser diffParser;
-
   private final ArtifactsDAO artifactsDAO;
+  private final Sources sources;
 
-  private SourceCompareType sourceCompareType = SourceCompareType.ALL;
+  private SourceCompareType sourceCompareType;
 
-  private final List<DataFilterJob> dataFilterJobs;
+  SourceComparator(ArtifactsDAO artifactsDAO, ComparatorProperties properties,
+      DiffParser diffParser, Sources sources) {
 
-  public SourceComparator(ArtifactsDAO artifactsDAO, ComparatorProperties properties,
-      DiffParser diffParser,
-      List<DataFilterJob> dataFilterJobs) {
     this.artifactsDAO = artifactsDAO;
     this.properties = properties;
     this.diffParser = diffParser;
-    this.dataFilterJobs = dataFilterJobs;
-
+    this.sources = sources;
   }
 
   @Override
-  @SuppressWarnings("unchecked")
+  public void setParameters(final Map<String, String> params) throws ParametersException {
+    this.sourceCompareType =
+        Optional.ofNullable(params.get(SOURCE_COMPARE_TYPE))
+            .map(String::toUpperCase)
+            .map(SourceCompareType::valueOf)
+            .orElse(SourceCompareType.ALL);
+  }
+
+  @Override
   public final ComparatorStepResult compare() throws ProcessingException {
-    final ComparatorStepResult result;
     try {
-      String patternSource = formatCode(
-          artifactsDAO.getArtifactAsString(properties, properties.getPatternId()));
-      String dataSource = formatCode(
-          artifactsDAO.getArtifactAsString(properties, properties.getCollectedId()));
-
-      for (DataFilterJob<String> dataFilterJob : dataFilterJobs) {
-        LOGGER.info("Starting {}. Company: {} Project: {}",
-            dataFilterJob.getInfo(), properties.getCompany(), properties.getProject());
-
-        dataSource = dataFilterJob.modifyData(dataSource);
-
-        LOGGER.info("Successfully ended data modifications using  {}. Company: {} Project: {}",
-            dataFilterJob.getInfo(), properties.getCompany(), properties.getProject());
-
-        patternSource = dataFilterJob.modifyPattern(patternSource);
-
-        LOGGER.info("Successfully ended pattern modifications using {}. Company: {} Project: {}",
-            dataFilterJob.getInfo(), properties.getCompany(), properties.getProject());
-      }
-
-      if (StringUtils.isNotBlank(patternSource)) {
-        boolean compareTrimmedLines = shouldCompareTrimmedLines(sourceCompareType);
-        final List<ResultDelta> deltas = diffParser
-            .generateDiffs(patternSource, dataSource, compareTrimmedLines);
-        if (deltas.isEmpty()) {
-          result = new ComparatorStepResult(null, ComparatorStepResult.Status.PASSED, false);
-        } else {
-          result = new ComparatorStepResult(artifactsDAO.saveArtifactInJsonFormat(properties,
-              Collections.singletonMap("differences", deltas)),
-              ComparatorStepResult.Status.FAILED, true);
-          result.addData("formattedPattern", artifactsDAO.saveArtifact(properties, patternSource));
-          result.addData("formattedSource", artifactsDAO.saveArtifact(properties, dataSource));
-          result.addData("sourceCompareType", sourceCompareType.name());
-        }
-      } else {
-        result = new ComparatorStepResult(null, ComparatorStepResult.Status.PASSED);
-      }
-    } catch (Exception e) {
-      throw new ProcessingException(e.getMessage(), e);
+      return compareSources();
+    } catch (Exception ex) {
+      throw new ProcessingException(ex.getMessage(), ex);
     }
+  }
 
+  @SuppressWarnings("unchecked")
+  private ComparatorStepResult compareSources() throws IOException, ProcessingException {
+    sources.generate(sourceCompareType);
+    return getResultOfCompare();
+  }
+
+  private ComparatorStepResult getResultOfCompare() {
+    List<ResultDelta> deltas = calculateDeltas();
+    ComparatorStepResult.Status status = calculateStatus(deltas);
+    ComparatorStepResult result = createNewStepResult(deltas, status);
+    addFormattedSources(result);
     return result;
   }
 
+  private List<ResultDelta> calculateDeltas() {
+    return Optional.of(sources.getPatternSource())
+        .map(this::diffSources)
+        .orElse(new ArrayList<>());
+  }
+
+  private List<ResultDelta> diffSources(String patternSource) {
+    boolean compareTrimmedLines = shouldCompareTrimmedLines(sourceCompareType);
+    return diffParser.generateDiffs(patternSource, sources.getDataSource(), compareTrimmedLines);
+  }
 
   private boolean shouldCompareTrimmedLines(SourceCompareType sourceCompareType) {
     return SourceCompareType.ALLFORMATTED.equals(sourceCompareType)
         || SourceCompareType.MARKUP.equals(sourceCompareType);
   }
 
-  @Override
-  public void setParameters(final Map<String, String> params) throws ParametersException {
-    if (params.containsKey(SOURCE_COMPARE_TYPE)) {
-      this.sourceCompareType = SourceCompareType
-          .valueOf(params.get(SOURCE_COMPARE_TYPE).toUpperCase());
-    }
+  private Status calculateStatus(List<ResultDelta> deltas) {
+    return deltas.stream().anyMatch(d -> d.getType().equals(TYPE.CHANGE)) ?
+        Status.FAILED : Status.PASSED;
   }
 
-  private String formatCode(String code) {
-    String result;
-    switch (sourceCompareType) {
-      case MARKUP:
-        result = formatCodeMarkup(code);
-        break;
-      case CONTENT:
-        result = formatCodeContent(code);
-        break;
-      case ALLFORMATTED:
-        result = formatCodeAllFormatted(code);
-        break;
-      default:
-        result = code;
-        break;
-    }
-    return result;
+  private ComparatorStepResult createNewStepResult(List<ResultDelta> deltas, Status status) {
+    Map<String, List<ResultDelta>> differences = Collections.singletonMap("differences", deltas);
+    String artifactId = artifactsDAO.saveArtifactInJsonFormat(properties, differences);
+    boolean rebaseable = Status.FAILED.equals(status);
+    return new ComparatorStepResult(artifactId, status, rebaseable);
   }
 
-  private String formatCodeAllFormatted(String code) {
-    Document doc = Jsoup.parse(code);
-    return removeEmptyLines(doc.outerHtml());
-  }
-
-  // package scoped for unit test
-  String removeEmptyLines(String source) {
-    String result = source;
-    if (StringUtils.isNotBlank(source)) {
-      result = result.replaceAll("(?m)^[ \t]*[\r\n]+", "");
-    }
-    return result;
-  }
-
-  private String formatCodeContent(String code) {
-    Document doc = Jsoup.parse(code);
-    ContentVisitor visitor = new ContentVisitor();
-    NodeTraversor traversor = new NodeTraversor(visitor);
-    traversor.traverse(doc);
-    return visitor.getFormattedText();
-  }
-
-  private String formatCodeMarkup(String code) {
-    Document doc = Jsoup.parse(code);
-    NodeTraversor traversor = new NodeTraversor(new MarkupVisitor());
-    traversor.traverse(doc);
-    return doc.html();
+  private void addFormattedSources(ComparatorStepResult result) {
+    String pattern = artifactsDAO.saveArtifact(properties, sources.getPatternSource());
+    String data = artifactsDAO.saveArtifact(properties, sources.getDataSource());
+    result.addData("formattedPattern", pattern);
+    result.addData("formattedSource", data);
+    result.addData("sourceCompareType", sourceCompareType.name());
   }
 }

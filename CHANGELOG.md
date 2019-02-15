@@ -17,6 +17,7 @@ All notable changes to AET will be documented in this file.
 - [PR-470](https://github.com/Cognifide/aet/pull/470) Security vulnerabilities fix ([#407](https://github.com/Cognifide/aet/issues/407))
 - [PR-468](https://github.com/Cognifide/aet/pull/468) Add loggers in collector/modifier ([#446](https://github.com/Cognifide/aet/issues/446)) 
 - [PR-461](https://github.com/Cognifide/aet/pull/461) Generating correct correlationId when suite name is overridden([#440](https://github.com/Cognifide/aet/issues/440)) 
+- [PR-413](https://github.com/Cognifide/aet/pull/413) Added ability to show full page source when there has been no difference discovered ([#369](https://github.com/Cognifide/aet/issues/369))
 
 ## Version 3.2.0
 
