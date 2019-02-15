@@ -96,6 +96,7 @@ public class LoginModifier implements CollectorJob {
     LoginFormComponent form = new LoginFormComponent(webDriver, config.getLoginInputSelector(),
         config.getPasswordInputSelector(), config.getSubmitButtonSelector(),
         new JavaScriptJobExecutor(webDriver));
+    LOGGER.debug("Executing Login Modifier");
     form.login(config.getLogin(), config.getPassword());
   }
 
