@@ -266,7 +266,7 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
 
         function hasStepComparatorAcceptedChanges(comparator) {
           return comparator && comparator.stepResult &&
-              comparator.stepResult.rebaseable  &&
+              comparator.stepResult.rebaseable &&
               comparator.stepResult.status === 'REBASED';
         }
 
@@ -371,4 +371,5 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
           }
         }
       }
-    });
+    }
+);

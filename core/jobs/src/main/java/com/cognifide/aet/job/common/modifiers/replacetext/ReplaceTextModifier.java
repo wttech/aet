@@ -99,6 +99,7 @@ public class ReplaceTextModifier extends WebElementsLocatorParams implements Col
         .waitForElementToBePresent(webDriver, elementLocator, getTimeoutInSeconds());
 
     List<WebElement> webElements = webDriver.findElements(elementLocator);
+    LOG.debug("Executing Replace Text Modifier");
     for (WebElement element : webElements) {
       jsExecutor.execute(script, element, value);
     }
