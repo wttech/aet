@@ -121,6 +121,7 @@ public class ResolutionModifier implements CollectorJob {
     Supplier<Integer> heightSupplier = () -> {
       int heightResult = HEIGHT_NOT_CALCULATED;
       try {
+        LOG.debug("Executing Resolution Modifier");
         heightResult = Integer.parseInt(
                 jsExecutor.execute(JAVASCRIPT_GET_BODY_HEIGHT).getExecutionResultAsString());
       } catch (ProcessingException e) {
