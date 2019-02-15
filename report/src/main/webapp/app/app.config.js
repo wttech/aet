@@ -20,12 +20,12 @@ require.config({
   paths: {
     // **** LIBRARIES ****
     'jquery': '../assets/libs/jquery/dist/jquery',
-    'bootstrap': '../assets/libs/bootstrap-sass-twbs/assets/javascripts/bootstrap',
+    'bootstrap': '../assets/libs/bootstrap-sass/assets/javascripts/bootstrap',
     'angular': '../assets/libs/angular/angular',
     'angular-ui-router': '../assets/libs/angular-ui-router/release/angular-ui-router',
-    'angularAMD': '../assets/libs/angularAMD/angularAMD',
-    'lodash': '../assets/libs/lodash/dist/lodash',
-    'angular-bootstrap': '../assets/libs/angular-bootstrap/ui-bootstrap-tpls',
+    'angularAMD': '../assets/libs/angular-amd/angularAMD',
+    'lodash': '../assets/libs/lodash/lodash',
+    'angular-bootstrap': '../assets/libs/angular-ui-bootstrap/dist/ui-bootstrap-tpls',
     'snowfall': '../assets/js/snowfall/snowfall.min',
     // **************** AET custom ********************
     //components

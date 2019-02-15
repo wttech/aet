@@ -30,17 +30,20 @@ import org.osgi.service.component.annotations.Reference;
 @Component
 public class SourceComparatorFactory implements ComparatorFactory {
 
+  private static final String COMPARATOR_TYPE = "source";
+  private static final String COMPARATOR_NAME = "source";
+
   @Reference
   private ArtifactsDAO artifactsDAO;
 
   @Override
   public final String getType() {
-    return SourceComparator.COMPARATOR_TYPE;
+    return COMPARATOR_TYPE;
   }
 
   @Override
   public final String getName() {
-    return SourceComparator.COMPARATOR_NAME;
+    return COMPARATOR_NAME;
   }
 
   @Override
@@ -49,11 +52,12 @@ public class SourceComparatorFactory implements ComparatorFactory {
   }
 
   @Override
-  public ComparatorJob createInstance(Comparator comparator,
-      ComparatorProperties comparatorProperties, List<DataFilterJob> dataFilterJobs)
-      throws ParametersException {
-    final SourceComparator sourceComparator = new SourceComparator(artifactsDAO,
-        comparatorProperties, new DiffParser(), dataFilterJobs);
+  public ComparatorJob createInstance(Comparator comparator, ComparatorProperties properties,
+      List<DataFilterJob> filters) throws ParametersException {
+
+    Sources sources = new Sources(artifactsDAO, properties, filters, new CodeFormatter());
+    final SourceComparator sourceComparator = new SourceComparator(artifactsDAO, properties,
+        new DiffParser(), sources);
     sourceComparator.setParameters(comparator.getParameters());
     return sourceComparator;
   }
