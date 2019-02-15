@@ -65,6 +65,7 @@ public class WaitForImageCompletionModifier extends WebElementsLocatorParams imp
     Boolean complete;
     WebElement element = webDriver.findElement(getLocator());
     try {
+      LOGGER.debug("Executing Wait For Image Completion Modifier");
       complete = (Boolean) jsExecutor.execute("return arguments[0].complete", element)
           .getExecutionResult()
           .orElse(false);
