@@ -48,7 +48,7 @@ public class JavaScriptJobExecutor {
 
   private JavaScriptJobResult executeJs(String jsSnippet, Object... elements) {
     if (LOGGER.isDebugEnabled()) {
-      LOGGER.debug("Executing JavaScript command: {} on page: {}", jsSnippet, currentUrl);
+      LOGGER.trace("Executing JavaScript command: {} on page: {}", jsSnippet, currentUrl);
     }
     Object jsResult = executor.executeScript(jsSnippet, elements);
     return new JavaScriptJobResult(jsResult);

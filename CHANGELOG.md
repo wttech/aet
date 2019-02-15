@@ -10,6 +10,12 @@ All notable changes to AET will be documented in this file.
 ## Unreleased
 
 **List of changes that are finished but not yet released in any final version.**
+- [PR-439](https://github.com/Cognifide/aet/pull/439) Fixed duplicating line and column numbers in accessibility tab
+- [PR-360](https://github.com/Cognifide/aet/pull/360) Keyboard shortcuts for 'Accept/Revert url/test' buttons ([#317](https://github.com/Cognifide/aet/issues/317))
+- [PR-432](https://github.com/Cognifide/aet/pull/432) Fixed issue with lack of clear message for erroneous suite definition.
+- [PR-363](https://github.com/Cognifide/aet/pull/363) Fixed saving case-level notes
+- [PR-470](https://github.com/Cognifide/aet/pull/470) Security vulnerabilities fix ([#407](https://github.com/Cognifide/aet/issues/407))
+- [PR-468](https://github.com/Cognifide/aet/pull/468) Add loggers in collector/modifier ([#446](https://github.com/Cognifide/aet/issues/446)) 
 
 - [PR-459](https://github.com/Cognifide/aet/pull/459) Print more meaningful error messages when suite.xml is malformed ([#436](https://github.com/Cognifide/aet/issues/436)) 
 
@@ -27,7 +33,7 @@ All notable changes to AET will be documented in this file.
 - [PR-404](https://github.com/Cognifide/aet/pull/404) Added missing tooltip for conditional tests
 - [PR-408](https://github.com/Cognifide/aet/pull/408) Advanced Screen Comparision button layout fix
 - [PR-410](https://github.com/Cognifide/aet/pull/410) Notification that displays when exclude-elements are not found on page now shows what specific elements were not found([#372](https://github.com/Cognifide/aet/issues/372)) 
-
+ 
 ## Version 3.1.0
 
 - [PR-409](https://github.com/Cognifide/aet/pull/409) Added sources link in "view source" url
