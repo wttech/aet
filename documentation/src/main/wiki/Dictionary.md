@@ -74,7 +74,7 @@ a module responsible for filtering the collected data before performing comparis
 a database abstraction layer which contains versioned data (data grid).
 
 *Execute Java Script Modifier*  
-a modifier that allows to execute JavaScript code.
+a modifier that allows to execute JavaScript code on the tested page.
 
 *Executor*  
 see *Test Executor*.
