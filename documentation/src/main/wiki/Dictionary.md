@@ -22,7 +22,7 @@ a set of system modules that are crucial for the whole system to work. The AET s
 implementations of jobs that can perform a particular task (e.g. collect screenshots, compare sources, validate a page against *W3C HTML5*).
 
 *AET Maven Plugin*  
-a default client application for the AET system that was used to trigger the execution of the *Test Suite*.
+a client application for the AET system that was used to trigger the execution of the *Test Suite*.
 The Plugin has been deprecated and will be no longer supported.
 
 *Apache Karaf*  
