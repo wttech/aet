@@ -49,7 +49,6 @@
                 <!-- Node instance for frontend-maven-plugin -->
                 <exclude>src/main/webapp/node/**</exclude>
 
-                <exclude>src/main/webapp/.bowerrc</exclude>
                 <exclude>src/main/webapp/.csslintrc</exclude>
                 <exclude>src/main/webapp/.jsbeautifyrc</exclude>
                 <exclude>src/main/webapp/.jshintrc</exclude>
