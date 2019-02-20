@@ -21,6 +21,8 @@ All notable changes to AET will be documented in this file.
 - [PR-461](https://github.com/Cognifide/aet/pull/461) Generating correct correlationId when suite name is overridden([#440](https://github.com/Cognifide/aet/issues/440)) 
 - [PR-413](https://github.com/Cognifide/aet/pull/413) Added ability to show full page source when there has been no difference discovered ([#369](https://github.com/Cognifide/aet/issues/369))
 
+- [PR-463](https://github.com/Cognifide/aet/pull/463) Removed dependency to Joda time library
+
 ## Version 3.2.0
 
 
