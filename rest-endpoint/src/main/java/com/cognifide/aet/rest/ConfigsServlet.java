@@ -45,6 +45,8 @@ public class ConfigsServlet extends HttpServlet {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(ConfigsServlet.class);
 
+  private static final Gson GSON = new Gson();
+
   public static final String LOCKS_PARAM = "locks";
 
   public static final String LIST_PARAM = "list";
@@ -82,7 +84,7 @@ public class ConfigsServlet extends HttpServlet {
 
       if (COMMUNICATION_SETTINGS_PARAM.equals(configType)) {
         CommunicationSettings communicationSettings = new CommunicationSettings(reportDomain);
-        responseWriter.write(new Gson().toJson(communicationSettings));
+        responseWriter.write(GSON.toJson(communicationSettings));
       } else if (LIST_PARAM.equals(configType)) {
         resp.setContentType("text/html; charset=utf-8");
         resp.setHeader("User-Agent",
@@ -121,7 +123,7 @@ public class ConfigsServlet extends HttpServlet {
   }
 
   private String getLocks() {
-    return lockService.getAllLocks().toString();
+    return GSON.toJson(lockService.getAllLocks());
   }
 
   @Override
