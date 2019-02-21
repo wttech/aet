@@ -15,6 +15,7 @@
  */
 package com.cognifide.aet.communication.api.metadata;
 
+import java.util.List;
 import java.util.Set;
 
 public class SuiteBuilder {
@@ -27,7 +28,7 @@ public class SuiteBuilder {
 
   private String name;
 
-  private Set<String> patternCorrelationId;
+  private List<String> patternCorrelationId;
 
   private String projectHashCode;
 
@@ -56,7 +57,7 @@ public class SuiteBuilder {
     return this;
   }
 
-  public SuiteBuilder setPatternCorrelationId(Set<String> patternCorrelationId) {
+  public SuiteBuilder setPatternCorrelationId(List<String> patternCorrelationId) {
     this.patternCorrelationId = patternCorrelationId;
     return this;
   }

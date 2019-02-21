@@ -70,7 +70,7 @@ public class SuiteFactoryTest {
   public void suiteFromTestSuiteRun_whenValidTestSuite_expectSameFieldsInResult() {
     String patternCorrelationId = "company-project-other-suite-012345678";
     when(testSuiteRun.getPatternsCorrelationIds()).thenReturn(
-        Collections.singleton(patternCorrelationId));
+        Collections.singletonList(patternCorrelationId));
 
     Suite suite = suiteFactory.suiteFromTestSuiteRun(testSuiteRun);
     assertThat(suite.getCompany(), equalTo(COMPANY));
@@ -86,7 +86,7 @@ public class SuiteFactoryTest {
       throws StorageException {
     String patternCorrelationId = "company-project-other-suite-012345678";
     String patternSuiteName = "other-suite";
-    when(testSuiteRun.getPatternsSuite()).thenReturn(Collections.singleton(patternSuiteName));
+    when(testSuiteRun.getPatternsSuite()).thenReturn(Collections.singletonList(patternSuiteName));
     when(metadataDAO.getLatestRun(any(), eq(patternSuiteName))).thenReturn(patternSuite);
     when(patternSuite.getCorrelationId()).thenReturn(patternCorrelationId);
 
@@ -102,8 +102,8 @@ public class SuiteFactoryTest {
     String patternSuiteName = "other-suite";
 
     when(testSuiteRun.getPatternsCorrelationIds()).thenReturn(
-        Collections.singleton(patternCorrelationId1));
-    when(testSuiteRun.getPatternsSuite()).thenReturn(Collections.singleton(patternSuiteName));
+        Collections.singletonList(patternCorrelationId1));
+    when(testSuiteRun.getPatternsSuite()).thenReturn(Collections.singletonList(patternSuiteName));
     when(metadataDAO.getLatestRun(any(), eq(patternSuiteName))).thenReturn(patternSuite);
     when(patternSuite.getCorrelationId()).thenReturn(patternCorrelationId2);
 

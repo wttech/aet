@@ -17,6 +17,7 @@ package com.cognifide.aet.job.api.collector;
 
 import com.cognifide.aet.communication.api.metadata.Pattern;
 import com.cognifide.aet.job.api.StepProperties;
+import java.util.List;
 import java.util.Set;
 
 public class CollectorProperties extends StepProperties {
@@ -25,7 +26,7 @@ public class CollectorProperties extends StepProperties {
 
   private final String url;
 
-  public CollectorProperties(String url, String company, String project, Set<Pattern> patternIds) {
+  public CollectorProperties(String url, String company, String project, List<Pattern> patternIds) {
     super(company, project, patternIds);
     this.url = url;
   }

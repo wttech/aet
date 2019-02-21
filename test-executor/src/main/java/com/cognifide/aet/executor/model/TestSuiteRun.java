@@ -44,9 +44,9 @@ public class TestSuiteRun implements Serializable {
 
   private Long version;
 
-  private Set<String> patternsCorrelationIds;
+  private List<String> patternsCorrelationIds;
 
-  private Set<String> patternsSuite;
+  private List<String> patternsSuite;
 
   /**
    * Parameters: name, company, project are part of identifier of test suite.
@@ -153,19 +153,19 @@ public class TestSuiteRun implements Serializable {
         .add("version", version).toString();
   }
 
-  public void setPatternsCorrelationIds(Set<String> patternsCorrelationIds) {
+  public void setPatternsCorrelationIds(List<String> patternsCorrelationIds) {
     this.patternsCorrelationIds = patternsCorrelationIds;
   }
 
-  public Set<String> getPatternsCorrelationIds() {
+  public List<String> getPatternsCorrelationIds() {
     return patternsCorrelationIds;
   }
 
-  public Set<String> getPatternsSuite() {
+  public List<String> getPatternsSuite() {
     return patternsSuite;
   }
 
-  public void setPatternsSuite(Set<String> patternSuite) {
+  public void setPatternsSuite(List<String> patternSuite) {
     this.patternsSuite = patternSuite;
   }
 }

@@ -26,6 +26,7 @@ import com.google.common.collect.Multimap;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collection;
 import java.util.HashSet;
@@ -106,8 +107,8 @@ public class SuiteServlet extends HttpServlet {
 
       if (StringUtils.isNotBlank(suite)) {
         HttpSuiteExecutionResultWrapper resultWrapper = suiteExecutor
-            .execute(suite, name, domain, new HashSet<>(patternCorrelationId),
-                new HashSet<>(patternSuite), projectChecksumPattern);
+            .execute(suite, name, domain, new ArrayList<>(patternCorrelationId),
+                new ArrayList<>(patternSuite), projectChecksumPattern);
         final SuiteExecutionResult suiteExecutionResult = resultWrapper.getExecutionResult();
 
         String responseBody = GSON.toJson(suiteExecutionResult);

@@ -74,7 +74,7 @@ public class SuiteDataServiceTest {
         .setCorrelationId(patternCorrelationId)
         .setCompany(COMPANY).setProject(PROJECT)
         .setName(SUITE_NAME)
-        .setPatternCorrelationId(Collections.singleton("id2"))
+        .setPatternCorrelationId(Collections.singletonList("id2"))
         .setProjectHashCode(CHECKSUM_01)
         .createSuite();
 
@@ -88,7 +88,7 @@ public class SuiteDataServiceTest {
     lastVersionSuite = new SuiteBuilder().setCorrelationId(patternCorrelationId)
         .setCompany(COMPANY).setProject(PROJECT)
         .setName(SUITE_NAME)
-        .setPatternCorrelationId(Collections.singleton(ID_LAST_VERSION_SUITE))
+        .setPatternCorrelationId(Collections.singletonList(ID_LAST_VERSION_SUITE))
         .setProjectHashCode(CHECKSUM_01)
         .createSuite();
     lastVersionSuite.setVersion(generateRandomPositiveLong());
@@ -96,7 +96,7 @@ public class SuiteDataServiceTest {
     suiteHashcode = new SuiteBuilder().setCorrelationId(patternCorrelationId)
         .setCompany(COMPANY).setProject(PROJECT)
         .setName(SUITE_NAME)
-        .setPatternCorrelationId(Collections.singleton("id"))
+        .setPatternCorrelationId(Collections.singletonList("id"))
         .setProjectHashCode(CHECKSUM_01)
         .createSuite();
   }

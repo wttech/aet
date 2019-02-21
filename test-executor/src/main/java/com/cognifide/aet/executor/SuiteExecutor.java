@@ -134,7 +134,7 @@ public class SuiteExecutor {
    * @return status of the suite execution
    */
   HttpSuiteExecutionResultWrapper execute(String suiteString, String name, String domain,
-      Set<String> patternCorrelationId, Set<String> patternSuite, String projectChecksum) {
+      List<String> patternCorrelationId, List<String> patternSuite, String projectChecksum) {
     HttpSuiteExecutionResultWrapper result;
     TestSuiteParser xmlFileParser = new XmlTestSuiteParser();
     try {

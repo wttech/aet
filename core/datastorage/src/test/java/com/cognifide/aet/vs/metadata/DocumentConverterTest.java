@@ -63,7 +63,7 @@ public class DocumentConverterTest {
     // when
     Suite suite = new DocumentConverter(oldSuite).toSuite();
 
-    Set<Pattern> patterns =
+    List<Pattern> patterns =
         suite.getTests().get(0).getUrls().iterator().next().getSteps().get(0).getPatterns();
     List<ComparatorStepResult> stepResults = suite.getTests().get(0).getUrls().iterator().next()
         .getSteps().get(0).getComparators().iterator().next().getStepResults();
