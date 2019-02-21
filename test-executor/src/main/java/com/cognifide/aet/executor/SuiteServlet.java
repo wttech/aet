@@ -18,14 +18,22 @@ package com.cognifide.aet.executor;
 import com.cognifide.aet.communication.api.execution.SuiteExecutionResult;
 import com.cognifide.aet.executor.http.HttpSuiteExecutionResultWrapper;
 import com.cognifide.aet.vs.MetadataDAO;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.HashSet;
 import java.util.NoSuchElementException;
+import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -99,8 +107,8 @@ public class SuiteServlet extends HttpServlet {
 
       if (StringUtils.isNotBlank(suite)) {
         HttpSuiteExecutionResultWrapper resultWrapper = suiteExecutor
-            .execute(suite, name, domain, new HashSet<>(patternCorrelationId),
-                new HashSet<>(patternSuite), projectChecksumPattern);
+            .execute(suite, name, domain, new ArrayList<>(patternCorrelationId),
+                new ArrayList<>(patternSuite), projectChecksumPattern);
         final SuiteExecutionResult suiteExecutionResult = resultWrapper.getExecutionResult();
 
         String responseBody = GSON.toJson(suiteExecutionResult);

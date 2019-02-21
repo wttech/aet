@@ -81,7 +81,7 @@ public class ScreenCollectorTest {
 
   @Before
   public void setup() throws Exception {
-    when(collectorProperties.getPatternsIds()).thenReturn(Collections.emptySet());
+    when(collectorProperties.getPatternsIds()).thenReturn(Collections.emptyList());
     when(webDriver.getScreenshotAs(OutputType.BYTES)).thenReturn(SCREENSHOT);
 
     when(webElement1.getLocation().moveBy(anyInt(), anyInt())).thenReturn(new Point(0, 0));
@@ -95,7 +95,7 @@ public class ScreenCollectorTest {
       throws ProcessingException {
     when(webDriver.getScreenshotAs(any())).thenReturn(SCREENSHOT);
     when(collectorProperties.getPatternsIds()).thenReturn(
-        Collections.singleton(new Pattern(PATTERN_ARTIFACT_ID, null)));
+        Collections.singletonList(new Pattern(PATTERN_ARTIFACT_ID, null)));
     when(artifactsDAO.getArtifactMD5(any(), eq(PATTERN_ARTIFACT_ID))).thenReturn(PATTERN_MD5);
 
     CollectorStepResult stepResult = screenCollector.collect();

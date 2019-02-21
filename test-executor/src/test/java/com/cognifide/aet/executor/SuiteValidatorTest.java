@@ -18,6 +18,7 @@ package com.cognifide.aet.executor;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertNull;
+import static org.junit.Assert.fail;
 import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.mock;
@@ -69,7 +70,7 @@ public class SuiteValidatorTest {
   public void validateTestSuiteRun_whenPatternIdFromDifferentProject_expectError() {
     String patternCorrelationId = "company1-project1-suite-name-123456789";
     when(testSuiteRun.getPatternsCorrelationIds()).thenReturn(
-        Collections.singleton(patternCorrelationId));
+        Collections.singletonList(patternCorrelationId));
 
     String errorMessage = String.format(
         "Incorrect patterns: '[%s]'. Must belong to same company (%s) and project (%s).",
@@ -81,7 +82,7 @@ public class SuiteValidatorTest {
   public void validateTestSuiteRun_whenPatternIdNotInDb_expectError() throws StorageException {
     String patternCorrelationId = "company-project-suite-name-123456789";
     when(testSuiteRun.getPatternsCorrelationIds()).thenReturn(
-        Collections.singleton(patternCorrelationId));
+        Collections.singletonList(patternCorrelationId));
 
     String errorMessage = String.format(
         "Incorrect patterns: '[%s]'. Not found in database.", patternCorrelationId);
@@ -92,7 +93,7 @@ public class SuiteValidatorTest {
   @Test
   public void validateTestSuiteRun_whenPatternSuiteNotInDb_expectError() throws StorageException {
     String patternSuite = "suite-name";
-    when(testSuiteRun.getPatternsSuite()).thenReturn(Collections.singleton(patternSuite));
+    when(testSuiteRun.getPatternsSuite()).thenReturn(Collections.singletonList(patternSuite));
 
     String errorMessage = String.format(
         "Incorrect patterns: '[%s]'. Not found in database.", patternSuite);
@@ -120,7 +121,7 @@ public class SuiteValidatorTest {
     String patternCorrelationId = "company-project-suite-name-123456789";
     Suite patternSuite = new Suite(patternCorrelationId, COMPANY, PROJECT, "suite-name", null);
     when(testSuiteRun.getPatternsCorrelationIds()).thenReturn(
-        Collections.singleton(patternCorrelationId));
+        Collections.singletonList(patternCorrelationId));
     when(metadataDAO.getSuite(any(), eq(patternCorrelationId))).thenReturn(patternSuite);
 
     assertNull(suiteValidator.validateTestSuiteRun(testSuiteRun));

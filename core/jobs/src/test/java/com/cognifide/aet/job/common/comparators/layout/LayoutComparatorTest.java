@@ -37,6 +37,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
@@ -79,7 +80,7 @@ public class LayoutComparatorTest {
     this.layoutComparator = new LayoutComparator(this.comparatorProperties, this.artifactsDAO);
 
     List<Pattern> patterns = Arrays.asList(PATTERN_1, PATTERN_2);
-    when(comparatorProperties.getPatternsIds()).thenReturn(new HashSet<>(patterns));
+    when(comparatorProperties.getPatternsIds()).thenReturn(new ArrayList<>(patterns));
     when(comparatorProperties.getCollectedId()).thenReturn(COLLECTED_ID);
     when(comparatorProperties.getPayload()).thenReturn(null);
 

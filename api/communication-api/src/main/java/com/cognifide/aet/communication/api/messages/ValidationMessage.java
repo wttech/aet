@@ -13,26 +13,14 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.job.api.collector;
+package com.cognifide.aet.communication.api.messages;
 
-import com.cognifide.aet.communication.api.metadata.Pattern;
-import com.cognifide.aet.job.api.StepProperties;
-import java.util.List;
-import java.util.Set;
+public class ValidationMessage extends TaskMessage<String> {
 
-public class CollectorProperties extends StepProperties {
-
-  private static final long serialVersionUID = -188750694404101821L;
-
-  private final String url;
-
-  public CollectorProperties(String url, String company, String project, List<Pattern> patternIds) {
-    super(company, project, patternIds);
-    this.url = url;
+  /**
+   * @param message - additional message to user, that will be sent.
+   */
+  public ValidationMessage(String message) {
+    super(MessageType.PROGRESS, message);
   }
-
-  public String getUrl() {
-    return url;
-  }
-
 }

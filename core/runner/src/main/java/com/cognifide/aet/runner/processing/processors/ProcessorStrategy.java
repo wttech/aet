@@ -17,6 +17,8 @@ package com.cognifide.aet.runner.processing.processors;
 
 import com.cognifide.aet.communication.api.messages.FinishedSuiteProcessingMessage;
 import com.cognifide.aet.communication.api.messages.FinishedSuiteProcessingMessage.Status;
+import com.cognifide.aet.communication.api.messages.ValidationMessage;
+import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.communication.api.wrappers.Run;
 import com.cognifide.aet.runner.RunnerConfiguration;
@@ -26,6 +28,8 @@ import com.cognifide.aet.runner.processing.SuiteProcessor;
 import com.cognifide.aet.runner.processing.data.wrappers.RunIndexWrapper;
 import com.cognifide.aet.runner.processing.data.SuiteDataService;
 import com.cognifide.aet.vs.StorageException;
+import java.util.List;
+import java.util.StringJoiner;
 import java.util.concurrent.Callable;
 import javax.jms.JMSException;
 import org.slf4j.Logger;
@@ -48,6 +52,7 @@ public abstract class ProcessorStrategy<T> implements Callable<String> {
     try {
       prepareSuiteWrapper();
       init();
+      validate();
       process();
       save();
     } catch (StorageException | JMSException | ValidatorException e) {
@@ -76,8 +81,21 @@ public abstract class ProcessorStrategy<T> implements Callable<String> {
     internalLogger.debug("Initializing suite processors {}", getObjectToRun());
     messagesSender = suiteExecutionFactory.newMessagesSender(jmsReplyTo);
     if (suiteProcessor == null) {
-      suiteProcessor = new SuiteProcessor(suiteExecutionFactory, runIndexWrapper, runnerConfiguration,
+      suiteProcessor = new SuiteProcessor(suiteExecutionFactory, runIndexWrapper,
+          runnerConfiguration,
           messagesSender);
+    }
+  }
+
+  private void validate() throws StorageException {
+    Suite realSuite = objectToRunWrapper.getRealSuite();
+    List<String> comparisonWarnings = suiteDataService.comparePatternSuites(realSuite);
+
+    if (!comparisonWarnings.isEmpty()) {
+      StringJoiner warningsJoiner = new StringJoiner("\n");
+      comparisonWarnings.forEach(msg -> warningsJoiner.add(String.format("[INFO]: %s", msg)));
+
+      messagesSender.sendMessage(new ValidationMessage(warningsJoiner.toString()));
     }
   }
 
@@ -88,10 +106,10 @@ public abstract class ProcessorStrategy<T> implements Callable<String> {
 
   protected void cleanup() {
     internalLogger.debug("Cleaning up {}", runIndexWrapper);
-    if(messagesSender != null){
+    if (messagesSender != null) {
       messagesSender.close();
     }
-    if(suiteProcessor != null){
+    if (suiteProcessor != null) {
       suiteProcessor.cleanup();
     }
   }

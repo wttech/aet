@@ -69,7 +69,8 @@ public class SuiteRunner implements Runnable {
     this.objectToRunWrapper = objectToRunWrapper;
     this.inQueueName = inQueueName;
     this.messageReceiveTimeout = messageReceiveTimeout;
-    this.suiteCacheUpdater = new SuiteCacheUpdater(cacheUpdater, runnerTerminator, objectToRunWrapper);
+    this.suiteCacheUpdater = new SuiteCacheUpdater(cacheUpdater, runnerTerminator,
+        objectToRunWrapper);
   }
 
   /**

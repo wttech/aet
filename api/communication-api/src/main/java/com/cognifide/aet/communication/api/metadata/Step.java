@@ -17,9 +17,11 @@ package com.cognifide.aet.communication.api.metadata;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import javax.validation.Valid;
@@ -37,7 +39,7 @@ public class Step extends Operation implements Commentable, Named {
   private String name;
 
   @Valid
-  private Set<Pattern> patterns;
+  private List<Pattern> patterns;
 
   @Valid
   private CollectorStepResult stepResult;
@@ -72,9 +74,9 @@ public class Step extends Operation implements Commentable, Named {
     return index;
   }
 
-  public Set<Pattern> getPatterns() {
+  public List<Pattern> getPatterns() {
     if (patterns == null) {
-      patterns = new HashSet<>();
+      patterns = new ArrayList<>();
     }
     return patterns;
   }
@@ -110,12 +112,12 @@ public class Step extends Operation implements Commentable, Named {
 
   public void addPattern(String artifactId, String patternSuiteCorrelationId) {
     Pattern pattern = new Pattern(artifactId, patternSuiteCorrelationId);
-    addPatterns(Collections.singleton(pattern));
+    addPatterns(Collections.singletonList(pattern));
   }
 
-  public void addPatterns(Set<Pattern> patterns) {
+  public void addPatterns(List<Pattern> patterns) {
     if (this.patterns == null) {
-      this.patterns = new HashSet<>();
+      this.patterns = new ArrayList<>();
     }
     this.patterns.addAll(patterns);
   }
@@ -173,7 +175,7 @@ public class Step extends Operation implements Commentable, Named {
 
     private final String type;
     private String name;
-    private Set<Pattern> patterns;
+    private List<Pattern> patterns;
     private CollectorStepResult stepResult;
     private String comment;
     private Set<Comparator> comparators = new HashSet<>();
@@ -189,7 +191,7 @@ public class Step extends Operation implements Commentable, Named {
       return this;
     }
 
-    public Builder withPatterns(Set<Pattern> val) {
+    public Builder withPatterns(List<Pattern> val) {
       patterns = val;
       return this;
     }

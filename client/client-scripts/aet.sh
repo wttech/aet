@@ -119,6 +119,7 @@ function start_suite {
 
 endpoint=$1
 suite_file_name=${2-suite.xml}
+endpoint_check_sum=$3
 
 while [[ $# -gt 0 ]]; do
     case "$1" in

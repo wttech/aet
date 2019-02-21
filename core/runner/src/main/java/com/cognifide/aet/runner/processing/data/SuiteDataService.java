@@ -15,14 +15,23 @@
  */
 package com.cognifide.aet.runner.processing.data;
 
+import com.cognifide.aet.communication.api.messages.ValidationMessage;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
+import com.cognifide.aet.runner.processing.MessagesSender;
 import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.SimpleDBKey;
 import com.cognifide.aet.vs.StorageException;
+import com.google.common.collect.Sets;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.Objects;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -45,10 +54,18 @@ public class SuiteDataService {
    * Suite.patternCorrelationIds) runs, if this is the first run of the suite, patterns will be
    * empty.
    */
-  public Suite enrichWithPatterns(final Suite currentRun) throws StorageException {
+  public Suite enrichWithPatterns(final Suite currentRun)
+      throws StorageException {
     final SimpleDBKey dbKey = new SimpleDBKey(currentRun);
     Suite lastVersion = metadataDAO.getLatestRun(dbKey, currentRun.getName());
 
+    List<Suite> patterns = getPatternSuites(currentRun, dbKey, lastVersion);
+
+    return SuiteMergeStrategy.merge(currentRun, lastVersion, patterns);
+  }
+
+  private List<Suite> getPatternSuites(Suite currentRun, SimpleDBKey dbKey, Suite lastVersion)
+      throws StorageException {
     List<Suite> patterns = new ArrayList<>();
     if (hasSharedPatterns(currentRun)) {
       getPatternsById(currentRun, dbKey, patterns);
@@ -56,7 +73,9 @@ public class SuiteDataService {
     } else {
       patterns.add(lastVersion);
     }
-    return SuiteMergeStrategy.merge(currentRun, lastVersion, patterns);
+
+    patterns.removeIf(Objects::isNull);
+    return patterns;
   }
 
   private void getPatternsById(Suite currentRun, SimpleDBKey dbKey, List<Suite> patterns)
@@ -100,4 +119,13 @@ public class SuiteDataService {
     return metadataDAO.getSuite(dbKey, correlationId);
   }
 
+  public List<String> comparePatternSuites(Suite currentRun) throws StorageException {
+    final SimpleDBKey dbKey = new SimpleDBKey(currentRun);
+    Suite lastVersion = metadataDAO.getLatestRun(dbKey, currentRun.getName());
+
+    List<Suite> allSuites = getPatternSuites(currentRun, dbKey, lastVersion);
+    allSuites.add(currentRun);
+
+    return SuiteComparator.compare(allSuites);
+  }
 }

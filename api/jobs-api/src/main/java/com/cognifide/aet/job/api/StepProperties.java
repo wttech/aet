@@ -19,6 +19,7 @@ package com.cognifide.aet.job.api;
 import com.cognifide.aet.communication.api.metadata.Pattern;
 import com.cognifide.aet.vs.DBKey;
 import com.google.common.base.MoreObjects;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -32,9 +33,9 @@ public abstract class StepProperties implements DBKey {
 
   private final String project;
 
-  private final Set<Pattern> patternsIds;
+  private final List<Pattern> patternsIds;
 
-  public StepProperties(String company, String project, Set<Pattern> patternsIds) {
+  public StepProperties(String company, String project, List<Pattern> patternsIds) {
     this.company = company;
     this.project = project;
     this.patternsIds = patternsIds;
@@ -50,7 +51,7 @@ public abstract class StepProperties implements DBKey {
     return project;
   }
 
-  public Set<Pattern> getPatternsIds() {
+  public List<Pattern> getPatternsIds() {
     return patternsIds;
   }
 

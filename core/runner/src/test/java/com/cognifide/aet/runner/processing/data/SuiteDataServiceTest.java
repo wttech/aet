@@ -15,14 +15,18 @@
  */
 package com.cognifide.aet.runner.processing.data;
 
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyObject;
 import static org.mockito.Matchers.anyString;
+import static org.mockito.Matchers.eq;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.SuiteBuilder;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
+import com.cognifide.aet.runner.processing.MessagesSender;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.StorageException;
 import java.util.Collections;
@@ -32,6 +36,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -69,7 +74,7 @@ public class SuiteDataServiceTest {
         .setCorrelationId(patternCorrelationId)
         .setCompany(COMPANY).setProject(PROJECT)
         .setName(SUITE_NAME)
-        .setPatternCorrelationId(Collections.singleton("id2"))
+        .setPatternCorrelationId(Collections.singletonList("id2"))
         .setProjectHashCode(CHECKSUM_01)
         .createSuite();
 
@@ -83,7 +88,7 @@ public class SuiteDataServiceTest {
     lastVersionSuite = new SuiteBuilder().setCorrelationId(patternCorrelationId)
         .setCompany(COMPANY).setProject(PROJECT)
         .setName(SUITE_NAME)
-        .setPatternCorrelationId(Collections.singleton(ID_LAST_VERSION_SUITE))
+        .setPatternCorrelationId(Collections.singletonList(ID_LAST_VERSION_SUITE))
         .setProjectHashCode(CHECKSUM_01)
         .createSuite();
     lastVersionSuite.setVersion(generateRandomPositiveLong());
@@ -91,7 +96,7 @@ public class SuiteDataServiceTest {
     suiteHashcode = new SuiteBuilder().setCorrelationId(patternCorrelationId)
         .setCompany(COMPANY).setProject(PROJECT)
         .setName(SUITE_NAME)
-        .setPatternCorrelationId(Collections.singleton("id"))
+        .setPatternCorrelationId(Collections.singletonList("id"))
         .setProjectHashCode(CHECKSUM_01)
         .createSuite();
   }
@@ -116,9 +121,11 @@ public class SuiteDataServiceTest {
     lastVersionSuite.setProjectChecksum(suiteHashcode.getProjectChecksum());
 
     Assert.assertEquals(currentRunWithoutCorrelationId.getProjectChecksum(),
-        service.enrichWithPatterns(currentRunWithoutCorrelationId).getProjectChecksum());
+        service.enrichWithPatterns(currentRunWithoutCorrelationId)
+            .getProjectChecksum());
     Assert.assertEquals(lastVersionSuite.getCorrelationId(),
-        service.enrichWithPatterns(currentRunWithoutCorrelationId).getCorrelationId());
+        service.enrichWithPatterns(currentRunWithoutCorrelationId)
+            .getCorrelationId());
     Assert.assertEquals(Long.valueOf(lastVersionSuite.getVersion() + 1L),
         service.enrichWithPatterns(currentRunWithoutCorrelationId).getVersion());
   }

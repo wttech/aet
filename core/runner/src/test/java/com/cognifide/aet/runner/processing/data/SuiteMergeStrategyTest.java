@@ -98,7 +98,7 @@ public class SuiteMergeStrategyTest {
   }
 
   @TestWith({"conversion/pattern.json;conversion/current.json"})
-  public void merge_addSinglePatternWhenMultipleSamePatternSuitesProvided(String patternResource,
+  public void merge_addSAllPatternsWhenMultipleSamePatternSuitesProvided(String patternResource,
       String currentResource) throws IOException {
     final Suite current = readSuite(currentResource);
     final Suite pattern1 = readSuite(patternResource);
@@ -114,7 +114,7 @@ public class SuiteMergeStrategyTest {
     assertThat(steps.size(), is(5));
 
     final Step step = steps.get(2);
-    assertThat(step.getPatterns(), hasSize(1));
+    assertThat(step.getPatterns(), hasSize(2));
   }
 
   @TestWith({"conversion/pattern.json;conversion/current.json"})
@@ -139,7 +139,7 @@ public class SuiteMergeStrategyTest {
     assertThat(steps.size(), is(5));
 
     final Step step = steps.get(2);
-    assertThat(step.getPatterns(), hasSize(3));
+    assertThat(step.getPatterns(), hasSize(4));
   }
 
   @TestWith({"conversion/pattern.json;conversion/current.json"})

@@ -30,6 +30,7 @@ import com.cognifide.aet.executor.model.TestSuiteRun;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.SimpleDBKey;
 import com.cognifide.aet.vs.StorageException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
@@ -120,12 +121,12 @@ public class SuiteFactory {
     String company = testSuiteRun.getCompany();
     String project = testSuiteRun.getProject();
     String name = testSuiteRun.getName();
-    Set<String> patternCorrelationId = getPatternCorrelationIds(testSuiteRun);
+    List<String> patternCorrelationId = getPatternCorrelationIds(testSuiteRun);
     return new Suite(correlationId, company, project, name, patternCorrelationId);
   }
 
-  private Set<String> getPatternCorrelationIds(TestSuiteRun testSuiteRun) {
-    final Set<String> patternIds = new HashSet<>();
+  private List<String> getPatternCorrelationIds(TestSuiteRun testSuiteRun) {
+    final List<String> patternIds = new ArrayList<>();
 
     if (testSuiteRun.getPatternsCorrelationIds() != null) {
       patternIds.addAll(testSuiteRun.getPatternsCorrelationIds());
@@ -138,13 +139,13 @@ public class SuiteFactory {
     return patternIds;
   }
 
-  private Set<String> getPatternIdsByLatestRunNames(TestSuiteRun testSuiteRun) {
+  private List<String> getPatternIdsByLatestRunNames(TestSuiteRun testSuiteRun) {
     return testSuiteRun.getPatternsSuite().stream()
         .map(name -> getLatestRunByName(testSuiteRun, name))
         .filter(Optional::isPresent)
         .map(Optional::get)
         .map(Suite::getCorrelationId)
-        .collect(Collectors.toSet());
+        .collect(Collectors.toList());
   }
 
   private Optional<Suite> getLatestRunByName(TestSuiteRun testSuiteRun, String name) {
