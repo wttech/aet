@@ -1,54 +1,44 @@
 package com.cognifide.aet.cleaner.processors;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DB;
-import com.mongodb.DBCollection;
+import static org.junit.Assert.assertEquals;
+
 import com.mongodb.MongoClient;
-import de.flapdoodle.embed.mongo.MongodExecutable;
-import de.flapdoodle.embed.mongo.MongodStarter;
-import de.flapdoodle.embed.mongo.config.IMongodConfig;
-import de.flapdoodle.embed.mongo.config.MongodConfigBuilder;
-import de.flapdoodle.embed.mongo.config.Net;
-import de.flapdoodle.embed.mongo.distribution.Version;
-import de.flapdoodle.embed.process.runtime.Network;
-import java.util.Date;
+import com.mongodb.ServerAddress;
+import com.mongodb.client.MongoCollection;
+import de.bwaldvogel.mongo.MongoServer;
+import de.bwaldvogel.mongo.backend.memory.MemoryBackend;
+import java.net.InetSocketAddress;
+import org.bson.Document;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
 public class StartMetadataCleanupProcessorTest {
 
-  private MongodExecutable mongodExecutable;
+  private MongoCollection<Document> collection;
+  private MongoClient client;
+  private MongoServer server;
 
   @Before
   public void setUp() throws Exception {
-    MongodStarter starter = MongodStarter.getDefaultInstance();
-    String bindIp = "localhost";
-    int port = 12345;
-    IMongodConfig mongodConfig = new MongodConfigBuilder()
-        .version(Version.Main.PRODUCTION)
-        .net(new Net(bindIp, port, Network.localhostIsIPv6()))
-        .build();
+    server = new MongoServer(new MemoryBackend());
 
-    mongodExecutable = starter.prepare(mongodConfig);
-    mongodExecutable.start();
-
-    MongoClient mongo = new MongoClient(bindIp, port);
-    DB db = mongo.getDB("test");
-    DBCollection col = db.createCollection("testCol", new BasicDBObject());
-    col.save(new BasicDBObject("testDoc", new Date()));
-
+    // bind on a random local port
+    InetSocketAddress serverAddress = server.bind();
+    client = new MongoClient(new ServerAddress(serverAddress));
+    collection = client.getDatabase("testdb").getCollection("testcollection");
   }
 
   @Test
   public void test() {
-
+    assertEquals(0, collection.countDocuments());
+    collection.insertOne(new Document());
+    assertEquals(1, collection.countDocuments());
   }
 
   @After
   public void tearDown() {
-    if (mongodExecutable != null) {
-      mongodExecutable.stop();
-    }
+    client.close();
+    server.shutdown();
   }
 }
