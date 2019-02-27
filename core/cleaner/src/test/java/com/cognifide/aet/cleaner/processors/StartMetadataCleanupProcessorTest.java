@@ -3,7 +3,7 @@ package com.cognifide.aet.cleaner.processors;
 import static org.junit.Assert.assertEquals;
 
 import com.mongodb.MongoClient;
-import com.mongodb.ServerAddress;
+import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import de.bwaldvogel.mongo.MongoServer;
 import de.bwaldvogel.mongo.backend.memory.MemoryBackend;
@@ -18,21 +18,28 @@ public class StartMetadataCleanupProcessorTest {
   private MongoCollection<Document> collection;
   private MongoClient client;
   private MongoServer server;
+  private String mongoURI;
 
   @Before
   public void setUp() throws Exception {
     server = new MongoServer(new MemoryBackend());
     InetSocketAddress serverAddress = server.bind();
-    client = new MongoClient(new ServerAddress(serverAddress));
+    mongoURI = String.format("mongodb://localhost:%d", serverAddress.getPort());
+    client = new MongoClient(new MongoClientURI(mongoURI));
 
     collection = client.getDatabase("testdb").getCollection("testcollection");
   }
 
   @Test
   public void test() {
-    assertEquals(0, collection.countDocuments());
-    collection.insertOne(new Document());
-    assertEquals(1, collection.countDocuments());
+    assertEquals(0, collection.count());
+
+    // creates the database and collection in memory and insert the object
+    Document obj = new Document("_id", 1).append("key", "value");
+    collection.insertOne(obj);
+
+    assertEquals(1, collection.count());
+    assertEquals(obj, collection.find().first());
   }
 
   @After
