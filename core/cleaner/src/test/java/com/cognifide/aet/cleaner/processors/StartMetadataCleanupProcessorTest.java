@@ -23,7 +23,6 @@ import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import de.bwaldvogel.mongo.MongoServer;
 import de.bwaldvogel.mongo.backend.memory.MemoryBackend;
-import java.net.InetSocketAddress;
 import org.apache.sling.testing.mock.osgi.junit.OsgiContext;
 import org.bson.Document;
 import org.junit.After;
@@ -47,8 +46,7 @@ public class StartMetadataCleanupProcessorTest {
   @Before
   public void setUp() {
     server = new MongoServer(new MemoryBackend());
-    InetSocketAddress serverAddress = server.bind();
-    mongoURI = String.format("mongodb://localhost:%d", serverAddress.getPort());
+    mongoURI = String.format("mongodb://localhost:%d", server.bind().getPort());
     client = new MongoClient(new MongoClientURI(mongoURI));
 
     collection = client.getDatabase("testdb").getCollection("testcollection");
