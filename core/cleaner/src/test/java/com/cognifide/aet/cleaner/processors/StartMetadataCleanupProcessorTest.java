@@ -22,10 +22,9 @@ public class StartMetadataCleanupProcessorTest {
   @Before
   public void setUp() throws Exception {
     server = new MongoServer(new MemoryBackend());
-
-    // bind on a random local port
     InetSocketAddress serverAddress = server.bind();
     client = new MongoClient(new ServerAddress(serverAddress));
+
     collection = client.getDatabase("testdb").getCollection("testcollection");
   }
 
