@@ -32,6 +32,7 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import de.bwaldvogel.mongo.MongoServer;
 import de.bwaldvogel.mongo.backend.memory.MemoryBackend;
+import java.net.InetSocketAddress;
 import org.apache.sling.testing.mock.osgi.junit.OsgiContext;
 import org.junit.After;
 import org.junit.Before;
@@ -64,7 +65,8 @@ public class CleanerIntegrationTest {
   @Before
   public void setUp() {
     server = new MongoServer(new MemoryBackend());
-    mongoURI = String.format("mongodb://localhost:%d", server.bind().getPort());
+    InetSocketAddress address = server.bind();
+    mongoURI = String.format("mongodb://localhost:%d", address.getPort());
     client = new MongoClient(new MongoClientURI(mongoURI));
 
     context.registerInjectActivateService(new MongoDBClient(), "mongoURI", mongoURI);
