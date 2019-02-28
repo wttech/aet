@@ -32,9 +32,10 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import de.bwaldvogel.mongo.MongoServer;
 import de.bwaldvogel.mongo.backend.memory.MemoryBackend;
+import java.io.File;
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.FileUtils;
 import org.apache.sling.testing.mock.osgi.junit.OsgiContext;
 import org.bson.Document;
 import org.junit.After;
@@ -89,7 +90,7 @@ public class CleanerIntegrationTest {
   @Test
   public void test() throws JobExecutionException, IOException {
     setUpJobData(1L, 1L, "companyTest", "projectTest");
-    insertDataToDb("companyTest","projectTest");
+    insertDataToDb("companyTest", "projectTest");
     new CleanerJob().execute(jobExecutionContext);
   }
 
@@ -115,7 +116,16 @@ public class CleanerIntegrationTest {
 
   private void insertDataToDb(String companyName, String projectName) throws IOException {
     String dbName = String.format("%s_%s", companyName, projectName);
-    String json = IOUtils.toString(this.getClass().getResource("/integrationTest/projectA/metadata/test1.json"), "UTF-8");
-    client.getDatabase(dbName).getCollection("metadata").insertOne(Document.parse(json));
+    String[] collections = new String[]{"artifacts.chunks", "artifacts.files", "metadata"};
+    for (String collection : collections) {
+      File[] collectionDirs = new File(
+          getClass().getResource("/integrationTest/projectA/" + collection).getFile()).listFiles();
+      if (collectionDirs != null) {
+        for (File file : collectionDirs) {
+          String json = FileUtils.readFileToString(file, "UTF-8");
+          client.getDatabase(dbName).getCollection(collection).insertOne(Document.parse(json));
+        }
+      }
+    }
   }
 }
