@@ -84,18 +84,7 @@ public class CleanerIntegrationTest {
 
   @Test
   public void test() throws Exception{
-    final JobDataMap jobData = new JobDataMap(ImmutableMap.<String, Object>builder()
-        .put(CleanerJob.KEY_ROUTE_BUILDER, metadataCleanerRouteBuilder)
-        .put(CleanerJob.KEY_KEEP_N_VERSIONS, 1L)
-        .put(CleanerJob.KEY_REMOVE_OLDER_THAN, 1L)
-        .put(CleanerJob.KEY_COMPANY_FILTER, "company")
-        .put(CleanerJob.KEY_PROJECT_FILTER, "project")
-        .put(CleanerJob.KEY_DRY_RUN, false)
-        .build());
-
-    when(jobDetail.getJobDataMap()).thenReturn(jobData);
-    when(jobExecutionContext.getJobDetail()).thenReturn(jobDetail);
-
+    setUpJobData(1L, 1L, "company" , "project");
     CleanerJob cleanerJob = new CleanerJob();
     cleanerJob.execute(jobExecutionContext);
   }
@@ -104,5 +93,18 @@ public class CleanerIntegrationTest {
   public void tearDown() {
     client.close();
     server.shutdown();
+  }
+
+  private void setUpJobData(Long versionsToKeep, Long maxAge, String companyName, String projectName){
+    final JobDataMap jobData = new JobDataMap(ImmutableMap.<String, Object>builder()
+        .put(CleanerJob.KEY_ROUTE_BUILDER, metadataCleanerRouteBuilder)
+        .put(CleanerJob.KEY_KEEP_N_VERSIONS, versionsToKeep)
+        .put(CleanerJob.KEY_REMOVE_OLDER_THAN, maxAge)
+        .put(CleanerJob.KEY_COMPANY_FILTER, companyName)
+        .put(CleanerJob.KEY_PROJECT_FILTER, projectName)
+        .put(CleanerJob.KEY_DRY_RUN, false)
+        .build());
+    when(jobDetail.getJobDataMap()).thenReturn(jobData);
+    when(jobExecutionContext.getJobDetail()).thenReturn(jobDetail);
   }
 }
