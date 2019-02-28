@@ -1,0 +1,6 @@
+{
+    "_id" : ObjectId("5c7524c1495d5008b3e68246"),
+    "files_id" : ObjectId("5c7524c1495d5008b3e68245"),
+    "n" : 0,
+	  "data" : { "$binary" :"mockedChunk", "$type" : "00"}
+}

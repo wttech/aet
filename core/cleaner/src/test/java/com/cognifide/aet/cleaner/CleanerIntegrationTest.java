@@ -88,8 +88,8 @@ public class CleanerIntegrationTest {
 
   @Test
   public void test() throws JobExecutionException, IOException {
-    setUpJobData(1L, 1L, "testCompany", "testProject");
-    insertDataToDb("testCompany","testProject");
+    setUpJobData(1L, 1L, "companyTest", "projectTest");
+    insertDataToDb("companyTest","projectTest");
     new CleanerJob().execute(jobExecutionContext);
   }
 
@@ -115,7 +115,7 @@ public class CleanerIntegrationTest {
 
   private void insertDataToDb(String companyName, String projectName) throws IOException {
     String dbName = String.format("%s_%s", companyName, projectName);
-    String json = IOUtils.toString(this.getClass().getResource("/integrationTest/metadata/test1.json"), "UTF-8");
+    String json = IOUtils.toString(this.getClass().getResource("/integrationTest/projectA/metadata/test1.json"), "UTF-8");
     client.getDatabase(dbName).getCollection("metadata").insertOne(Document.parse(json));
   }
 }
