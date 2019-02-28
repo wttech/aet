@@ -32,8 +32,11 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import de.bwaldvogel.mongo.MongoServer;
 import de.bwaldvogel.mongo.backend.memory.MemoryBackend;
+import java.io.IOException;
 import java.net.InetSocketAddress;
+import org.apache.commons.io.IOUtils;
 import org.apache.sling.testing.mock.osgi.junit.OsgiContext;
+import org.bson.Document;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -84,8 +87,9 @@ public class CleanerIntegrationTest {
   }
 
   @Test
-  public void test() throws JobExecutionException {
-    setUpJobData(1L, 1L, "company", "project");
+  public void test() throws JobExecutionException, IOException {
+    setUpJobData(1L, 1L, "testCompany", "testProject");
+    insertDataToDb("testCompany","testProject");
     new CleanerJob().execute(jobExecutionContext);
   }
 
@@ -107,5 +111,11 @@ public class CleanerIntegrationTest {
         .build());
     when(jobDetail.getJobDataMap()).thenReturn(jobData);
     when(jobExecutionContext.getJobDetail()).thenReturn(jobDetail);
+  }
+
+  private void insertDataToDb(String companyName, String projectName) throws IOException {
+    String dbName = String.format("%s_%s", companyName, projectName);
+    String json = IOUtils.toString(this.getClass().getResource("/integrationTest/metadata/test1.json"), "UTF-8");
+    client.getDatabase(dbName).getCollection("metadata").insertOne(Document.parse(json));
   }
 }
