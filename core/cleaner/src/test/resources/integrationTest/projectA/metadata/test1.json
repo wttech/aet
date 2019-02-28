@@ -4,7 +4,7 @@
   "company" : "company",
   "project" : "project",
   "name" : "test-suite",
-  "version" : 2,
+  "version" : 1,
   "runTimestamp" : NumberLong(1551181031545),
   "finishedTimestamp" : NumberLong(1551181037358),
   "statistics" : {
