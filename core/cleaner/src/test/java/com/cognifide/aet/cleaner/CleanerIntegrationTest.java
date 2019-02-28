@@ -15,7 +15,6 @@
  */
 package com.cognifide.aet.cleaner;
 
-import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 import com.cognifide.aet.cleaner.processors.FetchAllProjectSuitesProcessor;
@@ -31,11 +30,9 @@ import com.cognifide.aet.vs.mongodb.MongoDBClient;
 import com.google.common.collect.ImmutableMap;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
-import com.mongodb.client.MongoCollection;
 import de.bwaldvogel.mongo.MongoServer;
 import de.bwaldvogel.mongo.backend.memory.MemoryBackend;
 import org.apache.sling.testing.mock.osgi.junit.OsgiContext;
-import org.bson.Document;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -80,12 +77,13 @@ public class CleanerIntegrationTest {
     context.registerInjectActivateService(new RemoveMetadataProcessor());
     context.registerInjectActivateService(new GetMetadataArtifactsProcessor());
     context.registerInjectActivateService(new RemoveArtifactsProcessor());
-    metadataCleanerRouteBuilder = context.registerInjectActivateService(new MetadataCleanerRouteBuilder());
+    metadataCleanerRouteBuilder = context
+        .registerInjectActivateService(new MetadataCleanerRouteBuilder());
   }
 
   @Test
   public void test() throws JobExecutionException {
-    setUpJobData(1L, 1L, "company" , "project");
+    setUpJobData(1L, 1L, "company", "project");
     new CleanerJob().execute(jobExecutionContext);
   }
 
@@ -95,7 +93,8 @@ public class CleanerIntegrationTest {
     server.shutdown();
   }
 
-  private void setUpJobData(Long versionsToKeep, Long maxAge, String companyName, String projectName){
+  private void setUpJobData(Long versionsToKeep, Long maxAge, String companyName,
+      String projectName) {
     final JobDataMap jobData = new JobDataMap(ImmutableMap.<String, Object>builder()
         .put(CleanerJob.KEY_ROUTE_BUILDER, metadataCleanerRouteBuilder)
         .put(CleanerJob.KEY_KEEP_N_VERSIONS, versionsToKeep)
