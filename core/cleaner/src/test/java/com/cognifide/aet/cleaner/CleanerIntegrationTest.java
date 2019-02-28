@@ -16,6 +16,7 @@
 package com.cognifide.aet.cleaner;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.when;
 
 import com.cognifide.aet.cleaner.processors.FetchAllProjectSuitesProcessor;
 import com.cognifide.aet.cleaner.processors.GetMetadataArtifactsProcessor;
@@ -27,6 +28,7 @@ import com.cognifide.aet.cleaner.route.MetadataCleanerRouteBuilder;
 import com.cognifide.aet.vs.artifacts.ArtifactsDAOMongoDBImpl;
 import com.cognifide.aet.vs.metadata.MetadataDAOMongoDBImpl;
 import com.cognifide.aet.vs.mongodb.MongoDBClient;
+import com.google.common.collect.ImmutableMap;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
@@ -39,7 +41,11 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
+import org.quartz.JobDataMap;
+import org.quartz.JobDetail;
+import org.quartz.JobExecutionContext;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CleanerIntegrationTest {
@@ -47,10 +53,16 @@ public class CleanerIntegrationTest {
   @Rule
   public final OsgiContext context = new OsgiContext();
 
+  @Mock
+  JobExecutionContext jobExecutionContext;
+  @Mock
+  JobDetail jobDetail;
+
   private MongoCollection<Document> collection;
   private MongoClient client;
   private MongoServer server;
   private String mongoURI;
+  private MetadataCleanerRouteBuilder metadataCleanerRouteBuilder;
 
   @Before
   public void setUp() {
@@ -70,11 +82,27 @@ public class CleanerIntegrationTest {
     context.registerInjectActivateService(new RemoveMetadataProcessor());
     context.registerInjectActivateService(new GetMetadataArtifactsProcessor());
     context.registerInjectActivateService(new RemoveArtifactsProcessor());
-    context.registerInjectActivateService(new MetadataCleanerRouteBuilder());
+    metadataCleanerRouteBuilder = context.registerInjectActivateService(new MetadataCleanerRouteBuilder());
   }
 
   @Test
-  public void test() {
+  public void test() throws Exception{
+    final JobDataMap jobData = new JobDataMap(ImmutableMap.<String, Object>builder()
+        .put(CleanerJob.KEY_ROUTE_BUILDER, metadataCleanerRouteBuilder)
+        .put(CleanerJob.KEY_KEEP_N_VERSIONS, 1L)
+        .put(CleanerJob.KEY_REMOVE_OLDER_THAN, 1L)
+        .put(CleanerJob.KEY_COMPANY_FILTER, "company")
+        .put(CleanerJob.KEY_PROJECT_FILTER, "project")
+        .put(CleanerJob.KEY_DRY_RUN, false)
+        .build());
+
+    when(jobDetail.getJobDataMap()).thenReturn(jobData);
+    when(jobExecutionContext.getJobDetail()).thenReturn(jobDetail);
+
+
+    CleanerJob cleanerJob = new CleanerJob();
+    cleanerJob.execute(jobExecutionContext);
+
     assertEquals(0, collection.countDocuments());
 
     Document obj = new Document("_id", 1).append("key", "value");
