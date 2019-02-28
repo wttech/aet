@@ -90,7 +90,7 @@ public class CleanerIntegrationTest {
   @Test
   public void test() throws JobExecutionException, IOException {
     setUpJobData(1L, 1L, "companyTest", "projectTest");
-    insertDataToDb("companyTest", "projectTest");
+    insertDataToDb("companyTest", "projectTest", "projectA");
     new CleanerJob().execute(jobExecutionContext);
   }
 
@@ -114,16 +114,16 @@ public class CleanerIntegrationTest {
     when(jobExecutionContext.getJobDetail()).thenReturn(jobDetail);
   }
 
-  private void insertDataToDb(String companyName, String projectName) throws IOException {
+  private void insertDataToDb(String companyName, String projectName, String projectDataDir) throws IOException {
     String dbName = String.format("%s_%s", companyName, projectName);
-    String[] collections = new String[]{"artifacts.chunks", "artifacts.files", "metadata"};
-    for (String collection : collections) {
-      File[] collectionDirs = new File(
-          getClass().getResource("/integrationTest/projectA/" + collection).getFile()).listFiles();
-      if (collectionDirs != null) {
-        for (File file : collectionDirs) {
+    String[] collectionNames = new String[]{"artifacts.chunks", "artifacts.files", "metadata"};
+    for (String collectionName : collectionNames) {
+      String collectionDir = String.format("/integrationTest/%s/%s", projectDataDir, collectionName);
+      File[] collectionFiles = new File(getClass().getResource(collectionDir).getFile()).listFiles();
+      if (collectionFiles != null) {
+        for (File file : collectionFiles) {
           String json = FileUtils.readFileToString(file, "UTF-8");
-          client.getDatabase(dbName).getCollection(collection).insertOne(Document.parse(json));
+          client.getDatabase(dbName).getCollection(collectionName).insertOne(Document.parse(json));
         }
       }
     }
