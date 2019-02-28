@@ -13,10 +13,11 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.cleaner.processors;
+package com.cognifide.aet.cleaner;
 
 import static org.junit.Assert.assertEquals;
 
+import com.cognifide.aet.cleaner.processors.StartMetadataCleanupProcessor;
 import com.cognifide.aet.vs.mongodb.MongoDBClient;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
@@ -33,7 +34,7 @@ import org.junit.runner.RunWith;
 import org.mockito.runners.MockitoJUnitRunner;
 
 @RunWith(MockitoJUnitRunner.class)
-public class StartMetadataCleanupProcessorTest {
+public class CleanerIntegrationTest {
 
   @Rule
   public final OsgiContext context = new OsgiContext();
