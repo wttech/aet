@@ -15,6 +15,7 @@
  */
 package com.cognifide.aet.cleaner;
 
+import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
 import com.cognifide.aet.cleaner.processors.FetchAllProjectSuitesProcessor;
@@ -89,9 +90,11 @@ public class CleanerIntegrationTest {
 
   @Test
   public void test() throws JobExecutionException, IOException {
-    setUpJobData(1L, 1L, "companyTest", "projectTest");
-    insertDataToDb("companyTest", "projectTest", "projectA");
+    setUpJobData(1L, 1L, "company", "project");
+    insertDataToDb("company", "project", "projectA");
     new CleanerJob().execute(jobExecutionContext);
+    assertEquals(1,
+        client.getDatabase("company_project").getCollection("metadata").countDocuments());
   }
 
   @After
@@ -114,12 +117,15 @@ public class CleanerIntegrationTest {
     when(jobExecutionContext.getJobDetail()).thenReturn(jobDetail);
   }
 
-  private void insertDataToDb(String companyName, String projectName, String projectDataDir) throws IOException {
+  private void insertDataToDb(String companyName, String projectName, String projectDataDir)
+      throws IOException {
     String dbName = String.format("%s_%s", companyName, projectName);
     String[] collectionNames = new String[]{"artifacts.chunks", "artifacts.files", "metadata"};
     for (String collectionName : collectionNames) {
-      String collectionDir = String.format("/integrationTest/%s/%s", projectDataDir, collectionName);
-      File[] collectionFiles = new File(getClass().getResource(collectionDir).getFile()).listFiles();
+      String collectionDir = String
+          .format("/integrationTest/%s/%s", projectDataDir, collectionName);
+      File[] collectionFiles = new File(getClass().getResource(collectionDir).getFile())
+          .listFiles();
       if (collectionFiles != null) {
         for (File file : collectionFiles) {
           String json = FileUtils.readFileToString(file, "UTF-8");
