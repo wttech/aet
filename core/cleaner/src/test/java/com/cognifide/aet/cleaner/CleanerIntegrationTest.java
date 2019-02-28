@@ -17,7 +17,15 @@ package com.cognifide.aet.cleaner;
 
 import static org.junit.Assert.assertEquals;
 
+import com.cognifide.aet.cleaner.processors.FetchAllProjectSuitesProcessor;
+import com.cognifide.aet.cleaner.processors.GetMetadataArtifactsProcessor;
+import com.cognifide.aet.cleaner.processors.RemoveArtifactsProcessor;
+import com.cognifide.aet.cleaner.processors.RemoveMetadataProcessor;
 import com.cognifide.aet.cleaner.processors.StartMetadataCleanupProcessor;
+import com.cognifide.aet.cleaner.processors.SuitesRemovePredicateProcessor;
+import com.cognifide.aet.cleaner.route.MetadataCleanerRouteBuilder;
+import com.cognifide.aet.vs.artifacts.ArtifactsDAOMongoDBImpl;
+import com.cognifide.aet.vs.metadata.MetadataDAOMongoDBImpl;
 import com.cognifide.aet.vs.mongodb.MongoDBClient;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
@@ -53,7 +61,16 @@ public class CleanerIntegrationTest {
     collection = client.getDatabase("testdb").getCollection("testcollection");
 
     context.registerInjectActivateService(new MongoDBClient(), "mongoURI", mongoURI);
+    context.registerInjectActivateService(new MetadataDAOMongoDBImpl());
+    context.registerInjectActivateService(new ArtifactsDAOMongoDBImpl());
+
     context.registerInjectActivateService(new StartMetadataCleanupProcessor());
+    context.registerInjectActivateService(new FetchAllProjectSuitesProcessor());
+    context.registerInjectActivateService(new SuitesRemovePredicateProcessor());
+    context.registerInjectActivateService(new RemoveMetadataProcessor());
+    context.registerInjectActivateService(new GetMetadataArtifactsProcessor());
+    context.registerInjectActivateService(new RemoveArtifactsProcessor());
+    context.registerInjectActivateService(new MetadataCleanerRouteBuilder());
   }
 
   @Test
