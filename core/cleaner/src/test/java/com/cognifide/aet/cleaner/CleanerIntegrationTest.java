@@ -58,7 +58,6 @@ public class CleanerIntegrationTest {
   @Mock
   JobDetail jobDetail;
 
-  private MongoCollection<Document> collection;
   private MongoClient client;
   private MongoServer server;
   private String mongoURI;
@@ -69,8 +68,6 @@ public class CleanerIntegrationTest {
     server = new MongoServer(new MemoryBackend());
     mongoURI = String.format("mongodb://localhost:%d", server.bind().getPort());
     client = new MongoClient(new MongoClientURI(mongoURI));
-
-    collection = client.getDatabase("testdb").getCollection("testcollection");
 
     context.registerInjectActivateService(new MongoDBClient(), "mongoURI", mongoURI);
     context.registerInjectActivateService(new MetadataDAOMongoDBImpl());
@@ -99,17 +96,8 @@ public class CleanerIntegrationTest {
     when(jobDetail.getJobDataMap()).thenReturn(jobData);
     when(jobExecutionContext.getJobDetail()).thenReturn(jobDetail);
 
-
     CleanerJob cleanerJob = new CleanerJob();
     cleanerJob.execute(jobExecutionContext);
-
-    assertEquals(0, collection.countDocuments());
-
-    Document obj = new Document("_id", 1).append("key", "value");
-    collection.insertOne(obj);
-
-    assertEquals(1, collection.countDocuments());
-    assertEquals(obj, collection.find().first());
   }
 
   @After
