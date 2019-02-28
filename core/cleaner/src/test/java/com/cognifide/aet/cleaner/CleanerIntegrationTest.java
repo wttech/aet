@@ -46,6 +46,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
+import org.quartz.JobExecutionException;
 
 @RunWith(MockitoJUnitRunner.class)
 public class CleanerIntegrationTest {
@@ -83,10 +84,9 @@ public class CleanerIntegrationTest {
   }
 
   @Test
-  public void test() throws Exception{
+  public void test() throws JobExecutionException {
     setUpJobData(1L, 1L, "company" , "project");
-    CleanerJob cleanerJob = new CleanerJob();
-    cleanerJob.execute(jobExecutionContext);
+    new CleanerJob().execute(jobExecutionContext);
   }
 
   @After
