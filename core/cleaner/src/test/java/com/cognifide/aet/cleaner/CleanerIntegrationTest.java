@@ -30,6 +30,7 @@ import com.cognifide.aet.vs.artifacts.ArtifactsDAOMongoDBImpl;
 import com.cognifide.aet.vs.metadata.MetadataDAOMongoDBImpl;
 import com.cognifide.aet.vs.mongodb.MongoDBClient;
 import com.google.common.collect.ImmutableMap;
+import com.googlecode.zohhak.api.runners.ZohhakRunner;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import de.bwaldvogel.mongo.MongoServer;
@@ -47,14 +48,13 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
+import org.mockito.Mockito;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
-@RunWith(MockitoJUnitRunner.class)
+@RunWith(ZohhakRunner.class)
 public class CleanerIntegrationTest {
 
   private static final Long MOCKED_CURRENT_TIMESTAMP = 1551428149000L;  //March 1, 2019
@@ -62,10 +62,9 @@ public class CleanerIntegrationTest {
   @Rule
   public final OsgiContext context = new OsgiContext();
 
-  @Mock
-  JobExecutionContext jobExecutionContext;
-  @Mock
-  JobDetail jobDetail;
+  private JobExecutionContext jobExecutionContext = Mockito.mock(JobExecutionContext.class);
+
+  private JobDetail jobDetail = Mockito.mock(JobDetail.class);
 
   private MongoClient client;
   private MongoServer server;
@@ -97,7 +96,7 @@ public class CleanerIntegrationTest {
   }
 
   @Test
-  public void test() throws JobExecutionException, IOException {
+  public void clean_whenAllSuitesYounger_keepAllSuites() throws JobExecutionException, IOException {
     setUpJobData(1L, 1L, "company", "project");
     insertDataToDb("company", "project", "projectA");
     new CleanerJob().execute(jobExecutionContext);
