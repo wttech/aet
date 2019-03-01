@@ -106,10 +106,11 @@ public class CleanerIntegrationTest {
   public void clean_whenAllSuitesYounger_keepAllSuites(Long versionsToKeep, Long maxAge,
       String projectDataDir) throws JobExecutionException, IOException {
     setUpDataForTest(versionsToKeep, maxAge, projectDataDir);
-    long documentsBefore = getMetadataDocs().countDocuments();
+    long metadataCountBefore = getMetadataDocs().countDocuments();
+    long artifactCountBefore = getArtifactDocs().countDocuments();
     new CleanerJob().execute(jobExecutionContext);
-    long documentsAfter = getMetadataDocs().countDocuments();
-    assertEquals(documentsBefore, documentsAfter);
+    assertEquals(metadataCountBefore, getMetadataDocs().countDocuments());
+    assertEquals(artifactCountBefore, getArtifactDocs().countDocuments());
   }
 
   @TestWith({
@@ -120,8 +121,8 @@ public class CleanerIntegrationTest {
       String projectDataDir) throws JobExecutionException, IOException {
     setUpDataForTest(versionsToKeep, maxAge, projectDataDir);
     new CleanerJob().execute(jobExecutionContext);
-    long documentsAfter = getMetadataDocs().countDocuments();
-    assertEquals(1, documentsAfter);
+    assertEquals(1, getMetadataDocs().countDocuments());
+    assertEquals(1, getMetadataDocs().countDocuments());
   }
 
   @After
@@ -150,7 +151,7 @@ public class CleanerIntegrationTest {
   }
 
   private void insertDataToDb(String projectDataDir) throws IOException {
-    String[] collectionNames = new String[]{"artifacts.chunks", "artifacts.files", "metadata"};
+    String[] collectionNames = new String[]{"artifacts.files", "metadata"};
     for (String collectionName : collectionNames) {
       String collectionDir = String
           .format("/integrationTest/%s/%s", projectDataDir, collectionName);
@@ -168,5 +169,9 @@ public class CleanerIntegrationTest {
 
   private MongoCollection<Document> getMetadataDocs() {
     return client.getDatabase(MOCKED_DB_NAME).getCollection("metadata");
+  }
+
+  private MongoCollection<Document> getArtifactDocs(){
+    return client.getDatabase(MOCKED_DB_NAME).getCollection("artifacts.files");
   }
 }
