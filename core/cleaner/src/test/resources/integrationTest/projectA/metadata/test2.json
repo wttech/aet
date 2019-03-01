@@ -1,0 +1,207 @@
+{
+  "_id" : ObjectId("5c7524ed495d5008b3e6824b"),
+  "correlationId" : "company-project-test-suite-1551181031550",
+  "company" : "company",
+  "project" : "project",
+  "name" : "test-suite",
+  "version" : 1,
+  "runTimestamp" : NumberLong(1551181031550),
+  "finishedTimestamp" : NumberLong(1551181037358),
+  "statistics" : {
+    "duration" : 5813
+  },
+  "tests" : [
+    {
+      "name" : "first-test",
+      "proxy" : "rest",
+      "urls" : [
+        {
+          "name" : "https://en.wikipedia.org/wiki/Main_Page?a=b&c=d",
+          "url" : "https://en.wikipedia.org/wiki/Main_Page?a=b&c=d",
+          "collectionStats" : {
+            "duration" : 1925
+          },
+          "steps" : [
+            {
+              "index" : 0,
+              "name" : "open",
+              "stepResult" : {
+                "status" : "PAGE_OPENED"
+              },
+              "statistics" : {
+                "duration" : 1209
+              },
+              "type" : "open"
+            },
+            {
+              "index" : 1,
+              "name" : "resolution",
+              "stepResult" : {
+                "status" : "MODIFIED"
+              },
+              "statistics" : {
+                "duration" : 120
+              },
+              "type" : "resolution",
+              "parameters" : {
+                "height" : "600",
+                "width" : "800"
+              }
+            },
+            {
+              "index" : 2,
+              "name" : "sleep",
+              "stepResult" : {
+                "status" : "MODIFIED"
+              },
+              "statistics" : {
+                "duration" : 150
+              },
+              "type" : "sleep",
+              "parameters" : {
+                "duration" : "150"
+              }
+            },
+            {
+              "index" : 3,
+              "name" : "screen",
+              "pattern" : "5c7524c5495d5008b3e68247",
+              "stepResult" : {
+                "status" : "COLLECTED",
+                "artifactId" : "5c7524ec495d5008b3e6824a",
+                "payload" : {
+                  "layoutExclude" : {
+                    "notFoundElements" : [
+                      "#hplogo"
+                    ]
+                  }
+                }
+              },
+              "statistics" : {
+                "duration" : 314
+              },
+              "comparators" : [
+                {
+                  "stepResult" : {
+                    "status" : "FAILED",
+                    "rebaseable" : true,
+                    "acceptable" : true,
+                    "artifactId" : "5c7524ed495d5008b3e6824c",
+                    "data" : {
+                      "heightDifference" : "0",
+                      "widthDifference" : "0",
+                      "collectTimestamp" : "1551181037347",
+                      "percentagePixelDifference" : "31.496875",
+                      "pixelDifference" : "151185",
+                      "patternTimestamp" : "1551180997482",
+                      "excludeMessage" : "The following elements to be excluded have not been found on page: ",
+                      "notFoundCssElements" : "#hplogo"
+                    }
+                  },
+                  "statistics" : {
+                    "duration" : 412
+                  },
+                  "type" : "screen",
+                  "parameters" : {
+                    "comparator" : "layout"
+                  }
+                }
+              ],
+              "type" : "screen",
+              "parameters" : {
+                "exclude-elements" : "#hplogo"
+              }
+            }
+          ],
+          "isReran" : false
+        },
+        {
+          "name" : "https://google.com",
+          "url" : "https://google.com",
+          "collectionStats" : {
+            "duration" : 2021
+          },
+          "steps" : [
+            {
+              "index" : 0,
+              "name" : "open",
+              "stepResult" : {
+                "status" : "PAGE_OPENED"
+              },
+              "statistics" : {
+                "duration" : 1446
+              },
+              "type" : "open"
+            },
+            {
+              "index" : 1,
+              "name" : "resolution",
+              "stepResult" : {
+                "status" : "MODIFIED"
+              },
+              "statistics" : {
+                "duration" : 114
+              },
+              "type" : "resolution",
+              "parameters" : {
+                "height" : "600",
+                "width" : "800"
+              }
+            },
+            {
+              "index" : 2,
+              "name" : "sleep",
+              "stepResult" : {
+                "status" : "MODIFIED"
+              },
+              "statistics" : {
+                "duration" : 150
+              },
+              "type" : "sleep",
+              "parameters" : {
+                "duration" : "150"
+              }
+            },
+            {
+              "index" : 3,
+              "name" : "screen",
+              "pattern" : "5c7524c1495d5008b3e68245",
+              "stepResult" : {
+                "status" : "DUPLICATES_PATTERN",
+                "artifactId" : "5c7524c1495d5008b3e68245"
+              },
+              "statistics" : {
+                "duration" : 234
+              },
+              "comparators" : [
+                {
+                  "stepResult" : {
+                    "status" : "PASSED",
+                    "rebaseable" : false,
+                    "acceptable" : false,
+                    "data" : {
+                      "collectTimestamp" : "1551181037047",
+                      "patternTimestamp" : "1551180993118"
+                    }
+                  },
+                  "statistics" : {
+                    "duration" : 6
+                  },
+                  "type" : "screen",
+                  "parameters" : {
+                    "comparator" : "layout"
+                  }
+                }
+              ],
+              "type" : "screen",
+              "parameters" : {
+                "exclude-elements" : "#hplogo"
+              }
+            }
+          ],
+          "isReran" : false
+        }
+      ]
+    }
+  ]
+}
