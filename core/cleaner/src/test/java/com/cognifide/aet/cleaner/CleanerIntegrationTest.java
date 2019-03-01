@@ -99,9 +99,13 @@ public class CleanerIntegrationTest {
   }
 
   @TestWith({
+      //keeping based on age
       "1,3,projectA",
       "1,4,projectA",
-      "1,5,projectA"
+      "1,5,projectA",
+      //keeping based on versions
+      "100,0,projectA",
+      "100,1,projectA"
   })
   public void clean_whenAllSuitesYounger_keepAllSuites(Long versionsToKeep, Long maxAge,
       String projectDataDir) throws JobExecutionException, IOException {
