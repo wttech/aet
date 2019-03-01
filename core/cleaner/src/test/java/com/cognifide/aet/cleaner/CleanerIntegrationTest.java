@@ -34,6 +34,7 @@ import com.googlecode.zohhak.api.TestWith;
 import com.googlecode.zohhak.api.runners.ZohhakRunner;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
+import com.mongodb.client.MongoCollection;
 import de.bwaldvogel.mongo.MongoServer;
 import de.bwaldvogel.mongo.backend.memory.MemoryBackend;
 import java.io.File;
@@ -105,11 +106,9 @@ public class CleanerIntegrationTest {
   public void clean_whenAllSuitesYounger_keepAllSuites(Long versionsToKeep, Long maxAge,
       String projectDataDir) throws JobExecutionException, IOException {
     setUpDataForTest(versionsToKeep, maxAge, projectDataDir);
-    long documentsBefore = client.getDatabase(MOCKED_DB_NAME).getCollection("metadata")
-        .countDocuments();
+    long documentsBefore = getMetadataDocs().countDocuments();
     new CleanerJob().execute(jobExecutionContext);
-    long documentsAfter = client.getDatabase(MOCKED_DB_NAME).getCollection("metadata")
-        .countDocuments();
+    long documentsAfter = getMetadataDocs().countDocuments();
     assertEquals(documentsBefore, documentsAfter);
   }
 
@@ -121,8 +120,7 @@ public class CleanerIntegrationTest {
       String projectDataDir) throws JobExecutionException, IOException {
     setUpDataForTest(versionsToKeep, maxAge, projectDataDir);
     new CleanerJob().execute(jobExecutionContext);
-    long documentsAfter = client.getDatabase(MOCKED_DB_NAME).getCollection("metadata")
-        .countDocuments();
+    long documentsAfter = getMetadataDocs().countDocuments();
     assertEquals(1, documentsAfter);
   }
 
@@ -166,5 +164,9 @@ public class CleanerIntegrationTest {
         }
       }
     }
+  }
+
+  private MongoCollection<Document> getMetadataDocs() {
+    return client.getDatabase(MOCKED_DB_NAME).getCollection("metadata");
   }
 }
