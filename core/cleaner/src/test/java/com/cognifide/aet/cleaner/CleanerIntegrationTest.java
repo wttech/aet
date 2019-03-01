@@ -41,6 +41,7 @@ import org.apache.sling.testing.mock.osgi.junit.OsgiContext;
 import org.bson.Document;
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -52,6 +53,7 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 @RunWith(MockitoJUnitRunner.class)
+@Ignore
 public class CleanerIntegrationTest {
 
   @Rule
