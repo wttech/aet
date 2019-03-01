@@ -30,6 +30,7 @@ import com.cognifide.aet.vs.artifacts.ArtifactsDAOMongoDBImpl;
 import com.cognifide.aet.vs.metadata.MetadataDAOMongoDBImpl;
 import com.cognifide.aet.vs.mongodb.MongoDBClient;
 import com.google.common.collect.ImmutableMap;
+import com.googlecode.zohhak.api.TestWith;
 import com.googlecode.zohhak.api.runners.ZohhakRunner;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
@@ -46,7 +47,6 @@ import org.bson.Document;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 import org.quartz.JobDataMap;
@@ -68,7 +68,6 @@ public class CleanerIntegrationTest {
 
   private MongoClient client;
   private MongoServer server;
-  private String mongoURI;
   private MetadataCleanerRouteBuilder metadataCleanerRouteBuilder;
   private LocalDateTimeProvider mockedDateTimeProvider = zone -> LocalDateTime
       .ofInstant(Instant.ofEpochMilli(MOCKED_CURRENT_TIMESTAMP), zone);
@@ -77,7 +76,7 @@ public class CleanerIntegrationTest {
   public void setUp() {
     server = new MongoServer(new MemoryBackend());
     InetSocketAddress address = server.bind();
-    mongoURI = String.format("mongodb://localhost:%d", address.getPort());
+    String mongoURI = String.format("mongodb://localhost:%d", address.getPort());
     client = new MongoClient(new MongoClientURI(mongoURI));
 
     context.registerInjectActivateService(new MongoDBClient(), "mongoURI", mongoURI);
@@ -95,13 +94,21 @@ public class CleanerIntegrationTest {
         .registerInjectActivateService(new MetadataCleanerRouteBuilder());
   }
 
-  @Test
-  public void clean_whenAllSuitesYounger_keepAllSuites() throws JobExecutionException, IOException {
-    setUpJobData(1L, 1L, "company", "project");
-    insertDataToDb("company", "project", "projectA");
+  @TestWith({
+      "1,3,projectA",
+      "1,4,projectA",
+      "1,5,projectA"
+  })
+  public void clean_whenAllSuitesYounger_keepAllSuites(Long versionsToKeep, Long maxAge,
+      String projectDataDir) throws JobExecutionException, IOException {
+    setUpJobData(versionsToKeep, maxAge, "company", "project");
+    insertDataToDb("company", "project", projectDataDir);
+    Long documentsBefore = client.getDatabase("company_project").getCollection("metadata")
+        .countDocuments();
     new CleanerJob().execute(jobExecutionContext);
-    assertEquals(1,
-        client.getDatabase("company_project").getCollection("metadata").countDocuments());
+    Long documentsAfter = client.getDatabase("company_project").getCollection("metadata")
+        .countDocuments();
+    assertEquals(documentsBefore, documentsAfter);
   }
 
   @After
