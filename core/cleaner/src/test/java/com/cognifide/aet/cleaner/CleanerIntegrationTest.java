@@ -25,6 +25,7 @@ import com.cognifide.aet.cleaner.processors.RemoveMetadataProcessor;
 import com.cognifide.aet.cleaner.processors.StartMetadataCleanupProcessor;
 import com.cognifide.aet.cleaner.processors.SuitesRemovePredicateProcessor;
 import com.cognifide.aet.cleaner.route.MetadataCleanerRouteBuilder;
+import com.cognifide.aet.cleaner.time.LocalDateTimeProvider;
 import com.cognifide.aet.vs.artifacts.ArtifactsDAOMongoDBImpl;
 import com.cognifide.aet.vs.metadata.MetadataDAOMongoDBImpl;
 import com.cognifide.aet.vs.mongodb.MongoDBClient;
@@ -36,12 +37,13 @@ import de.bwaldvogel.mongo.backend.memory.MemoryBackend;
 import java.io.File;
 import java.io.IOException;
 import java.net.InetSocketAddress;
+import java.time.Instant;
+import java.time.LocalDateTime;
 import org.apache.commons.io.FileUtils;
 import org.apache.sling.testing.mock.osgi.junit.OsgiContext;
 import org.bson.Document;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -53,8 +55,9 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 
 @RunWith(MockitoJUnitRunner.class)
-@Ignore
 public class CleanerIntegrationTest {
+
+  private static final Long MOCKED_CURRENT_TIMESTAMP = 1551428149000L;  //March 1, 2019
 
   @Rule
   public final OsgiContext context = new OsgiContext();
@@ -68,6 +71,8 @@ public class CleanerIntegrationTest {
   private MongoServer server;
   private String mongoURI;
   private MetadataCleanerRouteBuilder metadataCleanerRouteBuilder;
+  private LocalDateTimeProvider mockedDateTimeProvider = zone -> LocalDateTime
+      .ofInstant(Instant.ofEpochMilli(MOCKED_CURRENT_TIMESTAMP), zone);
 
   @Before
   public void setUp() {
@@ -80,6 +85,7 @@ public class CleanerIntegrationTest {
     context.registerInjectActivateService(new MetadataDAOMongoDBImpl());
     context.registerInjectActivateService(new ArtifactsDAOMongoDBImpl());
 
+    context.registerService(LocalDateTimeProvider.class, mockedDateTimeProvider);
     context.registerInjectActivateService(new StartMetadataCleanupProcessor());
     context.registerInjectActivateService(new FetchAllProjectSuitesProcessor());
     context.registerInjectActivateService(new SuitesRemovePredicateProcessor());
