@@ -58,12 +58,15 @@ import org.quartz.JobExecutionException;
 public class CleanerIntegrationTest {
 
   private static final Long MOCKED_CURRENT_TIMESTAMP = 1551428149000L;  //March 1, 2019
+  private static final String MOCKED_COMPANY_NAME = "company";
+  private static final String MOCKED_PROJECT_NAME = "project";
+  private static final String MOCKED_DB_NAME = String
+      .format("%s_%s", MOCKED_COMPANY_NAME, MOCKED_PROJECT_NAME);
 
   @Rule
   public final OsgiContext context = new OsgiContext();
 
   private JobExecutionContext jobExecutionContext = Mockito.mock(JobExecutionContext.class);
-
   private JobDetail jobDetail = Mockito.mock(JobDetail.class);
 
   private MongoClient client;
@@ -101,12 +104,11 @@ public class CleanerIntegrationTest {
   })
   public void clean_whenAllSuitesYounger_keepAllSuites(Long versionsToKeep, Long maxAge,
       String projectDataDir) throws JobExecutionException, IOException {
-    setUpJobData(versionsToKeep, maxAge, "company", "project");
-    insertDataToDb("company", "project", projectDataDir);
-    Long documentsBefore = client.getDatabase("company_project").getCollection("metadata")
+    setUpDataForTest(versionsToKeep, maxAge, projectDataDir);
+    Long documentsBefore = client.getDatabase(MOCKED_DB_NAME).getCollection("metadata")
         .countDocuments();
     new CleanerJob().execute(jobExecutionContext);
-    Long documentsAfter = client.getDatabase("company_project").getCollection("metadata")
+    Long documentsAfter = client.getDatabase(MOCKED_DB_NAME).getCollection("metadata")
         .countDocuments();
     assertEquals(documentsBefore, documentsAfter);
   }
@@ -117,23 +119,26 @@ public class CleanerIntegrationTest {
     server.shutdown();
   }
 
-  private void setUpJobData(Long versionsToKeep, Long maxAge, String companyName,
-      String projectName) {
+  private void setUpDataForTest(Long versionsToKeep, Long maxAge, String projectDataDir)
+      throws IOException {
+    createJobData(versionsToKeep, maxAge);
+    insertDataToDb(projectDataDir);
+  }
+
+  private void createJobData(Long versionsToKeep, Long maxAge) {
     final JobDataMap jobData = new JobDataMap(ImmutableMap.<String, Object>builder()
         .put(CleanerJob.KEY_ROUTE_BUILDER, metadataCleanerRouteBuilder)
         .put(CleanerJob.KEY_KEEP_N_VERSIONS, versionsToKeep)
         .put(CleanerJob.KEY_REMOVE_OLDER_THAN, maxAge)
-        .put(CleanerJob.KEY_COMPANY_FILTER, companyName)
-        .put(CleanerJob.KEY_PROJECT_FILTER, projectName)
+        .put(CleanerJob.KEY_COMPANY_FILTER, MOCKED_COMPANY_NAME)
+        .put(CleanerJob.KEY_PROJECT_FILTER, MOCKED_PROJECT_NAME)
         .put(CleanerJob.KEY_DRY_RUN, false)
         .build());
     when(jobDetail.getJobDataMap()).thenReturn(jobData);
     when(jobExecutionContext.getJobDetail()).thenReturn(jobDetail);
   }
 
-  private void insertDataToDb(String companyName, String projectName, String projectDataDir)
-      throws IOException {
-    String dbName = String.format("%s_%s", companyName, projectName);
+  private void insertDataToDb(String projectDataDir) throws IOException {
     String[] collectionNames = new String[]{"artifacts.chunks", "artifacts.files", "metadata"};
     for (String collectionName : collectionNames) {
       String collectionDir = String
@@ -143,7 +148,8 @@ public class CleanerIntegrationTest {
       if (collectionFiles != null) {
         for (File file : collectionFiles) {
           String json = FileUtils.readFileToString(file, "UTF-8");
-          client.getDatabase(dbName).getCollection(collectionName).insertOne(Document.parse(json));
+          client.getDatabase(MOCKED_DB_NAME).getCollection(collectionName)
+              .insertOne(Document.parse(json));
         }
       }
     }
