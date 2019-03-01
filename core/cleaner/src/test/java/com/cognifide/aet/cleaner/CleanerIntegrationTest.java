@@ -105,12 +105,25 @@ public class CleanerIntegrationTest {
   public void clean_whenAllSuitesYounger_keepAllSuites(Long versionsToKeep, Long maxAge,
       String projectDataDir) throws JobExecutionException, IOException {
     setUpDataForTest(versionsToKeep, maxAge, projectDataDir);
-    Long documentsBefore = client.getDatabase(MOCKED_DB_NAME).getCollection("metadata")
+    long documentsBefore = client.getDatabase(MOCKED_DB_NAME).getCollection("metadata")
         .countDocuments();
     new CleanerJob().execute(jobExecutionContext);
-    Long documentsAfter = client.getDatabase(MOCKED_DB_NAME).getCollection("metadata")
+    long documentsAfter = client.getDatabase(MOCKED_DB_NAME).getCollection("metadata")
         .countDocuments();
     assertEquals(documentsBefore, documentsAfter);
+  }
+
+  @TestWith({
+      "1,0,projectA",
+      "1,1,projectA"
+  })
+  public void clean_whenAllSuitesOlder_keepNewestSuite(Long versionsToKeep, Long maxAge,
+      String projectDataDir) throws JobExecutionException, IOException {
+    setUpDataForTest(versionsToKeep, maxAge, projectDataDir);
+    new CleanerJob().execute(jobExecutionContext);
+    long documentsAfter = client.getDatabase(MOCKED_DB_NAME).getCollection("metadata")
+        .countDocuments();
+    assertEquals(1, documentsAfter);
   }
 
   @After
