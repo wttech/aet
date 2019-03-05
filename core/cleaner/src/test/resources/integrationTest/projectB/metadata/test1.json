@@ -1,0 +1,193 @@
+{
+  "_id" : ObjectId("5c7e349e6798f408cf3d1e12"),
+  "correlationId" : "company2-project-test-suite-1550996149000",
+  "company" : "company2",
+  "project" : "project",
+  "name" : "test-suite",
+  "version" : 1,
+  "runTimestamp" : NumberLong(1550996149000),
+  "finishedTimestamp" : NumberLong(1550996159000),
+  "statistics" : {
+    "duration" : 7338
+  },
+  "tests" : [
+    {
+      "name" : "first-test",
+      "proxy" : "rest",
+      "urls" : [
+        {
+          "name" : "https://www.cognifide.com",
+          "url" : "https://www.cognifide.com",
+          "collectionStats" : {
+            "duration" : 4031
+          },
+          "steps" : [
+            {
+              "index" : 0,
+              "name" : "open",
+              "stepResult" : {
+                "status" : "PAGE_OPENED"
+              },
+              "statistics" : {
+                "duration" : 2121
+              },
+              "type" : "open"
+            },
+            {
+              "index" : 1,
+              "name" : "resolution",
+              "stepResult" : {
+                "status" : "MODIFIED"
+              },
+              "statistics" : {
+                "duration" : 110
+              },
+              "type" : "resolution",
+              "parameters" : {
+                "height" : "600",
+                "width" : "800"
+              }
+            },
+            {
+              "index" : 2,
+              "name" : "sleep",
+              "stepResult" : {
+                "status" : "MODIFIED"
+              },
+              "statistics" : {
+                "duration" : 1501
+              },
+              "type" : "sleep",
+              "parameters" : {
+                "duration" : "1500"
+              }
+            },
+            {
+              "index" : 3,
+              "name" : "screen",
+              "pattern" : "5c7e349e6798f408cf3d1e10",
+              "stepResult" : {
+                "status" : "COLLECTED",
+                "artifactId" : "5c7e349e6798f408cf3d1e10"
+              },
+              "statistics" : {
+                "duration" : 251
+              },
+              "comparators" : [
+                {
+                  "stepResult" : {
+                    "status" : "PASSED",
+                    "rebaseable" : false,
+                    "acceptable" : false,
+                    "data" : {
+                      "collectTimestamp" : "1551774878017",
+                      "patternTimestamp" : "1551774878005"
+                    }
+                  },
+                  "statistics" : {
+                    "duration" : 2
+                  },
+                  "type" : "screen",
+                  "parameters" : {
+                    "comparator" : "layout"
+                  }
+                }
+              ],
+              "type" : "screen"
+            }
+          ],
+          "isReran" : false
+        }
+      ]
+    },
+    {
+      "name" : "second-test",
+      "proxy" : "rest",
+      "urls" : [
+        {
+          "name" : "https://thiscatdoesnotexist.com",
+          "url" : "https://thiscatdoesnotexist.com",
+          "collectionStats" : {
+            "duration" : 2368
+          },
+          "steps" : [
+            {
+              "index" : 0,
+              "name" : "open",
+              "stepResult" : {
+                "status" : "PAGE_OPENED"
+              },
+              "statistics" : {
+                "duration" : 394
+              },
+              "type" : "open"
+            },
+            {
+              "index" : 1,
+              "name" : "resolution",
+              "stepResult" : {
+                "status" : "MODIFIED"
+              },
+              "statistics" : {
+                "duration" : 115
+              },
+              "type" : "resolution",
+              "parameters" : {
+                "height" : "600",
+                "width" : "800"
+              }
+            },
+            {
+              "index" : 2,
+              "name" : "sleep",
+              "stepResult" : {
+                "status" : "MODIFIED"
+              },
+              "statistics" : {
+                "duration" : 1500
+              },
+              "type" : "sleep",
+              "parameters" : {
+                "duration" : "1500"
+              }
+            },
+            {
+              "index" : 3,
+              "name" : "screen",
+              "pattern" : "5c7e349c6798f408cf3d1e0e",
+              "stepResult" : {
+                "status" : "COLLECTED",
+                "artifactId" : "5c7e349c6798f408cf3d1e0e"
+              },
+              "statistics" : {
+                "duration" : 294
+              },
+              "comparators" : [
+                {
+                  "stepResult" : {
+                    "status" : "PASSED",
+                    "rebaseable" : false,
+                    "acceptable" : false,
+                    "data" : {
+                      "collectTimestamp" : "1551774876335",
+                      "patternTimestamp" : "1551774876317"
+                    }
+                  },
+                  "statistics" : {
+                    "duration" : 4
+                  },
+                  "type" : "screen",
+                  "parameters" : {
+                    "comparator" : "layout"
+                  }
+                }
+              ],
+              "type" : "screen"
+            }
+          ],
+          "isReran" : false
+        }
+      ]
+    }
+  ]
+}
