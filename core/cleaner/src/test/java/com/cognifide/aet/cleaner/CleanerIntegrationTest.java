@@ -120,15 +120,15 @@ public class CleanerIntegrationTest {
   }
 
   @TestWith({
-      "1,0,projectA",
-      "1,1,projectA"
+      "1,0,projectA,2",
+      "1,1,projectA,2"
   })
   public void clean_whenAllSuitesOlder_keepOnlyNewestSuite(Long versionsToKeep, Long maxAge,
-      String projectDataDir) throws JobExecutionException, IOException {
+      String projectDataDir, int expectedArtifactsLeft) throws JobExecutionException, IOException {
     setUpDataForTest(versionsToKeep, maxAge, projectDataDir);
     new CleanerJob().execute(jobExecutionContext);
     assertEquals(1, getMetadataDocs().countDocuments());
-    assertEquals(1, getMetadataDocs().countDocuments());
+    assertEquals(expectedArtifactsLeft, getArtifactDocs().countDocuments());
   }
 
   @After
