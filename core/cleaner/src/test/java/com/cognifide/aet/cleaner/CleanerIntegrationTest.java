@@ -121,7 +121,9 @@ public class CleanerIntegrationTest {
 
   @TestWith({
       "1,0,projectA,2",
-      "1,1,projectA,2"
+      "1,1,projectA,2",
+      "1,0,projectB,3",
+      "1,1,projectB,3"
   })
   public void clean_whenAllSuitesOlder_keepOnlyNewestSuite(Long versionsToKeep, Long maxAge,
       String projectDataDir, int expectedArtifactsLeft) throws JobExecutionException, IOException {
