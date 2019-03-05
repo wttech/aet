@@ -1,5 +1,5 @@
 {
-  "_id" : ObjectId("5c7e2b8f6798f408cf3d1dde"),
+  "_id" : ObjectId("5c7e2d446798f408cf3d1df8"),
   "correlationId" : "company-project-test-suite-1551082549000",
   "company" : "company",
   "project" : "project",
@@ -8,7 +8,7 @@
   "runTimestamp" : NumberLong(1551082549000),
   "finishedTimestamp" : NumberLong(1551082559000),
   "statistics" : {
-    "duration" : 6377
+    "duration" : 6693
   },
   "tests" : [
     {
@@ -19,7 +19,7 @@
           "name" : "https://en.wikipedia.org/wiki/Main_Page",
           "url" : "https://en.wikipedia.org/wiki/Main_Page",
           "collectionStats" : {
-            "duration" : 3052
+            "duration" : 2981
           },
           "steps" : [
             {
@@ -29,7 +29,7 @@
                 "status" : "PAGE_OPENED"
               },
               "statistics" : {
-                "duration" : 931
+                "duration" : 828
               },
               "type" : "open"
             },
@@ -40,7 +40,7 @@
                 "status" : "MODIFIED"
               },
               "statistics" : {
-                "duration" : 115
+                "duration" : 113
               },
               "type" : "resolution",
               "parameters" : {
@@ -55,7 +55,7 @@
                 "status" : "MODIFIED"
               },
               "statistics" : {
-                "duration" : 1500
+                "duration" : 1501
               },
               "type" : "sleep",
               "parameters" : {
@@ -67,25 +67,30 @@
               "name" : "screen",
               "pattern" : "5c7e291f6798f408cf3d1da7",
               "stepResult" : {
-                "status" : "DUPLICATES_PATTERN",
-                "artifactId" : "5c7e291f6798f408cf3d1da7"
+                "status" : "COLLECTED",
+                "artifactId" : "5c7e2d436798f408cf3d1dea"
               },
               "statistics" : {
-                "duration" : 289
+                "duration" : 276
               },
               "comparators" : [
                 {
                   "stepResult" : {
-                    "status" : "PASSED",
-                    "rebaseable" : false,
-                    "acceptable" : false,
+                    "status" : "FAILED",
+                    "rebaseable" : true,
+                    "acceptable" : true,
+                    "artifactId" : "5c7e2d446798f408cf3d1df6",
                     "data" : {
-                      "collectTimestamp" : "1551772559111",
+                      "heightDifference" : "0",
+                      "widthDifference" : "0",
+                      "collectTimestamp" : "1551772996036",
+                      "percentagePixelDifference" : "0.006458333333333333",
+                      "pixelDifference" : "31",
                       "patternTimestamp" : "1551771935056"
                     }
                   },
                   "statistics" : {
-                    "duration" : 10
+                    "duration" : 419
                   },
                   "type" : "screen",
                   "parameters" : {
@@ -101,10 +106,10 @@
               "pattern" : "5c7e291f6798f408cf3d1da9",
               "stepResult" : {
                 "status" : "COLLECTED",
-                "artifactId" : "5c7e2b8f6798f408cf3d1dd4"
+                "artifactId" : "5c7e2d436798f408cf3d1dec"
               },
               "statistics" : {
-                "duration" : 121
+                "duration" : 119
               },
               "comparators" : [
                 {
@@ -112,14 +117,14 @@
                     "status" : "FAILED",
                     "rebaseable" : false,
                     "acceptable" : false,
-                    "artifactId" : "5c7e2b8f6798f408cf3d1ddc",
+                    "artifactId" : "5c7e2d436798f408cf3d1df4",
                     "data" : {
                       "warningCount" : "0",
                       "errorCount" : "19"
                     }
                   },
                   "statistics" : {
-                    "duration" : 205
+                    "duration" : 286
                   },
                   "type" : "source",
                   "parameters" : {
@@ -135,10 +140,10 @@
               "pattern" : "5c7e291f6798f408cf3d1dab",
               "stepResult" : {
                 "status" : "COLLECTED",
-                "artifactId" : "5c7e2b8f6798f408cf3d1dd6"
+                "artifactId" : "5c7e2d436798f408cf3d1dee"
               },
               "statistics" : {
-                "duration" : 20
+                "duration" : 22
               },
               "comparators" : [
                 {
@@ -146,10 +151,10 @@
                     "status" : "PASSED",
                     "rebaseable" : false,
                     "acceptable" : false,
-                    "artifactId" : "5c7e2b8f6798f408cf3d1dda"
+                    "artifactId" : "5c7e2d436798f408cf3d1df2"
                   },
                   "statistics" : {
-                    "duration" : 27
+                    "duration" : 11
                   },
                   "type" : "status-codes",
                   "parameters" : {
@@ -165,10 +170,10 @@
               "pattern" : "5c7e291f6798f408cf3d1dad",
               "stepResult" : {
                 "status" : "COLLECTED",
-                "artifactId" : "5c7e2b8f6798f408cf3d1dd8"
+                "artifactId" : "5c7e2d436798f408cf3d1df0"
               },
               "statistics" : {
-                "duration" : 18
+                "duration" : 15
               },
               "comparators" : [
                 {
@@ -187,7 +192,7 @@
                     }
                   ],
                   "statistics" : {
-                    "duration" : 9
+                    "duration" : 18
                   },
                   "type" : "js-errors"
                 }
