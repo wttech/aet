@@ -1,10 +1,10 @@
 {
-    "_id" : ObjectId("5c7524c1495d5008b3e68245"),
+    "_id" : ObjectId("5c7e291f6798f408cf3d1da7"),
     "filename" : null,
     "aliases" : null,
     "chunkSize" : NumberLong(261120),
-    "uploadDate" : ISODate("2019-02-26T11:36:33.118Z"),
-    "length" : NumberLong(25254),
+    "uploadDate" : ISODate("2019-02-28T08:15:49.056Z"),
+    "length" : NumberLong(198205),
     "contentType" : "image/png",
-    "md5" : "fde31b5c87109abc68b0e3a456e5015a"
+    "md5" : "6e0ac5f99d67c5d707fb97993021f95a"
 }

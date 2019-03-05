@@ -1,5 +1,5 @@
 {
-  "_id" : ObjectId("5c7524ed495d5008b3e6824a"),
+  "_id" : ObjectId("5c7e29206798f408cf3d1db3"),
   "correlationId" : "company-project-test-suite-1551341749000",
   "company" : "company",
   "project" : "project",
@@ -8,7 +8,7 @@
   "runTimestamp" : NumberLong(1551341749000),
   "finishedTimestamp" : NumberLong(1551341759000),
   "statistics" : {
-    "duration" : 5813
+    "duration" : 6791
   },
   "tests" : [
     {
@@ -16,10 +16,10 @@
       "proxy" : "rest",
       "urls" : [
         {
-          "name" : "https://en.wikipedia.org/wiki/Main_Page?a=b&c=d",
-          "url" : "https://en.wikipedia.org/wiki/Main_Page?a=b&c=d",
+          "name" : "https://en.wikipedia.org/wiki/Main_Page",
+          "url" : "https://en.wikipedia.org/wiki/Main_Page",
           "collectionStats" : {
-            "duration" : 1925
+            "duration" : 3368
           },
           "steps" : [
             {
@@ -29,7 +29,7 @@
                 "status" : "PAGE_OPENED"
               },
               "statistics" : {
-                "duration" : 1209
+                "duration" : 1232
               },
               "type" : "open"
             },
@@ -40,7 +40,7 @@
                 "status" : "MODIFIED"
               },
               "statistics" : {
-                "duration" : 120
+                "duration" : 115
               },
               "type" : "resolution",
               "parameters" : {
@@ -55,123 +55,23 @@
                 "status" : "MODIFIED"
               },
               "statistics" : {
-                "duration" : 150
+                "duration" : 1505
               },
               "type" : "sleep",
               "parameters" : {
-                "duration" : "150"
+                "duration" : "1500"
               }
             },
             {
               "index" : 3,
               "name" : "screen",
-              "pattern" : "5c7524c5495d5008b3e68247",
-              "stepResult" : {
-                "status" : "COLLECTED",
-                "artifactId" : "5c7524ec495d5008b3e6824a",
-                "payload" : {
-                  "layoutExclude" : {
-                    "notFoundElements" : [
-                      "#hplogo"
-                    ]
-                  }
-                }
-              },
-              "statistics" : {
-                "duration" : 314
-              },
-              "comparators" : [
-                {
-                  "stepResult" : {
-                    "status" : "FAILED",
-                    "rebaseable" : true,
-                    "acceptable" : true,
-                    "artifactId" : "5c7524ed495d5008b3e6824c",
-                    "data" : {
-                      "heightDifference" : "0",
-                      "widthDifference" : "0",
-                      "collectTimestamp" : "1551181037347",
-                      "percentagePixelDifference" : "31.496875",
-                      "pixelDifference" : "151185",
-                      "patternTimestamp" : "1551180997482",
-                      "excludeMessage" : "The following elements to be excluded have not been found on page: ",
-                      "notFoundCssElements" : "#hplogo"
-                    }
-                  },
-                  "statistics" : {
-                    "duration" : 412
-                  },
-                  "type" : "screen",
-                  "parameters" : {
-                    "comparator" : "layout"
-                  }
-                }
-              ],
-              "type" : "screen",
-              "parameters" : {
-                "exclude-elements" : "#hplogo"
-              }
-            }
-          ],
-          "isReran" : false
-        },
-        {
-          "name" : "https://google.com",
-          "url" : "https://google.com",
-          "collectionStats" : {
-            "duration" : 2021
-          },
-          "steps" : [
-            {
-              "index" : 0,
-              "name" : "open",
-              "stepResult" : {
-                "status" : "PAGE_OPENED"
-              },
-              "statistics" : {
-                "duration" : 1446
-              },
-              "type" : "open"
-            },
-            {
-              "index" : 1,
-              "name" : "resolution",
-              "stepResult" : {
-                "status" : "MODIFIED"
-              },
-              "statistics" : {
-                "duration" : 114
-              },
-              "type" : "resolution",
-              "parameters" : {
-                "height" : "600",
-                "width" : "800"
-              }
-            },
-            {
-              "index" : 2,
-              "name" : "sleep",
-              "stepResult" : {
-                "status" : "MODIFIED"
-              },
-              "statistics" : {
-                "duration" : 150
-              },
-              "type" : "sleep",
-              "parameters" : {
-                "duration" : "150"
-              }
-            },
-            {
-              "index" : 3,
-              "name" : "screen",
-              "pattern" : "5c7524c1495d5008b3e68245",
+              "pattern" : "5c7e291f6798f408cf3d1da7",
               "stepResult" : {
                 "status" : "DUPLICATES_PATTERN",
-                "artifactId" : "5c7524c1495d5008b3e68245"
+                "artifactId" : "5c7e291f6798f408cf3d1da7"
               },
               "statistics" : {
-                "duration" : 234
+                "duration" : 281
               },
               "comparators" : [
                 {
@@ -180,12 +80,12 @@
                     "rebaseable" : false,
                     "acceptable" : false,
                     "data" : {
-                      "collectTimestamp" : "1551181037047",
-                      "patternTimestamp" : "1551180993118"
+                      "collectTimestamp" : "1551772127005",
+                      "patternTimestamp" : "1551771935056"
                     }
                   },
                   "statistics" : {
-                    "duration" : 6
+                    "duration" : 15
                   },
                   "type" : "screen",
                   "parameters" : {
@@ -193,13 +93,110 @@
                   }
                 }
               ],
-              "type" : "screen",
-              "parameters" : {
-                "exclude-elements" : "#hplogo"
-              }
+              "type" : "screen"
+            },
+            {
+              "index" : 4,
+              "name" : "source",
+              "pattern" : "5c7e291f6798f408cf3d1da9",
+              "stepResult" : {
+                "status" : "COLLECTED",
+                "artifactId" : "5c7e29de6798f408cf3d1db4"
+              },
+              "statistics" : {
+                "duration" : 127
+              },
+              "comparators" : [
+                {
+                  "stepResult" : {
+                    "status" : "FAILED",
+                    "rebaseable" : false,
+                    "acceptable" : false,
+                    "artifactId" : "5c7e29df6798f408cf3d1dbc",
+                    "data" : {
+                      "warningCount" : "0",
+                      "errorCount" : "19"
+                    }
+                  },
+                  "statistics" : {
+                    "duration" : 223
+                  },
+                  "type" : "source",
+                  "parameters" : {
+                    "comparator" : "w3c-html5"
+                  }
+                }
+              ],
+              "type" : "source"
+            },
+            {
+              "index" : 5,
+              "name" : "status-codes",
+              "pattern" : "5c7e291f6798f408cf3d1dab",
+              "stepResult" : {
+                "status" : "COLLECTED",
+                "artifactId" : "5c7e29de6798f408cf3d1db6"
+              },
+              "statistics" : {
+                "duration" : 40
+              },
+              "comparators" : [
+                {
+                  "stepResult" : {
+                    "status" : "PASSED",
+                    "rebaseable" : false,
+                    "acceptable" : false,
+                    "artifactId" : "5c7e29df6798f408cf3d1dba"
+                  },
+                  "statistics" : {
+                    "duration" : 14
+                  },
+                  "type" : "status-codes",
+                  "parameters" : {
+                    "filterRange" : "400,600"
+                  }
+                }
+              ],
+              "type" : "status-codes"
+            },
+            {
+              "index" : 6,
+              "name" : "js-errors",
+              "pattern" : "5c7e291f6798f408cf3d1dad",
+              "stepResult" : {
+                "status" : "COLLECTED",
+                "artifactId" : "5c7e29de6798f408cf3d1db8"
+              },
+              "statistics" : {
+                "duration" : 16
+              },
+              "comparators" : [
+                {
+                  "stepResult" : {
+                    "status" : "PASSED",
+                    "rebaseable" : false,
+                    "acceptable" : false
+                  },
+                  "filters" : [
+                    {
+                      "type" : "js-errors-filter",
+                      "parameters" : {
+                        "line" : "2",
+                        "source" : "http://w.iplsc.com/external/jquery/jquery-1.8.3.js"
+                      }
+                    }
+                  ],
+                  "statistics" : {
+                    "duration" : 16
+                  },
+                  "type" : "js-errors"
+                }
+              ],
+              "type" : "js-errors"
             }
           ],
-          "isReran" : false
+          "isReran" : true,
+          "rerunTimestamp" : NumberLong(1551772120452)
         }
       ]
     }
