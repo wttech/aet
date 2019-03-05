@@ -100,7 +100,7 @@ public class CleanerIntegrationTest {
 
   @TestWith({
       //keeping based on age
-      "1,5,projectA",
+      "1,6,projectA",
       //keeping based on versions
       "5,0,projectA",
       //both
