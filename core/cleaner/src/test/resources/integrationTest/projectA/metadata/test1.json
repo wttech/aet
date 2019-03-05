@@ -1,12 +1,12 @@
 {
-  "_id" : ObjectId("5c7524ed495d5008b3e6824e"),
-  "correlationId" : "company-project-test-suite-1551255349000",
+  "_id" : ObjectId("5c7524ed495d5008b3e6824a"),
+  "correlationId" : "company-project-test-suite-1551341749000",
   "company" : "company",
   "project" : "project",
   "name" : "test-suite",
   "version" : 1,
-  "runTimestamp" : NumberLong(1551255349000),
-  "finishedTimestamp" : NumberLong(1551255359000),
+  "runTimestamp" : NumberLong(1551341749000),
+  "finishedTimestamp" : NumberLong(1551341759000),
   "statistics" : {
     "duration" : 5813
   },
