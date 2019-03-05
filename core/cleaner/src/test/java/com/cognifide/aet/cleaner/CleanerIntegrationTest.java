@@ -58,7 +58,7 @@ import org.quartz.JobExecutionException;
 @RunWith(ZohhakRunner.class)
 public class CleanerIntegrationTest {
 
-  private static final Long MOCKED_CURRENT_TIMESTAMP = 1551428149000L;  //March 1, 2019
+  private static final Long MOCKED_CURRENT_TIMESTAMP = 1551428149000L;  //March 1, 2019 8:15:49 AM
   private static final String MOCKED_COMPANY_NAME = "company";
   private static final String MOCKED_PROJECT_NAME = "project";
   private static final String MOCKED_DB_NAME = String
