@@ -109,7 +109,7 @@ public class CleanerIntegrationTest {
       "5,6,projectA",
       "5,6,projectB"
   })
-  public void clean_whenKeepAllSuites_removeNothing(Long versionsToKeep, Long maxAge,
+  public void clean_whenNoSuiteMatchesRemoveCondition_keepEverything(Long versionsToKeep, Long maxAge,
       String projectDataDir) throws JobExecutionException, IOException {
     setUpDataForTest(versionsToKeep, maxAge, projectDataDir);
     long metadataCountBefore = getMetadataDocs().countDocuments();
@@ -125,7 +125,7 @@ public class CleanerIntegrationTest {
       "1,0,projectB,3",
       "1,1,projectB,3"
   })
-  public void clean_whenAllSuitesOlder_keepOnlyNewestSuite(Long versionsToKeep, Long maxAge,
+  public void clean_whenAllSuitesTooOld_keepOnlyNewestSuite(Long versionsToKeep, Long maxAge,
       String projectDataDir, int expectedArtifactsLeft) throws JobExecutionException, IOException {
     setUpDataForTest(versionsToKeep, maxAge, projectDataDir);
     new CleanerJob().execute(jobExecutionContext);
