@@ -22,6 +22,7 @@ All notable changes to AET will be documented in this file.
 - [PR-413](https://github.com/Cognifide/aet/pull/413) Added ability to show full page source when there has been no difference discovered ([#369](https://github.com/Cognifide/aet/issues/369))
 
 - [PR-463](https://github.com/Cognifide/aet/pull/463) Removed dependency to Joda time library
+- [PR-490](https://github.com/Cognifide/aet/pull/490) Bugfix/Claner removing to many artifacts
 
 ## Version 3.2.0
 
