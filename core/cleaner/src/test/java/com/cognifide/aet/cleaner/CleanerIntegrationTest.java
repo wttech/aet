@@ -34,20 +34,11 @@ import com.google.common.collect.ImmutableMap;
 import com.googlecode.zohhak.api.TestWith;
 import com.googlecode.zohhak.api.runners.ZohhakRunner;
 import com.mongodb.BasicDBObject;
-import com.mongodb.MongoClient;
-import com.mongodb.MongoClientURI;
-import com.mongodb.client.MongoCollection;
-import de.bwaldvogel.mongo.MongoServer;
-import de.bwaldvogel.mongo.backend.memory.MemoryBackend;
-import java.io.File;
 import java.io.IOException;
-import java.net.InetSocketAddress;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Arrays;
-import org.apache.commons.io.FileUtils;
 import org.apache.sling.testing.mock.osgi.junit.OsgiContext;
-import org.bson.Document;
 import org.bson.types.ObjectId;
 import org.junit.After;
 import org.junit.Before;
@@ -63,8 +54,12 @@ import org.quartz.JobExecutionException;
 public class CleanerIntegrationTest {
 
   private static final Long MOCKED_CURRENT_TIMESTAMP = 1551428149000L;  //March 1, 2019 8:15:49 AM
+  private static final Long CAMEL_CONTEXT_STOP_TIMEOUT = 1L;
   private static final String MOCKED_COMPANY_NAME = "company";
   private static final String MOCKED_PROJECT_NAME = "project";
+  private static final String DATA_DIR = "/integrationTest";
+  private static final String METADATA_COL_NAME = "metadata";
+  private static final String ARTIFACTS_COL_NAME = "artifacts.files";
   private static final String MOCKED_DB_NAME = String
       .format("%s_%s", MOCKED_COMPANY_NAME, MOCKED_PROJECT_NAME);
 
@@ -74,20 +69,17 @@ public class CleanerIntegrationTest {
   private JobExecutionContext jobExecutionContext = Mockito.mock(JobExecutionContext.class);
   private JobDetail jobDetail = Mockito.mock(JobDetail.class);
 
-  private MongoClient client;
-  private MongoServer server;
+  private InMemoryDB db;
+
   private MetadataCleanerRouteBuilder metadataCleanerRouteBuilder;
   private LocalDateTimeProvider mockedDateTimeProvider = zone -> LocalDateTime
       .ofInstant(Instant.ofEpochMilli(MOCKED_CURRENT_TIMESTAMP), zone);
 
   @Before
   public void setUp() {
-    server = new MongoServer(new MemoryBackend());
-    InetSocketAddress address = server.bind();
-    String mongoURI = String.format("mongodb://localhost:%d", address.getPort());
-    client = new MongoClient(new MongoClientURI(mongoURI));
+    db = new InMemoryDB(MOCKED_DB_NAME, DATA_DIR, METADATA_COL_NAME, ARTIFACTS_COL_NAME);
 
-    context.registerInjectActivateService(new MongoDBClient(), "mongoURI", mongoURI);
+    context.registerInjectActivateService(new MongoDBClient(), "mongoURI", db.getURI());
     context.registerInjectActivateService(new MetadataDAOMongoDBImpl());
     context.registerInjectActivateService(new ArtifactsDAOMongoDBImpl());
 
@@ -113,14 +105,15 @@ public class CleanerIntegrationTest {
       "5,6,projectA",
       "5,6,projectB"
   })
-  public void clean_whenNoSuiteMatchesRemoveCondition_keepEverything(Long versionsToKeep, Long maxAge,
+  public void clean_whenNoSuiteMatchesRemoveCondition_keepEverything(Long versionsToKeep,
+      Long maxAge,
       String projectDataDir) throws JobExecutionException, IOException {
     setUpDataForTest(versionsToKeep, maxAge, projectDataDir);
-    long metadataCountBefore = getMetadataDocs().countDocuments();
-    long artifactCountBefore = getArtifactDocs().countDocuments();
+    long metadataCountBefore = db.getMetadataDocsCount();
+    long artifactCountBefore = db.getArtifactsDocsCount();
     new CleanerJob().execute(jobExecutionContext);
-    assertEquals(metadataCountBefore, getMetadataDocs().countDocuments());
-    assertEquals(artifactCountBefore, getArtifactDocs().countDocuments());
+    assertEquals(metadataCountBefore, db.getMetadataDocsCount());
+    assertEquals(artifactCountBefore, db.getArtifactsDocsCount());
   }
 
   @TestWith({
@@ -133,8 +126,8 @@ public class CleanerIntegrationTest {
       String projectDataDir, int expectedArtifactsLeft) throws JobExecutionException, IOException {
     setUpDataForTest(versionsToKeep, maxAge, projectDataDir);
     new CleanerJob().execute(jobExecutionContext);
-    assertEquals(1, getMetadataDocs().countDocuments());
-    assertEquals(expectedArtifactsLeft, getArtifactDocs().countDocuments());
+    assertEquals(1, db.getMetadataDocsCount());
+    assertEquals(expectedArtifactsLeft, db.getArtifactsDocsCount());
   }
 
   @TestWith({
@@ -152,21 +145,20 @@ public class CleanerIntegrationTest {
     Arrays.stream(artifactsToKeepIds).forEach(artifactId -> {
       BasicDBObject query = new BasicDBObject();
       query.put("_id", new ObjectId(artifactId));
-      assertTrue(getArtifactDocs().find(query).iterator().hasNext());
+      assertTrue(db.getArtifactDocs().find(query).iterator().hasNext());
     });
-    assertEquals(artifactsToKeepIds.length, getArtifactDocs().countDocuments());
+    assertEquals(artifactsToKeepIds.length, db.getArtifactDocs().countDocuments());
   }
 
   @After
   public void tearDown() {
-    client.close();
-    server.shutdown();
+    db.shutdown();
   }
 
   private void setUpDataForTest(Long versionsToKeep, Long maxAge, String projectDataDir)
       throws IOException {
     createJobData(versionsToKeep, maxAge);
-    insertDataToDb(projectDataDir);
+    db.loadProjectData(projectDataDir);
   }
 
   private void createJobData(Long versionsToKeep, Long maxAge) {
@@ -177,34 +169,9 @@ public class CleanerIntegrationTest {
         .put(CleanerJob.KEY_COMPANY_FILTER, MOCKED_COMPANY_NAME)
         .put(CleanerJob.KEY_PROJECT_FILTER, MOCKED_PROJECT_NAME)
         .put(CleanerJob.KEY_DRY_RUN, false)
-        .put(CleanerJob.KEY_CAMEL_CONTEXT_CREATOR, new TimeoutCamelContextCreator(1L))
+        .put(CleanerJob.KEY_CAMEL_CONTEXT_CREATOR, new TimeoutCamelContextCreator(CAMEL_CONTEXT_STOP_TIMEOUT))
         .build());
     when(jobDetail.getJobDataMap()).thenReturn(jobData);
     when(jobExecutionContext.getJobDetail()).thenReturn(jobDetail);
-  }
-
-  private void insertDataToDb(String projectDataDir) throws IOException {
-    String[] collectionNames = new String[]{"artifacts.files", "metadata"};
-    for (String collectionName : collectionNames) {
-      String collectionDir = String
-          .format("/integrationTest/%s/%s", projectDataDir, collectionName);
-      File[] collectionFiles = new File(getClass().getResource(collectionDir).getFile())
-          .listFiles();
-      if (collectionFiles != null) {
-        for (File file : collectionFiles) {
-          String json = FileUtils.readFileToString(file, "UTF-8");
-          client.getDatabase(MOCKED_DB_NAME).getCollection(collectionName)
-              .insertOne(Document.parse(json));
-        }
-      }
-    }
-  }
-
-  private MongoCollection<Document> getMetadataDocs() {
-    return client.getDatabase(MOCKED_DB_NAME).getCollection("metadata");
-  }
-
-  private MongoCollection<Document> getArtifactDocs() {
-    return client.getDatabase(MOCKED_DB_NAME).getCollection("artifacts.files");
   }
 }
