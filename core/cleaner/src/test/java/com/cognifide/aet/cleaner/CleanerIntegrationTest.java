@@ -16,6 +16,7 @@
 package com.cognifide.aet.cleaner;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 import com.cognifide.aet.cleaner.processors.FetchAllProjectSuitesProcessor;
@@ -32,6 +33,7 @@ import com.cognifide.aet.vs.mongodb.MongoDBClient;
 import com.google.common.collect.ImmutableMap;
 import com.googlecode.zohhak.api.TestWith;
 import com.googlecode.zohhak.api.runners.ZohhakRunner;
+import com.mongodb.BasicDBObject;
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
@@ -42,9 +44,11 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.time.Instant;
 import java.time.LocalDateTime;
+import java.util.Arrays;
 import org.apache.commons.io.FileUtils;
 import org.apache.sling.testing.mock.osgi.junit.OsgiContext;
 import org.bson.Document;
+import org.bson.types.ObjectId;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -131,6 +135,26 @@ public class CleanerIntegrationTest {
     new CleanerJob().execute(jobExecutionContext);
     assertEquals(1, getMetadataDocs().countDocuments());
     assertEquals(expectedArtifactsLeft, getArtifactDocs().countDocuments());
+  }
+
+  @TestWith({
+      "1,0,projectA,5c7e2d446798f408cf3d1df6;5c7e2d436798f408cf3d1dea",
+      "2,0,projectA,5c7e2d446798f408cf3d1df6;5c7e2d436798f408cf3d1dea;5c7e291f6798f408cf3d1da7",
+      "1,0,projectB,5c7e349e6798f408cf3d1e10;5c7e35236798f408cf3d1e19;5c7e35236798f408cf3d1e1b",
+      "2,0,projectB,5c7e349e6798f408cf3d1e10;5c7e35236798f408cf3d1e19;5c7e35236798f408cf3d1e1b;5c7e34c86798f408cf3d1e13"
+  })
+  public void clean_whenRemoveSomeSuites_keepOnlyReferencedArtifacts(Long versionsToKeep,
+      Long maxAge, String projectDataDir, String artifactsToKeep)
+      throws IOException, JobExecutionException {
+    String[] artifactsToKeepIds = artifactsToKeep.split(";");
+    setUpDataForTest(versionsToKeep, maxAge, projectDataDir);
+    new CleanerJob().execute(jobExecutionContext);
+    Arrays.stream(artifactsToKeepIds).forEach(artifactId -> {
+      BasicDBObject query = new BasicDBObject();
+      query.put("_id", new ObjectId(artifactId));
+      assertTrue(getArtifactDocs().find(query).iterator().hasNext());
+    });
+    assertEquals(artifactsToKeepIds.length, getArtifactDocs().countDocuments());
   }
 
   @After
