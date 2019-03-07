@@ -153,6 +153,7 @@ public class CleanerIntegrationTest {
         .put(CleanerJob.KEY_COMPANY_FILTER, MOCKED_COMPANY_NAME)
         .put(CleanerJob.KEY_PROJECT_FILTER, MOCKED_PROJECT_NAME)
         .put(CleanerJob.KEY_DRY_RUN, false)
+        .put(CleanerJob.KEY_CAMEL_CONTEXT_CREATOR, new TimeoutCamelContextCreator(1L))
         .build());
     when(jobDetail.getJobDataMap()).thenReturn(jobData);
     when(jobExecutionContext.getJobDetail()).thenReturn(jobDetail);
@@ -179,7 +180,7 @@ public class CleanerIntegrationTest {
     return client.getDatabase(MOCKED_DB_NAME).getCollection("metadata");
   }
 
-  private MongoCollection<Document> getArtifactDocs(){
+  private MongoCollection<Document> getArtifactDocs() {
     return client.getDatabase(MOCKED_DB_NAME).getCollection("artifacts.files");
   }
 }
