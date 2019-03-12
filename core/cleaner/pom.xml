@@ -39,11 +39,13 @@
         <groupId>de.bwaldvogel</groupId>
         <artifactId>mongo-java-server</artifactId>
         <version>1.12.0</version>
+        <scope>test</scope>
       </dependency>
       <dependency>
         <groupId>org.apache.sling</groupId>
         <artifactId>org.apache.sling.testing.osgi-mock.junit4</artifactId>
         <version>2.4.6</version>
+        <scope>test</scope>
       </dependency>
     </dependencies>
   </dependencyManagement>
