@@ -160,8 +160,7 @@ public class DiffParser {
       deltaListWithSource.add(resultDelta);
       deltaListWithSource.add(processDelta(delta));
     }
-    if ((originalList.size() > lastPositionOriginal || revisedList.size() > lastPositionRevised)
-        && !deltaList.isEmpty()) {
+    if ((originalList.size() > lastPositionOriginal || revisedList.size() > lastPositionRevised)) {
       ResultDelta resultDelta = prepareNoChangeResultDelta(originalList, revisedList,
           lastPositionOriginal, lastPositionRevised);
       deltaListWithSource.add(resultDelta);

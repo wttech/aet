@@ -98,10 +98,12 @@ public class ArtifactsDAOMongoDBImpl implements ArtifactsDAO {
 
     GridFS gfs = getGridFS(dbKey);
     BasicDBObject query = new BasicDBObject();
-    query.put(ID_FIELD_NAME, new ObjectId(objectID));
-    GridFSDBFile file = gfs.findOne(query);
-    if (file != null) {
-      artifact = new Artifact(file.getInputStream(), file.getContentType());
+    if (ObjectId.isValid(objectID)) {
+      query.put(ID_FIELD_NAME, new ObjectId(objectID));
+      GridFSDBFile file = gfs.findOne(query);
+      if (file != null) {
+        artifact = new Artifact(file.getInputStream(), file.getContentType());
+      }
     }
     return artifact;
   }

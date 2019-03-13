@@ -225,4 +225,11 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
     }
     return database.getCollection(METADATA_COLLECTION_NAME);
   }
+
+  @Override
+  public boolean isDatabase(DBKey dbKey) {
+    final String dbName = MongoDBClient.getDbName(dbKey.getCompany(), dbKey.getProject());
+    final MongoDatabase database = client.getDatabase(dbName, true);
+    return database != null ? true : false;
+  }
 }
