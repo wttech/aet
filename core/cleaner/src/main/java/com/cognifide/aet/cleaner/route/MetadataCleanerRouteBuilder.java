@@ -72,7 +72,7 @@ public class MetadataCleanerRouteBuilder extends RouteBuilder {
         .process(suitesRemovePredicateProcessor)
         .split(body())
         .choice()
-        .when(body().method("shouldBeKept").isEqualTo(false)).to(direct("removeMetadata"))
+        .when(body().method("shouldBeRemoved").isEqualTo(true)).to(direct("removeMetadata"))
         .otherwise().to(direct("getMetadataArtifacts"))
         .endChoice();
 
@@ -86,7 +86,7 @@ public class MetadataCleanerRouteBuilder extends RouteBuilder {
         .to(direct(AGGREGATE_SUITES_STEP));
 
     from(direct(AGGREGATE_SUITES_STEP))
-        .aggregate(body().method("getDbKey"), new SuitesAggregationStrategy())
+        .aggregate(body().method("getId"), new SuitesAggregationStrategy())
         .completionSize(header(SuiteAggregationCounter.NAME_KEY).method("getSuitesToAggregate"))
         .completionTimeout(60000L).forceCompletionOnStop()
         .discardOnCompletionTimeout()

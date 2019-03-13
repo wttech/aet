@@ -32,8 +32,8 @@ public class SuiteMessageBody extends MessageBody<Suite> {
     this.toRemove = toRemove;
   }
 
-  public boolean shouldBeKept() {
-    return !toRemove;
+  public boolean shouldBeRemoved() {
+    return toRemove;
   }
 
   public Set<String> getSuiteArtifacts() {
