@@ -17,10 +17,12 @@ package com.cognifide.aet.cleaner.processors;
 
 import com.cognifide.aet.cleaner.context.CleanerContext;
 import com.cognifide.aet.cleaner.processors.exchange.ReferencedArtifactsMessageBody;
+import com.cognifide.aet.vs.ArtifactsDAO;
 import com.google.common.collect.Sets;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -28,6 +30,9 @@ import org.slf4j.LoggerFactory;
 public class RemoveArtifactsProcessor implements Processor {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(RemoveArtifactsProcessor.class);
+
+  @Reference
+  private ArtifactsDAO artifactsDAO;
 
   @Override
   @SuppressWarnings("unchecked")
