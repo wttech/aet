@@ -20,6 +20,7 @@ import com.cognifide.aet.cleaner.context.SuiteAggregationCounter;
 import com.cognifide.aet.cleaner.processors.ErrorHandlingProcessor;
 import com.cognifide.aet.cleaner.processors.FetchAllProjectSuitesProcessor;
 import com.cognifide.aet.cleaner.processors.GetMetadataArtifactsProcessor;
+import com.cognifide.aet.cleaner.processors.GroupProjectSuitesProcessor;
 import com.cognifide.aet.cleaner.processors.RemoveArtifactsProcessor;
 import com.cognifide.aet.cleaner.processors.RemoveMetadataProcessor;
 import com.cognifide.aet.cleaner.processors.StartMetadataCleanupProcessor;
@@ -41,6 +42,9 @@ public class MetadataCleanerRouteBuilder extends RouteBuilder {
 
   @Reference
   private FetchAllProjectSuitesProcessor fetchAllProjectSuitesProcessor;
+
+  @Reference
+  private GroupProjectSuitesProcessor groupProjectSuitesProcessor;
 
   @Reference
   private SuitesRemovePredicateProcessor suitesRemovePredicateProcessor;
@@ -65,6 +69,7 @@ public class MetadataCleanerRouteBuilder extends RouteBuilder {
 
     from(direct("fetchProjectSuites"))
         .process(fetchAllProjectSuitesProcessor)
+        .process(groupProjectSuitesProcessor)
         .split(body())
         .to(direct("suitesRemovePredicateProcessor"));
 
