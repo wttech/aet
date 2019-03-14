@@ -22,37 +22,47 @@ import org.apache.commons.lang3.StringUtils;
 
 public class CleanerSchedulerValidator implements Validator {
 
-  private final String schedule;
+  private final String expiredCleanerSchedule;
 
-  private final Long keepNVersions;
+  private final boolean runOrphanCleaner;
 
-  private final Long removeOlderThan;
+  private final String orphanCleanerSchedule;
+
+  private final long keepNVersions;
+
+  private final long removeOlderThan;
 
   public CleanerSchedulerValidator(CleanerSchedulerConf config) {
-    this.schedule = config.expiredCleanerSchedule();
+    this.expiredCleanerSchedule = config.expiredCleanerSchedule();
+    this.runOrphanCleaner = config.runOrphanCleaner();
+    this.orphanCleanerSchedule = config.orphanCleanerSchedule();
     this.keepNVersions = config.keepNVersions();
     this.removeOlderThan = config.removeOlderThan();
   }
 
   private void validateRestrictions(ValidationResultBuilder validationResultBuilder) {
-    if (keepNVersions == null || keepNVersions <= 0) {
+    if (keepNVersions <= 0) {
       validationResultBuilder.addErrorMessage("Leave N Patterns has to be greater than 0");
     }
-    if (removeOlderThan == null || removeOlderThan < 0) {
+    if (removeOlderThan < 0) {
       validationResultBuilder
           .addErrorMessage("Remove Older Than has to be greater or equal than 0");
     }
   }
 
-  private void validateSchedule(ValidationResultBuilder validationResultBuilder) {
-    if (StringUtils.isEmpty(schedule)) {
-      validationResultBuilder.addErrorMessage("CRON expression may not be empty");
+  private void validateSchedules(ValidationResultBuilder validationResultBuilder) {
+    if (StringUtils.isEmpty(expiredCleanerSchedule)) {
+      validationResultBuilder
+          .addErrorMessage("Expired Data Cleaner CRON expression may not be empty");
+    }
+    if (runOrphanCleaner && StringUtils.isEmpty(orphanCleanerSchedule)) {
+      validationResultBuilder.addErrorMessage("Orphan Cleaner CRON expression may not be empty");
     }
   }
 
   @Override
   public void validate(ValidationResultBuilder validationResultBuilder) {
-    validateSchedule(validationResultBuilder);
+    validateSchedules(validationResultBuilder);
     validateRestrictions(validationResultBuilder);
   }
 }
