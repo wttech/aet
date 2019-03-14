@@ -95,7 +95,7 @@ public class CleanerSchedulerValidatorTest {
 
   @Test
   public void validateTest_emptySchedule() {
-    Validator tested = validatorBuilder.setSchedule(null).build();
+    Validator tested = validatorBuilder.setExpiredDataCleanerSchedule(null).build();
 
     tested.validate(builder);
 
@@ -103,6 +103,29 @@ public class CleanerSchedulerValidatorTest {
     assertThat(builder.getErrorMessages(), Matchers.hasSize(1));
     assertThat(builder.getErrorMessages().get(0).getMessage(),
         is("Expired Data Cleaner CRON expression may not be empty"));
+  }
+
+  @Test
+  public void validateTest_runOrphanCleanerWithEmptySchedule() {
+    Validator tested = validatorBuilder.setRunOrphanCleaner(true).setOrphanCleanerSchedule(null)
+        .build();
+
+    tested.validate(builder);
+
+    assertThat(builder.isValid(), is(false));
+    assertThat(builder.getErrorMessages(), Matchers.hasSize(1));
+    assertThat(builder.getErrorMessages().get(0).getMessage(),
+        is("Orphan Cleaner CRON expression may not be empty"));
+  }
+
+  @Test
+  public void validateTest_dontRunOrphanCleanerWithEmptySchedule(){
+    Validator tested = validatorBuilder.setRunOrphanCleaner(false).setOrphanCleanerSchedule(null)
+        .build();
+
+    tested.validate(builder);
+
+    assertThat(builder.isValid(), is(true));
   }
 
   private static class ValidatorBuilder {
@@ -115,35 +138,51 @@ public class CleanerSchedulerValidatorTest {
 
     private final CleanerSchedulerConf config;
 
-    private String schedule = DEFAULT_SCHEDULE;
+    private String expiredCleanerSchedule = DEFAULT_SCHEDULE;
+
+    private String orphanCleanerSchedule = DEFAULT_SCHEDULE;
 
     private long keepNVersions = DEFAULT_KEEP_N_VERSIONS;
 
     private long removeOlderThan = DEFAULT_REMOVE_OLDER_THAN;
 
+    private boolean runOrphanCleaner;
+
     ValidatorBuilder(CleanerSchedulerConf config) {
       this.config = config;
     }
 
-    private ValidatorBuilder setSchedule(String schedule) {
-      this.schedule = schedule;
+    private ValidatorBuilder setExpiredDataCleanerSchedule(String schedule) {
+      this.expiredCleanerSchedule = schedule;
       return this;
     }
 
-    private ValidatorBuilder setKeepNVersions(Long keeNVersions) {
+    private ValidatorBuilder setOrphanCleanerSchedule(String schedule) {
+      this.orphanCleanerSchedule = schedule;
+      return this;
+    }
+
+    private ValidatorBuilder setKeepNVersions(long keeNVersions) {
       this.keepNVersions = keeNVersions;
       return this;
     }
 
-    private ValidatorBuilder setRemoveOlderThan(Long removeOlderThan) {
+    private ValidatorBuilder setRemoveOlderThan(long removeOlderThan) {
       this.removeOlderThan = removeOlderThan;
       return this;
     }
 
+    private ValidatorBuilder setRunOrphanCleaner(boolean runOrphanCleaner) {
+      this.runOrphanCleaner = runOrphanCleaner;
+      return this;
+    }
+
     Validator build() {
-      when(config.expiredCleanerSchedule()).thenReturn(schedule);
+      when(config.expiredCleanerSchedule()).thenReturn(expiredCleanerSchedule);
+      when(config.orphanCleanerSchedule()).thenReturn(orphanCleanerSchedule);
       when(config.keepNVersions()).thenReturn(keepNVersions);
       when(config.removeOlderThan()).thenReturn(removeOlderThan);
+      when(config.runOrphanCleaner()).thenReturn(runOrphanCleaner);
       return new CleanerSchedulerValidator(config);
     }
   }
