@@ -34,7 +34,7 @@ public @interface CleanerSchedulerConf {
 
   String ORPHAN_SCHEDULE_CRON="Orphan Cleaner schedule";
 
-  String ORPHAN_RUN = "Orphan Cleaner run";
+  String ORPHAN_RUN = "Run Orphan Cleaner";
 
   String DRY_RUN = "Dry run";
 
@@ -49,7 +49,7 @@ public @interface CleanerSchedulerConf {
 
   @AttributeDefinition(
       name = ORPHAN_RUN,
-      description = "Run Orphan Cleaner.",
+      description = "Flag that says if Orphan Cleaner should be run with a given schedule.",
       type = AttributeType.BOOLEAN)
   boolean runOrphanCleaner() default true;
 

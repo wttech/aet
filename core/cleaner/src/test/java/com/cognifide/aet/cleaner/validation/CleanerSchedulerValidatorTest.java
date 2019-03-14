@@ -102,24 +102,24 @@ public class CleanerSchedulerValidatorTest {
     assertThat(builder.isValid(), is(false));
     assertThat(builder.getErrorMessages(), Matchers.hasSize(1));
     assertThat(builder.getErrorMessages().get(0).getMessage(),
-        is("CRON expression may not be empty"));
+        is("Expired Data Cleaner CRON expression may not be empty"));
   }
 
   private static class ValidatorBuilder {
 
     private static final String DEFAULT_SCHEDULE = "0 0 21 ? * *";
 
-    private static final Long DEFAULT_KEEP_N_VERSIONS = 3L;
+    private static final long DEFAULT_KEEP_N_VERSIONS = 3L;
 
-    private static final Long DEFAULT_REMOVE_OLDER_THAN = 5L;
+    private static final long DEFAULT_REMOVE_OLDER_THAN = 5L;
 
     private final CleanerSchedulerConf config;
 
     private String schedule = DEFAULT_SCHEDULE;
 
-    private Long keepNVersions = DEFAULT_KEEP_N_VERSIONS;
+    private long keepNVersions = DEFAULT_KEEP_N_VERSIONS;
 
-    private Long removeOlderThan = DEFAULT_REMOVE_OLDER_THAN;
+    private long removeOlderThan = DEFAULT_REMOVE_OLDER_THAN;
 
     ValidatorBuilder(CleanerSchedulerConf config) {
       this.config = config;
