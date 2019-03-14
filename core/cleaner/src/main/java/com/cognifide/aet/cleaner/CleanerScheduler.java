@@ -32,7 +32,6 @@ import org.osgi.service.component.annotations.Deactivate;
 import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.metatype.annotations.Designate;
 import org.quartz.CronScheduleBuilder;
-import org.quartz.Job;
 import org.quartz.JobBuilder;
 import org.quartz.JobDataMap;
 import org.quartz.JobDetail;
@@ -70,7 +69,7 @@ public class CleanerScheduler {
   /**
    * Names of scheduled cleaner jobs in this CleanerScheduler session.
    */
-  private String scheduledJob;
+  private String scheduledExpiredJob;
   private String scheduledOrphanJob;
 
   @Activate
@@ -85,10 +84,7 @@ public class CleanerScheduler {
       if (!validationResultBuilder.hasErrors()) {
         scheduler = StdSchedulerFactory.getDefaultScheduler();
         scheduler.start();
-        scheduledJob = registerCleaningJob(metadataCleanerRouteBuilder, config.expiredCleanerSchedule());
-        if (config.runOrphanCleaner()) {
-          scheduledOrphanJob = registerCleaningJob(orphanCleanerRouteBuilder, config.orphanCleanerSchedule());
-        }
+        registerJobs(config);
         LOGGER.info("CleanerScheduler has been activated successfully with parameters: {}",
             this.toString());
       } else {
@@ -107,7 +103,7 @@ public class CleanerScheduler {
     try {
       LOGGER.info("Deactivating CleanerScheduler.");
       if (!scheduler.isShutdown()) {
-        scheduler.deleteJob(JobKey.jobKey(scheduledJob));
+        deleteJobs();
         scheduler.shutdown();
         scheduler = null;
         LOGGER.info("CleanerScheduler has been deactivated");
@@ -119,7 +115,17 @@ public class CleanerScheduler {
     }
   }
 
-  private String registerCleaningJob(RouteBuilder routeBuilder, String cronExpression) throws SchedulerException {
+  private void registerJobs(CleanerSchedulerConf config) throws SchedulerException {
+    scheduledExpiredJob = registerCleaningJob(metadataCleanerRouteBuilder,
+        config.expiredCleanerSchedule());
+    if (config.runOrphanCleaner()) {
+      scheduledOrphanJob = registerCleaningJob(orphanCleanerRouteBuilder,
+          config.orphanCleanerSchedule());
+    }
+  }
+
+  private String registerCleaningJob(RouteBuilder routeBuilder, String cronExpression)
+      throws SchedulerException {
     final UUID uuid = UUID.randomUUID();
 
     final String cleanerJobName = "cleanMongoDbJob-" + uuid;
@@ -148,11 +154,22 @@ public class CleanerScheduler {
     return cleanerJobName;
   }
 
+  private void deleteJobs() throws SchedulerException {
+    deleteJob(scheduledExpiredJob);
+    deleteJob(scheduledOrphanJob);
+  }
+
+  private void deleteJob(String jobKey) throws SchedulerException {
+    if (jobKey != null) {
+      scheduler.deleteJob(JobKey.jobKey(jobKey));
+    }
+  }
+
   @Override
   public String toString() {
     return MoreObjects.toStringHelper(this)
         .add("expiredCleanerSchedule", config.expiredCleanerSchedule())
-        .add("orphanCleanerSchedule",config.orphanCleanerSchedule())
+        .add("orphanCleanerSchedule", config.orphanCleanerSchedule())
         .add("keepNVersions", config.keepNVersions())
         .add("removeOlderThan", config.removeOlderThan())
         .add("companyName", config.companyName())
