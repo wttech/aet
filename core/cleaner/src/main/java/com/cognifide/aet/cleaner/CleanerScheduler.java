@@ -82,13 +82,13 @@ public class CleanerScheduler {
 
       ValidationResultBuilder validationResultBuilder = validationResultBuilderFactory
           .createInstance();
-      new CleanerSchedulerValidator(config.schedule(), config.keepNVersions(), config.removeOlderThan())
+      new CleanerSchedulerValidator(config.expiredCleanerSchedule(), config.keepNVersions(), config.removeOlderThan())
           .validate(validationResultBuilder);
       if (!validationResultBuilder.hasErrors()) {
         scheduler = StdSchedulerFactory.getDefaultScheduler();
         scheduler.start();
-        scheduledJob = registerCleaningJob(metadataCleanerRouteBuilder, config.schedule());
-        scheduledOrphanJob = registerCleaningJob(orphanCleanerRouteBuilder, config.orphanSchedule());
+        scheduledJob = registerCleaningJob(metadataCleanerRouteBuilder, config.expiredCleanerSchedule());
+        scheduledOrphanJob = registerCleaningJob(orphanCleanerRouteBuilder, config.orphanCleanerSchedule());
         LOGGER.info("CleanerScheduler has been activated successfully with parameters: {}",
             this.toString());
       } else {
@@ -151,8 +151,8 @@ public class CleanerScheduler {
   @Override
   public String toString() {
     return MoreObjects.toStringHelper(this)
-        .add("schedule", config.schedule())
-        .add("orphanSchedule",config.orphanSchedule())
+        .add("schedule", config.expiredCleanerSchedule())
+        .add("orphanSchedule",config.orphanCleanerSchedule())
         .add("keepNVersions", config.keepNVersions())
         .add("removeOlderThan", config.removeOlderThan())
         .add("companyName", config.companyName())
