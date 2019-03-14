@@ -86,7 +86,9 @@ public class CleanerScheduler {
         scheduler = StdSchedulerFactory.getDefaultScheduler();
         scheduler.start();
         scheduledJob = registerCleaningJob(metadataCleanerRouteBuilder, config.expiredCleanerSchedule());
-        scheduledOrphanJob = registerCleaningJob(orphanCleanerRouteBuilder, config.orphanCleanerSchedule());
+        if (config.runOrphanCleaner()) {
+          scheduledOrphanJob = registerCleaningJob(orphanCleanerRouteBuilder, config.orphanCleanerSchedule());
+        }
         LOGGER.info("CleanerScheduler has been activated successfully with parameters: {}",
             this.toString());
       } else {
