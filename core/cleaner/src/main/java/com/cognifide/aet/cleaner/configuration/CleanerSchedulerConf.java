@@ -32,6 +32,8 @@ public @interface CleanerSchedulerConf {
 
   String SCHEDULE_CRON = "Schedule";
 
+  String ORPHAN_SCHEDULE_CRON="Orphan cleaner schedule";
+
   String DRY_RUN = "Dry run";
 
   long DEFAULT_REMOVE_OLDER_THAN_PARAM = 10L;
@@ -42,6 +44,11 @@ public @interface CleanerSchedulerConf {
       name = SCHEDULE_CRON,
       description = "CRON notation of when the job is to be fired. [example: '0 0 21 ? * *' will trigger job daily at 21:00].")
   String schedule();
+
+  @AttributeDefinition(
+      name = ORPHAN_SCHEDULE_CRON,
+      description = "CRON notation of when the orphan cleaner job is to be fired.")
+  String orphanSchedule();
 
   @AttributeDefinition(
       name = KEEP_N_VERSIONS,
