@@ -68,10 +68,9 @@ public class CleanerScheduler {
   private ValidationResultBuilderFactory validationResultBuilderFactory;
 
   /**
-   * Name of scheduled cleaner job in this CleanerScheduler session.
+   * Names of scheduled cleaner jobs in this CleanerScheduler session.
    */
   private String scheduledJob;
-
   private String scheduledOrphanJob;
 
   @Activate
@@ -82,8 +81,7 @@ public class CleanerScheduler {
 
       ValidationResultBuilder validationResultBuilder = validationResultBuilderFactory
           .createInstance();
-      new CleanerSchedulerValidator(config.expiredCleanerSchedule(), config.keepNVersions(), config.removeOlderThan())
-          .validate(validationResultBuilder);
+      new CleanerSchedulerValidator(config).validate(validationResultBuilder);
       if (!validationResultBuilder.hasErrors()) {
         scheduler = StdSchedulerFactory.getDefaultScheduler();
         scheduler.start();
@@ -151,8 +149,8 @@ public class CleanerScheduler {
   @Override
   public String toString() {
     return MoreObjects.toStringHelper(this)
-        .add("schedule", config.expiredCleanerSchedule())
-        .add("orphanSchedule",config.orphanCleanerSchedule())
+        .add("expiredCleanerSchedule", config.expiredCleanerSchedule())
+        .add("orphanCleanerSchedule",config.orphanCleanerSchedule())
         .add("keepNVersions", config.keepNVersions())
         .add("removeOlderThan", config.removeOlderThan())
         .add("companyName", config.companyName())

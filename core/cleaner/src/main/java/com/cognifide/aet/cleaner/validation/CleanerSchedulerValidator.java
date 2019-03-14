@@ -15,6 +15,7 @@
  */
 package com.cognifide.aet.cleaner.validation;
 
+import com.cognifide.aet.cleaner.configuration.CleanerSchedulerConf;
 import com.cognifide.aet.validation.ValidationResultBuilder;
 import com.cognifide.aet.validation.Validator;
 import org.apache.commons.lang3.StringUtils;
@@ -27,10 +28,10 @@ public class CleanerSchedulerValidator implements Validator {
 
   private final Long removeOlderThan;
 
-  public CleanerSchedulerValidator(String schedule, Long keepNVersions, Long removeOlderThan) {
-    this.schedule = schedule;
-    this.keepNVersions = keepNVersions;
-    this.removeOlderThan = removeOlderThan;
+  public CleanerSchedulerValidator(CleanerSchedulerConf config) {
+    this.schedule = config.expiredCleanerSchedule();
+    this.keepNVersions = config.keepNVersions();
+    this.removeOlderThan = config.removeOlderThan();
   }
 
   private void validateRestrictions(ValidationResultBuilder validationResultBuilder) {
