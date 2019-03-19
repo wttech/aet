@@ -22,6 +22,7 @@ import com.cognifide.aet.cleaner.processors.FetchAllProjectSuitesProcessor;
 import com.cognifide.aet.cleaner.processors.GetMetadataArtifactsProcessor;
 import com.cognifide.aet.cleaner.processors.GroupProjectSuitesProcessor;
 import com.cognifide.aet.cleaner.processors.RemoveArtifactsProcessor;
+import com.cognifide.aet.cleaner.processors.RemoveExpiredArtifactsProcessor;
 import com.cognifide.aet.cleaner.processors.RemoveMetadataProcessor;
 import com.cognifide.aet.cleaner.processors.StartMetadataCleanupProcessor;
 import com.cognifide.aet.cleaner.processors.SuitesRemovePredicateProcessor;
@@ -56,7 +57,7 @@ public class MetadataCleanerRouteBuilder extends RouteBuilder {
   private GetMetadataArtifactsProcessor getMetadataArtifactsProcessor;
 
   @Reference
-  private RemoveArtifactsProcessor removeArtifactsProcessor;
+  private RemoveExpiredArtifactsProcessor removeArtifactsProcessor;
 
   @Override
   public void configure() throws Exception {

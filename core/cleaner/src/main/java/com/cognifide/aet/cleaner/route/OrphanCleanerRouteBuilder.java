@@ -16,9 +16,13 @@
 package com.cognifide.aet.cleaner.route;
 
 
+import com.cognifide.aet.cleaner.context.SuiteAggregationCounter;
 import com.cognifide.aet.cleaner.processors.ErrorHandlingProcessor;
 import com.cognifide.aet.cleaner.processors.FetchAllProjectSuitesProcessor;
-import com.cognifide.aet.cleaner.processors.RemoveOrphanArtifactsProcessor;
+import com.cognifide.aet.cleaner.processors.GetMetadataArtifactsProcessor;
+import com.cognifide.aet.cleaner.processors.OrphanSuiteSplitterProcessor;
+import com.cognifide.aet.cleaner.processors.RemoveArtifactsProcessor;
+import com.cognifide.aet.cleaner.processors.RemoveOrphanedArtifactsProcessor;
 import com.cognifide.aet.cleaner.processors.StartMetadataCleanupProcessor;
 import com.cognifide.aet.communication.api.exceptions.AETException;
 import org.apache.camel.builder.RouteBuilder;
@@ -39,7 +43,13 @@ public class OrphanCleanerRouteBuilder extends RouteBuilder {
   private FetchAllProjectSuitesProcessor fetchAllProjectSuitesProcessor;
 
   @Reference
-  private RemoveOrphanArtifactsProcessor removeOrphanArtifactsProcessor;
+  private OrphanSuiteSplitterProcessor orphanSuiteSplitterProcessor;
+
+  @Reference
+  private RemoveOrphanedArtifactsProcessor removeArtifactsProcessor;
+
+  @Reference
+  private GetMetadataArtifactsProcessor getMetadataArtifactsProcessor;
 
   @Override
   public void configure() throws Exception {
@@ -52,11 +62,18 @@ public class OrphanCleanerRouteBuilder extends RouteBuilder {
 
     from(direct("fetchProjectSuites"))
         .process(fetchAllProjectSuitesProcessor)
+        .process(orphanSuiteSplitterProcessor)
         .split(body())
-        .to(direct("removeOrphanArtifacts"));
+        .process(getMetadataArtifactsProcessor)
+        //aggregation
+        .aggregate(body().method("getDbKey"), new SuitesAggregationStrategy())
+        .completionSize(header(SuiteAggregationCounter.NAME_KEY).method("getSuitesToAggregate"))
+        .completionTimeout(60000L).forceCompletionOnStop()
+        .discardOnCompletionTimeout()
+        .to(direct("removeArtifacts"));
 
-    from(direct("removeOrphanArtifacts"))
-        .process(removeOrphanArtifactsProcessor);
+    from(direct("removeArtifacts"))
+        .process(removeArtifactsProcessor);
   }
 
   private void setupErrorHandling() {
