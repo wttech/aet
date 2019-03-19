@@ -21,14 +21,9 @@ import com.google.common.collect.Sets;
 import java.util.Set;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Component(service = RemoveExpiredArtifactsProcessor.class)
 public class RemoveExpiredArtifactsProcessor extends RemoveArtifactsProcessor {
-
-  private static final Logger LOGGER = LoggerFactory
-      .getLogger(RemoveExpiredArtifactsProcessor.class);
 
   @Reference
   private ArtifactsDAO artifactsDAO;

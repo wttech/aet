@@ -20,14 +20,9 @@ import com.cognifide.aet.vs.ArtifactsDAO;
 import java.util.Set;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @Component(service = RemoveOrphanArtifactsProcessor.class)
 public class RemoveOrphanArtifactsProcessor extends RemoveArtifactsProcessor {
-
-  private static final Logger LOGGER = LoggerFactory
-      .getLogger(RemoveOrphanArtifactsProcessor.class);
 
   @Reference
   private ArtifactsDAO artifactsDAO;
