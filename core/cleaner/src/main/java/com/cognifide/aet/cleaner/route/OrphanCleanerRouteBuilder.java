@@ -20,7 +20,7 @@ import com.cognifide.aet.cleaner.context.SuiteAggregationCounter;
 import com.cognifide.aet.cleaner.processors.ErrorHandlingProcessor;
 import com.cognifide.aet.cleaner.processors.FetchAllProjectSuitesProcessor;
 import com.cognifide.aet.cleaner.processors.GetMetadataArtifactsProcessor;
-import com.cognifide.aet.cleaner.processors.OrphanSuiteSplitterProcessor;
+import com.cognifide.aet.cleaner.processors.SuiteSplitterProcessor;
 import com.cognifide.aet.cleaner.processors.RemoveOrphanArtifactsProcessor;
 import com.cognifide.aet.cleaner.processors.StartMetadataCleanupProcessor;
 import com.cognifide.aet.communication.api.exceptions.AETException;
@@ -42,7 +42,7 @@ public class OrphanCleanerRouteBuilder extends RouteBuilder {
   private FetchAllProjectSuitesProcessor fetchAllProjectSuitesProcessor;
 
   @Reference
-  private OrphanSuiteSplitterProcessor orphanSuiteSplitterProcessor;
+  private SuiteSplitterProcessor suiteSplitterProcessor;
 
   @Reference
   private RemoveOrphanArtifactsProcessor removeArtifactsProcessor;
@@ -61,7 +61,7 @@ public class OrphanCleanerRouteBuilder extends RouteBuilder {
 
     from(direct("fetchProjectSuites"))
         .process(fetchAllProjectSuitesProcessor)
-        .process(orphanSuiteSplitterProcessor)
+        .process(suiteSplitterProcessor)
         .split(body())
         .process(getMetadataArtifactsProcessor)
         //aggregation

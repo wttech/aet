@@ -19,22 +19,20 @@ import com.cognifide.aet.cleaner.context.CleanerContext;
 import com.cognifide.aet.cleaner.context.SuiteAggregationCounter;
 import com.cognifide.aet.cleaner.processors.exchange.AllProjectSuitesMessageBody;
 import com.cognifide.aet.cleaner.processors.exchange.SuiteMessageBody;
-import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.vs.DBKey;
-import com.google.common.base.Function;
-import com.google.common.collect.FluentIterable;
-import com.google.common.collect.ImmutableList;
+import java.util.List;
+import java.util.stream.Collectors;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.osgi.service.component.annotations.Component;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Component(service = OrphanSuiteSplitterProcessor.class)
-public class OrphanSuiteSplitterProcessor implements Processor {
+@Component(service = SuiteSplitterProcessor.class)
+public class SuiteSplitterProcessor implements Processor {
 
   private static final Logger LOGGER = LoggerFactory
-      .getLogger(OrphanSuiteSplitterProcessor.class);
+      .getLogger(SuiteSplitterProcessor.class);
 
   @Override
   @SuppressWarnings("unchecked")
@@ -45,13 +43,9 @@ public class OrphanSuiteSplitterProcessor implements Processor {
         AllProjectSuitesMessageBody.class);
     final DBKey dbKey = allSuites.getDbKey();
 
-    final ImmutableList<SuiteMessageBody> body =
-        FluentIterable.from(allSuites.getData()).transform(new Function<Suite, SuiteMessageBody>() {
-          @Override
-          public SuiteMessageBody apply(Suite suite) {
-            return new SuiteMessageBody(suite, dbKey, false);
-          }
-        }).toList();
+    final List<SuiteMessageBody> body =
+        allSuites.getData().stream().map(suite -> new SuiteMessageBody(suite, dbKey, false))
+            .collect(Collectors.toList());
 
     exchange.getOut().setBody(body);
     exchange.getOut().setHeader(SuiteAggregationCounter.NAME_KEY,
