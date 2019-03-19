@@ -33,8 +33,8 @@ import java.util.stream.Collectors;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
-@RunWith(ZohhakRunner.class)
-@Configure(separator = ";")
+//@RunWith(ZohhakRunner.class)
+//@Configure(separator = ";")
 public class SuiteRemoveConditionTest {
 
   private static final SuitesListCoercer SUITES_LIST_COERCER = new SuitesListCoercer();

@@ -26,6 +26,7 @@ define([], function () {
     vm.thereAreChangesToSave = thereAreChangesToSave;
     vm.saveAllChanges = saveAllChanges;
     vm.discardAllChanges = discardAllChanges;
+    vm.resetPattern  = resetPattern;
 
     $rootScope.$on('metadata:changed', updateNavigationTree);
     $rootScope.$on('filter:applied', updateTestsStats);
@@ -53,6 +54,12 @@ define([], function () {
     function saveAllChanges() {
       console.log('All changes will be saved!');
       metadataService.commitLocalChanges();
+    }
+
+    function resetPattern() {
+      console.log('The suite will be reset!');
+      var currentTestedSite = $('.test-url.ng-binding.is-active').text().trim();
+      metadataService.resetPattern(currentTestedSite);
     }
 
     function discardAllChanges() {
@@ -92,5 +99,24 @@ define([], function () {
       vm.testsStats[statusName] =
           $('.test-name.' + statusName + '.is-visible').length;
     }
+  }
+});
+
+define(['angularAMD', 'metadataService'], function (angularAMD) {
+  'use strict';
+  angularAMD.controller('errorCtrl', ErrorController)
+
+  function ErrorController(metadataService) {
+    var vm = this;
+
+    vm.resetPattern  = resetPattern;
+
+    function resetPattern() {
+      console.log('The suite will be reset!');
+      var currentTestedSite = $('.test-url.ng-binding.is-active').text().trim();
+      metadataService.resetPattern(currentTestedSite);
+    }
+
+
   }
 });

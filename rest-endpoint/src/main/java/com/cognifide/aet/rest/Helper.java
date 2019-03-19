@@ -35,6 +35,7 @@ public final class Helper {
   static final String LOCK_PART_PATH = "/lock";
   static final String XUNIT_PART_PATH = "/xunit";
   static final String PATH_SEPARATOR = "/";
+  static final String RESET_PATH = "reset";
 
   public static final String COMPANY_PARAM = "company";
   public static final String PROJECT_PARAM = "project";
@@ -87,6 +88,10 @@ public final class Helper {
     return REST_PREFIX + PATH_SEPARATOR + RERUN_PART_PATH;
   }
 
+  public static String getResetPath() {
+    return REST_PREFIX + PATH_SEPARATOR + RESET_PATH;
+  }
+
   public static DBKey getDBKeyFromRequest(HttpServletRequest req) throws ValidatorException {
     String company = req.getParameter(Helper.COMPANY_PARAM);
     String project = req.getParameter(Helper.PROJECT_PARAM);
@@ -106,18 +111,5 @@ public final class Helper {
 
   public static String responseAsJson(Gson GSON, String format, Object... args) {
     return GSON.toJson(new ErrorMessage(format, args));
-  }
-
-  private static class ErrorMessage {
-
-    private final String message;
-
-    ErrorMessage(String format, Object... args) {
-      message = String.format(format, args);
-    }
-
-    public String getMessage() {
-      return message;
-    }
   }
 }
