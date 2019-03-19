@@ -21,8 +21,7 @@ import com.cognifide.aet.cleaner.processors.ErrorHandlingProcessor;
 import com.cognifide.aet.cleaner.processors.FetchAllProjectSuitesProcessor;
 import com.cognifide.aet.cleaner.processors.GetMetadataArtifactsProcessor;
 import com.cognifide.aet.cleaner.processors.OrphanSuiteSplitterProcessor;
-import com.cognifide.aet.cleaner.processors.RemoveArtifactsProcessor;
-import com.cognifide.aet.cleaner.processors.RemoveOrphanedArtifactsProcessor;
+import com.cognifide.aet.cleaner.processors.RemoveOrphanArtifactsProcessor;
 import com.cognifide.aet.cleaner.processors.StartMetadataCleanupProcessor;
 import com.cognifide.aet.communication.api.exceptions.AETException;
 import org.apache.camel.builder.RouteBuilder;
@@ -46,7 +45,7 @@ public class OrphanCleanerRouteBuilder extends RouteBuilder {
   private OrphanSuiteSplitterProcessor orphanSuiteSplitterProcessor;
 
   @Reference
-  private RemoveOrphanedArtifactsProcessor removeArtifactsProcessor;
+  private RemoveOrphanArtifactsProcessor removeArtifactsProcessor;
 
   @Reference
   private GetMetadataArtifactsProcessor getMetadataArtifactsProcessor;
