@@ -17,6 +17,8 @@ package com.cognifide.aet.cleaner.route;
 
 
 import com.cognifide.aet.cleaner.context.SuiteAggregationCounter;
+import com.cognifide.aet.cleaner.processors.DbLockProcessor;
+import com.cognifide.aet.cleaner.processors.DbUnlockProcessor;
 import com.cognifide.aet.cleaner.processors.ErrorHandlingProcessor;
 import com.cognifide.aet.cleaner.processors.FetchAllProjectSuitesProcessor;
 import com.cognifide.aet.cleaner.processors.GetMetadataArtifactsProcessor;
@@ -50,11 +52,18 @@ public class OrphanCleanerRouteBuilder extends RouteBuilder {
   @Reference
   private GetMetadataArtifactsProcessor getMetadataArtifactsProcessor;
 
+  @Reference
+  private DbLockProcessor dbLockProcessor;
+
+  @Reference
+  private DbUnlockProcessor dbUnlockProcessor;
+
   @Override
   public void configure() throws Exception {
     setupErrorHandling();
 
     from(direct("start"))
+        .process(dbLockProcessor)
         .process(startMetadataCleanupProcessor)
         .split(body())
         .to(direct("fetchProjectSuites"));
@@ -72,7 +81,8 @@ public class OrphanCleanerRouteBuilder extends RouteBuilder {
         .to(direct("removeArtifacts"));
 
     from(direct("removeArtifacts"))
-        .process(removeArtifactsProcessor);
+        .process(removeArtifactsProcessor)
+        .process(dbUnlockProcessor);
   }
 
   private void setupErrorHandling() {

@@ -15,32 +15,21 @@
  */
 package com.cognifide.aet.cleaner.processors;
 
-import com.cognifide.aet.cleaner.processors.exchange.ReferencedArtifactsMessageBody;
-import com.cognifide.aet.vs.ArtifactsDAO;
 import com.cognifide.aet.vs.mongodb.MongoDBClient;
-import java.util.Set;
+import org.apache.camel.Exchange;
+import org.apache.camel.Processor;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-@Component(service = RemoveOrphanArtifactsProcessor.class)
-public class RemoveOrphanArtifactsProcessor extends RemoveArtifactsProcessor {
-
-  @Reference
-  private ArtifactsDAO artifactsDAO;
+@Component(service = DbUnlockProcessor.class)
+public class DbUnlockProcessor implements Processor {
 
   @Reference
   private MongoDBClient client;
 
   @Override
-  Set<String> getArtifactsIdsToRemove(ReferencedArtifactsMessageBody messageBody) {
-    Set<String> artifactsToRemove = artifactsDAO.getArtifactsIds(messageBody.getDbKey());
-    artifactsToRemove.removeAll(messageBody.getArtifactsToKeep());
+  @SuppressWarnings("unchecked")
+  public void process(Exchange exchange) throws Exception {
     client.unlock();
-    return artifactsToRemove;
-  }
-
-  @Override
-  ArtifactsDAO getArtifactsDAO() {
-    return artifactsDAO;
   }
 }
