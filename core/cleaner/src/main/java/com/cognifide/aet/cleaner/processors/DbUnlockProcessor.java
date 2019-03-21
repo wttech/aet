@@ -31,5 +31,6 @@ public class DbUnlockProcessor implements Processor {
   @SuppressWarnings("unchecked")
   public void process(Exchange exchange) throws Exception {
     client.unlock();
+    exchange.setOut(exchange.getIn());
   }
 }
