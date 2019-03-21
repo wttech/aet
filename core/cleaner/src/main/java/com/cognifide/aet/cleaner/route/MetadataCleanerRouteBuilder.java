@@ -19,10 +19,10 @@ package com.cognifide.aet.cleaner.route;
 import com.cognifide.aet.cleaner.context.SuiteAggregationCounter;
 import com.cognifide.aet.cleaner.processors.ErrorHandlingProcessor;
 import com.cognifide.aet.cleaner.processors.FetchAllProjectSuitesProcessor;
+import com.cognifide.aet.cleaner.processors.GetExpiredArtifactsProcessor;
 import com.cognifide.aet.cleaner.processors.GetMetadataArtifactsProcessor;
 import com.cognifide.aet.cleaner.processors.GroupProjectSuitesProcessor;
 import com.cognifide.aet.cleaner.processors.RemoveArtifactsProcessor;
-import com.cognifide.aet.cleaner.processors.RemoveExpiredArtifactsProcessor;
 import com.cognifide.aet.cleaner.processors.RemoveMetadataProcessor;
 import com.cognifide.aet.cleaner.processors.StartMetadataCleanupProcessor;
 import com.cognifide.aet.cleaner.processors.SuitesRemovePredicateProcessor;
@@ -57,7 +57,10 @@ public class MetadataCleanerRouteBuilder extends RouteBuilder {
   private GetMetadataArtifactsProcessor getMetadataArtifactsProcessor;
 
   @Reference
-  private RemoveExpiredArtifactsProcessor removeArtifactsProcessor;
+  private GetExpiredArtifactsProcessor getExpiredArtifactsProcessor;
+
+  @Reference
+  private RemoveArtifactsProcessor removeArtifactsProcessor;
 
   @Override
   public void configure() throws Exception {
@@ -99,6 +102,7 @@ public class MetadataCleanerRouteBuilder extends RouteBuilder {
         .to(direct("removeArtifacts"));
 
     from(direct("removeArtifacts"))
+        .process(getExpiredArtifactsProcessor)
         .process(removeArtifactsProcessor);
   }
 

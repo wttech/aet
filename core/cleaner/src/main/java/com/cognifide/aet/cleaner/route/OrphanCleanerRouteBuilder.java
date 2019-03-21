@@ -18,14 +18,15 @@ package com.cognifide.aet.cleaner.route;
 
 import com.cognifide.aet.cleaner.context.DbAggregationCounter;
 import com.cognifide.aet.cleaner.context.SuiteAggregationCounter;
-import com.cognifide.aet.cleaner.processors.SuiteLockProcessor;
-import com.cognifide.aet.cleaner.processors.SuiteUnlockProcessor;
 import com.cognifide.aet.cleaner.processors.ErrorHandlingProcessor;
 import com.cognifide.aet.cleaner.processors.FetchAllProjectSuitesProcessor;
 import com.cognifide.aet.cleaner.processors.GetMetadataArtifactsProcessor;
-import com.cognifide.aet.cleaner.processors.RemoveOrphanArtifactsProcessor;
+import com.cognifide.aet.cleaner.processors.GetOrphanedArtifactsProcessor;
+import com.cognifide.aet.cleaner.processors.RemoveArtifactsProcessor;
 import com.cognifide.aet.cleaner.processors.StartMetadataCleanupProcessor;
+import com.cognifide.aet.cleaner.processors.SuiteLockProcessor;
 import com.cognifide.aet.cleaner.processors.SuiteSplitterProcessor;
+import com.cognifide.aet.cleaner.processors.SuiteUnlockProcessor;
 import com.cognifide.aet.communication.api.exceptions.AETException;
 import org.apache.camel.builder.RouteBuilder;
 import org.apache.camel.processor.aggregate.GroupedBodyAggregationStrategy;
@@ -49,10 +50,13 @@ public class OrphanCleanerRouteBuilder extends RouteBuilder {
   private SuiteSplitterProcessor suiteSplitterProcessor;
 
   @Reference
-  private RemoveOrphanArtifactsProcessor removeArtifactsProcessor;
+  private RemoveArtifactsProcessor removeArtifactsProcessor;
 
   @Reference
   private GetMetadataArtifactsProcessor getMetadataArtifactsProcessor;
+
+  @Reference
+  private GetOrphanedArtifactsProcessor getOrphanedArtifactsProcessor;
 
   @Reference
   private SuiteLockProcessor suiteLockProcessor;
@@ -80,6 +84,7 @@ public class OrphanCleanerRouteBuilder extends RouteBuilder {
         .completionSize(header(SuiteAggregationCounter.NAME_KEY).method("getSuitesToAggregate"))
         .completionTimeout(60000L).forceCompletionOnStop()
         .discardOnCompletionTimeout()
+        .process(getOrphanedArtifactsProcessor)
         .aggregate(new GroupedBodyAggregationStrategy()).constant(true)
         .completionSize(header(DbAggregationCounter.NAME_KEY).method("getDbsToAggregate"))
         .process(suiteUnlockProcessor)
