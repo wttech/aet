@@ -56,7 +56,7 @@ public class OrphanCleanerRouteBuilder extends RouteBuilder {
   private GetMetadataArtifactsProcessor getMetadataArtifactsProcessor;
 
   @Reference
-  private GetOrphanedArtifactsProcessor getOrphanedArtifactsProcessor;
+  private GetOrphanedArtifactsProcessor getArtifactsToRemoveProcessor;
 
   @Reference
   private SuiteLockProcessor suiteLockProcessor;
@@ -84,7 +84,7 @@ public class OrphanCleanerRouteBuilder extends RouteBuilder {
         .completionSize(header(SuiteAggregationCounter.NAME_KEY).method("getSuitesToAggregate"))
         .completionTimeout(60000L).forceCompletionOnStop()
         .discardOnCompletionTimeout()
-        .process(getOrphanedArtifactsProcessor)
+        .process(getArtifactsToRemoveProcessor)
         .aggregate(new GroupedBodyAggregationStrategy()).constant(true)
         .completionSize(header(DbAggregationCounter.NAME_KEY).method("getDbsToAggregate"))
         .process(suiteUnlockProcessor)

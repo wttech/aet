@@ -57,7 +57,7 @@ public class MetadataCleanerRouteBuilder extends RouteBuilder {
   private GetMetadataArtifactsProcessor getMetadataArtifactsProcessor;
 
   @Reference
-  private GetExpiredArtifactsProcessor getExpiredArtifactsProcessor;
+  private GetExpiredArtifactsProcessor getArtifactsToRemoveProcessor;
 
   @Reference
   private RemoveArtifactsProcessor removeArtifactsProcessor;
@@ -102,7 +102,7 @@ public class MetadataCleanerRouteBuilder extends RouteBuilder {
         .to(direct("removeArtifacts"));
 
     from(direct("removeArtifacts"))
-        .process(getExpiredArtifactsProcessor)
+        .process(getArtifactsToRemoveProcessor)
         .process(removeArtifactsProcessor);
   }
 

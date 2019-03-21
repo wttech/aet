@@ -15,33 +15,16 @@
  */
 package com.cognifide.aet.cleaner.processors;
 
-import com.cognifide.aet.cleaner.processors.exchange.ArtifactsToRemoveMessageBody;
 import com.cognifide.aet.cleaner.processors.exchange.ReferencedArtifactsMessageBody;
 import com.google.common.collect.Sets;
 import java.util.HashSet;
-import org.apache.camel.Exchange;
-import org.apache.camel.Processor;
 import org.osgi.service.component.annotations.Component;
 
 @Component(service = GetExpiredArtifactsProcessor.class)
-public class GetExpiredArtifactsProcessor implements Processor {
+public class GetExpiredArtifactsProcessor extends GetArtifactsToRemoveProcessor {
 
   @Override
-  public void process(Exchange exchange) throws Exception {
-    final ReferencedArtifactsMessageBody messageBody = exchange.getIn()
-        .getBody(ReferencedArtifactsMessageBody.class);
-
-    final HashSet<String> artifactsToRemove = getArtifactsIdsToRemove(messageBody);
-
-    ArtifactsToRemoveMessageBody body = new ArtifactsToRemoveMessageBody(artifactsToRemove,
-        messageBody.getDbKey());
-
-    exchange.getOut().setBody(body);
-    exchange.getOut().setHeaders(exchange.getIn().getHeaders());
-  }
-
-
-  HashSet<String> getArtifactsIdsToRemove(ReferencedArtifactsMessageBody messageBody) {
+  protected HashSet<String> getArtifactsIdsToRemove(ReferencedArtifactsMessageBody messageBody) {
     return new HashSet<>(
         Sets.difference(messageBody.getArtifactsToRemove(), messageBody.getArtifactsToKeep()));
   }
