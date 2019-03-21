@@ -17,15 +17,14 @@ package com.cognifide.aet.cleaner.processors;
 
 import com.cognifide.aet.cleaner.processors.exchange.ReferencedArtifactsMessageBody;
 import com.google.common.collect.Sets;
-import java.util.HashSet;
+import java.util.Set;
 import org.osgi.service.component.annotations.Component;
 
 @Component(service = GetAllExpiredArtifactsProcessor.class)
 public class GetAllExpiredArtifactsProcessor extends GetArtifactsToRemoveProcessor {
 
   @Override
-  protected HashSet<String> getArtifactsIdsToRemove(ReferencedArtifactsMessageBody messageBody) {
-    return new HashSet<>(
-        Sets.difference(messageBody.getArtifactsToRemove(), messageBody.getArtifactsToKeep()));
+  protected Set<String> getArtifactsIdsToRemove(ReferencedArtifactsMessageBody messageBody) {
+    return Sets.difference(messageBody.getArtifactsToRemove(), messageBody.getArtifactsToKeep());
   }
 }

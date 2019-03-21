@@ -17,7 +17,7 @@ package com.cognifide.aet.cleaner.processors;
 
 import com.cognifide.aet.cleaner.processors.exchange.ArtifactsToRemoveMessageBody;
 import com.cognifide.aet.cleaner.processors.exchange.ReferencedArtifactsMessageBody;
-import java.util.HashSet;
+import java.util.Set;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 
@@ -28,7 +28,7 @@ public abstract class GetArtifactsToRemoveProcessor implements Processor {
     final ReferencedArtifactsMessageBody messageBody = exchange.getIn()
         .getBody(ReferencedArtifactsMessageBody.class);
 
-    final HashSet<String> artifactsToRemove = getArtifactsIdsToRemove(messageBody);
+    final Set<String> artifactsToRemove = getArtifactsIdsToRemove(messageBody);
 
     ArtifactsToRemoveMessageBody body = new ArtifactsToRemoveMessageBody(artifactsToRemove,
         messageBody.getDbKey());
@@ -38,6 +38,6 @@ public abstract class GetArtifactsToRemoveProcessor implements Processor {
   }
 
 
-  protected abstract HashSet<String> getArtifactsIdsToRemove(
+  protected abstract Set<String> getArtifactsIdsToRemove(
       ReferencedArtifactsMessageBody messageBody);
 }

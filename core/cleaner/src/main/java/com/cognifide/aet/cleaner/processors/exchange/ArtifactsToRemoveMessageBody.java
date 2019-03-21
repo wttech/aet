@@ -17,13 +17,14 @@ package com.cognifide.aet.cleaner.processors.exchange;
 
 import com.cognifide.aet.vs.DBKey;
 import java.util.HashSet;
+import java.util.Set;
 
 public class ArtifactsToRemoveMessageBody extends MessageBody<HashSet<String>> {
 
   private static final long serialVersionUID = 3748474548512567069L;
 
-  public ArtifactsToRemoveMessageBody(HashSet<String> data, DBKey dbKey) {
-    super(data, dbKey);
+  public ArtifactsToRemoveMessageBody(Set<String> data, DBKey dbKey) {
+    super(new HashSet<>(data), dbKey);
   }
 
 }

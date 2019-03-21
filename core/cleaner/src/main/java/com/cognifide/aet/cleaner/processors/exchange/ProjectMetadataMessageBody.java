@@ -17,14 +17,14 @@ package com.cognifide.aet.cleaner.processors.exchange;
 
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.vs.DBKey;
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
-public class ProjectMetadataMessageBody extends MessageBody<LinkedList<Suite>> {
+public class ProjectMetadataMessageBody extends MessageBody<ArrayList<Suite>> {
 
   private static final long serialVersionUID = 4507393638887122289L;
 
   public ProjectMetadataMessageBody(List<Suite> data, DBKey dbKey) {
-    super(new LinkedList<>(data), dbKey);
+    super(new ArrayList<>(data), dbKey);
   }
 }

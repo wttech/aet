@@ -17,7 +17,6 @@ package com.cognifide.aet.cleaner.processors;
 
 import com.cognifide.aet.cleaner.processors.exchange.ReferencedArtifactsMessageBody;
 import com.cognifide.aet.vs.ArtifactsDAO;
-import java.util.HashSet;
 import java.util.Set;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -29,9 +28,9 @@ public class GetAllOrphanedArtifactsProcessor extends GetArtifactsToRemoveProces
   private ArtifactsDAO artifactsDAO;
 
   @Override
-  protected HashSet<String> getArtifactsIdsToRemove(ReferencedArtifactsMessageBody messageBody) {
+  protected Set<String> getArtifactsIdsToRemove(ReferencedArtifactsMessageBody messageBody) {
     Set<String> artifactsToRemove = artifactsDAO.getArtifactsIds(messageBody.getDbKey());
     artifactsToRemove.removeAll(messageBody.getArtifactsToKeep());
-    return new HashSet<>(artifactsToRemove);
+    return artifactsToRemove;
   }
 }
