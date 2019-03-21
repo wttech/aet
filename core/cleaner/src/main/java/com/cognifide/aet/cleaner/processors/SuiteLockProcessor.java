@@ -31,7 +31,6 @@ public class SuiteLockProcessor implements Processor {
   @SuppressWarnings("unchecked")
   public void process(Exchange exchange) throws Exception {
     lockService.setGlobalLock();
-    Thread.sleep(10000);
     exchange.setOut(exchange.getIn());
   }
 }
