@@ -38,8 +38,6 @@ public class SuiteSplitterProcessor implements Processor {
   @Override
   @SuppressWarnings("unchecked")
   public void process(Exchange exchange) throws Exception {
-    final CleanerContext cleanerContext = exchange.getIn()
-        .getHeader(CleanerContext.KEY_NAME, CleanerContext.class);
     final ProjectMetadataMessageBody allSuites = exchange.getIn().getBody(
         ProjectMetadataMessageBody.class);
     final DBKey dbKey = allSuites.getDbKey();
@@ -51,8 +49,6 @@ public class SuiteSplitterProcessor implements Processor {
     exchange.getOut().setBody(body);
     exchange.getOut().setHeader(SuiteAggregationCounter.NAME_KEY,
         new SuiteAggregationCounter(allSuites.getData().size()));
-    exchange.getOut().setHeader(CleanerContext.KEY_NAME, cleanerContext);
-    exchange.getOut().setHeader(DbAggregationCounter.NAME_KEY, exchange.getIn()
-        .getHeader(DbAggregationCounter.NAME_KEY, DbAggregationCounter.class));
+    exchange.getOut().getHeaders().putAll(exchange.getIn().getHeaders());
   }
 }

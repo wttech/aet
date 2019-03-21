@@ -44,8 +44,6 @@ public class GroupProjectSuitesProcessor implements Processor {
   @Override
   @SuppressWarnings("unchecked")
   public void process(Exchange exchange) throws Exception {
-    final CleanerContext cleanerContext = exchange.getIn()
-        .getHeader(CleanerContext.KEY_NAME, CleanerContext.class);
     final ProjectMetadataMessageBody allSuites = exchange.getIn().getBody(
         ProjectMetadataMessageBody.class);
     final DBKey dbKey = allSuites.getDbKey();
@@ -61,6 +59,6 @@ public class GroupProjectSuitesProcessor implements Processor {
             .collect(Collectors.toList());
 
     exchange.getOut().setBody(body);
-    exchange.getOut().setHeader(CleanerContext.KEY_NAME, cleanerContext);
+    exchange.getOut().getHeaders().putAll(exchange.getIn().getHeaders());
   }
 }

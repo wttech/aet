@@ -64,8 +64,6 @@ public class GetMetadataArtifactsProcessor implements Processor {
   @SuppressWarnings("unchecked")
   public void process(Exchange exchange) throws Exception {
     final SuiteMessageBody messageBody = exchange.getIn().getBody(SuiteMessageBody.class);
-    final CleanerContext cleanerContext = exchange.getIn()
-        .getHeader(CleanerContext.KEY_NAME, CleanerContext.class);
 
     final Set<String> metatadaArtifacts = new HashSet<>();
 
@@ -85,11 +83,7 @@ public class GetMetadataArtifactsProcessor implements Processor {
     }
 
     exchange.getOut().setBody(body);
-    exchange.getOut().setHeader(CleanerContext.KEY_NAME, cleanerContext);
-    exchange.getOut().setHeader(SuiteAggregationCounter.NAME_KEY, exchange.getIn()
-        .getHeader(SuiteAggregationCounter.NAME_KEY, SuiteAggregationCounter.class));
-    exchange.getOut().setHeader(DbAggregationCounter.NAME_KEY, exchange.getIn()
-        .getHeader(DbAggregationCounter.NAME_KEY, DbAggregationCounter.class));
+    exchange.getOut().getHeaders().putAll(exchange.getIn().getHeaders());
   }
 
   private Set<String> traverseTest(Test test) {

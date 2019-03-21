@@ -41,8 +41,6 @@ public class FetchProjectMetadataProcessor implements Processor {
   @Override
   @SuppressWarnings("unchecked")
   public void process(Exchange exchange) throws Exception {
-    final CleanerContext cleanerContext = exchange.getIn()
-        .getHeader(CleanerContext.KEY_NAME, CleanerContext.class);
     final DBKey dbKey = exchange.getIn().getBody(DBKey.class);
     LOGGER.info("Querying for unused data in {}", dbKey);
 
@@ -51,9 +49,7 @@ public class FetchProjectMetadataProcessor implements Processor {
         allProjectSuites, dbKey);
 
     exchange.getOut().setBody(messageBody);
-    exchange.getOut().setHeader(CleanerContext.KEY_NAME, cleanerContext);
-    exchange.getOut().setHeader(DbAggregationCounter.NAME_KEY, exchange.getIn()
-        .getHeader(DbAggregationCounter.NAME_KEY, DbAggregationCounter.class));
+    exchange.getOut().getHeaders().putAll(exchange.getIn().getHeaders());
   }
 
 
