@@ -16,7 +16,7 @@
 package com.cognifide.aet.cleaner.processors;
 
 import com.cognifide.aet.cleaner.context.CleanerContext;
-import com.cognifide.aet.cleaner.processors.exchange.AllProjectSuitesMessageBody;
+import com.cognifide.aet.cleaner.processors.exchange.ProjectMetadataMessageBody;
 import com.cognifide.aet.cleaner.processors.exchange.AllSuiteVersionsMessageBody;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.vs.DBKey;
@@ -46,8 +46,8 @@ public class GroupProjectSuitesProcessor implements Processor {
   public void process(Exchange exchange) throws Exception {
     final CleanerContext cleanerContext = exchange.getIn()
         .getHeader(CleanerContext.KEY_NAME, CleanerContext.class);
-    final AllProjectSuitesMessageBody allSuites = exchange.getIn().getBody(
-        AllProjectSuitesMessageBody.class);
+    final ProjectMetadataMessageBody allSuites = exchange.getIn().getBody(
+        ProjectMetadataMessageBody.class);
     final DBKey dbKey = allSuites.getDbKey();
 
     final ImmutableListMultimap<String, Suite> groupedSuites =

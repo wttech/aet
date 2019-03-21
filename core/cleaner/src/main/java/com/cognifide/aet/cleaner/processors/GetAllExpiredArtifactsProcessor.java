@@ -20,8 +20,8 @@ import com.google.common.collect.Sets;
 import java.util.HashSet;
 import org.osgi.service.component.annotations.Component;
 
-@Component(service = GetExpiredArtifactsProcessor.class)
-public class GetExpiredArtifactsProcessor extends GetArtifactsToRemoveProcessor {
+@Component(service = GetAllExpiredArtifactsProcessor.class)
+public class GetAllExpiredArtifactsProcessor extends GetArtifactsToRemoveProcessor {
 
   @Override
   protected HashSet<String> getArtifactsIdsToRemove(ReferencedArtifactsMessageBody messageBody) {

@@ -22,8 +22,8 @@ import java.util.Set;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-@Component(service = GetOrphanedArtifactsProcessor.class)
-public class GetOrphanedArtifactsProcessor extends GetArtifactsToRemoveProcessor {
+@Component(service = GetAllOrphanedArtifactsProcessor.class)
+public class GetAllOrphanedArtifactsProcessor extends GetArtifactsToRemoveProcessor {
 
   @Reference
   private ArtifactsDAO artifactsDAO;

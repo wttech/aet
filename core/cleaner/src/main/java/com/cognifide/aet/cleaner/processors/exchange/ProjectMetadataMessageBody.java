@@ -20,11 +20,11 @@ import com.cognifide.aet.vs.DBKey;
 import java.util.LinkedList;
 import java.util.List;
 
-public class AllProjectSuitesMessageBody extends MessageBody<LinkedList<Suite>> {
+public class ProjectMetadataMessageBody extends MessageBody<LinkedList<Suite>> {
 
   private static final long serialVersionUID = 4507393638887122289L;
 
-  public AllProjectSuitesMessageBody(List<Suite> data, DBKey dbKey) {
+  public ProjectMetadataMessageBody(List<Suite> data, DBKey dbKey) {
     super(new LinkedList<>(data), dbKey);
   }
 }

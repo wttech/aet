@@ -17,7 +17,7 @@ package com.cognifide.aet.cleaner.processors;
 
 import com.cognifide.aet.cleaner.context.CleanerContext;
 import com.cognifide.aet.cleaner.context.DbAggregationCounter;
-import com.cognifide.aet.cleaner.processors.exchange.AllProjectSuitesMessageBody;
+import com.cognifide.aet.cleaner.processors.exchange.ProjectMetadataMessageBody;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.MetadataDAO;
@@ -29,11 +29,11 @@ import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Component(service = FetchAllProjectSuitesProcessor.class)
-public class FetchAllProjectSuitesProcessor implements Processor {
+@Component(service = FetchProjectMetadataProcessor.class)
+public class FetchProjectMetadataProcessor implements Processor {
 
   private static final Logger LOGGER = LoggerFactory
-      .getLogger(FetchAllProjectSuitesProcessor.class);
+      .getLogger(FetchProjectMetadataProcessor.class);
 
   @Reference
   private MetadataDAO metadataDAO;
@@ -47,7 +47,7 @@ public class FetchAllProjectSuitesProcessor implements Processor {
     LOGGER.info("Querying for unused data in {}", dbKey);
 
     final List<Suite> allProjectSuites = metadataDAO.listSuites(dbKey);
-    final AllProjectSuitesMessageBody messageBody = new AllProjectSuitesMessageBody(
+    final ProjectMetadataMessageBody messageBody = new ProjectMetadataMessageBody(
         allProjectSuites, dbKey);
 
     exchange.getOut().setBody(messageBody);

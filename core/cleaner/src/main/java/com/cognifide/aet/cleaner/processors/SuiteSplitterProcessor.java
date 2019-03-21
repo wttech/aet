@@ -18,7 +18,7 @@ package com.cognifide.aet.cleaner.processors;
 import com.cognifide.aet.cleaner.context.CleanerContext;
 import com.cognifide.aet.cleaner.context.DbAggregationCounter;
 import com.cognifide.aet.cleaner.context.SuiteAggregationCounter;
-import com.cognifide.aet.cleaner.processors.exchange.AllProjectSuitesMessageBody;
+import com.cognifide.aet.cleaner.processors.exchange.ProjectMetadataMessageBody;
 import com.cognifide.aet.cleaner.processors.exchange.SuiteMessageBody;
 import com.cognifide.aet.vs.DBKey;
 import java.util.List;
@@ -40,8 +40,8 @@ public class SuiteSplitterProcessor implements Processor {
   public void process(Exchange exchange) throws Exception {
     final CleanerContext cleanerContext = exchange.getIn()
         .getHeader(CleanerContext.KEY_NAME, CleanerContext.class);
-    final AllProjectSuitesMessageBody allSuites = exchange.getIn().getBody(
-        AllProjectSuitesMessageBody.class);
+    final ProjectMetadataMessageBody allSuites = exchange.getIn().getBody(
+        ProjectMetadataMessageBody.class);
     final DBKey dbKey = allSuites.getDbKey();
 
     final List<SuiteMessageBody> body =

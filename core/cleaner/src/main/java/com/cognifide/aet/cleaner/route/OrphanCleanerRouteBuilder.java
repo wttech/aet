@@ -19,9 +19,9 @@ package com.cognifide.aet.cleaner.route;
 import com.cognifide.aet.cleaner.context.DbAggregationCounter;
 import com.cognifide.aet.cleaner.context.SuiteAggregationCounter;
 import com.cognifide.aet.cleaner.processors.ErrorHandlingProcessor;
-import com.cognifide.aet.cleaner.processors.FetchAllProjectSuitesProcessor;
+import com.cognifide.aet.cleaner.processors.FetchProjectMetadataProcessor;
 import com.cognifide.aet.cleaner.processors.GetMetadataArtifactsProcessor;
-import com.cognifide.aet.cleaner.processors.GetOrphanedArtifactsProcessor;
+import com.cognifide.aet.cleaner.processors.GetAllOrphanedArtifactsProcessor;
 import com.cognifide.aet.cleaner.processors.RemoveArtifactsProcessor;
 import com.cognifide.aet.cleaner.processors.StartMetadataCleanupProcessor;
 import com.cognifide.aet.cleaner.processors.SuiteLockProcessor;
@@ -44,7 +44,7 @@ public class OrphanCleanerRouteBuilder extends RouteBuilder {
   private StartMetadataCleanupProcessor startMetadataCleanupProcessor;
 
   @Reference
-  private FetchAllProjectSuitesProcessor fetchAllProjectSuitesProcessor;
+  private FetchProjectMetadataProcessor fetchProjectMetadataProcessor;
 
   @Reference
   private SuiteSplitterProcessor suiteSplitterProcessor;
@@ -56,7 +56,7 @@ public class OrphanCleanerRouteBuilder extends RouteBuilder {
   private GetMetadataArtifactsProcessor getMetadataArtifactsProcessor;
 
   @Reference
-  private GetOrphanedArtifactsProcessor getArtifactsToRemoveProcessor;
+  private GetAllOrphanedArtifactsProcessor getArtifactsToRemoveProcessor;
 
   @Reference
   private SuiteLockProcessor suiteLockProcessor;
@@ -75,7 +75,7 @@ public class OrphanCleanerRouteBuilder extends RouteBuilder {
         .to(direct("fetchProjectSuites"));
 
     from(direct("fetchProjectSuites"))
-        .process(fetchAllProjectSuitesProcessor)
+        .process(fetchProjectMetadataProcessor)
         .process(suiteSplitterProcessor)
         .split(body())
         .process(getMetadataArtifactsProcessor)

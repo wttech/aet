@@ -18,8 +18,8 @@ package com.cognifide.aet.cleaner.route;
 
 import com.cognifide.aet.cleaner.context.SuiteAggregationCounter;
 import com.cognifide.aet.cleaner.processors.ErrorHandlingProcessor;
-import com.cognifide.aet.cleaner.processors.FetchAllProjectSuitesProcessor;
-import com.cognifide.aet.cleaner.processors.GetExpiredArtifactsProcessor;
+import com.cognifide.aet.cleaner.processors.FetchProjectMetadataProcessor;
+import com.cognifide.aet.cleaner.processors.GetAllExpiredArtifactsProcessor;
 import com.cognifide.aet.cleaner.processors.GetMetadataArtifactsProcessor;
 import com.cognifide.aet.cleaner.processors.GroupProjectSuitesProcessor;
 import com.cognifide.aet.cleaner.processors.RemoveArtifactsProcessor;
@@ -42,7 +42,7 @@ public class MetadataCleanerRouteBuilder extends RouteBuilder {
   private StartMetadataCleanupProcessor startMetadataCleanupProcessor;
 
   @Reference
-  private FetchAllProjectSuitesProcessor fetchAllProjectSuitesProcessor;
+  private FetchProjectMetadataProcessor fetchProjectMetadataProcessor;
 
   @Reference
   private GroupProjectSuitesProcessor groupProjectSuitesProcessor;
@@ -57,7 +57,7 @@ public class MetadataCleanerRouteBuilder extends RouteBuilder {
   private GetMetadataArtifactsProcessor getMetadataArtifactsProcessor;
 
   @Reference
-  private GetExpiredArtifactsProcessor getArtifactsToRemoveProcessor;
+  private GetAllExpiredArtifactsProcessor getArtifactsToRemoveProcessor;
 
   @Reference
   private RemoveArtifactsProcessor removeArtifactsProcessor;
@@ -72,7 +72,7 @@ public class MetadataCleanerRouteBuilder extends RouteBuilder {
         .to(direct("fetchProjectSuites"));
 
     from(direct("fetchProjectSuites"))
-        .process(fetchAllProjectSuitesProcessor)
+        .process(fetchProjectMetadataProcessor)
         .process(groupProjectSuitesProcessor)
         .split(body())
         .to(direct("suitesRemovePredicateProcessor"));
