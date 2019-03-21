@@ -16,6 +16,7 @@
 package com.cognifide.aet.cleaner.route;
 
 
+import com.cognifide.aet.cleaner.context.DbAggregationCounter;
 import com.cognifide.aet.cleaner.context.SuiteAggregationCounter;
 import com.cognifide.aet.cleaner.processors.DbLockProcessor;
 import com.cognifide.aet.cleaner.processors.DbUnlockProcessor;
@@ -80,7 +81,7 @@ public class OrphanCleanerRouteBuilder extends RouteBuilder {
         .completionTimeout(60000L).forceCompletionOnStop()
         .discardOnCompletionTimeout()
         .aggregate(new GroupedBodyAggregationStrategy()).constant(true)
-        .completionSize(header(SuiteAggregationCounter.NAME_KEY).method("getDbsToAggregate"))
+        .completionSize(header(DbAggregationCounter.NAME_KEY).method("getDbsToAggregate"))
         .process(dbUnlockProcessor)
         .split(body())
         .to(direct("removeArtifacts"));
