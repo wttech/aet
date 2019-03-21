@@ -25,6 +25,7 @@ import org.hibernate.validator.constraints.NotBlank;
 public class Step extends Operation implements Commentable, Named {
 
   private static final long serialVersionUID = 3123747091786941360L;
+
   public static final String SCREEN = "screen";
 
   @NotNull
@@ -60,7 +61,7 @@ public class Step extends Operation implements Commentable, Named {
     if (SCREEN.equals(name)) {
       pattern = stepResult.getArtifactId();
     } else {
-      throw new IllegalStateException(String.format("Reset pattern was executed run for %s step. It Can only run for %s step", name, SCREEN));
+      throw new IllegalStateException(String.format("Reset pattern wasn't  executed  for %s step. It Can only run for %s step", name, SCREEN));
     }
   }
 

@@ -15,9 +15,9 @@
   * See the License for the specific language governing permissions and
   * limitations under the License.
   */
-define(['angularAMD', 'metadataService'], function (angularAMD) {
+define([], function () {
   'use strict';
-  angularAMD.controller('errorCtrl', ErrorController)
+  return ['metadataService', ErrorController];
 
   function ErrorController(metadataService) {
     var vm = this;

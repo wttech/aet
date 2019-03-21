@@ -66,6 +66,9 @@ require.config({
     'sidepanelSaveChangesDirective': 'layout/sidepanel/saveChanges.directive',
     'sidepanelTruncateUrlsDirective': 'layout/sidepanel/truncateUrls.directive',
     'sidepanelController': 'layout/sidepanel/sidepanel.controller',
+    //error page
+    'errorController': 'layout/main/url/errors/processingError.controller',
+    'errorDirective': 'layout/main/url/errors/processingError.directive',
     //main
     'suiteController': 'layout/main/suite/mainView.suite.controller',
     'testController': 'layout/main/test/mainView.test.controller',
