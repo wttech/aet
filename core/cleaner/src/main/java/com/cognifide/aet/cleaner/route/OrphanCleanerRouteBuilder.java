@@ -20,8 +20,8 @@ import com.cognifide.aet.cleaner.context.DbAggregationCounter;
 import com.cognifide.aet.cleaner.context.SuiteAggregationCounter;
 import com.cognifide.aet.cleaner.processors.ErrorHandlingProcessor;
 import com.cognifide.aet.cleaner.processors.FetchProjectMetadataProcessor;
-import com.cognifide.aet.cleaner.processors.GetMetadataArtifactsProcessor;
 import com.cognifide.aet.cleaner.processors.GetAllOrphanedArtifactsProcessor;
+import com.cognifide.aet.cleaner.processors.GetMetadataArtifactsProcessor;
 import com.cognifide.aet.cleaner.processors.RemoveArtifactsProcessor;
 import com.cognifide.aet.cleaner.processors.StartMetadataCleanupProcessor;
 import com.cognifide.aet.cleaner.processors.SuiteLockProcessor;
@@ -78,20 +78,25 @@ public class OrphanCleanerRouteBuilder extends RouteBuilder {
         .process(fetchProjectMetadataProcessor)
         .process(suiteSplitterProcessor)
         .split(body())
+        .to(direct("getMetadataArtifacts"));
+
+    from(direct("getMetadataArtifacts"))
         .process(getMetadataArtifactsProcessor)
-        //aggregation
+        .to(direct("aggregateByDbKey"));
+
+    from(direct("aggregateByDbKey"))
         .aggregate(body().method("getDbKey"), new SuitesAggregationStrategy())
         .completionSize(header(SuiteAggregationCounter.NAME_KEY).method("getSuitesToAggregate"))
         .completionTimeout(60000L).forceCompletionOnStop()
         .discardOnCompletionTimeout()
+        .to(direct("removeArtifacts"));
+
+    from(direct("removeArtifacts"))
         .process(getArtifactsToRemoveProcessor)
         .aggregate(new GroupedBodyAggregationStrategy()).constant(true)
         .completionSize(header(DbAggregationCounter.NAME_KEY).method("getDbsToAggregate"))
         .process(suiteUnlockProcessor)
         .split(body())
-        .to(direct("removeArtifacts"));
-
-    from(direct("removeArtifacts"))
         .process(removeArtifactsProcessor);
   }
 
