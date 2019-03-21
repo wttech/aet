@@ -16,6 +16,7 @@
 package com.cognifide.aet.cleaner.processors;
 
 import com.cognifide.aet.cleaner.context.CleanerContext;
+import com.cognifide.aet.cleaner.context.DbAggregationCounter;
 import com.cognifide.aet.cleaner.context.SuiteAggregationCounter;
 import com.cognifide.aet.cleaner.processors.exchange.ReferencedArtifactsMessageBody;
 import com.cognifide.aet.cleaner.processors.exchange.SuiteMessageBody;
@@ -87,6 +88,8 @@ public class GetMetadataArtifactsProcessor implements Processor {
     exchange.getOut().setHeader(CleanerContext.KEY_NAME, cleanerContext);
     exchange.getOut().setHeader(SuiteAggregationCounter.NAME_KEY, exchange.getIn()
         .getHeader(SuiteAggregationCounter.NAME_KEY, SuiteAggregationCounter.class));
+    exchange.getOut().setHeader(DbAggregationCounter.NAME_KEY, exchange.getIn()
+        .getHeader(DbAggregationCounter.NAME_KEY, DbAggregationCounter.class));
   }
 
   private Set<String> traverseTest(Test test) {

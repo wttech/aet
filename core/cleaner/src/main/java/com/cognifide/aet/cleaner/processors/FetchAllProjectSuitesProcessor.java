@@ -16,6 +16,7 @@
 package com.cognifide.aet.cleaner.processors;
 
 import com.cognifide.aet.cleaner.context.CleanerContext;
+import com.cognifide.aet.cleaner.context.DbAggregationCounter;
 import com.cognifide.aet.cleaner.processors.exchange.AllProjectSuitesMessageBody;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.vs.DBKey;
@@ -46,10 +47,13 @@ public class FetchAllProjectSuitesProcessor implements Processor {
     LOGGER.info("Querying for unused data in {}", dbKey);
 
     final List<Suite> allProjectSuites = metadataDAO.listSuites(dbKey);
-    final AllProjectSuitesMessageBody messageBody = new AllProjectSuitesMessageBody(allProjectSuites, dbKey);
+    final AllProjectSuitesMessageBody messageBody = new AllProjectSuitesMessageBody(
+        allProjectSuites, dbKey);
 
     exchange.getOut().setBody(messageBody);
     exchange.getOut().setHeader(CleanerContext.KEY_NAME, cleanerContext);
+    exchange.getOut().setHeader(DbAggregationCounter.NAME_KEY, exchange.getIn()
+        .getHeader(DbAggregationCounter.NAME_KEY, DbAggregationCounter.class));
   }
 
 

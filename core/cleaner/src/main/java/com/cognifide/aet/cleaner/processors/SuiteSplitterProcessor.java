@@ -16,6 +16,7 @@
 package com.cognifide.aet.cleaner.processors;
 
 import com.cognifide.aet.cleaner.context.CleanerContext;
+import com.cognifide.aet.cleaner.context.DbAggregationCounter;
 import com.cognifide.aet.cleaner.context.SuiteAggregationCounter;
 import com.cognifide.aet.cleaner.processors.exchange.AllProjectSuitesMessageBody;
 import com.cognifide.aet.cleaner.processors.exchange.SuiteMessageBody;
@@ -51,5 +52,7 @@ public class SuiteSplitterProcessor implements Processor {
     exchange.getOut().setHeader(SuiteAggregationCounter.NAME_KEY,
         new SuiteAggregationCounter(allSuites.getData().size()));
     exchange.getOut().setHeader(CleanerContext.KEY_NAME, cleanerContext);
+    exchange.getOut().setHeader(DbAggregationCounter.NAME_KEY, exchange.getIn()
+        .getHeader(DbAggregationCounter.NAME_KEY, DbAggregationCounter.class));
   }
 }

@@ -22,11 +22,12 @@ import com.cognifide.aet.cleaner.processors.DbUnlockProcessor;
 import com.cognifide.aet.cleaner.processors.ErrorHandlingProcessor;
 import com.cognifide.aet.cleaner.processors.FetchAllProjectSuitesProcessor;
 import com.cognifide.aet.cleaner.processors.GetMetadataArtifactsProcessor;
-import com.cognifide.aet.cleaner.processors.SuiteSplitterProcessor;
 import com.cognifide.aet.cleaner.processors.RemoveOrphanArtifactsProcessor;
 import com.cognifide.aet.cleaner.processors.StartMetadataCleanupProcessor;
+import com.cognifide.aet.cleaner.processors.SuiteSplitterProcessor;
 import com.cognifide.aet.communication.api.exceptions.AETException;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.processor.aggregate.GroupedBodyAggregationStrategy;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -78,11 +79,14 @@ public class OrphanCleanerRouteBuilder extends RouteBuilder {
         .completionSize(header(SuiteAggregationCounter.NAME_KEY).method("getSuitesToAggregate"))
         .completionTimeout(60000L).forceCompletionOnStop()
         .discardOnCompletionTimeout()
+        .aggregate(new GroupedBodyAggregationStrategy()).constant(true)
+        .completionSize(header(SuiteAggregationCounter.NAME_KEY).method("getDbsToAggregate"))
+        .process(dbUnlockProcessor)
+        .split(body())
         .to(direct("removeArtifacts"));
 
     from(direct("removeArtifacts"))
-        .process(removeArtifactsProcessor)
-        .process(dbUnlockProcessor);
+        .process(removeArtifactsProcessor);
   }
 
   private void setupErrorHandling() {

@@ -35,7 +35,6 @@ public class RemoveOrphanArtifactsProcessor extends RemoveArtifactsProcessor {
   Set<String> getArtifactsIdsToRemove(ReferencedArtifactsMessageBody messageBody) {
     Set<String> artifactsToRemove = artifactsDAO.getArtifactsIds(messageBody.getDbKey());
     artifactsToRemove.removeAll(messageBody.getArtifactsToKeep());
-    client.unlock();
     return artifactsToRemove;
   }
 

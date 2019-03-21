@@ -16,6 +16,7 @@
 package com.cognifide.aet.cleaner.route;
 
 import com.cognifide.aet.cleaner.context.CleanerContext;
+import com.cognifide.aet.cleaner.context.DbAggregationCounter;
 import com.cognifide.aet.cleaner.processors.exchange.ReferencedArtifactsMessageBody;
 import org.apache.camel.Exchange;
 import org.apache.camel.processor.aggregate.CompletionAwareAggregationStrategy;
@@ -41,7 +42,9 @@ class SuitesAggregationStrategy implements CompletionAwareAggregationStrategy {
 
       oldExchange.getIn().setBody(newBody);
       oldExchange.getIn().setHeader(CleanerContext.KEY_NAME,
-          newExchange.getIn().getHeader(CleanerContext.KEY_NAME, CleanerContext.class));
+          oldExchange.getIn().getHeader(CleanerContext.KEY_NAME, CleanerContext.class));
+      oldExchange.getIn().setHeader(DbAggregationCounter.NAME_KEY,
+          oldExchange.getIn().getHeader(DbAggregationCounter.NAME_KEY, DbAggregationCounter.class));
 
       aggregatedExchange = oldExchange;
     }
