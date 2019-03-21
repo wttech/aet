@@ -18,8 +18,8 @@ package com.cognifide.aet.cleaner.route;
 
 import com.cognifide.aet.cleaner.context.DbAggregationCounter;
 import com.cognifide.aet.cleaner.context.SuiteAggregationCounter;
-import com.cognifide.aet.cleaner.processors.DbLockProcessor;
-import com.cognifide.aet.cleaner.processors.DbUnlockProcessor;
+import com.cognifide.aet.cleaner.processors.SuiteLockProcessor;
+import com.cognifide.aet.cleaner.processors.SuiteUnlockProcessor;
 import com.cognifide.aet.cleaner.processors.ErrorHandlingProcessor;
 import com.cognifide.aet.cleaner.processors.FetchAllProjectSuitesProcessor;
 import com.cognifide.aet.cleaner.processors.GetMetadataArtifactsProcessor;
@@ -55,17 +55,17 @@ public class OrphanCleanerRouteBuilder extends RouteBuilder {
   private GetMetadataArtifactsProcessor getMetadataArtifactsProcessor;
 
   @Reference
-  private DbLockProcessor dbLockProcessor;
+  private SuiteLockProcessor suiteLockProcessor;
 
   @Reference
-  private DbUnlockProcessor dbUnlockProcessor;
+  private SuiteUnlockProcessor suiteUnlockProcessor;
 
   @Override
   public void configure() throws Exception {
     setupErrorHandling();
 
     from(direct("start"))
-        .process(dbLockProcessor)
+        .process(suiteLockProcessor)
         .process(startMetadataCleanupProcessor)
         .split(body())
         .to(direct("fetchProjectSuites"));
@@ -82,7 +82,7 @@ public class OrphanCleanerRouteBuilder extends RouteBuilder {
         .discardOnCompletionTimeout()
         .aggregate(new GroupedBodyAggregationStrategy()).constant(true)
         .completionSize(header(DbAggregationCounter.NAME_KEY).method("getDbsToAggregate"))
-        .process(dbUnlockProcessor)
+        .process(suiteUnlockProcessor)
         .split(body())
         .to(direct("removeArtifacts"));
 

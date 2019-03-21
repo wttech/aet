@@ -15,22 +15,23 @@
  */
 package com.cognifide.aet.cleaner.processors;
 
-import com.cognifide.aet.vs.mongodb.MongoDBClient;
+import com.cognifide.aet.rest.LockService;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-@Component(service = DbUnlockProcessor.class)
-public class DbUnlockProcessor implements Processor {
+@Component(service = SuiteLockProcessor.class)
+public class SuiteLockProcessor implements Processor {
 
   @Reference
-  private MongoDBClient client;
+  private LockService lockService;
 
   @Override
   @SuppressWarnings("unchecked")
   public void process(Exchange exchange) throws Exception {
-    client.unlock();
+    lockService.setGlobalLock();
+    Thread.sleep(10000);
     exchange.setOut(exchange.getIn());
   }
 }
