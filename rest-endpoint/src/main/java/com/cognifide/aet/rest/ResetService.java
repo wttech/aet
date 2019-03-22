@@ -53,7 +53,7 @@ public class ResetService {
           .findFirst()
           .orElseThrow(() -> new IllegalStateException(String.format("The step name %s don't exit in test: %s", SCREEN, test)));
 
-      selectedStep.replacePatternWithCurrentPattern();
+      selectedStep.replacePatternWithLatestPattern();
     } else {
       LOGGER.warn("Suite test has not contains any element: {}", suite);
       throw new IllegalStateException(String.format("Suite test has not element: %s", suite.toString()));

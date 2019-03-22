@@ -58,7 +58,7 @@ public class Step extends Operation implements Commentable, Named {
     comparators = builder.comparators;
   }
 
-  public void replacePatternWithCurrentPattern() {
+  public void replacePatternWithLatestPattern() {
     if (SCREEN.equals(name)) {
       pattern = stepResult.getArtifactId();
       changeStepResultStatusToResetPattern();
