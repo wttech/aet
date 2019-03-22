@@ -23,7 +23,6 @@ import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.StorageException;
 import java.util.List;
-import java.util.Optional;
 import java.util.Set;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -38,25 +37,25 @@ public class ResetService {
   private static final org.slf4j.Logger LOGGER = LoggerFactory.getLogger(ResetSuiteServlet.class);
 
   public Suite resetPattern(Suite suite, String urlToReset) throws StorageException, ValidatorException {
-    Optional<List<Test>> tests = Optional.of(suite.getTests());
+    List<Test> tests = suite.getTests();
 
-    if (tests.isPresent() && !tests.get().isEmpty()) {
-      Test test = getLatestTest(tests.get());//todo get last test? add id null
+    if (!tests.isEmpty()) {
+      Test test = getLatestTest(tests);
       Set<Url> urls = test.getUrls();
 
       Url curentUrl = urls.stream()
           .filter(url -> urlToReset.equals(url.getUrl()))
           .findFirst()
-          .orElseThrow(() -> new IllegalStateException(String.format("The url: %s don't exit in test: $s", urlToReset,test)));
+          .orElseThrow(() -> new IllegalStateException(String.format("The url: %s don't exit in test: %s", urlToReset, test)));
 
       Step selectedStep = curentUrl.getSteps().stream()
           .filter(step -> SCREEN.equals(step.getName()))
           .findFirst()
-          .orElseThrow(() -> new IllegalStateException(String.format("The step name %d don't exit in test",SCREEN,test)));
+          .orElseThrow(() -> new IllegalStateException(String.format("The step name %s don't exit in test: %s", SCREEN, test)));
 
       selectedStep.replacePatternWithCurrentPattern();
     } else {
-      LOGGER.warn(String.format("Suite test has not contains any element: %s", suite.toString()));
+      LOGGER.warn("Suite test has not contains any element: {}", suite);
       throw new IllegalStateException(String.format("Suite test has not element: %s", suite.toString()));
     }
 
