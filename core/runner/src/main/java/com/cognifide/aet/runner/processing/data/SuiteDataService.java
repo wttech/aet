@@ -60,9 +60,4 @@ public class SuiteDataService {
   public Suite getSuite(DBKey dbKey, String correlationId) throws StorageException {
     return metadataDAO.getSuite(dbKey, correlationId);
   }
-
-  private BinaryOperator<Test> getLastElementFromList() {
-    return (first, second) -> second;
-  }
-
 }
