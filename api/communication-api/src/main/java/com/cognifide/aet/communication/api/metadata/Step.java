@@ -1,4 +1,5 @@
 /**
+/**
  * AET
  *
  * Copyright (C) 2013 Cognifide Limited
@@ -60,9 +61,13 @@ public class Step extends Operation implements Commentable, Named {
   public void replacePatternWithCurrentPattern() {
     if (SCREEN.equals(name)) {
       pattern = stepResult.getArtifactId();
+      changeStepResultStatusToResetPattern();
     } else {
       throw new IllegalStateException(String.format("Reset pattern wasn't  executed  for %s step. It Can only run for %s step", name, SCREEN));
     }
+  }
+  private void changeStepResultStatusToResetPattern() {
+    stepResult = CollectorStepResult.changeStatusToResetPattern(stepResult.getArtifactId(), stepResult.getPayload());
   }
 
   public static Builder newBuilder(String type, Integer index) {
@@ -95,8 +100,7 @@ public class Step extends Operation implements Commentable, Named {
   }
 
   /**
-   * Adds comparator to comparators set. If the same comparator already exists, it is removed and
-   * replaced by passed comparator object.
+   * Adds comparator to comparators set. If the same comparator already exists, it is removed and replaced by passed comparator object.
    *
    * @param comparator to add
    */

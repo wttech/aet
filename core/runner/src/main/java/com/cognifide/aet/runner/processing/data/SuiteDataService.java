@@ -53,7 +53,7 @@ public class SuiteDataService {
   }
 
   public Suite replaceSuite(final Suite oldSuite, final Suite newSuite) throws StorageException {
-    metadataDAO.replaceSuite(oldSuite, newSuite);
+    metadataDAO.replaceSuite(oldSuite,newSuite);
     return newSuite;
   }
 
