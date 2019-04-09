@@ -10,6 +10,7 @@ All notable changes to AET will be documented in this file.
 ## Unreleased
 
 **List of changes that are finished but not yet released in any final version.**
+- Implement a feature that will allow monitoring the size of responses for the given requests ([#501](https://github.com/Cognifide/aet/issues/501))
 
 ## Version 3.2.1
 
