@@ -21,7 +21,6 @@ import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
-import com.cognifide.aet.job.common.comparators.requestmonitoring.utils.RequestMonitoringResultBuilder;
 import com.cognifide.aet.job.common.comparators.requestmonitoring.utils.RequestMonitoringResults;
 import com.cognifide.aet.vs.ArtifactsDAO;
 import org.apache.commons.lang3.StringUtils;
@@ -55,18 +54,18 @@ public class RequestMonitoringCollector implements CollectorJob {
   public CollectorStepResult collect() throws ProcessingException {
     final CollectorStepResult stepResult;
 
-    RequestMonitoringResults result = new RequestMonitoringResults();
+    RequestMonitoringResults results = new RequestMonitoringResults();
     HarLog log = webCommunicationWrapper.getProxyServer().getHar().getLog();
 
     for (final HarEntry harLogEntry : log.getEntries()) {
       String url = harLogEntry.getRequest().getUrl();
       if (url.matches(urlPattern)) {
         long bodySize = harLogEntry.getResponse().getBodySize();
-        result.addItem(new RequestMonitoringResultBuilder().setUrl(url).setSize(bodySize).build());
+        results.addItem(url, bodySize);
       }
     }
 
-    final String artifactId = artifactsDAO.saveArtifactInJsonFormat(properties, result);
+    final String artifactId = artifactsDAO.saveArtifactInJsonFormat(properties, results);
     stepResult = CollectorStepResult.newCollectedResult(artifactId);
 
     return stepResult;

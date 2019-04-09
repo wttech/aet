@@ -29,7 +29,9 @@ public class RequestMonitoringResults {
     this.totalSize = 0d;
   }
 
-  public final void addItem(RequestMonitoringResult item) {
+  public final void addItem(String url, long bodySize) {
+    RequestMonitoringResult item = new RequestMonitoringResultBuilder().setUrl(url)
+        .setSize(bodySize).build();
     results.add(item);
     totalSize += item.getSize();
   }
