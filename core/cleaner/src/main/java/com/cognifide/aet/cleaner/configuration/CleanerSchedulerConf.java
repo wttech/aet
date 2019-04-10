@@ -51,7 +51,7 @@ public @interface CleanerSchedulerConf {
       name = ORPHAN_RUN,
       description = "Flag that says if Orphan Cleaner should be run with a given schedule.",
       type = AttributeType.BOOLEAN)
-  boolean runOrphanCleaner() default true;
+  boolean runOrphanCleaner() default false;
 
   @AttributeDefinition(
       name = ORPHAN_SCHEDULE_CRON,
