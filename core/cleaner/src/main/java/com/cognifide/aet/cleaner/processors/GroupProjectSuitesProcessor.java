@@ -16,18 +16,15 @@
 package com.cognifide.aet.cleaner.processors;
 
 import com.cognifide.aet.cleaner.context.CleanerContext;
-import com.cognifide.aet.cleaner.context.SuiteAggregationCounter;
+import com.cognifide.aet.cleaner.processors.exchange.ProjectMetadataMessageBody;
 import com.cognifide.aet.cleaner.processors.exchange.AllSuiteVersionsMessageBody;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.MetadataDAO;
-import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
-import com.google.common.collect.ImmutableList;
 import com.google.common.collect.ImmutableListMultimap;
-import java.util.Collection;
 import java.util.List;
-import java.util.Map;
+import java.util.stream.Collectors;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.osgi.service.component.annotations.Component;
@@ -35,11 +32,11 @@ import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Component(service = FetchAllProjectSuitesProcessor.class)
-public class FetchAllProjectSuitesProcessor implements Processor {
+@Component(service = GroupProjectSuitesProcessor.class)
+public class GroupProjectSuitesProcessor implements Processor {
 
   private static final Logger LOGGER = LoggerFactory
-      .getLogger(FetchAllProjectSuitesProcessor.class);
+      .getLogger(GroupProjectSuitesProcessor.class);
 
   @Reference
   private MetadataDAO metadataDAO;
@@ -47,37 +44,21 @@ public class FetchAllProjectSuitesProcessor implements Processor {
   @Override
   @SuppressWarnings("unchecked")
   public void process(Exchange exchange) throws Exception {
-    final CleanerContext cleanerContext = exchange.getIn()
-        .getHeader(CleanerContext.KEY_NAME, CleanerContext.class);
-    final DBKey dbKey = exchange.getIn().getBody(DBKey.class);
-    LOGGER.info("Querying for unused data in {}", dbKey);
-
-    final List<Suite> allProjectSuites = metadataDAO.listSuites(dbKey);
+    final ProjectMetadataMessageBody allSuites = exchange.getIn().getBody(
+        ProjectMetadataMessageBody.class);
+    final DBKey dbKey = allSuites.getDbKey();
 
     final ImmutableListMultimap<String, Suite> groupedSuites =
-        FluentIterable.from(allProjectSuites).index(new Function<Suite, String>() {
-          @Override
-          public String apply(Suite suite) {
-            return suite.getName();
-          }
-        });
+        FluentIterable.from(allSuites.getData()).index(Suite::getName);
 
     LOGGER.info("Found {} distinct suites in {}", groupedSuites.keySet().size(), dbKey);
 
-    final ImmutableList<AllSuiteVersionsMessageBody> body =
-        FluentIterable.from(groupedSuites.asMap().entrySet()).transform(
-            new Function<Map.Entry<String, Collection<Suite>>, AllSuiteVersionsMessageBody>() {
-              @Override
-              public AllSuiteVersionsMessageBody apply(Map.Entry<String, Collection<Suite>> input) {
-                return new AllSuiteVersionsMessageBody(input.getKey(), dbKey, input.getValue());
-              }
-            }).toList();
+    final List<AllSuiteVersionsMessageBody> body =
+        groupedSuites.asMap().entrySet().stream()
+            .map(input -> new AllSuiteVersionsMessageBody(input.getKey(), dbKey, input.getValue()))
+            .collect(Collectors.toList());
 
     exchange.getOut().setBody(body);
-    exchange.getOut().setHeader(SuiteAggregationCounter.NAME_KEY,
-        new SuiteAggregationCounter(allProjectSuites.size()));
-    exchange.getOut().setHeader(CleanerContext.KEY_NAME, cleanerContext);
+    exchange.getOut().getHeaders().putAll(exchange.getIn().getHeaders());
   }
-
-
 }

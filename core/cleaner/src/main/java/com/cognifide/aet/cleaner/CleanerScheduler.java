@@ -17,12 +17,14 @@ package com.cognifide.aet.cleaner;
 
 import com.cognifide.aet.cleaner.configuration.CleanerSchedulerConf;
 import com.cognifide.aet.cleaner.route.MetadataCleanerRouteBuilder;
+import com.cognifide.aet.cleaner.route.OrphanCleanerRouteBuilder;
 import com.cognifide.aet.cleaner.validation.CleanerSchedulerValidator;
 import com.cognifide.aet.validation.ValidationResultBuilder;
 import com.cognifide.aet.validation.ValidationResultBuilderFactory;
 import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableMap;
 import java.util.UUID;
+import org.apache.camel.builder.RouteBuilder;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.ConfigurationPolicy;
@@ -59,12 +61,16 @@ public class CleanerScheduler {
   private MetadataCleanerRouteBuilder metadataCleanerRouteBuilder;
 
   @Reference
+  private OrphanCleanerRouteBuilder orphanCleanerRouteBuilder;
+
+  @Reference
   private ValidationResultBuilderFactory validationResultBuilderFactory;
 
   /**
-   * Name of scheduled job in this CleanerScheduler session.
+   * Names of scheduled cleaner jobs in this CleanerScheduler session.
    */
-  private String scheduledJob;
+  private String scheduledExpiredJob;
+  private String scheduledOrphanJob;
 
   @Activate
   public void activate(CleanerSchedulerConf config) {
@@ -74,12 +80,11 @@ public class CleanerScheduler {
 
       ValidationResultBuilder validationResultBuilder = validationResultBuilderFactory
           .createInstance();
-      new CleanerSchedulerValidator(config.schedule(), config.keepNVersions(), config.removeOlderThan())
-          .validate(validationResultBuilder);
+      new CleanerSchedulerValidator(config).validate(validationResultBuilder);
       if (!validationResultBuilder.hasErrors()) {
         scheduler = StdSchedulerFactory.getDefaultScheduler();
         scheduler.start();
-        scheduledJob = registerCleaningJob();
+        registerJobs(config);
         LOGGER.info("CleanerScheduler has been activated successfully with parameters: {}",
             this.toString());
       } else {
@@ -98,7 +103,7 @@ public class CleanerScheduler {
     try {
       LOGGER.info("Deactivating CleanerScheduler.");
       if (!scheduler.isShutdown()) {
-        scheduler.deleteJob(JobKey.jobKey(scheduledJob));
+        deleteJobs();
         scheduler.shutdown();
         scheduler = null;
         LOGGER.info("CleanerScheduler has been deactivated");
@@ -110,14 +115,24 @@ public class CleanerScheduler {
     }
   }
 
-  private String registerCleaningJob() throws SchedulerException {
+  private void registerJobs(CleanerSchedulerConf config) throws SchedulerException {
+    scheduledExpiredJob = registerCleaningJob(metadataCleanerRouteBuilder,
+        config.expiredCleanerSchedule());
+    if (config.runOrphanCleaner()) {
+      scheduledOrphanJob = registerCleaningJob(orphanCleanerRouteBuilder,
+          config.orphanCleanerSchedule());
+    }
+  }
+
+  private String registerCleaningJob(RouteBuilder routeBuilder, String cronExpression)
+      throws SchedulerException {
     final UUID uuid = UUID.randomUUID();
 
     final String cleanerJobName = "cleanMongoDbJob-" + uuid;
     final String cleanerTriggerName = "cleanMongoDbTrigger-" + uuid;
 
     final ImmutableMap<String, Object> jobData = ImmutableMap.<String, Object>builder()
-        .put(CleanerJob.KEY_ROUTE_BUILDER, metadataCleanerRouteBuilder)
+        .put(CleanerJob.KEY_ROUTE_BUILDER, routeBuilder)
         .put(CleanerJob.KEY_KEEP_N_VERSIONS, config.keepNVersions())
         .put(CleanerJob.KEY_REMOVE_OLDER_THAN, config.removeOlderThan())
         .put(CleanerJob.KEY_COMPANY_FILTER, config.companyName())
@@ -132,17 +147,29 @@ public class CleanerScheduler {
 
     Trigger trigger = TriggerBuilder.newTrigger()
         .withIdentity(cleanerTriggerName)
-        .withSchedule(CronScheduleBuilder.cronSchedule(config.schedule()))
+        .withSchedule(CronScheduleBuilder.cronSchedule(cronExpression))
         .build();
 
     scheduler.scheduleJob(jobDetail, trigger);
     return cleanerJobName;
   }
 
+  private void deleteJobs() throws SchedulerException {
+    deleteJob(scheduledExpiredJob);
+    deleteJob(scheduledOrphanJob);
+  }
+
+  private void deleteJob(String jobKey) throws SchedulerException {
+    if (jobKey != null) {
+      scheduler.deleteJob(JobKey.jobKey(jobKey));
+    }
+  }
+
   @Override
   public String toString() {
     return MoreObjects.toStringHelper(this)
-        .add("schedule", config.schedule())
+        .add("expiredCleanerSchedule", config.expiredCleanerSchedule())
+        .add("orphanCleanerSchedule", config.orphanCleanerSchedule())
         .add("keepNVersions", config.keepNVersions())
         .add("removeOlderThan", config.removeOlderThan())
         .add("companyName", config.companyName())

@@ -64,8 +64,8 @@ public class SuitesRemovePredicateProcessor implements Processor {
         }).toList();
 
     exchange.getOut().setBody(body);
-    exchange.getOut().setHeader(SuiteAggregationCounter.NAME_KEY, exchange.getIn()
-        .getHeader(SuiteAggregationCounter.NAME_KEY, SuiteAggregationCounter.class));
+    exchange.getOut().setHeader(SuiteAggregationCounter.NAME_KEY,
+        new SuiteAggregationCounter(suiteVersions.size()));
     exchange.getOut().setHeader(CleanerContext.KEY_NAME, cleanerContext);
   }
 }

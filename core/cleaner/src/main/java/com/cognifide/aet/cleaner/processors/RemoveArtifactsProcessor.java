@@ -16,7 +16,7 @@
 package com.cognifide.aet.cleaner.processors;
 
 import com.cognifide.aet.cleaner.context.CleanerContext;
-import com.cognifide.aet.cleaner.processors.exchange.ReferencedArtifactsMessageBody;
+import com.cognifide.aet.cleaner.processors.exchange.ArtifactsToRemoveMessageBody;
 import com.cognifide.aet.vs.ArtifactsDAO;
 import java.util.Set;
 import org.apache.camel.Exchange;
@@ -34,42 +34,26 @@ public class RemoveArtifactsProcessor implements Processor {
   @Reference
   private ArtifactsDAO artifactsDAO;
 
-  public RemoveArtifactsProcessor() {
-    //default constructor
-  }
-
-  // for unit tests
-  public RemoveArtifactsProcessor(ArtifactsDAO artifactsDAO) {
-    this.artifactsDAO = artifactsDAO;
-  }
-
   @Override
   @SuppressWarnings("unchecked")
   public void process(Exchange exchange) throws Exception {
     final CleanerContext cleanerContext = exchange.getIn()
         .getHeader(CleanerContext.KEY_NAME, CleanerContext.class);
-    final ReferencedArtifactsMessageBody messageBody = exchange.getIn()
-        .getBody(ReferencedArtifactsMessageBody.class);
+    final ArtifactsToRemoveMessageBody messageBody = exchange.getIn()
+        .getBody(ArtifactsToRemoveMessageBody.class);
 
-    Set<String> artifactsToRemove = getArtifactsIdsToRemove(artifactsDAO, messageBody);
+    final Set<String> artifactsToRemove = messageBody.getData();
 
     LOGGER.debug("Artifacts that will be removed: {}", artifactsToRemove);
     if (!cleanerContext.isDryRun()) {
-      LOGGER.info("{} unreferenced artifacts will be removed from {} after cleaning suite `{}`",
-          artifactsToRemove.size(), messageBody.getDbKey(), messageBody.getData());
+      LOGGER.info("{} unreferenced artifacts will be removed from {}",
+          artifactsToRemove.size(), messageBody.getDbKey());
       artifactsDAO.removeArtifacts(messageBody.getDbKey(), artifactsToRemove);
       LOGGER.info("{} artifacts removed successfully!", artifactsToRemove.size());
     } else {
       LOGGER.info(
-          "Dry run completed! {} unreferenced artifacts should be removed from {} after cleaning suite `{}`",
-          artifactsToRemove.size(), messageBody.getDbKey(), messageBody.getData());
+          "Dry run completed! {} unreferenced artifacts should be removed from {}",
+          artifactsToRemove.size(), messageBody.getDbKey());
     }
-  }
-
-  static Set<String> getArtifactsIdsToRemove(ArtifactsDAO artifactsDAO,
-      ReferencedArtifactsMessageBody messageBody) {
-    Set<String> artifactsToRemove = artifactsDAO.getArtifactsIds(messageBody.getDbKey());
-    artifactsToRemove.removeAll(messageBody.getArtifactsToKeep());
-    return artifactsToRemove;
   }
 }

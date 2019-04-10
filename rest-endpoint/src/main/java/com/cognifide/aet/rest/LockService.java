@@ -39,6 +39,8 @@ public class LockService implements Serializable {
 
   private transient Cache<String, String> lockSet;
 
+  private boolean globalLock;
+
   @Activate
   public void start() {
     LOGGER.debug("Starting lock service");
@@ -55,12 +57,20 @@ public class LockService implements Serializable {
     lockSet.put(key, value);
   }
 
+  public void setGlobalLock() {
+    globalLock = true;
+  }
+
+  public void unsetGlobalLock() {
+    globalLock = false;
+  }
+
   public boolean isLockPresent(String key) {
-    return null != lockSet.getIfPresent(key);
+    return globalLock || null != lockSet.getIfPresent(key);
   }
 
   public synchronized boolean trySetLock(String key, String value) {
-    if (null == lockSet.getIfPresent(key)) {
+    if (!globalLock && null == lockSet.getIfPresent(key)) {
       lockSet.put(key, value);
       return true;
     }

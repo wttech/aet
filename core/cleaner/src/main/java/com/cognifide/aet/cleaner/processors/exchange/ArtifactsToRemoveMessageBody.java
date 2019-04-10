@@ -15,32 +15,16 @@
  */
 package com.cognifide.aet.cleaner.processors.exchange;
 
-import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.vs.DBKey;
+import java.util.HashSet;
 import java.util.Set;
 
-public class SuiteMessageBody extends MessageBody<Suite> {
+public class ArtifactsToRemoveMessageBody extends MessageBody<HashSet<String>> {
 
-  private static final long serialVersionUID = -162821828397507909L;
+  private static final long serialVersionUID = 3748474548512567069L;
 
-  private final boolean toRemove;
-
-  private Set<String> suiteArtifacts;
-
-  public SuiteMessageBody(Suite data, DBKey dbKey, boolean toRemove) {
-    super(data, dbKey);
-    this.toRemove = toRemove;
+  public ArtifactsToRemoveMessageBody(Set<String> data, DBKey dbKey) {
+    super(new HashSet<>(data), dbKey);
   }
 
-  public boolean shouldBeRemoved() {
-    return toRemove;
-  }
-
-  public Set<String> getSuiteArtifacts() {
-    return suiteArtifacts;
-  }
-
-  public void setSuiteArtifacts(Set<String> suiteArtifacts) {
-    this.suiteArtifacts = suiteArtifacts;
-  }
 }

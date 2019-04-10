@@ -233,6 +233,14 @@ public class MongoDBClient {
     return getCollectionsList(dbName).contains(collectionName);
   }
 
+  public void lock() {
+    mongoClient.fsyncAndLock();
+  }
+
+  public void unlock() {
+    mongoClient.unlock();
+  }
+
   private Set<String> getCollectionsList(String dbName) {
     Set<String> result = Collections.emptySet();
     DB db = getDB(dbName);
