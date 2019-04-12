@@ -85,6 +85,11 @@ public class RequestMonitoringComparator implements ComparatorJob {
     return result;
   }
 
+  @Override
+  public void setParameters(Map<String, String> params) throws ParametersException {
+    maxSize = getMaxSize(params);
+  }
+
   private RequestMonitoringResults getCollectedResult() throws IOException {
     return artifactsDAO
         .getJsonFormatArtifact(comparatorProperties, comparatorProperties.getCollectedId(), TYPE);
@@ -99,10 +104,5 @@ public class RequestMonitoringComparator implements ComparatorJob {
       }
     }
     return result;
-  }
-
-  @Override
-  public void setParameters(Map<String, String> params) throws ParametersException {
-    maxSize = getMaxSize(params);
   }
 }

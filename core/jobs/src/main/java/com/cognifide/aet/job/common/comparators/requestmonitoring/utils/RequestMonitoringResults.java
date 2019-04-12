@@ -15,17 +15,18 @@
  */
 package com.cognifide.aet.job.common.comparators.requestmonitoring.utils;
 
-import java.util.SortedSet;
+import java.util.Collection;
+import java.util.Collections;
 import java.util.TreeSet;
 
 public class RequestMonitoringResults {
 
-  private final SortedSet<RequestMonitoringResult> results;
+  private final Collection<RequestMonitoringResult> results;
 
   private double totalSize;
 
   public RequestMonitoringResults() {
-    this.results = new TreeSet<>();
+    this.results = new TreeSet<>(Collections.reverseOrder());
     this.totalSize = 0d;
   }
 
@@ -36,7 +37,7 @@ public class RequestMonitoringResults {
     totalSize += item.getSize();
   }
 
-  public SortedSet<RequestMonitoringResult> getResults() {
+  public Collection<RequestMonitoringResult> getResults() {
     return results;
   }
 

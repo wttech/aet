@@ -17,9 +17,9 @@ package com.cognifide.aet.job.common.comparators.requestmonitoring.utils;
 
 public class RequestMonitoringResultBuilder {
 
-  private String url; //kB
+  private String url;
 
-  private double size;
+  private double size; //kB
 
   public RequestMonitoringResultBuilder() {
   }

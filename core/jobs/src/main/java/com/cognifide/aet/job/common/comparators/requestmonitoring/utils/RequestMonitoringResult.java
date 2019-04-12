@@ -19,7 +19,7 @@ public class RequestMonitoringResult implements Comparable<RequestMonitoringResu
 
   private final String url;
 
-  private final double size;
+  private final double size; // kB
 
   public RequestMonitoringResult(String url, double size) {
     this.url = url;
@@ -36,6 +36,6 @@ public class RequestMonitoringResult implements Comparable<RequestMonitoringResu
 
   @Override
   public int compareTo(RequestMonitoringResult o) {
-    return this.size > o.getSize() ? -1 : 1;
+    return Double.compare(this.size, o.getSize());
   }
 }
