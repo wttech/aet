@@ -22,6 +22,7 @@ import static com.cognifide.aet.rest.Helper.responseAsJson;
 import com.cognifide.aet.communication.api.exceptions.AETException;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
+import com.cognifide.aet.rest.helpers.BundleVersionProvider;
 import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.StorageException;
@@ -55,6 +56,7 @@ public class MetadataServlet extends BasicDataServlet {
   private static final Logger LOGGER = LoggerFactory.getLogger(MetadataServlet.class);
 
   private static final String FORMATTED_PARAM = "formatted";
+  private static final String APP_VERSION_HEADER = "Application-Version";
   private static final Gson PRETTY_PRINT_GSON = new GsonBuilder().setPrettyPrinting().create();
   private static final JsonParser JSON_PARSER = new JsonParser();
 
@@ -63,6 +65,9 @@ public class MetadataServlet extends BasicDataServlet {
 
   @Reference
   private LockService lockService;
+
+  @Reference
+  private BundleVersionProvider bundleVersionProvider;
 
   @Reference
   private transient HttpService httpService;
@@ -74,6 +79,7 @@ public class MetadataServlet extends BasicDataServlet {
     String suiteName = req.getParameter(Helper.SUITE_PARAM);
     String suiteVersion = req.getParameter(Helper.VERSION_PARAM);
     String formatted = req.getParameter(FORMATTED_PARAM);
+    resp.setHeader(APP_VERSION_HEADER, bundleVersionProvider.getBundleVersion());
     resp.setCharacterEncoding("UTF-8");
 
     Suite suite;
