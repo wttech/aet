@@ -20,6 +20,7 @@ import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferByte;
 import java.awt.image.WritableRaster;
 import java.util.Arrays;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,6 +45,12 @@ public final class ImageComparison {
 
   private static final int VALID_PIXEL_COLOR = new Color(0, 0, 0, 0).getRGB();
 
+  private static final double GRAYSCALE_RED_FACTOR = 0.299;
+
+  private static final double GRAYSCALE_GREEN_FACTOR = 0.587;
+
+  private static final double GRAYSCALE_BLUE_FACTOR = 0.114;
+
   private ImageComparison() {
   }
 
@@ -56,7 +63,7 @@ public final class ImageComparison {
    * @return ImageComparisonResult
    */
   public static ImageComparisonResult compare(final BufferedImage pattern,
-      final BufferedImage sample) {
+      final BufferedImage sample, final Integer fuzz) {
     LOG.debug("Starting comparison of images.");
     int minWidth = Math.min(pattern.getWidth(), sample.getWidth());
     int minHeight = Math.min(pattern.getHeight(), sample.getHeight());
@@ -68,11 +75,11 @@ public final class ImageComparison {
     BufferedImage resultImage = new BufferedImage(resultWidth, resultHeight,
         BufferedImage.TYPE_INT_ARGB);
 
-    int[][] img1Pixels = convertImageTo2DArray(pattern);
-    int[][] img2Pixels = convertImageTo2DArray(sample);
+    int[][] img1Pixels = convertImageTo2DArray(pattern, fuzz);
+    int[][] img2Pixels = convertImageTo2DArray(sample, fuzz);
 
     int differenceCounter = fastCompareMatchingArea(minWidth, minHeight, resultImage.getRaster(),
-        img1Pixels, img2Pixels);
+        img1Pixels, img2Pixels, fuzz);
 
     differenceCounter += fastMarkOuterAreaAsError(minWidth, minHeight, widthDifference,
         heightDifference,
@@ -100,7 +107,8 @@ public final class ImageComparison {
 
   private static int fastCompareMatchingArea(int minWidth, int minHeight,
       WritableRaster writableRaster,
-      int[][] img1Pixels, int[][] img2Pixels) {
+      int[][] img1Pixels, int[][] img2Pixels,
+      Integer fuzz) {
     int differenceCounter = 0;
     int[] pixels = new int[minWidth * minHeight];
     int i = 0;
@@ -109,7 +117,14 @@ public final class ImageComparison {
     for (int row = 0; row < minHeight; ++row) {
       for (int col = 0; col < minWidth; ++col) {
         int newRGB;
-        if (img1Pixels[row][col] == img2Pixels[row][col]) {
+        boolean testPassed;
+
+        if (fuzz != null) {
+          testPassed = Math.abs(img1Pixels[row][col] - img2Pixels[row][col]) <= (fuzz * 255 / 100);
+        } else {
+          testPassed = img1Pixels[row][col] == img2Pixels[row][col];
+        }
+        if (testPassed) {
           newRGB = VALID_PIXEL_COLOR;
         } else {
           newRGB = INVALID_PIXEL_COLOR;
@@ -123,7 +138,7 @@ public final class ImageComparison {
   }
 
   // package-scoped for unit test
-  static int[][] convertImageTo2DArray(BufferedImage image) {
+  static int[][] convertImageTo2DArray(BufferedImage image, Integer fuzz) {
     final byte[] imageBytes = ((DataBufferByte) image.getRaster().getDataBuffer()).getData();
     final int width = image.getWidth();
     final int height = image.getHeight();
@@ -137,9 +152,16 @@ public final class ImageComparison {
       int green = imageBytes[pixel + 2] & CHANNEL_VALUE_MASK;
       int blue = imageBytes[pixel + 1] & CHANNEL_VALUE_MASK;
       int alpha = imageBytes[pixel] & CHANNEL_VALUE_MASK;
+      int resultPixel;
 
-      int argb = new Color(red, green, blue, alpha).getRGB();
-      result[row][col] = argb;
+      if (fuzz != null) {
+        resultPixel = (int) Math.round(red * GRAYSCALE_RED_FACTOR
+            + green * GRAYSCALE_GREEN_FACTOR
+            + blue * GRAYSCALE_BLUE_FACTOR);
+      } else {
+        resultPixel = new Color(red, green, blue, alpha).getRGB();
+      }
+      result[row][col] = resultPixel;
       col++;
       if (col == width) {
         col = 0;
