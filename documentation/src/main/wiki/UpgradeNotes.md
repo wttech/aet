@@ -6,6 +6,8 @@ necessary configuration changes that were introduced in comparison to previously
 You may see all changes in the [Changelog](https://github.com/Cognifide/aet/blob/master/CHANGELOG.md).
 
 ## Unreleased
+
+## Version 3.2.1
 Changes:
 * Counting line and column number of an accessibility issue occurrence in [[Accessibility Collector|AccessibilityCollector]] has been improved. 
 Columns are now indexed starting from 1. Bug with two identical issues on a single page yielding the same line and column number has been fixed.
