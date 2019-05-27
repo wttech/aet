@@ -10,6 +10,9 @@ All notable changes to AET will be documented in this file.
 ## Unreleased
 
 **List of changes that are finished but not yet released in any final version.**
+
+## Version 3.2.2
+
 - [PR-507](https://github.com/Cognifide/aet/pull/507) Add option to match colors that are close to the target color in a grayscale space when comparing pixels with the LayoutComparator
 
 ## Version 3.2.1
