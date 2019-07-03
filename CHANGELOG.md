@@ -10,6 +10,7 @@ All notable changes to AET will be documented in this file.
 ## Unreleased
 
 **List of changes that are finished but not yet released in any final version.**
+- [PR-479](https://github.com/Cognifide/aet/pull/479) Added Secure and HttpOnly flags for cookies. ([#477](https://github.com/Cognifide/aet/issues/477))
 
 ## Version 3.2.2
 
@@ -21,7 +22,6 @@ All notable changes to AET will be documented in this file.
 - [PR-439](https://github.com/Cognifide/aet/pull/439) Fixed duplicating line and column numbers in accessibility tab
 - [PR-360](https://github.com/Cognifide/aet/pull/360) Keyboard shortcuts for 'Accept/Revert url/test' buttons ([#317](https://github.com/Cognifide/aet/issues/317))
 - [PR-432](https://github.com/Cognifide/aet/pull/432) Fixed issue with lack of clear message for erroneous suite definition.
-- [PR-479](https://github.com/Cognifide/aet/pull/479) Added Secure and HttpOnly flags for cookies. ([#477](https://github.com/Cognifide/aet/issues/477))
 - [PR-472](https://github.com/Cognifide/aet/pull/472) Return message when database does not exists and set suite status to MISSING_DATABASE ([#341](https://github.com/Cognifide/aet/issues/341))
 - [PR-363](https://github.com/Cognifide/aet/pull/363) Fixed saving case-level notes
 - [PR-470](https://github.com/Cognifide/aet/pull/470) Security vulnerabilities fix ([#407](https://github.com/Cognifide/aet/issues/407))
