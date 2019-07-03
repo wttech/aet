@@ -23,10 +23,9 @@ import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.job.common.utils.javascript.JavaScriptJobExecutor;
 import com.cognifide.aet.job.common.utils.Sampler;
 import java.util.Map;
-import java.util.function.Supplier;
+import java.util.function.IntSupplier;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.openqa.selenium.Dimension;
-import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriver.Window;
 import org.slf4j.Logger;
@@ -44,6 +43,7 @@ public class ResolutionModifier implements CollectorJob {
 
   private static final int HEIGHT_MAX_SIZE = 35000;
   private static final int INITIAL_HEIGHT = 300;
+  private static final int MINIMUM_HEIGHT = 1;
   private static final int HEIGHT_NOT_DEFINED = 0;
   private static final int HEIGHT_NOT_CALCULATED = -1;
   private static final int DEFAULT_SAMPLING_WAIT_PERIOD = 100;
@@ -108,6 +108,8 @@ public class ResolutionModifier implements CollectorJob {
         height = HEIGHT_MAX_SIZE;
       } else if (height == HEIGHT_NOT_CALCULATED) {
         throw new ProcessingException("Failed to calculate height, could not parse javascript result to integer");
+      } else if (height < MINIMUM_HEIGHT) {
+        height = MINIMUM_HEIGHT;
       }
     }
     LOG.info("Setting resolution to  {}x{}  ", width, height);
@@ -118,7 +120,7 @@ public class ResolutionModifier implements CollectorJob {
     Window window = webDriver.manage().window();
     window.setSize(new Dimension(width, INITIAL_HEIGHT));
 
-    Supplier<Integer> heightSupplier = () -> {
+    IntSupplier heightSupplier = () -> {
       int heightResult = HEIGHT_NOT_CALCULATED;
       try {
         LOG.debug("Executing Resolution Modifier");
