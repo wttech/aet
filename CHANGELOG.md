@@ -13,6 +13,10 @@ All notable changes to AET will be documented in this file.
 - [PR-506](https://github.com/Cognifide/aet/pull/506) About tab ([#475](https://github.com/Cognifide/aet/issues/475)) 
 
 
+## Version 3.2.2
+
+- [PR-507](https://github.com/Cognifide/aet/pull/507) Add option to match colors that are close to the target color in a grayscale space when comparing pixels with the LayoutComparator
+
 ## Version 3.2.1
 
 - [PR-469](https://github.com/Cognifide/aet/pull/469) Fix WebAPI issues([#425](https://github.com/Cognifide/aet/issues/425)) 
