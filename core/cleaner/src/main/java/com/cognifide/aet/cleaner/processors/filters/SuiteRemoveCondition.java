@@ -18,10 +18,11 @@ package com.cognifide.aet.cleaner.processors.filters;
 import com.cognifide.aet.cleaner.context.CleanerContext;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.google.common.collect.Ordering;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Collection;
 import java.util.Comparator;
 import java.util.List;
-import org.joda.time.DateTime;
 
 public class SuiteRemoveCondition {
 
@@ -88,8 +89,10 @@ public class SuiteRemoveCondition {
   private Long getRemoveTimestamp(CleanerContext cleanerContext) {
     Long removeBeforeTimestamp = null;
     if (cleanerContext.getRemoveOlderThan() != null) {
-      DateTime dateTime = new DateTime().minusDays(cleanerContext.getRemoveOlderThan().intValue());
-      removeBeforeTimestamp = dateTime.getMillis();
+      LocalDateTime now = LocalDateTime.now(ZoneOffset.UTC);
+      int daysToKeep = cleanerContext.getRemoveOlderThan().intValue();
+      LocalDateTime then = now.minusDays(daysToKeep);
+      removeBeforeTimestamp = then.toInstant(ZoneOffset.UTC).toEpochMilli();
     }
     return removeBeforeTimestamp;
   }
