@@ -175,6 +175,6 @@ The technology that AET makes use of comprises:
 - MongoDB (NoSQL DB)
 - Browsermob (HTTP Proxy)
 - Selenium (Grid with Hub and Chrome nodes)
-- Chef (cookbooks + Vagrant local instance on Oracle VirtualBox)
-- Docker (with example Docker Swarm cluster config)
+- Chef (cookbooks + Vagrant local instance on Oracle VirtualBox - see [AET Cookbook](https://github.com/Cognifide/aet-cookbook)
+- Docker (with example Docker Swarm cluster config) - see [AET Docker](https://github.com/Skejven/aet-docker)
 - AngularJS (Report app)
