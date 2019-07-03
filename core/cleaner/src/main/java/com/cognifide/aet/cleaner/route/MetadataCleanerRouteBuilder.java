@@ -89,6 +89,7 @@ public class MetadataCleanerRouteBuilder extends RouteBuilder {
         .aggregate(body().method("getDbKey"), new SuitesAggregationStrategy())
         .completionSize(header(SuiteAggregationCounter.NAME_KEY).method("getSuitesToAggregate"))
         .completionTimeout(60000L).forceCompletionOnStop()
+        .discardOnCompletionTimeout()
         .to(direct("removeArtifacts"));
 
     from(direct("removeArtifacts"))

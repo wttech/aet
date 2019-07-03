@@ -31,7 +31,7 @@ You will need following tools installed locally:
    (for vagrant setup url example: 'http://aet-vagrant/api/')
 2. go into `.../report/src/main/webapp` folder
 3. run `npm install` to install required npm modules
-4. if you are running the app for the first time use `gulp installLibs` or `gulp build`
+4. if you are running the app for the first time use `gulp copyLibs` or `gulp build`
 4. run `gulp` to start the application
 
 

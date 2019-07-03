@@ -36,6 +36,11 @@ public enum ProcessingStatus {
   FATAL_ERROR,
 
   /**
+   * An error occured when accessing database.
+   */
+  MISSING_DATABASE,
+
+  /**
    * Suite processing has finished successfully.
    */
   FINISHED,

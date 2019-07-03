@@ -73,7 +73,6 @@
     </feature>
 
     <feature name="aet-standalone-dependencies" version="0.6.0" description="Set of simple dependencies for AET" install="auto">
-        <bundle>mvn:joda-time/joda-time/2.10</bundle>
         <bundle>mvn:org.json/json/20180130</bundle>
         <bundle>mvn:com.google.code.gson/gson/2.8.5</bundle>
         <bundle>mvn:com.google.guava/guava/25.1-jre</bundle>

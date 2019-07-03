@@ -20,8 +20,8 @@ For Linux environment setup, use the [AET Cookbook](https://github.com/Cognifide
 
 **Prerequisites**
  * [Chrome browser](https://www.google.com/chrome/browser/desktop/) 
- * [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/downloads) (at least version 2.40)
- * [Selenium Standalone Server](http://www.seleniumhq.org/download/) (at least version 3.41)
+ * [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/downloads) (version 2.40 or newer)
+ * [Selenium Standalone Server](http://www.seleniumhq.org/download/) (version 3.41 or newer)
 
 **Start Selenium Grid node**
 

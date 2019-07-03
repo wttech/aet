@@ -7,6 +7,13 @@ You may see all changes in the [Changelog](https://github.com/Cognifide/aet/blob
 
 ## Unreleased
 
+## Version 3.2.1
+Changes:
+* Counting line and column number of an accessibility issue occurrence in [[Accessibility Collector|AccessibilityCollector]] has been improved. 
+Columns are now indexed starting from 1. Bug with two identical issues on a single page yielding the same line and column number has been fixed.
+When upgrading from previous AET version you may need to increase `column` values by 1. Pay special attention to issues that occur more than once on a single page. In new AET version they will be listed twice, each with its exact column and line number.
+Related issue: [#438](https://github.com/Cognifide/aet/issues/438)
+
 ## Version 3.2.0
 
 ### Users
@@ -39,7 +46,6 @@ Please see latest [[Screen Collector|ScreenCollector]] and [[Resolution Modifier
 the width of collected screenshot could be different that the width set in the `<resolution>` tag because of the Firefox's scrollbar 
 (see "Notes" section in [[Resolution Modifier|ResolutionModifier]] wiki). This issue doesn't occur when using AET 3.0 with Chrome browser - make
 sure to adjust the resolution `width` value when updating your suite from previous AET versions.
-
 ##### Known issues
 
 * [#357](https://github.com/Cognifide/aet/issues/357) - see Known issues section in [[Resolution Modifier|ResolutionModifier]] wiki

@@ -30,11 +30,11 @@ import browserSync      from 'browser-sync';
 import jshint           from 'gulp-jshint';
 import csslint          from 'gulp-csslint';
 import jshintSummary    from 'jshint-summary';
-import bower            from 'gulp-bower';
+import gncd             from 'gulp-npm-copy-deps'
 
 
 
-gulp.task("parseSCSS", ["installLibs"], () => {
+gulp.task("parseSCSS", ["copyLibs"], () => {
     gulp.src('./assets/sass/*.scss')
     .pipe(sourceMaps.init())
     .pipe(sass())
@@ -69,9 +69,9 @@ gulp.task('lintJS', function() {
         }));
 });
 
-gulp.task('installLibs', function() {
-    return bower({ directory: 'assets/libs'});
-})
+gulp.task('copyLibs', function() {
+    return gncd('./node_modules', 'assets/libs');
+});
 
 gulp.task('lintCSS', function() {
     gulp.src('./assets/css/main.css')
@@ -94,5 +94,5 @@ gulp.task('watch', ['parseSCSS', 'lintJS'], () => {
 
 
 gulp.task('default',['watch']);
-gulp.task('build', ['installLibs', 'parseSCSS', 'lintJS']);
+gulp.task('build', ['copyLibs', 'parseSCSS', 'lintJS']);
 

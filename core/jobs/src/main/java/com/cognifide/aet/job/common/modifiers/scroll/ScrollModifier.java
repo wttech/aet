@@ -20,11 +20,15 @@ import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.job.common.utils.javascript.JavaScriptJobExecutor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.util.Map;
 
 class ScrollModifier implements CollectorJob {
 
   static final String NAME = "scroll";
+  private static final Logger LOG = LoggerFactory.getLogger(ScrollModifier.class);
 
   private final ScrollModifierParamsParser parametersParser;
   private final JavaScriptJobExecutor jsExecutor;
@@ -42,6 +46,7 @@ class ScrollModifier implements CollectorJob {
   @Override
   public CollectorStepResult collect() throws ProcessingException {
     String jsSnippet = parametersParser.getJavaScriptSnippet();
+    LOG.debug("Executing Scroll Modifier");
     jsExecutor.execute(jsSnippet);
     return CollectorStepResult.newModifierResult();
   }

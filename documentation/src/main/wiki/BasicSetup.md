@@ -29,9 +29,9 @@ You need to download and install the following software:
    * [ChefDK 3.3.23](https://downloads.chef.io/chefdk/stable/3.3.23)
    * [JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
    * [Chrome browser](https://www.google.com/chrome/browser/desktop/) to view reports
-   * [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/downloads) (at least version 2.40)
-   * [Selenium Standalone Server](http://www.seleniumhq.org/download/) (at least version 3.41)
-   * [Maven](https://maven.apache.org/download.cgi) (at least version 3.0.4; for development only)
+   * [ChromeDriver](https://sites.google.com/a/chromium.org/chromedriver/downloads) (version 2.40or newer)
+   * [Selenium Standalone Server](http://www.seleniumhq.org/download/) (version 3.41 or newer)
+   * [Maven](https://maven.apache.org/download.cgi) (version 3.0.4 or newer; for development only)
 
 
 #### Set up Vagrant
@@ -51,7 +51,7 @@ Execute following commands to start the virtual machine (this process may take a
 * `berks update`
 * `vagrant up` - creates a new virtual machine (the `.box` file will be downloaded during the first run), runs Chef inside it, sets domains and port forwarding up.
 
-See [Vagrant README](https://github.com/Cognifide/aet/blob/master/vagrant/README.md) file
+See the [Vagrant README](https://github.com/Cognifide/aet/blob/master/vagrant/README.md) file
 for more Vagrant details, useful commands, etc.
 
 #### Set up Selenium Grid node
