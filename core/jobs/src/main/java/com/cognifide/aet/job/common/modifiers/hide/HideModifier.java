@@ -104,6 +104,7 @@ public class HideModifier extends WebElementsLocatorParams implements CollectorJ
         .waitForElementToBePresent(webDriver, locator, getTimeoutInSeconds());
 
     List<WebElement> webElements = webDriver.findElements(locator);
+    LOG.debug("Executing Hide Modifier");
     for (WebElement element : webElements) {
       jsExecutor.execute(script, element);
     }

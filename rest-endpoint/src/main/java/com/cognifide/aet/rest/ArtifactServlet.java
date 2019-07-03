@@ -50,11 +50,10 @@ public class ArtifactServlet extends BasicDataServlet {
     String id = req.getParameter(Helper.ID_PARAM);
     resp.setCharacterEncoding("UTF-8");
     Artifact artifact = artifactsDAO.getArtifact(dbKey, id);
-    artifactsDAO.getArtifact(dbKey, id);
     if (artifact != null) {
       sendArtifact(req, resp, artifact);
     } else {
-      sendErrorMessage(dbKey, resp, id);
+      sendNotFoundMessage(dbKey, resp, id);
     }
   }
 
@@ -70,12 +69,12 @@ public class ArtifactServlet extends BasicDataServlet {
     output.flush();
   }
 
-  private void sendErrorMessage(DBKey dbKey, HttpServletResponse resp, String id)
+  private void sendNotFoundMessage(DBKey dbKey, HttpServletResponse resp, String id)
       throws IOException {
-    resp.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
+    resp.setStatus(HttpURLConnection.HTTP_NOT_FOUND);
     resp.setContentType("application/json");
     resp.getWriter().write(
-        responseAsJson(GSON, "Unable to get artifact with id : %s form %s", id, dbKey.toString()));
+        responseAsJson(GSON, "Unable to get artifact with id: %s for %s", id, dbKey.toString()));
   }
 
   @Override

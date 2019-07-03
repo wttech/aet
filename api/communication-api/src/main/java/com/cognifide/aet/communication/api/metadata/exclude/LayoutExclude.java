@@ -17,18 +17,25 @@ package com.cognifide.aet.communication.api.metadata.exclude;
 
 import java.io.Serializable;
 import java.util.List;
+import java.util.Set;
 
 public class LayoutExclude implements Serializable {
+
   private static final long serialVersionUID = -6496109702966509444L;
 
   private final List<ExcludedElement> excludedElements;
+  private final Set<String> notFoundElements;
 
-  public LayoutExclude(
-      List<ExcludedElement> excludedElements) {
+  public LayoutExclude(List<ExcludedElement> excludedElements, Set<String> notFoundElements) {
     this.excludedElements = excludedElements;
+    this.notFoundElements = notFoundElements;
   }
 
   public List<ExcludedElement> getExcludedElements() {
     return excludedElements;
+  }
+
+  public Set<String> getNotFoundElements() {
+    return notFoundElements;
   }
 }

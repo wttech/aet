@@ -27,6 +27,7 @@ import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.job.common.comparators.layout.utils.ImageComparison;
 import com.cognifide.aet.job.common.comparators.layout.utils.ImageComparisonResult;
 import com.cognifide.aet.vs.ArtifactsDAO;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.image.BufferedImage;
@@ -37,7 +38,10 @@ import java.io.InputStream;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
+
 import javax.imageio.ImageIO;
+
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -54,6 +58,8 @@ public class LayoutComparator implements ComparatorJob {
 
   public static final String PIXEL_THRESHOLD_PARAM = "pixelThreshold";
 
+  public static final String FUZZ_PARAM = "fuzz";
+
   private final ComparatorProperties properties;
 
   private final ArtifactsDAO artifactsDAO;
@@ -64,7 +70,9 @@ public class LayoutComparator implements ComparatorJob {
 
   private boolean excludeFunctionIsOn;
 
-  private boolean excludeElementsNotFound;
+  private Set<String> notFoundExcludeElements;
+
+  private Integer fuzz;
 
   LayoutComparator(ComparatorProperties comparatorProperties, ArtifactsDAO artifactsDAO) {
     this.properties = comparatorProperties;
@@ -105,12 +113,11 @@ public class LayoutComparator implements ComparatorJob {
               if (!CollectionUtils.isEmpty(excludedElements)) {
                 hideElementsInImg(patternImg, excludedElements);
                 hideElementsInImg(collectedImg, excludedElements);
-              } else {
-                excludeElementsNotFound = true;
               }
+              notFoundExcludeElements = exclude.getNotFoundElements();
             });
 
-        imageComparisonResult = ImageComparison.compare(patternImg, collectedImg);
+        imageComparisonResult = ImageComparison.compare(patternImg, collectedImg, fuzz);
         stepResult = saveArtifacts(imageComparisonResult);
       } catch (IOException e) {
         throw new ProcessingException("Error while obtaining artifacts!", e);
@@ -144,8 +151,10 @@ public class LayoutComparator implements ComparatorJob {
         result = new ComparatorStepResult(maskArtifactId, Status.FAILED, true);
       }
 
-      if (excludeElementsNotFound) {
-        addExcludeMessageToResult(result, "Elements to exclude are not found on page");
+      if (!CollectionUtils.isEmpty(notFoundExcludeElements)) {
+        addExcludeMessageToResult(result,
+            "The following elements to be excluded have not been found on page: ",
+            String.join(", ", notFoundExcludeElements));
       }
 
       addPixelDifferenceDataToResult(result, imageComparisonResult);
@@ -178,6 +187,10 @@ public class LayoutComparator implements ComparatorJob {
     this.percentageThreshold = percentageThreshold;
   }
 
+  public void setFuzz(int fuzz) {
+    this.fuzz = fuzz;
+  }
+
   private boolean isAcceptablePixelChange(ImageComparisonResult mask) {
     return mask.getPixelDifferenceCount() <= this.pixelThreshold;
   }
@@ -203,8 +216,10 @@ public class LayoutComparator implements ComparatorJob {
         Double.toString(imageComparisonResult.getPercentagePixelDifference()));
   }
 
-  private void addExcludeMessageToResult(ComparatorStepResult result, String message) {
+  private void addExcludeMessageToResult(ComparatorStepResult result, String message,
+      String notFoundCssElements) {
     result.addData("excludeMessage", message);
+    result.addData("notFoundCssElements", notFoundCssElements);
   }
 
   private void addTimestampToResult(ComparatorStepResult result) {
@@ -232,6 +247,12 @@ public class LayoutComparator implements ComparatorJob {
       setPixelThreshold(Integer.valueOf(params.get(PIXEL_THRESHOLD_PARAM)));
       ParametersValidator.checkParameter(pixelThreshold >= 0,
           "Pixel threshold should be greater or equal to 0");
+    }
+    if (params.containsKey(FUZZ_PARAM)) {
+      setFuzz(Integer.valueOf(params.get(FUZZ_PARAM)));
+      ParametersValidator
+          .checkRange(fuzz, 0, 100,
+              "Fuzz should be a decimal value between 0 and 100");
     }
   }
 

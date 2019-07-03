@@ -1,7 +1,14 @@
 Here are notes that summarize the most important changes in AET from the user and admin perspective.
 To see the full list of changes, please refer to [CHANGELOG](https://github.com/Cognifide/aet/blob/master/CHANGELOG.md).
 
-### `master` branch version (not released yet)
+### `master` branch version (Unreleased)
+
+### Version 3.2.2
+
+Layout Comparator has new optional parameter `fuzz` which can set maximum allowed 
+color difference between the pattern and collected screenshot. Read more [[here|LayoutComparator]]
+
+### Version 3.2.0
 
 #### Rerun
 Now it is possible to schedule AET task from the report directly.

@@ -20,6 +20,7 @@ import java.awt.Point;
 import java.io.Serializable;
 
 public class ExcludedElement implements Serializable {
+
   private static final long serialVersionUID = 692282363549228800L;
 
   private final Point point;
