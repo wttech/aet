@@ -75,7 +75,7 @@ This endpoint returns JSON object with following fields:
 
 | Field            | Description |
 | --------------   | ----------- |
-| `status`  | Processing status. Available values: `PROGRESS`, `ERROR`, `FATAL_ERROR`, `FINISHED`, `UNKNOWN` |
+| `status`  | Processing status. Available values: `PROGRESS`, `ERROR`, `FATAL_ERROR`, `MISSING_DATABASE`, `FINISHED`, `UNKNOWN` |
 | `message` | Detailed message associated with status (might be empty). |
 
 #### SuiteExecutor service

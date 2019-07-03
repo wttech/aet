@@ -28,6 +28,8 @@ import java.util.List;
 import java.util.Map;
 import org.apache.commons.io.IOUtils;
 import org.osgi.framework.BundleContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class AccessibilityCollector implements CollectorJob {
 
@@ -36,6 +38,8 @@ public class AccessibilityCollector implements CollectorJob {
   private static final String DOCUMENT_OUTER_HTML_SCRIPT = "return document.documentElement.outerHTML;";
   private static final String PARAM_STANDARD = "standard";
   private static final String DEFAULT_STANDARD = "WCAG2AA";
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(AccessibilityCollector.class);
 
   private final ArtifactsDAO artifactsDAO;
   private final BundleContext context;
@@ -55,6 +59,7 @@ public class AccessibilityCollector implements CollectorJob {
   @Override
   public CollectorStepResult collect() throws ProcessingException {
     String script = getScriptFromFile();
+    LOGGER.debug("Executing Accessibility Collector");
     final String html = jsExecutor.execute(DOCUMENT_OUTER_HTML_SCRIPT)
         .getExecutionResultAsString();
     final String json = jsExecutor.execute(script, standard).getExecutionResultAsString();
