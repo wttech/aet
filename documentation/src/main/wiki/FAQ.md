@@ -35,10 +35,10 @@ To setup AET you need [VirtualBox 5.2.18](https://www.virtualbox.org/wiki/Downlo
 See more details in [[Basic Setup|BasicSetup]] section.
 
 ### 1.2. I have an AET environment, how can I run tests?
-You need a shell script and Java installed to run AET and the Google Chrome browser to see reports. 
+You need the AET shell script to run AET and the Google Chrome browser to see reports. 
 See more information in [[Running Suite|RunningSuite#requirements]] section.
 To start AET suite you need 2 files:
-- [[aet.sh|ClientScripts]] that defines how to run [[AET Client Application|ClientApplication]],
+- [[aet.sh|RunningSuite#running-suite-with-bash-script]] that defines how to run [[AET Client Scripts|ClientScripts]],
 - [[suite.xml|DefiningSuite]] that defines [[AET suite|SuiteStructure]].
 
 To run the suite simply execute this command: 
