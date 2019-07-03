@@ -212,14 +212,25 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
       BufferedImage fullImg = ImageIO.read(in);
       Point point = webElement.getLocation();
       Dimension size = webElement.getSize();
-      BufferedImage screenshotSection = fullImg.getSubimage(point.getX(), point.getY(),
-          size.getWidth(), size.getHeight());
+      BufferedImage screenshotSection = getSubImage(fullImg, point, size);
       return bufferedImageToByteArray(screenshotSection);
     } catch (IOException e) {
       throw new ProcessingException("Unable to create image from taken screenshot", e);
     } finally {
       IOUtils.closeQuietly(in);
     }
+  }
+
+  private BufferedImage getSubImage(BufferedImage fullImg, Point point, Dimension size) {
+    int width = size.getWidth();
+    int height = size.getHeight();
+    if (point.getX() + width > fullImg.getWidth()) {
+      width = fullImg.getWidth() - point.getX();
+    }
+    if (point.getY() + height > fullImg.getHeight()) {
+      height = fullImg.getHeight() - point.getY();
+    }
+    return fullImg.getSubimage(point.getX(), point.getY(), width, height);
   }
 
   private byte[] bufferedImageToByteArray(BufferedImage bufferedImage) throws ProcessingException {
