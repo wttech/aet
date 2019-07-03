@@ -10,6 +10,7 @@ All notable changes to AET will be documented in this file.
 ## Unreleased
 
 **List of changes that are finished but not yet released in any final version.**
+- [PR-489](https://github.com/Cognifide/aet/pull/489) Cleaner integration tests
 
 ## Version 3.2.2
 
@@ -29,7 +30,6 @@ All notable changes to AET will be documented in this file.
 - [PR-413](https://github.com/Cognifide/aet/pull/413) Added ability to show full page source when there has been no difference discovered ([#369](https://github.com/Cognifide/aet/issues/369))
 - [PR-463](https://github.com/Cognifide/aet/pull/463) Removed dependency to Joda time library
 - [PR-488](https://github.com/Cognifide/aet/pull/488) Fix SuiteRemoveCondition unit test
-- [PR-489](https://github.com/Cognifide/aet/pull/489) Cleaner integration tests
 - [PR-490](https://github.com/Cognifide/aet/pull/490) Fix removing too many artifacts by cleaner job by terminating processing in case of timeout
 
 ## Version 3.2.0
