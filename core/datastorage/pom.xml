@@ -122,22 +122,6 @@
         <extensions>true</extensions>
         <executions>
           <execution>
-            <id>scr-metadata</id>
-            <goals>
-              <goal>manifest</goal>
-            </goals>
-            <configuration>
-              <supportIncrementalBuild>true</supportIncrementalBuild>
-              <exportScr>true</exportScr>
-              <instructions>
-                <!-- Enable processing of OSGI DS component annotations -->
-                <_dsannotations>*</_dsannotations>
-                <!-- Enable processing of OSGI metatype annotations -->
-                <_metatypeannotations>*</_metatypeannotations>
-              </instructions>
-            </configuration>
-          </execution>
-          <execution>
             <id>default-bundle</id>
             <configuration>
               <instructions>
