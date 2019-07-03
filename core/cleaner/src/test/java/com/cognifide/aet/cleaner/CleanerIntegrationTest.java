@@ -94,6 +94,11 @@ public class CleanerIntegrationTest {
         .registerInjectActivateService(new MetadataCleanerRouteBuilder());
   }
 
+  @After
+  public void tearDown() {
+    db.shutdown();
+  }
+
   @TestWith({
       //keeping based on age
       "1,6,projectA",
@@ -148,11 +153,6 @@ public class CleanerIntegrationTest {
       assertTrue(db.getArtifactDocs().find(query).iterator().hasNext());
     });
     assertEquals(artifactsToKeepIds.length, db.getArtifactDocs().countDocuments());
-  }
-
-  @After
-  public void tearDown() {
-    db.shutdown();
   }
 
   private void setUpDataForTest(Long versionsToKeep, Long maxAge, String projectDataDir)
