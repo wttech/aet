@@ -10,12 +10,27 @@ All notable changes to AET will be documented in this file.
 ## Unreleased
 
 **List of changes that are finished but not yet released in any final version.**
+- [PR-479](https://github.com/Cognifide/aet/pull/479) Added Secure and HttpOnly flags for cookies. ([#477](https://github.com/Cognifide/aet/issues/477))
+
+## Version 3.2.2
+
+- [PR-507](https://github.com/Cognifide/aet/pull/507) Add option to match colors that are close to the target color in a grayscale space when comparing pixels with the LayoutComparator
+
+## Version 3.2.1
+
+- [PR-469](https://github.com/Cognifide/aet/pull/469) Fix WebAPI issues([#425](https://github.com/Cognifide/aet/issues/425)) 
 - [PR-439](https://github.com/Cognifide/aet/pull/439) Fixed duplicating line and column numbers in accessibility tab
 - [PR-360](https://github.com/Cognifide/aet/pull/360) Keyboard shortcuts for 'Accept/Revert url/test' buttons ([#317](https://github.com/Cognifide/aet/issues/317))
 - [PR-432](https://github.com/Cognifide/aet/pull/432) Fixed issue with lack of clear message for erroneous suite definition.
+- [PR-472](https://github.com/Cognifide/aet/pull/472) Return message when database does not exists and set suite status to MISSING_DATABASE ([#341](https://github.com/Cognifide/aet/issues/341))
 - [PR-363](https://github.com/Cognifide/aet/pull/363) Fixed saving case-level notes
 - [PR-470](https://github.com/Cognifide/aet/pull/470) Security vulnerabilities fix ([#407](https://github.com/Cognifide/aet/issues/407))
 - [PR-468](https://github.com/Cognifide/aet/pull/468) Add loggers in collector/modifier ([#446](https://github.com/Cognifide/aet/issues/446)) 
+- [PR-461](https://github.com/Cognifide/aet/pull/461) Generating correct correlationId when suite name is overridden([#440](https://github.com/Cognifide/aet/issues/440)) 
+- [PR-413](https://github.com/Cognifide/aet/pull/413) Added ability to show full page source when there has been no difference discovered ([#369](https://github.com/Cognifide/aet/issues/369))
+- [PR-463](https://github.com/Cognifide/aet/pull/463) Removed dependency to Joda time library
+- [PR-488](https://github.com/Cognifide/aet/pull/488) Fix SuiteRemoveCondition unit test
+- [PR-490](https://github.com/Cognifide/aet/pull/490) Fix removing too many artifacts by cleaner job by terminating processing in case of timeout
 
 - [PR-459](https://github.com/Cognifide/aet/pull/459) Print more meaningful error messages when suite.xml is malformed ([#436](https://github.com/Cognifide/aet/issues/436)) 
 
@@ -33,7 +48,7 @@ All notable changes to AET will be documented in this file.
 - [PR-404](https://github.com/Cognifide/aet/pull/404) Added missing tooltip for conditional tests
 - [PR-408](https://github.com/Cognifide/aet/pull/408) Advanced Screen Comparision button layout fix
 - [PR-410](https://github.com/Cognifide/aet/pull/410) Notification that displays when exclude-elements are not found on page now shows what specific elements were not found([#372](https://github.com/Cognifide/aet/issues/372)) 
- 
+
 ## Version 3.1.0
 
 - [PR-409](https://github.com/Cognifide/aet/pull/409) Added sources link in "view source" url

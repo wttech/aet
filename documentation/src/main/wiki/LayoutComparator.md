@@ -14,6 +14,9 @@ Resource name: screen
 | --------- | ----- | ----------- | --------- |
 | `pixelThreshold` | int (equal or greater than 0) | The value to set the error threshold in pixels e.g if difference between photos is smaller or equal to `pixelThreshold`, the test will pass. In case of difference is bigger than `pixelThreshold`, the test will fail. | no |
 | `percentageThreshold` | double (between 0 and 100) | It works as `pixelThreshold` but values are in percentages | no |
+| `fuzz` | int (between 0 and 100) | A percentage value that describes the maximum color difference between pixels on the pattern and collected screenshot images. This option allows to filter out image rendering issues like AEM image rendition differences not visible to the human eye. | no |
+
+Each of these parameters should be used with caution. It's recommended to test how these parameters change the behavior of your tests before introducing them to your test suite permanently.
 
 When you provide `pixelThreshold` and `percentageThreshold` test will pass only if pixel difference is smaller or equal than `pixelThreshold` and percentage difference is smaller or equal than `percentageThreshold`.
 
@@ -30,7 +33,7 @@ When you provide `pixelThreshold` and `percentageThreshold` test will pass only 
         </collect>
         <compare>
             ...
-            <screen comparator="layout" pixelThreshold="2500" percentageThreshold="0.5" />
+            <screen comparator="layout" pixelThreshold="2500" percentageThreshold="0.5" fuzz="30"/>
             ...
         </compare>
         <urls>

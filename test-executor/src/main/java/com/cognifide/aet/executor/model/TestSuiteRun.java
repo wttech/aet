@@ -67,12 +67,7 @@ public class TestSuiteRun implements Serializable {
   }
 
   public TestSuiteRun(TestSuiteRun testSuiteRun, String name, String domain, List<TestRun> tests) {
-    this.name = name;
-    this.company = testSuiteRun.getCompany();
-    this.project = testSuiteRun.getProject();
-    this.domain = domain;
-    this.correlationId = testSuiteRun.getCorrelationId();
-    this.testRunMap = getMap(tests);
+    this(name, testSuiteRun.getCompany(), testSuiteRun.getProject(), domain, tests);
   }
 
   private Map<String, TestRun> getMap(List<TestRun> testRunList) {

@@ -108,9 +108,7 @@ public class MetadataServlet extends BasicDataServlet {
       resp.setContentType("application/json");
       resp.getWriter().write(result);
     } else {
-      resp.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
-      resp.getWriter()
-          .write(responseAsJson(GSON,"Unable to get Suite Metadata for %s", dbKey.toString()));
+      createNotFoundResponse(resp, correlationId, suiteName, suiteVersion, dbKey);
     }
   }
 
@@ -190,6 +188,21 @@ public class MetadataServlet extends BasicDataServlet {
     if (lockService.isLockPresent(suiteIdentifier)) {
       throw new AETException("Suite modification is currently locked. Please try again later.");
     }
+  }
+
+  private void createNotFoundResponse(HttpServletResponse response, String correlationId, String suiteName, String suiteVersion, DBKey dbKey) throws IOException {
+    response.setStatus(HttpURLConnection.HTTP_NOT_FOUND);
+    String paramsValuesMessage = "";
+    if (correlationId != null) {
+      paramsValuesMessage = String.format("correlationId: %s", correlationId);
+    } else if (suiteName != null) {
+      paramsValuesMessage = String.format("suite name: %s", suiteName);
+      if (suiteVersion != null) {
+        paramsValuesMessage = String.format("%s, version: %s", paramsValuesMessage, suiteVersion);
+      }
+    }
+    response.getWriter()
+        .write(responseAsJson(GSON, "Unable to get Suite Metadata with %s for %s", paramsValuesMessage, dbKey.toString()));
   }
 
   @Activate

@@ -25,10 +25,11 @@ import com.cognifide.aet.communication.api.metadata.Suite.Timestamp;
 import com.googlecode.zohhak.api.Configure;
 import com.googlecode.zohhak.api.TestWith;
 import com.googlecode.zohhak.api.runners.ZohhakRunner;
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
-import org.joda.time.DateTime;
 import org.junit.runner.RunWith;
 import org.mockito.Mockito;
 
@@ -37,8 +38,6 @@ import org.mockito.Mockito;
 public class SuiteRemoveConditionTest {
 
   private static final SuitesListCoercer SUITES_LIST_COERCER = new SuitesListCoercer();
-
-  private static final long ONE_HOUR = 3600000L;
 
   @TestWith({
       //1 suite, remove all but last version in all cases
@@ -51,10 +50,10 @@ public class SuiteRemoveConditionTest {
       Long removeOlderThan, Long keepNVersions, String evaluatedSuite, Integer createdDaysAgo) {
     final List<Suite> suites = SUITES_LIST_COERCER.toList(allSuitesVersions);
 
+    Suite suite = mockSuiteVersionAndCreatedDate(evaluatedSuite, createdDaysAgo);
     SuiteRemoveCondition condition = new SuiteRemoveCondition(suites,
         mockRemoveConditions(removeOlderThan, keepNVersions));
-    final boolean remove = condition
-        .evaluate(mockSuiteVersionAndCreatedDate(evaluatedSuite, createdDaysAgo));
+    final boolean remove = condition.evaluate(suite);
     assertFalse(remove);
   }
 
@@ -81,10 +80,10 @@ public class SuiteRemoveConditionTest {
       Long removeOlderThan, Long keepNVersions, String evaluatedSuite, Integer createdDaysAgo) {
     final List<Suite> suites = SUITES_LIST_COERCER.toList(allSuitesVersions);
 
+    Suite suite = mockSuiteVersionAndCreatedDate(evaluatedSuite, createdDaysAgo);
     SuiteRemoveCondition condition = new SuiteRemoveCondition(suites,
         mockRemoveConditions(removeOlderThan, keepNVersions));
-    final boolean remove = condition
-        .evaluate(mockSuiteVersionAndCreatedDate(evaluatedSuite, createdDaysAgo));
+    final boolean remove = condition.evaluate(suite);
     assertTrue(remove);
   }
 
@@ -107,10 +106,10 @@ public class SuiteRemoveConditionTest {
       Long removeOlderThan, Long keepNVersions, String evaluatedSuite, Integer createdDaysAgo) {
     final List<Suite> suites = SUITES_LIST_COERCER.toList(allSuitesVersions);
 
+    Suite suite = mockSuiteVersionAndCreatedDate(evaluatedSuite, createdDaysAgo);
     SuiteRemoveCondition condition = new SuiteRemoveCondition(suites,
         mockRemoveConditions(removeOlderThan, keepNVersions));
-    final boolean remove = condition
-        .evaluate(mockSuiteVersionAndCreatedDate(evaluatedSuite, createdDaysAgo));
+    final boolean remove = condition.evaluate(suite);
     assertFalse(remove);
   }
 
@@ -135,10 +134,10 @@ public class SuiteRemoveConditionTest {
       Long removeOlderThan, Long keepNVersions, String evaluatedSuite, Integer createdDaysAgo) {
     final List<Suite> suites = SUITES_LIST_COERCER.toList(allSuitesVersions);
 
+    Suite suite = mockSuiteVersionAndCreatedDate(evaluatedSuite, createdDaysAgo);
     SuiteRemoveCondition condition = new SuiteRemoveCondition(suites,
         mockRemoveConditions(removeOlderThan, keepNVersions));
-    final boolean remove = condition
-        .evaluate(mockSuiteVersionAndCreatedDate(evaluatedSuite, createdDaysAgo));
+    final boolean remove = condition.evaluate(suite);
     assertTrue(remove);
   }
 
@@ -154,10 +153,10 @@ public class SuiteRemoveConditionTest {
       Long removeOlderThan, Long keepNVersions, String evaluatedSuite, Integer createdDaysAgo) {
     final List<Suite> suites = SUITES_LIST_COERCER.toList(allSuitesVersions);
 
+    Suite suite = mockSuiteVersionAndCreatedDate(evaluatedSuite, createdDaysAgo);
     SuiteRemoveCondition condition = new SuiteRemoveCondition(suites,
         mockRemoveConditions(removeOlderThan, keepNVersions));
-    final boolean remove = condition
-        .evaluate(mockSuiteVersionAndCreatedDate(evaluatedSuite, createdDaysAgo));
+    final boolean remove = condition.evaluate(suite);
     assertFalse(remove);
   }
 
@@ -173,10 +172,10 @@ public class SuiteRemoveConditionTest {
       Long removeOlderThan, Long keepNVersions, String evaluatedSuite, Integer createdDaysAgo) {
     final List<Suite> suites = SUITES_LIST_COERCER.toList(allSuitesVersions);
 
+    Suite suite = mockSuiteVersionAndCreatedDate(evaluatedSuite, createdDaysAgo);
     SuiteRemoveCondition condition = new SuiteRemoveCondition(suites,
         mockRemoveConditions(removeOlderThan, keepNVersions));
-    final boolean remove = condition
-        .evaluate(mockSuiteVersionAndCreatedDate(evaluatedSuite, createdDaysAgo));
+    final boolean remove = condition.evaluate(suite);
     assertTrue(remove);
   }
 
@@ -192,10 +191,10 @@ public class SuiteRemoveConditionTest {
       Long removeOlderThan, Long keepNVersions, String evaluatedSuite, Integer createdDaysAgo) {
     final List<Suite> suites = SUITES_LIST_COERCER.toList(allSuitesVersions);
 
+    Suite suite = mockSuiteVersionAndCreatedDate(evaluatedSuite, createdDaysAgo);
     SuiteRemoveCondition condition = new SuiteRemoveCondition(suites,
         mockRemoveConditions(removeOlderThan, keepNVersions));
-    final boolean remove = condition
-        .evaluate(mockSuiteVersionAndCreatedDate(evaluatedSuite, createdDaysAgo));
+    final boolean remove = condition.evaluate(suite);
     assertFalse(remove);
   }
 
@@ -207,10 +206,10 @@ public class SuiteRemoveConditionTest {
       Long removeOlderThan, Long keepNVersions, String evaluatedSuite, Integer createdDaysAgo) {
     final List<Suite> suites = SUITES_LIST_COERCER.toList(allSuitesVersions);
 
+    Suite suite = mockSuiteVersionAndCreatedDate(evaluatedSuite, createdDaysAgo);
     SuiteRemoveCondition condition = new SuiteRemoveCondition(suites,
         mockRemoveConditions(removeOlderThan, keepNVersions));
-    final boolean remove = condition
-        .evaluate(mockSuiteVersionAndCreatedDate(evaluatedSuite, createdDaysAgo));
+    final boolean remove = condition.evaluate(suite);
     assertTrue(remove);
   }
 
@@ -223,10 +222,10 @@ public class SuiteRemoveConditionTest {
       Long removeOlderThan, Long keepNVersions, String evaluatedSuite, Integer createdDaysAgo) {
     final List<Suite> suites = SUITES_LIST_COERCER.toList(allSuitesVersions);
 
+    Suite suite = mockSuiteVersionAndCreatedDate(evaluatedSuite, createdDaysAgo);
     SuiteRemoveCondition condition = new SuiteRemoveCondition(suites,
         mockRemoveConditions(removeOlderThan, keepNVersions));
-    final boolean remove = condition
-        .evaluate(mockSuiteVersionAndCreatedDate(evaluatedSuite, createdDaysAgo));
+    final boolean remove = condition.evaluate(suite);
     assertFalse(remove);
   }
 
@@ -251,9 +250,13 @@ public class SuiteRemoveConditionTest {
   private Suite mockSuiteVersionAndCreatedDate(String input, int createdDaysAgo) {
     Suite suite = mockSuiteVersion(input);
     Timestamp timestamp = Mockito.mock(Timestamp.class);
-    //substract one hour for test purposes accuracy
-    when(timestamp.get())
-        .thenReturn(new DateTime().minusDays(createdDaysAgo).getMillis() - ONE_HOUR);
+
+    long timestampDaysAgo = LocalDateTime
+        .now(ZoneOffset.UTC)
+        .minusDays(createdDaysAgo)
+        .toInstant(ZoneOffset.UTC).toEpochMilli();
+
+    when(timestamp.get()).thenReturn(timestampDaysAgo);
     when(suite.getRunTimestamp()).thenReturn(timestamp);
     return suite;
   }
