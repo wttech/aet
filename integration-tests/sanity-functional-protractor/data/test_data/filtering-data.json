@@ -1,0 +1,56 @@
+{
+  "testData": [
+    {
+      "searchPhrase": "accessibility",
+      "statistics": "16 ( 8 / 3 / 5 (0) / 0 )"
+    },
+    {
+      "searchPhrase": "cookie",
+      "statistics": "9 ( 4 / 0 / 5 (0) / 0 )"
+    },
+    {
+      "searchPhrase": "layout",
+      "statistics": "37 ( 16 / 0 / 21 (9) / 0 )"
+    },
+    {
+      "searchPhrase": "jserrors",
+      "statistics": "14 ( 6 / 0 / 8 (0) / 0 )"
+    },
+    {
+      "searchPhrase": "source",
+      "statistics": "17 ( 7 / 0 / 10 (0) / 0 )"
+    },
+    {
+      "searchPhrase": "status",
+      "statistics": "21 ( 9 / 0 / 12 (0) / 0 )"
+    },
+    {
+      "searchPhrase": "w3c-html5",
+      "statistics": "8 ( 1 / 1 / 6 (0) / 0 )"
+    },
+    {
+      "searchPhrase": "click",
+      "statistics": "1 ( 0 / 0 / 1 (0) / 0 )"
+    },
+    {
+      "searchPhrase": "header",
+      "statistics": "1 ( 0 / 0 / 1 (0) / 0 )"
+    },
+    {
+      "searchPhrase": "sleep",
+      "statistics": "2 ( 1 / 0 / 1 (0) / 0 )"
+    },
+    {
+      "searchPhrase": "wait-for-page-loaded",
+      "statistics": "2 ( 1 / 0 / 1 (0) / 0 )"
+    },
+    {
+      "searchPhrase": "wait-for-element-to-be-visible",
+      "statistics": "2 ( 1 / 0 / 1 (0) / 0 )"
+    },
+    {
+      "searchPhrase": "wait-for-image-completion",
+      "statistics": "4 ( 1 / 0 / 3 (0) / 0 )"
+    }
+  ]
+}

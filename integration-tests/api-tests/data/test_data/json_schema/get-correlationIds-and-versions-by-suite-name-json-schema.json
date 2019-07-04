@@ -1,0 +1,26 @@
+{
+  "definitions": {},
+  "$schema": "http://json-schema.org/draft-06/schema#",
+  "$id": "http://example.com/root.json",
+  "type": "array",
+  "items": {
+    "$id": "#/items",
+    "type": "object",
+    "required": [
+      "correlationId",
+      "version"
+    ],
+    "properties": {
+      "correlationId": {
+        "$id": "#/items/properties/correlationId",
+        "type": "string",
+        "pattern": "^(?!\\s*$).+"
+      },
+      "version": {
+        "$id": "#/items/properties/version",
+        "type": "integer",
+        "minimum": 1.0
+      }
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "spec_dir": "specs",
+  "spec_files": [
+    "api-artifact-spec.js",
+    "api-history-spec.js",
+    "api-metadata-spec.js",
+    "configs-communicationSettings-spec.js",
+    "lock-spec.js"
+  ],
+  "helpers": [
+    "helpers/**/*.js"
+  ],
+  "stopSpecOnExpectationFailure": false,
+  "random": false
+}
