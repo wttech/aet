@@ -11,6 +11,7 @@ All notable changes to AET will be documented in this file.
 
 **List of changes that are finished but not yet released in any final version.**
 - [PR-479](https://github.com/Cognifide/aet/pull/479) Added Secure and HttpOnly flags for cookies. ([#477](https://github.com/Cognifide/aet/issues/477))
+- [PR-459](https://github.com/Cognifide/aet/pull/459) Print more meaningful error messages when suite.xml is malformed ([#436](https://github.com/Cognifide/aet/issues/436)) 
 
 ## Version 3.2.2
 
@@ -31,8 +32,6 @@ All notable changes to AET will be documented in this file.
 - [PR-463](https://github.com/Cognifide/aet/pull/463) Removed dependency to Joda time library
 - [PR-488](https://github.com/Cognifide/aet/pull/488) Fix SuiteRemoveCondition unit test
 - [PR-490](https://github.com/Cognifide/aet/pull/490) Fix removing too many artifacts by cleaner job by terminating processing in case of timeout
-
-- [PR-459](https://github.com/Cognifide/aet/pull/459) Print more meaningful error messages when suite.xml is malformed ([#436](https://github.com/Cognifide/aet/issues/436)) 
 
 ## Version 3.2.0
 
