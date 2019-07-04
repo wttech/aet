@@ -47,11 +47,11 @@
   <dependencies>
     <dependency>
       <groupId>com.cognifide.aet</groupId>
-      <artifactId>cleaner</artifactId>
+      <artifactId>communication-api</artifactId>
     </dependency>
     <dependency>
       <groupId>com.cognifide.aet</groupId>
-      <artifactId>communication-api</artifactId>
+      <artifactId>cleaner</artifactId>
     </dependency>
     <dependency>
       <groupId>com.cognifide.aet</groupId>
@@ -59,15 +59,7 @@
     </dependency>
     <dependency>
       <groupId>com.cognifide.aet</groupId>
-      <artifactId>validation-api</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.cognifide.aet</groupId>
       <artifactId>datastorage</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>com.cognifide.aet</groupId>
-      <artifactId>validation</artifactId>
     </dependency>
 
     <dependency>
@@ -79,28 +71,12 @@
       <artifactId>org.osgi.compendium</artifactId>
     </dependency>
     <dependency>
-      <groupId>org.osgi</groupId>
-      <artifactId>org.osgi.service.component.annotations</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.osgi</groupId>
-      <artifactId>org.osgi.annotation</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.osgi</groupId>
-      <artifactId>org.osgi.service.metatype.annotations</artifactId>
-    </dependency>
-    <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-lang3</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.activemq</groupId>
-      <artifactId>activemq-osgi</artifactId>
     </dependency>
     <dependency>
       <groupId>org.apache.servicemix.bundles</groupId>
@@ -152,27 +128,5 @@
       <scope>test</scope>
     </dependency>
   </dependencies>
-
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.felix</groupId>
-        <artifactId>maven-bundle-plugin</artifactId>
-        <extensions>true</extensions>
-        <executions>
-          <execution>
-            <id>default-bundle</id>
-            <configuration>
-              <instructions>
-                <Bundle-Vendor>Cognifide Ltd.</Bundle-Vendor>
-                <Import-Package>javax.annotation;resolution:=optional,*</Import-Package>
-                <Export-Package>com.cognifide.aet.cleaner.*</Export-Package>
-              </instructions>
-            </configuration>
-          </execution>
-        </executions>
-      </plugin>
-    </plugins>
-  </build>
 
 </project>
