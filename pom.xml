@@ -74,6 +74,7 @@
     <module>client</module>
     <module>core</module>
     <module>documentation</module>
+    <module>integration-tests/cleaner-test</module>
     <module>integration-tests/sample-site</module>
     <module>integration-tests/test-suite</module>
     <module>osgi-dependencies</module>
@@ -425,6 +426,12 @@
       <dependency>
         <groupId>com.cognifide.aet</groupId>
         <artifactId>rest-endpoint</artifactId>
+        <version>${project.version}</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.cognifide.aet</groupId>
+        <artifactId>cleaner</artifactId>
         <version>${project.version}</version>
         <scope>provided</scope>
       </dependency>
