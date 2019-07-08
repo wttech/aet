@@ -65,7 +65,7 @@ define(['angularAMD', 'endpointConfiguration', 'requestParametersService'],
             }
           }).then(function (data) {
             deferred.resolve(data.data);
-            $rootScope.applicationVersion = data.headers()['application-version'];
+            $rootScope.applicationVersion = data.headers()['x-application-version'];
             return deferred.promise;
           }).catch(function (exception) {
             handleFailed('Failed to load report data!', exception);

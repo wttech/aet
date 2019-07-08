@@ -56,7 +56,7 @@ public class MetadataServlet extends BasicDataServlet {
   private static final Logger LOGGER = LoggerFactory.getLogger(MetadataServlet.class);
 
   private static final String FORMATTED_PARAM = "formatted";
-  private static final String APP_VERSION_HEADER = "Application-Version";
+  private static final String APP_VERSION_HEADER = "X-Application-Version";
   private static final Gson PRETTY_PRINT_GSON = new GsonBuilder().setPrettyPrinting().create();
   private static final JsonParser JSON_PARSER = new JsonParser();
 
