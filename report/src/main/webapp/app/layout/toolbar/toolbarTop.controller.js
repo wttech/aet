@@ -71,6 +71,8 @@ define([], function () {
         templateUrl: 'app/layout/modal/history/historyModal.view.html',
         controller: 'historyModalController',
         controllerAs: 'historyModal',
+        size: 'lg',
+        windowClass: 'modal-history-window',
         resolve: {
           model: function () {
             return vm.model;
