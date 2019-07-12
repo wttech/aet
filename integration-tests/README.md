@@ -61,3 +61,10 @@ or in `.../config/common/webdriver.properties` file.
 To start the Bobcat tests, run `mvn clean test` from the `sanity-functional` directory level
 
 [Chromedriver]: https://sites.google.com/a/chromium.org/chromedriver/
+
+### cleaner-test
+
+Cleaner Integration Tests are using [mocked OSGi context](https://sling.apache.org/documentation/development/osgi-mock.html) 
+and an [in-memory mock of MongoDB server](https://github.com/bwaldvogel/mongo-java-server). 
+Tests check various combinations of Cleaner parameters (versions to keep and suite max age) 
+and verify whether correct metadata and artifacts documents have been removed from database.
