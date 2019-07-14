@@ -24,6 +24,7 @@ import com.cognifide.aet.job.common.utils.javascript.JavaScriptJobExecutor;
 import com.cognifide.aet.job.common.utils.Sampler;
 import java.util.Map;
 import java.util.function.IntSupplier;
+import java.util.function.Supplier;
 import org.apache.commons.lang3.math.NumberUtils;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
@@ -109,6 +110,7 @@ public class ResolutionModifier implements CollectorJob {
       } else if (height == HEIGHT_NOT_CALCULATED) {
         throw new ProcessingException("Failed to calculate height, could not parse javascript result to integer");
       } else if (height < MINIMUM_HEIGHT) {
+        LOG.warn("Detected page height is 0, setting height to 1");
         height = MINIMUM_HEIGHT;
       }
     }
@@ -120,7 +122,7 @@ public class ResolutionModifier implements CollectorJob {
     Window window = webDriver.manage().window();
     window.setSize(new Dimension(width, INITIAL_HEIGHT));
 
-    IntSupplier heightSupplier = () -> {
+    Supplier<Integer> heightSupplier = () -> {
       int heightResult = HEIGHT_NOT_CALCULATED;
       try {
         LOG.debug("Executing Resolution Modifier");
