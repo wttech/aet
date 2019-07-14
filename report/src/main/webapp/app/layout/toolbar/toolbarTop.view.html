@@ -98,8 +98,15 @@
     <div class="toolbar-block">
       Execution time: {{toolbarTop.suiteInfo.duration | date: 'mm:ss'}}
     </div>
-    <div class="toolbar-block fontawesome-link" data-toggle="modal" data-target="#helpModal">
-      <i class="fas fa-question-circle fa-lg"></i>
+    <div class="toolbar-block fontawesome-link slim-padding" data-toggle="modal" data-target="#helpModal">
+      <span data-toggle="popover" data-content="Help" data-trigger="hover" data-container="body">
+        <i class="fas fa-question-circle fa-lg"></i>
+      </span>
+    </div>
+    <div class="toolbar-block fontawesome-link slim-padding" data-toggle="modal" data-target="#aboutModal">
+      <span data-toggle="popover" data-content="About..." data-trigger="hover" data-container="body">
+        <i class="fas fa-info-circle fa-lg"></i>
+    </span>
     </div>
   </div>
 </div>

@@ -1,0 +1,204 @@
+{
+  "_id" : ObjectId("5c7e2b316798f408cf3d1dd3"),
+  "correlationId" : "company-project-test-suite-1551168949000",
+  "company" : "company",
+  "project" : "project",
+  "name" : "test-suite",
+  "version" : 3,
+  "runTimestamp" : NumberLong(1551168949000),
+  "finishedTimestamp" : NumberLong(1551168959000),
+  "statistics" : {
+    "duration" : 6309
+  },
+  "tests" : [
+    {
+      "name" : "first-test",
+      "proxy" : "rest",
+      "urls" : [
+        {
+          "name" : "https://en.wikipedia.org/wiki/Main_Page",
+          "url" : "https://en.wikipedia.org/wiki/Main_Page",
+          "collectionStats" : {
+            "duration" : 2913
+          },
+          "steps" : [
+            {
+              "index" : 0,
+              "name" : "open",
+              "stepResult" : {
+                "status" : "PAGE_OPENED"
+              },
+              "statistics" : {
+                "duration" : 739
+              },
+              "type" : "open"
+            },
+            {
+              "index" : 1,
+              "name" : "resolution",
+              "stepResult" : {
+                "status" : "MODIFIED"
+              },
+              "statistics" : {
+                "duration" : 112
+              },
+              "type" : "resolution",
+              "parameters" : {
+                "height" : "600",
+                "width" : "800"
+              }
+            },
+            {
+              "index" : 2,
+              "name" : "sleep",
+              "stepResult" : {
+                "status" : "MODIFIED"
+              },
+              "statistics" : {
+                "duration" : 1500
+              },
+              "type" : "sleep",
+              "parameters" : {
+                "duration" : "1500"
+              }
+            },
+            {
+              "index" : 3,
+              "name" : "screen",
+              "pattern" : "5c7e291f6798f408cf3d1da7",
+              "stepResult" : {
+                "status" : "DUPLICATES_PATTERN",
+                "artifactId" : "5c7e291f6798f408cf3d1da7"
+              },
+              "statistics" : {
+                "duration" : 293
+              },
+              "comparators" : [
+                {
+                  "stepResult" : {
+                    "status" : "PASSED",
+                    "rebaseable" : false,
+                    "acceptable" : false,
+                    "data" : {
+                      "collectTimestamp" : "1551772464265",
+                      "patternTimestamp" : "1551771935056"
+                    }
+                  },
+                  "statistics" : {
+                    "duration" : 4
+                  },
+                  "type" : "screen",
+                  "parameters" : {
+                    "comparator" : "layout"
+                  }
+                }
+              ],
+              "type" : "screen"
+            },
+            {
+              "index" : 4,
+              "name" : "source",
+              "pattern" : "5c7e291f6798f408cf3d1da9",
+              "stepResult" : {
+                "status" : "COLLECTED",
+                "artifactId" : "5c7e2b306798f408cf3d1dc9"
+              },
+              "statistics" : {
+                "duration" : 129
+              },
+              "comparators" : [
+                {
+                  "stepResult" : {
+                    "status" : "FAILED",
+                    "rebaseable" : false,
+                    "acceptable" : false,
+                    "artifactId" : "5c7e2b306798f408cf3d1dd1",
+                    "data" : {
+                      "warningCount" : "0",
+                      "errorCount" : "19"
+                    }
+                  },
+                  "statistics" : {
+                    "duration" : 213
+                  },
+                  "type" : "source",
+                  "parameters" : {
+                    "comparator" : "w3c-html5"
+                  }
+                }
+              ],
+              "type" : "source"
+            },
+            {
+              "index" : 5,
+              "name" : "status-codes",
+              "pattern" : "5c7e291f6798f408cf3d1dab",
+              "stepResult" : {
+                "status" : "COLLECTED",
+                "artifactId" : "5c7e2b306798f408cf3d1dcb"
+              },
+              "statistics" : {
+                "duration" : 30
+              },
+              "comparators" : [
+                {
+                  "stepResult" : {
+                    "status" : "PASSED",
+                    "rebaseable" : false,
+                    "acceptable" : false,
+                    "artifactId" : "5c7e2b306798f408cf3d1dcf"
+                  },
+                  "statistics" : {
+                    "duration" : 34
+                  },
+                  "type" : "status-codes",
+                  "parameters" : {
+                    "filterRange" : "400,600"
+                  }
+                }
+              ],
+              "type" : "status-codes"
+            },
+            {
+              "index" : 6,
+              "name" : "js-errors",
+              "pattern" : "5c7e291f6798f408cf3d1dad",
+              "stepResult" : {
+                "status" : "COLLECTED",
+                "artifactId" : "5c7e2b306798f408cf3d1dcd"
+              },
+              "statistics" : {
+                "duration" : 16
+              },
+              "comparators" : [
+                {
+                  "stepResult" : {
+                    "status" : "PASSED",
+                    "rebaseable" : false,
+                    "acceptable" : false
+                  },
+                  "filters" : [
+                    {
+                      "type" : "js-errors-filter",
+                      "parameters" : {
+                        "line" : "2",
+                        "source" : "http://w.iplsc.com/external/jquery/jquery-1.8.3.js"
+                      }
+                    }
+                  ],
+                  "statistics" : {
+                    "duration" : 10
+                  },
+                  "type" : "js-errors"
+                }
+              ],
+              "type" : "js-errors"
+            }
+          ],
+          "isReran" : true,
+          "rerunTimestamp" : NumberLong(1551772120452)
+        }
+      ]
+    }
+  ]
+}
