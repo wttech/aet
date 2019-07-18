@@ -15,6 +15,7 @@
  */
 package com.cognifide.aet.cleaner;
 
+import com.cognifide.aet.cleaner.camel.CamelContextCreator;
 import com.cognifide.aet.cleaner.configuration.CleanerSchedulerConf;
 import com.cognifide.aet.cleaner.route.MetadataCleanerRouteBuilder;
 import com.cognifide.aet.cleaner.validation.CleanerSchedulerValidator;
@@ -57,6 +58,9 @@ public class CleanerScheduler {
 
   @Reference
   private MetadataCleanerRouteBuilder metadataCleanerRouteBuilder;
+
+  @Reference
+  private CamelContextCreator camelContextCreator;
 
   @Reference
   private ValidationResultBuilderFactory validationResultBuilderFactory;
@@ -118,6 +122,7 @@ public class CleanerScheduler {
 
     final ImmutableMap<String, Object> jobData = ImmutableMap.<String, Object>builder()
         .put(CleanerJob.KEY_ROUTE_BUILDER, metadataCleanerRouteBuilder)
+        .put(CleanerJob.KEY_CAMEL_CONTEXT_CREATOR, camelContextCreator)
         .put(CleanerJob.KEY_KEEP_N_VERSIONS, config.keepNVersions())
         .put(CleanerJob.KEY_REMOVE_OLDER_THAN, config.removeOlderThan())
         .put(CleanerJob.KEY_COMPANY_FILTER, config.companyName())

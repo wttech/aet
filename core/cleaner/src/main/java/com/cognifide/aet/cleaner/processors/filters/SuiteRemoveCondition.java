@@ -16,6 +16,7 @@
 package com.cognifide.aet.cleaner.processors.filters;
 
 import com.cognifide.aet.cleaner.context.CleanerContext;
+import com.cognifide.aet.cleaner.time.LocalDateTimeProvider;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.google.common.collect.Ordering;
 import java.time.LocalDateTime;
@@ -45,9 +46,9 @@ public class SuiteRemoveCondition {
   private final Long minKeepVersion;
 
   public SuiteRemoveCondition(final Collection<Suite> suiteRunVersions,
-      final CleanerContext cleanerContext) {
+      final CleanerContext cleanerContext, LocalDateTimeProvider dateTimeProvider) {
     minKeepVersion = getMinKeepVersion(suiteRunVersions, cleanerContext);
-    removeTimestamp = getRemoveTimestamp(cleanerContext);
+    removeTimestamp = getRemoveTimestamp(cleanerContext, dateTimeProvider);
   }
 
   public boolean evaluate(final Suite suite) {
@@ -86,10 +87,10 @@ public class SuiteRemoveCondition {
     return minVersionToKeep;
   }
 
-  private Long getRemoveTimestamp(CleanerContext cleanerContext) {
+  private Long getRemoveTimestamp(CleanerContext cleanerContext, LocalDateTimeProvider dateTimeProvider) {
     Long removeBeforeTimestamp = null;
     if (cleanerContext.getRemoveOlderThan() != null) {
-      LocalDateTime now = LocalDateTime.now(ZoneOffset.UTC);
+      LocalDateTime now = dateTimeProvider.now(ZoneOffset.UTC);
       int daysToKeep = cleanerContext.getRemoveOlderThan().intValue();
       LocalDateTime then = now.minusDays(daysToKeep);
       removeBeforeTimestamp = then.toInstant(ZoneOffset.UTC).toEpochMilli();
