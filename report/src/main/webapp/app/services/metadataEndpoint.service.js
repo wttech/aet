@@ -23,7 +23,7 @@ define(['angularAMD', 'endpointConfiguration', 'requestParametersService'],
       /**
        * Service responsible for communication with AET metadata REST API endpoint.
        */
-      function MetadataEndpointService($q, $http, endpointConfiguration,
+      function MetadataEndpointService($q, $rootScope, $http, endpointConfiguration,
           requestParametersService) {
         var service = {
               getMetadata: getMetadata,
@@ -65,6 +65,7 @@ define(['angularAMD', 'endpointConfiguration', 'requestParametersService'],
             }
           }).then(function (data) {
             deferred.resolve(data.data);
+            $rootScope.applicationVersion = data.headers()['x-application-version'];
             return deferred.promise;
           }).catch(function (exception) {
             handleFailed('Failed to load report data!', exception);
