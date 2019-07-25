@@ -19,6 +19,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.cognifide.aet.executor.model.TestSuiteRun;
+import com.cognifide.aet.executor.xmlparser.api.ParseException;
 import com.cognifide.aet.executor.xmlparser.api.TestSuiteParser;
 import java.io.File;
 import java.net.URL;
@@ -35,6 +36,26 @@ public class XmlTestSuiteParserTest {
 
     TestSuiteRun testSuite = testSuiteParser.parse(testSuitFile);
     assertThat(testSuite.getName(), is("ts1"));
+  }
+
+  @Test(expected = ParseException.class)
+  public void testParse_withWrongUrl_inSecondTestCase_expectParseException() throws Exception {
+    URL resourceURL = getClass().getResource("/testSuiteWithEmptyUrlsInSecondTestCase.xml");
+    File testSuitFile = new File(resourceURL.toURI());
+
+    TestSuiteParser testSuiteParser = new XmlTestSuiteParser();
+
+    TestSuiteRun testSuite = testSuiteParser.parse(testSuitFile);
+  }
+
+  @Test(expected = ParseException.class)
+  public void testParse_withWrongUrl_inTwoTestCase_expectParseException() throws Exception {
+    URL resourceURL = getClass().getResource("/testSuiteWithEmptyUrls.xml");
+    File testSuitFile = new File(resourceURL.toURI());
+
+    TestSuiteParser testSuiteParser = new XmlTestSuiteParser();
+
+    TestSuiteRun testSuite = testSuiteParser.parse(testSuitFile);
   }
 
 }
