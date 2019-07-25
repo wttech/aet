@@ -21,6 +21,8 @@ import com.github.detro.browsermobproxyclient.BMPCProxy;
 import com.github.detro.browsermobproxyclient.exceptions.BMPCUnableToConnectException;
 import com.google.gson.GsonBuilder;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
 import java.net.UnknownHostException;
 import java.util.Date;
 import org.apache.http.client.methods.CloseableHttpResponse;
@@ -38,6 +40,8 @@ import org.slf4j.LoggerFactory;
 public class RestProxyServer implements ProxyServerWrapper {
 
   private static final String HTTP = "http";
+
+  private static final String USER_AGENT_HEADER = "user-agent";
 
   public static final int STATUS_CODE_OK = 200;
 
@@ -99,14 +103,13 @@ public class RestProxyServer implements ProxyServerWrapper {
     CloseableHttpClient httpClient = HttpClients.createSystem();
     try {
       URIBuilder uriBuilder = new URIBuilder().setScheme(HTTP).setHost(server.getAPIHost())
-          .setPort(server.getAPIPort());
-      // Request BMP to add header
-      HttpPost request = new HttpPost(uriBuilder.setPath(
-          String.format("/proxy/%d/headers", server.getProxyPort())).build());
-      request.setHeader("Content-Type", "application/json");
-      JSONObject json = new JSONObject();
-      json.put(name, value);
-      request.setEntity(new StringEntity(json.toString()));
+              .setPort(server.getAPIPort());
+      HttpPost request;
+      if (USER_AGENT_HEADER.equalsIgnoreCase(name)) {
+        request = createUserAgentChangeRequest(uriBuilder, value);
+      } else {
+        request = createHeaderRequest(uriBuilder, name, value);
+      }
       // Execute request
       CloseableHttpResponse response = httpClient.execute(request);
       int statusCode = response.getStatusLine().getStatusCode();
@@ -132,6 +135,28 @@ public class RestProxyServer implements ProxyServerWrapper {
   public void stop() {
     server.close();
     proxyManager.detach(this);
+  }
+
+  private HttpPost createHeaderRequest(URIBuilder uriBuilder, String name, String value)
+          throws URISyntaxException, UnsupportedEncodingException {
+    HttpPost request = new HttpPost(uriBuilder.setPath(
+            String.format("/proxy/%d/headers", server.getProxyPort())).build());
+    request.setHeader("Content-Type", "application/json");
+    JSONObject json = new JSONObject();
+    json.put(name, value);
+    request.setEntity(new StringEntity(json.toString()));
+    return request;
+  }
+
+  private HttpPost createUserAgentChangeRequest(URIBuilder uriBuilder, String value)
+          throws URISyntaxException, UnsupportedEncodingException {
+    HttpPost request = new HttpPost(uriBuilder.setPath(
+            String.format("/proxy/%d/filter/request", server.getProxyPort())).build());
+    request.setHeader("Content-Type", "text/plain");
+    String data = String.format(
+            "request.headers().remove('User-Agent'); request.headers().add('User-Agent', '%s');", value);
+    request.setEntity(new StringEntity(data));
+    return request;
   }
 
 }
