@@ -17,22 +17,22 @@ package com.cognifide.aet.proxy;
 
 import com.cognifide.aet.job.api.collector.ProxyServerWrapper;
 import com.cognifide.aet.proxy.exceptions.UnableToAddHeaderException;
+import com.cognifide.aet.proxy.headers.CommonHeaderStrategy;
+import com.cognifide.aet.proxy.headers.HeaderRequestStrategy;
+import com.cognifide.aet.proxy.headers.UserAgentHeaderStrategy;
 import com.github.detro.browsermobproxyclient.BMPCProxy;
 import com.github.detro.browsermobproxyclient.exceptions.BMPCUnableToConnectException;
 import com.google.gson.GsonBuilder;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URISyntaxException;
 import java.net.UnknownHostException;
 import java.util.Date;
+
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.browsermob.core.har.Har;
-import org.json.JSONObject;
 import org.openqa.selenium.Proxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -104,12 +104,14 @@ public class RestProxyServer implements ProxyServerWrapper {
     try {
       URIBuilder uriBuilder = new URIBuilder().setScheme(HTTP).setHost(server.getAPIHost())
               .setPort(server.getAPIPort());
-      HttpPost request;
+      HeaderRequestStrategy headerRequestStrategy;
       if (USER_AGENT_HEADER.equalsIgnoreCase(name)) {
-        request = createUserAgentChangeRequest(uriBuilder, value);
+        headerRequestStrategy = new UserAgentHeaderStrategy();
       } else {
-        request = createHeaderRequest(uriBuilder, name, value);
+        headerRequestStrategy = new CommonHeaderStrategy();
       }
+
+      HttpPost request = headerRequestStrategy.createRequest(uriBuilder, server.getProxyPort(), name, value);
       // Execute request
       CloseableHttpResponse response = httpClient.execute(request);
       int statusCode = response.getStatusLine().getStatusCode();
@@ -136,27 +138,4 @@ public class RestProxyServer implements ProxyServerWrapper {
     server.close();
     proxyManager.detach(this);
   }
-
-  private HttpPost createHeaderRequest(URIBuilder uriBuilder, String name, String value)
-          throws URISyntaxException, UnsupportedEncodingException {
-    HttpPost request = new HttpPost(uriBuilder.setPath(
-            String.format("/proxy/%d/headers", server.getProxyPort())).build());
-    request.setHeader("Content-Type", "application/json");
-    JSONObject json = new JSONObject();
-    json.put(name, value);
-    request.setEntity(new StringEntity(json.toString()));
-    return request;
-  }
-
-  private HttpPost createUserAgentChangeRequest(URIBuilder uriBuilder, String value)
-          throws URISyntaxException, UnsupportedEncodingException {
-    HttpPost request = new HttpPost(uriBuilder.setPath(
-            String.format("/proxy/%d/filter/request", server.getProxyPort())).build());
-    request.setHeader("Content-Type", "text/plain");
-    String data = String.format(
-            "request.headers().remove('User-Agent'); request.headers().add('User-Agent', '%s');", value);
-    request.setEntity(new StringEntity(data));
-    return request;
-  }
-
 }
