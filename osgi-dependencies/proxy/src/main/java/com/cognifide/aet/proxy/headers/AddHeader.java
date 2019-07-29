@@ -18,11 +18,12 @@ package com.cognifide.aet.proxy.headers;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.entity.StringEntity;
+import org.json.JSONObject;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 
-public class UserAgentHeader implements HeaderRequestStrategy {
+public class AddHeader implements HeaderRequestStrategy {
 
     private final String apiHost;
 
@@ -30,26 +31,23 @@ public class UserAgentHeader implements HeaderRequestStrategy {
 
     private final int proxyPort;
 
-    private final String headerValue;
-
-    public UserAgentHeader(String apiHost, int apiPort, int proxyPort, String headerValue) {
+    public AddHeader(String apiHost, int apiPort, int proxyPort) {
         this.apiHost = apiHost;
         this.apiPort = apiPort;
         this.proxyPort = proxyPort;
-        this.headerValue = headerValue;
     }
 
     @Override
-    public HttpPost createRequest()
+    public HttpPost createRequest(String name, String value)
             throws URISyntaxException, UnsupportedEncodingException {
         URIBuilder uriBuilder = new URIBuilder().setScheme("http")
                 .setHost(apiHost).setPort(apiPort);
         HttpPost request = new HttpPost(uriBuilder.setPath(
-                String.format("/proxy/%d/filter/request", proxyPort)).build());
-        request.setHeader("Content-Type", "text/plain");
-        String data = String.format(
-                "request.headers().remove('User-Agent'); request.headers().add('User-Agent', '%s');", headerValue);
-        request.setEntity(new StringEntity(data));
+                String.format("/proxy/%d/headers", proxyPort)).build());
+        request.setHeader("Content-Type", "application/json");
+        JSONObject json = new JSONObject();
+        json.put(name, value);
+        request.setEntity(new StringEntity(json.toString()));
         return request;
     }
 }

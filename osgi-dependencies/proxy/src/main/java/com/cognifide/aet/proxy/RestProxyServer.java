@@ -17,9 +17,9 @@ package com.cognifide.aet.proxy;
 
 import com.cognifide.aet.job.api.collector.ProxyServerWrapper;
 import com.cognifide.aet.proxy.exceptions.UnableToAddHeaderException;
-import com.cognifide.aet.proxy.headers.CommonHeader;
+import com.cognifide.aet.proxy.headers.AddHeader;
 import com.cognifide.aet.proxy.headers.HeaderRequestStrategy;
-import com.cognifide.aet.proxy.headers.UserAgentHeader;
+import com.cognifide.aet.proxy.headers.OverrideHeader;
 import com.github.detro.browsermobproxyclient.BMPCProxy;
 import com.github.detro.browsermobproxyclient.exceptions.BMPCUnableToConnectException;
 import com.google.gson.GsonBuilder;
@@ -98,19 +98,19 @@ public class RestProxyServer implements ProxyServerWrapper {
   }
 
   @Override
-  public void addHeader(String name, String value) {
+  public void addHeader(String name, String value, Boolean override) {
     CloseableHttpClient httpClient = HttpClients.createSystem();
     try {
       HeaderRequestStrategy headerRequestStrategy;
-      if (USER_AGENT_HEADER.equalsIgnoreCase(name)) {
-        headerRequestStrategy = new UserAgentHeader(server.getAPIHost(), server.getAPIPort(),
-                server.getProxyPort(), value);
+      if (override) {
+        headerRequestStrategy = new OverrideHeader(server.getAPIHost(), server.getAPIPort(),
+                server.getProxyPort());
       } else {
-        headerRequestStrategy = new CommonHeader(server.getAPIHost(), server.getAPIPort(),
-                server.getProxyPort(), name, value);
+        headerRequestStrategy = new AddHeader(server.getAPIHost(), server.getAPIPort(),
+                server.getProxyPort());
       }
 
-      HttpPost request = headerRequestStrategy.createRequest();
+      HttpPost request = headerRequestStrategy.createRequest(name, value);
       // Execute request
       CloseableHttpResponse response = httpClient.execute(request);
       int statusCode = response.getStatusLine().getStatusCode();

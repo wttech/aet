@@ -21,5 +21,5 @@ import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 
 public interface HeaderRequestStrategy {
-    HttpPost createRequest() throws URISyntaxException, UnsupportedEncodingException;
+    HttpPost createRequest(String name, String value) throws URISyntaxException, UnsupportedEncodingException;
 }
