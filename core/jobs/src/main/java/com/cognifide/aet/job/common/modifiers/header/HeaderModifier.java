@@ -30,11 +30,15 @@ public class HeaderModifier implements CollectorJob {
 
   private static final String PARAM_VALUE = "value";
 
+  private static final String PARAM_OVERRIDE = "override";
+
   private final WebCommunicationWrapper webCommunicationWrapper;
 
   private String key;
 
   private String value;
+
+  private Boolean override;
 
   public HeaderModifier(WebCommunicationWrapper webCommunicationWrapper) {
     this.webCommunicationWrapper = webCommunicationWrapper;
@@ -46,7 +50,7 @@ public class HeaderModifier implements CollectorJob {
     if (!webCommunicationWrapper.isUseProxy()) {
       throw new ProcessingException("Cannot modify header without using proxy");
     }
-    webCommunicationWrapper.getProxyServer().addHeader(key, value);
+    webCommunicationWrapper.getProxyServer().addHeader(key, value, override);
     webCommunicationWrapper.getHttpRequestExecutor().addHeader(key, value);
     return CollectorStepResult.newModifierResult();
   }
@@ -58,6 +62,11 @@ public class HeaderModifier implements CollectorJob {
       value = params.get(PARAM_VALUE);
     } else {
       throw new ParametersException("Missing Key or Value on Header Modifier");
+    }
+    if (params.containsKey(PARAM_OVERRIDE)) {
+      override = Boolean.parseBoolean(params.get(PARAM_OVERRIDE));
+    } else {
+      override = false;
     }
   }
 
