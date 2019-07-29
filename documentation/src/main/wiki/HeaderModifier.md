@@ -14,6 +14,7 @@ In order to use this modifier it must be declared before the open module in the 
 | --------- | ----- | ----------- | --------- |
 | `key` | x | Key for the header | yes |
 | `value` | y | Value for the header | yes |
+| `override` | `true`/`false` | Replace existing header instead of adding new one | no (default false) |
 
 ##### Example Usage
 
@@ -23,6 +24,9 @@ In order to use this modifier it must be declared before the open module in the 
     <test name="header-modify-test" useProxy="rest">
         <collect>
             ...
+            <header key="User-Agent" value="Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20120101 Firefox/33.0" 
+                    override="true"/>
+            <header key="Accept" value="application/json" override="true"/>
             <header key="Authorization" value="Basic emVuT2FyZXVuOnozbkdAckQZbiE=" />
             ...
             <open />
