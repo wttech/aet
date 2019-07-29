@@ -16,11 +16,10 @@
 package com.cognifide.aet.proxy.headers;
 
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.utils.URIBuilder;
 
 import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 
 public interface HeaderRequestStrategy {
-    HttpPost createRequest(URIBuilder uriBuilder, int proxyPort, String name, String value) throws URISyntaxException, UnsupportedEncodingException;
+    HttpPost createRequest() throws URISyntaxException, UnsupportedEncodingException;
 }

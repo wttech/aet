@@ -17,9 +17,9 @@ package com.cognifide.aet.proxy;
 
 import com.cognifide.aet.job.api.collector.ProxyServerWrapper;
 import com.cognifide.aet.proxy.exceptions.UnableToAddHeaderException;
-import com.cognifide.aet.proxy.headers.CommonHeaderStrategy;
+import com.cognifide.aet.proxy.headers.CommonHeader;
 import com.cognifide.aet.proxy.headers.HeaderRequestStrategy;
-import com.cognifide.aet.proxy.headers.UserAgentHeaderStrategy;
+import com.cognifide.aet.proxy.headers.UserAgentHeader;
 import com.github.detro.browsermobproxyclient.BMPCProxy;
 import com.github.detro.browsermobproxyclient.exceptions.BMPCUnableToConnectException;
 import com.google.gson.GsonBuilder;
@@ -29,7 +29,6 @@ import java.util.Date;
 
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.utils.URIBuilder;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.browsermob.core.har.Har;
@@ -102,16 +101,16 @@ public class RestProxyServer implements ProxyServerWrapper {
   public void addHeader(String name, String value) {
     CloseableHttpClient httpClient = HttpClients.createSystem();
     try {
-      URIBuilder uriBuilder = new URIBuilder().setScheme(HTTP).setHost(server.getAPIHost())
-              .setPort(server.getAPIPort());
       HeaderRequestStrategy headerRequestStrategy;
       if (USER_AGENT_HEADER.equalsIgnoreCase(name)) {
-        headerRequestStrategy = new UserAgentHeaderStrategy();
+        headerRequestStrategy = new UserAgentHeader(server.getAPIHost(), server.getAPIPort(),
+                server.getProxyPort(), value);
       } else {
-        headerRequestStrategy = new CommonHeaderStrategy();
+        headerRequestStrategy = new CommonHeader(server.getAPIHost(), server.getAPIPort(),
+                server.getProxyPort(), name, value);
       }
 
-      HttpPost request = headerRequestStrategy.createRequest(uriBuilder, server.getProxyPort(), name, value);
+      HttpPost request = headerRequestStrategy.createRequest();
       // Execute request
       CloseableHttpResponse response = httpClient.execute(request);
       int statusCode = response.getStatusLine().getStatusCode();
