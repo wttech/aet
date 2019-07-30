@@ -14,7 +14,11 @@ In order to use this modifier it must be declared before the open module in the 
 | --------- | ----- | ----------- | --------- |
 | `key` | x | Key for the header | yes |
 | `value` | y | Value for the header | yes |
-| `override` | `true`/`false` | Override option should be set at `true` when your want change header added by Chrome instance, otherwise it should by `false` | no (default false) |
+| `override` | `true`/`false` | Override option should be set at `true` when your want replace header added by Chrome instance, otherwise it should by `false` | no (default false) |
+
+Important note.
+
+When you want add another value to Accept header and leave the default value create by Chrome instance, you can use `override=false`.
 
 ##### Example Usage
 
