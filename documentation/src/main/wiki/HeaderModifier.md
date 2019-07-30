@@ -14,7 +14,7 @@ In order to use this modifier it must be declared before the open module in the 
 | --------- | ----- | ----------- | --------- |
 | `key` | x | Key for the header | yes |
 | `value` | y | Value for the header | yes |
-| `override` | `true`/`false` | Replace existing header instead of adding new one | no (default false) |
+| `override` | `true`/`false` | Override option should be set at `true` when your want change header added by Chrome instance, otherwise it should by `false` | no (default false) |
 
 ##### Example Usage
 
