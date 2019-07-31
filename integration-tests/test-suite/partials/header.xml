@@ -39,4 +39,55 @@
 		</urls>
 	</test>
 	<!-- Header-Modifier END -->
+	<test name="S-modifier-User-Agent-Header" useProxy="rest">
+		<collect>
+			<header key="user-agent" value="Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20120101 Firefox/33.0" override="true"/>
+			<open />
+			<resolution width="1920"/>
+			<sleep duration="1000"/>
+			<screen name="Desktop"/>
+			<source/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+			<source comparator="source"/>
+		</compare>
+		<urls>
+			<url href="modifiers/header/show_headers.jsp" />
+		</urls>
+	</test>
+	<test name="S-modifier-accept-Header-replace" useProxy="rest">
+		<collect>
+			<header key="accept" value="test" override="true"/>
+			<open />
+			<resolution width="1920"/>
+			<sleep duration="1000"/>
+			<screen name="Desktop"/>
+			<source/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+			<source comparator="source"/>
+		</compare>
+		<urls>
+			<url href="modifiers/header/show_headers.jsp" />
+		</urls>
+	</test>
+	<test name="S-modifier-accept-Header-add" useProxy="rest">
+		<collect>
+			<header key="accept" value="test" override="false"/>
+			<open />
+			<resolution width="1920"/>
+			<sleep duration="1000"/>
+			<screen name="Desktop"/>
+			<source/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+			<source comparator="source"/>
+		</compare>
+		<urls>
+			<url href="modifiers/header/show_headers.jsp" />
+		</urls>
+	</test>
 </suite>
