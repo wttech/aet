@@ -22,12 +22,6 @@ import com.cognifide.aet.executor.http.HttpSuiteExecutionResultWrapper;
 import com.cognifide.aet.rest.Helper;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.google.gson.Gson;
-import java.io.IOException;
-import java.net.HttpURLConnection;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.CharEncoding;
 import org.apache.http.HttpStatus;
 import org.osgi.service.component.annotations.Activate;
@@ -38,6 +32,13 @@ import org.osgi.service.http.HttpService;
 import org.osgi.service.http.NamespaceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.net.HttpURLConnection;
 
 @Component(immediate = true)
 public class SuiteRerunServlet extends HttpServlet {
@@ -83,6 +84,8 @@ public class SuiteRerunServlet extends HttpServlet {
         } catch (javax.jms.JMSException | ValidatorException e) {
           e.printStackTrace();
         }
+      } else {
+        response.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
       }
     } catch (ValidatorException e) {
       LOGGER.error("Validation problem!", e);
