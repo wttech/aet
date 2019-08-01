@@ -127,7 +127,7 @@ public class Step extends Operation implements Commentable, Named {
         .add("index", index)
         .add("type", type)
         .add("name", name)
-        .add("comparators no", comparators.size())
+        .add("comparators no", comparators != null ? comparators.size() : 0)
         .toString();
   }
 
