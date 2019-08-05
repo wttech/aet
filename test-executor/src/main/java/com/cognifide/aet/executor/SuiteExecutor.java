@@ -22,12 +22,12 @@ import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.communication.api.queues.QueuesConstant;
+import com.cognifide.aet.communication.api.wrappers.Run;
+import com.cognifide.aet.communication.api.wrappers.SuiteRunWrapper;
 import com.cognifide.aet.executor.configuration.SuiteExecutorConf;
 import com.cognifide.aet.executor.http.HttpSuiteExecutionResultWrapper;
 import com.cognifide.aet.executor.model.TestRun;
 import com.cognifide.aet.executor.model.TestSuiteRun;
-import com.cognifide.aet.communication.api.wrappers.Run;
-import com.cognifide.aet.communication.api.wrappers.SuiteRunWrapper;
 import com.cognifide.aet.executor.xmlparser.api.ParseException;
 import com.cognifide.aet.executor.xmlparser.api.TestSuiteParser;
 import com.cognifide.aet.executor.xmlparser.xml.XmlTestSuiteParser;
@@ -39,12 +39,6 @@ import com.google.common.cache.RemovalListener;
 import com.google.common.cache.RemovalNotification;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import java.util.List;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.TimeUnit;
-import javax.jms.JMSException;
-import javax.jms.Session;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.osgi.service.component.annotations.Activate;
@@ -53,6 +47,13 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.metatype.annotations.Designate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.jms.JMSException;
+import javax.jms.Session;
+import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This service is responsible for executing the test suite and maintaining the processing statuses.
@@ -73,7 +74,7 @@ public class SuiteExecutor {
 
   private static final String LOCKED_SUITE_MESSAGE = "Suite is currently locked. Please try again later.";
 
-  private static final long CACHE_EXPIRATION_TIMEOUT = 20000L;
+  private static final long CACHE_EXPIRATION_TIMEOUT = 30000L;
 
   private SuiteExecutorConf config;
 
@@ -240,7 +241,7 @@ public class SuiteExecutor {
   private SuiteRunner createSuiteRunner(Run objectToRun) throws JMSException {
     Session session = jmsConnection.getJmsSession();
     SuiteRunner suiteRunner = new SuiteRunner(session, cacheUpdater,
-        suiteStatusHandler, objectToRun, RUNNER_IN_QUEUE, config.messageReceiveTimeout());
+        suiteStatusHandler, objectToRun, RUNNER_IN_QUEUE, config.messageReceiveTimeout(), lockService);
     suiteRunnerCache.put(objectToRun.getCorrelationId(), suiteRunner);
     suiteStatusCache
         .put(objectToRun.getCorrelationId(), new ConcurrentLinkedQueue<SuiteStatusResult>());
@@ -255,6 +256,10 @@ public class SuiteExecutor {
 
   private String getStatusUrl(Run objectToRunWrapper) {
     return SuiteStatusServlet.SERVLET_PATH + "/" + objectToRunWrapper.getCorrelationId();
+  }
+
+  private long getRunningSuites() {
+    return this.suiteRunnerCache.size();
   }
 
   private static class RunnerCacheRemovalListener implements RemovalListener<String, SuiteRunner> {

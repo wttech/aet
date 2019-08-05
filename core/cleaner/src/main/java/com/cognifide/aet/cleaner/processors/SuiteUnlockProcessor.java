@@ -30,6 +30,7 @@ public class SuiteUnlockProcessor implements Processor {
   @Override
   @SuppressWarnings("unchecked")
   public void process(Exchange exchange) throws Exception {
+    lockService.releaseAllSlots();
     lockService.unsetGlobalLock();
     exchange.setOut(exchange.getIn());
   }

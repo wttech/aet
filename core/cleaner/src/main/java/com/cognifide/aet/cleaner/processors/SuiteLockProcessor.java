@@ -20,9 +20,13 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Component(service = SuiteLockProcessor.class)
 public class SuiteLockProcessor implements Processor {
+
+  private static Logger LOGGER = LoggerFactory.getLogger(SuiteLockProcessor.class);
 
   @Reference
   private LockService lockService;
@@ -31,6 +35,9 @@ public class SuiteLockProcessor implements Processor {
   @SuppressWarnings("unchecked")
   public void process(Exchange exchange) throws Exception {
     lockService.setGlobalLock();
+    LOGGER.debug("Try lock semaphore");
+    lockService.acquireUninterruptiblyAllSlots();
+    LOGGER.debug("Semaphore locked");
     exchange.setOut(exchange.getIn());
   }
 }

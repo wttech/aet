@@ -19,14 +19,16 @@ package com.cognifide.aet.rest;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.ImmutableMap;
-import java.io.Serializable;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.Serializable;
+import java.util.Map;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 
 @Component(service = LockService.class, immediate = true)
 public class LockService implements Serializable {
@@ -35,7 +37,11 @@ public class LockService implements Serializable {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(LockService.class);
 
-  private static final int LOCK_CACHE_TIMEOUT = 20000;
+  private static final int LOCK_CACHE_TIMEOUT = 30000;
+
+  private static final int AVAILABLE_SLOTS = 1000;
+
+  private transient Semaphore semaphore;
 
   private transient Cache<String, String> lockSet;
 
@@ -46,6 +52,7 @@ public class LockService implements Serializable {
     LOGGER.debug("Starting lock service");
     lockSet = CacheBuilder.newBuilder().expireAfterWrite(LOCK_CACHE_TIMEOUT, TimeUnit.MILLISECONDS)
         .build();
+    semaphore = new Semaphore(AVAILABLE_SLOTS);
   }
 
   @Deactivate
@@ -70,12 +77,26 @@ public class LockService implements Serializable {
   }
 
   public synchronized boolean trySetLock(String key, String value) {
-    if (!globalLock && null == lockSet.getIfPresent(key)) {
+    if (!globalLock && semaphore.tryAcquire()) {
       lockSet.put(key, value);
       return true;
     }
     return false;
   }
+
+  public synchronized void releaseLock() {
+    this.semaphore.release();
+  }
+
+  public void acquireUninterruptiblyAllSlots() {
+    this.semaphore.acquireUninterruptibly(AVAILABLE_SLOTS);
+  }
+
+  public void releaseAllSlots() {
+    this.semaphore.release(AVAILABLE_SLOTS);
+  }
+
+
 
   public Map<String, String> getAllLocks() {
     return ImmutableMap.copyOf(lockSet.asMap());
