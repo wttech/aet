@@ -35,9 +35,7 @@ public class SuiteLockProcessor implements Processor {
   @SuppressWarnings("unchecked")
   public void process(Exchange exchange) throws Exception {
     lockService.setGlobalLock();
-    LOGGER.debug("Try lock semaphore");
     lockService.acquireUninterruptiblyAllSlots();
-    LOGGER.debug("Semaphore locked");
     exchange.setOut(exchange.getIn());
   }
 }

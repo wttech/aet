@@ -96,12 +96,9 @@ public class LockService implements Serializable {
     this.semaphore.release(AVAILABLE_SLOTS);
   }
 
-
-
   public Map<String, String> getAllLocks() {
     return ImmutableMap.copyOf(lockSet.asMap());
   }
-
 
 }
 
