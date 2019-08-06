@@ -19,12 +19,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
-import com.cognifide.aet.cleaner.processors.FetchAllProjectSuitesProcessor;
-import com.cognifide.aet.cleaner.processors.GetMetadataArtifactsProcessor;
-import com.cognifide.aet.cleaner.processors.RemoveArtifactsProcessor;
-import com.cognifide.aet.cleaner.processors.RemoveMetadataProcessor;
-import com.cognifide.aet.cleaner.processors.StartMetadataCleanupProcessor;
-import com.cognifide.aet.cleaner.processors.SuitesRemovePredicateProcessor;
+import com.cognifide.aet.cleaner.processors.*;
 import com.cognifide.aet.cleaner.route.MetadataCleanerRouteBuilder;
 import com.cognifide.aet.cleaner.time.LocalDateTimeProvider;
 import com.cognifide.aet.vs.artifacts.ArtifactsDAOMongoDBImpl;
@@ -85,10 +80,12 @@ public class CleanerIntegrationTest {
 
     context.registerService(LocalDateTimeProvider.class, mockedDateTimeProvider);
     context.registerInjectActivateService(new StartMetadataCleanupProcessor());
-    context.registerInjectActivateService(new FetchAllProjectSuitesProcessor());
+    context.registerInjectActivateService(new FetchProjectMetadataProcessor());
+    context.registerInjectActivateService(new GroupProjectSuitesProcessor());
     context.registerInjectActivateService(new SuitesRemovePredicateProcessor());
     context.registerInjectActivateService(new RemoveMetadataProcessor());
     context.registerInjectActivateService(new GetMetadataArtifactsProcessor());
+    context.registerInjectActivateService(new GetAllExpiredArtifactsProcessor());
     context.registerInjectActivateService(new RemoveArtifactsProcessor());
     metadataCleanerRouteBuilder = context
         .registerInjectActivateService(new MetadataCleanerRouteBuilder());
