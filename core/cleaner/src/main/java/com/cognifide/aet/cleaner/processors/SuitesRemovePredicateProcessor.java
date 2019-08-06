@@ -20,6 +20,7 @@ import com.cognifide.aet.cleaner.context.SuiteAggregationCounter;
 import com.cognifide.aet.cleaner.processors.exchange.AllSuiteVersionsMessageBody;
 import com.cognifide.aet.cleaner.processors.exchange.SuiteMessageBody;
 import com.cognifide.aet.cleaner.processors.filters.SuiteRemoveCondition;
+import com.cognifide.aet.cleaner.time.LocalDateTimeProvider;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.vs.DBKey;
 import com.google.common.base.Function;
@@ -29,6 +30,7 @@ import java.util.Collection;
 import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -37,6 +39,9 @@ public class SuitesRemovePredicateProcessor implements Processor {
 
   private static final Logger LOGGER = LoggerFactory
       .getLogger(SuitesRemovePredicateProcessor.class);
+
+  @Reference
+  private LocalDateTimeProvider dateTimeProvider;
 
   @Override
   @SuppressWarnings("unchecked")
@@ -53,7 +58,7 @@ public class SuitesRemovePredicateProcessor implements Processor {
         suiteVersions.size(), dbKey);
 
     final SuiteRemoveCondition removeCondition = new SuiteRemoveCondition(suiteVersions,
-        cleanerContext);
+        cleanerContext, dateTimeProvider);
 
     final ImmutableList<SuiteMessageBody> body =
         FluentIterable.from(suiteVersions).transform(new Function<Suite, SuiteMessageBody>() {

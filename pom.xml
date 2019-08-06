@@ -23,7 +23,7 @@
 
   <groupId>com.cognifide.aet</groupId>
   <artifactId>aet-root</artifactId>
-  <version>3.2.2-SNAPSHOT</version>
+  <version>3.2.3-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>AET</name>
@@ -74,6 +74,7 @@
     <module>client</module>
     <module>core</module>
     <module>documentation</module>
+    <module>integration-tests/cleaner-test</module>
     <module>integration-tests/sample-site</module>
     <module>integration-tests/test-suite</module>
     <module>osgi-dependencies</module>
@@ -428,6 +429,12 @@
         <version>${project.version}</version>
         <scope>provided</scope>
       </dependency>
+      <dependency>
+        <groupId>com.cognifide.aet</groupId>
+        <artifactId>cleaner</artifactId>
+        <version>${project.version}</version>
+        <scope>provided</scope>
+      </dependency>
 
       <!-- AET wrappers for non-OSGi libraries -->
       <dependency>
@@ -523,6 +530,12 @@
         <groupId>com.github.stefanbirkner</groupId>
         <artifactId>system-rules</artifactId>
         <version>1.18.0</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.sling</groupId>
+        <artifactId>org.apache.sling.testing.osgi-mock.junit4</artifactId>
+        <version>2.4.6</version>
         <scope>test</scope>
       </dependency>
 
@@ -633,6 +646,24 @@
           <artifactId>maven-bundle-plugin</artifactId>
           <version>4.0.0</version>
           <extensions>true</extensions>
+          <executions>
+            <execution>
+              <id>scr-metadata</id>
+              <goals>
+                <goal>manifest</goal>
+              </goals>
+              <configuration>
+                <supportIncrementalBuild>true</supportIncrementalBuild>
+                <exportScr>true</exportScr>
+                <instructions>
+                  <!-- Enable processing of OSGI DS component annotations -->
+                  <_dsannotations>*</_dsannotations>
+                  <!-- Enable processing of OSGI metatype annotations -->
+                  <_metatypeannotations>*</_metatypeannotations>
+                </instructions>
+              </configuration>
+            </execution>
+          </executions>
         </plugin>
 
         <plugin>

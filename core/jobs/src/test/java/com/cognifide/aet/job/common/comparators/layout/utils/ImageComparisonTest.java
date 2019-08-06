@@ -43,7 +43,7 @@ public class ImageComparisonTest {
       BufferedImage sample = ImageIO.read(sampleStream);
       BufferedImage pattern = ImageIO.read(patternStream);
       // when
-      ImageComparisonResult imageComparisonResult = ImageComparison.compare(pattern, sample);
+      ImageComparisonResult imageComparisonResult = ImageComparison.compare(pattern, sample, null);
       // then
       assertThat(imageComparisonResult.getPercentagePixelDifference(), is(0.0));
       assertThat(imageComparisonResult.getHeightDifference(), is(0));
@@ -74,7 +74,7 @@ public class ImageComparisonTest {
       BufferedImage sample = ImageIO.read(sampleStream);
       BufferedImage pattern = ImageIO.read(patternStream);
       // when
-      ImageComparisonResult imageComparisonResult = ImageComparison.compare(pattern, sample);
+      ImageComparisonResult imageComparisonResult = ImageComparison.compare(pattern, sample, null);
       // then
       assertThat(imageComparisonResult.getPercentagePixelDifference(), is(0.7435369480668039));
       assertThat(imageComparisonResult.getHeightDifference(), is(0));
@@ -108,7 +108,7 @@ public class ImageComparisonTest {
       BufferedImage sample = ImageIO.read(sampleStream);
       BufferedImage pattern = ImageIO.read(patternStream);
       // when
-      ImageComparisonResult imageComparisonResult = ImageComparison.compare(pattern, sample);
+      ImageComparisonResult imageComparisonResult = ImageComparison.compare(pattern, sample, null);
       // then
       assertThat(imageComparisonResult.getPercentagePixelDifference(), is(59.99583333333333));
       assertThat(imageComparisonResult.getHeightDifference(), is(100));
@@ -118,6 +118,259 @@ public class ImageComparisonTest {
       maskStream = imageToStream(imageComparisonResult.getResultImage());
       expectedMaskStream = getClass()
           .getResourceAsStream("/mock/LayoutComparator/canvasSizeDiff/mask.png");
+      assertThat(IOUtils.contentEquals(maskStream, expectedMaskStream), is(true));
+    } finally {
+      closeInputStreams(sampleStream, patternStream, maskStream, expectedMaskStream);
+    }
+  }
+
+  @Test
+  public void test_sameScreenshot_grayscale_expectNoDifferencesInResultAndTransparentMask() throws Exception {
+    InputStream sampleStream = null;
+    InputStream patternStream = null;
+    InputStream maskStream = null;
+    InputStream expectedMaskStream = null;
+    try {
+      // given
+      sampleStream = getClass().getResourceAsStream("/mock/LayoutComparator/image.png");
+      patternStream = getClass().getResourceAsStream("/mock/LayoutComparator/image.png");
+
+      BufferedImage sample = ImageIO.read(sampleStream);
+      BufferedImage pattern = ImageIO.read(patternStream);
+      // when
+      ImageComparisonResult imageComparisonResult = ImageComparison.compare(pattern, sample, 0);
+      // then
+      assertThat(imageComparisonResult.getPercentagePixelDifference(), is(0.0));
+      assertThat(imageComparisonResult.getHeightDifference(), is(0));
+      assertThat(imageComparisonResult.getWidthDifference(), is(0));
+      assertThat(imageComparisonResult.getPixelDifferenceCount(), is(0));
+
+      maskStream = imageToStream(imageComparisonResult.getResultImage());
+      expectedMaskStream = getClass()
+          .getResourceAsStream("/mock/LayoutComparator/mask-identical.png");
+
+      assertThat(IOUtils.contentEquals(expectedMaskStream, maskStream), is(true));
+    } finally {
+      closeInputStreams(sampleStream, patternStream, maskStream, expectedMaskStream);
+    }
+  }
+
+  @Test
+  public void testCompare_grayscale_different() throws Exception {
+    InputStream sampleStream = null;
+    InputStream patternStream = null;
+    InputStream maskStream = null;
+    InputStream expectedMaskStream = null;
+    try {
+      // given
+      sampleStream = getClass().getResourceAsStream("/mock/LayoutComparator/image.png");
+      patternStream = getClass().getResourceAsStream("/mock/LayoutComparator/image2.png");
+
+      BufferedImage sample = ImageIO.read(sampleStream);
+      BufferedImage pattern = ImageIO.read(patternStream);
+      // when
+      ImageComparisonResult imageComparisonResult = ImageComparison.compare(pattern, sample, 0);
+      // then
+      assertThat(imageComparisonResult.getPercentagePixelDifference(), is(0.7435369480668039));
+      assertThat(imageComparisonResult.getHeightDifference(), is(0));
+      assertThat(imageComparisonResult.getWidthDifference(), is(0));
+      assertThat(imageComparisonResult.getPixelDifferenceCount(), is(15600));
+
+      maskStream = imageToStream(imageComparisonResult.getResultImage());
+      expectedMaskStream = getClass()
+          .getResourceAsStream("/mock/LayoutComparator/mask-different.png");
+
+      assertThat(IOUtils.contentEquals(maskStream, expectedMaskStream), is(true));
+    } finally {
+      closeInputStreams(sampleStream, patternStream, maskStream, expectedMaskStream);
+    }
+  }
+
+  @Test
+  public void compare_differentSizeScreenshots_grayscale_expectSizeDifferenceMarkedWithYellow()
+      throws Exception {
+    InputStream sampleStream = null;
+    InputStream patternStream = null;
+    InputStream maskStream = null;
+    InputStream expectedMaskStream = null;
+    try {
+      // given
+      sampleStream = getClass()
+          .getResourceAsStream("/mock/LayoutComparator/canvasSizeDiff/collected.png");
+      patternStream = getClass()
+          .getResourceAsStream("/mock/LayoutComparator/canvasSizeDiff/pattern.png");
+
+      BufferedImage sample = ImageIO.read(sampleStream);
+      BufferedImage pattern = ImageIO.read(patternStream);
+      // when
+      ImageComparisonResult imageComparisonResult = ImageComparison.compare(pattern, sample, 0);
+      // then
+      assertThat(imageComparisonResult.getPercentagePixelDifference(), is(59.99583333333333));
+      assertThat(imageComparisonResult.getHeightDifference(), is(100));
+      assertThat(imageComparisonResult.getWidthDifference(), is(20));
+      assertThat(imageComparisonResult.getPixelDifferenceCount(), is(14399));
+
+      maskStream = imageToStream(imageComparisonResult.getResultImage());
+      expectedMaskStream = getClass()
+          .getResourceAsStream("/mock/LayoutComparator/canvasSizeDiff/mask.png");
+      assertThat(IOUtils.contentEquals(maskStream, expectedMaskStream), is(true));
+    } finally {
+      closeInputStreams(sampleStream, patternStream, maskStream, expectedMaskStream);
+    }
+  }
+
+
+  @Test
+  public void compare_screenshotsWithRenditionIssueAndTextMovement_tooLittleFuzz() throws Exception {
+    InputStream sampleStream = null;
+    InputStream patternStream = null;
+    InputStream maskStream = null;
+    InputStream expectedMaskStream = null;
+    try {
+      // given
+      sampleStream = getClass().getResourceAsStream("/mock/LayoutComparator/fuzz1.png");
+      patternStream = getClass().getResourceAsStream("/mock/LayoutComparator/fuzz2.png");
+
+      BufferedImage sample = ImageIO.read(sampleStream);
+      BufferedImage pattern = ImageIO.read(patternStream);
+      // when
+      ImageComparisonResult imageComparisonResult = ImageComparison.compare(pattern, sample, 2);
+      // then
+      assertThat(imageComparisonResult.getPercentagePixelDifference(), is(2.444548872180451));
+      assertThat(imageComparisonResult.getHeightDifference(), is(0));
+      assertThat(imageComparisonResult.getWidthDifference(), is(0));
+      assertThat(imageComparisonResult.getPixelDifferenceCount(), is(5202));
+
+      maskStream = imageToStream(imageComparisonResult.getResultImage());
+      expectedMaskStream = getClass()
+          .getResourceAsStream("/mock/LayoutComparator/too-little-fuzz-result.png");
+
+      assertThat(IOUtils.contentEquals(maskStream, expectedMaskStream), is(true));
+    } finally {
+      closeInputStreams(sampleStream, patternStream, maskStream, expectedMaskStream);
+    }
+  }
+
+  @Test
+  public void compare_screenshotsWithRenditionIssueAndTextMovement_enoughFuzz() throws Exception {
+    InputStream sampleStream = null;
+    InputStream patternStream = null;
+    InputStream maskStream = null;
+    InputStream expectedMaskStream = null;
+    try {
+      // given
+      sampleStream = getClass().getResourceAsStream("/mock/LayoutComparator/fuzz1.png");
+      patternStream = getClass().getResourceAsStream("/mock/LayoutComparator/fuzz2.png");
+
+      BufferedImage sample = ImageIO.read(sampleStream);
+      BufferedImage pattern = ImageIO.read(patternStream);
+      // when
+      ImageComparisonResult imageComparisonResult = ImageComparison.compare(pattern, sample, 10);
+      // then
+      assertThat(imageComparisonResult.getPercentagePixelDifference(), is(1.781954887218045));
+      assertThat(imageComparisonResult.getHeightDifference(), is(0));
+      assertThat(imageComparisonResult.getWidthDifference(), is(0));
+      assertThat(imageComparisonResult.getPixelDifferenceCount(), is(3792));
+
+      maskStream = imageToStream(imageComparisonResult.getResultImage());
+      expectedMaskStream = getClass()
+          .getResourceAsStream("/mock/LayoutComparator/enough-fuzz-result.png");
+
+      assertThat(IOUtils.contentEquals(maskStream, expectedMaskStream), is(true));
+    } finally {
+      closeInputStreams(sampleStream, patternStream, maskStream, expectedMaskStream);
+    }
+  }
+
+  @Test
+  public void compare_screenshotsWithRenditionIssueAndTextMovement_tooMuchFuzz() throws Exception {
+    InputStream sampleStream = null;
+    InputStream patternStream = null;
+    InputStream maskStream = null;
+    InputStream expectedMaskStream = null;
+    try {
+      // given
+      sampleStream = getClass().getResourceAsStream("/mock/LayoutComparator/fuzz1.png");
+      patternStream = getClass().getResourceAsStream("/mock/LayoutComparator/fuzz2.png");
+
+      BufferedImage sample = ImageIO.read(sampleStream);
+      BufferedImage pattern = ImageIO.read(patternStream);
+      // when
+      ImageComparisonResult imageComparisonResult = ImageComparison.compare(pattern, sample, 90);
+      // then
+      assertThat(imageComparisonResult.getPercentagePixelDifference(), is(0.0));
+      assertThat(imageComparisonResult.getHeightDifference(), is(0));
+      assertThat(imageComparisonResult.getWidthDifference(), is(0));
+      assertThat(imageComparisonResult.getPixelDifferenceCount(), is(0));
+
+      maskStream = imageToStream(imageComparisonResult.getResultImage());
+      expectedMaskStream = getClass()
+          .getResourceAsStream("/mock/LayoutComparator/too-much-fuzz-result.png");
+
+      assertThat(IOUtils.contentEquals(maskStream, expectedMaskStream), is(true));
+    } finally {
+      closeInputStreams(sampleStream, patternStream, maskStream, expectedMaskStream);
+    }
+  }
+
+
+  @Test
+  public void compare_screenshotsWithRenditionIssue_withoutFuzz() throws Exception {
+    InputStream sampleStream = null;
+    InputStream patternStream = null;
+    InputStream maskStream = null;
+    InputStream expectedMaskStream = null;
+    try {
+      // given
+      sampleStream = getClass().getResourceAsStream("/mock/LayoutComparator/fuzz3.png");
+      patternStream = getClass().getResourceAsStream("/mock/LayoutComparator/fuzz4.png");
+
+      BufferedImage sample = ImageIO.read(sampleStream);
+      BufferedImage pattern = ImageIO.read(patternStream);
+      // when
+      ImageComparisonResult imageComparisonResult = ImageComparison.compare(pattern, sample, 0);
+      // then
+      assertThat(imageComparisonResult.getPercentagePixelDifference(), is(24.331668331668332));
+      assertThat(imageComparisonResult.getHeightDifference(), is(0));
+      assertThat(imageComparisonResult.getWidthDifference(), is(0));
+      assertThat(imageComparisonResult.getPixelDifferenceCount(), is(30445));
+
+      maskStream = imageToStream(imageComparisonResult.getResultImage());
+      expectedMaskStream = getClass()
+          .getResourceAsStream("/mock/LayoutComparator/without-fuzz-result.png");
+
+      assertThat(IOUtils.contentEquals(maskStream, expectedMaskStream), is(true));
+    } finally {
+      closeInputStreams(sampleStream, patternStream, maskStream, expectedMaskStream);
+    }
+  }
+
+
+  @Test
+  public void compare_screenshotsWithRenditionIssue_withFuzz() throws Exception {
+    InputStream sampleStream = null;
+    InputStream patternStream = null;
+    InputStream maskStream = null;
+    InputStream expectedMaskStream = null;
+    try {
+      // given
+      sampleStream = getClass().getResourceAsStream("/mock/LayoutComparator/fuzz3.png");
+      patternStream = getClass().getResourceAsStream("/mock/LayoutComparator/fuzz4.png");
+
+      BufferedImage sample = ImageIO.read(sampleStream);
+      BufferedImage pattern = ImageIO.read(patternStream);
+      // when
+      ImageComparisonResult imageComparisonResult = ImageComparison.compare(pattern, sample, 10);
+      // then
+      assertThat(imageComparisonResult.getPercentagePixelDifference(), is(0.0));
+      assertThat(imageComparisonResult.getHeightDifference(), is(0));
+      assertThat(imageComparisonResult.getWidthDifference(), is(0));
+      assertThat(imageComparisonResult.getPixelDifferenceCount(), is(0));
+
+      maskStream = imageToStream(imageComparisonResult.getResultImage());
+      expectedMaskStream = getClass()
+          .getResourceAsStream("/mock/LayoutComparator/with-fuzz-result.png");
+
       assertThat(IOUtils.contentEquals(maskStream, expectedMaskStream), is(true));
     } finally {
       closeInputStreams(sampleStream, patternStream, maskStream, expectedMaskStream);

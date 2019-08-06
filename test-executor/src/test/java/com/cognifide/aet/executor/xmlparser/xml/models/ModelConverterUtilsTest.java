@@ -61,6 +61,22 @@ public class ModelConverterUtilsTest {
     ModelConverterUtils.extendUrlsList(urls);
   }
 
+  @Test(expected = ParseException.class)
+  public void extendUrlsList_withTheSameUrlsWithoutNames_expectParseException() throws Exception {
+    Url url1 = new Url("https://www.google.com", null, null);
+    Url url2 = new Url("https://www.google.com", null, null);
+    List<Url> urls = Lists.newArrayList(url1, url2);
+    ModelConverterUtils.extendUrlsList(urls);
+  }
+
+  @Test(expected = ParseException.class)
+  public void extendUrlsList_withEmptyUrl_expectParseException() throws Exception {
+    Url url1 = new Url("", null, null);
+    Url url2 = new Url("https://www.google.com", null, null);
+    List<Url> urls = Lists.newArrayList(url1, url2);
+    ModelConverterUtils.extendUrlsList(urls);
+  }
+
   @Test
   public void extendUrlsList_expectConvertedUrls() throws Exception {
     List<Url> urls = new LinkedList<>();

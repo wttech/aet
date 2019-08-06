@@ -16,6 +16,7 @@
 package com.cognifide.aet.cleaner;
 
 
+import com.cognifide.aet.cleaner.camel.CamelContextCreator;
 import com.cognifide.aet.cleaner.context.CleanerContext;
 import org.apache.camel.CamelContext;
 import org.apache.camel.ProducerTemplate;
@@ -46,6 +47,8 @@ public class CleanerJob implements Job {
 
   static final String KEY_DRY_RUN = "dryRun";
 
+  static final String KEY_CAMEL_CONTEXT_CREATOR = "camelContextCreator";
+
   @Override
   public void execute(JobExecutionContext context) throws JobExecutionException {
     CamelContext camelContext = null;
@@ -59,8 +62,10 @@ public class CleanerJob implements Job {
       final String companyFilter = (String) jobDataMap.get(KEY_COMPANY_FILTER);
       final String projectFilter = (String) jobDataMap.get(KEY_PROJECT_FILTER);
       final Boolean dryRun = (Boolean) jobDataMap.get(KEY_DRY_RUN);
+      final CamelContextCreator contextCreator = (CamelContextCreator) jobDataMap
+          .get(KEY_CAMEL_CONTEXT_CREATOR);
 
-      camelContext = new DefaultCamelContext();
+      camelContext = contextCreator.create();
       camelContext.setAllowUseOriginalMessage(false);
       camelContext.addRoutes(cleanerRouteBuilder);
       camelContext.start();
