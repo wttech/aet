@@ -75,6 +75,7 @@ public class SuiteExecutor {
 
   private static final String LOCKED_SUITE_MESSAGE = "Suite is currently locked. Please try again later.";
   private static final String LOCKED_DATABASE_MESSAGE = "Database is currently locked. Please try again later.";
+  private static final String TOO_MANY_TESTS_MESSAGE = "There are too many tests running in the system. Please try again later.";
 
   private static final long CACHE_EXPIRATION_TIMEOUT = 60000L;
 
@@ -200,6 +201,9 @@ public class SuiteExecutor {
     } else if (lockResult == LockType.DATABASE_LOCK) {
       return HttpSuiteExecutionResultWrapper.wrapError(
               SuiteExecutionResult.createErrorResult(LOCKED_DATABASE_MESSAGE), HttpStatus.SC_LOCKED);
+    } else if (lockResult == LockType.TOO_MANY_TESTS) {
+      return HttpSuiteExecutionResultWrapper.wrapError(
+              SuiteExecutionResult.createErrorResult(TOO_MANY_TESTS_MESSAGE), HttpStatus.SC_LOCKED);
     } else {
       return HttpSuiteExecutionResultWrapper.wrapError(
           SuiteExecutionResult.createErrorResult(LOCKED_SUITE_MESSAGE), HttpStatus.SC_LOCKED);

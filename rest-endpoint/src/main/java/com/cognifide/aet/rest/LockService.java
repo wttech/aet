@@ -79,9 +79,13 @@ public class LockService implements Serializable {
 
   public synchronized LockType trySetLock(String key, String value) {
     if (null == lockSet.getIfPresent(key)) {
-      if (!globalLock && semaphore.tryAcquire()) {
-        lockSet.put(key, value);
-        return LockType.UNLOCK;
+      if (!globalLock) {
+        if (semaphore.tryAcquire()) {
+          lockSet.put(key, value);
+          return LockType.UNLOCK;
+        } else {
+          return LockType.TOO_MANY_TESTS;
+        }
       } else {
         return LockType.DATABASE_LOCK;
       }

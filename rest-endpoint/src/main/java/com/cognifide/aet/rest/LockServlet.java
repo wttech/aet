@@ -16,13 +16,8 @@
 package com.cognifide.aet.rest;
 
 
+import com.cognifide.aet.rest.helpers.LockType;
 import com.google.gson.Gson;
-import java.io.IOException;
-import javax.servlet.ServletConfig;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.lang3.StringUtils;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -31,6 +26,13 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.http.HttpService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.servlet.ServletConfig;
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 @Component(immediate = true)
 public class LockServlet extends HttpServlet {
@@ -79,7 +81,7 @@ public class LockServlet extends HttpServlet {
     String key = getKey(req);
     if (StringUtils.isBlank(key) || StringUtils.isBlank(value)) {
       resp.setStatus(404);
-    } else if (lockService.trySetLock(key, value)) {
+    } else if (lockService.trySetLock(key, value) == LockType.UNLOCK) {
       resp.setStatus(200);
     } else {
       resp.setStatus(409);
