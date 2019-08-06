@@ -77,8 +77,6 @@ public class SuiteExecutor {
   private static final String LOCKED_DATABASE_MESSAGE = "Database is currently locked. Please try again later.";
   private static final String TOO_MANY_TESTS_MESSAGE = "There are too many tests running in the system. Please try again later.";
 
-  private static final long CACHE_EXPIRATION_TIMEOUT = 60000L;
-
   private SuiteExecutorConf config;
 
   @Reference
@@ -111,12 +109,12 @@ public class SuiteExecutor {
     this.config = config;
 
     suiteRunnerCache = CacheBuilder.newBuilder()
-        .expireAfterAccess(CACHE_EXPIRATION_TIMEOUT, TimeUnit.MILLISECONDS)
+        .expireAfterAccess(config.cacheExpirationTimeout(), TimeUnit.MILLISECONDS)
         .removalListener(new RunnerCacheRemovalListener())
         .build();
 
     suiteStatusCache = CacheBuilder.newBuilder()
-        .expireAfterAccess(CACHE_EXPIRATION_TIMEOUT, TimeUnit.MILLISECONDS)
+        .expireAfterAccess(config.cacheExpirationTimeout(), TimeUnit.MILLISECONDS)
         .build();
 
     cacheUpdater = new CacheUpdater(suiteRunnerCache, suiteStatusCache, lockService);
