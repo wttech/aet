@@ -16,6 +16,7 @@
 package com.cognifide.aet.rest;
 
 
+import com.cognifide.aet.rest.helpers.LockType;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.ImmutableMap;
@@ -76,12 +77,16 @@ public class LockService implements Serializable {
     return globalLock || null != lockSet.getIfPresent(key);
   }
 
-  public synchronized boolean trySetLock(String key, String value) {
-    if (!globalLock && semaphore.tryAcquire()) {
-      lockSet.put(key, value);
-      return true;
+  public synchronized LockType trySetLock(String key, String value) {
+    if (null == lockSet.getIfPresent(key)) {
+      if (!globalLock && semaphore.tryAcquire()) {
+        lockSet.put(key, value);
+        return LockType.UNLOCK;
+      } else {
+        return LockType.DATABASE_LOCK;
+      }
     }
-    return false;
+    return LockType.SUITE_LOCK;
   }
 
   public synchronized void releaseLock() {
@@ -99,6 +104,7 @@ public class LockService implements Serializable {
   public Map<String, String> getAllLocks() {
     return ImmutableMap.copyOf(lockSet.asMap());
   }
+
 
 }
 
