@@ -64,7 +64,7 @@ class SuiteRerun {
     } else if (isUrlRerun(testName, urlName)) {
       Optional<Test> test = suite.getTest(testName);
       if(test.isPresent()){
-        Optional<Url> url = test.get().getUrl(urlName);
+        Optional<Url> url = test.get().findUrl(data.getTestUrl());
         if(url.isPresent()){
           UrlRunWrapper urlRunWrapper = new UrlRunWrapper(url.get(), test.get());
           urlRunWrapper.setReran();
