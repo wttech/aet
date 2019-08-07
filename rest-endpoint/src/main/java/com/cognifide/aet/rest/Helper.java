@@ -95,6 +95,12 @@ public final class Helper {
     return dbKey;
   }
 
+  public static DBKey getDBKey(String company, String project) throws ValidatorException {
+    SimpleDBKey dbKey = new SimpleDBKey(company, project);
+    dbKey.validate(null);
+    return dbKey;
+  }
+
   public static boolean isValidName(String suiteName) {
     return ValidatorProvider.getValidator().validateValue(Suite.class, "name", suiteName).isEmpty();
   }

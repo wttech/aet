@@ -27,6 +27,7 @@ import com.cognifide.aet.communication.api.wrappers.Run;
 import com.cognifide.aet.communication.api.wrappers.SuiteRunWrapper;
 import com.cognifide.aet.communication.api.wrappers.TestRunWrapper;
 import com.cognifide.aet.communication.api.wrappers.UrlRunWrapper;
+import com.cognifide.aet.executor.http.RerunDataWrapper;
 import com.cognifide.aet.executor.model.CorrelationIdGenerator;
 import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.MetadataDAO;
@@ -42,29 +43,28 @@ class SuiteRerun {
   private SuiteRerun() {
   }
 
-  static Run getAndPrepareObject(MetadataDAO metadataDAO, DBKey dbKey, String correlationId,
-      String suiteName, String testName, String urlName) {
+  static Run getAndPrepareObject(MetadataDAO metadataDAO, DBKey dbKey, RerunDataWrapper data) {
     Suite suite = null;
     try {
-      suite = getSuiteFromMetadata(metadataDAO, dbKey, correlationId, suiteName);
+      suite = getSuiteFromMetadata(metadataDAO, dbKey, data.getCorrelationId(), data.getSuite());
       suite.setRunTimestamp(new Timestamp(System.currentTimeMillis()));
     } catch (StorageException e) {
       LOGGER.error("Read metadata from DB problem!", e);
     }
     Run objectToRunWrapper = null;
-    if (isSuiteRerun(testName, urlName)) {
+    if (isSuiteRerun(data.getTestName(), data.getTestUrl())) {
       prepareSuiteToRerun(suite);
       objectToRunWrapper = new SuiteRunWrapper(suite);
-    } else if (isTestRerun(testName, urlName)) {
-      Optional<Test> test = suite.getTest(testName);
+    } else if (isTestRerun(data.getTestName(), data.getTestUrl())) {
+      Optional<Test> test = suite.getTest(data.getTestName());
       test.get().setRerunUrls();
       if(test.isPresent()){
         objectToRunWrapper = new MetadataRunDecorator(new TestRunWrapper(test.get()), suite);
       }
-    } else if (isUrlRerun(testName, urlName)) {
-      Optional<Test> test = suite.getTest(testName);
+    } else if (isUrlRerun(data.getTestName(), data.getTestUrl())) {
+      Optional<Test> test = suite.getTest(data.getTestName());
       if(test.isPresent()){
-        Optional<Url> url = test.get().findUrl(urlName);
+        Optional<Url> url = test.get().findUrl(data.getTestUrl());
         if(url.isPresent()){
           UrlRunWrapper urlRunWrapper = new UrlRunWrapper(url.get(), test.get());
           urlRunWrapper.setReran();

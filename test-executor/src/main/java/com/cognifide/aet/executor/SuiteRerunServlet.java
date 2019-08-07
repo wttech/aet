@@ -19,10 +19,13 @@ import com.cognifide.aet.communication.api.execution.SuiteExecutionResult;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.communication.api.wrappers.Run;
 import com.cognifide.aet.executor.http.HttpSuiteExecutionResultWrapper;
+import com.cognifide.aet.executor.http.RerunDataWrapper;
 import com.cognifide.aet.rest.Helper;
+import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.MetadataDAO;
+import com.google.common.base.Charsets;
 import com.google.gson.Gson;
-import org.apache.commons.lang3.CharEncoding;
+import com.google.gson.JsonSyntaxException;
 import org.apache.http.HttpStatus;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -33,6 +36,7 @@ import org.osgi.service.http.NamespaceException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.jms.JMSException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -58,44 +62,40 @@ public class SuiteRerunServlet extends HttpServlet {
 
   private static final Gson GSON = new Gson();
 
-  private SuiteExecutionResult suiteExecutionResult;
 
-  private HttpSuiteExecutionResultWrapper resultWrapper = null;
-
+  @Override
   protected void doPost(HttpServletRequest request, HttpServletResponse response)
-      throws IOException {
+    throws IOException {
 
     addCors(response);
-    String correlationId = request.getParameter(Helper.CORRELATION_ID_PARAM);
-    String suiteName = request.getParameter(Helper.SUITE_PARAM);
-    String testName = request.getParameter(Helper.TEST_RERUN_PARAM);
-    String urlName = request.getParameter(Helper.URL_RERUN_PARAM);
-
-    Run objectToRunWrapper = null;
 
     try {
-      objectToRunWrapper = SuiteRerun
-          .getAndPrepareObject(metadataDAO, Helper.getDBKeyFromRequest(request), correlationId, suiteName,
-              testName, urlName);
-      if(objectToRunWrapper != null) {
-        try {
-          resultWrapper = suiteExecutor.executeSuite(objectToRunWrapper);
-          createResponse(resultWrapper, response);
-        } catch (javax.jms.JMSException | ValidatorException e) {
-          e.printStackTrace();
+      RerunDataWrapper rerunDataWrapper = GSON.fromJson(request.getReader(), RerunDataWrapper.class);
+
+      if (rerunDataWrapper != null) {
+        DBKey dbKey = Helper.getDBKey(rerunDataWrapper.getCompany(), rerunDataWrapper.getProject());
+        Run objectToRunWrapper = SuiteRerun
+                .getAndPrepareObject(metadataDAO, dbKey, rerunDataWrapper);
+
+        if (objectToRunWrapper != null) {
+          createResponse(objectToRunWrapper, response);
+        } else {
+          response.setStatus(HttpURLConnection.HTTP_NOT_FOUND);
         }
       } else {
         response.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
       }
-    } catch (ValidatorException e) {
+    } catch (ValidatorException | JsonSyntaxException | JMSException e) {
       LOGGER.error("Validation problem!", e);
       response.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
     }
   }
 
-  private void createResponse(HttpSuiteExecutionResultWrapper resultWrapper,
-      HttpServletResponse response) throws IOException {
-    suiteExecutionResult = resultWrapper.getExecutionResult();
+  private void createResponse(Run objectToRunWrapper, HttpServletResponse response)
+          throws IOException, ValidatorException, JMSException {
+
+    HttpSuiteExecutionResultWrapper resultWrapper = suiteExecutor.executeSuite(objectToRunWrapper);
+    SuiteExecutionResult suiteExecutionResult = resultWrapper.getExecutionResult();
     String responseBody = GSON.toJson(suiteExecutionResult);
 
     if (resultWrapper.hasError()) {
@@ -103,14 +103,13 @@ public class SuiteRerunServlet extends HttpServlet {
     } else {
       response.setStatus(HttpStatus.SC_OK);
       response.setContentType("application/json");
-      response.setCharacterEncoding(CharEncoding.UTF_8);
+      response.setCharacterEncoding(Charsets.UTF_8.name());
       response.getWriter().write(responseBody);
     }
   }
 
   @Override
-  protected void doOptions(HttpServletRequest req, HttpServletResponse resp)
-      throws ServletException, IOException {
+  protected void doOptions(HttpServletRequest req, HttpServletResponse resp) {
     addCors(resp);
   }
 
