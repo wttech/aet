@@ -1,18 +1,32 @@
+/**
+ * AET
+ *
+ * Copyright (C) 2013 Cognifide Limited
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
+ * in compliance with the License. You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License
+ * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
+ * or implied. See the License for the specific language governing permissions and limitations under
+ * the License.
+ */
 package com.cognifide.aet.cleaner;
 
 import com.cognifide.aet.cleaner.processors.*;
-import com.cognifide.aet.cleaner.route.MetadataCleanerRouteBuilder;
 import com.cognifide.aet.cleaner.route.OrphanCleanerRouteBuilder;
 import com.cognifide.aet.cleaner.time.LocalDateTimeProvider;
+import com.cognifide.aet.rest.LockService;
 import com.cognifide.aet.vs.artifacts.ArtifactsDAOMongoDBImpl;
 import com.cognifide.aet.vs.metadata.MetadataDAOMongoDBImpl;
 import com.cognifide.aet.vs.mongodb.MongoDBClient;
 import com.google.common.collect.ImmutableMap;
+import com.google.common.collect.Sets;
 import com.googlecode.zohhak.api.TestWith;
 import com.googlecode.zohhak.api.runners.ZohhakRunner;
-import com.mongodb.BasicDBObject;
 import org.apache.sling.testing.mock.osgi.junit.OsgiContext;
-import org.bson.types.ObjectId;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -26,10 +40,9 @@ import org.quartz.JobExecutionException;
 import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDateTime;
-import java.util.Arrays;
+import java.util.Set;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 @RunWith(ZohhakRunner.class)
@@ -73,6 +86,7 @@ public class OrphanCleanerIntegrationTest {
         context.registerInjectActivateService(new RemoveArtifactsProcessor());
         context.registerInjectActivateService(new GetMetadataArtifactsProcessor());
         context.registerInjectActivateService(new GetAllOrphanedArtifactsProcessor());
+        context.registerInjectActivateService(new LockService());
         context.registerInjectActivateService(new SuiteLockProcessor());
         context.registerInjectActivateService(new SuiteUnlockProcessor());
         orphanCleanerRouteBuilder = context
@@ -85,72 +99,69 @@ public class OrphanCleanerIntegrationTest {
     }
 
     @TestWith({
-            //keeping based on age
-            "1,6,projectA",
-            "1,6,projectB",
-            //keeping based on versions
-            "5,0,projectA",
-            "5,0,projectB",
-            //both
-            "5,6,projectA",
-            "5,6,projectB"
+            "projectA",
+            "projectB"
     })
-    public void clean_whenNoSuiteMatchesRemoveCondition_keepEverything(Long versionsToKeep,
-                                                                       Long maxAge,
-                                                                       String projectDataDir) throws JobExecutionException, IOException {
-        setUpDataForTest(versionsToKeep, maxAge, projectDataDir);
+    public void clean_whenAllArtifactsHaveParents_keepEverything(String projectDataDir)
+            throws JobExecutionException, IOException {
+        setUpDataForTest(projectDataDir);
+
         long metadataCountBefore = db.getMetadataDocsCount();
         long artifactCountBefore = db.getArtifactsDocsCount();
+
         new CleanerJob().execute(jobExecutionContext);
+
         assertEquals(metadataCountBefore, db.getMetadataDocsCount());
         assertEquals(artifactCountBefore, db.getArtifactsDocsCount());
     }
 
     @TestWith({
-            "1,0,projectA,2",
-            "1,1,projectA,2",
-            "1,0,projectB,3",
-            "1,1,projectB,3"
+            "projectC,3"
     })
-    public void clean_whenAllSuitesTooOld_keepOnlyNewestSuite(Long versionsToKeep, Long maxAge,
-                                                              String projectDataDir, int expectedArtifactsLeft) throws JobExecutionException, IOException {
-        setUpDataForTest(versionsToKeep, maxAge, projectDataDir);
+    public void clean_someArtifactsAreOrphan_keepOnlyWithParent(String projectDataDir, int expectedArtifactsLeft)
+            throws JobExecutionException, IOException {
+        setUpDataForTest(projectDataDir);
+
+        long metadataCountBefore = db.getMetadataDocsCount();
+
         new CleanerJob().execute(jobExecutionContext);
-        assertEquals(1, db.getMetadataDocsCount());
+
+        assertEquals(metadataCountBefore, db.getMetadataDocsCount());
         assertEquals(expectedArtifactsLeft, db.getArtifactsDocsCount());
     }
 
     @TestWith({
-            "1,0,projectA,5c7e2d446798f408cf3d1df6;5c7e2d436798f408cf3d1dea",
-            "2,0,projectA,5c7e2d446798f408cf3d1df6;5c7e2d436798f408cf3d1dea;5c7e291f6798f408cf3d1da7",
-            "1,0,projectB,5c7e349e6798f408cf3d1e10;5c7e35236798f408cf3d1e19;5c7e35236798f408cf3d1e1b",
-            "2,0,projectB,5c7e349e6798f408cf3d1e10;5c7e35236798f408cf3d1e19;5c7e35236798f408cf3d1e1b;5c7e34c86798f408cf3d1e13"
+            "projectC,5c7e291f6798f408cf3d1da7;5c7e2d436798f408cf3d1dea;5c7e2d446798f408cf3d1df6,5c7e2d436798f408cf3d1ded"
     })
-    public void clean_whenRemoveSomeSuites_keepOnlyReferencedArtifacts(Long versionsToKeep,
-                                                                       Long maxAge, String projectDataDir, String artifactsToKeep)
+    public void clean_removeOrphanedArtifacts_keepOnlyReferencedArtifacts(String projectDataDir, String artifactsToKeep,
+                                                                          String artifactToRemove)
             throws IOException, JobExecutionException {
-        String[] artifactsToKeepIds = artifactsToKeep.split(";");
-        setUpDataForTest(versionsToKeep, maxAge, projectDataDir);
+        Set<String> artifactsToKeepIds = Sets.newHashSet(artifactsToKeep.split(";"));
+        Set<String> artifactsToRemoveIds = Sets.newHashSet(artifactToRemove.split(";"));
+
+        setUpDataForTest(projectDataDir);
+
+        Set<String> allArtifacts = db.getArtifactsIds();
         new CleanerJob().execute(jobExecutionContext);
-        Arrays.stream(artifactsToKeepIds).forEach(artifactId -> {
-            BasicDBObject query = new BasicDBObject();
-            query.put("_id", new ObjectId(artifactId));
-            assertTrue(db.getArtifactDocs().find(query).iterator().hasNext());
-        });
-        assertEquals(artifactsToKeepIds.length, db.getArtifactDocs().countDocuments());
+        Set<String> artifactsAfterCleaning = db.getArtifactsIds();
+
+        Set<String> removedArtifacts = Sets.difference(allArtifacts, artifactsAfterCleaning);
+
+        assertEquals(removedArtifacts, artifactsToRemoveIds);
+        assertEquals(artifactsAfterCleaning, artifactsToKeepIds);
     }
 
-    private void setUpDataForTest(Long versionsToKeep, Long maxAge, String projectDataDir)
+    private void setUpDataForTest(String projectDataDir)
             throws IOException {
-        createJobData(versionsToKeep, maxAge);
+        createJobData();
         db.loadProjectData(projectDataDir);
     }
 
-    private void createJobData(Long versionsToKeep, Long maxAge) {
+    private void createJobData() {
         final JobDataMap jobData = new JobDataMap(ImmutableMap.<String, Object>builder()
                 .put(CleanerJob.KEY_ROUTE_BUILDER, orphanCleanerRouteBuilder)
-                .put(CleanerJob.KEY_KEEP_N_VERSIONS, versionsToKeep)
-                .put(CleanerJob.KEY_REMOVE_OLDER_THAN, maxAge)
+                .put(CleanerJob.KEY_KEEP_N_VERSIONS, 0L)
+                .put(CleanerJob.KEY_REMOVE_OLDER_THAN, 0L)
                 .put(CleanerJob.KEY_COMPANY_FILTER, MOCKED_COMPANY_NAME)
                 .put(CleanerJob.KEY_PROJECT_FILTER, MOCKED_PROJECT_NAME)
                 .put(CleanerJob.KEY_DRY_RUN, false)

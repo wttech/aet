@@ -19,13 +19,18 @@ import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
+import com.mongodb.client.model.Projections;
 import de.bwaldvogel.mongo.MongoServer;
 import de.bwaldvogel.mongo.backend.memory.MemoryBackend;
+import org.apache.commons.io.FileUtils;
+import org.bson.Document;
+
 import java.io.File;
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import org.apache.commons.io.FileUtils;
-import org.bson.Document;
+import java.util.Set;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
 
 public class InMemoryDB {
 
@@ -62,8 +67,8 @@ public class InMemoryDB {
     for (String collectionName : collectionNames) {
       String collectionDir = String
           .format("%s/%s/%s", dataDir, projectDataDir, collectionName);
-      File[] collectionFiles = new File(getClass().getResource(collectionDir).getFile())
-          .listFiles();
+      String dir = getClass().getResource(collectionDir).getFile();
+      File[] collectionFiles = new File(dir).listFiles();
       if (collectionFiles != null) {
         for (File file : collectionFiles) {
           String json = FileUtils.readFileToString(file, "UTF-8");
@@ -85,6 +90,12 @@ public class InMemoryDB {
     return getDatabase().getCollection(artifactsColName);
   }
 
+  public Set<String> getArtifactsIds() {
+    return StreamSupport.stream(
+            getArtifactDocs().find().projection(Projections.include("_id")).spliterator(), false)
+            .map(this::getIdFromDocument).collect(Collectors.toSet());
+  }
+
   public long getMetadataDocsCount() {
     return getMetadataDocs().countDocuments();
   }
@@ -95,5 +106,9 @@ public class InMemoryDB {
 
   private MongoDatabase getDatabase() {
     return client.getDatabase(dbName);
+  }
+
+  private String getIdFromDocument(Document document) {
+    return document.getObjectId("_id").toString();
   }
 }
