@@ -14,6 +14,7 @@ All notable changes to AET will be documented in this file.
 - [PR-506](https://github.com/Cognifide/aet/pull/506) About tab ([#475](https://github.com/Cognifide/aet/issues/475)) 
 - [PR-462](https://github.com/Cognifide/aet/pull/462) Popup window unification([#367](https://github.com/Cognifide/aet/issues/367)) 
 - [PR-489](https://github.com/Cognifide/aet/pull/489) Cleaner integration tests
+- [PR-518](https://github.com/Cognifide/aet/pull/518) Minimum site height ([#384](https://github.com/Cognifide/aet/issues/384))
 
 ## Version 3.2.2
 
