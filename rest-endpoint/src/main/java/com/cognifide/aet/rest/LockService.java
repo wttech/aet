@@ -40,7 +40,7 @@ public class LockService implements Serializable {
 
   private static final int LOCK_CACHE_TIMEOUT = 30000;
 
-  private static final int AVAILABLE_SLOTS = 1000;
+  private static final int AVAILABLE_SLOTS = 100;
 
   private transient Semaphore semaphore;
 
@@ -82,7 +82,7 @@ public class LockService implements Serializable {
       if (!globalLock) {
         if (semaphore.tryAcquire()) {
           lockSet.put(key, value);
-          return LockType.UNLOCK;
+          return LockType.LOCK;
         } else {
           return LockType.TOO_MANY_TESTS;
         }
@@ -93,7 +93,12 @@ public class LockService implements Serializable {
     return LockType.SUITE_LOCK;
   }
 
-  public synchronized void releaseLock() {
+  public synchronized void acquireSlot() throws InterruptedException {
+    this.semaphore.acquire();
+  }
+
+
+  public synchronized void releaseSlot() {
     this.semaphore.release();
   }
 
@@ -109,6 +114,11 @@ public class LockService implements Serializable {
     return ImmutableMap.copyOf(lockSet.asMap());
   }
 
-
+  // for tests
+  public void clearCacheAndChangeCacheTimeout(long timeout) {
+    this.lockSet = CacheBuilder.newBuilder()
+            .expireAfterWrite(timeout, TimeUnit.MILLISECONDS)
+            .build();
+  }
 }
 

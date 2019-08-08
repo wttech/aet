@@ -16,7 +16,7 @@
 package com.cognifide.aet.rest.helpers;
 
 public enum LockType {
-    UNLOCK,
+    LOCK,
     SUITE_LOCK,
     DATABASE_LOCK,
     TOO_MANY_TESTS

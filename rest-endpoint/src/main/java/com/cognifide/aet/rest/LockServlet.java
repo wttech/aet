@@ -81,7 +81,7 @@ public class LockServlet extends HttpServlet {
     String key = getKey(req);
     if (StringUtils.isBlank(key) || StringUtils.isBlank(value)) {
       resp.setStatus(404);
-    } else if (lockService.trySetLock(key, value) == LockType.UNLOCK) {
+    } else if (lockService.trySetLock(key, value) == LockType.LOCK) {
       resp.setStatus(200);
     } else {
       resp.setStatus(409);

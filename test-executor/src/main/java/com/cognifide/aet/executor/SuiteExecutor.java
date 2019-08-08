@@ -185,7 +185,7 @@ public class SuiteExecutor {
 
     LockType lockResult = lockTestSuite(objectToRunWrapper);
 
-    if (lockResult == LockType.UNLOCK) {
+    if (lockResult == LockType.LOCK) {
       suiteRunner = createSuiteRunner(objectToRunWrapper);
       suiteRunner.runSuite();
 

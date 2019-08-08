@@ -136,7 +136,7 @@ public class SuiteRunner implements Runnable {
       }
       close();
     } finally {
-        lockService.releaseLock();
+        lockService.releaseSlot();
     }
   }
 

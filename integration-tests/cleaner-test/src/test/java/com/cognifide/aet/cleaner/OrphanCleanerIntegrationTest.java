@@ -27,6 +27,7 @@ import com.google.common.collect.Sets;
 import com.googlecode.zohhak.api.TestWith;
 import com.googlecode.zohhak.api.runners.ZohhakRunner;
 import org.apache.sling.testing.mock.osgi.junit.OsgiContext;
+import org.awaitility.Duration;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Rule;
@@ -41,7 +42,11 @@ import java.io.IOException;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.util.Set;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Semaphore;
 
+import static org.awaitility.Awaitility.*;
+import static org.hamcrest.Matchers.equalTo;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.when;
 
@@ -68,6 +73,7 @@ public class OrphanCleanerIntegrationTest {
     private InMemoryDB db;
 
     private OrphanCleanerRouteBuilder orphanCleanerRouteBuilder;
+    private LockService lockService;
     private LocalDateTimeProvider mockedDateTimeProvider = zone -> LocalDateTime
             .ofInstant(Instant.ofEpochMilli(MOCKED_CURRENT_TIMESTAMP), zone);
 
@@ -86,7 +92,7 @@ public class OrphanCleanerIntegrationTest {
         context.registerInjectActivateService(new RemoveArtifactsProcessor());
         context.registerInjectActivateService(new GetMetadataArtifactsProcessor());
         context.registerInjectActivateService(new GetAllOrphanedArtifactsProcessor());
-        context.registerInjectActivateService(new LockService());
+        lockService = context.registerInjectActivateService(new LockService());
         context.registerInjectActivateService(new SuiteLockProcessor());
         context.registerInjectActivateService(new SuiteUnlockProcessor());
         orphanCleanerRouteBuilder = context
@@ -151,6 +157,25 @@ public class OrphanCleanerIntegrationTest {
         assertEquals(artifactsAfterCleaning, artifactsToKeepIds);
     }
 
+    @TestWith({
+            "projectC,3"
+    })
+    public void clean_startCleanerWhenTestIsRunning_waitUntilTestStops(String projectDataDir, long expectedArtifactsLeft)
+            throws Exception{
+        lockService.acquireSlot();
+
+        setUpDataForTest(projectDataDir);
+        TestRunner testRunner = new TestRunner();
+        Thread thread = new Thread(testRunner);
+        thread.start();
+
+        await("Cleaner wait until tests stop").atMost(Duration.FIVE_SECONDS).until(threadQueueSize(), equalTo(1));
+        lockService.releaseSlot();
+        await("Cleaner start working").atMost(Duration.FIVE_SECONDS).until(threadQueueSize(), equalTo(0));
+        with().pollInterval(Duration.TWO_HUNDRED_MILLISECONDS)
+                .await("Cleaner stop working").atMost(Duration.FIVE_SECONDS).until(countArtifactsInDatabase(), equalTo(expectedArtifactsLeft));
+    }
+
     private void setUpDataForTest(String projectDataDir)
             throws IOException {
         createJobData();
@@ -171,4 +196,26 @@ public class OrphanCleanerIntegrationTest {
         when(jobExecutionContext.getJobDetail()).thenReturn(jobDetail);
     }
 
+    private Callable<Long> countArtifactsInDatabase() {
+        return () -> db.getArtifactsDocsCount();
+    }
+
+    private Callable<Integer> threadQueueSize() {
+        return () -> fieldIn(lockService)
+                .ofType(Semaphore.class)
+                .call()
+                .getQueueLength();
+    }
+
+    private class TestRunner implements Runnable {
+
+        @Override
+        public void run() {
+            try {
+                new CleanerJob().execute(jobExecutionContext);
+            } catch (JobExecutionException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }
