@@ -15,18 +15,13 @@
  */
 package com.cognifide.aet.job.common.collectors.screen;
 
-import com.cognifide.aet.job.api.collector.CollectorProperties;
-import com.cognifide.aet.job.api.exceptions.ParametersException;
-import com.cognifide.aet.vs.ArtifactsDAO;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.runners.MockitoJUnitRunner;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.Point;
-import org.openqa.selenium.remote.RemoteWebDriver;
 
 import javax.imageio.ImageIO;
 import java.awt.*;
@@ -80,5 +75,27 @@ public class ScreenCollectorImageTest {
             }
         }
         assertThat(onlyBlack).isTrue();
+    }
+
+    @Test
+    public void testSubImageSize_whenElementIsHidden() {
+        Point point = new Point(0, 0);
+        Dimension dimension = new Dimension(0, 0);
+
+        BufferedImage subImage = screenCollector.getSubImage(testImage, point, dimension);
+
+        assertThat(subImage.getHeight()).isEqualTo(1);
+        assertThat(subImage.getWidth()).isEqualTo(1);
+    }
+
+    @Test
+    public void testSubImageSize_whenElementIsBiggerThanImage() {
+        Point point = new Point(20, 20);
+        Dimension dimension = new Dimension(48, 48);
+
+        BufferedImage subImage = screenCollector.getSubImage(testImage, point, dimension);
+
+        assertThat(subImage.getHeight()).isEqualTo(28);
+        assertThat(subImage.getWidth()).isEqualTo(28);
     }
 }
