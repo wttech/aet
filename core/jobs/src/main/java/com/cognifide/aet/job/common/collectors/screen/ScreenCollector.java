@@ -227,17 +227,11 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
   private BufferedImage getSubImage(BufferedImage fullImg, Point point, Dimension size) {
     int width = size.getWidth();
     int height = size.getHeight();
-    if (point.getX() + width > fullImg.getWidth()) {
-      width = fullImg.getWidth() - point.getX();
+    if (point.getX() + width > fullImg.getWidth() || point.getX() + width == 0) {
+      width = Math.max(1, fullImg.getWidth() - point.getX());
     }
-    if (point.getY() + height > fullImg.getHeight()) {
-      height = fullImg.getHeight() - point.getY();
-    }
-    if (point.getX() + width == 0) {
-      width = 1;
-    }
-    if (point.getY() + height == 0) {
-      height = 1;
+    if (point.getY() + height > fullImg.getHeight() || point.getY() + height == 0) {
+      height = Math.max(1, fullImg.getHeight() - point.getY());
     }
 
     return fullImg.getSubimage(point.getX(), point.getY(), width, height);
