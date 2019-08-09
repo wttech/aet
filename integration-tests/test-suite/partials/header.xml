@@ -38,7 +38,6 @@
 			<url href="modifiers/header/private/basic_auth_required.jsp" />
 		</urls>
 	</test>
-	<!-- Header-Modifier END -->
 	<test name="S-modifier-User-Agent-Header" useProxy="rest">
 		<collect>
 			<header key="user-agent" value="Mozilla/5.0 (Windows NT 6.1; WOW64; rv:33.0) Gecko/20120101 Firefox/33.0" override="true"/>
@@ -90,4 +89,5 @@
 			<url href="modifiers/header/show_headers.jsp" />
 		</urls>
 	</test>
+	<!-- Header-Modifier END -->
 </suite>
