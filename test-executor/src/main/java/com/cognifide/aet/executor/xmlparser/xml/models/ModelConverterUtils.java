@@ -28,6 +28,9 @@ import org.apache.commons.lang3.StringUtils;
 
 public final class ModelConverterUtils {
 
+  private static final String EMPTY_URL_MESSAGE = "Empty url";
+  private static final String DUPLICATED_URL_MESSAGE = "Duplicated url";
+
   private ModelConverterUtils() {
     // empty utils constructor
   }
@@ -37,28 +40,48 @@ public final class ModelConverterUtils {
     List<ExtendedUrl> extendedUrls = Lists.newArrayList();
     List<ExtendedUrl> duplicatedUrls = Lists.newArrayList();
     Set<String> names = Sets.newHashSet();
+    StringBuilder builder = new StringBuilder();
+
     for (Url url : urls) {
-      String urlName;
-      if (StringUtils.isBlank(url.getName())) {
-        urlName = url.getHref().trim();
-      } else {
-        urlName = URLEncoder.encode(url.getName().trim(), StandardCharsets.UTF_8.displayName());
-      }
+      String urlName = extractUrlName(url);
       ExtendedUrl extendedUrl = new ExtendedUrl(url.getHref(), urlName, url.getDescription());
+      if (StringUtils.isBlank(extendedUrl.getUrl())) {
+        buildErrorMessage(builder, EMPTY_URL_MESSAGE, extendedUrl);
+      }
       if (!names.add(urlName)) {
         duplicatedUrls.add(extendedUrl);
+        buildErrorMessage(builder, DUPLICATED_URL_MESSAGE, extendedUrl);
       } else {
         extendedUrls.add(extendedUrl);
       }
     }
-    if (!duplicatedUrls.isEmpty()) {
-      StringBuilder builder = new StringBuilder("Duplicated urls:");
-      for (ExtendedUrl url : duplicatedUrls) {
-        builder.append(String.format("%n%s with name %s", url.getUrl(), url.getName()));
-      }
+    if (builder.length() > 0) {
       throw new ParseException(builder.toString());
     }
     return extendedUrls;
   }
 
+  private static String extractUrlName(Url url) throws UnsupportedEncodingException {
+    String urlName;
+    if (StringUtils.isBlank(url.getName())) {
+      urlName = url.getHref().trim();
+    } else {
+      urlName = URLEncoder.encode(url.getName().trim(), StandardCharsets.UTF_8.displayName());
+    }
+    return urlName;
+  }
+
+  private static void buildErrorMessage(StringBuilder builder, String baseMessage, ExtendedUrl url) {
+    builder.append(baseMessage);
+    formatIfNotBlank(builder, ", with URL: %s", url.getUrl());
+    formatIfNotBlank(builder, ", with name: %s", url.getName());
+    formatIfNotBlank(builder, ", with description: %s", url.getDescription());
+    builder.append(String.format("%n"));
+  }
+
+  private static void formatIfNotBlank(StringBuilder builder, String message, String string) {
+    if (StringUtils.isNotBlank(string)) {
+      builder.append(String.format(message, string));
+    }
+  }
 }
