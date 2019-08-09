@@ -47,10 +47,12 @@
     function rerunSuite() {
       $rootScope.rerunInProgress = true;
       var suiteInfo = suiteInfoService.getInfo();
-      var rerunParams = 'company=' + suiteInfo.company + '&' + 'project=' + suiteInfo.project + '&' +
-        'suite=' + suiteInfo.name;
-      var url = endpointConfiguration.getEndpoint().getUrl + 'suite-rerun?' + rerunParams;
-      $http.post(url, {}).then(function successCallback(response) {
+      var url = endpointConfiguration.getEndpoint().getUrl + 'suite-rerun';
+      $http.post(url, {
+        company: suiteInfo.company,
+        project: suiteInfo.project,
+        suite: suiteInfo.name,
+      }).then(function successCallback(response) {
         $rootScope.rerunMsg = 'Suite rerun initialized';
         $rootScope.rerunInProgressSuccessful = true;
         localStorage.setItem('currentRerunEndpointUrl', response.data.statusUrl);
@@ -64,10 +66,13 @@
     function rerunTest(testName) {
       $rootScope.rerunInProgress = true;
       var suiteInfo = suiteInfoService.getInfo();
-      var rerunParams = 'company=' + suiteInfo.company + '&' + 'project=' + suiteInfo.project + '&' +
-        'suite=' + suiteInfo.name + '&' + 'testName=' + testName;
-      var url = endpointConfiguration.getEndpoint().getUrl + 'suite-rerun?' + rerunParams;
-      $http.post(url, {}).then(function successCallback(response) {
+      var url = endpointConfiguration.getEndpoint().getUrl + 'suite-rerun';
+      $http.post(url, {
+        company: suiteInfo.company,
+        project: suiteInfo.project,
+        suite: suiteInfo.name,
+        testName: testName
+      }).then(function successCallback(response) {
         $rootScope.rerunMsg = 'Test rerun initialized';
         $rootScope.rerunProgress = 0;
         $rootScope.rerunInProgressSuccessful = true;
@@ -81,10 +86,14 @@
     function rerunURL(testName, testUrl) {
       $rootScope.rerunInProgress = true;
       var suiteInfo = suiteInfoService.getInfo();
-      var rerunParams = 'company=' + suiteInfo.company + '&' + 'project=' + suiteInfo.project + '&' +
-        'suite=' + suiteInfo.name + '&' + 'testUrl=' + testUrl + '&' + 'testName=' + testName;
-      var url = endpointConfiguration.getEndpoint().getUrl + 'suite-rerun?' + rerunParams;
-      $http.post(url, {}).then(function successCallback(response) {
+      var url = endpointConfiguration.getEndpoint().getUrl + 'suite-rerun';
+      $http.post(url, {
+        company: suiteInfo.company,
+        project: suiteInfo.project,
+        suite: suiteInfo.name,
+        testUrl: testUrl,
+        testName: testName
+      }).then(function successCallback(response) {
         $rootScope.rerunMsg = 'URL rerun initialized';
         $rootScope.rerunProgress = 0;
         $rootScope.rerunInProgressSuccessful = true;
