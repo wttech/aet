@@ -224,17 +224,16 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
     }
   }
 
-  private BufferedImage getSubImage(BufferedImage fullImg, Point point, Dimension size) {
-    int width = size.getWidth();
-    int height = size.getHeight();
-    if (point.getX() + width > fullImg.getWidth() || point.getX() + width == 0) {
-      width = Math.max(1, fullImg.getWidth() - point.getX());
-    }
-    if (point.getY() + height > fullImg.getHeight() || point.getY() + height == 0) {
-      height = Math.max(1, fullImg.getHeight() - point.getY());
-    }
+  BufferedImage getSubImage(BufferedImage fullImg, Point point, Dimension size) {
+    int width = calculateMeasure(fullImg.getWidth(), size.getWidth(), point.getX());
+    int height = calculateMeasure(fullImg.getHeight(), size.getHeight(), point.getY());
 
     return fullImg.getSubimage(point.getX(), point.getY(), width, height);
+  }
+
+  private int calculateMeasure(int fullImgMeasure, int subImgMeasure, int point) {
+    int result = Math.min(subImgMeasure, fullImgMeasure - point);
+    return Math.max(result, 1);
   }
 
   private byte[] bufferedImageToByteArray(BufferedImage bufferedImage) throws ProcessingException {
