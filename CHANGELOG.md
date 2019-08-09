@@ -16,6 +16,7 @@ All notable changes to AET will be documented in this file.
 - [PR-489](https://github.com/Cognifide/aet/pull/489) Cleaner integration tests
 - [PR-480](https://github.com/Cognifide/aet/pull/480) Test summary stats on the main report page. ([#474](https://github.com/Cognifide/aet/issues/474))
 - [PR-459](https://github.com/Cognifide/aet/pull/459) Print more meaningful error messages when suite.xml is malformed ([#436](https://github.com/Cognifide/aet/issues/436)) 
+- [PR-517](https://github.com/Cognifide/aet/pull/517) Single URL rerun fixed for named URLs ([#487](https://github.com/Cognifide/aet/issues/487))
 
 ## Version 3.2.2
 
