@@ -73,8 +73,8 @@ Feature: Tests Results Filtering
   Scenario: Filtering Tests Results: header
     Given I have opened sample tests report page
     When I search for tests containing "header"
-    Then There are 1 tiles visible
-    And Statistics text contains "1 ( 0 / 0 / 1 (0) / 0 )"
+    Then There are 4 tiles visible
+    And Statistics text contains "4 ( 0 / 0 / 4 (0) / 0 )"
 
   Scenario: Filtering Tests Results: sleep-modifier
     Given I have opened sample tests report page

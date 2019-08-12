@@ -13,29 +13,13 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.job.api.collector;
+package com.cognifide.aet.proxy.headers;
 
-import com.cognifide.aet.job.api.exceptions.ProxyException;
-import java.net.UnknownHostException;
-import org.browsermob.core.har.Har;
-import org.openqa.selenium.Proxy;
+import org.apache.http.client.methods.HttpPost;
 
-public interface ProxyServerWrapper {
+import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
 
-  Har getHar();
-
-  Har newHar(String initialPageRef);
-
-  Proxy seleniumProxy() throws UnknownHostException;
-
-  int getPort();
-
-  void setCaptureHeaders(boolean captureHeaders);
-
-  void setCaptureContent(boolean captureContent);
-
-  void addHeader(String name, String value, Boolean override);
-
-  void stop() throws ProxyException;
-
+public interface HeaderRequestStrategy {
+    HttpPost createRequest(String name, String value) throws URISyntaxException, UnsupportedEncodingException;
 }
