@@ -17,7 +17,9 @@ All notable changes to AET will be documented in this file.
 - [PR-480](https://github.com/Cognifide/aet/pull/480) Test summary stats on the main report page. ([#474](https://github.com/Cognifide/aet/issues/474))
 - [PR-459](https://github.com/Cognifide/aet/pull/459) Print more meaningful error messages when suite.xml is malformed ([#436](https://github.com/Cognifide/aet/issues/436)) 
 - [PR-517](https://github.com/Cognifide/aet/pull/517) Single URL rerun fixed for named URLs ([#487](https://github.com/Cognifide/aet/issues/487))
+- [PR-516](https://github.com/Cognifide/aet/pull/516) Added option to change headers added by Chrome instance. ([#515](https://github.com/Cognifide/aet/issues/515))
 - [PR-518](https://github.com/Cognifide/aet/pull/518) Minimum site height ([#384](https://github.com/Cognifide/aet/issues/384))
+
 
 ## Version 3.2.2
 
