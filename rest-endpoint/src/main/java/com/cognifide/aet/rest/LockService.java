@@ -38,7 +38,7 @@ public class LockService implements Serializable {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(LockService.class);
 
-  private static final int LOCK_CACHE_TIMEOUT = 30000;
+  private static final int LOCK_CACHE_TIMEOUT = 20000;
 
   private static final int AVAILABLE_SLOTS = 100;
 
