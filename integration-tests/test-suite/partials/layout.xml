@@ -564,7 +564,7 @@
 		<collect>
 			<open/>
 			<resolution width="767"/>
-			<screen css="someclass"/>
+			<screen css=".someclass"/>
 		</collect>
 		<compare>
 			<screen comparator="layout"/>
