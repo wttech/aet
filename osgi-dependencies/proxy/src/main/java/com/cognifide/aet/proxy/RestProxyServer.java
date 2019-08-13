@@ -17,31 +17,27 @@ package com.cognifide.aet.proxy;
 
 import com.cognifide.aet.job.api.collector.ProxyServerWrapper;
 import com.cognifide.aet.proxy.exceptions.UnableToAddHeaderException;
+import com.cognifide.aet.proxy.headers.HeaderRequestFactory;
 import com.github.detro.browsermobproxyclient.BMPCProxy;
 import com.github.detro.browsermobproxyclient.exceptions.BMPCUnableToConnectException;
 import com.google.gson.GsonBuilder;
-import java.io.IOException;
-import java.net.UnknownHostException;
-import java.util.Date;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
-import org.apache.http.client.utils.URIBuilder;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.browsermob.core.har.Har;
-import org.json.JSONObject;
 import org.openqa.selenium.Proxy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class RestProxyServer implements ProxyServerWrapper {
+import java.io.IOException;
+import java.util.Date;
 
-  private static final String HTTP = "http";
+public class RestProxyServer implements ProxyServerWrapper {
 
   public static final int STATUS_CODE_OK = 200;
 
-  private BMPCProxy server;
+  private final BMPCProxy server;
 
   private boolean captureContent;
 
@@ -49,15 +45,18 @@ public class RestProxyServer implements ProxyServerWrapper {
 
   private RestProxyManager proxyManager;
 
+  private final HeaderRequestFactory requestFactory;
+
   private static final Logger LOGGER = LoggerFactory.getLogger(RestProxyServer.class);
 
   public RestProxyServer(BMPCProxy bmpcProxy, RestProxyManager restProxyManager) {
     this.server = bmpcProxy;
     this.proxyManager = restProxyManager;
+    this.requestFactory = new HeaderRequestFactory(bmpcProxy);
   }
 
   @Override
-  public Proxy seleniumProxy() throws UnknownHostException {
+  public Proxy seleniumProxy() {
     return server.asSeleniumProxy()
         .setHttpProxy(String.format("%s:%d", proxyManager.getServer(), getPort()))
         .setSslProxy(String.format("%s:%d", proxyManager.getServer(), getPort()));
@@ -95,18 +94,10 @@ public class RestProxyServer implements ProxyServerWrapper {
   }
 
   @Override
-  public void addHeader(String name, String value) {
+  public void addHeader(String name, String value, Boolean override) {
     CloseableHttpClient httpClient = HttpClients.createSystem();
     try {
-      URIBuilder uriBuilder = new URIBuilder().setScheme(HTTP).setHost(server.getAPIHost())
-          .setPort(server.getAPIPort());
-      // Request BMP to add header
-      HttpPost request = new HttpPost(uriBuilder.setPath(
-          String.format("/proxy/%d/headers", server.getProxyPort())).build());
-      request.setHeader("Content-Type", "application/json");
-      JSONObject json = new JSONObject();
-      json.put(name, value);
-      request.setEntity(new StringEntity(json.toString()));
+      HttpPost request = requestFactory.create(name, value, override);
       // Execute request
       CloseableHttpResponse response = httpClient.execute(request);
       int statusCode = response.getStatusLine().getStatusCode();
@@ -133,5 +124,4 @@ public class RestProxyServer implements ProxyServerWrapper {
     server.close();
     proxyManager.detach(this);
   }
-
 }
