@@ -41,7 +41,7 @@
   }
 
   input,
-  .filter-list {
+  .filter-list, select {
     background-color: $grayish;
     border: 0 none;
     color: $white;
@@ -105,6 +105,14 @@
       a {
         color: $text-color;
         display: inline;
+      }
+
+      button{
+        background: transparent;
+        border: none;
+        width: 100%;
+        height: 100%;
+        text-align: left;
       }
     }
   }

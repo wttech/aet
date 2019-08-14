@@ -96,6 +96,26 @@
         </div>
       </div>
     </div>
+    <div class="form-group">
+      <div data-aet-sidepanel-order data-toggle="popover">
+        <div class="filter-list">
+          <div class="filter-list-title">
+            <p ng-bind="$root.orderLabel"></p>
+            <div class="fontawesome">
+              <i class="fas fa-angle-down fa-lg"></i>
+            </div>
+          </div>
+          <form class="dropdown-menu">
+            <div class="dropdown-field">
+              <button data-ordering-attribute="name" class="dropdown-item">Order by name</button>
+            </div>
+            <div class="dropdown-field">
+              <button data-ordering-attribute="+" class="dropdown-item">Order by suite ordering</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
 
   <!--
@@ -126,7 +146,7 @@
   </div>
 
   <div class="aside-report-container" ng-class="sidepanel.thereAreChangesToSave() ? 'aside-report-container_short' : ''">
-    <div ng-repeat="test in sidepanel.tests | orderBy:'name'"
+    <div ng-repeat="test in sidepanel.tests | orderBy:$root.order"
          class="aside-report {{filteredUrls.length > 0 ? 'is-visible' : 'is-hidden'}}">
       <a ui-sref="test({'suite':$root.params.project, 'test':test.name})" ui-sref-active="is-active"
          class="test-name {{filteredUrls.length > 0 ? 'is-visible' : 'is-hidden'}}" aet-toggle-link

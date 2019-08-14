@@ -61,6 +61,7 @@ require.config({
     //sidepanel
     'sidepanelDirective': 'layout/sidepanel/sidepanel.directive',
     'sidepanelStatusFilterDirective': 'layout/sidepanel/sidepanelStatusFilter.directive',
+    'sidepanelOrderDirective': 'layout/sidepanel/sidepanelOrder.directive',
     'sidepanelSearchDirective': 'layout/sidepanel/sidepanelSearch.directive',
     'sidepanelToggleLinkDirective': 'layout/sidepanel/toggleLink.directive',
     'sidepanelSaveChangesDirective': 'layout/sidepanel/saveChanges.directive',
