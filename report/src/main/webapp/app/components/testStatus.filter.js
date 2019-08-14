@@ -30,8 +30,8 @@ define(['angularAMD'], function (angularAMD) {
     function filter(tests, statuses) {
       var filteredTests = tests;
       if (statuses && statuses.length > 0) {
-        filteredTests = _.filter(tests, function (test) {
-          return _.some(test.urls, function (url) {
+        filteredTests = _.filter(tests, function (testWrapper) {
+          return _.some(testWrapper.test.urls, function (url) {
             return statuses.indexOf(url.getStatus()) > -1;
           });
         });
