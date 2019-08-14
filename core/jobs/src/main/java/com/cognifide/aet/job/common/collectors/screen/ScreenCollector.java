@@ -26,22 +26,6 @@ import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.job.common.SeleniumWaitHelper;
 import com.cognifide.aet.job.common.modifiers.WebElementsLocatorParams;
 import com.cognifide.aet.vs.ArtifactsDAO;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-import java.util.stream.Collectors;
-import javax.imageio.ImageIO;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.io.IOUtils;
@@ -55,6 +39,25 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriverException;
 import org.openqa.selenium.WebElement;
+
+
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ScreenCollector extends WebElementsLocatorParams implements CollectorJob {
 
@@ -212,14 +215,25 @@ public class ScreenCollector extends WebElementsLocatorParams implements Collect
       BufferedImage fullImg = ImageIO.read(in);
       Point point = webElement.getLocation();
       Dimension size = webElement.getSize();
-      BufferedImage screenshotSection = fullImg.getSubimage(point.getX(), point.getY(),
-          size.getWidth(), size.getHeight());
+      BufferedImage screenshotSection = getSubImage(fullImg, point, size);
       return bufferedImageToByteArray(screenshotSection);
     } catch (IOException e) {
       throw new ProcessingException("Unable to create image from taken screenshot", e);
     } finally {
       IOUtils.closeQuietly(in);
     }
+  }
+
+  BufferedImage getSubImage(BufferedImage fullImg, Point point, Dimension size) {
+    int width = calculateMeasure(fullImg.getWidth(), size.getWidth(), point.getX());
+    int height = calculateMeasure(fullImg.getHeight(), size.getHeight(), point.getY());
+
+    return fullImg.getSubimage(point.getX(), point.getY(), width, height);
+  }
+
+  private int calculateMeasure(int fullImgMeasure, int subImgMeasure, int point) {
+    int result = Math.min(subImgMeasure, fullImgMeasure - point);
+    return Math.max(result, 1);
   }
 
   private byte[] bufferedImageToByteArray(BufferedImage bufferedImage) throws ProcessingException {
