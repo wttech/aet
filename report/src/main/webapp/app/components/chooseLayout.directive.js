@@ -17,9 +17,9 @@
  */
 define(['angularAMD'], function (angularAMD) {
   'use strict';
-  angularAMD.directive('aetChooseLayout', chooseLayoutDirective);
+  angularAMD.directive('aetChooseStepResult', chooseStepResultDirective);
 
-  function chooseLayoutDirective() {
+  function chooseStepResultDirective() {
     return {
       restrict: 'A',
       link: linkFunc
@@ -27,8 +27,16 @@ define(['angularAMD'], function (angularAMD) {
   }
 
   function linkFunc(scope) {
+    var statuses = {
+      'FAILED': "failed",
+      'PASSED': "passed",
+      'REBASED': "rebased",
+      'WARNING': "warning",
+      'CONDITIONALLY_PASSED': "conditionallyPassed",
+      'UNREBASED': "unrebased"
+    };
 
-    scope.layoutIndex = function (index) {
+    scope.stepResultIndex = function (index) {
       if (index === undefined) {
         if (scope.layoutScreenIndex === undefined) {
           scope.layoutScreenIndex = 0;
@@ -40,20 +48,8 @@ define(['angularAMD'], function (angularAMD) {
       return scope.layoutScreenIndex;
     };
 
-    scope.patternStatus = function (status) {
-      var buttonStatus = "failed";
-      if (status === 'PASSED') {
-        buttonStatus = "passed";
-      } else if (status === 'REBASED') {
-        buttonStatus = "rebased";
-      } else if (status === 'WARNING') {
-        buttonStatus = "warning";
-      } else if (status === 'CONDITIONALLY_PASSED') {
-        buttonStatus = "conditionallyPassed";
-      } else if (status === 'UNREBASED') {
-        buttonStatus = "unrebased";
-      }
-      return buttonStatus;
+    scope.stepResultStatus = function (status) {
+      return statuses[status];
     }
   }
 });

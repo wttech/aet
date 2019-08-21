@@ -27,6 +27,7 @@ public class Pattern implements Serializable {
   @javax.validation.constraints.Pattern(regexp = "^[0-9a-fA-F]{24}$", message = "Invalid objectID")
   private final String pattern;
 
+  @NotBlank
   private final String patternSuiteCorrelationId;
 
   public Pattern(String pattern, String patternSuiteCorrelationId) {

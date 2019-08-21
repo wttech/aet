@@ -17,120 +17,129 @@
     limitations under the License.
 
 -->
+<div data-aet-choose-step-result>
 
-<div class="tab-content-toolbar">
-  <div class="toolbar-blocks">
-    <div class="toolbar-btns pull-right">
-      <ng-include src="'app/layout/main/url/navigation/navigation.comments.html'"/>
-      <ng-include src="'app/layout/main/url/navigation/navigation.patternButtons.html'"/>
+  <ng-include src="'app/layout/main/url/patterns/patternsToolbar.html'"/>
+
+  <div class="tab-content-toolbar">
+    <div class="toolbar-blocks">
+      <div class="toolbar-btns pull-right">
+        <ng-include src="'app/layout/main/url/navigation/navigation.comments.html'"/>
+        <ng-include src="'app/layout/main/url/navigation/navigation.patternButtons.html'"/>
+      </div>
     </div>
   </div>
-</div>
-<div>
-  <div ng-if="case.comparator.parameters.action == 'compare'">
-    Cookie names are identical.
-    <div ng-if="case.comparator.parameters.showMatched">
-      Cookies matching the pattern:
+  <div>
+
+    <div ng-if="case.comparator.parameters.action == 'compare'">
+      Cookie names are identical.
+      <div ng-if="case.comparator.parameters.showMatched">
+        Cookies matching pattern {{stepResultIndex() + 1}}:
+        <table class="table table-striped table-hover">
+          <thead>
+          <tr>
+            <th>No.</th>
+            <th>Name</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="item in case.results[stepResultIndex()].foundCookies track by $index">
+            <td>{{$index+1}}</td>
+            <td>{{item}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div ng-if="case.comparator.parameters.action == 'list'">
       <table class="table table-striped table-hover">
         <thead>
         <tr>
           <th>No.</th>
           <th>Name</th>
+          <th>Value</th>
+          <th>Expiry</th>
         </tr>
         </thead>
         <tbody>
-        <tr ng-repeat="item in case.result.foundCookies track by $index">
+        <tr ng-repeat="item in case.results[stepResultIndex()].cookies track by $index">
           <td>{{$index+1}}</td>
-          <td>{{item}}</td>
+          <td>{{item.name}}</td>
+          <td>{{item.value}}</td>
+          <td>{{item.expiry}}</td>
         </tr>
         </tbody>
       </table>
     </div>
 
-  </div>
-  <div ng-if="case.comparator.parameters.action == 'list'">
-    <table class="table table-striped table-hover">
-      <thead>
-      <tr>
-        <th>No.</th>
-        <th>Name</th>
-        <th>Value</th>
-        <th>Expiry</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr ng-repeat="item in case.result.cookies track by $index">
-        <td>{{$index+1}}</td>
-        <td>{{item.name}}</td>
-        <td>{{item.value}}</td>
-        <td>{{item.expiry}}</td>
-      </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <div ng-if="case.comparator.parameters.action == 'test'"
-       ng-class="case.comparator.stepResult.status == 'FAILED' ? 'failed' : 'passed'">
-    Cookie with name: <span class="cookie-test">{{case.result.cookieName}}</span>
-    <span ng-if="case.result.cookieValue"> and value: <span class="cookie-test">{{case.result.cookieValue}}</span></span>
-    <span ng-if="case.comparator.stepResult.status == 'FAILED'">not</span> found
-  </div>
-
-  <div
-      ng-if="case.result.additionalCookies || case.result.notFoundCookies || case.result.foundCookies || case.result.case.result">
-
-    <div ng-if="case.result.additionalCookies.length > 0">
-      Additional case.result:
-      <table class="table table-striped table-hover">
-        <thead>
-        <tr>
-          <th>No.</th>
-          <th>Name</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="item in case.result.additionalCookies track by $index">
-          <td>{{$index+1}}</td>
-          <td>{{item}}</td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
-    <div ng-if="case.result.notFoundCookies.length">
-      Not found case.result:
-      <table class="table table-striped table-hover">
-        <thead>
-        <tr>
-          <th>No.</th>
-          <th>Name</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="item in case.result.notFoundCookies track by $index">
-          <td>{{$index+1}}</td>
-          <td>{{item}}</td>
-        </tr>
-        </tbody>
-      </table>
-      <br>
+    <div ng-if="case.comparator.parameters.action == 'test'"
+         ng-class="case.comparator.stepResults[stepResultIndex()].status == 'FAILED' ? 'failed' : 'passed'">
+      Cookie with name: <span
+        class="cookie-test">{{case.results[stepResultIndex()].cookieName}}</span>
+      <span ng-if="case.results[stepResultIndex()].cookieValue"> and value: <span
+          class="cookie-test">{{case.results[stepResultIndex()].cookieValue}}</span></span>
+      <span ng-if="case.comparator.stepResults[stepResultIndex()].status == 'FAILED'">not</span>
+      found
     </div>
 
-    <div ng-if="case.result.foundCookies.length && !case.comparator.parameters.showMatched">
-      Found case.result:
-      <table class="table table-striped table-hover">
-        <thead>
-        <tr>
-          <th>No.</th>
-          <th>Name</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr ng-repeat="item in case.result.foundCookies track by $index">
-          <td>{{$index+1}}</td>
-          <td>{{item}}</td>
-        </tr>
-        </tbody>
-      </table>
+    <div
+        ng-if="case.results[stepResultIndex()].additionalCookies || case.results[stepResultIndex()].notFoundCookies || case.results[stepResultIndex()].foundCookies || case.results[stepResultIndex()].case.results">
+
+      <div ng-if="case.results[stepResultIndex()].additionalCookies.length > 0">
+        Additional cookies not present in pattern {{stepResultIndex() + 1}}:
+        <table class="table table-striped table-hover">
+          <thead>
+          <tr>
+            <th>No.</th>
+            <th>Name</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="item in case.results[stepResultIndex()].additionalCookies track by $index">
+            <td>{{$index+1}}</td>
+            <td>{{item}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+      <div ng-if="case.results[stepResultIndex()].notFoundCookies.length">
+        Not found pattern {{stepResultIndex() + 1}} cookies:
+        <table class="table table-striped table-hover">
+          <thead>
+          <tr>
+            <th>No.</th>
+            <th>Name</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="item in case.results[stepResultIndex()].notFoundCookies track by $index">
+            <td>{{$index+1}}</td>
+            <td>{{item}}</td>
+          </tr>
+          </tbody>
+        </table>
+        <br>
+      </div>
+
+      <div
+          ng-if="case.results[stepResultIndex()].foundCookies.length && !case.comparator.parameters.showMatched">
+        Found case.result:
+        <table class="table table-striped table-hover">
+          <thead>
+          <tr>
+            <th>No.</th>
+            <th>Name</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr ng-repeat="item in case.results[stepResultIndex()].foundCookies track by $index">
+            <td>{{$index+1}}</td>
+            <td>{{item}}</td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
     </div>
   </div>
 </div>

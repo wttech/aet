@@ -88,8 +88,17 @@ define(['angularAMD', 'artifactsService', 'suiteInfoService'],
         }
 
         function hasResult() {
-          return caseModel.comparator.stepResult &&
-              caseModel.comparator.stepResult.artifactId;
+          return caseModel.comparator.stepResults &&
+              anyStepHasResultArtifact();
+        }
+
+        function anyStepHasResultArtifact() {
+          var stepResultWithArtifact =
+              _.find(caseModel.comparator.stepResults, function (stepResult) {
+                return stepResult.artifactId;
+              });
+
+          return !!stepResultWithArtifact;
         }
 
         function getResultUrl(artifactId) {
@@ -99,16 +108,18 @@ define(['angularAMD', 'artifactsService', 'suiteInfoService'],
           return artifactsService.getArtifactUrl(artifactId);
         }
 
-        function getResultArtifact() {
-          caseModel.result = {};
+        function getResultsArtifacts() {
+          caseModel.results = [];
+
           if (hasResult()) {
-            artifactsService.getArtifact(
-                caseModel.comparator.stepResult.artifactId)
-            .then(function (data) {
-              caseModel.result = data;
-            })
-            .catch(function (e) {
-              console.log(e);
+            _.forEach(caseModel.comparator.stepResults, function (stepResult) {
+              artifactsService.getArtifact(stepResult.artifactId)
+              .then(function (data) {
+                caseModel.results.push(data);
+              })
+              .catch(function (e) {
+                console.log(e);
+              });
             });
           }
         }
@@ -146,7 +157,7 @@ define(['angularAMD', 'artifactsService', 'suiteInfoService'],
           caseModel.step = step;
 
           update();
-          getResultArtifact();
+          getResultsArtifacts();
           initializeCollectorResultArtifact();
         }
 
@@ -179,7 +190,8 @@ define(['angularAMD', 'artifactsService', 'suiteInfoService'],
           var errors;
           if (comparator.stepResult) {
             errors =
-                comparator.stepResult.errors ? comparator.stepResult.errors
+                comparator.stepResult.getErrors()
+                    ? comparator.stepResult.getErrors()
                     : step.stepResult.errors;
           } else {
             errors = step.stepResult ? step.stepResult.errors : 'Unknown error';

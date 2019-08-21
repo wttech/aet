@@ -17,25 +17,24 @@
     limitations under the License.
 
 -->
-<div data-aet-choose-layout>
+<div data-aet-choose-step-result>
 
-  <div class="toolbar-patterns-list"
-       ng-if="case.comparator.stepResults && case.comparator.stepResults.length > 1">
-    <span class="toolbar-patterns-header pull-left">Patterns: </span>
+  <div ng-if="case.comparator.stepResults && case.comparator.stepResults.length > 1">
+    <span class="toolbar-patterns-header layoutSize pull-left">Patterns: </span>
     <div class="toolbar-patterns-list">
-      <div class="toolbar-patterns-pattern"
+      <div class="toolbar-patterns-pattern layoutSize"
            ng-repeat="comparatorStepResult in case.comparator.stepResults">
-        <div class="toolbar-patterns-container">
-          <a data-ng-click="layoutIndex($index)">
-            <img ng-class="patternStatus(comparatorStepResult.status)"
+        <div class="toolbar-patterns-images-container">
+          <a data-ng-click="stepResultIndex($index)">
+            <img ng-class="stepResultStatus(comparatorStepResult.status)"
                  class="img-responsive toolbar-patterns-image-mask toolbar-pattern-status"/>
             <img
                 ng-src="{{case.getPatternUrl(comparatorStepResult.pattern.pattern)}}"
                 class="img-responsive toolbar-patterns-image"/>
           </a>
         </div>
-        <div ng-class="patternStatus(comparatorStepResult.status)"
-             class="fontawesome toolbar-patterns-icon toolbar-pattern-status">
+        <div ng-class="stepResultStatus(comparatorStepResult.status)"
+             class="toolbar-patterns-icon toolbar-pattern-status">
           {{$index + 1}}
         </div>
       </div>
@@ -68,39 +67,42 @@
 
   <div>
     <div class="text-center text-danger"
-         ng-if="case.comparator.stepResults[layoutIndex()].data.excludeMessage">
-      {{case.comparator.stepResults[layoutIndex()].data.excludeMessage}}
+         ng-if="case.comparator.stepResults[stepResultIndex()].data.excludeMessage">
+      {{case.comparator.stepResults[stepResultIndex()].data.excludeMessage}}
     </div>
     <div class="text-center text-danger"
-         ng-if="case.comparator.stepResults[layoutIndex()].data.notFoundCssElements">
-      {{case.comparator.stepResults[layoutIndex()].data.notFoundCssElements}}
+         ng-if="case.comparator.stepResults[stepResultIndex()].data.notFoundCssElements">
+      {{case.comparator.stepResults[stepResultIndex()].data.notFoundCssElements}}
     </div>
   </div>
 
   <div class="layout-compare">
 
     <div class="layout-compare-item pull-left">
-      <p class="layout-compare-description">Pattern {{layoutIndex() + 1}}
+      <p class="layout-compare-description">Pattern {{stepResultIndex() + 1}}
         <span class="label label-info">
-          {{case.comparator.stepResults[layoutIndex()].data.patternTimestamp | date:'yyyy-MM-dd HH:mm'}}
+          {{case.comparator.stepResults[stepResultIndex()].data.patternTimestamp | date:'yyyy-MM-dd HH:mm'}}
         </span><br>
-        <span ng-if="!case.comparator.stepResults[layoutIndex()].pattern.patternSuiteCorrelationId"
-              class="label-spacer">
+        <span
+            ng-if="!case.comparator.stepResults[stepResultIndex()].pattern.patternSuiteCorrelationId"
+            class="label-spacer">
         </span>
-        <span ng-if="case.comparator.stepResults[layoutIndex()].pattern.patternSuiteCorrelationId">
-          {{case.comparator.stepResults[layoutIndex()].pattern.patternSuiteCorrelationId}}
+        <span
+            ng-if="case.comparator.stepResults[stepResultIndex()].pattern.patternSuiteCorrelationId">
+          {{case.comparator.stepResults[stepResultIndex()].pattern.patternSuiteCorrelationId}}
         </span>
       </p>
       <div class="mask-container">
-        <img ng-src="{{case.getResultUrl(case.comparator.stepResults[layoutIndex()].artifactId)}}"
-             class="mask img-responsive"
-             ng-class="($root.maskVisible == true ? 'is-visible' : '')"
-             ng-if="case.comparator.stepResults[layoutIndex()].status == 'FAILED'"/>
+        <img
+            ng-src="{{case.getResultUrl(case.comparator.stepResults[stepResultIndex()].artifactId)}}"
+            class="mask img-responsive"
+            ng-class="($root.maskVisible == true ? 'is-visible' : '')"
+            ng-if="case.comparator.stepResults[stepResultIndex()].status == 'FAILED'"/>
 
-        <a href="{{case.getPatternUrl(case.comparator.stepResults[layoutIndex()].pattern.pattern)}}"
+        <a href="{{case.getPatternUrl(case.comparator.stepResults[stepResultIndex()].pattern.pattern)}}"
            target="_blank">
           <img
-              ng-src="{{case.getPatternUrl(case.comparator.stepResults[layoutIndex()].pattern.pattern)}}"
+              ng-src="{{case.getPatternUrl(case.comparator.stepResults[stepResultIndex()].pattern.pattern)}}"
               class="img-responsive"/>
         </a>
       </div>
@@ -110,16 +112,17 @@
          ng-if="case.status == 'FAILED' || case.status == 'CONDITIONALLY_PASSED'">
       <p class="layout-compare-description">Collected
         <span class="label label-info">
-          {{case.comparator.stepResults[layoutIndex()].data.collectTimestamp | date:'yyyy-MM-dd HH:mm'}}
+          {{case.comparator.stepResults[stepResultIndex()].data.collectTimestamp | date:'yyyy-MM-dd HH:mm'}}
         </span><br>
-        <span>Difference: {{case.comparator.stepResults[layoutIndex()].data.percentagePixelDifference | number: 2}}%,
-          {{case.comparator.stepResults[layoutIndex()].data.pixelDifference}}px</span>
+        <span>Difference: {{case.comparator.stepResults[stepResultIndex()].data.percentagePixelDifference | number: 2}}%,
+          {{case.comparator.stepResults[stepResultIndex()].data.pixelDifference}}px</span>
       </p>
 
       <div class="mask-container">
-        <img ng-src="{{case.getResultUrl(case.comparator.stepResults[layoutIndex()].artifactId)}}"
-             class="mask img-responsive"
-             ng-class="($root.maskVisible == true ? 'is-visible' : '')"/>
+        <img
+            ng-src="{{case.getResultUrl(case.comparator.stepResults[stepResultIndex()].artifactId)}}"
+            class="mask img-responsive"
+            ng-class="($root.maskVisible == true ? 'is-visible' : '')"/>
 
         <a href="{{case.getDataUrl()}}" target="_blank">
           <img ng-src="{{case.getDataUrl()}}" class="img-responsive"/>

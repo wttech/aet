@@ -231,14 +231,7 @@
   flex-wrap: wrap;
   padding-left: 5px;
   padding-right: 5px;
-  padding-bottom: 10px;
-}
-
-.toolbar-patterns-base {
-  border-bottom: 2px solid #dcdce5;
-  padding: 10px;
-  margin: 0 -25px 10px -25px;
-  width: 110%;
+  padding-bottom: 15px;
 }
 
 .toolbar-patterns-header {
@@ -246,39 +239,41 @@
   color: $gray_dark;
   display: inline-block;
   padding: 0 20px;
-  line-height: 31px;
   margin: 8px 0;
   vertical-align: middle;
-  margin-top: 45px;
+
+  &.layoutSize {
+    line-height: 31px;
+    margin-top: 45px;
+  }
 }
 
 .toolbar-patterns-pattern {
-  height: 130px;
   width: 100px;
   margin: 3px;
   cursor: pointer;
   overflow: hidden;
   position: relative;
+
+  &.layoutSize {
+    height: 130px;
+  }
 }
 
-.toolbar-patterns-container {
+.toolbar-patterns-images-container {
   height: 100px;
   overflow: hidden;
   position: relative;
 }
 
 .toolbar-patterns-image {
-  width: 100px;
-  position: absolute;
-  top: 0;
   opacity: 0.5;
 }
 
 .toolbar-patterns-image-mask {
-  width: 100px;
+  width: 100%;
   height: 100%;
   position: absolute;
-  top: 0;
 }
 
 .toolbar-patterns-icon {
@@ -286,7 +281,6 @@
   font-size: 20px;
   font-family: montserratlight, sans-serif;
   text-align: center;
-  position: relative;
 }
 
 .toolbar-pattern-status {
