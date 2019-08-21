@@ -133,6 +133,11 @@ define(['angularAMD', 'metadataService', 'metadataAccessService'],
                 pattern: step.stepResult.artifactId,
                 patternSuiteCorrelationId: step.suiteCottelationId
               };
+              if (comparator.stepResults.length > 0) {
+                var newStepResult = comparator.stepResults[0];
+                newStepResult.pattern = newPattern;
+                comparator.stepResults = [newStepResult];
+              }
               step.patterns = [newPattern];
               comparator.hasNotSavedChanges = true;
             }
