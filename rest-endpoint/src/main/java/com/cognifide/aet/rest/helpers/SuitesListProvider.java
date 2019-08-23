@@ -19,12 +19,14 @@ import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.StorageException;
+import com.cognifide.aet.vs.SuiteQueryWrapper;
 import com.google.common.base.Function;
 import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableListMultimap;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.slf4j.Logger;
@@ -52,6 +54,21 @@ public class SuitesListProvider {
   public SuitesListProvider(MetadataDAO metadataDAO, String reportDomain) {
     this.metadataDAO = metadataDAO;
     this.reportDomain = reportDomain;
+  }
+
+  public Map<DBKey, List<SuiteQueryWrapper>> listProjects() {
+    Map<DBKey, List<SuiteQueryWrapper>> result = new HashMap<>();
+    try {
+      final Collection<DBKey> projects = metadataDAO.getProjects(null);
+      for (DBKey dbKey : projects) {
+        final List<SuiteQueryWrapper> list = metadataDAO.listGroupSuites(dbKey);
+        result.put(dbKey, list);
+      }
+    } catch (StorageException e) {
+      LOGGER.debug("Exception while obtaining projects", e);
+    }
+
+    return result;
   }
 
   public String listSuites() {

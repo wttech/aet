@@ -17,18 +17,27 @@ package com.cognifide.aet.rest;
 
 
 import com.cognifide.aet.communication.api.CommunicationSettings;
+import com.cognifide.aet.rest.helpers.FreeMarkerConfigurationManager;
 import com.cognifide.aet.rest.helpers.ReportConfigurationManager;
 import com.cognifide.aet.rest.helpers.SuitesListProvider;
+import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.MetadataDAO;
+import com.cognifide.aet.vs.SuiteQueryWrapper;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import freemarker.template.Template;
+import freemarker.template.TemplateException;
 import org.apache.commons.lang3.StringUtils;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
@@ -37,6 +46,7 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.http.HttpService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 
 @Component(immediate = true)
 public class ConfigsServlet extends HttpServlet {
@@ -65,6 +75,27 @@ public class ConfigsServlet extends HttpServlet {
   @Reference
   private transient ReportConfigurationManager reportConfigurationManager;
 
+  @Reference
+  private transient FreeMarkerConfigurationManager templateConfiguration;
+
+
+  public ConfigsServlet() {
+    super();
+//    ServletContextTemplateResolver templateResolver =
+//            new ServletContextTemplateResolver(this.getServletContext());
+//    templateResolver.setTemplateMode(TemplateMode.HTML);
+//
+//    templateResolver.setPrefix("/WEB-INF/templates/");
+//    templateResolver.setSuffix(".html");
+//
+//    templateResolver.setCacheTTLMs(3600000L);
+//
+//    templateResolver.setCacheable(false);
+//
+//    this.templateEngine = new TemplateEngine();
+//    this.templateEngine.setTemplateResolver(templateResolver);
+  }
+
   /***
    * Returns JSON representation of Suite based on correlationId or suite name.
    * If suite name is provided, then newest version of JSON is returned.
@@ -73,7 +104,7 @@ public class ConfigsServlet extends HttpServlet {
    * @param resp
    */
   @Override
-  protected void doGet(HttpServletRequest req, HttpServletResponse resp) {
+  protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
     LOGGER.debug("GET, req: '{}'", req);
     PrintWriter responseWriter = retrieveResponseWriter(req, resp);
     if (responseWriter != null) {
@@ -86,10 +117,7 @@ public class ConfigsServlet extends HttpServlet {
         CommunicationSettings communicationSettings = new CommunicationSettings(reportDomain);
         responseWriter.write(GSON.toJson(communicationSettings));
       } else if (LIST_PARAM.equals(configType)) {
-        resp.setContentType("text/html; charset=utf-8");
-        resp.setHeader("User-Agent",
-            "Mozilla/5.0 (Windows NT 6.3; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/49.0.2623.112 Safari/537.36");
-        responseWriter.write(new SuitesListProvider(metadataDAO, reportDomain).listSuites());
+        processListRequest(req, resp);
       } else if (LOCKS_PARAM.equals(configType)) {
         responseWriter.write(getLocks());
       } else {
@@ -100,6 +128,24 @@ public class ConfigsServlet extends HttpServlet {
       resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
     }
     flushResponseBuffer(req, resp);
+  }
+
+  private void processListRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    String reportDomain = reportConfigurationManager.getReportDomain();
+    Map<DBKey, List<SuiteQueryWrapper>> data = new SuitesListProvider(metadataDAO, reportDomain).listProjects();
+    Map root = new HashMap();
+    root.put("data", data);
+    root.put("size", data.size());
+
+    Template template = templateConfiguration.getConfiguration().getTemplate("suitesList.ftlh");
+
+    try {
+      template.process(root, resp.getWriter());
+    } catch (TemplateException e) {
+      resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+      LOGGER.error("Template engine error" ,e);
+    }
+
   }
 
   private PrintWriter retrieveResponseWriter(HttpServletRequest req, HttpServletResponse resp) {
