@@ -21,10 +21,12 @@ import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.SimpleDBKey;
 import com.cognifide.aet.vs.StorageException;
+import com.cognifide.aet.vs.SuiteQueryWrapper;
 import com.cognifide.aet.vs.SuiteVersion;
 import com.cognifide.aet.vs.mongodb.MongoDBClient;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Collections2;
+import com.mongodb.client.AggregateIterable;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -42,6 +44,20 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import java.util.Arrays;
+
+import static com.mongodb.client.model.Accumulators.sum;
+import static com.mongodb.client.model.Filters.and;
+import static com.mongodb.client.model.Filters.eq;
+import static com.mongodb.client.model.Aggregates.group;
+import static com.mongodb.client.model.Aggregates.project;
+import static com.mongodb.client.model.Aggregates.sort;
+import static com.mongodb.client.model.Accumulators.push;
+import static com.mongodb.client.model.Projections.computed;
+import static com.mongodb.client.model.Projections.fields;
+import static com.mongodb.client.model.Sorts.ascending;
+import static com.mongodb.client.model.Sorts.descending;
+import static com.mongodb.client.model.Sorts.orderBy;
 
 @Component(immediate = true)
 public class MetadataDAOMongoDBImpl implements MetadataDAO {
@@ -162,6 +178,40 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
         .collect(Collectors.toList());
   }
 
+  public List<SuiteQueryWrapper> listGroupSuites(DBKey dbKey) throws StorageException {
+    MongoCollection<Document> metadata = getMetadataCollection(dbKey);
+    LOGGER.debug("Fetching all suites for company: `{}`, project: `{}`.", dbKey.getCompany(),
+            dbKey.getProject());
+
+    AggregateIterable<Document> list = metadata.aggregate(
+      Arrays.asList(
+        sort(orderBy(ascending("name"), descending("version"))),
+        group("$name",
+          push("testItems",
+            and(
+              eq("company", "$company"),
+              eq("project", "$project"),
+              eq("name", "$name"),
+              eq("correlationId", "$correlationId"),
+              eq("version", "$version"),
+              eq("runTimestamp", "$runTimestamp")
+            )
+          ),
+          sum("count", 1L)),
+        project(
+          fields(
+            computed("testItems", eq("$slice", Arrays.asList("$testItems", 10L))),
+            computed("count", "$count")
+          )
+        )
+      )
+    );
+
+    return StreamSupport.stream(list.spliterator(), false)
+            .map(document -> new DocumentConverter(document).toSuiteQueryWrapper())
+            .collect(Collectors.toList());
+  }
+
   public List<SuiteVersion> listSuiteVersions(DBKey dbKey, String name) throws StorageException {
     MongoCollection<Document> metadata = getMetadataCollection(dbKey);
     LOGGER.debug("Fetching all versions of suite: `{}` , company: `{}`, project: `{}`.", name,
@@ -230,6 +280,6 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
   public boolean isDatabase(DBKey dbKey) {
     final String dbName = MongoDBClient.getDbName(dbKey.getCompany(), dbKey.getProject());
     final MongoDatabase database = client.getDatabase(dbName, true);
-    return database != null ? true : false;
+    return database != null;
   }
 }
