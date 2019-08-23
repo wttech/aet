@@ -72,7 +72,16 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
 
   private static final String SUITE_VERSION_PARAM_NAME = "version";
 
+  private static final String SUITE_COMPANY_PARAM_NAME = "company";
+
+  private static final String SUITE_PROJECT_PARAM_NAME = "project";
+
   private static final String CORRELATION_ID_PARAM_NAME = "correlationId";
+
+  private final transient DocumentConverter<SuiteQueryWrapper> suiteQueryWrapperConverter =
+                                                        new DocumentConverter<>(SuiteQueryWrapper.class);
+
+  private final transient  DocumentConverter<Suite> suiteConverter = new DocumentConverter<>(Suite.class);
 
   @Reference
   private transient MongoDBClient client;
@@ -125,7 +134,7 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
         .sort(Sorts.descending(SUITE_VERSION_PARAM_NAME))
         .limit(1);
     final Document result = found.first();
-    return new DocumentConverter(result).toSuite();
+    return suiteConverter.convert(result);
   }
 
   @Override
@@ -138,7 +147,7 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
         .find(Filters.and(Filters.eq(SUITE_PARAM_NAME, name),
             Filters.eq(SUITE_VERSION_PARAM_NAME, Integer.parseInt(version))));
     final Document result = found.first();
-    return new DocumentConverter(result).toSuite();
+    return suiteConverter.convert(result);
   }
 
   @Override
@@ -152,7 +161,7 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
         .sort(Sorts.descending(SUITE_VERSION_PARAM_NAME))
         .limit(1);
     final Document result = found.first();
-    return new DocumentConverter(result).toSuite();
+    return suiteConverter.convert(result);
   }
 
   @Override
@@ -174,26 +183,26 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
         .sort(Sorts.descending(SUITE_VERSION_PARAM_NAME));
 
     return StreamSupport.stream(found.spliterator(), false)
-        .map(document -> new DocumentConverter(document).toSuite())
+        .map(suiteConverter::convert)
         .collect(Collectors.toList());
   }
 
   public List<SuiteQueryWrapper> listGroupSuites(DBKey dbKey) throws StorageException {
     MongoCollection<Document> metadata = getMetadataCollection(dbKey);
-    LOGGER.debug("Fetching all suites for company: `{}`, project: `{}`.", dbKey.getCompany(),
+    LOGGER.debug("Fetching all suites for company: `{}`, project: `{}`, group by suite name.", dbKey.getCompany(),
             dbKey.getProject());
 
-    AggregateIterable<Document> list = metadata.aggregate(
+    AggregateIterable<Document> documents = metadata.aggregate(
       Arrays.asList(
-        sort(orderBy(ascending("name"), descending("version"))),
+        sort(orderBy(ascending(SUITE_PARAM_NAME), descending(SUITE_VERSION_PARAM_NAME))),
         group("$name",
           push("testItems",
             and(
-              eq("company", "$company"),
-              eq("project", "$project"),
-              eq("name", "$name"),
-              eq("correlationId", "$correlationId"),
-              eq("version", "$version"),
+              eq(SUITE_COMPANY_PARAM_NAME, "$company"),
+              eq(SUITE_PROJECT_PARAM_NAME, "$project"),
+              eq(SUITE_PARAM_NAME, "$name"),
+              eq(CORRELATION_ID_PARAM_NAME, "$correlationId"),
+              eq(SUITE_VERSION_PARAM_NAME, "$version"),
               eq("runTimestamp", "$runTimestamp")
             )
           ),
@@ -207,8 +216,8 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
       )
     );
 
-    return StreamSupport.stream(list.spliterator(), false)
-            .map(document -> new DocumentConverter(document).toSuiteQueryWrapper())
+    return StreamSupport.stream(documents.spliterator(), false)
+            .map(suiteQueryWrapperConverter::convert)
             .collect(Collectors.toList());
   }
 
