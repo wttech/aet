@@ -57,6 +57,10 @@ public class ConfigsServlet extends HttpServlet {
 
   private static final Gson GSON = new Gson();
 
+  private static final String COMPANY_PARAM = "company";
+
+  private static final String PROJECT_PARAM = "project";
+
   public static final String LOCKS_PARAM = "locks";
 
   public static final String LIST_PARAM = "list";
@@ -79,23 +83,6 @@ public class ConfigsServlet extends HttpServlet {
   private transient FreeMarkerConfigurationManager templateConfiguration;
 
 
-  public ConfigsServlet() {
-    super();
-//    ServletContextTemplateResolver templateResolver =
-//            new ServletContextTemplateResolver(this.getServletContext());
-//    templateResolver.setTemplateMode(TemplateMode.HTML);
-//
-//    templateResolver.setPrefix("/WEB-INF/templates/");
-//    templateResolver.setSuffix(".html");
-//
-//    templateResolver.setCacheTTLMs(3600000L);
-//
-//    templateResolver.setCacheable(false);
-//
-//    this.templateEngine = new TemplateEngine();
-//    this.templateEngine.setTemplateResolver(templateResolver);
-  }
-
   /***
    * Returns JSON representation of Suite based on correlationId or suite name.
    * If suite name is provided, then newest version of JSON is returned.
@@ -117,6 +104,8 @@ public class ConfigsServlet extends HttpServlet {
         CommunicationSettings communicationSettings = new CommunicationSettings(reportDomain);
         responseWriter.write(GSON.toJson(communicationSettings));
       } else if (LIST_PARAM.equals(configType)) {
+        resp.setContentType("text/html");
+
         processListRequest(req, resp);
       } else if (LOCKS_PARAM.equals(configType)) {
         responseWriter.write(getLocks());
@@ -136,6 +125,7 @@ public class ConfigsServlet extends HttpServlet {
     Map root = new HashMap();
     root.put("data", data);
     root.put("size", data.size());
+    root.put("reportDomain", reportDomain);
 
     Template template = templateConfiguration.getConfiguration().getTemplate("suitesList.ftlh");
 
@@ -146,6 +136,11 @@ public class ConfigsServlet extends HttpServlet {
       LOGGER.error("Template engine error" ,e);
     }
 
+  }
+
+  private boolean hasParameters(HttpServletRequest req) {
+    Map parameters = req.getParameterMap();
+    return parameters.containsKey(COMPANY_PARAM) && parameters.containsKey(PROJECT_PARAM);
   }
 
   private PrintWriter retrieveResponseWriter(HttpServletRequest req, HttpServletResponse resp) {

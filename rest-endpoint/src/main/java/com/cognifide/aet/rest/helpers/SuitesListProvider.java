@@ -25,10 +25,15 @@ import com.google.common.collect.FluentIterable;
 import com.google.common.collect.ImmutableListMultimap;
 import java.text.SimpleDateFormat;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
+import java.util.stream.Collectors;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -57,9 +62,10 @@ public class SuitesListProvider {
   }
 
   public Map<DBKey, List<SuiteQueryWrapper>> listProjects() {
-    Map<DBKey, List<SuiteQueryWrapper>> result = new HashMap<>();
+    Map<DBKey, List<SuiteQueryWrapper>> result = new TreeMap<>(Comparator.comparing(DBKey::getProject));
     try {
       final Collection<DBKey> projects = metadataDAO.getProjects(null);
+
       for (DBKey dbKey : projects) {
         final List<SuiteQueryWrapper> list = metadataDAO.listGroupSuites(dbKey);
         result.put(dbKey, list);

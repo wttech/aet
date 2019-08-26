@@ -212,7 +212,8 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
             computed("testItems", eq("$slice", Arrays.asList("$testItems", 10L))),
             computed("count", "$count")
           )
-        )
+        ),
+        sort(orderBy(ascending("_id")))
       )
     );
 
