@@ -19,14 +19,16 @@ package com.cognifide.aet.rest;
 import com.cognifide.aet.communication.api.CommunicationSettings;
 import com.cognifide.aet.rest.helpers.FreeMarkerConfigurationManager;
 import com.cognifide.aet.rest.helpers.ReportConfigurationManager;
-import com.cognifide.aet.rest.helpers.SuitesListProvider;
 import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.MetadataDAO;
+import com.cognifide.aet.vs.SimpleDBKey;
+import com.cognifide.aet.vs.StorageException;
 import com.cognifide.aet.vs.SuiteQueryWrapper;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.HttpURLConnection;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -106,7 +108,11 @@ public class ConfigsServlet extends HttpServlet {
       } else if (LIST_PARAM.equals(configType)) {
         resp.setContentType("text/html");
 
-        processListRequest(req, resp);
+        if (hasParameters(req)) {
+          processSuitesListRequest(req, resp);
+        } else {
+          processProjectsListRequest(req, resp);
+        }
       } else if (LOCKS_PARAM.equals(configType)) {
         responseWriter.write(getLocks());
       } else {
@@ -119,23 +125,51 @@ public class ConfigsServlet extends HttpServlet {
     flushResponseBuffer(req, resp);
   }
 
-  private void processListRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+  private void processProjectsListRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
     String reportDomain = reportConfigurationManager.getReportDomain();
-    Map<DBKey, List<SuiteQueryWrapper>> data = new SuitesListProvider(metadataDAO, reportDomain).listProjects();
-    Map root = new HashMap();
-    root.put("data", data);
-    root.put("size", data.size());
-    root.put("reportDomain", reportDomain);
-
-    Template template = templateConfiguration.getConfiguration().getTemplate("suitesList.ftlh");
-
     try {
+      Collection<DBKey> projects = metadataDAO.getProjects(null);
+      Map root = new HashMap();
+      root.put("data", projects);
+      root.put("size", projects.size());
+      root.put("reportDomain", reportDomain);
+
+      Template template = templateConfiguration.getConfiguration().getTemplate("projectList.ftl");
+
       template.process(root, resp.getWriter());
+    } catch (StorageException e) {
+      LOGGER.debug("Exception while obtaining projects", e);
     } catch (TemplateException e) {
       resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
       LOGGER.error("Template engine error" ,e);
     }
 
+  }
+
+  private void processSuitesListRequest(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+    String reportDomain = reportConfigurationManager.getReportDomain();
+
+    String company = req.getParameter(COMPANY_PARAM);
+    String project = req.getParameter(PROJECT_PARAM);
+
+    try {
+      List<SuiteQueryWrapper> data = metadataDAO.listGroupSuites(new SimpleDBKey(company, project));
+      Map root = new HashMap();
+      root.put("data", data);
+      root.put("size", data.size());
+      root.put("reportDomain", reportDomain);
+      root.put(PROJECT_PARAM, project);
+      root.put(COMPANY_PARAM, company);
+
+      Template template = templateConfiguration.getConfiguration().getTemplate("suiteList.ftl");
+
+      template.process(root, resp.getWriter());
+    } catch (StorageException e) {
+      LOGGER.error("Database error", e);
+    } catch (TemplateException e) {
+      resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+      LOGGER.error("Template engine error" ,e);
+    }
   }
 
   private boolean hasParameters(HttpServletRequest req) {

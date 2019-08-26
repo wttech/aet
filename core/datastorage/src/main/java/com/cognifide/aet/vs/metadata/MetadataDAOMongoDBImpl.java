@@ -205,15 +205,8 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
               eq(SUITE_VERSION_PARAM_NAME, "$version"),
               eq("runTimestamp", "$runTimestamp")
             )
-          ),
-          sum("count", 1L)),
-        project(
-          fields(
-            computed("testItems", eq("$slice", Arrays.asList("$testItems", 10L))),
-            computed("count", "$count")
           )
-        ),
-        sort(orderBy(ascending("_id")))
+        )
       )
     );
 

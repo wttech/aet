@@ -26,7 +26,6 @@ class DocumentConverter<T> {
 
   private static final Gson GSON_FOR_MONGO_JSON = new GsonBuilder()
       .registerTypeAdapter(Suite.Timestamp.class, new TimestampDeserializer())
-      .registerTypeAdapter(SuiteQueryWrapper.Count.class, new LongDeserializer())
       .create();
 
   private final Type type;

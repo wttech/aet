@@ -18,19 +18,16 @@ package com.cognifide.aet.vs;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.google.gson.annotations.SerializedName;
 
-import java.io.Serializable;
 import java.util.List;
 
 public class SuiteQueryWrapper {
 
     @SerializedName("_id")
     private String suiteName;
-    private Count count;
     private List<Suite> testItems;
 
-    public SuiteQueryWrapper(String suiteName, Count count, List<Suite> testItems) {
+    public SuiteQueryWrapper(String suiteName, List<Suite> testItems) {
         this.suiteName = suiteName;
-        this.count = count;
         this.testItems = testItems;
     }
 
@@ -38,27 +35,7 @@ public class SuiteQueryWrapper {
         return suiteName;
     }
 
-    public Count getCount() {
-        return count;
-    }
-
     public List<Suite> getTestItems() {
         return testItems;
     }
-
-    public static class Count implements Serializable {
-
-        private static final long serialVersionUID = 4336050542781523943L;
-
-        private final long value;
-
-        public Count(long value) {
-            this.value = value;
-        }
-
-        public long get() {
-            return value;
-        }
-    }
-
 }
