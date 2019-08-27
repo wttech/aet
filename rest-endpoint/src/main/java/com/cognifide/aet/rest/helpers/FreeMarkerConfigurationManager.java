@@ -32,7 +32,6 @@ public class FreeMarkerConfigurationManager {
         configuration = new Configuration(Configuration.VERSION_2_3_19);
         configuration.setClassForTemplateLoading(getClass(), "/templates/");
         configuration.setDefaultEncoding(StandardCharsets.UTF_8.name());
-        //TODO create configuration with exception handler level https://freemarker.apache.org/docs/pgui_quickstart_createconfiguration.html
         configuration.setTemplateExceptionHandler(TemplateExceptionHandler.RETHROW_HANDLER);
 
         configuration.setLogTemplateExceptions(false);

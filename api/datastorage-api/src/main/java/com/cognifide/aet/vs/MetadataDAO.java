@@ -78,9 +78,9 @@ public interface MetadataDAO extends Serializable {
 
   /**
    * @param dbKey - key with project and company name
-   * @return List of grouped suites that were found in database.
+   * @return List of unique suites names that were found in database.
    */
-  List<SuiteQueryWrapper> listGroupSuites(DBKey dbKey) throws StorageException;
+  List<String> listDistinctSuitesNames(DBKey dbKey) throws StorageException;
 
   /**
    * @param dbKey - key with project and company name

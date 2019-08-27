@@ -16,7 +16,6 @@
 package com.cognifide.aet.vs.metadata;
 
 import com.cognifide.aet.communication.api.metadata.Suite;
-import com.cognifide.aet.vs.SuiteQueryWrapper;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.lang.reflect.Type;
