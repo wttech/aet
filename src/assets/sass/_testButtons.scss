@@ -1,0 +1,121 @@
+.buttons-container {
+  display: flex;
+  background-color: $projectInfoBg;
+  position: relative;
+  align-content: center;
+  justify-content: center;
+  width: 100%;
+  height: 80px;
+  box-shadow: -3px -3px 5px 3px $shadow;
+  z-index:999;
+
+  .btn-disabled {
+    background-color: gray !important;
+
+    &:hover {
+      cursor: default !important;
+
+      &::after {
+        display: none !important;
+      }
+
+      &::before {
+        display: none !important;
+      }
+    }
+  }
+
+  .test-button {
+    background-color: $buttonsBg;
+    color: $textColor;
+    border-radius:35px;
+    width: 140px;
+    padding: 20px 3px;
+    font-size: 13px;
+    font-weight: bold;
+    position: relative;
+    align-self: center;
+    margin-left: 2%;
+    text-align: center;
+    transition: all 0.3s ease-in-out;
+    position: relative;
+    user-select: none;
+
+    span {
+      font-weight: bold;
+    }
+
+    &:active {
+      background-color: darken($buttonsBg,50%) !important;
+    }
+
+    &:hover {
+      cursor: pointer;
+      background-color: darken($buttonsBg, 15%);
+
+      &::after {
+        font-size: 14px;
+        display: block;
+        position: absolute;
+        background-color: $black;
+        color: white;
+        padding: 7px 15px;
+        display: block;
+        top: 0;
+        left: 50%;
+        margin-top: -45px;
+        width: 250px;
+        transform: translate(-50%, -50%);
+      }
+
+      &::before {
+        content: "";
+        display: block;
+        position: absolute;
+        width: 15px;
+        height: 15px;
+        background-color: $black;
+        display: block;
+        top: 0;
+        left: 50%;
+        margin-top: -18px;
+        transform: translate(-50%, -50%) rotate(45deg);
+      }
+    }
+  }
+
+  .add-test {
+    &::after {
+      content: "Add current test to the project tree. This will clear current test.";
+      display: none;
+    }
+  }
+
+  .delete-test {
+    &::after {
+      content: "Delete currently selected test from the project.";
+      display: none;
+    }
+  }
+
+  .update-test {
+    &::after {
+      content: "Update currently selected test. This won't create a new test.";
+      display: none;
+    }
+  }
+
+  .clear-test {
+    &::after {
+      content: "Clear current test tree. This won't delete anything from the project.";
+      display: none;
+    }
+  }
+
+  .expand-test {
+    &::after {
+      content: "Click to show or hide parameters of blocks in the test.";
+      display: none;
+    }
+  }
+}

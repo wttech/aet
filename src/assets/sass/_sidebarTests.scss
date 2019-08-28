@@ -1,0 +1,116 @@
+.sidebar-tests {
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 300px;
+  background-color: $testsBg;
+  height: 100vh;
+  overflow: hidden;
+
+  .search-bar {
+    width: 220px;
+    padding: 5px 15px;
+    height: 40px;
+    display: block;
+    margin: 30px auto;
+    background-color: transparent;
+    border:1px solid $textColor;
+    border-radius:20px;
+    background-color: $featuresBg;
+    box-sizing: border-box;
+
+    &>input {
+      width: 90%;
+      margin-left: 2%;
+      height: 25px;
+      font-size: 16px;
+      color: $textColor;
+    }
+  }
+
+  .sidebar-btn {
+    display: block;
+    width: 90%;
+    padding: 7px 3px;
+    text-align: center;
+    background-color: $newProjectBtnBg;
+    color: $textColor;
+    border-radius:25px;
+    font-weight: bold;
+    position: relative;
+    bottom: 1%;
+    margin-left: 5%;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    transition: all 0.2s ease-in-out;
+
+    &:hover {
+      cursor: pointer;
+      background-color: darken($newProjectBtnBg, 10%);
+    }
+  }
+
+  .tests-container {
+    position: relative;
+    padding-right:3px;
+    width: 96%;
+    margin: 20px auto;
+    color: $white;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    height:75%;
+
+    .tests-main {
+      font-weight: 500;
+      font-size: 21px;
+      margin-left: 15px;
+    }
+
+    .test-currently-selected {
+      background-color: rgba(70, 121, 246, 0.4);
+
+      &:hover {
+        background-color: rgba(70, 121, 246, 0.6) !important; // overwriting a default hover style
+      }
+    }
+
+    .test-item {
+      width: 90%;
+      margin: 18px auto;
+
+      .test-invalid-block{
+        background-color: rgba(255,0,0,0.4) !important; // overwriting a default background style
+      }
+
+      .test-name {
+        width: 90%;
+        padding: 3% 5%;
+        color: $textColor;
+        font-weight: bold;
+        font-size: 15px;
+        text-align: center;
+        transition: all 0.2s ease-in-out;
+        border:1.5px solid $collectorsBg;
+        border-radius:25px;
+
+        &:hover {
+          cursor: pointer;
+          background-color: rgba(70, 121, 246, 0.2);
+        }
+      }
+
+      .test-list {
+        float: right;
+        width: 90%;
+        margin: 5px auto;
+        
+        .test-list-item {
+          width: 120px;
+          padding: 4px 0px;
+          list-style-type: disc;
+          margin-top: 3px;
+        }
+      }
+    }
+  }
+}

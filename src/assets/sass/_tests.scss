@@ -1,0 +1,410 @@
+.middle-section-container {
+  height: 100vh;
+  display: grid;
+  grid-template-rows: 1fr 80px;
+
+  .test-container {
+    background-color: $testContainerBg ;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+  
+    .tests-wrapper {
+      position: relative;
+      padding-right: 17px;
+      right: -17px;
+      overflow-y: scroll;
+      overflow-x: hidden;
+      height: calc(100% - 125px);
+  
+      .tests {
+        position: relative;
+        left: 50%;
+        transform: translate(-50%);
+        margin-top: 40px;
+        padding: 25px 0;
+        width:415px;
+  
+        .collectors-list,
+        .modifiers-list,
+        .comparators-list,
+        .urls-list {
+          overflow: hidden;
+        }
+  
+        .test-name {
+          color: $textColorDark;
+          font-size: 18px;
+          font-weight: bold;
+          width: 400px;
+          margin-left: 10px;
+          text-align: center;
+          display: block;
+        }
+  
+        .list-expanded {
+          overflow: visible;
+          height: 100%;
+        }
+  
+        .list-hidden {
+          height: 0;
+        }
+  
+        .arrow-expanded {
+          transform: rotate(0deg);
+          position: absolute;
+          right: 15px;
+        }
+  
+        .arrow-hidden {
+          transform: rotate(90deg);
+          position: absolute;
+          right: 15px;
+        }
+  
+        .block {
+          width: 300px;
+          margin: 10px;
+          text-align: center;
+          box-sizing: border-box;
+          transition: all 0.3s ease-in-out;
+          user-select: none;
+          border-radius:25px;
+          box-shadow: 3px 3px 8px 0px rgba(0,0,0,0.25) !important;
+          color: $textColor;
+          
+          .arrow-block {
+            position: absolute;
+            top:7px;
+            right: 15px;
+          }
+  
+          .block-type {
+            width:100%;
+            text-align: center;
+            padding:7px 0;
+  
+            span {
+              font-size:16px;
+              font-weight: bold;
+            }
+          }
+  
+          .block-parameters-container {
+            
+            .block-parameter {
+              background-color: $white;
+              color: $textColorDark;
+              text-align: center;
+              padding: 7px 0;
+              font-size: 15px;     
+              word-wrap: break-word;   
+              width:100%;
+              margin: 0px auto;  
+              border-bottom: 1px solid lighten($gray, 60%);
+  
+              &:last-child {
+                border-bottom:0px solid; 
+                border-bottom-right-radius: 25px;
+                border-bottom-left-radius: 25px;
+              }
+  
+              &-mandatory-missing {
+                font-weight: bold;
+                background-color: lighten($blockError, 15%);
+                //color: $blockError;
+              }
+  
+              &-bold {
+                font-weight: bold;
+              }
+  
+              &-wrapper {
+                width:90%;
+                margin: 0 auto;
+                text-align: center;
+              }
+            }
+          }
+        }
+  
+        .block-hidden {
+          opacity: 0.2;
+        }
+  
+        .static {
+          background-color: $staticBg;
+          padding:7px 0;
+          font-weight: bold;
+          width:400px;
+  
+          div {
+            text-align: center;
+          }
+        }
+  
+        .start {
+          position: relative;
+          &:hover {
+            cursor: pointer;
+            background-color: darken($staticBg, 8%);
+          }
+        }
+  
+        .droppable {
+          background-color: $blockDroppable;
+        }
+  
+        .custom {
+          position: relative;
+          margin: 15px 0;
+          width:300px;
+  
+          &:hover {
+            cursor: pointer;
+          }
+        }
+  
+        .add-url {
+          background-color: $urlsBg;
+          font-size: 16px;
+          font-weight: bold;
+          padding:7px 0;
+          transition: none !important;
+  
+          &:hover {
+            cursor: pointer;
+            background-color: darken($urlsBg, 10%);
+          }
+        }
+  
+        .added-url {
+          background-color: lighten($urlsBg, 15%);
+          padding:7px 0;
+          position: relative;
+  
+          span {
+            width: 90%;
+            text-align: center;
+            margin: 0 auto;
+            display: block;
+            word-wrap: break-word;
+          }
+  
+          &:hover {
+            cursor: pointer;
+            background-color: lighten($urlsBg, 25%);
+          }
+        }
+  
+        .add-url-input-container {
+          height: 36px;
+          background-color: $urlsBg;
+  
+          .add-url-input {
+            float: left;
+            height: 25px;
+            font-size: 16px;
+            padding: 0px 20px;
+            margin-top: 5px;
+            color: $textColor;
+            transition: none;
+             
+            &::placeholder {
+              color: $textColor;
+            }
+          }
+  
+          .add-url-button {
+            float: right;
+            padding: 7px 15px;
+            border-top-right-radius:25px;
+            border-bottom-right-radius:25px;
+            background-color: $white;
+            color: $textColorDark;
+            font-size: 28px;
+            font-weight: bold;
+            transition: none !important;
+  
+            &:hover {
+              cursor: pointer;
+              background-color: darken($white, 10%);
+            }
+          }
+        }
+  
+        .empty {
+          color: transparent;
+          background-color: transparent;
+          border: 0px solid transparent;
+          box-sizing: border-box;
+          padding: 0;
+          margin: 0;
+          height: 0px;
+        }
+  
+        .nested {
+          margin-left: 60px;
+        }
+  
+        .nested-twice {
+          width:230px;
+          margin-left: 92.5px;
+          margin-top: -7px;
+        }
+  
+        .valid {
+          height: 30px;
+          border: 1px dashed $borderValid;
+        }
+  
+        .valid-onhover {
+          height: 80px;
+        }
+  
+        .block-valid {
+          background-color: $blockValid;
+  
+          &:hover {
+            background-color: darken($blockValid, 15%);
+          }
+        }
+  
+        .modifier {
+          background-color: $modifiersBg;
+  
+          &:hover {
+            background-color: darken($modifiersBg, 15%);
+          }
+        }
+  
+        .collector {
+          background-color: $collectorsBg;
+  
+          &:hover {
+            background-color: darken($collectorsBg, 15%);
+          }
+        }
+  
+        .comparator {
+          background-color: $comparatorsBg;
+  
+          &:hover {
+            background: darken($comparatorsBg, 15%);
+          }
+        }
+  
+        .block-error {
+          background-color: $blockError;
+  
+          &::after {
+            content: "Error: Collector for this type of comparator was not found!";
+            width: 100%;
+            top: -56px;
+            left: -5px;
+            margin-top: -8px;
+            border-radius:5px;
+            padding: 1% 3%;
+            font-size: 12px;
+            position: absolute;
+            background-color: $black;
+            color: $white;
+            display: none;
+            transition: all 0.3s ease-in-out;
+          }
+  
+          &::before {
+            content: " ";
+            width: 15px;
+            height: 15px;
+            background-color: $black;
+            position: absolute;
+            top: -35px;
+            left: 50%;
+            margin-top: 11px;
+            transform: rotate(45deg);
+            display: none;
+            transition: all 0.3s ease-in-out;
+          }
+  
+          &:hover {
+            background-color: darken(red, 15%);
+  
+            &::after {
+              display: block;
+            }
+  
+            &::before {
+              display: block;
+            }
+          }
+        }
+  
+        .block-warning {
+          background-color: $blockWarning;
+  
+          &::after {
+            content: "Warning: Comparator for this type of collector was not found!";
+            width: 100%;
+            top: -56px;
+            left: -5px;
+            margin-top: -8px;
+            padding: 1% 3%;
+            font-size: 12px;
+            position: absolute;
+            border-radius:5px;
+            background-color: $black;
+            color: $white;
+            display: none;
+            transition: all 0.3s ease-in-out;
+          }
+  
+          &::before {
+            content: " ";
+            width: 15px;
+            height: 15px;
+            background-color: $black;
+            position: absolute;
+            top: -35px;
+            left: 50%;
+            margin-top: 11px;
+            transform: rotate(45deg);
+            display: none;
+            transition: all 0.3s ease-in-out;
+          }
+  
+          &:hover {
+            background-color: darken($blockWarning, 15%);
+  
+            &::after {
+              display: block;
+            }
+  
+            &::before {
+              display: block;
+            }
+          }
+        }
+  
+        .data-filter-valid {
+          background-color: #838fff;
+        }
+  
+        .filter-droppable {
+          background-color: darken($blockValid, 25%);
+        }
+  
+        .filter-block {
+          background-color: $filtersBg;
+          
+          &:hover {
+            background-color: darken($filtersBg, 30%);
+            cursor: pointer;
+          }
+        }
+      }
+    }
+  }
+}
+
