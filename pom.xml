@@ -79,6 +79,7 @@
     <module>integration-tests/test-suite</module>
     <module>osgi-dependencies</module>
     <module>report</module>
+    <module>suite-generator</module>
     <module>rest-endpoint</module>
     <module>test-executor</module>
     <module>zip</module>
@@ -130,6 +131,7 @@
 
     <target.httpd.serverId>aet-vagrant-instance</target.httpd.serverId>
     <target.httpd.report.url>scp://192.168.123.100/opt/aet/apache/aet_reports/current</target.httpd.report.url>
+    <target.httpd.generator.url>scp://192.168.123.100/opt/aet/apache/aet_reports/current/generator</target.httpd.generator.url>
 
     <!--
         required for building by sortpom-maven-plugin:2.5.0 and bobcat
