@@ -1,0 +1,64 @@
+/*
+ * AET
+ *
+ * Copyright (C) 2013 Cognifide Limited
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+.options-box {
+  position: absolute;
+  width: 200px;
+  height: 40px;
+  background-color: $newProjectBtnBg;
+  color: $textColorDark;
+  font-size: 22px;
+  border-radius: 8px;
+  z-index:99;
+  opacity: 1;
+  display: flex;
+  align-items: center;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  .option {
+    display: block;
+    flex: 1;
+    transition: all 0.3s ease-in-out;
+
+    &:hover {
+      cursor: pointer;
+      color: $white;
+    }
+    
+    &>svg {
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
+}
+
+.options-box::after {
+  content: '';
+  position: absolute;
+  left: 100%;
+  top: 50%;
+  display: block;
+  width: 14px;
+  height: 14px;
+  background-color: inherit;
+  transform: translate(-50%, -50%) rotate(45deg);
+  z-index: -1;
+}

@@ -54,3 +54,25 @@ atlassian-ide-plugin.xml
 # aet-vagrant
 /vagrant/.vagrant
 /vagrant/Berksfile.lock
+
+### AET suite generator web app
+# dependencies
+/suite-generator/node_modules
+/suite-generator/node
+
+# testing
+/suite-generator/coverage
+
+# production
+/suite-generator/build
+
+# misc
+/suite-generator/.DS_Store
+/suite-generator/.env.local
+/suite-generator/.env.development.local
+/suite-generator/.env.test.local
+/suite-generator/.env.production.local
+
+/suite-generator/npm-debug.log*
+/suite-generator/yarn-debug.log*
+/suite-generator/yarn-error.log*
