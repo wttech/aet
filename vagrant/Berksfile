@@ -21,7 +21,8 @@ source "https://supermarket.chef.io"
 # Uncomment one of the below lines to use aet cookbook from alternative location.
 # And update the cookbook required version in 'metadata.rb' file.
 
-cookbook 'aet', git: 'https://github.com/Cognifide/aet-cookbook.git', branch: 'master'
-#cookbook 'aet', path: '../../aet-cookbook'
+# TODO: change branch to master after merge feature/suite-generator to master in aet-cookbook repository
+#cookbook 'aet', git: 'https://github.com/Cognifide/aet-cookbook.git', branch: 'feature/suite-generator'
+cookbook 'aet', path: '../../aet-cookbook'
 
 metadata
