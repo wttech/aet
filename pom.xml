@@ -79,8 +79,8 @@
     <module>integration-tests/test-suite</module>
     <module>osgi-dependencies</module>
     <module>report</module>
-    <module>suite-generator</module>
     <module>rest-endpoint</module>
+    <module>suite-generator</module>
     <module>test-executor</module>
     <module>zip</module>
   </modules>
@@ -434,6 +434,12 @@
       <dependency>
         <groupId>com.cognifide.aet</groupId>
         <artifactId>cleaner</artifactId>
+        <version>${project.version}</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.cognifide.aet</groupId>
+        <artifactId>worker</artifactId>
         <version>${project.version}</version>
         <scope>provided</scope>
       </dependency>

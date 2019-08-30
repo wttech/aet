@@ -15,12 +15,19 @@
  */
 package com.cognifide.aet.worker.impl;
 
+import afu.org.checkerframework.checker.oigj.qual.O;
+import com.cognifide.aet.job.api.BaseFactory;
 import com.cognifide.aet.job.api.collector.CollectorFactory;
 import com.cognifide.aet.job.api.comparator.ComparatorFactory;
 import com.cognifide.aet.job.api.datafilter.DataFilterFactory;
 import com.cognifide.aet.worker.api.JobRegistry;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
+
+import com.google.common.collect.ImmutableList;
 import org.osgi.framework.Constants;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -68,6 +75,15 @@ public class JobRegistryImpl implements JobRegistry {
   @Override
   public boolean hasJob(String name) {
     return collectorFactories.containsKey(name);
+  }
+
+  @Override
+  public List<BaseFactory> getFactories() {
+    List<BaseFactory> result = new ArrayList<>();
+    result.addAll(collectorFactories.values());
+    result.addAll(comparatorFactoryMap.values());
+    result.addAll(dataModifierFactoryMap.values());
+    return result;
   }
 
   // ######## Binding related methods

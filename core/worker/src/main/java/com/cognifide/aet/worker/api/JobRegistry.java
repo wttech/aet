@@ -15,9 +15,12 @@
  */
 package com.cognifide.aet.worker.api;
 
+import com.cognifide.aet.job.api.BaseFactory;
 import com.cognifide.aet.job.api.collector.CollectorFactory;
 import com.cognifide.aet.job.api.comparator.ComparatorFactory;
 import com.cognifide.aet.job.api.datafilter.DataFilterFactory;
+
+import java.util.List;
 
 public interface JobRegistry {
 
@@ -30,5 +33,7 @@ public interface JobRegistry {
   boolean hasJob(String name);
 
   DataFilterFactory getDataModifierFactory(String name);
+
+  List<BaseFactory> getFactories();
 
 }

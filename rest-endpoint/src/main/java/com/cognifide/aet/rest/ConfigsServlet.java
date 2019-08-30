@@ -17,9 +17,11 @@ package com.cognifide.aet.rest;
 
 
 import com.cognifide.aet.communication.api.CommunicationSettings;
+import com.cognifide.aet.rest.helpers.ComponentsListProvider;
 import com.cognifide.aet.rest.helpers.ReportConfigurationManager;
 import com.cognifide.aet.rest.helpers.SuitesListProvider;
 import com.cognifide.aet.vs.MetadataDAO;
+import com.cognifide.aet.worker.api.JobRegistry;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -53,6 +55,8 @@ public class ConfigsServlet extends HttpServlet {
 
   public static final String COMMUNICATION_SETTINGS_PARAM = "communicationSettings";
 
+  public static final String COMPONENTS_PARAM = "components";
+
   @Reference
   private transient HttpService httpService;
 
@@ -64,6 +68,9 @@ public class ConfigsServlet extends HttpServlet {
 
   @Reference
   private transient ReportConfigurationManager reportConfigurationManager;
+
+  @Reference
+  private transient JobRegistry jobRegistry;
 
   /***
    * Returns JSON representation of Suite based on correlationId or suite name.
@@ -92,6 +99,8 @@ public class ConfigsServlet extends HttpServlet {
         responseWriter.write(new SuitesListProvider(metadataDAO, reportDomain).listSuites());
       } else if (LOCKS_PARAM.equals(configType)) {
         responseWriter.write(getLocks());
+      } else if (COMPONENTS_PARAM.equals(configType)) {
+        ComponentsListProvider.createResponse(resp, jobRegistry);
       } else {
         resp.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
         responseWriter.write("Unable to get given config.");

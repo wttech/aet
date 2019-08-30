@@ -15,7 +15,9 @@
  */
 package com.cognifide.aet.job.api.datafilter;
 
+import com.cognifide.aet.job.api.BaseFactory;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
+
 import java.util.Map;
 
 /**
