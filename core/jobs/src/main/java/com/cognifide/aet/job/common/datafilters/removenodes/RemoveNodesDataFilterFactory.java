@@ -19,6 +19,9 @@ import com.cognifide.aet.job.api.datafilter.DataFilterFactory;
 import com.cognifide.aet.job.api.datafilter.DataFilterJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import java.util.Map;
+
+import com.cognifide.aet.job.api.info.FeatureMetadata;
+import com.cognifide.aet.job.api.info.ParameterMetadata;
 import org.osgi.service.component.annotations.Component;
 
 @Component
@@ -37,4 +40,27 @@ public class RemoveNodesDataFilterFactory implements DataFilterFactory {
     return modifier;
   }
 
+  @Override
+  public FeatureMetadata getInformation() {
+    return FeatureMetadata.builder()
+            .type("Remove Nodes")
+            .tag(getName())
+            .withParameters()
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("XPath")
+                            .tag("xpath")
+                            .withoutValues()
+                            .isMandatory(true)
+                            .description("XPath to node")
+                            .build()
+            )
+            .and()
+            .withDeps("Source").depType(null)
+            .dropTo("source-comparators")
+            .group("DataFilters")
+            .proxy(false)
+            .wiki("https://github.com/Cognifide/aet/wiki/RemoveNodesDataFilter")
+            .build();
+  }
 }

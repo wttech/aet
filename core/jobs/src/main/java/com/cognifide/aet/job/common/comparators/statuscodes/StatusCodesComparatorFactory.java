@@ -21,6 +21,8 @@ import com.cognifide.aet.job.api.comparator.ComparatorJob;
 import com.cognifide.aet.job.api.comparator.ComparatorProperties;
 import com.cognifide.aet.job.api.datafilter.DataFilterJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
+import com.cognifide.aet.job.api.info.FeatureMetadata;
+import com.cognifide.aet.job.api.info.ParameterMetadata;
 import com.cognifide.aet.vs.ArtifactsDAO;
 import java.util.List;
 import org.osgi.service.component.annotations.Component;
@@ -59,4 +61,48 @@ public class StatusCodesComparatorFactory implements ComparatorFactory {
     return statusCodesComparator;
   }
 
+  @Override
+  public FeatureMetadata getInformation() {
+    return FeatureMetadata.builder()
+            .type("StatusCodes")
+            .tag(getName())
+            .withParameters()
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Filter Range")
+                            .tag("filterRange")
+                            .withoutValues()
+                            .isMandatory(false)
+                            .description("Defines range of status codes that should be processed, example values: [400, 500]. Mandatory if filterCodes is not set")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Filter Codes")
+                            .tag("filterCodes")
+                            .withoutValues()
+                            .isMandatory(false)
+                            .description("List of status codes that should be processed, example values: [400, 401, 404]. Mandatory if filterRange is not set")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Show Excluded")
+                            .tag("showExcluded")
+                            .withValues()
+                            .addValue("true")
+                            .addValue("false")
+                            .and().defaultValue("true")
+                            .isMandatory(false)
+                            .description("Flag that says if excluded codes ")
+                            .build()
+            )
+            .and()
+            .withDeps("statuscodes-collectors").depType("Error")
+            .dropTo("Comparators")
+            .group("Comparators")
+            .proxy(false)
+            .wiki("https://github.com/Cognifide/aet/wiki/StatusCodesComparator")
+            .build();
+  }
 }

@@ -21,6 +21,8 @@ import com.cognifide.aet.job.api.comparator.ComparatorJob;
 import com.cognifide.aet.job.api.comparator.ComparatorProperties;
 import com.cognifide.aet.job.api.datafilter.DataFilterJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
+import com.cognifide.aet.job.api.info.FeatureMetadata;
+import com.cognifide.aet.job.api.info.ParameterMetadata;
 import com.cognifide.aet.job.common.comparators.source.diff.DiffParser;
 import com.cognifide.aet.vs.ArtifactsDAO;
 import java.util.List;
@@ -60,5 +62,45 @@ public class SourceComparatorFactory implements ComparatorFactory {
         new DiffParser(), sources);
     sourceComparator.setParameters(comparator.getParameters());
     return sourceComparator;
+  }
+
+  @Override
+  public FeatureMetadata getInformation() {
+    return FeatureMetadata.builder()
+            .type("Source")
+            .tag(getName())
+            .withParameters()
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Comparator")
+                            .tag("comparator")
+                            .withValues()
+                            .addValue("source")
+                            .and().defaultValue("source")
+                            .isMandatory(true)
+                            .description("See wiki for specific information")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Compare Type")
+                            .tag("compareType")
+                            .withValues()
+                            .addValue("content")
+                            .addValue("markup")
+                            .addValue("allFormatted")
+                            .addValue("all")
+                            .and().defaultValue("all")
+                            .isMandatory(false)
+                            .description("See wiki for specific information")
+                            .build()
+            )
+            .and()
+            .withDeps("source-collectors").depType("Error")
+            .dropTo("Comparators")
+            .group("Comparators")
+            .proxy(false)
+            .wiki("https://github.com/Cognifide/aet/wiki/SourceComparator")
+            .build();
   }
 }

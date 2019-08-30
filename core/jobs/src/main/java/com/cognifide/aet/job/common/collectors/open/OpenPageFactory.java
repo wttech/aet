@@ -21,6 +21,8 @@ import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import java.util.Map;
+
+import com.cognifide.aet.job.api.info.FeatureMetadata;
 import org.osgi.service.component.annotations.Component;
 
 @Component
@@ -37,4 +39,17 @@ public class OpenPageFactory implements CollectorFactory {
     return new OpenPage(webCommunicationWrapper, properties);
   }
 
+  @Override
+  public FeatureMetadata getInformation() {
+    return FeatureMetadata.builder()
+            .type("Open")
+            .tag(getName())
+            .withoutParameters()
+            .withoutDeps()
+            .dropTo("Collectors")
+            .group("Open")
+            .proxy(false)
+            .wiki("https://github.com/Cognifide/aet/wiki/Open")
+            .build();
+  }
 }

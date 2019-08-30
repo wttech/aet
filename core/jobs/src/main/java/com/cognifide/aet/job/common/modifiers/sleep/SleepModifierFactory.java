@@ -21,6 +21,9 @@ import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import java.util.Map;
+
+import com.cognifide.aet.job.api.info.FeatureMetadata;
+import com.cognifide.aet.job.api.info.ParameterMetadata;
 import org.osgi.service.component.annotations.Component;
 
 @Component
@@ -39,4 +42,27 @@ public class SleepModifierFactory implements CollectorFactory {
     return modifier;
   }
 
+  @Override
+  public FeatureMetadata getInformation() {
+    return FeatureMetadata.builder()
+            .type("Sleep")
+            .tag(getName())
+            .withParameters()
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Duration")
+                            .tag("duration")
+                            .withoutValues()
+                            .isMandatory(true)
+                            .description("Sleep time, in milliseconds")
+                            .build()
+            )
+            .and()
+            .withoutDeps()
+            .dropTo("Collectors")
+            .group("Modifiers")
+            .proxy(false)
+            .wiki("https://github.com/Cognifide/aet/wiki/SleepModifier")
+            .build();
+  }
 }

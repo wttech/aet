@@ -20,6 +20,8 @@ import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
+import com.cognifide.aet.job.api.info.FeatureMetadata;
+import com.cognifide.aet.job.api.info.ParameterMetadata;
 import com.cognifide.aet.job.common.utils.javascript.JavaScriptJobExecutor;
 import java.util.Map;
 import org.openqa.selenium.WebDriver;
@@ -43,4 +45,63 @@ public class ReplaceTextFactory implements CollectorFactory {
     return modifier;
   }
 
+  @Override
+  public FeatureMetadata getInformation() {
+    return FeatureMetadata.builder()
+            .type("Replace Text")
+            .tag(getName())
+            .withParameters()
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Value")
+                            .tag("value")
+                            .withValues().and().defaultValue("")
+                            .isMandatory(false)
+                            .description("New text value for given attribute or innterHTML of selected element")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Attribute Name")
+                            .tag("attributeName")
+                            .withValues().and().defaultValue("innerHTML")
+                            .isMandatory(false)
+                            .description("Attribute of selected element to be set, e.g. 'href' or 'value'")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("XPath")
+                            .tag("xpath")
+                            .withoutValues()
+                            .isMandatory(false)
+                            .description("Xpath of element(s)")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("CSS")
+                            .tag("css")
+                            .withoutValues()
+                            .isMandatory(false)
+                            .description("css selector of element(s)")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Timeout")
+                            .tag("timeout")
+                            .withValues().and().defaultValue("1000ms")
+                            .isMandatory(false)
+                            .description("The timeout for the element to appear, in milliseconds. The max value of this parameter is 15000ms")
+                            .build()
+            )
+            .and()
+            .withoutDeps()
+            .dropTo("Collectors")
+            .group("Modifiers")
+            .proxy(false)
+            .wiki("https://github.com/Cognifide/aet/wiki/ReplaceTextModifier")
+            .build();
+  }
 }

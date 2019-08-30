@@ -20,6 +20,8 @@ import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
+import com.cognifide.aet.job.api.info.FeatureMetadata;
+import com.cognifide.aet.job.api.info.ParameterMetadata;
 import com.cognifide.aet.vs.ArtifactsDAO;
 import java.util.Map;
 import org.osgi.service.component.annotations.Component;
@@ -45,4 +47,63 @@ public class ScreenCollectorFactory implements CollectorFactory {
     return collector;
   }
 
+  @Override
+  public FeatureMetadata getInformation() {
+    return FeatureMetadata.builder()
+            .type("Screen")
+            .tag(getName())
+            .withParameters()
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Name")
+                            .tag("name")
+                            .withoutValues()
+                            .isMandatory(false)
+                            .description("Name of that test.")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("XPath")
+                            .tag("xpath")
+                            .withoutValues()
+                            .isMandatory(false)
+                            .description("XPath to element(s)")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("CSS")
+                            .tag("css")
+                            .withoutValues()
+                            .isMandatory(false)
+                            .description("CSS selector to element(s)")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Timeout")
+                            .tag("timeout")
+                            .withValues().and().defaultValue("1000ms")
+                            .isMandatory(false)
+                            .description("The timeout for the element to appear, in milliseconds. The max value of this parameter is 15000ms")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Exclude Elements")
+                            .tag("exclude-elements")
+                            .withoutValues()
+                            .isMandatory(false)
+                            .description("Elements found with that selector will be ignored by layout comparator (they won't affect its results) but will be rendered on the report as captured.")
+                            .build()
+            )
+            .and()
+            .withDeps("screen-comparators").depType("Warning")
+            .dropTo("Collectors")
+            .group("Collectors")
+            .proxy(false)
+            .wiki("https://github.com/Cognifide/aet/wiki/ScreenCollector")
+            .build();
+  }
 }

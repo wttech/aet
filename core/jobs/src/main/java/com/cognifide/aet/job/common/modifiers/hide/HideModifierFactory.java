@@ -20,6 +20,8 @@ import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
+import com.cognifide.aet.job.api.info.FeatureMetadata;
+import com.cognifide.aet.job.api.info.ParameterMetadata;
 import com.cognifide.aet.job.common.utils.javascript.JavaScriptJobExecutor;
 import java.util.Map;
 import org.openqa.selenium.WebDriver;
@@ -43,4 +45,57 @@ public class HideModifierFactory implements CollectorFactory {
     return modifier;
   }
 
+  @Override
+  public FeatureMetadata getInformation() {
+    return FeatureMetadata.builder()
+            .type("Hide")
+            .tag(getName())
+            .withParameters()
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("XPath")
+                            .tag("xpath")
+                            .withoutValues()
+                            .isMandatory(false)
+                            .description("Xpath of element(s)")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("CSS")
+                            .tag("css")
+                            .withoutValues()
+                            .isMandatory(false)
+                            .description("css selector of element(s)")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Timeout")
+                            .tag("timeout")
+                            .withValues().and().defaultValue("1000ms")
+                            .isMandatory(false)
+                            .description("The timeout for the element to appear, in milliseconds. The max value of this parameter is 15000ms")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Leave Blank Space")
+                            .tag("leaveBlankSpace")
+                            .withValues()
+                            .addValue("true")
+                            .addValue("false")
+                            .and().defaultValue(null)
+                            .isMandatory(false)
+                            .description("When set to true, blank and transparent space is left in place of the hidden element, otherwise, element is completely removed from the view.")
+                            .build()
+            )
+            .and()
+            .withoutDeps()
+            .dropTo("Collectors")
+            .group("Modifiers")
+            .proxy(false)
+            .wiki("https://github.com/Cognifide/aet/wiki/HideModifier")
+            .build();
+  }
 }

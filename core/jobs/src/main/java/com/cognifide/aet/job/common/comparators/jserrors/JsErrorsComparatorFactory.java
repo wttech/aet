@@ -21,6 +21,7 @@ import com.cognifide.aet.job.api.comparator.ComparatorJob;
 import com.cognifide.aet.job.api.comparator.ComparatorProperties;
 import com.cognifide.aet.job.api.datafilter.DataFilterJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
+import com.cognifide.aet.job.api.info.FeatureMetadata;
 import com.cognifide.aet.vs.ArtifactsDAO;
 import java.util.List;
 import org.osgi.service.component.annotations.Component;
@@ -54,4 +55,17 @@ public class JsErrorsComparatorFactory implements ComparatorFactory {
     return new JsErrorsComparator(comparatorProperties, dataFilterJobs, artifactsDAO);
   }
 
+  @Override
+  public FeatureMetadata getInformation() {
+    return FeatureMetadata.builder()
+            .type("JSErrors")
+            .tag(getName())
+            .withoutParameters()
+            .withDeps("jserrors-collectors").depType("Error")
+            .dropTo("Comparators")
+            .group("Comparators")
+            .proxy(false)
+            .wiki("https://github.com/Cognifide/aet/wiki/JSErrorsComparator")
+            .build();
+  }
 }

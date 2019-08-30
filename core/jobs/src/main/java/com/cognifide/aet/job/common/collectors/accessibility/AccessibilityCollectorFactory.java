@@ -20,6 +20,8 @@ import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
+import com.cognifide.aet.job.api.info.FeatureMetadata;
+import com.cognifide.aet.job.api.info.ParameterMetadata;
 import com.cognifide.aet.job.common.utils.javascript.JavaScriptJobExecutor;
 import com.cognifide.aet.vs.ArtifactsDAO;
 import java.util.Map;
@@ -53,5 +55,33 @@ public class AccessibilityCollectorFactory implements CollectorFactory {
   @Activate
   public void activate(BundleContext context) {
     this.context = context;
+  }
+
+  @Override
+  public FeatureMetadata getInformation() {
+    return FeatureMetadata.builder()
+            .type("Accessibility")
+            .tag(getName())
+            .withParameters()
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Standard")
+                            .tag("standard")
+                            .withValues()
+                            .addValue("WCAG2A")
+                            .addValue("WCAG2AA")
+                            .addValue("WCAG2AAA")
+                            .and().defaultValue("WCAG2AA")
+                            .isMandatory(false)
+                            .description("The parameter specifies the standard which the page is validated against")
+                            .build()
+            )
+            .and()
+            .withDeps("accessibility-comparators").depType("Warning")
+            .dropTo("Collectors")
+            .group("Collectors")
+            .proxy(false)
+            .wiki("https://github.com/Cognifide/aet/wiki/AccessibilityCollector")
+            .build();
   }
 }

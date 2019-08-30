@@ -20,6 +20,7 @@ import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
+import com.cognifide.aet.job.api.info.FeatureMetadata;
 import com.cognifide.aet.vs.ArtifactsDAO;
 import java.util.Map;
 import org.osgi.framework.BundleContext;
@@ -53,5 +54,19 @@ public class ClientSidePerformanceCollectorFactory implements CollectorFactory {
   @Activate
   public void activate(BundleContext context) {
     this.context = context;
+  }
+
+  @Override
+  public FeatureMetadata getInformation() {
+    return FeatureMetadata.builder()
+            .type("Client Side Performance")
+            .tag(getName())
+            .withoutParameters()
+            .withDeps("clientsideperformance-comparators").depType("Warning")
+            .dropTo("Collectors")
+            .group("Collectors")
+            .proxy(true)
+            .wiki("https://github.com/Cognifide/aet/wiki/ClientSidePerformanceComparator")
+            .build();
   }
 }

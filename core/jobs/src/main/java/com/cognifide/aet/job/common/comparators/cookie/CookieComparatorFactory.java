@@ -21,6 +21,8 @@ import com.cognifide.aet.job.api.comparator.ComparatorJob;
 import com.cognifide.aet.job.api.comparator.ComparatorProperties;
 import com.cognifide.aet.job.api.datafilter.DataFilterJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
+import com.cognifide.aet.job.api.info.FeatureMetadata;
+import com.cognifide.aet.job.api.info.ParameterMetadata;
 import com.cognifide.aet.vs.ArtifactsDAO;
 import java.util.List;
 import org.osgi.service.component.annotations.Component;
@@ -55,5 +57,63 @@ public class CookieComparatorFactory implements ComparatorFactory {
         artifactsDAO);
     cookieComparator.setParameters(comparator.getParameters());
     return cookieComparator;
+  }
+
+  @Override
+  public FeatureMetadata getInformation() {
+    return FeatureMetadata.builder()
+            .type("Cookie")
+            .tag(getName())
+            .withParameters()
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Action")
+                            .tag("action")
+                            .withValues()
+                            .addValue("LIST")
+                            .addValue("TEST")
+                            .addValue("COMPARE")
+                            .and().defaultValue("LIST")
+                            .isMandatory(false)
+                            .description("Violation types to be show in the report, ERROR for errors, WARN for errors and warnings, NOTICE for everything")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Cookie Name")
+                            .tag("cookie-name")
+                            .withoutValues()
+                            .isMandatory(false)
+                            .description("The name of the cookie to test, applicable only for the test action")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Cookie Value")
+                            .tag("cookie-value")
+                            .withoutValues()
+                            .isMandatory(false)
+                            .description("The value of the cookie to test, applicable only for the test action")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Show Matched")
+                            .tag("showMatched")
+                            .withValues()
+                            .addValue("true")
+                            .addValue("false")
+                            .and().defaultValue("true")
+                            .isMandatory(false)
+                            .description("Works only in the compare mode. The flag that says if matched cookies should be displayed in the report or not. By default set to true.")
+                            .build()
+            )
+            .and()
+            .withDeps("cookie-collectors").depType("Error")
+            .dropTo("Comparators")
+            .group("Comparators")
+            .proxy(false)
+            .wiki("https://github.com/Cognifide/aet/wiki/CookieComparator")
+            .build();
   }
 }

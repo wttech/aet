@@ -20,6 +20,7 @@ import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
+import com.cognifide.aet.job.api.info.FeatureMetadata;
 import com.cognifide.aet.vs.ArtifactsDAO;
 import java.util.Map;
 import org.osgi.service.component.annotations.Component;
@@ -44,5 +45,19 @@ public class StatusCodesCollectorFactory implements CollectorFactory {
         properties);
     collector.setParameters(parameters);
     return collector;
+  }
+
+  @Override
+  public FeatureMetadata getInformation() {
+    return FeatureMetadata.builder()
+            .type("Status Codes")
+            .tag(getName())
+            .withoutParameters()
+            .withDeps("statuscodes-comparators").depType("Warning")
+            .dropTo("Collectors")
+            .group("Collectors")
+            .proxy(true)
+            .wiki("https://github.com/Cognifide/aet/wiki/StatusCodesCollector")
+            .build();
   }
 }

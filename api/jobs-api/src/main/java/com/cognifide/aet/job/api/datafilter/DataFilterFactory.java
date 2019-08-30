@@ -26,13 +26,7 @@ import java.util.Map;
  * Implementation of this interface should be a OSGI service so each implementation requires to have
  * {@literal @}Service and {@literal @}Component annotation to work and register properly.
  */
-public interface DataFilterFactory {
-
-  /**
-   * @return the name, which the modifier factory will be registered on. It has to be unique for all
-   * modules in the compare phase.
-   */
-  String getName();
+public interface DataFilterFactory extends BaseFactory {
 
   /**
    * Creates data filter job. Each call should return new instance of a data filter object unless it

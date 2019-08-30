@@ -25,13 +25,7 @@ import java.util.Map;
  * Implementation of this interface should be a OSGI service so each implementation requires to have
  * {@literal @}Service and {@literal @}Component annotation to work and register properly.
  */
-public interface CollectorFactory {
-
-  /**
-   * @return name, which the collector factory will be registered on. It has to be unique for all
-   * modules in collect phase. It is also name of tag definition for collector used in suite.
-   */
-  String getName();
+public interface CollectorFactory extends BaseFactory {
 
   /**
    * Creates collector job. Each call should return new instance of a collector object unless it is
@@ -45,4 +39,5 @@ public interface CollectorFactory {
    */
   CollectorJob createInstance(CollectorProperties properties, Map<String, String> parameters,
       WebCommunicationWrapper webCommunicationWrapper) throws ParametersException;
+
 }

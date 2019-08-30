@@ -20,6 +20,8 @@ import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
+import com.cognifide.aet.job.api.info.FeatureMetadata;
+import com.cognifide.aet.job.api.info.ParameterMetadata;
 import com.cognifide.aet.validation.ValidationResultBuilderFactory;
 import java.util.Map;
 import org.osgi.service.component.annotations.Component;
@@ -45,4 +47,66 @@ public class CookieModifierFactory implements CollectorFactory {
     return cookieModifier;
   }
 
+  @Override
+  public FeatureMetadata getInformation() {
+    return FeatureMetadata.builder()
+            .type("Cookie")
+            .tag(getName())
+            .withParameters()
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Action")
+                            .tag("action")
+                            .withValues()
+                            .addValue("add")
+                            .addValue("remove")
+                            .and().defaultValue(null)
+                            .isMandatory(true)
+                            .description("Specifies what action should be taken with a given cookie")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Cookie Name")
+                            .tag("cookie-name")
+                            .withoutValues()
+                            .isMandatory(true)
+                            .description("Cookie name")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Cookie Value")
+                            .tag("cookie-value")
+                            .withoutValues()
+                            .isMandatory(false)
+                            .description("Cookie Value, mandatory if 'add' action is selected")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Cookie Domain")
+                            .tag("cookie-domain")
+                            .withoutValues()
+                            .isMandatory(false)
+                            .description("Cookie domain, used only if 'add' action is selected but it's not mandatory")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Cookie Path")
+                            .tag("cookie-path")
+                            .withoutValues()
+                            .isMandatory(false)
+                            .description("Cookie path, used only if 'add' action is selected but it's not mandatory")
+                            .build()
+            )
+            .and()
+            .withoutDeps()
+            .dropTo("Collectors")
+            .group("Modifiers")
+            .proxy(false)
+            .wiki("https://github.com/Cognifide/aet/wiki/CookieModifier")
+            .build();
+  }
 }

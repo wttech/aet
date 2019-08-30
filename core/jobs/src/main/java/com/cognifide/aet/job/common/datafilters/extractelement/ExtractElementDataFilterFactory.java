@@ -19,6 +19,9 @@ import com.cognifide.aet.job.api.datafilter.DataFilterFactory;
 import com.cognifide.aet.job.api.datafilter.DataFilterJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import java.util.Map;
+
+import com.cognifide.aet.job.api.info.FeatureMetadata;
+import com.cognifide.aet.job.api.info.ParameterMetadata;
 import org.osgi.service.component.annotations.Component;
 
 /**
@@ -38,5 +41,38 @@ public class ExtractElementDataFilterFactory implements DataFilterFactory {
     ExtractElementDataModifier dm = new ExtractElementDataModifier();
     dm.setParameters(params);
     return dm;
+  }
+
+  @Override
+  public FeatureMetadata getInformation() {
+    return FeatureMetadata.builder()
+            .type("Extract Element")
+            .tag(getName())
+            .withParameters()
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Element ID")
+                            .tag("elementId")
+                            .withoutValues()
+                            .isMandatory(false)
+                            .description("Id for the element to extract. One of these parameters is required.")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Class")
+                            .tag("class")
+                            .withoutValues()
+                            .isMandatory(false)
+                            .description("Class name for the element to extract. One of these parameters is required.")
+                            .build()
+            )
+            .and()
+            .withDeps("Source").depType(null)
+            .dropTo("source-comparators")
+            .group("DataFilters")
+            .proxy(false)
+            .wiki("https://github.com/Cognifide/aet/wiki/ExtractElementDataFilter")
+            .build();
   }
 }
