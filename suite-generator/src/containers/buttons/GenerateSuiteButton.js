@@ -132,9 +132,9 @@ class GenerateSuiteButton extends Component {
         } else {
           if(this.checkIfParamExists(param.current)) {
             groupItem.att(param.tag, param.current);
-          } else if(this.checkIfParamExists(param.default)) {
-            groupItem.att(param.tag, param.default);
-          } else if(!this.checkIfParamExists(param.current) && !this.checkIfParamExists(param.default)) {
+          } else if(this.checkIfParamExists(param.defaultValue)) {
+            groupItem.att(param.tag, param.defaultValue);
+          } else if(!this.checkIfParamExists(param.current) && !this.checkIfParamExists(param.defaultValue)) {
             console.error("Mandatory parameter " + param.tag + " is missing!");
             groupItem.att(param.tag, "MISSING_PARAM");
           }

@@ -52,7 +52,7 @@ public class SleepModifierFactory implements CollectorFactory {
                     ParameterMetadata.builder()
                             .name("Duration")
                             .tag("duration")
-                            .withoutValues()
+                            .withValues().and().defaultValue("1000")
                             .isMandatory(true)
                             .description("Sleep time, in milliseconds")
                             .build()

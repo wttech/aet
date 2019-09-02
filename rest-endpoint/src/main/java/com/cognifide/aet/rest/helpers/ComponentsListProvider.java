@@ -60,7 +60,6 @@ public class ComponentsListProvider {
 
         private List<FeatureMetadata> modifiers;
 
-        @SerializedName("data-filters")
         private List<FeatureMetadata> dataFilters;
 
         static ComponentListWrapper fromComponentList(List<BaseFactory> data) {

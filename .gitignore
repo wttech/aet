@@ -59,6 +59,7 @@ atlassian-ide-plugin.xml
 # dependencies
 /suite-generator/node_modules
 /suite-generator/node
+/suite-generator/.vscode
 
 # testing
 /suite-generator/coverage

@@ -16,21 +16,76 @@
  * limitations under the License.
  */
 import React, {Component} from "react";
+import { connect } from 'react-redux';
+import { bindActionCreators } from "redux";
+
 import SearchFeatures from "../../containers/search/SearchFeatures";
 import AppName from "../main/AppName";
 import { CreateFeatureList } from "../../functions/createFeatureList";
 
+import fetchFeaturesAction from "../../functions/fetchFeatures";
+import {getFeatures, getFeaturesPending, getFeaturesError} from "../../reducers/features/featuresReducer";
+
+
+
 class SidebarFeatures extends Component {
+  constructor(props) {
+    super(props);
+
+    this.shouldComponentRender = this.shouldComponentRender.bind(this);
+  }
+
+  componentWillMount() {
+    const {fetchFeatures} = this.props;
+    fetchFeatures();
+  }
+
+  shouldComponentRender() {
+    const {pending} = this.props;
+    if (pending === false) return true;
+
+    return false;
+  }
 
   render () {
+
+    const {features, error} = this.props;
+
+    let content = null;
+
+    if (this.shouldComponentRender()) {
+      content = (
+        <React.Fragment>
+          <SearchFeatures/>
+          <CreateFeatureList features={features} error={error}/>
+        </React.Fragment>
+      )
+    } else {
+      content = (
+        <h1>Loading</h1>
+      )
+    }
+
     return (
       <div className="sidebar-features">
         <AppName />
-        <SearchFeatures/>
-        <CreateFeatureList />
+        {content}
       </div>
     )
   }
 }
 
-export default SidebarFeatures;
+const mapStateToProps = state => ({
+  error: getFeaturesError(state),
+  features: getFeatures(state),
+  pending: getFeaturesPending(state)
+}) 
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  fetchFeatures: fetchFeaturesAction
+}, dispatch)
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(SidebarFeatures);

@@ -27,6 +27,7 @@ import urlInput from "./urls/urlInputReducer";
 import testName from "./test/testNameReducer";
 import staticBlocks from "./blocks/staticBlocksReducer";
 import testOptions from "./test/testOptionsReducer";
+import features from "./features/featuresReducer";
 
 const reducer = combineReducers(
   {
@@ -41,6 +42,7 @@ const reducer = combineReducers(
     testName: testName,
     staticBlocks: staticBlocks,
     testOptions: testOptions,
+    features: features,
   }
 )
 

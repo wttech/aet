@@ -101,6 +101,7 @@ public class ConfigsServlet extends HttpServlet {
         responseWriter.write(getLocks());
       } else if (COMPONENTS_PARAM.equals(configType)) {
         ComponentsListProvider.createResponse(resp, jobRegistry);
+        addCors(resp);
       } else {
         resp.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
         responseWriter.write("Unable to get given config.");
@@ -109,6 +110,18 @@ public class ConfigsServlet extends HttpServlet {
       resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
     }
     flushResponseBuffer(req, resp);
+  }
+
+  @Override
+  protected void doOptions(HttpServletRequest req, HttpServletResponse resp) {
+    addCors(resp);
+  }
+
+  private void addCors(HttpServletResponse response) {
+    response.setHeader("Access-Control-Allow-Origin", "*");
+    response.setHeader("Access-Control-Allow-Headers",
+            "Origin, X-Requested-With, Content-Type, Accept");
+    response.setHeader("Access-Control-Allow-Methods", "GET");
   }
 
   private PrintWriter retrieveResponseWriter(HttpServletRequest req, HttpServletResponse resp) {

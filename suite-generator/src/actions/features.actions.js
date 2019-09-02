@@ -15,19 +15,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-import React from 'react';
-import FeaturesList from "../containers/sidebars/FeaturesList";
+export const FETCH_FEATURES_PENDING = 'features/fetch_features_pending';
+export const FETCH_FEATURES_SUCCESS = 'features/fetch_features_success';
+export const FETCH_FEATURES_ERROR = 'features/fetch_features_error';
 
-export const CreateFeatureList = (props) => {
+export const fetchFeaturesPending = () => {
+    return {
+        type: FETCH_FEATURES_PENDING
+    }
+}
 
-  const {features} = props;
+export const fetchFeaturesSuccess = (features) => {
+    return {
+        type: FETCH_FEATURES_SUCCESS,
+        payload: features
+    }
+}
 
-  return (
-    <div className="features-container">
-    <FeaturesList data={features["collectors"]} name="Collectors" type="collectors"/>
-    <FeaturesList data={features["comparators"]} name="Comparators" type="comparators"/>
-    <FeaturesList data={features["modifiers"]} name="Modifiers" type="modifiers"/>
-    <FeaturesList data={features["dataFilters"]} name="Data Filters" type="data-filters"/>
-  </div>
-  )
+export const fetchFeaturesError = (error) => {
+    return {
+        type: FETCH_FEATURES_ERROR,
+        payload: error
+    }
 }
