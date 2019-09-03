@@ -67,6 +67,7 @@ class GenerateSuiteButton extends Component {
    }
   }
 
+  // TODO check paramteres quantity if OnlyOne etc.
   validateParams(suite) {
     let invalidParams = [];
     let invalidBlock = {};

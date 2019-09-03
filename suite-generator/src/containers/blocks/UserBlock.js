@@ -39,54 +39,54 @@ class UserBlockContainer extends Component {
 
   generateListOfUserBlocks(type) {
     if(this.props.test.length > 0) {
-      return this.props.test.map((test, index) => {
-        if(typeof test !== 'undefined') {   
-          if(test.dropTo.toLowerCase() === type) {
+      return this.props.test.map((component, index) => {
+        if(typeof component !== 'undefined') {   
+          if(component.dropTo.toLowerCase() === type) {
             const elemClass = `${type}-list-container ${this.props.testName.isVisible ? "block-hidden" : ""}`;
             let elemID = null;
-            if(test.type === "Source W3CHTML5") {
+            if(component.type === "Source W3CHTML5") {
               elemID = "source-comparators-" + index;
             } else {
-              elemID = generateID(test) + "-" + index;
+              elemID = generateID(component) + "-" + index;
             }
             if(type === "comparators") {
               return (
-              <div key={elemID} >
-                <div className={elemClass}>
-                  <div 
-                  className="block custom nested comparator" 
-                  id={elemID} 
-                  onClick={(ev) => this.toggleOptionsBox(ev, test, elemID)}
-                  onDragOver={(ev) => handleDragOver(ev)}  
-                  onDrop={(ev) => this.handleFilterDrop(ev, test)}>
-                  <div className={`${test.group !== "Open" ? "block-type" : ""}`}>
-                    <span>{test.type}</span>
-                  </div>
-                  {this.props.testOptions.blocksExpanded ? (
-                    <div className="block-parameters-container">
-                      {this.generateListOfBlockParameters(test)}
+                <div key={elemID} >
+                  <div className={elemClass}>
+                    <div 
+                    className="block custom nested comparator" 
+                    id={elemID} 
+                    onClick={(ev) => this.toggleOptionsBox(ev, component, elemID)}
+                    onDragOver={(ev) => handleDragOver(ev)}  
+                    onDrop={(ev) => this.handleFilterDrop(ev, component)}>
+                    <div className={`${component.group !== "Open" ? "block-type" : ""}`}>
+                      <span>{component.type}</span>
                     </div>
-                  ) : null}
+                    {this.props.testOptions.blocksExpanded ? (
+                      <div className="block-parameters-container">
+                        {this.generateListOfBlockParameters(component)}
+                      </div>
+                    ) : null}
+                    </div>
+                    {this.generateListOfFilters(component, index)}
                   </div>
-                  {this.generateListOfFilters(test, index)}
+                  <DropContainer dropTo={"comparators"} />
                 </div>
-                <DropContainer dropTo={"comparators"} />
-              </div>
               )
             } else {
               return (
                 <div className={elemClass}  key={elemID}>
                   <div 
-                  className={`block custom nested  ${test.group === "Modifiers" ? "modifier" : "collector"}`}
-                  onClick={(ev) => this.toggleOptionsBox(ev, test, elemID)}
+                  className={`block custom nested  ${component.group === "Modifiers" ? "modifier" : "collector"}`}
+                  onClick={(ev) => this.toggleOptionsBox(ev, component, elemID)}
                   key={elemID} 
                   id={elemID}>
                   <div className="block-type">
-                    <span>{test.type}</span>
+                    <span>{component.type}</span>
                   </div>
-                  {test.group !== "Open" && this.props.testOptions.blocksExpanded ? (
+                  {component.group !== "Open" && this.props.testOptions.blocksExpanded ? (
                     <div className="block-parameters-container">
-                      {this.generateListOfBlockParameters(test)}
+                      {this.generateListOfBlockParameters(component)}
                     </div>
                   ) : null}
                   </div>
@@ -103,9 +103,10 @@ class UserBlockContainer extends Component {
     }
   }
 
-  generateListOfBlockParameters(test) {
-    if(test.parameters !== null && test.parameters.length > 0) {
-      return Object.values(test.parameters).map((param, index) => {
+  // TODO check parameters number or dependencies
+  generateListOfBlockParameters(component) {
+    if(component.parameters !== null && component.parameters.length > 0) {
+      return Object.values(component.parameters).map((param, index) => {
         if(typeof param.current === "undefined") {
           param.current = null;
         }
