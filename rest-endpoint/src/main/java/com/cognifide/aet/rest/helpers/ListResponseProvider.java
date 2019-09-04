@@ -62,18 +62,23 @@ public class ListResponseProvider {
 
         try {
             List data = createData(company, project, name);
-            Map root = new HashMap();
-            root.put("data", data);
-            root.put("size", data.size());
-            root.put("reportDomain", reportDomain);
-            root.put(PROJECT_PARAM, project);
-            root.put(COMPANY_PARAM, company);
-            root.put(NAME_PARAM, name);
+            if (!data.isEmpty() || (StringUtils.isEmpty(company)
+                    && StringUtils.isEmpty(project) && StringUtils.isEmpty(name)) ) {
+                Map root = new HashMap();
+                root.put("data", data);
+                root.put("size", data.size());
+                root.put("reportDomain", reportDomain);
+                root.put(PROJECT_PARAM, project);
+                root.put(COMPANY_PARAM, company);
+                root.put(NAME_PARAM, name);
 
-            Template template = templateConfiguration.getConfiguration()
-                    .getTemplate(chooseTemplate(company, project, name));
+                Template template = templateConfiguration.getConfiguration()
+                        .getTemplate(chooseTemplate(company, project, name));
 
-            template.process(root, resp.getWriter());
+                template.process(root, resp.getWriter());
+            } else {
+                resp.setStatus(HttpServletResponse.SC_NOT_FOUND);
+            }
         } catch (StorageException e) {
             resp.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
             LOGGER.error("Database error", e);
