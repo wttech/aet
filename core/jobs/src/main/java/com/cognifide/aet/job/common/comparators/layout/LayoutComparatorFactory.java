@@ -62,7 +62,7 @@ public class LayoutComparatorFactory implements ComparatorFactory {
   public FeatureMetadata getInformation() {
     return FeatureMetadata.builder()
             .type("Screen")
-            .tag(getName())
+            .tag("screen")
             .withParameters()
             .addParameter(
                     ParameterMetadata.builder()
