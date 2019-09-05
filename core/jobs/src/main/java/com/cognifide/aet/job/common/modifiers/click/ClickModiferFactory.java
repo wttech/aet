@@ -21,6 +21,9 @@ import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import java.util.Map;
+
+import com.cognifide.aet.job.api.info.FeatureMetadata;
+import com.cognifide.aet.job.api.info.ParameterMetadata;
 import org.osgi.service.component.annotations.Component;
 
 @Component
@@ -37,5 +40,49 @@ public class ClickModiferFactory implements CollectorFactory {
     ClickModifier collector = new ClickModifier(webCommunicationWrapper.getWebDriver());
     collector.setParameters(parameters);
     return collector;
+  }
+
+  @Override
+  public FeatureMetadata getInformation() {
+    return FeatureMetadata.builder()
+            .type("Click")
+            .tag(getName())
+            .withParameters()
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("XPath")
+                            .tag("xpath")
+                            .withoutValues()
+                            .isMandatory(false)
+                            .description("XPath to element to be clicked")
+                            .build()
+            )
+
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("CSS")
+                            .tag("css")
+                            .withoutValues()
+                            .isMandatory(false)
+                            .description("CSS selector to element to be clicked")
+                            .build()
+            )
+
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Timeout")
+                            .tag("timeout")
+                            .withValues().and().defaultValue("1000ms")
+                            .isMandatory(false)
+                            .description("The timeout for the element to appear, in milliseconds. The max value of this parameter is 15000ms")
+                            .build()
+            )
+            .and()
+            .withoutDeps()
+            .dropTo("Collectors")
+            .group("Modifiers")
+            .proxy(false)
+            .wiki("https://github.com/Cognifide/aet/wiki/ClickModifier")
+            .build();
   }
 }

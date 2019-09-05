@@ -21,6 +21,8 @@ import com.cognifide.aet.job.api.comparator.ComparatorJob;
 import com.cognifide.aet.job.api.comparator.ComparatorProperties;
 import com.cognifide.aet.job.api.datafilter.DataFilterJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
+import com.cognifide.aet.job.api.info.FeatureMetadata;
+import com.cognifide.aet.job.api.info.ParameterMetadata;
 import com.cognifide.aet.vs.ArtifactsDAO;
 import java.util.List;
 import org.osgi.service.component.annotations.Component;
@@ -58,4 +60,55 @@ public class AccessibilityComparatorFactory implements ComparatorFactory {
     return accessibilityComparator;
   }
 
+  @Override
+  public FeatureMetadata getInformation() {
+    return FeatureMetadata.builder()
+            .type("Accessibility")
+            .tag(getName())
+            .withParameters()
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Raport Level")
+                            .tag("raport-level")
+                            .withValues()
+                            .addValue("ERROR")
+                            .addValue("WARN")
+                            .addValue("NOTICE")
+                            .and().defaultValue("ERROR")
+                            .isMandatory(false)
+                            .description("Violation types to be show in the report, ERROR for errors, WARN for errors and warnings, NOTICE for everything")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Ignore Notice")
+                            .tag("ignore-notice")
+                            .withValues()
+                            .addValue("true")
+                            .addValue("false")
+                            .and().defaultValue("true")
+                            .isMandatory(false)
+                            .description("If the ignore-notice=true test status does not depend on the number of notices. If ignore-notice=false notices are treated as warnings in calculating the test status.")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Show Excluded")
+                            .tag("showExcluded")
+                            .withValues()
+                            .addValue("true")
+                            .addValue("false")
+                            .and().defaultValue("true")
+                            .isMandatory(false)
+                            .description("The flag that indicates if excluded issues")
+                            .build()
+            )
+            .and()
+            .withDeps("accessibility-collectors").depType("Error")
+            .dropTo("Comparators")
+            .group("Comparators")
+            .proxy(false)
+            .wiki("https://github.com/Cognifide/aet/wiki/AccessibilityComparator")
+            .build();
+  }
 }

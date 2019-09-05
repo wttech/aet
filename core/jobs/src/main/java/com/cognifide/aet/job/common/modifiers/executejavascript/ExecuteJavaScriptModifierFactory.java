@@ -20,6 +20,8 @@ import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
+import com.cognifide.aet.job.api.info.FeatureMetadata;
+import com.cognifide.aet.job.api.info.ParameterMetadata;
 import com.cognifide.aet.job.common.utils.javascript.JavaScriptJobExecutor;
 import java.util.Map;
 import org.osgi.service.component.annotations.Component;
@@ -43,6 +45,57 @@ public class ExecuteJavaScriptModifierFactory implements CollectorFactory {
         httpClient, new JavaScriptJobExecutor(webCommunicationWrapper.getWebDriver()));
     modifier.setParameters(parameters);
     return modifier;
+  }
+
+  @Override
+  public FeatureMetadata getInformation() {
+    return FeatureMetadata.builder()
+            .type("ExecuteJavaScript")
+            .tag(getName())
+            .withParameters()
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Command")
+                            .tag("cmd")
+                            .withoutValues()
+                            .isMandatory(false)
+                            .description("Javascript command that will be executed, not mandatory if snippetUrl is set")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Snippet URL")
+                            .tag("snippetUrl")
+                            .withoutValues()
+                            .isMandatory(false)
+                            .description("The url to external js snippet that will be executed, not mandatory if cmd is set")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Basic Auth Username")
+                            .tag("basicAuthUsername")
+                            .withoutValues()
+                            .isMandatory(false)
+                            .description("For Basic HTTP Authentication header, only if basicAuthPassword is set")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Basic Auth Password")
+                            .tag("basicAuthPassword")
+                            .withoutValues()
+                            .isMandatory(false)
+                            .description("For Basic HTTP Authentication header, only if basicAuthUsername is set")
+                            .build()
+            )
+            .and()
+            .withoutDeps()
+            .dropTo("Collectors")
+            .group("Modifiers")
+            .proxy(false)
+            .wiki("https://github.com/Cognifide/aet/wiki/ExecuteJavaScriptModifier")
+            .build();
   }
 
 }

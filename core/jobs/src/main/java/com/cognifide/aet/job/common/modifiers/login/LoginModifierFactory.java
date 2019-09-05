@@ -20,6 +20,8 @@ import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
+import com.cognifide.aet.job.api.info.FeatureMetadata;
+import com.cognifide.aet.job.api.info.ParameterMetadata;
 import com.cognifide.aet.validation.ValidationResultBuilderFactory;
 import java.util.Map;
 import org.osgi.service.component.annotations.Component;
@@ -42,5 +44,110 @@ public class LoginModifierFactory implements CollectorFactory {
     LoginModifier modifier = new LoginModifier(webCommunicationWrapper);
     modifier.setParameters(parameters);
     return modifier;
+  }
+
+  @Override
+  public FeatureMetadata getInformation() {
+    return FeatureMetadata.builder()
+            .type("Login")
+            .tag(getName())
+            .withParameters()
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Login")
+                            .tag("login")
+                            .withValues().and().defaultValue("admin")
+                            .isMandatory(false)
+                            .description("User's login")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Password")
+                            .tag("password")
+                            .withValues().and().defaultValue("admin")
+                            .isMandatory(false)
+                            .description("User's password")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Login Page")
+                            .tag("login-page")
+                            .withoutValues()
+                            .isMandatory(true)
+                            .description("Url to login page")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Login Input Selector")
+                            .tag("login-input-selector")
+                            .withValues().and().defaultValue("//input[@name='j_username']")
+                            .isMandatory(false)
+                            .description("Xpath expression for login input")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Login Password Selector")
+                            .tag("login-password-selector")
+                            .withValues().and().defaultValue("//input[@name='j_password']")
+                            .isMandatory(false)
+                            .description("Xpath expression for password input")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Submit Button Selector")
+                            .tag("submit-button-selector")
+                            .withValues().and().defaultValue("//*[@type='submit']")
+                            .isMandatory(false)
+                            .description("Xpath expression for submit button")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Login Token Key")
+                            .tag("login-token-key")
+                            .withValues().and().defaultValue("login-token")
+                            .isMandatory(false)
+                            .description("Name for cookie we get after successful login")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Timeout")
+                            .tag("timeout")
+                            .withValues().and().defaultValue("5000ms")
+                            .isMandatory(false)
+                            .description("Number of milliseconds (between 0 and 10000) that modifier will wait to login page response after submiting credentials. It is also used between reattempts to log in.")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Force Login")
+                            .tag("force-login")
+                            .withValues().and().defaultValue("1000ms")
+                            .isMandatory(false)
+                            .description("Enforces login even when login cookie is present.")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Retrial Number")
+                            .tag("retrial-number")
+                            .withValues().and().defaultValue("3")
+                            .isMandatory(false)
+                            .description("Number of reattempts to log in. It's a way to deal with unpredictable problem with logging in.")
+                            .build()
+            )
+            .and()
+            .withoutDeps()
+            .dropTo("Collectors")
+            .group("Modifiers")
+            .proxy(false)
+            .wiki("https://github.com/Cognifide/aet/wiki/LoginModifier")
+            .build();
   }
 }

@@ -1,0 +1,156 @@
+/*
+ * AET
+ *
+ * Copyright (C) 2013 Cognifide Limited
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
+
+.edit-box-container {
+  position: fixed;
+  width: 500px;
+  height: 550px;
+  z-index: 99999;
+  color: $textColorDark;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: $projectInfoBg;
+  box-shadow: 4px 4px 6px 2px $shadow;
+  border-radius: 8px;
+  overflow: hidden;
+
+  .edit-box {
+    margin-top:15px;
+    position: absolute;
+    padding-right: 17px;
+    right: -17px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height:97%;
+    width:100%;
+
+    .center {
+      text-align: center;
+    }
+
+    .type {
+      margin-top: 0px;
+    }
+
+    .group {
+      margin-top: 10px;
+      margin-bottom: 70px;
+    }
+
+    .param-wrapper {
+      width: 90%;
+      margin: 0 auto;
+      margin-top: 30px;
+      margin-bottom: 30px;
+    }
+
+    .title::before {
+      content: " ";
+      display: block;
+      width: 90%;
+      margin: 0 auto;
+      position: absolute;
+      border: 1px solid $textColorDark;
+      margin-top: -15px;
+    }
+
+    .mandatory {
+      color: $red_light;
+      font-size: 12spx;
+    }
+
+    .no-params {
+      margin-top: 30px;
+    }
+
+    .default {
+      margin-top: 10px;
+    }
+
+    .desc {
+      font-style: italic;
+    }
+
+    .parameters {
+      margin-top: 10px;
+      .param-list>.param {
+        color: darken($collectorsBg, 10%);
+        transition: all 0.2s ease-in-out;
+        &:hover {
+          cursor: pointer;
+          color: $red_light;
+        }
+      }
+    }
+
+    .current {
+      width: 90%;
+      margin: 20px auto;
+      word-wrap: break-word;
+    }
+
+    .input-wrapper {
+      display: flex;
+      margin-top: 15px;
+      align-items: center;
+      justify-content: center;
+
+      .input-text {
+        display: inline-block;
+      }
+
+      .input-container {
+        width: 300px;
+        height: 30px;
+        background-color: $testsBg;
+        border-radius:15px;
+        margin-left: 15px;
+        padding: 0.5% 5%;
+
+        .input {
+          width: 100%;
+          color: $textColor;
+          height: 100%;
+          font-size: 18px;
+          float: left;
+        
+          &::placeholder {
+            color: lighten($white, 25%);
+          }
+        }
+      }
+
+      .submit-btn {
+        width: 80px;
+        padding: 8px 5px;
+        text-align: center;
+        background-color: $white;
+        margin-left: 16px;
+        font-weight: bold;
+        transition: all 0.3s ease-in-out;
+        
+        &:hover {
+          background-color: darken($white, 20%);
+          cursor: pointer;
+        }
+      }
+    }
+  }
+}

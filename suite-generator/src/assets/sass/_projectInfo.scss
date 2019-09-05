@@ -1,0 +1,132 @@
+/*
+ * AET
+ *
+ * Copyright (C) 2013 Cognifide Limited
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+.project-info-container {
+  position: relative;
+  background-color: $projectInfoBg;
+  width: 100%;
+  height: 125px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  z-index:999;
+  box-shadow: 0px 3px 5px 0px $shadow;
+
+  .project-info-block {
+    text-align: center;
+    color: white;
+    padding: 15px 0 21px 0;
+    justify-items: center;
+    align-items: center;
+    position: relative;
+
+    span {
+      color: $textColorDark;
+      font-weight: bold;
+    }
+
+    .new-proj-btn {
+      background-color: $newProjectBtnBg;
+      color: $textColor;
+      position: absolute;
+      width: 50px;
+      padding:12px 0;
+      border-radius:50%;
+      text-align: center;
+      font-size:33px;
+      left: 20px;
+      top: 120%;
+      box-shadow: 2px 5px 5px 0px rgba(0,0,0,0.2);
+      transition: all 0.25s ease-in-out;
+
+      &:hover {
+        cursor: pointer;
+        background-color: darken($newProjectBtnBg, 10%)
+      }
+    }
+
+    h4 {
+      margin-top: 7px;
+      text-align: center;
+      font-family: "Roboto", sans-serif;
+      width: 90%;
+      margin: 0 auto;
+      word-wrap: break-word;
+      color: $textColorDark;
+      
+      a {
+        color: inherit;
+        &:hover {
+          cursor: pointer;
+          color: lighten($textColorDark, 40%);
+        }
+      }
+    }
+
+    
+    .edit-domain-visible {
+      display: block;
+    }
+
+    .edit-domain-hidden {
+      display: none;
+    }
+
+    .edit-domain-input {
+      width: 90%;
+      margin: 0 auto;
+      font-size: 16px;
+      text-align: center;
+      background-color: rgba(0, 0, 0, 0.02);
+      border: 1px solid rgba(0, 0, 0, 0.15);
+      border-radius: 5px;
+      resize: none;
+    }
+
+    .domain-icons-container {
+      width: 44px;
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+
+      .domain-icon-grouped {
+        width: 22px;
+        float: left;
+      }
+    }
+
+    .domain-icon {
+      width: 22px;
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      float: left;
+    }
+
+    .edit-domain,
+    .edit-domain-save {
+      width: 20px;
+      color: rgba(0, 0, 0, 0.25);
+      transition: color 0.3s ease-in-out;
+      font-size: 16px;
+
+      &:hover {
+        cursor: pointer;  
+        color: rgba(0, 0, 0, 0.9);
+      }
+    }
+  }
+}

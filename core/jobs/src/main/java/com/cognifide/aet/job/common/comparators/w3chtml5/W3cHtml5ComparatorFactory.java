@@ -21,6 +21,8 @@ import com.cognifide.aet.job.api.comparator.ComparatorJob;
 import com.cognifide.aet.job.api.comparator.ComparatorProperties;
 import com.cognifide.aet.job.api.datafilter.DataFilterJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
+import com.cognifide.aet.job.api.info.FeatureMetadata;
+import com.cognifide.aet.job.api.info.ParameterMetadata;
 import com.cognifide.aet.job.common.comparators.w3chtml5.parser.W3cHtml5ValidationResultParser;
 import com.cognifide.aet.job.common.comparators.w3chtml5.wrapper.NuValidatorWrapper;
 import com.cognifide.aet.vs.ArtifactsDAO;
@@ -60,5 +62,43 @@ public class W3cHtml5ComparatorFactory implements ComparatorFactory {
         new NuValidatorWrapper(), resultParser, dataFilterJobs);
     w3cHtml5Comparator.setParameters(comparator.getParameters());
     return w3cHtml5Comparator;
+  }
+
+  @Override
+  public FeatureMetadata getInformation() {
+    return FeatureMetadata.builder()
+            .type("Source W3CHTML5")
+            .tag("source")
+            .withParameters()
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Comparator")
+                            .tag("comparator")
+                            .withValues()
+                            .addValue("w3c-html5")
+                            .and().defaultValue("w3c-html5")
+                            .isMandatory(true)
+                            .description("See wiki for specific information")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Ignore Warnings")
+                            .tag("ignore-warnings")
+                            .withValues()
+                            .addValue("true")
+                            .addValue("false")
+                            .and().defaultValue(null)
+                            .isMandatory(false)
+                            .description("If set to true the test status does not depend on the warnings amount.")
+                            .build()
+            )
+            .and()
+            .withDeps("source-collectors").depType("Error")
+            .dropTo("Comparators")
+            .group("Comparators")
+            .proxy(false)
+            .wiki("https://github.com/Cognifide/aet/wiki/W3CHTML5Comparator")
+            .build();
   }
 }

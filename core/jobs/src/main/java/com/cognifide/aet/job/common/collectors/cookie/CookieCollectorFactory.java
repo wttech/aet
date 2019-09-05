@@ -20,6 +20,7 @@ import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
+import com.cognifide.aet.job.api.info.FeatureMetadata;
 import com.cognifide.aet.vs.ArtifactsDAO;
 import java.util.Map;
 import org.osgi.service.component.annotations.Component;
@@ -42,4 +43,17 @@ public class CookieCollectorFactory implements CollectorFactory {
     return new CookieCollector(properties, webCommunicationWrapper.getWebDriver(), artifactsDAO);
   }
 
+  @Override
+  public FeatureMetadata getInformation() {
+    return FeatureMetadata.builder()
+            .type("Cookie")
+            .tag(getName())
+            .withoutParameters()
+            .withDeps("cookie-comparators").depType("Warning")
+            .dropTo("Collectors")
+            .group("Collectors")
+            .proxy(false)
+            .wiki("https://github.com/Cognifide/aet/wiki/CookieCollector")
+            .build();
+  }
 }

@@ -18,6 +18,8 @@ package com.cognifide.aet.job.common.datafilters.accessibilityfilter;
 import com.cognifide.aet.job.api.datafilter.DataFilterFactory;
 import com.cognifide.aet.job.api.datafilter.DataFilterJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
+import com.cognifide.aet.job.api.info.FeatureMetadata;
+import com.cognifide.aet.job.api.info.ParameterMetadata;
 import com.cognifide.aet.job.common.collectors.accessibility.AccessibilityIssue;
 import java.util.List;
 import java.util.Map;
@@ -37,5 +39,66 @@ public class AccessibilityFilterFactory implements DataFilterFactory {
     AccessibilityFilter filter = new AccessibilityFilter();
     filter.setParameters(params);
     return filter;
+  }
+
+  @Override
+  public FeatureMetadata getInformation() {
+    return FeatureMetadata.builder()
+            .type("Accessibility")
+            .tag(getName())
+            .withParameters()
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Error")
+                            .tag("error")
+                            .withoutValues()
+                            .isMandatory(false)
+                            .description("The exact error message. At least one parameter is required, ignored if 'errorPattern' parameter is provided")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Error Pattern")
+                            .tag("errorPattern")
+                            .withoutValues()
+                            .isMandatory(false)
+                            .description("Regular expression that matches message text of issue to be filter out.")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Principle")
+                            .tag("principle")
+                            .withoutValues()
+                            .isMandatory(false)
+                            .description("The exact accessibility issue principle.")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Line")
+                            .tag("line")
+                            .withoutValues()
+                            .isMandatory(false)
+                            .description("The line number in the file which the issue occurred in.")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Column")
+                            .tag("column")
+                            .withoutValues()
+                            .isMandatory(false)
+                            .description("The column number in the file which the issue occurred is.")
+                            .build()
+            )
+            .and()
+            .withDeps("Accessibility")
+            .depType(null)
+            .dropTo("accessibility-comparators")
+            .group("DataFilters")
+            .proxy(false)
+            .wiki("https://github.com/Cognifide/aet/wiki/AccessibilityDataFilter")
+            .build();
   }
 }

@@ -20,6 +20,8 @@ import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
+import com.cognifide.aet.job.api.info.FeatureMetadata;
+import com.cognifide.aet.job.api.info.ParameterMetadata;
 import com.cognifide.aet.job.common.utils.javascript.JavaScriptJobExecutor;
 import java.util.Map;
 import org.openqa.selenium.WebDriver;
@@ -43,4 +45,48 @@ public class ScrollModifierFactory implements CollectorFactory {
     return modifier;
   }
 
+  @Override
+  public FeatureMetadata getInformation() {
+    return FeatureMetadata.builder()
+            .type("Scroll")
+            .tag(getName())
+            .withParameters()
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Position")
+                            .tag("position")
+                            .withValues()
+                            .addValue("top")
+                            .addValue("bottom")
+                            .and().defaultValue("bottom")
+                            .isMandatory(false)
+                            .description("Page position to scroll")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Css")
+                            .tag("css")
+                            .withoutValues()
+                            .isMandatory(false)
+                            .description("css selector of the element to scroll page view into")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Xpath")
+                            .tag("xpath")
+                            .withoutValues()
+                            .isMandatory(false)
+                            .description("xpath of the element to scroll page view into")
+                            .build()
+            )
+            .and()
+            .withoutDeps()
+            .dropTo("Collectors")
+            .group("Modifiers")
+            .proxy(false)
+            .wiki("https://github.com/Cognifide/aet/wiki/ScrollModifier")
+            .build();
+  }
 }

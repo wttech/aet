@@ -16,6 +16,7 @@
 package com.cognifide.aet.job.api.comparator;
 
 import com.cognifide.aet.communication.api.metadata.Comparator;
+import com.cognifide.aet.job.api.BaseFactory;
 import com.cognifide.aet.job.api.datafilter.DataFilterJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import java.util.List;
@@ -27,7 +28,7 @@ import java.util.List;
  * Implementation of this interface should be a OSGI service so each implementation requires to have
  * {@literal @}Service and {@literal @}Component annotation to work and register properly.
  */
-public interface ComparatorFactory {
+public interface ComparatorFactory extends BaseFactory {
 
   int DEFAULT_COMPARATOR_RANKING = 100;
 
@@ -36,13 +37,6 @@ public interface ComparatorFactory {
    * tag definition for comparator.
    */
   String getType();
-
-  /**
-   * @return return the name, which the collector factory will be registered on. It has to be unique
-   * for all modules in the compare phase. It is also the name of a tag definition for comparator
-   * used in a suite.
-   */
-  String getName();
 
   /**
    * @return the ranking of a comparator. This number determines if created collector should be the
@@ -62,4 +56,5 @@ public interface ComparatorFactory {
    */
   ComparatorJob createInstance(Comparator comparator, ComparatorProperties comparatorProperties,
       List<DataFilterJob> dataFilterJobs) throws ParametersException;
+
 }

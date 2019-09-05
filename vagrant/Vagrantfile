@@ -104,6 +104,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       "recipe[aet::karaf]",
       "recipe[aet::deploy_aet_for_karaf]",
       "recipe[aet::deploy_reports]",
+      "recipe[aet::deploy_suite_generator]",
       "recipe[aet::deploy_sample_site]",
       "recipe[aet::postdeploy_restart]",
       "recipe[aet::reboot]"

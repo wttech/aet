@@ -21,6 +21,7 @@ import com.cognifide.aet.job.api.comparator.ComparatorJob;
 import com.cognifide.aet.job.api.comparator.ComparatorProperties;
 import com.cognifide.aet.job.api.datafilter.DataFilterJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
+import com.cognifide.aet.job.api.info.FeatureMetadata;
 import com.cognifide.aet.job.common.comparators.permormance.clientside.parser.ClientSidePerformanceParser;
 import com.cognifide.aet.vs.ArtifactsDAO;
 import java.util.List;
@@ -59,5 +60,19 @@ public class ClientSidePerformanceComparatorFactory implements ComparatorFactory
         clientSidePerformanceParser, comparatorProperties);
     clientSidePerformanceComparator.setParameters(comparator.getParameters());
     return clientSidePerformanceComparator;
+  }
+
+  @Override
+  public FeatureMetadata getInformation() {
+    return FeatureMetadata.builder()
+            .type("Client Side Performance")
+            .tag(getName())
+            .withoutParameters()
+            .withDeps("clientsideperformance-collectors").depType("Error")
+            .dropTo("Comparators")
+            .group("Comparators")
+            .proxy(false)
+            .wiki("https://github.com/Cognifide/aet/wiki/ClientSidePerformanceComparator")
+            .build();
   }
 }

@@ -21,6 +21,8 @@ import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import java.util.Map;
+
+import com.cognifide.aet.job.api.info.FeatureMetadata;
 import org.osgi.service.component.annotations.Component;
 
 @Component
@@ -37,4 +39,17 @@ public class WaitForPageLoadedModifierFactory implements CollectorFactory {
     return new WaitForPageLoadedModifier(webCommunicationWrapper.getWebDriver());
   }
 
+  @Override
+  public FeatureMetadata getInformation() {
+    return FeatureMetadata.builder()
+            .type("WaitForPageLoaded")
+            .tag(getName())
+            .withoutParameters()
+            .withoutDeps()
+            .dropTo("Collectors")
+            .group("Modifiers")
+            .proxy(false)
+            .wiki("https://github.com/Cognifide/aet/wiki/WaitForPageLoadedModifier")
+            .build();
+  }
 }

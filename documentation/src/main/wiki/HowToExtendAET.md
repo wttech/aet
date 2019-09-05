@@ -163,7 +163,7 @@ be available on the Karaf instance that AET are running at.
 Start with creating `PageBackgroundModifier` class in the `com.example.aet.modifiers.pagebackground` package.
 Now, implement a [`CollectorJob`](https://github.com/Cognifide/aet/blob/master/api/jobs-api/src/main/java/com/cognifide/aet/job/api/collector/CollectorJob.java).
 This is common interface for both [[Collectors|Collectors]] and [[Modifiers|Modifiers]].
-You will have to implement two methods:
+You will have to implement three methods:
 - `collect` which is executed during the [[`collection phase`|TestProcessing#collection]], this method can throw 
  [`ProcessingException`](https://github.com/Cognifide/aet/blob/master/api/jobs-api/src/main/java/com/cognifide/aet/job/api/exceptions/ProcessingException.java)
  when the modification fails. Throwing this exception from the `collect` method won't terminate processing of all collectors/modifiers. The 
@@ -173,6 +173,8 @@ You will have to implement two methods:
 - `setParameters` that setups all parameters necessary to perform modification (in our case `color` parameter), 
 this method can throw [`ParametersException`](https://github.com/Cognifide/aet/blob/master/api/jobs-api/src/main/java/com/cognifide/aet/job/api/exceptions/ParametersException.java)
 when some mandatory parameter is missing. Throwing this exception will terminate processing of all collectors/modifiers steps.
+
+- `getInformation` that provides all necessary information to include new component in Suite Generator. Implementing this function is optional. By default returns null. 
 
 Implementation of `PageBackgroundModifier` can look like this:
 
@@ -249,26 +251,49 @@ import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
+import com.cognifide.aet.job.api.info.FeatureMetadata;
+import com.cognifide.aet.job.api.info.ParameterMetadata;
+import org.osgi.service.component.annotations.Component;
+
 import java.util.Map;
-import org.apache.felix.scr.annotations.Component;
-import org.apache.felix.scr.annotations.Service;
 
 @Component
-@Service
 public class PageBackgroundModifierCollectorFactory implements CollectorFactory {
 
-  @Override
-  public String getName() {
-    return PageBackgroundModifier.NAME;
-  }
+    @Override
+    public String getName() {
+        return PageBackgroundModifier.NAME;
+    }
 
-  @Override
-  public CollectorJob createInstance(CollectorProperties properties, Map<String, String> parameters,
-      WebCommunicationWrapper webCommunicationWrapper) throws ParametersException {
-    PageBackgroundModifier modifier = new PageBackgroundModifier(webCommunicationWrapper.getWebDriver());
-    modifier.setParameters(parameters);
-    return modifier;
-  }
+    @Override
+    public CollectorJob createInstance(CollectorProperties properties, Map<String, String> parameters,
+                                       WebCommunicationWrapper webCommunicationWrapper) throws ParametersException {
+        PageBackgroundModifier modifier = new PageBackgroundModifier(webCommunicationWrapper.getWebDriver());
+        modifier.setParameters(parameters);
+        return modifier;
+    }
+
+    @Override
+    public FeatureMetadata getInformation() {
+        return FeatureMetadata.builder()
+                .type("Page Background Modifier")
+                .tag(getName())
+                .withParameters()
+                .addParameter(
+                        ParameterMetadata.builder()
+                            .name("Color")
+                            .tag(PageBackgroundModifier.COLOR_PARAM)
+                            .withoutValues()
+                            .isMandatory(true)
+                            .description("set background color to chosen value")
+                            .build()
+                ).and()
+                .withoutDeps()
+                .dropTo("Collectors")
+                .group("Modifiers")
+                .proxy(false)
+                .build();
+    }
 }
 ```
 

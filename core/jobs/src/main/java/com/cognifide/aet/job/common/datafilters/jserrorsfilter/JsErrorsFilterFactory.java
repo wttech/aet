@@ -21,6 +21,9 @@ import com.cognifide.aet.job.api.datafilter.DataFilterJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import java.util.Map;
 import java.util.Set;
+
+import com.cognifide.aet.job.api.info.FeatureMetadata;
+import com.cognifide.aet.job.api.info.ParameterMetadata;
 import org.osgi.service.component.annotations.Component;
 
 @Component
@@ -37,5 +40,56 @@ public class JsErrorsFilterFactory implements DataFilterFactory {
     JsErrorsFilter filter = new JsErrorsFilter();
     filter.setParameters(params);
     return filter;
+  }
+
+  @Override
+  public FeatureMetadata getInformation() {
+    return FeatureMetadata.builder()
+            .type("JSErrors")
+            .tag(getName())
+            .withParameters()
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Error")
+                            .tag("error")
+                            .withoutValues()
+                            .isMandatory(false)
+                            .description("Exact error message. At least one parameter is required.")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Source")
+                            .tag("source")
+                            .withoutValues()
+                            .isMandatory(false)
+                            .description("Source file name in which error occurred. At least one parameter is required.")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Error Pattern")
+                            .tag("errorPattern")
+                            .withoutValues()
+                            .isMandatory(false)
+                            .description("Regular expression that matches message text of issue to be filter out. At least one parameter is required.")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Line")
+                            .tag("line")
+                            .withoutValues()
+                            .isMandatory(false)
+                            .description("Line number in file in which error occurred. At least one parameter is required.")
+                            .build()
+            )
+            .and()
+            .withDeps("JSError").depType(null)
+            .dropTo("jserrors-comparators")
+            .group("DataFilters")
+            .proxy(false)
+            .wiki("https://github.com/Cognifide/aet/wiki/JSErrorsDataFilter")
+            .build();
   }
 }

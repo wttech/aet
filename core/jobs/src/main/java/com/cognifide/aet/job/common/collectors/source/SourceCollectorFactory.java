@@ -20,6 +20,7 @@ import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
+import com.cognifide.aet.job.api.info.FeatureMetadata;
 import com.cognifide.aet.job.common.collectors.source.configuration.SourceCollectorFactoryConf;
 import com.cognifide.aet.vs.ArtifactsDAO;
 import java.util.Map;
@@ -55,4 +56,17 @@ public class SourceCollectorFactory implements CollectorFactory {
     this.config = config;
   }
 
+  @Override
+  public FeatureMetadata getInformation() {
+    return FeatureMetadata.builder()
+            .type("Source")
+            .tag(getName())
+            .withoutParameters()
+            .withDeps("source-comparators").depType("Warning")
+            .dropTo("Collectors")
+            .group("Collectors")
+            .proxy(false)
+            .wiki("https://github.com/Cognifide/aet/wiki/SourceCollector")
+            .build();
+  }
 }

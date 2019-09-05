@@ -21,6 +21,8 @@ import com.cognifide.aet.job.api.comparator.ComparatorJob;
 import com.cognifide.aet.job.api.comparator.ComparatorProperties;
 import com.cognifide.aet.job.api.datafilter.DataFilterJob;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
+import com.cognifide.aet.job.api.info.FeatureMetadata;
+import com.cognifide.aet.job.api.info.ParameterMetadata;
 import com.cognifide.aet.vs.ArtifactsDAO;
 import java.util.List;
 import org.osgi.service.component.annotations.Component;
@@ -56,4 +58,48 @@ public class LayoutComparatorFactory implements ComparatorFactory {
     return layoutComparator;
   }
 
+  @Override
+  public FeatureMetadata getInformation() {
+    return FeatureMetadata.builder()
+            .type("Screen")
+            .tag("screen")
+            .withParameters()
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Comparator")
+                            .tag("comparator")
+                            .withValues()
+                            .addValue("layout")
+                            .and().defaultValue("layout")
+                            .isMandatory(true)
+                            .description("Layout Comparator is responsible for collecting compared screenshot.")
+                            .current("layout")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Pixel Threshold")
+                            .tag("pixelThreshold")
+                            .withoutValues()
+                            .isMandatory(false)
+                            .description("The value to set the error threshold in pixels e.g if difference between photos is smaller or equal to pixel threshold, the test will pass.")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Percentage Threshold")
+                            .tag("percentageThreshold")
+                            .withoutValues()
+                            .isMandatory(false)
+                            .description("The value to set the error threshold in percentages e.g if difference between photos is smaller or equal to pixel threshold, the test will pass.")
+                            .build()
+            )
+            .and()
+            .withDeps("screen-collectors").depType("Error")
+            .dropTo("Comparators")
+            .group("Comparators")
+            .proxy(false)
+            .wiki("https://github.com/Cognifide/aet/wiki/LayoutComparator")
+            .build();
+  }
 }

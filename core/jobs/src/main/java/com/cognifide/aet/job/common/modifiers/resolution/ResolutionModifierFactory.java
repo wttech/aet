@@ -20,6 +20,8 @@ import com.cognifide.aet.job.api.collector.CollectorJob;
 import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
+import com.cognifide.aet.job.api.info.FeatureMetadata;
+import com.cognifide.aet.job.api.info.ParameterMetadata;
 import com.cognifide.aet.job.common.utils.javascript.JavaScriptJobExecutor;
 import java.util.Map;
 import org.openqa.selenium.WebDriver;
@@ -43,4 +45,37 @@ public class ResolutionModifierFactory implements CollectorFactory {
     return modifier;
   }
 
+  @Override
+  public FeatureMetadata getInformation() {
+    return FeatureMetadata.builder()
+            .type("Resolution")
+            .tag(getName())
+            .withParameters()
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Width")
+                            .tag("width")
+                            .withoutValues()
+                            .isMandatory(false)
+                            .description("Window width")
+                            .build()
+            )
+
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Height")
+                            .tag("height")
+                            .withoutValues()
+                            .isMandatory(false)
+                            .description("Window height")
+                            .build()
+            )
+            .and()
+            .withoutDeps()
+            .dropTo("Collectors")
+            .group("Modifiers")
+            .proxy(false)
+            .wiki("https://github.com/Cognifide/aet/wiki/ResolutionModifier")
+            .build();
+  }
 }

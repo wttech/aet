@@ -21,6 +21,9 @@ import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import java.util.Map;
+
+import com.cognifide.aet.job.api.info.FeatureMetadata;
+import com.cognifide.aet.job.api.info.ParameterMetadata;
 import org.osgi.service.component.annotations.Component;
 
 @Component
@@ -39,4 +42,36 @@ public class HeaderModifierFactory implements CollectorFactory {
     return modifier;
   }
 
+  @Override
+  public FeatureMetadata getInformation() {
+    return FeatureMetadata.builder()
+            .type("Header")
+            .tag(getName())
+            .withParameters()
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Key")
+                            .tag("key")
+                            .withoutValues()
+                            .isMandatory(true)
+                            .description("Key for the header")
+                            .build()
+            )
+            .addParameter(
+                    ParameterMetadata.builder()
+                            .name("Value")
+                            .tag("value")
+                            .withoutValues()
+                            .isMandatory(true)
+                            .description("Value for the header")
+                            .build()
+            )
+            .and()
+            .withoutDeps()
+            .dropTo("Collectors")
+            .group("Modifiers")
+            .proxy(true)
+            .wiki("https://github.com/Cognifide/aet/wiki/HeaderModifier")
+            .build();
+  }
 }
