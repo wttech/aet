@@ -22,7 +22,7 @@ source "https://supermarket.chef.io"
 # And update the cookbook required version in 'metadata.rb' file.
 
 # TODO: change branch to master after merge feature/suite-generator to master in aet-cookbook repository
-#cookbook 'aet', git: 'https://github.com/Cognifide/aet-cookbook.git', branch: 'feature/suite-generator'
-cookbook 'aet', path: '../../aet-cookbook'
+cookbook 'aet', git: 'https://github.com/Cognifide/aet-cookbook.git', branch: 'feature/suite-generator'
+#cookbook 'aet', path: '../../aet-cookbook'
 
 metadata
