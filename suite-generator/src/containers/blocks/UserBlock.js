@@ -103,9 +103,8 @@ class UserBlockContainer extends Component {
     }
   }
 
-  // TODO check parameters number or dependencies
   generateListOfBlockParameters(component) {
-    if(component.parameters !== null && component.parameters.length > 0) {
+    if(component.parameters !== null) {
       return Object.values(component.parameters).map((param, index) => {
         if(typeof param.current === "undefined") {
           param.current = null;

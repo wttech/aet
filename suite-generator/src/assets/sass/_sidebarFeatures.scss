@@ -102,9 +102,6 @@
       .list-of-features {
         margin: 15px 20px;
         transition: all 0.4s ease-in-out;
-        overflow: hidden;
-        max-height: 700px;
-        height: auto;
 
         .feature-collectors {
           background-color: $collectorsBg;
@@ -171,5 +168,19 @@
         }
       }
     }
+  }
+
+  .features-spinner-container {
+    height: 90%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .features-spinner {
+    width: 50%;
+    height: 0;
+    padding-bottom: 50%;
+    display: block;
   }
 }

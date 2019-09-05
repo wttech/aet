@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-export default function (state = {}, action = null) {
+export default function (state = [], action = null) {
 
   switch(action.type) {
 

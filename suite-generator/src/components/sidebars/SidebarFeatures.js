@@ -22,6 +22,7 @@ import { bindActionCreators } from "redux";
 import SearchFeatures from "../../containers/search/SearchFeatures";
 import AppName from "../main/AppName";
 import { CreateFeatureList } from "../../functions/createFeatureList";
+import Spinner from 'react-bootstrap/Spinner'
 
 import fetchFeaturesAction from "../../functions/fetchFeatures";
 import {getFeatures, getFeaturesPending, getFeaturesError} from "../../reducers/features/featuresReducer";
@@ -62,7 +63,9 @@ class SidebarFeatures extends Component {
       )
     } else {
       content = (
-        <h1>Loading</h1>
+        <div className="features-spinner-container">
+          <Spinner className="features-spinner" animation="grow" variant="light" role="status"/>
+        </div>
       )
     }
 

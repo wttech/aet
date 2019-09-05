@@ -18,11 +18,8 @@
 import React, { Component } from 'react';
 import { connect } from "react-redux";
 import { bindActionCreators } from 'redux';
-import { setLoadedFileAsCurrentProject, clearTests, hideUrlInput, clearUrlsList, hideTestNameInput} from "../../actions"
-import listOfComparators from "../../constants/listOfComparators";
-import listOfCollectors from "../../constants/listOfCollectors";
-import listOfModifiers from "../../constants/listOfModifiers";
-import listOfDataFilters from "../../constants/listOfDataFilters";
+import { setLoadedFileAsCurrentProject, clearTests, hideUrlInput, clearUrlsList, hideTestNameInput} from "../../actions";
+import { getFeatures } from "../../reducers/features/featuresReducer";
 import urlBlock from "../../constants/urlBlock";
 
 class UpdateTest extends Component {
@@ -184,37 +181,29 @@ class UpdateTest extends Component {
     switch (type) {
       case "modifiers":
         {
-          listOfModifiers.forEach((modifier) => {
-            if (modifier.tag === tagName) {
-              block = modifier;
-            }
+          block = this.props.features.modifiers.find((modifier) => {
+            return modifier.tag === tagName;
           });
           break;
         }
       case "collectors":
         {
-          listOfCollectors.forEach((collector) => {
-            if (collector.tag === tagName) {
-              block = collector;
-            }
+          block = this.props.features.collectors.find((collector) => {
+            return collector.tag === tagName;
           });
           break;
         }
       case "comparators":
         {
-          listOfComparators.forEach((comparator) => {
-            if (comparator.tag === tagName) {
-              block = comparator;
-            }
+          block = this.props.features.comparators.find((comparator) => { 
+            return comparator.tag === tagName; 
           });
           break;
         }
       case "data-filters":
         {
-          listOfDataFilters.forEach((datafilter) => {
-            if (datafilter.tag === tagName) {
-              block = datafilter;
-            }
+          block = this.props.features.dataFilters.find((dataFilter) => {
+            return dataFilter.tag === tagName;
           });
           break;
         }
@@ -268,7 +257,8 @@ function mapStateToProps(state) {
   return {
     test: state.test,
     urls: state.urls,
-    testName: state.testName
+    testName: state.testName,
+    features: getFeatures(state)
   }
 }
 

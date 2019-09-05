@@ -18,6 +18,22 @@
 import {fetchFeaturesPending, fetchFeaturesSuccess, fetchFeaturesError} from '../actions/features.actions'
 
 function fetchFeatures() {
+
+    const convertListToObject = (list) => {
+        if (list.length > 0) {
+            let result = {};
+            list.forEach(element => {
+                result[element.tag.replace('-', '').toLowerCase()] = element;
+                if ( element.values && element.values.length === 0) {
+                    element.values = null;
+                }
+            })
+            return result;
+        } else {
+            return null;
+        }
+    }
+
     return dispatch => {
         dispatch(fetchFeaturesPending())
         // TODO change url
@@ -27,6 +43,19 @@ function fetchFeatures() {
             if(res.error) {
                 throw(res.error);
             }
+            res.collectors.forEach(collector => {
+                collector.parameters = convertListToObject(collector.parameters);
+            })
+            res.comparators.forEach(comparator => {
+                comparator.parameters = convertListToObject(comparator.parameters);
+            })
+            res.dataFilters.forEach(dataFilter => {
+                dataFilter.parameters = convertListToObject(dataFilter.parameters);
+            })
+            res.modifiers.forEach(modifier => {
+                modifier.parameters = convertListToObject(modifier.parameters);
+            })
+
             dispatch(fetchFeaturesSuccess(res));
             return res;
         })

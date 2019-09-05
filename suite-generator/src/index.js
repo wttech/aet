@@ -18,17 +18,20 @@
 import React from 'react'
 import { render} from 'react-dom'
 import { Provider } from 'react-redux'
-import { createStore, applyMiddleware } from 'redux'
+import { createStore, applyMiddleware, compose } from 'redux'
 import reducers from './reducers';
 import App from './components/main/App'
 import thunk from 'redux-thunk';
 
 
+const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 const middlewares = [thunk]
 
 const store = createStore(reducers, 
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__(),
-    applyMiddleware(...middlewares));
+    composeEnhancers(
+        applyMiddleware(...middlewares)
+    )
+);
 
 render (
     <Provider store={store}>

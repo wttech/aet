@@ -76,7 +76,7 @@ class ProjectInfo extends Component {
           <span>Suite: </span> <h4>{this.props.project[0].suite}</h4>
         </div>
         <div className="project-info-block">
-        <span>Domain: </span> <h4 className={`${!this.state.isEditMode ? ("edit-domain-visible") : ("edit-domain-hidden")}`}><a href={this.state.domainInputPlaceholder} target="_blank">{this.state.domainInputPlaceholder}</a></h4>
+        <span>Domain: </span> <h4 className={`${!this.state.isEditMode ? ("edit-domain-visible") : ("edit-domain-hidden")}`}><a href={this.state.domainInputPlaceholder} target="_blank" rel="noopener noreferrer">{this.state.domainInputPlaceholder}</a></h4>
         <textarea type="text" className={`edit-domain-input ${this.state.isEditMode ? ("edit-domain-visible") : ("edit-domain-hidden")}`} value={this.state.domainInputValue} onChange={(ev) => this.handleDomainInputChange(ev)}/>
         <div onClick={() => this.toggleDomainEdit()} className={`domain-icon ${!this.state.isEditMode ? ("edit-domain-visible") : ("edit-domain-hidden")}`}>
           <i className={`fas fa-pencil-alt edit-domain`}></i>
