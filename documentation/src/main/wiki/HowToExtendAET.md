@@ -281,7 +281,7 @@ public class PageBackgroundModifierCollectorFactory implements CollectorFactory 
                 .withParameters()
                 .addParameter(
                         ParameterMetadata.builder()
-                            .name(PageBackgroundModifier.NAME)
+                            .name("Color")
                             .tag(PageBackgroundModifier.COLOR_PARAM)
                             .withoutValues()
                             .isMandatory(true)
