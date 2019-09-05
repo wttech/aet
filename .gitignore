@@ -68,6 +68,7 @@ atlassian-ide-plugin.xml
 /suite-generator/build
 
 # misc
+/suite-generator/package-lock.json
 /suite-generator/.DS_Store
 /suite-generator/.env.local
 /suite-generator/.env.development.local
