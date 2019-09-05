@@ -37,7 +37,7 @@ function fetchFeatures() {
     return dispatch => {
         dispatch(fetchFeaturesPending())
         // TODO change url
-        fetch('http://localhost:8181/configs/components')
+        fetch('/configs/components')
         .then(res => res.json())
         .then(res => {
             if(res.error) {
