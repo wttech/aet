@@ -36,13 +36,13 @@ define(['angularAMD'], function (angularAMD) {
         },
         html: true
       }).parent().on('click', 'button', function (event) {
-        onOrderSelected(event, $element)
+        onOrderSelected(event, $element);
       });
     }
 
     function onOrderSelected(event, $element) {
       (($element.popover('hide').data('bs.popover')||{}).inState||{}).click = false;
-      var orderingAttribute = $(event.target).data("ordering-attribute");
+      var orderingAttribute = $(event.target).data('ordering-attribute');
       var label = $(event.target).text();
       updateOrdering(orderingAttribute, label);
     }
