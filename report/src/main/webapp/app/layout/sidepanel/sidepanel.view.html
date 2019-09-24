@@ -99,8 +99,8 @@
     <!--
     Ordering
     -->
-    <div class="form-group" style="position: static">
-      <div style="position: relative; width: calc(100% - 26px - 8px);float:left;" data-aet-sidepanel-order data-toggle="popover">
+    <div class="form-group order-group">
+      <div class="order-dropdown" data-aet-sidepanel-order data-toggle="popover">
         <div class="filter-list">
           <div>
             <p data-ng-bind="$root.orderLabel"></p>
@@ -118,8 +118,8 @@
           </form>
         </div>
       </div>
-      <div style="width:26px; height:12px; color:white;float:right;">
-        <div class="fontawesome" style="position:static;cursor: pointer"  data-ng-click="changeSortingOrder()">
+      <div class="order-reversal-icon">
+        <div class="fontawesome" data-ng-click="changeSortingOrder()">
           <div data-ng-if="$root.orderIsReverse">
             <i class="fas fa-lg fa-sort-amount-up"></i>
           </div>

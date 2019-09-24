@@ -38,6 +38,28 @@
         cursor: pointer;
       }
     }
+
+    &.order-group {
+      position: static;
+
+      .order-dropdown {
+        position: relative;
+        width: calc(100% - 26px - 8px);
+        float: left;
+      }
+
+      .order-reversal-icon {
+        width: 26px;
+        height: 12px;
+        color: white;
+        float: right;
+
+        .fontawesome {
+          position: static;
+          cursor: pointer;
+        }
+      }
+    }
   }
 
   input,
