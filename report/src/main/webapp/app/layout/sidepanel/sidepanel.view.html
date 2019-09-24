@@ -103,7 +103,7 @@
       <div style="position: relative; width: calc(100% - 26px - 8px);float:left;" data-aet-sidepanel-order data-toggle="popover">
         <div class="filter-list">
           <div>
-            <p ng-bind="$root.orderLabel"></p>
+            <p data-ng-bind="$root.orderLabel"></p>
             <div class="fontawesome">
               <i class="fas fa-angle-down fa-lg"></i>
             </div>
@@ -119,12 +119,12 @@
         </div>
       </div>
       <div style="width:26px; height:12px; color:white;float:right;">
-        <div class="fontawesome" style="position:static;cursor: pointer"  ng-click="changeSortingOrder()">
-          <div ng-if="$root.isReverse">
-            <i class="fas fa-lg fa-sort-amount-down"></i>
-          </div>
-          <div ng-if="!$root.isReverse">
+        <div class="fontawesome" style="position:static;cursor: pointer"  data-ng-click="changeSortingOrder()">
+          <div data-ng-if="$root.orderIsReverse">
             <i class="fas fa-lg fa-sort-amount-up"></i>
+          </div>
+          <div data-ng-if="!$root.orderIsReverse">
+            <i class="fas fa-lg fa-sort-amount-down"></i>
           </div>
         </div>
       </div>
@@ -159,7 +159,7 @@
   </div>
 
   <div class="aside-report-container" ng-class="sidepanel.thereAreChangesToSave() ? 'aside-report-container_short' : ''">
-    <div ng-repeat="test in sidepanel.tests | orderBy:$root.order:$root.isReverse"
+    <div ng-repeat="test in sidepanel.tests | orderBy:$root.orderAttribute:$root.orderIsReverse"
          class="aside-report {{filteredUrls.length > 0 ? 'is-visible' : 'is-hidden'}}">
       <a ui-sref="test({'suite':$root.params.project, 'test':test.name})" ui-sref-active="is-active"
          class="test-name {{filteredUrls.length > 0 ? 'is-visible' : 'is-hidden'}}" aet-toggle-link

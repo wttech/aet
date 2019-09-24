@@ -52,15 +52,14 @@ define(['angularAMD'], function (angularAMD) {
 
     function updateOrdering(orderingAttribute, labelText){
       $timeout(function() {
-        $rootScope.order = orderingAttribute;
-        $rootScope.isReverse = false;
+        $rootScope.orderAttribute = orderingAttribute;
         $rootScope.orderLabel = labelText;
       });
     }
 
-    function changeSortingOrder(event) {
+    function changeSortingOrder() {
       $timeout(function() {
-        $rootScope.isReverse = !$rootScope.isReverse;
+        $rootScope.orderIsReverse = !$rootScope.orderIsReverse;
       });
     }
   }
