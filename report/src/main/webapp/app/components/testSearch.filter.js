@@ -39,7 +39,7 @@ define(['angularAMD'], function (angularAMD) {
     }
 
     function matches(searchPhrase, name) {
-      return name && name.indexOf(searchPhrase) > 0;
+      return name && name.includes(searchPhrase);
     }
   }
 });
