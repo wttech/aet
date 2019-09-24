@@ -44,19 +44,21 @@
 
       .order-dropdown {
         position: relative;
-        width: calc(100% - 26px - 8px);
+        width: calc(100% - 32px);
         float: left;
       }
 
       .order-reversal-icon {
-        width: 26px;
+        width: 24px;
         height: 12px;
         color: white;
         float: right;
+        cursor: pointer;
+        position: relative;
 
-        .fontawesome {
-          position: static;
-          cursor: pointer;
+        .fontawesome{
+          right: 0;
+          top: 7px;
         }
       }
     }
