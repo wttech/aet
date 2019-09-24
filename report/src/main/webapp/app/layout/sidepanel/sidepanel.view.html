@@ -105,7 +105,12 @@
           <div>
             <p data-ng-bind="$root.orderLabel"></p>
             <div class="fontawesome">
-              <i class="fas fa-angle-down fa-lg"></i>
+              <div data-toggle="popover"
+                   data-content="Change tests order"
+                   data-trigger="hover"
+                   data-container="body">
+                <i class="fas fa-angle-down fa-lg"></i>
+              </div>
             </div>
           </div>
           <form class="dropdown-menu">
@@ -120,11 +125,16 @@
       </div>
       <div class="order-reversal-icon">
         <div class="fontawesome" data-ng-click="changeSortingOrder()">
-          <div data-ng-if="$root.orderIsReverse">
-            <i class="fas fa-lg fa-sort-amount-up"></i>
-          </div>
-          <div data-ng-if="!$root.orderIsReverse">
-            <i class="fas fa-lg fa-sort-amount-down"></i>
+          <div data-toggle="popover"
+               data-content="Reverse tests order"
+               data-trigger="hover"
+               data-container="body">
+            <div data-ng-if="$root.orderIsReverse">
+              <i class="fas fa-lg fa-sort-amount-up"></i>
+            </div>
+            <div data-ng-if="!$root.orderIsReverse">
+              <i class="fas fa-lg fa-sort-amount-down"></i>
+            </div>
           </div>
         </div>
       </div>
