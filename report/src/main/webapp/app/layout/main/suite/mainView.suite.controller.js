@@ -40,6 +40,7 @@ define([], function () {
           urlStats[status] = urlStats[status] ? urlStats[status] + 1 : 1;
         });
         vm.testWrappers.push({
+          name: test.name,
           test: test,
           stats: urlStats
         });
