@@ -30,7 +30,7 @@ define(['angularAMD'], function (angularAMD) {
     };
 
     function init(scope, $element) {
-      updateOrdering('name', 'Order by name');
+      updateOrdering('name', 'Sort by name');
       $element.popover({
         placement: 'bottom',
         trigger: 'click',
