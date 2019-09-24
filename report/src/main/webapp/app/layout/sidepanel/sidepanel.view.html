@@ -96,8 +96,11 @@
         </div>
       </div>
     </div>
-    <div class="form-group">
-      <div data-aet-sidepanel-order data-toggle="popover">
+    <!--
+    Ordering
+    -->
+    <div class="form-group" style="position: static">
+      <div style="position: relative; width: calc(100% - 26px - 8px);float:left;" data-aet-sidepanel-order data-toggle="popover">
         <div class="filter-list">
           <div>
             <p ng-bind="$root.orderLabel"></p>
@@ -113,6 +116,16 @@
               <button data-ordering-attribute="-" class="dropdown-item">Order by suite ordering</button>
             </div>
           </form>
+        </div>
+      </div>
+      <div style="width:26px; height:12px; color:white;float:right;">
+        <div class="fontawesome" style="position:static;cursor: pointer"  ng-click="changeSortingOrder()">
+          <div ng-if="$root.isReverse">
+            <i class="fas fa-lg fa-sort-amount-down"></i>
+          </div>
+          <div ng-if="!$root.isReverse">
+            <i class="fas fa-lg fa-sort-amount-up"></i>
+          </div>
         </div>
       </div>
     </div>
@@ -146,7 +159,7 @@
   </div>
 
   <div class="aside-report-container" ng-class="sidepanel.thereAreChangesToSave() ? 'aside-report-container_short' : ''">
-    <div ng-repeat="test in sidepanel.tests | orderBy:$root.order"
+    <div ng-repeat="test in sidepanel.tests | orderBy:$root.order:$root.isReverse"
          class="aside-report {{filteredUrls.length > 0 ? 'is-visible' : 'is-hidden'}}">
       <a ui-sref="test({'suite':$root.params.project, 'test':test.name})" ui-sref-active="is-active"
          class="test-name {{filteredUrls.length > 0 ? 'is-visible' : 'is-hidden'}}" aet-toggle-link

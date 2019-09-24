@@ -23,7 +23,10 @@ define(['angularAMD'], function (angularAMD) {
   function SidepanelOrderDirective($rootScope, $timeout) {
     return {
       restrict: 'AE',
-      link: init
+      link: init,
+      controller: function ($scope) {
+        $scope.changeSortingOrder = changeSortingOrder;
+      }
     };
 
     function init(scope, $element) {
@@ -50,8 +53,14 @@ define(['angularAMD'], function (angularAMD) {
     function updateOrdering(orderingAttribute, labelText){
       $timeout(function() {
         $rootScope.order = orderingAttribute;
+        $rootScope.isReverse = false;
         $rootScope.orderLabel = labelText;
-        $rootScope.$apply();
+      });
+    }
+
+    function changeSortingOrder(event) {
+      $timeout(function() {
+        $rootScope.isReverse = !$rootScope.isReverse;
       });
     }
   }
