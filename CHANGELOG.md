@@ -10,6 +10,7 @@ All notable changes to AET will be documented in this file.
 ## Unreleased
 
 **List of changes that are finished but not yet released in any final version.**
+- [PR-526](https://github.com/Cognifide/aet/pull/526) Added sending urls to collectors in packets. ([#431](https://github.com/Cognifide/aet/issues/431))
 
 ## Version 3.3.0
 
