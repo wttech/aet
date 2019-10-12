@@ -81,6 +81,7 @@ class SourceComparator implements ComparatorJob {
     ComparatorStepResult.Status status = calculateStatus(deltas);
     ComparatorStepResult result = createNewStepResult(deltas, status);
     addFormattedSources(result);
+    addTimestampToResult(result);
     return result;
   }
 
@@ -119,4 +120,11 @@ class SourceComparator implements ComparatorJob {
     result.addData("formattedSource", data);
     result.addData("sourceCompareType", sourceCompareType.name());
   }
+
+  private void addTimestampToResult(ComparatorStepResult result) {
+    result.addData("patternTimestamp", Long.toString(
+        artifactsDAO.getArtifactUploadDate(properties, properties.getPatternId()).getTime()));
+    result.addData("collectTimestamp", Long.toString(System.currentTimeMillis()));
+  }
+
 }

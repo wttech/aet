@@ -23,7 +23,12 @@
     <thead>
     <tr>
       <th class="num" title="Line Number">#</th>
-      <th class="code">Pattern</th>
+      <th class="code">
+        <p class="layout-compare-description">Pattern
+          <span class="label label-info">{{case.comparator.stepResult.data.patternTimestamp | date:'yyyy-MM-dd HH:mm'}}</span><br>
+          <span class="label-spacer"></span>
+        </p>
+      </th>
     </tr>
     </thead>
     <tbody>
@@ -54,7 +59,12 @@
     <thead>
     <tr>
       <th class="num" title="Line Number">#</th>
-      <th class="code">Source</th>
+      <th class="code">
+        <p class="layout-compare-description">Collected
+          <span class="label label-info">{{case.comparator.stepResult.data.collectTimestamp | date:'yyyy-MM-dd HH:mm'}}</span><br>
+          <span class="label-spacer"></span>
+        </p>
+      </th>
     </tr>
     </thead>
     <tbody>
