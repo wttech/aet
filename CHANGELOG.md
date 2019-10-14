@@ -10,6 +10,7 @@ All notable changes to AET will be documented in this file.
 ## Unreleased
 
 **List of changes that are finished but not yet released in any final version.**
+- [PR-528](https://github.com/Cognifide/aet/pull/528) Added source pattern date and source collected date. ([#500](https://github.com/Cognifide/aet/issues/500))
 
 ## Version 3.3.0
 
