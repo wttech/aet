@@ -19,16 +19,15 @@
 -->
 <div class="clearfix"></div>
 <div class="col-xs-6">
+  <p class="layout-compare-description text-center">Pattern
+    <span class="label label-info">{{case.comparator.stepResult.data.patternTimestamp | date:'yyyy-MM-dd HH:mm'}}</span><br>
+    <span class="label-spacer"></span>
+  </p>
   <table class="table table-striped table-condensed">
     <thead>
     <tr>
       <th class="num" title="Line Number">#</th>
-      <th class="code">
-        <p class="layout-compare-description">Pattern
-          <span class="label label-info">{{case.comparator.stepResult.data.patternTimestamp | date:'yyyy-MM-dd HH:mm'}}</span><br>
-          <span class="label-spacer"></span>
-        </p>
-      </th>
+      <th class="code">Code</th>
     </tr>
     </thead>
     <tbody>
@@ -55,16 +54,15 @@
   </table>
 </div>
 <div class="col-xs-6">
+  <p class="layout-compare-description text-center">Collected
+    <span class="label label-info">{{case.comparator.stepResult.data.collectTimestamp | date:'yyyy-MM-dd HH:mm'}}</span><br>
+    <span class="label-spacer"></span>
+  </p>
   <table class="table table-striped table-condensed">
     <thead>
     <tr>
       <th class="num" title="Line Number">#</th>
-      <th class="code">
-        <p class="layout-compare-description">Collected
-          <span class="label label-info">{{case.comparator.stepResult.data.collectTimestamp | date:'yyyy-MM-dd HH:mm'}}</span><br>
-          <span class="label-spacer"></span>
-        </p>
-      </th>
+      <th class="code">Code</th>
     </tr>
     </thead>
     <tbody>

@@ -122,8 +122,13 @@ class SourceComparator implements ComparatorJob {
   }
 
   private void addTimestampToResult(ComparatorStepResult result) {
-    result.addData("patternTimestamp", Long.toString(
-        artifactsDAO.getArtifactUploadDate(properties, properties.getPatternId()).getTime()));
+    long stamp;
+    try {
+      stamp = artifactsDAO.getArtifactUploadDate(properties, properties.getPatternId()).getTime();
+    } catch(Exception e) {
+      stamp = 0;
+    }
+    result.addData("patternTimestamp", Long.toString(stamp));
     result.addData("collectTimestamp", Long.toString(System.currentTimeMillis()));
   }
 
