@@ -12,6 +12,9 @@ All notable changes to AET will be documented in this file.
 **List of changes that are finished but not yet released in any final version.**
 - [PR-528](https://github.com/Cognifide/aet/pull/528) Added source pattern date and source collected date. ([#500](https://github.com/Cognifide/aet/issues/500))
 
+- [PR-522](https://github.com/Cognifide/aet/pull/522) Improve performance of generating /configs/list. ([#519](https://github.com/Cognifide/aet/issues/519))
+
+
 ## Version 3.3.0
 
 - [PR-479](https://github.com/Cognifide/aet/pull/479) Added Secure and HttpOnly flags for cookies. ([#477](https://github.com/Cognifide/aet/issues/477))
