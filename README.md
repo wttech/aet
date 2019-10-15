@@ -52,7 +52,6 @@ AET helps testers to ensure that a change in one part of the software has not in
 * Check **status codes** using [BrowserMob Proxy](https://bmp.lightbody.net/).
 * Check page **accessibility** with [HTML_CodeSniffer](http://squizlabs.github.io/HTML_CodeSniffer/).
 * Check and modify page **cookies**.
-* Check page **client side performance** using [YSlow](http://yslow.org/).
 
 ## AET architecture
 The AET System consists of 7 units:

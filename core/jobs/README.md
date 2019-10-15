@@ -10,7 +10,6 @@
 Contains implementations for `Modifiers`, `Collectors`, `Data Filters` and `Comparators`:
 
 - Accessibility Collector,
-- Client Side Performance Collector,
 - Cookie Collector,
 - JS Errors Collector,
 - Screen Collector,
@@ -25,7 +24,6 @@ Contains implementations for `Modifiers`, `Collectors`, `Data Filters` and `Comp
 - Sleep Modifier,
 - Wait For Page Loaded Modifier,
 - Accessibility Comparator,
-- Client Side Performance Comparator,
 - Cookie Comparator,
 - JS Errors Comparator,
 - Layout Comparator,
