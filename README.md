@@ -24,6 +24,7 @@ AET helps testers to ensure that a change in one part of the software has not in
 * managing visual changes across digital platform after changing common component (e.g. footer),
 * regression tests at the end of an Hourly/Daily/Weekly/Per Sprint Completion,
 * as part of an upgrade or migration process of a platform.
+* client side performance tests of pages using [Lighthouse extension](https://github.com/Skejven/aet-lighthouse-extension)
 
 #### A typical scenario of use
 1. The AET user (Developer or QA) baselines a set of components or pages with URLs as an input to the tool.

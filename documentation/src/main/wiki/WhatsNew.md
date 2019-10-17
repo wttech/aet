@@ -124,3 +124,7 @@ that you are concerned about and share with your team just by copying the test U
 #### Accessibility report BETA
 AET 2.0 introduces an accessibility report that displays validation output of page accessibility analysis using the 
 [HTML_CodeSniffer](http://squizlabs.github.io/HTML_CodeSniffer/) library. Results show the total count of errors, warnings and notice type violations.
+
+#### Client-side performance BETA
+Now it’s possible to test client-side performance in an agile and incremental fashion. Brand new reports show overall scores along with a 
+list of rules with individual grades. The performance analysis is based on the [YSlow](http://yslow.org/) tool.
