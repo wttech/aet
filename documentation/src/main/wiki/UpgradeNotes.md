@@ -12,9 +12,9 @@ Changes:
 * All suites have to be valid xmls. This is mostly related to URL's whch can have special characters like '&'. Such characters have to be escaped.
 This changes requires to update all suites and escape all URL's inside. 
 For example - given suite line:
-<url href="https://en.wikipedia.org/wiki/Main_Page?a=b&c=d"/>
+``<url href="https://en.wikipedia.org/wiki/Main_Page?a=b&c=d"/>``
 has to be updated into:
-<url href="https://en.wikipedia.org/wiki/Main_Page?a=b&amp;c=d"/>
+``<url href="https://en.wikipedia.org/wiki/Main_Page?a=b&amp;c=d"/>``
 Related issue: [#441](https://github.com/Cognifide/aet/issues/441)
 
 ## Version 3.2.1
