@@ -61,11 +61,11 @@ public class XmlTestSuiteParserTest {
   @Test(expected = ParseException.class)
   public void testParse_withUnescapedUrls_expectParseException() throws Exception {
     URL resourceURL = getClass().getResource("/testSuiteWithUnescapedUrls.xml");
-    File testSuitFile = new File(resourceURL.toURI());
+    File testSuiteFile = new File(resourceURL.toURI());
 
     TestSuiteParser testSuiteParser = new XmlTestSuiteParser();
 
-    TestSuiteRun testSuite = testSuiteParser.parse(testSuitFile);
+    TestSuiteRun testSuite = testSuiteParser.parse(testSuiteFile);
   }
 
 }
