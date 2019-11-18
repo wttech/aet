@@ -37,6 +37,8 @@ public class JsErrorLog implements Serializable, Comparable<JsErrorLog> {
 
   private boolean ignored;
 
+  private String urlName;
+
   private final List<FilterInfo> matchingFilters;
 
   public JsErrorLog(String errorMessage, String sourceName, int lineNumber) {
@@ -60,6 +62,14 @@ public class JsErrorLog implements Serializable, Comparable<JsErrorLog> {
 
   public boolean isIgnored() {
     return this.ignored;
+  }
+
+  public String getUrlName() {
+    return urlName;
+  }
+
+  public void setUrlName(String urlName) {
+    this.urlName = urlName;
   }
 
   @Override

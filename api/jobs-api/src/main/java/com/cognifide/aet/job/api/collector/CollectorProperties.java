@@ -23,13 +23,19 @@ public class CollectorProperties extends StepProperties {
 
   private final String url;
 
-  public CollectorProperties(String url, String company, String project, String patternId) {
+  private final String urlName;
+
+  public CollectorProperties(String url, String urlName, String company, String project, String patternId) {
     super(company, project, patternId);
     this.url = url;
+    this.urlName = urlName;
   }
 
   public String getUrl() {
     return url;
   }
 
+  public String getUrlName() {
+    return urlName;
+  }
 }
