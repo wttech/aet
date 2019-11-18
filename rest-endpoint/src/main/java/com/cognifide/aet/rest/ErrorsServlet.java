@@ -16,7 +16,11 @@
 package com.cognifide.aet.rest;
 
 import com.cognifide.aet.communication.api.metadata.*;
-import com.cognifide.aet.vs.*;
+import com.cognifide.aet.rest.helpers.ErrorType;
+import com.cognifide.aet.vs.ArtifactsDAO;
+import com.cognifide.aet.vs.DBKey;
+import com.cognifide.aet.vs.MetadataDAO;
+import com.cognifide.aet.vs.StorageException;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
@@ -28,10 +32,12 @@ import org.slf4j.LoggerFactory;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import static com.cognifide.aet.rest.Helper.isValidCorrelationId;
 import static com.cognifide.aet.rest.Helper.responseAsJson;
@@ -54,39 +60,25 @@ public class ErrorsServlet extends BasicDataServlet {
         String correlationId = req.getParameter(Helper.CORRELATION_ID_PARAM);
         String testName = req.getParameter(Helper.TEST_RERUN_PARAM);
 
-        Suite suite;
-        try {
-            if (isValidCorrelationId(correlationId)) {
-                suite = metadataDAO.getSuite(dbKey, correlationId);
-            } else {
-                resp.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
-                resp.getWriter()
-                    .write(responseAsJson(GSON, "Invalid correlationId of suite was specified."));
-                return;
-            }
-        } catch (StorageException e) {
-            LOGGER.error("Failed to get suite", e);
-            resp.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
-            resp.getWriter().write(responseAsJson(GSON, "Failed to get suite %s", e.getMessage()));
-            return;
-        }
+        Suite suite = getSuite(resp, dbKey, correlationId);
 
         if (suite != null) {
             Optional<Test> test = suite.getTests().stream()
                 .filter(t -> t.getName().equals(testName)).findFirst();
             if (test.isPresent()) {
-                List<Artifact> artifacts = new ArrayList<>();
+                List<Object> artifacts = new ArrayList<>();
                 String errorType = Helper.getErrorTypeFromRequest(req);
-                for(Url url : test.get().getUrls()) {
-                    if(errorType != null) {
-                        Optional<Step> step = url.getSteps().stream()
-                            .filter(s -> s.getName().equals(errorType)).findFirst();
-                        if(!step.isPresent())
+                for (Url url : test.get().getUrls()) {
+                    if (errorType != null) {
+                        List<Step> steps = url.getSteps().stream()
+                            .filter(s -> s.getName().equals(errorType)).collect(Collectors.toList());
+                        if (steps.isEmpty())
                             continue;
-                        processStep(step.get(), dbKey, artifacts);
+                        for(Step step : steps)
+                            processStep(step, dbKey, artifacts, errorType);
                     } else {
-                        for(Step step : url.getSteps())
-                            processStep(step, dbKey, artifacts);
+                        for (Step step : url.getSteps())
+                            processStep(step, dbKey, artifacts, step.getType());
                     }
                 }
 
@@ -98,10 +90,35 @@ public class ErrorsServlet extends BasicDataServlet {
             createNotFoundSuiteResponse(resp, correlationId, dbKey);
     }
 
-    private void processStep(Step step, DBKey dbKey, List<Artifact> artifacts) {
-        for(Comparator comparator : step.getComparators()) {
-            artifacts.add(artifactsDAO.getArtifact(dbKey, comparator.getStepResult().getArtifactId()));
+    private Suite getSuite(HttpServletResponse resp, DBKey dbKey, String correlationId) throws IOException {
+        try {
+            if (isValidCorrelationId(correlationId)) {
+                return metadataDAO.getSuite(dbKey, correlationId);
+            } else {
+                resp.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
+                resp.getWriter()
+                    .write(responseAsJson(GSON, "Invalid correlationId of suite was specified."));
+                return null;
+            }
+        } catch (StorageException e) {
+            LOGGER.error("Failed to get suite", e);
+            resp.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
+            resp.getWriter().write(responseAsJson(GSON, "Failed to get suite %s", e.getMessage()));
+            return null;
         }
+    }
+
+    private void processStep(Step step, DBKey dbKey, List<Object> artifacts, String errorType) throws IOException {
+        Type type = ErrorType.getTypeByName(errorType);
+        //for now working for js-errors
+        if (type == null)
+            return;
+        if (step.getComparators() != null)
+            for (Comparator comparator : step.getComparators())
+                if (comparator.getStepResult() != null && comparator.getStepResult().getArtifactId() != null)
+                    artifacts.addAll(artifactsDAO.getJsonFormatArtifact(dbKey,
+                        comparator.getStepResult().getArtifactId(), type));
+
     }
 
     private void createNotFoundTestResponse(HttpServletResponse response, String testName, DBKey dbKey)

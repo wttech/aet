@@ -120,6 +120,11 @@
       <groupId>org.osgi</groupId>
       <artifactId>org.osgi.core</artifactId>
     </dependency>
+      <dependency>
+          <groupId>com.cognifide.aet</groupId>
+          <artifactId>jobs-api</artifactId>
+          <scope>compile</scope>
+      </dependency>
   </dependencies>
 
   <build>
