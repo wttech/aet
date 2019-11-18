@@ -49,6 +49,8 @@ public final class Helper {
   public static final String TEST_RERUN_PARAM = "testName";
   public static final String URL_RERUN_PARAM = "testUrl";
 
+  public static final String APPLICATION_JSON_CONTENT_TYPE = "application/json";
+
   private Helper() {
     //private helper constructor
   }
