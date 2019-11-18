@@ -60,27 +60,29 @@ public class ErrorsServlet extends BasicDataServlet {
         String correlationId = req.getParameter(Helper.CORRELATION_ID_PARAM);
         String testName = req.getParameter(Helper.TEST_RERUN_PARAM);
 
-        Suite suite = getSuite(resp, dbKey, correlationId);
+        Suite suite;
+        try {
+            if (isValidCorrelationId(correlationId)) {
+                suite = metadataDAO.getSuite(dbKey, correlationId);
+            } else {
+                resp.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
+                resp.getWriter()
+                    .write(responseAsJson(GSON, "Invalid correlationId of suite was specified."));
+                return;
+            }
+        } catch (StorageException e) {
+            LOGGER.error("Failed to get suite", e);
+            resp.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
+            resp.getWriter().write(responseAsJson(GSON, "Failed to get suite %s", e.getMessage()));
+            return;
+        }
 
         if (suite != null) {
             Optional<Test> test = suite.getTests().stream()
                 .filter(t -> t.getName().equals(testName)).findFirst();
             if (test.isPresent()) {
-                List<Object> artifacts = new ArrayList<>();
                 String errorType = Helper.getErrorTypeFromRequest(req);
-                for (Url url : test.get().getUrls()) {
-                    if (errorType != null) {
-                        List<Step> steps = url.getSteps().stream()
-                            .filter(s -> s.getName().equals(errorType)).collect(Collectors.toList());
-                        if (steps.isEmpty())
-                            continue;
-                        for(Step step : steps)
-                            processStep(step, dbKey, artifacts, errorType);
-                    } else {
-                        for (Step step : url.getSteps())
-                            processStep(step, dbKey, artifacts, step.getType());
-                    }
-                }
+                List<Object> artifacts = processTest(test.get(), dbKey, errorType);
 
                 resp.setContentType(Helper.APPLICATION_JSON_CONTENT_TYPE);
                 resp.getWriter().write(GSON.toJson(artifacts));
@@ -90,21 +92,25 @@ public class ErrorsServlet extends BasicDataServlet {
             createNotFoundSuiteResponse(resp, correlationId, dbKey);
     }
 
-    private Suite getSuite(HttpServletResponse resp, DBKey dbKey, String correlationId) throws IOException {
-        try {
-            if (isValidCorrelationId(correlationId)) {
-                return metadataDAO.getSuite(dbKey, correlationId);
-            } else {
-                resp.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
-                resp.getWriter()
-                    .write(responseAsJson(GSON, "Invalid correlationId of suite was specified."));
-                return null;
-            }
-        } catch (StorageException e) {
-            LOGGER.error("Failed to get suite", e);
-            resp.setStatus(HttpURLConnection.HTTP_BAD_REQUEST);
-            resp.getWriter().write(responseAsJson(GSON, "Failed to get suite %s", e.getMessage()));
-            return null;
+    private List<Object> processTest(Test test, DBKey dbKey, String errorType) throws IOException {
+        List<Object> artifacts = new ArrayList<>();
+        for (Url url : test.getUrls())
+            processUrl(url, dbKey, artifacts, errorType);
+
+        return artifacts;
+    }
+
+    private void processUrl(Url url, DBKey dbKey, List<Object> artifacts, String errorType) throws IOException {
+        if (errorType != null) {
+            List<Step> steps = url.getSteps().stream()
+                .filter(s -> s.getName().equals(errorType)).collect(Collectors.toList());
+            if (steps.isEmpty())
+                return;
+            for (Step step : steps)
+                processStep(step, dbKey, artifacts, errorType);
+        } else {
+            for (Step step : url.getSteps())
+                processStep(step, dbKey, artifacts, step.getType());
         }
     }
 
