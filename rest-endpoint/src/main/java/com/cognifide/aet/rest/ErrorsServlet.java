@@ -48,6 +48,8 @@ import org.slf4j.LoggerFactory;
 @Component(immediate = true)
 public class ErrorsServlet extends BasicDataServlet {
 
+  private static final long serialVersionUID = 4312853975173807071L;
+
   private static final Logger LOGGER = LoggerFactory.getLogger(ErrorsServlet.class);
 
   @Reference
