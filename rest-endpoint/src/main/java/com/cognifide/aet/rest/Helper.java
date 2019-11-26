@@ -1,13 +1,13 @@
 /**
  * AET
- *
+ * <p>
  * Copyright (C) 2013 Cognifide Limited
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License. You may obtain a copy of the License at
- *
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
  * Unless required by applicable law or agreed to in writing, software distributed under the License
  * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
  * or implied. See the License for the specific language governing permissions and limitations under
@@ -34,6 +34,7 @@ public final class Helper {
   static final String CONFIGS_PART_PATH = "/configs";
   static final String LOCK_PART_PATH = "/lock";
   static final String XUNIT_PART_PATH = "/xunit";
+  static final String ERRORS_PART_PATH = "errors";
   static final String PATH_SEPARATOR = "/";
 
   public static final String COMPANY_PARAM = "company";
@@ -43,9 +44,12 @@ public final class Helper {
   public static final String VERSION_PARAM = "version";
   public static final String ID_PARAM = "id";
   public static final String TYPE_PARAM = "type";
+  public static final String ERROR_TYPE_PARAM = "errorType";
   public static final String REPORT_PART_PATH_DEFAULT_PAGE = "index.html";
   public static final String TEST_RERUN_PARAM = "testName";
   public static final String URL_RERUN_PARAM = "testUrl";
+
+  public static final String APPLICATION_JSON_CONTENT_TYPE = "application/json";
 
   private Helper() {
     //private helper constructor
@@ -61,6 +65,10 @@ public final class Helper {
 
   public static String getArtifactPath() {
     return REST_PREFIX + PATH_SEPARATOR + ARTIFACT_PART_PATH;
+  }
+
+  public static String getErrorsPath() {
+    return REST_PREFIX + PATH_SEPARATOR + ERRORS_PART_PATH;
   }
 
   public static String getReportPath() {
@@ -83,7 +91,7 @@ public final class Helper {
     return REPORT_PART_PATH + PATH_SEPARATOR + REPORT_PART_PATH_DEFAULT_PAGE;
   }
 
-  public static String getRerunPath(){
+  public static String getRerunPath() {
     return REST_PREFIX + PATH_SEPARATOR + RERUN_PART_PATH;
   }
 
@@ -93,6 +101,10 @@ public final class Helper {
     SimpleDBKey dbKey = new SimpleDBKey(company, project);
     dbKey.validate(null);
     return dbKey;
+  }
+
+  public static String getErrorTypeFromRequest(HttpServletRequest req) {
+    return req.getParameter(Helper.ERROR_TYPE_PARAM);
   }
 
   public static DBKey getDBKey(String company, String project) throws ValidatorException {

@@ -1,13 +1,13 @@
 /**
  * AET
- *
+ * <p>
  * Copyright (C) 2013 Cognifide Limited
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except
  * in compliance with the License. You may obtain a copy of the License at
- *
+ * <p>
  * http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
  * Unless required by applicable law or agreed to in writing, software distributed under the License
  * is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express
  * or implied. See the License for the specific language governing permissions and limitations under
@@ -65,7 +65,7 @@ public class CollectorDispatcherImpl implements CollectorDispatcher {
           collectorJobData.getTestName());
 
       final String urlWithDomain = StringUtils.trimToEmpty(url.getDomain()) + url.getUrl();
-      CollectorJob collectorJob = getConfiguredCollector(step, urlWithDomain,
+      CollectorJob collectorJob = getConfiguredCollector(step, urlWithDomain, url.getName(),
           webCommunicationWrapper, collectorJobData);
       ExecutionTimer timer = ExecutionTimer.createAndRun("collector");
       CollectorStepResult result = null;
@@ -105,11 +105,12 @@ public class CollectorDispatcherImpl implements CollectorDispatcher {
   }
 
   private CollectorJob getConfiguredCollector(Step currentStep, String urlWithDomain,
+      String urlName,
       WebCommunicationWrapper webCommunicationWrapper, CollectorJobData jobData)
       throws ParametersException {
     final String collectorType = currentStep.getType();
     if (jobRegistry.hasJob(collectorType)) {
-      CollectorProperties collectorProperties = new CollectorProperties(urlWithDomain,
+      CollectorProperties collectorProperties = new CollectorProperties(urlWithDomain, urlName,
           jobData.getCompany(), jobData.getProject(), currentStep.getPattern());
       return jobRegistry.getCollectorFactory(collectorType)
           .createInstance(collectorProperties, currentStep.getParameters(),
