@@ -15,6 +15,7 @@
  */
 package com.cognifide.aet.rest.helpers;
 
+import com.cognifide.aet.models.CookieResult;
 import com.cognifide.aet.models.JsError;
 import com.cognifide.aet.models.StatusCodeResult;
 import com.google.gson.reflect.TypeToken;
@@ -27,6 +28,8 @@ public enum ErrorType {
   JS_ERRORS("js-errors", new TypeToken<Set<JsError>>() {
   }.getType()),
   STATUS_CODES("status-codes", new TypeToken<StatusCodeResult>() {
+  }.getType()),
+  COOKIE("cookie", new TypeToken<CookieResult>() {
   }.getType());
 
   private final String errorName;
