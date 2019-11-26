@@ -15,7 +15,8 @@
  */
 package com.cognifide.aet.rest.helpers;
 
-import com.cognifide.aet.job.api.collector.JsErrorLog;
+import com.cognifide.aet.models.JsError;
+import com.cognifide.aet.models.StatusCodeResult;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -23,7 +24,9 @@ import java.util.Map;
 import java.util.Set;
 
 public enum ErrorType {
-  JS_ERRORS("js-errors", new TypeToken<Set<JsErrorLog>>() {
+  JS_ERRORS("js-errors", new TypeToken<Set<JsError>>() {
+  }.getType()),
+  STATUS_CODES("status-codes", new TypeToken<StatusCodeResult>() {
   }.getType());
 
   private final String errorName;
