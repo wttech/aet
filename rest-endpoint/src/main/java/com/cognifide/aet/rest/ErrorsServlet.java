@@ -131,7 +131,12 @@ public class ErrorsServlet extends BasicDataServlet {
       throws IOException {
     Type type = ErrorType.getTypeByName(errorType);
     //for now working for js-errors
-    if (type == null) {
+    if (errorType.equals(ErrorType.LAYOUT.getErrorName())) {
+      //todo wyciagamy dane z "data" (i moze cos z artifactId)
+      return;
+    }
+    if (errorType.equals(ErrorType.SOURCE.getErrorName())) {
+      //todo wyciagamy dane z artifactId i cos z "data"
       return;
     }
     if (step.getComparators() != null) {

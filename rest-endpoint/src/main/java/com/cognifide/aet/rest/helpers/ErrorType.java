@@ -15,9 +15,10 @@
  */
 package com.cognifide.aet.rest.helpers;
 
+import com.cognifide.aet.job.api.collector.JsErrorLog;
+import com.cognifide.aet.job.common.comparators.cookie.CookieCompareComparatorResult;
+import com.cognifide.aet.job.common.comparators.statuscodes.StatusCodesComparatorResult;
 import com.cognifide.aet.models.CookieResult;
-import com.cognifide.aet.models.JsError;
-import com.cognifide.aet.models.StatusCodeResult;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -25,12 +26,14 @@ import java.util.Map;
 import java.util.Set;
 
 public enum ErrorType {
-  JS_ERRORS("js-errors", new TypeToken<Set<JsError>>() {
+  JS_ERRORS("js-errors", new TypeToken<Set<JsErrorLog>>() {
   }.getType()),
-  STATUS_CODES("status-codes", new TypeToken<StatusCodeResult>() {
+  STATUS_CODES("status-codes", new TypeToken<StatusCodesComparatorResult>() {
   }.getType()),
-  COOKIE("cookie", new TypeToken<CookieResult>() {
-  }.getType());
+  COOKIE("cookie", new TypeToken<CookieCompareComparatorResult>() {
+  }.getType()),
+  LAYOUT("layout", null),
+  SOURCE("source", null);
 
   private final String errorName;
   private final Type type;
@@ -51,5 +54,9 @@ public enum ErrorType {
 
   public static Type getTypeByName(String name) {
     return map.get(name);
+  }
+
+  public String getErrorName() {
+    return errorName;
   }
 }

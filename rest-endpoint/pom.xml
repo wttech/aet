@@ -42,6 +42,14 @@
       <groupId>com.cognifide.aet</groupId>
       <artifactId>datastorage-api</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.cognifide.aet</groupId>
+      <artifactId>jobs-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.cognifide.aet</groupId>
+      <artifactId>jobs</artifactId>
+    </dependency>
 
     <dependency>
       <groupId>org.osgi</groupId>
