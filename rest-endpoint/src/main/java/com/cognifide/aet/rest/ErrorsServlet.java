@@ -19,10 +19,15 @@ import static com.cognifide.aet.rest.Helper.isValidCorrelationId;
 import static com.cognifide.aet.rest.Helper.responseAsJson;
 
 import com.cognifide.aet.communication.api.metadata.Comparator;
+import com.cognifide.aet.communication.api.metadata.ComparatorStepResult.Status;
 import com.cognifide.aet.communication.api.metadata.Step;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.Test;
 import com.cognifide.aet.communication.api.metadata.Url;
+import com.cognifide.aet.models.AccessibilityError;
+import com.cognifide.aet.models.JsError;
+import com.cognifide.aet.models.StatusCodesError;
+import com.cognifide.aet.models.W3cHtml5Error;
 import com.cognifide.aet.rest.helpers.ErrorType;
 import com.cognifide.aet.vs.ArtifactsDAO;
 import com.cognifide.aet.vs.DBKey;
@@ -34,6 +39,7 @@ import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -103,51 +109,82 @@ public class ErrorsServlet extends BasicDataServlet {
   private List<Object> processTest(Test test, DBKey dbKey, String errorType) throws IOException {
     List<Object> artifacts = new ArrayList<>();
     for (Url url : test.getUrls()) {
-      processUrl(url, dbKey, artifacts, errorType);
+      processUrl(url, dbKey, artifacts, errorType, url.getName());
     }
 
     return artifacts;
   }
 
-  private void processUrl(Url url, DBKey dbKey, List<Object> artifacts, String errorType)
+  private void processUrl(Url url, DBKey dbKey, List<Object> artifacts, String errorType,
+      String urlName)
       throws IOException {
     if (errorType != null) {
       List<Step> steps = url.getSteps().stream()
-          .filter(s -> s.getName().equals(errorType)).collect(Collectors.toList());
+          .filter(s -> s.getType().equals(errorType)).collect(Collectors.toList());
       if (steps.isEmpty()) {
         return;
       }
       for (Step step : steps) {
-        processStep(step, dbKey, artifacts, errorType);
+        processStep(step, dbKey, artifacts, errorType, urlName);
       }
     } else {
       for (Step step : url.getSteps()) {
-        processStep(step, dbKey, artifacts, step.getType());
+        processStep(step, dbKey, artifacts, step.getType(), urlName);
       }
     }
   }
 
-  private void processStep(Step step, DBKey dbKey, List<Object> artifacts, String errorType)
+  private void processStep(Step step, DBKey dbKey, List<Object> artifacts, String errorType,
+      String urlName)
       throws IOException {
     Type type = ErrorType.getTypeByName(errorType);
-    //for now working for js-errors
-    if (errorType.equals(ErrorType.LAYOUT.getErrorName())) {
-      //todo wyciagamy dane z "data" (i moze cos z artifactId)
+    if (step.getComparators() == null || step.getComparators().isEmpty()) {
       return;
     }
-    if (errorType.equals(ErrorType.SOURCE.getErrorName())) {
-      //todo wyciagamy dane z artifactId i cos z "data"
-      return;
-    }
-    if (step.getComparators() != null) {
-      for (Comparator comparator : step.getComparators()) {
-        if (comparator.getStepResult() != null
-            && comparator.getStepResult().getArtifactId() != null) {
-          artifacts.addAll(artifactsDAO.getJsonFormatArtifact(dbKey,
-              comparator.getStepResult().getArtifactId(), type));
-        }
+
+    for (Comparator comparator : step.getComparators()) {
+      if (comparator.getStepResult().getStatus() == Status.PASSED) {
+        continue;
+      }
+      if (errorType.equals(ErrorType.JS_ERRORS.getErrorName())) {
+        Set<JsError> jsErrors = artifactsDAO.getJsonFormatArtifact(dbKey,
+            comparator.getStepResult().getArtifactId(), type);
+        jsErrors.forEach(er -> er.setType(ErrorType.JS_ERRORS.getErrorName()));
+        artifacts.addAll(jsErrors);
+      } else if (errorType.equals(ErrorType.STATUS_CODES.getErrorName())) {
+        StatusCodesError sc = artifactsDAO.getJsonFormatArtifact(dbKey,
+            comparator.getStepResult().getArtifactId(), type);
+        sc.setUrlName(urlName);
+        sc.setType(ErrorType.STATUS_CODES.getErrorName());
+        artifacts.add(sc);
+      } else if (errorType.equals(ErrorType.ACCESSIBILITY.getErrorName())) {
+        AccessibilityError accessibilityError = artifactsDAO.getJsonFormatArtifact(dbKey,
+            comparator.getStepResult().getArtifactId(), type);
+        accessibilityError.setUrlName(urlName);
+        accessibilityError.setType(ErrorType.ACCESSIBILITY.getErrorName());
+        artifacts.add(accessibilityError);
+      } else if(errorType.equals(ErrorType.SOURCE_W3CHTML5.getErrorName())) {
+        W3cHtml5Error error = artifactsDAO.getJsonFormatArtifact(dbKey,
+            comparator.getStepResult().getArtifactId(), type);
+        error.setUrlName(urlName);
+        error.setType(ErrorType.SOURCE_W3CHTML5.getErrorName());
+        artifacts.add(error);
       }
     }
+    //for now working for js-errors
+//    if (errorType.equals(ErrorType.LAYOUT.getErrorName())) {
+//      //todo wyciagamy dane z "data" (i moze cos z artifactId - maskArtifactId)
+//
+//    } else if (errorType.equals(ErrorType.SOURCE.getErrorName())) {
+//      //todo wyciagamy dane z artifactId i cos z "data"
+//    } else if (errorType.equals(ErrorType.JS_ERRORS.getErrorName())) {
+//      for (Comparator comparator : step.getComparators()) {
+//        if (comparator.getStepResult() != null
+//            && comparator.getStepResult().getArtifactId() != null) {
+//          artifacts.addAll(artifactsDAO.getJsonFormatArtifact(dbKey,
+//              comparator.getStepResult().getArtifactId(), type));
+//        }
+//      }
 
   }
 

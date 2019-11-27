@@ -15,25 +15,35 @@
  */
 package com.cognifide.aet.rest.helpers;
 
-import com.cognifide.aet.job.api.collector.JsErrorLog;
-import com.cognifide.aet.job.common.comparators.cookie.CookieCompareComparatorResult;
-import com.cognifide.aet.job.common.comparators.statuscodes.StatusCodesComparatorResult;
-import com.cognifide.aet.models.CookieResult;
+import com.cognifide.aet.job.common.comparators.cookie.CookieComparatorResult;
+import com.cognifide.aet.job.common.comparators.source.diff.ResultDelta;
+import com.cognifide.aet.models.AccessibilityError;
+import com.cognifide.aet.models.JsError;
+import com.cognifide.aet.models.StatusCodesError;
+import com.cognifide.aet.models.W3cHtml5Error;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 public enum ErrorType {
-  JS_ERRORS("js-errors", new TypeToken<Set<JsErrorLog>>() {
+  JS_ERRORS("js-errors", new TypeToken<Set<JsError>>() {
   }.getType()),
-  STATUS_CODES("status-codes", new TypeToken<StatusCodesComparatorResult>() {
+  STATUS_CODES("status-codes", new TypeToken<StatusCodesError>() {
   }.getType()),
-  COOKIE("cookie", new TypeToken<CookieCompareComparatorResult>() {
+  COOKIE("cookie", new TypeToken<CookieComparatorResult>() {
   }.getType()),
-  LAYOUT("layout", null),
-  SOURCE("source", null);
+  SCREEN("screen", null),
+  SOURCE("source", new TypeToken<Map<String, List<ResultDelta>>>() {
+  }.getType()),
+  SOURCE_W3CHTML5("source-w3c-html5", new TypeToken<W3cHtml5Error>() {
+  }.getType()),
+  ACCESSIBILITY("accessibility",new TypeToken<AccessibilityError>() {
+  }.
+
+  getType());
 
   private final String errorName;
   private final Type type;
@@ -59,4 +69,4 @@ public enum ErrorType {
   public String getErrorName() {
     return errorName;
   }
-}
+  }
