@@ -22,7 +22,6 @@ import java.util.List;
 public class W3cHtml5Error extends W3cHtml5ComparatorResult {
 
   private String urlName;
-  private String type;
 
   public W3cHtml5Error(int errorCount, int warningCount,
       List<W3cHtml5Issue> issues,
@@ -36,13 +35,5 @@ public class W3cHtml5Error extends W3cHtml5ComparatorResult {
 
   public void setUrlName(String urlName) {
     this.urlName = urlName;
-  }
-
-  public String getType() {
-    return type;
-  }
-
-  public void setType(String type) {
-    this.type = type;
   }
 }

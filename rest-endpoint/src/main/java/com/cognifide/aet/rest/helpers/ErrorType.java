@@ -15,10 +15,11 @@
  */
 package com.cognifide.aet.rest.helpers;
 
+import com.cognifide.aet.job.api.collector.JsErrorLog;
 import com.cognifide.aet.job.common.comparators.cookie.CookieComparatorResult;
 import com.cognifide.aet.job.common.comparators.source.diff.ResultDelta;
 import com.cognifide.aet.models.AccessibilityError;
-import com.cognifide.aet.models.JsError;
+import com.cognifide.aet.models.JsErrorWrapper;
 import com.cognifide.aet.models.StatusCodesError;
 import com.cognifide.aet.models.W3cHtml5Error;
 import com.google.gson.reflect.TypeToken;
@@ -29,7 +30,7 @@ import java.util.Map;
 import java.util.Set;
 
 public enum ErrorType {
-  JS_ERRORS("js-errors", new TypeToken<Set<JsError>>() {
+  JS_ERRORS("js-errors", new TypeToken<Set<JsErrorLog>>() {
   }.getType()),
   STATUS_CODES("status-codes", new TypeToken<StatusCodesError>() {
   }.getType()),

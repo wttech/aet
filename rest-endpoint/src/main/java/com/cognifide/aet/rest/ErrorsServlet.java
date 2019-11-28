@@ -24,8 +24,9 @@ import com.cognifide.aet.communication.api.metadata.Step;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.Test;
 import com.cognifide.aet.communication.api.metadata.Url;
+import com.cognifide.aet.job.api.collector.JsErrorLog;
 import com.cognifide.aet.models.AccessibilityError;
-import com.cognifide.aet.models.JsError;
+import com.cognifide.aet.models.JsErrorWrapper;
 import com.cognifide.aet.models.StatusCodesError;
 import com.cognifide.aet.models.W3cHtml5Error;
 import com.cognifide.aet.rest.helpers.ErrorType;
@@ -37,7 +38,10 @@ import java.io.IOException;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -94,7 +98,7 @@ public class ErrorsServlet extends BasicDataServlet {
           .filter(t -> t.getName().equals(testName)).findFirst();
       if (test.isPresent()) {
         String errorType = Helper.getErrorTypeFromRequest(req);
-        List<Object> artifacts = processTest(test.get(), dbKey, errorType);
+        Map<String, List<Object>> artifacts = processTest(test.get(), dbKey, errorType);
 
         resp.setContentType(Helper.APPLICATION_JSON_CONTENT_TYPE);
         resp.getWriter().write(GSON.toJson(artifacts));
@@ -106,8 +110,9 @@ public class ErrorsServlet extends BasicDataServlet {
     }
   }
 
-  private List<Object> processTest(Test test, DBKey dbKey, String errorType) throws IOException {
-    List<Object> artifacts = new ArrayList<>();
+  private Map<String, List<Object>> processTest(Test test, DBKey dbKey, String errorType)
+      throws IOException {
+    Map<String, List<Object>> artifacts = new HashMap<>();
     for (Url url : test.getUrls()) {
       processUrl(url, dbKey, artifacts, errorType, url.getName());
     }
@@ -115,7 +120,8 @@ public class ErrorsServlet extends BasicDataServlet {
     return artifacts;
   }
 
-  private void processUrl(Url url, DBKey dbKey, List<Object> artifacts, String errorType,
+  private void processUrl(Url url, DBKey dbKey, Map<String, List<Object>> artifacts,
+      String errorType,
       String urlName)
       throws IOException {
     if (errorType != null) {
@@ -134,7 +140,8 @@ public class ErrorsServlet extends BasicDataServlet {
     }
   }
 
-  private void processStep(Step step, DBKey dbKey, List<Object> artifacts, String errorType,
+  private void processStep(Step step, DBKey dbKey, Map<String, List<Object>> artifacts,
+      String errorType,
       String urlName)
       throws IOException {
     Type type = ErrorType.getTypeByName(errorType);
@@ -147,45 +154,31 @@ public class ErrorsServlet extends BasicDataServlet {
         continue;
       }
       if (errorType.equals(ErrorType.JS_ERRORS.getErrorName())) {
-        Set<JsError> jsErrors = artifactsDAO.getJsonFormatArtifact(dbKey,
+        Set<JsErrorLog> jsErrors = artifactsDAO.getJsonFormatArtifact(dbKey,
             comparator.getStepResult().getArtifactId(), type);
-        jsErrors.forEach(er -> er.setType(ErrorType.JS_ERRORS.getErrorName()));
-        artifacts.addAll(jsErrors);
+        JsErrorWrapper jsErrorWrapper = new JsErrorWrapper(jsErrors, urlName);
+
+        mergeMap(artifacts, ErrorType.JS_ERRORS.getErrorName(), jsErrorWrapper);
       } else if (errorType.equals(ErrorType.STATUS_CODES.getErrorName())) {
         StatusCodesError sc = artifactsDAO.getJsonFormatArtifact(dbKey,
             comparator.getStepResult().getArtifactId(), type);
         sc.setUrlName(urlName);
-        sc.setType(ErrorType.STATUS_CODES.getErrorName());
-        artifacts.add(sc);
+
+        mergeMap(artifacts, ErrorType.STATUS_CODES.getErrorName(), sc);
       } else if (errorType.equals(ErrorType.ACCESSIBILITY.getErrorName())) {
         AccessibilityError accessibilityError = artifactsDAO.getJsonFormatArtifact(dbKey,
             comparator.getStepResult().getArtifactId(), type);
         accessibilityError.setUrlName(urlName);
-        accessibilityError.setType(ErrorType.ACCESSIBILITY.getErrorName());
-        artifacts.add(accessibilityError);
-      } else if(errorType.equals(ErrorType.SOURCE_W3CHTML5.getErrorName())) {
+
+        mergeMap(artifacts, ErrorType.ACCESSIBILITY.getErrorName(), accessibilityError);
+      } else if (errorType.equals(ErrorType.SOURCE_W3CHTML5.getErrorName())) {
         W3cHtml5Error error = artifactsDAO.getJsonFormatArtifact(dbKey,
             comparator.getStepResult().getArtifactId(), type);
         error.setUrlName(urlName);
-        error.setType(ErrorType.SOURCE_W3CHTML5.getErrorName());
-        artifacts.add(error);
+
+        mergeMap(artifacts, ErrorType.SOURCE_W3CHTML5.getErrorName(), error);
       }
     }
-    //for now working for js-errors
-//    if (errorType.equals(ErrorType.LAYOUT.getErrorName())) {
-//      //todo wyciagamy dane z "data" (i moze cos z artifactId - maskArtifactId)
-//
-//    } else if (errorType.equals(ErrorType.SOURCE.getErrorName())) {
-//      //todo wyciagamy dane z artifactId i cos z "data"
-//    } else if (errorType.equals(ErrorType.JS_ERRORS.getErrorName())) {
-//      for (Comparator comparator : step.getComparators()) {
-//        if (comparator.getStepResult() != null
-//            && comparator.getStepResult().getArtifactId() != null) {
-//          artifacts.addAll(artifactsDAO.getJsonFormatArtifact(dbKey,
-//              comparator.getStepResult().getArtifactId(), type));
-//        }
-//      }
-
   }
 
   private void createNotFoundTestResponse(HttpServletResponse response, String testName,
@@ -206,6 +199,14 @@ public class ErrorsServlet extends BasicDataServlet {
         responseAsJson(GSON, "Unable to get Suite Metadata with correlationId: %s for %s",
             correlationId, dbKey.toString())
     );
+  }
+
+  private void mergeMap(Map<String, List<Object>> map, String errorType, Object object) {
+    map.merge(errorType, new ArrayList<>(Collections.singletonList(object)),
+        (old, error) -> {
+          old.addAll(error);
+          return old;
+        });
   }
 
   @Override

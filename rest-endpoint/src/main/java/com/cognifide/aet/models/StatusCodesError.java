@@ -22,7 +22,6 @@ import java.util.List;
 public class StatusCodesError extends StatusCodesComparatorResult {
 
   private String urlName;
-  private String type;
 
   public StatusCodesError(
       List<StatusCode> statusCodes,
@@ -37,13 +36,5 @@ public class StatusCodesError extends StatusCodesComparatorResult {
 
   public void setUrlName(String urlName) {
     this.urlName = urlName;
-  }
-
-  public String getType() {
-    return type;
-  }
-
-  public void setType(String type) {
-    this.type = type;
   }
 }

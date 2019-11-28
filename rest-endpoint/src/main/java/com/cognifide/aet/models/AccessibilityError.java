@@ -23,7 +23,6 @@ import java.util.List;
 public class AccessibilityError extends AccessibilityReport {
 
   private String urlName;
-  private String type;
 
   public AccessibilityError(
       List<AccessibilityIssue> nonExcludedIssues,
@@ -39,13 +38,5 @@ public class AccessibilityError extends AccessibilityReport {
 
   public void setUrlName(String urlName) {
     this.urlName = urlName;
-  }
-
-  public String getType() {
-    return type;
-  }
-
-  public void setType(String type) {
-    this.type = type;
   }
 }

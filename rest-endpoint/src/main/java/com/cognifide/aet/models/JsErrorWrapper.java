@@ -16,20 +16,23 @@
 package com.cognifide.aet.models;
 
 import com.cognifide.aet.job.api.collector.JsErrorLog;
+import java.util.Set;
 
-public class JsError extends JsErrorLog {
+public class JsErrorWrapper {
 
-  private String type;
+  private Set<JsErrorLog> jsErrors;
+  private String urlName;
 
-  public JsError(String errorMessage, String sourceName, int lineNumber) {
-    super(errorMessage, sourceName, lineNumber);
+  public JsErrorWrapper(Set<JsErrorLog> jsErrors, String urlName) {
+    this.jsErrors = jsErrors;
+    this.urlName = urlName;
   }
 
-  public String getType() {
-    return type;
+  public void setJsErrors(Set<JsErrorLog> jsErrors) {
+    this.jsErrors = jsErrors;
   }
 
-  public void setType(String type) {
-    this.type = type;
+  public void setUrlName(String urlName) {
+    this.urlName = urlName;
   }
 }
