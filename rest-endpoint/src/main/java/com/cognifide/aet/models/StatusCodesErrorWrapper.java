@@ -15,21 +15,19 @@
  */
 package com.cognifide.aet.models;
 
-import com.cognifide.aet.job.common.collectors.accessibility.AccessibilityIssue;
-import com.cognifide.aet.job.common.comparators.accessibility.report.AccessibilityReport;
-import com.cognifide.aet.job.common.comparators.accessibility.report.AccessibilityReportConfiguration;
+import com.cognifide.aet.job.common.collectors.statuscodes.StatusCode;
+import com.cognifide.aet.job.common.comparators.statuscodes.StatusCodesComparatorResult;
 import java.util.List;
 
-public class AccessibilityError extends AccessibilityReport {
+public class StatusCodesErrorWrapper extends StatusCodesComparatorResult {
 
   private String urlName;
 
-  public AccessibilityError(
-      List<AccessibilityIssue> nonExcludedIssues,
-      List<AccessibilityIssue> excludedIssues,
-      int errorCount, int warningCount, int noticeCount,
-      AccessibilityReportConfiguration configuration) {
-    super(nonExcludedIssues, excludedIssues, errorCount, warningCount, noticeCount, configuration);
+  public StatusCodesErrorWrapper(
+      List<StatusCode> statusCodes,
+      List<StatusCode> filteredStatusCodes,
+      List<StatusCode> excludedStatusCodes) {
+    super(statusCodes, filteredStatusCodes, excludedStatusCodes);
   }
 
   public String getUrlName() {

@@ -15,26 +15,23 @@
  */
 package com.cognifide.aet.models;
 
-import com.cognifide.aet.job.common.collectors.statuscodes.StatusCode;
-import com.cognifide.aet.job.common.comparators.statuscodes.StatusCodesComparatorResult;
-import java.util.List;
+import com.cognifide.aet.job.common.comparators.cookie.CookieComparatorResult;
 
-public class StatusCodesError extends StatusCodesComparatorResult {
+public class CookieErrorWrapper {
 
-  private String urlName;
+  private final CookieComparatorResult result;
+  private final String urlName;
 
-  public StatusCodesError(
-      List<StatusCode> statusCodes,
-      List<StatusCode> filteredStatusCodes,
-      List<StatusCode> excludedStatusCodes) {
-    super(statusCodes, filteredStatusCodes, excludedStatusCodes);
+  public CookieErrorWrapper(CookieComparatorResult result, String urlName) {
+    this.result = result;
+    this.urlName = urlName;
+  }
+
+  public CookieComparatorResult getResult() {
+    return result;
   }
 
   public String getUrlName() {
     return urlName;
-  }
-
-  public void setUrlName(String urlName) {
-    this.urlName = urlName;
   }
 }

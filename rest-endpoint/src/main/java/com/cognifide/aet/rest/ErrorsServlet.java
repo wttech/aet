@@ -25,10 +25,17 @@ import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.Test;
 import com.cognifide.aet.communication.api.metadata.Url;
 import com.cognifide.aet.job.api.collector.JsErrorLog;
-import com.cognifide.aet.models.AccessibilityError;
+import com.cognifide.aet.job.common.comparators.cookie.CookieComparatorResult;
+import com.cognifide.aet.job.common.comparators.cookie.CookieCompareComparatorResult;
+import com.cognifide.aet.job.common.comparators.cookie.CookieTestComparatorResult;
+import com.cognifide.aet.job.common.comparators.source.diff.ResultDelta;
+import com.cognifide.aet.models.AccessibilityErrorWrapper;
+import com.cognifide.aet.models.CookieErrorWrapper;
 import com.cognifide.aet.models.JsErrorWrapper;
-import com.cognifide.aet.models.StatusCodesError;
-import com.cognifide.aet.models.W3cHtml5Error;
+import com.cognifide.aet.models.ScreenErrorWrapper;
+import com.cognifide.aet.models.SourceErrorWrapper;
+import com.cognifide.aet.models.StatusCodesErrorWrapper;
+import com.cognifide.aet.models.W3cHtml5ErrorWrapper;
 import com.cognifide.aet.rest.helpers.ErrorType;
 import com.cognifide.aet.vs.ArtifactsDAO;
 import com.cognifide.aet.vs.DBKey;
@@ -160,23 +167,51 @@ public class ErrorsServlet extends BasicDataServlet {
 
         mergeMap(artifacts, ErrorType.JS_ERRORS.getErrorName(), jsErrorWrapper);
       } else if (errorType.equals(ErrorType.STATUS_CODES.getErrorName())) {
-        StatusCodesError sc = artifactsDAO.getJsonFormatArtifact(dbKey,
+        StatusCodesErrorWrapper sc = artifactsDAO.getJsonFormatArtifact(dbKey,
             comparator.getStepResult().getArtifactId(), type);
         sc.setUrlName(urlName);
 
         mergeMap(artifacts, ErrorType.STATUS_CODES.getErrorName(), sc);
       } else if (errorType.equals(ErrorType.ACCESSIBILITY.getErrorName())) {
-        AccessibilityError accessibilityError = artifactsDAO.getJsonFormatArtifact(dbKey,
+        AccessibilityErrorWrapper accessibilityError = artifactsDAO.getJsonFormatArtifact(dbKey,
             comparator.getStepResult().getArtifactId(), type);
         accessibilityError.setUrlName(urlName);
 
         mergeMap(artifacts, ErrorType.ACCESSIBILITY.getErrorName(), accessibilityError);
-      } else if (errorType.equals(ErrorType.SOURCE_W3CHTML5.getErrorName())) {
-        W3cHtml5Error error = artifactsDAO.getJsonFormatArtifact(dbKey,
-            comparator.getStepResult().getArtifactId(), type);
-        error.setUrlName(urlName);
+      } else if (errorType.equals(ErrorType.SCREEN.getErrorName())) {
+        ScreenErrorWrapper screenError = new ScreenErrorWrapper(step.getName(),
+            comparator.getStepResult().getData(), urlName);
+        mergeMap(artifacts, ErrorType.SCREEN.getErrorName(), screenError);
+      } else if (errorType.equals("cookie")) {
+        if(comparator.getParameters().get("action").equals("compare")) {
+          type = ErrorType.COOKIE_COMPARE.getType();
+          CookieCompareComparatorResult result = artifactsDAO.getJsonFormatArtifact(dbKey,
+              comparator.getStepResult().getArtifactId(), type);
+          CookieErrorWrapper cookieError = new CookieErrorWrapper(result, urlName);
+          mergeMap(artifacts, "cookie", cookieError);
+        } else if(comparator.getParameters().get("action").equals("test")) {
+          type = ErrorType.COOKIE_TEST.getType();
+          CookieTestComparatorResult result = artifactsDAO.getJsonFormatArtifact(dbKey,
+              comparator.getStepResult().getArtifactId(), type);
+          CookieErrorWrapper cookieError = new CookieErrorWrapper(result, urlName);
+          mergeMap(artifacts, "cookie", cookieError);
+        }
+      } else if (errorType.equals("source")) {
+        if (comparator.getParameters().get("comparator").equals("w3c-html5")) {
+          type = ErrorType.SOURCE_W3CHTML5.getType();
+          W3cHtml5ErrorWrapper error = artifactsDAO.getJsonFormatArtifact(dbKey,
+              comparator.getStepResult().getArtifactId(), type);
+          error.setUrlName(urlName);
 
-        mergeMap(artifacts, ErrorType.SOURCE_W3CHTML5.getErrorName(), error);
+          mergeMap(artifacts, "source_w3c-html5", error);
+        } else if (comparator.getParameters().get("comparator").equals("source")) {
+          type = ErrorType.SOURCE.getType();
+          Map<String, List<ResultDelta>> result = artifactsDAO.getJsonFormatArtifact(dbKey,
+              comparator.getStepResult().getArtifactId(), type);
+          SourceErrorWrapper error = new SourceErrorWrapper(result, urlName,
+              comparator.getStepResult().getData());
+          mergeMap(artifacts, "source_source", error);
+        }
       }
     }
   }

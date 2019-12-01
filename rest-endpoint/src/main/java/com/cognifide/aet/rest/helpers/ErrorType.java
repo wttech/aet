@@ -17,11 +17,12 @@ package com.cognifide.aet.rest.helpers;
 
 import com.cognifide.aet.job.api.collector.JsErrorLog;
 import com.cognifide.aet.job.common.comparators.cookie.CookieComparatorResult;
+import com.cognifide.aet.job.common.comparators.cookie.CookieCompareComparatorResult;
+import com.cognifide.aet.job.common.comparators.cookie.CookieTestComparatorResult;
 import com.cognifide.aet.job.common.comparators.source.diff.ResultDelta;
-import com.cognifide.aet.models.AccessibilityError;
-import com.cognifide.aet.models.JsErrorWrapper;
-import com.cognifide.aet.models.StatusCodesError;
-import com.cognifide.aet.models.W3cHtml5Error;
+import com.cognifide.aet.models.AccessibilityErrorWrapper;
+import com.cognifide.aet.models.StatusCodesErrorWrapper;
+import com.cognifide.aet.models.W3cHtml5ErrorWrapper;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
 import java.util.HashMap;
@@ -32,16 +33,18 @@ import java.util.Set;
 public enum ErrorType {
   JS_ERRORS("js-errors", new TypeToken<Set<JsErrorLog>>() {
   }.getType()),
-  STATUS_CODES("status-codes", new TypeToken<StatusCodesError>() {
+  STATUS_CODES("status-codes", new TypeToken<StatusCodesErrorWrapper>() {
   }.getType()),
-  COOKIE("cookie", new TypeToken<CookieComparatorResult>() {
+  COOKIE_COMPARE("cookie-compare", new TypeToken<CookieCompareComparatorResult>() {
+  }.getType()),
+  COOKIE_TEST("cookie-test", new TypeToken<CookieTestComparatorResult>() {
   }.getType()),
   SCREEN("screen", null),
   SOURCE("source", new TypeToken<Map<String, List<ResultDelta>>>() {
   }.getType()),
-  SOURCE_W3CHTML5("source-w3c-html5", new TypeToken<W3cHtml5Error>() {
+  SOURCE_W3CHTML5("source-w3c-html5", new TypeToken<W3cHtml5ErrorWrapper>() {
   }.getType()),
-  ACCESSIBILITY("accessibility",new TypeToken<AccessibilityError>() {
+  ACCESSIBILITY("accessibility",new TypeToken<AccessibilityErrorWrapper>() {
   }.
 
   getType());
@@ -70,4 +73,8 @@ public enum ErrorType {
   public String getErrorName() {
     return errorName;
   }
+
+  public Type getType() {
+    return type;
   }
+}

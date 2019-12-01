@@ -15,24 +15,25 @@
  */
 package com.cognifide.aet.models;
 
-import com.cognifide.aet.job.api.collector.JsErrorLog;
-import java.util.Set;
+import com.cognifide.aet.job.common.comparators.w3chtml5.W3cHtml5ComparatorResult;
+import com.cognifide.aet.job.common.comparators.w3chtml5.W3cHtml5Issue;
+import java.util.List;
 
-public class JsErrorWrapper {
+public class W3cHtml5ErrorWrapper extends W3cHtml5ComparatorResult {
 
-  private final Set<JsErrorLog> jsErrors;
-  private final String urlName;
+  private String urlName;
 
-  public JsErrorWrapper(Set<JsErrorLog> jsErrors, String urlName) {
-    this.jsErrors = jsErrors;
-    this.urlName = urlName;
-  }
-
-  public Set<JsErrorLog> getJsErrors() {
-    return jsErrors;
+  public W3cHtml5ErrorWrapper(int errorCount, int warningCount,
+      List<W3cHtml5Issue> issues,
+      List<W3cHtml5Issue> excludedIssues) {
+    super(errorCount, warningCount, issues, excludedIssues);
   }
 
   public String getUrlName() {
     return urlName;
+  }
+
+  public void setUrlName(String urlName) {
+    this.urlName = urlName;
   }
 }

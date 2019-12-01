@@ -15,25 +15,29 @@
  */
 package com.cognifide.aet.models;
 
-import com.cognifide.aet.job.common.comparators.w3chtml5.W3cHtml5ComparatorResult;
-import com.cognifide.aet.job.common.comparators.w3chtml5.W3cHtml5Issue;
-import java.util.List;
+import java.util.Map;
 
-public class W3cHtml5Error extends W3cHtml5ComparatorResult {
+public class ScreenErrorWrapper {
 
-  private String urlName;
+  private final String name;
+  private final Map<String, String> data;
+  private final String urlName;
 
-  public W3cHtml5Error(int errorCount, int warningCount,
-      List<W3cHtml5Issue> issues,
-      List<W3cHtml5Issue> excludedIssues) {
-    super(errorCount, warningCount, issues, excludedIssues);
+  public ScreenErrorWrapper(String name, Map<String, String> data, String urlName) {
+    this.name = name;
+    this.data = data;
+    this.urlName = urlName;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public Map<String, String> getData() {
+    return data;
   }
 
   public String getUrlName() {
     return urlName;
-  }
-
-  public void setUrlName(String urlName) {
-    this.urlName = urlName;
   }
 }

@@ -15,24 +15,32 @@
  */
 package com.cognifide.aet.models;
 
-import com.cognifide.aet.job.api.collector.JsErrorLog;
-import java.util.Set;
+import com.cognifide.aet.job.common.comparators.source.diff.ResultDelta;
+import java.util.List;
+import java.util.Map;
 
-public class JsErrorWrapper {
+public class SourceErrorWrapper {
 
-  private final Set<JsErrorLog> jsErrors;
+  private final Map<String, List<ResultDelta>> result;
   private final String urlName;
+  private final Map<String, String> data;
 
-  public JsErrorWrapper(Set<JsErrorLog> jsErrors, String urlName) {
-    this.jsErrors = jsErrors;
+  public SourceErrorWrapper(Map<String, List<ResultDelta>> result, String urlName,
+      Map<String, String> data) {
+    this.result = result;
     this.urlName = urlName;
+    this.data = data;
   }
 
-  public Set<JsErrorLog> getJsErrors() {
-    return jsErrors;
+  public Map<String, List<ResultDelta>> getResult() {
+    return result;
   }
 
   public String getUrlName() {
     return urlName;
+  }
+
+  public Map<String, String> getData() {
+    return data;
   }
 }
