@@ -16,9 +16,15 @@
 package com.cognifide.aet.models;
 
 import com.cognifide.aet.job.api.collector.JsErrorLog;
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
 import java.util.Set;
 
 public class JsErrorWrapper {
+
+  public static final String ERROR_TYPE = "js-errors";
+  public static final Type ARTIFACT_TYPE = new TypeToken<Set<JsErrorLog>>() {
+  }.getType();
 
   private final Set<JsErrorLog> jsErrors;
   private final String urlName;

@@ -17,9 +17,16 @@ package com.cognifide.aet.models;
 
 import com.cognifide.aet.job.common.comparators.w3chtml5.W3cHtml5ComparatorResult;
 import com.cognifide.aet.job.common.comparators.w3chtml5.W3cHtml5Issue;
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
 import java.util.List;
 
 public class W3cHtml5ErrorWrapper extends W3cHtml5ComparatorResult {
+
+  public static final String COMPARATOR_TYPE = "w3c-html5";
+  public static final String RESULT_KEY = "source_w3c-html5";
+  public static final Type ARTIFACT_TYPE = new TypeToken<W3cHtml5ErrorWrapper>() {
+  }.getType();
 
   private String urlName;
 

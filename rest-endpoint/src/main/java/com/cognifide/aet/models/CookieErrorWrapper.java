@@ -16,8 +16,22 @@
 package com.cognifide.aet.models;
 
 import com.cognifide.aet.job.common.comparators.cookie.CookieComparatorResult;
+import com.cognifide.aet.job.common.comparators.cookie.CookieCompareComparatorResult;
+import com.cognifide.aet.job.common.comparators.cookie.CookieTestComparatorResult;
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
 
 public class CookieErrorWrapper {
+
+  public static final String ERROR_TYPE = "cookie";
+  public static final String ACTION_PARAM = "action";
+  public static final String ACTION_COMPARE = "compare";
+  public static final String ACTION_TEST = "test";
+
+  public static final Type ARTIFACT_COOKIE_COMPARE_TYPE = new TypeToken<CookieCompareComparatorResult>() {
+  }.getType();
+  public static final Type ARTIFACT_COOKIE_TEST_TYPE = new TypeToken<CookieTestComparatorResult>() {
+  }.getType();
 
   private final CookieComparatorResult result;
   private final String urlName;

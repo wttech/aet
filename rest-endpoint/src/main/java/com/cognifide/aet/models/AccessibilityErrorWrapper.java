@@ -18,9 +18,15 @@ package com.cognifide.aet.models;
 import com.cognifide.aet.job.common.collectors.accessibility.AccessibilityIssue;
 import com.cognifide.aet.job.common.comparators.accessibility.report.AccessibilityReport;
 import com.cognifide.aet.job.common.comparators.accessibility.report.AccessibilityReportConfiguration;
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
 import java.util.List;
 
 public class AccessibilityErrorWrapper extends AccessibilityReport {
+
+  public static final String ERROR_TYPE = "accessibility";
+  public static final Type ARTIFACT_TYPE = new TypeToken<AccessibilityErrorWrapper>() {
+  }.getType();
 
   private String urlName;
 

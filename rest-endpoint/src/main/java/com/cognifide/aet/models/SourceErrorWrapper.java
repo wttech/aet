@@ -16,10 +16,18 @@
 package com.cognifide.aet.models;
 
 import com.cognifide.aet.job.common.comparators.source.diff.ResultDelta;
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
 import java.util.List;
 import java.util.Map;
 
 public class SourceErrorWrapper {
+
+  public static final String ERROR_TYPE = "source";
+  public static final String COMPARATOR_PARAM = "comparator";
+  public static final String COMPARATOR_TYPE = "source";
+  public static final Type ARTIFACT_TYPE = new TypeToken<Map<String, List<ResultDelta>>>() {
+  }.getType();
 
   private final Map<String, List<ResultDelta>> result;
   private final String urlName;

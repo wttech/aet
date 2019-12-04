@@ -17,9 +17,15 @@ package com.cognifide.aet.models;
 
 import com.cognifide.aet.job.common.collectors.statuscodes.StatusCode;
 import com.cognifide.aet.job.common.comparators.statuscodes.StatusCodesComparatorResult;
+import com.google.gson.reflect.TypeToken;
+import java.lang.reflect.Type;
 import java.util.List;
 
 public class StatusCodesErrorWrapper extends StatusCodesComparatorResult {
+
+  public static final String ERROR_TYPE = "status-codes";
+  public static final Type ARTIFACT_TYPE = new TypeToken<StatusCodesErrorWrapper>() {
+  }.getType();
 
   private String urlName;
 

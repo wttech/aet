@@ -15,31 +15,25 @@
  */
 package com.cognifide.aet.models;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class ScreenErrorWrapper {
+public class ErrorsMap {
 
-  public static final String ERROR_TYPE = "screen";
+  private Map<String, List<Object>> map = new HashMap<>();
 
-  private final String name;
-  private final Map<String, String> data;
-  private final String urlName;
-
-  public ScreenErrorWrapper(String name, Map<String, String> data, String urlName) {
-    this.name = name;
-    this.data = data;
-    this.urlName = urlName;
+  public void mergeMap(String errorType, Object object) {
+    map.merge(errorType, new ArrayList<>(Collections.singletonList(object)),
+        (old, error) -> {
+          old.addAll(error);
+          return old;
+        });
   }
 
-  public String getName() {
-    return name;
-  }
-
-  public Map<String, String> getData() {
-    return data;
-  }
-
-  public String getUrlName() {
-    return urlName;
+  public Map<String, List<Object>> getMap() {
+    return map;
   }
 }
