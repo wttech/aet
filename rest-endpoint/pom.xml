@@ -43,8 +43,12 @@
       <artifactId>datastorage-api</artifactId>
     </dependency>
     <dependency>
-      <artifactId>jobs-api</artifactId>
       <groupId>com.cognifide.aet</groupId>
+      <artifactId>jobs-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.cognifide.aet</groupId>
+      <artifactId>jobs</artifactId>
     </dependency>
 
     <dependency>
