@@ -18,17 +18,23 @@ package com.cognifide.aet.rest;
 import static com.cognifide.aet.rest.Helper.isValidCorrelationId;
 import static com.cognifide.aet.rest.Helper.responseAsJson;
 
+import com.cognifide.aet.communication.api.metadata.Comparator;
+import com.cognifide.aet.communication.api.metadata.Step;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.Test;
-import com.cognifide.aet.models.ErrorsMap;
-import com.cognifide.aet.services.ErrorsService;
+import com.cognifide.aet.communication.api.metadata.Url;
+import com.cognifide.aet.rest.helpers.ErrorType;
 import com.cognifide.aet.vs.ArtifactsDAO;
 import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.StorageException;
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.osgi.service.component.annotations.Activate;
@@ -50,8 +56,6 @@ public class ErrorsServlet extends BasicDataServlet {
   private MetadataDAO metadataDAO;
   @Reference
   private ArtifactsDAO artifactsDAO;
-  @Reference
-  private ErrorsService errorsService;
 
   @Reference
   private transient HttpService httpService;
@@ -84,17 +88,62 @@ public class ErrorsServlet extends BasicDataServlet {
           .filter(t -> t.getName().equals(testName)).findFirst();
       if (test.isPresent()) {
         String errorType = Helper.getErrorTypeFromRequest(req);
-        ErrorsMap errorsMap = errorsService
-            .getErrorsFromTest(test.get(), dbKey, errorType);
+        List<Object> artifacts = processTest(test.get(), dbKey, errorType);
 
         resp.setContentType(Helper.APPLICATION_JSON_CONTENT_TYPE);
-        resp.getWriter().write(GSON.toJson(errorsMap.getMap()));
+        resp.getWriter().write(GSON.toJson(artifacts));
       } else {
         createNotFoundTestResponse(resp, testName, dbKey);
       }
     } else {
       createNotFoundSuiteResponse(resp, correlationId, dbKey);
     }
+  }
+
+  private List<Object> processTest(Test test, DBKey dbKey, String errorType) throws IOException {
+    List<Object> artifacts = new ArrayList<>();
+    for (Url url : test.getUrls()) {
+      processUrl(url, dbKey, artifacts, errorType);
+    }
+
+    return artifacts;
+  }
+
+  private void processUrl(Url url, DBKey dbKey, List<Object> artifacts, String errorType)
+      throws IOException {
+    if (errorType != null) {
+      List<Step> steps = url.getSteps().stream()
+          .filter(s -> s.getName().equals(errorType)).collect(Collectors.toList());
+      if (steps.isEmpty()) {
+        return;
+      }
+      for (Step step : steps) {
+        processStep(step, dbKey, artifacts, errorType);
+      }
+    } else {
+      for (Step step : url.getSteps()) {
+        processStep(step, dbKey, artifacts, step.getType());
+      }
+    }
+  }
+
+  private void processStep(Step step, DBKey dbKey, List<Object> artifacts, String errorType)
+      throws IOException {
+    Type type = ErrorType.getTypeByName(errorType);
+    //for now working for js-errors
+    if (type == null) {
+      return;
+    }
+    if (step.getComparators() != null) {
+      for (Comparator comparator : step.getComparators()) {
+        if (comparator.getStepResult() != null
+            && comparator.getStepResult().getArtifactId() != null) {
+          artifacts.addAll(artifactsDAO.getJsonFormatArtifact(dbKey,
+              comparator.getStepResult().getArtifactId(), type));
+        }
+      }
+    }
+
   }
 
   private void createNotFoundTestResponse(HttpServletResponse response, String testName,

@@ -13,32 +13,37 @@
  * or implied. See the License for the specific language governing permissions and limitations under
  * the License.
  */
-package com.cognifide.aet.models;
+package com.cognifide.aet.rest.helpers;
 
 import com.cognifide.aet.job.api.collector.JsErrorLog;
 import com.google.gson.reflect.TypeToken;
 import java.lang.reflect.Type;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
-public class JsErrorWrapper {
+public enum ErrorType {
+  JS_ERRORS("js-errors", new TypeToken<Set<JsErrorLog>>() {
+  }.getType());
 
-  public static final String ERROR_TYPE = "js-errors";
-  public static final Type ARTIFACT_TYPE = new TypeToken<Set<JsErrorLog>>() {
-  }.getType();
+  private final String errorName;
+  private final Type type;
 
-  private final Set<JsErrorLog> jsErrors;
-  private final String urlName;
-
-  public JsErrorWrapper(Set<JsErrorLog> jsErrors, String urlName) {
-    this.jsErrors = jsErrors;
-    this.urlName = urlName;
+  ErrorType(String errorName, Type type) {
+    this.errorName = errorName;
+    this.type = type;
   }
 
-  public Set<JsErrorLog> getJsErrors() {
-    return jsErrors;
+  private static final Map<String, Type> map;
+
+  static {
+    map = new HashMap<>();
+    for (ErrorType type : ErrorType.values()) {
+      map.put(type.errorName, type.type);
+    }
   }
 
-  public String getUrlName() {
-    return urlName;
+  public static Type getTypeByName(String name) {
+    return map.get(name);
   }
 }
