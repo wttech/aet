@@ -12,6 +12,7 @@ All notable changes to AET will be documented in this file.
 **List of changes that are finished but not yet released in any final version.**
 
 - [PR-522](https://github.com/Cognifide/aet/pull/522) Improve performance of generating /configs/list. ([#519](https://github.com/Cognifide/aet/issues/519))
+- [PR-554](https://github.com/Cognifide/aet/pull/554) Fix race condition under non-native bash environments ([#551](https://github.com/Cognifide/aet/issues/551))
 
 
 ## Version 3.3.0
