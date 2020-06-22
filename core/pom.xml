@@ -34,6 +34,7 @@
   <description>Root module for AET core functionalities</description>
 
   <modules>
+    <module>accessibility-report</module>
     <module>cleaner</module>
     <module>communication</module>
     <module>datastorage</module>

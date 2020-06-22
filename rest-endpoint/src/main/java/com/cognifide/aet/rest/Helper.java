@@ -30,6 +30,8 @@ public final class Helper {
   static final String METADATA_PART_PATH = "metadata";
   static final String RERUN_PART_PATH = "suite-rerun";
   static final String HISTORY_PART_PATH = "history";
+  static final String ACCESSIBILITY_PART_PATH = "/accessibility";
+  static final String AVAILABLE_PART_PATH = "/available";
   static final String REPORT_PART_PATH = "/report";
   static final String CONFIGS_PART_PATH = "/configs";
   static final String LOCK_PART_PATH = "/lock";
@@ -43,6 +45,7 @@ public final class Helper {
   public static final String VERSION_PARAM = "version";
   public static final String ID_PARAM = "id";
   public static final String TYPE_PARAM = "type";
+  public static final String EXTENSION_PARAM = "extension";
   public static final String REPORT_PART_PATH_DEFAULT_PAGE = "index.html";
   public static final String TEST_RERUN_PARAM = "testName";
   public static final String URL_RERUN_PARAM = "testUrl";
@@ -79,11 +82,19 @@ public final class Helper {
     return XUNIT_PART_PATH;
   }
 
+  public static String getAccessibilityReportAvailabilityPath() {
+    return REST_PREFIX + ACCESSIBILITY_PART_PATH + REPORT_PART_PATH + AVAILABLE_PART_PATH;
+  }
+
+  public static String getAccessibilityReportPath() {
+    return REST_PREFIX + ACCESSIBILITY_PART_PATH + REPORT_PART_PATH;
+  }
+
   public static String getReportPathDefaultPage() {
     return REPORT_PART_PATH + PATH_SEPARATOR + REPORT_PART_PATH_DEFAULT_PAGE;
   }
 
-  public static String getRerunPath(){
+  public static String getRerunPath() {
     return REST_PREFIX + PATH_SEPARATOR + RERUN_PART_PATH;
   }
 
