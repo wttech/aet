@@ -1,0 +1,16 @@
+.accessibility-level-form, .accessibility-format-form {
+  display: flex;
+  align-items: center;
+
+  .form-check {
+    margin-left: 15px;
+  }
+}
+
+.accessibility-format-form {
+  margin-top: 20px;
+}
+
+.report-correlation-id {
+  color: $gray_disabled;
+}
