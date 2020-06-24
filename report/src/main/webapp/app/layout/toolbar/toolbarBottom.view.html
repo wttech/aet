@@ -28,7 +28,7 @@
          data-ng-click="toolbarBottom.scrollSidepanel(false)">
         <i class="fas fa-crosshairs fa-sm"></i>
       </div>
-      <div 
+      <div
         ng-if="toolbarBottom.viewMode != 'suite' && toolbarBottom.viewMode != 'test' && toolbarBottom.isLastSuiteVersion"
         class="fontawesome-link"
         data-toggle="popover"
@@ -114,6 +114,20 @@
           </div>
         </a>
       </div>
+
+      <span class="accessibility-status pull-left"
+        data-toggle="popover"
+        data-content="{{toolbarBottom.canGenerateAccessibilityReport ? '<span>Click to generate accessibility report</span>' : '<span>No data to generate accessibility report</span>'}}"
+        data-html="true" data-trigger="hover"
+        data-ng-click="toolbarBottom.canGenerateAccessibilityReport && toolbarBottom.displayAccessibilityModal()">
+        <div ng-if="!toolbarBottom.canGenerateAccessibilityReport">
+          <i class="fas fa-universal-access icon-disabled" data-fa-transform="up-.5"></i>
+        </div>
+        <div ng-if="toolbarBottom.canGenerateAccessibilityReport">
+          <i class="fas fa-universal-access" data-fa-transform="up-.5"></i>
+        </div>
+      </span>
+
       <span class="comments-status pull-left"
         data-toggle="popover"
         data-ng-class="toolbarBottom.model.comment ? 'present' : 'absent'"
@@ -137,7 +151,7 @@
             data-trigger="hover"></i>
         Accept {{toolbarBottom.viewMode}}
       </span>
-    
+
       <span id="accept-test" class="button js-rebase-suite button-blue"
             data-ng-if="toolbarBottom.showAcceptButton()"
             data-ng-click="toolbarBottom.updatePatterns()"></i>

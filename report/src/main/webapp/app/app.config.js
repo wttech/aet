@@ -77,6 +77,7 @@ require.config({
     //modals
     'unsavedChangesModalController': 'layout/modal/unsavedChanges/unsavedChangesModal.controller',
     'noteModalController': 'layout/modal/note/noteModal.controller',
+    'accessibilityModalController': 'layout/modal/accessibility/accessibilityModal.controller',
     'historyModalController': 'layout/modal/history/historyModal.controller'
   },
   shim: {

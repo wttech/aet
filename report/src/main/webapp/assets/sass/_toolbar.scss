@@ -227,7 +227,7 @@
   }
 }
 
-.comments-status {
+.comments-status, .accessibility-status {
   font-family: $font_light;
   font-size: 30px;
   display: block;
@@ -292,4 +292,8 @@
 
 .suite-rerun p {
   margin-bottom: 3px;
+}
+
+.icon-disabled {
+  color: $gray_disabled;
 }
