@@ -19,7 +19,8 @@ define(['angularAMD', 'endpointConfiguration'], function (angularAMD) {
   'use strict';
   angularAMD.controller('accessibilityModalController', AccessibilityModalController);
 
-  function AccessibilityModalController($scope, $http, $uibModalInstance, model, $stateParams, $window, endpointConfiguration) {
+  function AccessibilityModalController($scope, $http, $uibModalInstance,
+     model, $stateParams, $window, endpointConfiguration) {
 
     var vm = this;
     init();
@@ -32,24 +33,23 @@ define(['angularAMD', 'endpointConfiguration'], function (angularAMD) {
       vm.report = {
         logLevel: 'ERROR',
         format: 'xlsx'
-      }
+      };
       vm.generateReport = generateReport;
       vm.cancelReport = cancelReport;
       vm.model = model;
     }
 
     function generateReport() {
-      const { company, correlationId, name: suite, project } = model;
-      const baseUrl = endpointConfiguration.getEndpoint().getUrl;
-      const downloadUrl = 'accessibility/report?' +
-      'company=' + company +
-      '&project=' + project +
-      '&suite=' + suite +
-      '&correlationId=' + correlationId +
+      var baseUrl = endpointConfiguration.getEndpoint().getUrl;
+      var downloadUrl = 'accessibility/report?' +
+      'company=' + model.company +
+      '&project=' + model.project +
+      '&suite=' + model.name +
+      '&correlationId=' + model.correlationId +
       '&type=' + vm.report.logLevel +
-      '&extenstion=' + vm.report.format;
+      '&extension=' + vm.report.format;
 
-      $window.open(baseUrl + downloadUrl, "_blank");
+      $window.open(baseUrl + downloadUrl, '_blank');
 
       $uibModalInstance.close();
     }
