@@ -85,6 +85,7 @@ class AccessibilityReportService {
                     .asSequence()
                     .filter { it.name == "accessibility" }
                     .map { it.comparators }
+                    .filterNotNull()
                     .flatMap { it.asSequence() }
                     .filter { it.type == "accessibility" }
                     .map { it.stepResult.artifactId }

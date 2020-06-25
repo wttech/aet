@@ -83,14 +83,11 @@ public class AccessibilityReportAvailabilityServlet extends BasicDataServlet {
                 .withObjectId(correlationId);
 
         boolean isAvailable = serviceTask.invokeIsAvailable();
-        Map<String, Boolean> json = new HashMap<>();
 
-        response.setContentType("application/json");
+        Map<String, Boolean> json = new HashMap<>();
         json.put("isAvailable", isAvailable);
 
-        if (!isAvailable) {
-          response.setStatus(HttpURLConnection.HTTP_NOT_FOUND);
-        }
+        response.setContentType("application/json");
 
         response.getWriter().write(GSON.toJson(json, new TypeToken<HashMap<String, Boolean>>() {}.getType()));
       } else {
@@ -124,7 +121,6 @@ public class AccessibilityReportAvailabilityServlet extends BasicDataServlet {
     response.getWriter()
         .write(responseAsJson(GSON, "Unable to get accessibility report with %s for %s", paramsValuesMessage, dbKey.toString()));
   }
-
 
   @Activate
   public void start() {
