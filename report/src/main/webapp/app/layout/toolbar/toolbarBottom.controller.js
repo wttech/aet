@@ -73,15 +73,15 @@ define([], function () {
      ***************************************/
 
     function updateAccessibilityInfo() {
-      const { company, correlationId, name: suite, project } = suiteInfoService.getInfo();
-      const url = endpointConfiguration.getEndpoint().getUrl;
+      var suiteInfo = suiteInfoService.getInfo();
+      var baseUrl = endpointConfiguration.getEndpoint().getUrl;
 
-      $http.get(url + 'accessibility/report/available', {
+      $http.get(baseUrl + 'accessibility/report/available', {
         params: {
-          company,
-          project,
-          suite,
-          correlationId
+          company: suiteInfo.company,
+          project: suiteInfo.project,
+          suite: suiteInfo.name,
+          correlationId: suiteInfo.correlationId
         }
       })
         .then(function (response) {

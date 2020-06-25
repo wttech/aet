@@ -119,7 +119,8 @@
         data-toggle="popover"
         data-content="{{toolbarBottom.canGenerateAccessibilityReport ? '<span>Click to generate accessibility report</span>' : '<span>No data to generate accessibility report</span>'}}"
         data-html="true" data-trigger="hover"
-        data-ng-click="toolbarBottom.canGenerateAccessibilityReport && toolbarBottom.displayAccessibilityModal()">
+        data-ng-click="toolbarBottom.canGenerateAccessibilityReport && toolbarBottom.displayAccessibilityModal()"
+        ng-show="toolbarBottom.viewMode == 'suite'">
         <div ng-if="!toolbarBottom.canGenerateAccessibilityReport">
           <i class="fas fa-universal-access icon-disabled" data-fa-transform="up-.5"></i>
         </div>
