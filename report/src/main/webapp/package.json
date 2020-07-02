@@ -16,6 +16,7 @@
     "bootstrap-sass": "~3.3.5",
     "jquery": "^2.2.3",
     "lodash": "^4.11.0",
+    "natives": "^1.1.6",
     "requirejs": "~2.1.8",
     "requirejs-text": "~2.0.10"
   },

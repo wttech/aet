@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<testsuites name="test-suite" tests="8" failures="4">
+    <testsuite name="first-test" tests="8">
+        <testcase name="screen (layout) on: https://pl.wikipedia.org/wiki/SpaceX">
+            <failure type="FAILED"/>
+        </testcase>
+        <testcase name="source (w3c-html5) on: https://pl.wikipedia.org/wiki/SpaceX">
+            <failure type="FAILED"/>
+        </testcase>
+        <testcase name="status-codes on: https://pl.wikipedia.org/wiki/SpaceX"/>
+        <testcase name="js-errors on: https://pl.wikipedia.org/wiki/SpaceX"/>
+        <testcase name="screen (layout) on: https://pl.wikipedia.org/wiki/Microsoft">
+            <failure type="FAILED"/>
+        </testcase>
+        <testcase name="source (w3c-html5) on: https://pl.wikipedia.org/wiki/Microsoft">
+            <failure type="FAILED"/>
+        </testcase>
+        <testcase name="status-codes on: https://pl.wikipedia.org/wiki/Microsoft"/>
+        <testcase name="js-errors on: https://pl.wikipedia.org/wiki/Microsoft"/>
+    </testsuite>
+</testsuites>
