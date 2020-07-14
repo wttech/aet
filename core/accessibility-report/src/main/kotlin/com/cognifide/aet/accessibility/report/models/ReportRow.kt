@@ -16,6 +16,7 @@
 package com.cognifide.aet.accessibility.report.models
 
 import org.apache.commons.text.StringEscapeUtils
+import org.slf4j.LoggerFactory
 import java.net.MalformedURLException
 import java.net.URL
 
@@ -34,8 +35,12 @@ class ReportRow(
     return try {
       URL(issue.url).path
     } catch (e: MalformedURLException) {
-      e.printStackTrace()
+      LOG.warn("Exception for provided URL: ${issue.url}", e)
       issue.url
     }
+  }
+
+  companion object {
+    private val LOG by lazy { LoggerFactory.getLogger(ReportRow::class.java) }
   }
 }

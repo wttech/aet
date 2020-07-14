@@ -79,7 +79,9 @@ class XslxFileWriter(task: AccessibilityReportService.ServiceTask) : BaseFileWri
 
   @Throws(IOException::class)
   override fun toByteArray(): ByteArray {
-    XslxColumnModel.forEach { column -> sheet.autoSizeColumn(column.ordinal) }
+    // FIXME: will not work under current docker image due to a bug with X & fonts
+    // This should be retested after updating alpine jdk8 image
+    // XslxColumnModel.forEach { column -> sheet.autoSizeColumn(column.ordinal) }
 
     sheet.setAutoFilter(
         CellRangeAddress(0, rowsCounter.get(), 0, XslxColumnModel.itemsTotal))

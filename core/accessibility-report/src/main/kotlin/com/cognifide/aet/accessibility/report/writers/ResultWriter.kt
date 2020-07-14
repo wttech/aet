@@ -79,16 +79,11 @@ class ResultWriter(private val writer: BaseFileWriter) {
   }
 
   companion object Factory {
-    fun forTask(task: ServiceTask): ResultWriter {
-      val filename = task.filename //fixme should this be filename or sth else?
-
-      val writer: BaseFileWriter =
-          when (task.fileType) {
-            FileType.TEXT -> PlainFileWriter(task)
-            FileType.XSLX -> XslxFileWriter(task)
-          }
-
-      return ResultWriter(writer)
-    }
+    fun forTask(task: ServiceTask): ResultWriter =
+        when (task.fileType) {
+          FileType.TEXT -> PlainFileWriter(task)
+          FileType.XSLX -> XslxFileWriter(task)
+        }
+            .let { ResultWriter(it) }
   }
 }
