@@ -13,7 +13,7 @@ All notable changes to AET will be documented in this file.
 
 - [PR-522](https://github.com/Cognifide/aet/pull/522) Improve performance of generating /configs/list. ([#519](https://github.com/Cognifide/aet/issues/519))
 - [PR-554](https://github.com/Cognifide/aet/pull/554) Fix race condition under non-native bash environments ([#551](https://github.com/Cognifide/aet/issues/551))
-
+- [PR-564](https://github.com/Cognifide/aet/pull/564) Accessibility Issues Provider ([#557](https://github.com/Cognifide/aet/issues/557))
 
 ## Version 3.3.0
 
@@ -49,7 +49,6 @@ All notable changes to AET will be documented in this file.
 - [PR-490](https://github.com/Cognifide/aet/pull/490) Fix removing too many artifacts by cleaner job by terminating processing in case of timeout
 
 ## Version 3.2.0
-
 
 - [PR-451](https://github.com/Cognifide/aet/pull/451) Collectors and comparators configured by single config number
 - [PR-449](https://github.com/Cognifide/aet/pull/449) Improvements to the Winter Edition Theme

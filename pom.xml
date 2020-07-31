@@ -112,7 +112,6 @@
     <!-- Versions -->
     <source.java.version>1.8</source.java.version>
     <jetty.plugin.version>9.2.10.v20150310</jetty.plugin.version>
-<!--    <mongo.driver.version>3.2.2</mongo.driver.version>-->
     <junit.version>4.11</junit.version>
 
     <!-- properties for maven uploads -->
