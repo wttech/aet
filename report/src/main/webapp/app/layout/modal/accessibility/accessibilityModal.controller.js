@@ -31,22 +31,38 @@ define(['angularAMD', 'endpointConfiguration'], function (angularAMD) {
 
     function init() {
       vm.report = {
-        logLevel: 'ERROR',
+        verbosityLevel: { error: true, warn: true },
         format: 'xlsx'
       };
       vm.generateReport = generateReport;
       vm.cancelReport = cancelReport;
+      vm.canGenerateReport = canGenerateReport;
       vm.model = model;
+    }
+
+    function verbosityLevelToUrl() {
+      var verbosityLevel = vm.report.verbosityLevel;
+      return Object.keys(verbosityLevel)
+        .filter(function (value) {
+          return !!verbosityLevel[value];
+        })
+        .join(',');
+    }
+
+    function canGenerateReport() {
+      return !!verbosityLevelToUrl();
     }
 
     function generateReport() {
       var baseUrl = endpointConfiguration.getEndpoint().getUrl;
+      var verbosityToUrl = verbosityLevelToUrl();
+
       var downloadUrl = 'accessibility/report?' +
       'company=' + model.company +
       '&project=' + model.project +
       '&suite=' + model.name +
       '&correlationId=' + model.correlationId +
-      '&type=' + vm.report.logLevel +
+      '&verbosity=' + verbosityToUrl +
       '&extension=' + vm.report.format;
 
       $window.open(baseUrl + downloadUrl, '_blank');

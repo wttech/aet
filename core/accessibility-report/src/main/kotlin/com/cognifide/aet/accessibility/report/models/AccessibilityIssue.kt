@@ -68,6 +68,12 @@ class AccessibilityIssue(
 
   enum class IssueType {
     ERROR, WARN, NOTICE, UNKNOWN;
+
+    companion object {
+      fun fromString(issue: String): IssueType? =
+          values().find { it.toString() == issue.toUpperCase() }
+              ?: throw IllegalArgumentException("Unrecognized value for issue verbosity was provided: $issue")
+    }
   }
 
   companion object {

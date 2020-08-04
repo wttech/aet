@@ -66,7 +66,7 @@ class AccessibilityReportService {
                 }
                 .flatMap { report ->
                   report.nonExcludedIssues
-                      .filter { it.type == task.verbosityLevel }
+                      .filter { it.type in task.verbosityLevels }
                       .onEach { it.url = entry.key }
                 }
           }
@@ -110,13 +110,13 @@ class AccessibilityReportService {
   inner class ServiceTask {
     lateinit var dbKey: DBKey
     lateinit var correlationId: String
-    lateinit var verbosityLevel: IssueType
+    lateinit var verbosityLevels: Set<IssueType>
     lateinit var fileType: FileType
     lateinit var setter: Consumer<String>
     val filename: String by lazy {
       correlationId +
           "-" +
-          verbosityLevel.toString().toLowerCase() +
+          verbosityLevels.joinToString("_").toLowerCase() +
           "-" +
           LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HHmmss")) +
           "." +
@@ -134,8 +134,14 @@ class AccessibilityReportService {
     }
 
     @Throws(IllegalArgumentException::class)
-    fun withVerbosity(verbosityLevel: String): ServiceTask {
-      this.verbosityLevel = IssueType.valueOf(verbosityLevel.toUpperCase())
+    fun withVerbosity(verbosityLevels: String): ServiceTask {
+      this.verbosityLevels = verbosityLevels.split(',')
+          .mapNotNull { IssueType.fromString(it) }
+          .filter { it != IssueType.UNKNOWN }
+          .toSet()
+
+      require(this.verbosityLevels.isNotEmpty()) { "No valid verbosity values were provided, aborting" }
+
       return this
     }
 

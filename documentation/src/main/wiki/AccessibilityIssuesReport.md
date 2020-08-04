@@ -14,7 +14,7 @@ This functionality is entirely dependent on the availability of the accessiblity
 The option to generate report will not be available if a given suite doesn't have any accessibility collectors and comparators configured
 (see [AccessibilityCollector] and [AccessibilityComparator] for information on how to do it).
 
-You can choose the verbosity of the report (issue severity, what kind will be reported in the result):
+You can choose the verbosity of the report (issues severity, what kind will be reported in the result):
 - NOTICE
 - WARNING
 - ERROR
@@ -58,7 +58,7 @@ URL is as follows:
 Where:
 - `domain`: domain on which AETs are set up (eg. `localhost`)
 - `company`, `project`, `suite`, `correlationId`: for these the report will be generated, if available
-- `type`: verbosity level of the report (`NOTICE`, `WARNING`, `ERROR`)
+- `verbosity`: verbosity level of the report, comma separated values: `NOTICE`, `WARNING`, `ERROR` (case-insensitive; e.g.: `notice,error`)
 - `extension`: type of the report (`xlsx` or `txt`)
 
 **Querying for report availability**

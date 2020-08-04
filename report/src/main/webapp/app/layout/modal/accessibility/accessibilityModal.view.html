@@ -23,25 +23,25 @@
   <h3 class="modal-title">Accessibility report generator</h3>
 </div>
 <div class="modal-body">
-  <p class="report-correlation-id">Correlation ID: {{accessibilityModal.model.correlationId}}</p>
+  <p class="report-correlation-id">For correlation ID: {{accessibilityModal.model.correlationId}}</p>
   <form class="accessibility-level-form">
-    <label>Level of report:</label>
+    <label>Issues' levels to include:</label>
     <div class="form-check">
-      <input class="form-check-input" type="radio" ng-model="accessibilityModal.report.logLevel" id="errorRadio" value="ERROR"
+      <input class="form-check-input" type="checkbox" ng-model="accessibilityModal.report.verbosityLevel.error" id="errorCheck" value="ERROR"
         checked>
-      <label class="form-check-label" for="errorRadio">
+      <label class="form-check-label" for="errorCheck">
         ERROR
       </label>
     </div>
     <div class="form-check">
-      <input class="form-check-input" type="radio" ng-model="accessibilityModal.report.logLevel" id="warnRadio" value="WARN">
-      <label class="form-check-label" for="warnRadio">
+      <input class="form-check-input" type="checkbox" ng-model="accessibilityModal.report.verbosityLevel.warn" id="warnCheck" value="WARN">
+      <label class="form-check-label" for="warnCheck">
         WARN
       </label>
     </div>
     <div class="form-check">
-      <input class="form-check-input" type="radio" ng-model="accessibilityModal.report.logLevel" id="infoRadio" value="NOTICE">
-      <label class="form-check-label" for="infoRadio">
+      <input class="form-check-input" type="checkbox" ng-model="accessibilityModal.report.verbosityLevel.notice" id="infoCheck" value="NOTICE">
+      <label class="form-check-label" for="infoCheck">
         NOTICE
       </label>
     </div>
@@ -72,7 +72,7 @@
     <div>
       <button class="btn btn-warning" type="button" data-ng-click="accessibilityModal.cancelReport()">Cancel
       </button>
-      <button class="btn btn-primary" type="button" data-ng-click="accessibilityModal.generateReport()">Generate report
+      <button class="btn btn-primary" type="button" ng-disabled="!accessibilityModal.canGenerateReport()" data-ng-click="accessibilityModal.generateReport()">Generate report
       </button>
     </div>
   </div>

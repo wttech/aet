@@ -45,6 +45,7 @@ public final class Helper {
   public static final String VERSION_PARAM = "version";
   public static final String ID_PARAM = "id";
   public static final String TYPE_PARAM = "type";
+  public static final String VERBOSITY_PARAM = "verbosity";
   public static final String EXTENSION_PARAM = "extension";
   public static final String REPORT_PART_PATH_DEFAULT_PAGE = "index.html";
   public static final String TEST_RERUN_PARAM = "testName";

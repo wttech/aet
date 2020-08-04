@@ -65,7 +65,7 @@ public class AccessibilityReportServlet extends BasicDataServlet {
   protected void process(DBKey dbKey, HttpServletRequest request, HttpServletResponse response)
       throws IOException {
     String correlationId = request.getParameter(Helper.CORRELATION_ID_PARAM);
-    String verbosityType = request.getParameter(Helper.TYPE_PARAM);
+    String verbosityLevels = request.getParameter(Helper.VERBOSITY_PARAM);
     String extension = request.getParameter(Helper.EXTENSION_PARAM);
 
     response.setHeader(APP_VERSION_HEADER, bundleVersionProvider.getBundleVersion());
@@ -78,7 +78,7 @@ public class AccessibilityReportServlet extends BasicDataServlet {
                 .newTask()
                 .withDbKey(dbKey)
                 .withObjectId(correlationId)
-                .withVerbosity(verbosityType)
+                .withVerbosity(verbosityLevels)
                 .withExtension(extension)
                 .withMimetypeSetter(response::setContentType);
 
