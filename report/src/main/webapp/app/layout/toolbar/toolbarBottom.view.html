@@ -29,7 +29,7 @@
         <i class="fas fa-crosshairs fa-sm"></i>
       </div>
       <div
-        ng-if="toolbarBottom.viewMode != 'suite' && toolbarBottom.viewMode != 'test' && toolbarBottom.isLastSuiteVersion"
+        ng-show="toolbarBottom.viewMode != 'suite' && toolbarBottom.viewMode != 'test' && toolbarBottom.isLastSuiteVersion"
         class="fontawesome-link"
         data-toggle="popover"
         data-content="Rerun current URL"
@@ -38,7 +38,7 @@
         data-ng-click="toolbarBottom.rerunURL(toolbarBottom.model.url)">
         <i class="far fa-play-circle fa-sm"></i>
       </div>
-      <div ng-if="toolbarBottom.viewMode == 'suite' && toolbarBottom.isLastSuiteVersion"
+      <div ng-show="toolbarBottom.viewMode == 'suite' && toolbarBottom.isLastSuiteVersion"
            class="fontawesome-link"
            data-toggle="popover"
            data-content="Rerun current suite"
@@ -47,7 +47,7 @@
            data-ng-click="toolbarBottom.rerunSuite()">
         <i class="far fa-play-circle fa-sm"></i>
       </div>
-      <div ng-if="toolbarBottom.viewMode != 'url' && toolbarBottom.viewMode != 'suite' && toolbarBottom.isLastSuiteVersion" class="fontawesome-link"
+      <div ng-show="toolbarBottom.viewMode != 'url' && toolbarBottom.viewMode != 'suite' && toolbarBottom.isLastSuiteVersion" class="fontawesome-link"
            data-toggle="popover"
            data-content="Rerun current test"
            data-trigger="hover"
@@ -86,7 +86,7 @@
         data-trigger="hover"
         data-container="body"
         data-ng-click="toolbarBottom.rerunTest()"
-        ng-if="toolbarBottom.isLastSuiteVersion">
+        ng-show="toolbarBottom.isLastSuiteVersion">
       <i class="far fa-play-circle fa-sm"></i>
       </div>
       <span class="preformatted">test:</span><span>{{toolbarBottom.model.testGroupName}}</span>
