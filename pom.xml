@@ -275,7 +275,7 @@
       <dependency>
         <groupId>org.apache.camel</groupId>
         <artifactId>camel-core</artifactId>
-        <version>2.21.1</version>
+        <version>2.24.0</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
@@ -449,6 +449,16 @@
         <version>${project.version}</version>
         <scope>provided</scope>
       </dependency>
+
+      <!-- Template engine-->
+
+      <dependency>
+        <groupId>org.freemarker</groupId>
+        <artifactId>freemarker</artifactId>
+        <version>2.3.29</version>
+        <scope>provided</scope>
+      </dependency>
+
 
       <!-- Tests -->
       <dependency>
@@ -628,6 +638,7 @@
               <exclude>**/*.zip</exclude>
 
               <exclude>**/*.json</exclude>
+              <exclude>**/*.svg</exclude>
 
               <!-- Eclipse files -->
               <exclude>**/.project</exclude>

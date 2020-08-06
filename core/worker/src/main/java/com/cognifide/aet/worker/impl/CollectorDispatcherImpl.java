@@ -64,9 +64,7 @@ public class CollectorDispatcherImpl implements CollectorDispatcher {
           collectorJobData.getSuiteName(),
           collectorJobData.getTestName());
 
-      final String urlWithDomain = StringUtils.trimToEmpty(url.getDomain()) + url.getUrl();
-      CollectorJob collectorJob = getConfiguredCollector(step, urlWithDomain,
-          webCommunicationWrapper, collectorJobData);
+      CollectorJob collectorJob = getConfiguredCollector(step, url, webCommunicationWrapper, collectorJobData);
       ExecutionTimer timer = ExecutionTimer.createAndRun("collector");
       CollectorStepResult result = null;
       try {
@@ -104,20 +102,20 @@ public class CollectorDispatcherImpl implements CollectorDispatcher {
     return cause;
   }
 
-  private CollectorJob getConfiguredCollector(Step currentStep, String urlWithDomain,
+  private CollectorJob getConfiguredCollector(Step currentStep, Url url,
       WebCommunicationWrapper webCommunicationWrapper, CollectorJobData jobData)
       throws ParametersException {
     final String collectorType = currentStep.getType();
     if (jobRegistry.hasJob(collectorType)) {
-      CollectorProperties collectorProperties = new CollectorProperties(urlWithDomain,
-          jobData.getCompany(), jobData.getProject(), currentStep.getPattern());
+      CollectorProperties collectorProperties = new CollectorProperties(url.getDomain(),
+          url.getUrl(), jobData.getCompany(), jobData.getProject(), currentStep.getPattern());
       return jobRegistry.getCollectorFactory(collectorType)
           .createInstance(collectorProperties, currentStep.getParameters(),
               webCommunicationWrapper);
     } else {
       throw new ParametersException(String
           .format("Can not find collector with name '%s' while processing url: '%s'", collectorType,
-              urlWithDomain));
+              url.getUrl()));
     }
   }
 

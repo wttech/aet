@@ -13,7 +13,7 @@ Module name: **wait-for-element-to-be-visible**
 | --------- | ------------- | ----------- | --------- |
 | `xpath` | | an xpath locator which identifies the image to be found and loaded within a web page | xpath or css |
 | `css`   | | a css selector which identifies the image to be found and loaded within a web page | xpath or css |
-| `timeout` | 1000ms | a value of timeout for the image to load, in milliseconds. The max value of this parameter is 15000 milliseconds (15 seconds). | no (the default will be used) |
+| `timeout` | 1000ms | a value of timeout for the image to load, in milliseconds. | no (the default will be used) |
 
 ##### Example Usage
 

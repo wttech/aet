@@ -169,8 +169,8 @@ while $process_status; do
     extract_code_and_body "$status_response"
 
     if [ $code -eq 200 ]; then
-        status=$(echo $body | jq -r ".status")
-        message=$(echo $body | jq -r ".message")
+        status=$(echo "$body" | jq -r ".status")
+        message=$(echo "$body" | jq -r ".message")
 
         case "$status" in
             "FINISHED")

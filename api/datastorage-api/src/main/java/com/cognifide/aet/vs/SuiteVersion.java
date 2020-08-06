@@ -15,14 +15,19 @@
  */
 package com.cognifide.aet.vs;
 
+import com.cognifide.aet.communication.api.metadata.Suite;
+
 public class SuiteVersion {
   private final String correlationId;
 
   private final Integer version;
 
-  public SuiteVersion(String correlationId, Integer version) {
+  private final Suite.Timestamp runTimestamp;
+
+  public SuiteVersion(String correlationId, Integer version, Suite.Timestamp runTimestamp) {
     this.correlationId = correlationId;
     this.version = version;
+    this.runTimestamp = runTimestamp;
   }
 
   public String getCorrelationId() {
@@ -31,5 +36,9 @@ public class SuiteVersion {
 
   public Integer getVersion() {
     return version;
+  }
+
+  public Suite.Timestamp getRunTimestamp() {
+    return runTimestamp;
   }
 }
