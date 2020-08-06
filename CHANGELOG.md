@@ -10,6 +10,7 @@ All notable changes to AET will be documented in this file.
 ## Unreleased
 
 **List of changes that are finished but not yet released in any final version.**
+- [PR-525](https://github.com/Cognifide/aet/pull/525) Added tests ordering. ([#509](https://github.com/Cognifide/aet/issues/509))
 
 - [PR-524](https://github.com/Cognifide/aet/pull/524) Remove handling unescaped URLs in suites
 - [PR-526](https://github.com/Cognifide/aet/pull/526) Added sending urls to collectors in packets. ([#431](https://github.com/Cognifide/aet/issues/431))
