@@ -7,7 +7,6 @@ You may see all changes in the [Changelog](https://github.com/Cognifide/aet/blob
 
 ## Unreleased
 
-## Version 3.3.1
 Changes:
 * All suites have to be valid xmls. This is mostly related to URL's whch can have special characters like '&'. Such characters have to be escaped.
 This changes requires to update all suites and escape all URL's inside. 
