@@ -9,7 +9,7 @@
   "author": "Cognifide",
   "license": "Apache-2.0",
   "dependencies": {
-    "angular": "1.5.5",
+    "angular": "1.8.0",
     "angular-amd": "^0.2.1",
     "angular-ui-bootstrap": "^1.1.0",
     "angular-ui-router": "^0.2.18",
