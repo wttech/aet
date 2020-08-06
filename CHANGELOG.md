@@ -10,8 +10,9 @@ All notable changes to AET will be documented in this file.
 ## Unreleased
 
 **List of changes that are finished but not yet released in any final version.**
-- [PR-526](https://github.com/Cognifide/aet/pull/526) Added sending urls to collectors in packets. ([#431](https://github.com/Cognifide/aet/issues/431))
 
+- [PR-524](https://github.com/Cognifide/aet/pull/524) Remove handling unescaped URLs in suites
+- [PR-526](https://github.com/Cognifide/aet/pull/526) Added sending urls to collectors in packets. ([#431](https://github.com/Cognifide/aet/issues/431))
 - [PR-565](https://github.com/Cognifide/aet/pull/565) Fixing styles of note-editor icon ([#371](https://github.com/Cognifide/aet/issues/371))
 - [PR-567](https://github.com/Cognifide/aet/pull/567) Added missing tooltips in the report - "Previous url" and "Next url" ([#566](https://github.com/Cognifide/aet/issues/566))
 - [PR-563](https://github.com/Cognifide/aet/pull/563) Fixed bug with tooltips for "Re-run" buttons. ([#476](https://github.com/Cognifide/aet/issues/476))
