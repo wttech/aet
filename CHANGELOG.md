@@ -11,6 +11,8 @@ All notable changes to AET will be documented in this file.
 
 **List of changes that are finished but not yet released in any final version.**
 
+- [PR-567](https://github.com/Cognifide/aet/pull/567) Added missing tooltips in the report - "Previous url" and "Next url" ([#566](https://github.com/Cognifide/aet/issues/566))
+- [PR-563](https://github.com/Cognifide/aet/pull/563) Fixed bug with tooltips for "Re-run" buttons. ([#476](https://github.com/Cognifide/aet/issues/476))
 - [PR-522](https://github.com/Cognifide/aet/pull/522) Improve performance of generating /configs/list. ([#519](https://github.com/Cognifide/aet/issues/519))
 - [PR-554](https://github.com/Cognifide/aet/pull/554) Fix race condition under non-native bash environments ([#551](https://github.com/Cognifide/aet/issues/551))
 - [PR-564](https://github.com/Cognifide/aet/pull/564) Accessibility Issues Provider ([#557](https://github.com/Cognifide/aet/issues/557))
@@ -18,11 +20,11 @@ All notable changes to AET will be documented in this file.
 ## Version 3.3.0
 
 - [PR-479](https://github.com/Cognifide/aet/pull/479) Added Secure and HttpOnly flags for cookies. ([#477](https://github.com/Cognifide/aet/issues/477))
-- [PR-506](https://github.com/Cognifide/aet/pull/506) About tab ([#475](https://github.com/Cognifide/aet/issues/475)) 
-- [PR-462](https://github.com/Cognifide/aet/pull/462) Popup window unification([#367](https://github.com/Cognifide/aet/issues/367)) 
+- [PR-506](https://github.com/Cognifide/aet/pull/506) About tab ([#475](https://github.com/Cognifide/aet/issues/475))
+- [PR-462](https://github.com/Cognifide/aet/pull/462) Popup window unification([#367](https://github.com/Cognifide/aet/issues/367))
 - [PR-489](https://github.com/Cognifide/aet/pull/489) Cleaner integration tests
 - [PR-480](https://github.com/Cognifide/aet/pull/480) Test summary stats on the main report page. ([#474](https://github.com/Cognifide/aet/issues/474))
-- [PR-459](https://github.com/Cognifide/aet/pull/459) Print more meaningful error messages when suite.xml is malformed ([#436](https://github.com/Cognifide/aet/issues/436)) 
+- [PR-459](https://github.com/Cognifide/aet/pull/459) Print more meaningful error messages when suite.xml is malformed ([#436](https://github.com/Cognifide/aet/issues/436))
 - [PR-517](https://github.com/Cognifide/aet/pull/517) Single URL rerun fixed for named URLs ([#487](https://github.com/Cognifide/aet/issues/487))
 - [PR-516](https://github.com/Cognifide/aet/pull/516) Added option to change headers added by Chrome instance. ([#515](https://github.com/Cognifide/aet/issues/515))
 - [PR-520](https://github.com/Cognifide/aet/pull/520) Fix displaying test tiles
@@ -34,15 +36,15 @@ All notable changes to AET will be documented in this file.
 
 ## Version 3.2.1
 
-- [PR-469](https://github.com/Cognifide/aet/pull/469) Fix WebAPI issues([#425](https://github.com/Cognifide/aet/issues/425)) 
+- [PR-469](https://github.com/Cognifide/aet/pull/469) Fix WebAPI issues([#425](https://github.com/Cognifide/aet/issues/425))
 - [PR-439](https://github.com/Cognifide/aet/pull/439) Fixed duplicating line and column numbers in accessibility tab
 - [PR-360](https://github.com/Cognifide/aet/pull/360) Keyboard shortcuts for 'Accept/Revert url/test' buttons ([#317](https://github.com/Cognifide/aet/issues/317))
 - [PR-432](https://github.com/Cognifide/aet/pull/432) Fixed issue with lack of clear message for erroneous suite definition.
 - [PR-472](https://github.com/Cognifide/aet/pull/472) Return message when database does not exists and set suite status to MISSING_DATABASE ([#341](https://github.com/Cognifide/aet/issues/341))
 - [PR-363](https://github.com/Cognifide/aet/pull/363) Fixed saving case-level notes
 - [PR-470](https://github.com/Cognifide/aet/pull/470) Security vulnerabilities fix ([#407](https://github.com/Cognifide/aet/issues/407))
-- [PR-468](https://github.com/Cognifide/aet/pull/468) Add loggers in collector/modifier ([#446](https://github.com/Cognifide/aet/issues/446)) 
-- [PR-461](https://github.com/Cognifide/aet/pull/461) Generating correct correlationId when suite name is overridden([#440](https://github.com/Cognifide/aet/issues/440)) 
+- [PR-468](https://github.com/Cognifide/aet/pull/468) Add loggers in collector/modifier ([#446](https://github.com/Cognifide/aet/issues/446))
+- [PR-461](https://github.com/Cognifide/aet/pull/461) Generating correct correlationId when suite name is overridden([#440](https://github.com/Cognifide/aet/issues/440))
 - [PR-413](https://github.com/Cognifide/aet/pull/413) Added ability to show full page source when there has been no difference discovered ([#369](https://github.com/Cognifide/aet/issues/369))
 - [PR-463](https://github.com/Cognifide/aet/pull/463) Removed dependency to Joda time library
 - [PR-488](https://github.com/Cognifide/aet/pull/488) Fix SuiteRemoveCondition unit test
@@ -53,25 +55,25 @@ All notable changes to AET will be documented in this file.
 - [PR-451](https://github.com/Cognifide/aet/pull/451) Collectors and comparators configured by single config number
 - [PR-449](https://github.com/Cognifide/aet/pull/449) Improvements to the Winter Edition Theme
 - [PR-354](https://github.com/Cognifide/aet/pull/354) Remove jmsEndpointConfig information from communication settings endpoint ([#352](https://github.com/Cognifide/aet/issues/352))
-- [PR-412](https://github.com/Cognifide/aet/pull/412) ([PR-336](https://github.com/Cognifide/aet/pull/336), [PR-337](https://github.com/Cognifide/aet/pull/337), [PR-395](https://github.com/Cognifide/aet/pull/395)) - Added rerun functionality for suite, test and url 
+- [PR-412](https://github.com/Cognifide/aet/pull/412) ([PR-336](https://github.com/Cognifide/aet/pull/336), [PR-337](https://github.com/Cognifide/aet/pull/337), [PR-395](https://github.com/Cognifide/aet/pull/395)) - Added rerun functionality for suite, test and url
 - [PR-429](https://github.com/Cognifide/aet/pull/429) - `aet-cookbook` version updated to [`v5.1.1`](https://github.com/Cognifide/aet-cookbook/blob/master/CHANGELOG.md#511) in Vagrant. **Important**: please follow the instructions from [PR-43 description](https://github.com/Cognifide/aet-cookbook/pull/43) in order to keep the MongoDB data on your local environment.
 - [PR-422](https://github.com/Cognifide/aet/pull/422) RunnerConfiguration's urlPackageSize property got set to 1
 - [PR-430](https://github.com/Cognifide/aet/pull/430) Upgraded HTML codesniffer to latest release (3.2.0)
 - [PR-385](https://github.com/Cognifide/aet/pull/385) Fixed ChefDK and vagrant-berkshelf versions
 - [PR-404](https://github.com/Cognifide/aet/pull/404) Added missing tooltip for conditional tests
 - [PR-408](https://github.com/Cognifide/aet/pull/408) Advanced Screen Comparision button layout fix
-- [PR-410](https://github.com/Cognifide/aet/pull/410) Notification that displays when exclude-elements are not found on page now shows what specific elements were not found([#372](https://github.com/Cognifide/aet/issues/372)) 
+- [PR-410](https://github.com/Cognifide/aet/pull/410) Notification that displays when exclude-elements are not found on page now shows what specific elements were not found([#372](https://github.com/Cognifide/aet/issues/372))
 
 ## Version 3.1.0
 
 - [PR-409](https://github.com/Cognifide/aet/pull/409) Added sources link in "view source" url
 - [PR-394](https://github.com/Cognifide/aet/pull/394) Added scroll modifier
 - [PR-399](https://github.com/Cognifide/aet/pull/399) Bug fix on side panel - conditional tests ([#398](https://github.com/Cognifide/aet/issues/398))
-- [PR-396](https://github.com/Cognifide/aet/pull/396) Added horizontal scrollbar for wide pages ([#393](https://github.com/Cognifide/aet/issues/393)) 
+- [PR-396](https://github.com/Cognifide/aet/pull/396) Added horizontal scrollbar for wide pages ([#393](https://github.com/Cognifide/aet/issues/393))
 - [PR-403](https://github.com/Cognifide/aet/pull/403) Conditionally passed tests can be accepted ([#400](https://github.com/Cognifide/aet/issues/400))
 - [PR-387](https://github.com/Cognifide/aet/pull/387) Set max allowed page screenshot height to 35k pixels.
 - [PR-401](https://github.com/Cognifide/aet/pull/401) Added new regex param `sourcePattern` to [JS Errors Data Filter](https://github.com/Cognifide/aet/wiki/JSErrorsDataFilter)
-- [PR-397](https://github.com/Cognifide/aet/pull/397) Add algorithm to enable taking long screenshots without resolution-sleep-resolution workaround 
+- [PR-397](https://github.com/Cognifide/aet/pull/397) Add algorithm to enable taking long screenshots without resolution-sleep-resolution workaround
 
 ## Version 3.0.1
 
@@ -171,7 +173,7 @@ All notable changes to AET will be documented in this file.
 ## Version 2.0.2
 - [PR-44](https://github.com/Cognifide/aet/pull/44) [ScreenCollector](https://github.com/Cognifide/aet/wiki/ScreenCollector) enhancement: added ability to take screenshots of parts of the page by using css or xpath element selectors
 - [PR-41](https://github.com/Cognifide/aet/pull/41) Added new [Replace Text](https://github.com/Cognifide/aet/wiki/ReplaceTextModifier) modifier and  [Click](https://github.com/Cognifide/aet/wiki/ClickModifier)
- and [Hide](https://github.com/Cognifide/aet/wiki/HideModifier) Modifiers allows to use css selectors as parameters. 
+ and [Hide](https://github.com/Cognifide/aet/wiki/HideModifier) Modifiers allows to use css selectors as parameters.
 - [PR-39](https://github.com/Cognifide/aet/pull/39) Fixed filtering w3cHtml issues and update nuvalidator to the newest version
 - [PR-31](https://github.com/Cognifide/aet/pull/31) Fixed source report artifact error
 - [PR-30](https://github.com/Cognifide/aet/pull/30) Fixed cookie report display in 'test' action mode
