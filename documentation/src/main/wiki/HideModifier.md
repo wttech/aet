@@ -15,7 +15,7 @@ Module name: **hide**
 | --------- | ----- | ----------- | --------- |
 | `xpath` | xpath_to_element | Xpath to element(s) to hide | xpath or css |
 | `css` | css_selector_to_element | css selector to element(s) to hide | xpath or css |
-| `timeout` | 1000ms | The timeout for the element to appear, in milliseconds. The max value of this parameter is 15000 milliseconds (15 seconds). | no (default will be used) |
+| `timeout` | 1000ms | The timeout for the element to appear, in milliseconds. | no (default will be used) |
 | `leaveBlankSpace` | boolean | Defines if element(s) should be invisible (effect as using `display=none`) or should be not displayed (effect as using `visibility=hidden`). When set to `true`, blank and transparent space is left in place of the hidden element, otherwise, element is completely removed from the view. When not defined, hide modifier behaves as if `leaveBlankSpace` property was set to `true`. | no |
 
 ##### Example Usage

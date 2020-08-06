@@ -54,7 +54,7 @@ class LoginModifierConfig {
 
   private static final String FORCE_LOGIN = "force-login";
 
-  private static final String DEFAULT_CHECK_TIMEOUT_PARAM = "1000";
+  private static final String DEFAULT_CHECK_TIMEOUT_PARAM = "5000";
 
   private static final String RETRIAL_NUMBER_PARAM = "retrial-number";
 
@@ -98,8 +98,6 @@ class LoginModifierConfig {
         .toInt(getParameter(params, RETRIAL_NUMBER_PARAM, DEFAULT_RETRIAL_NUMBER));
 
     ParametersValidator.checkNotBlank(loginPage, "`login-page` parameter is mandatory");
-    ParametersValidator.checkRange(delayBeforeLoginCheckOrReattempt, 0, 10000,
-        "Timeout duration should be greater than 0 and less than 10 seconds");
     ParametersValidator
         .checkRange(retrialNumber, 1, Integer.MAX_VALUE, "Retrial number has to be at least 1");
   }

@@ -1,4 +1,3 @@
-<?xml version="1.0" encoding="UTF-8"?>
 <!--
 
     AET
@@ -18,22 +17,17 @@
     limitations under the License.
 
 -->
-<suite name="TS1" company="Cognifide" >
-	<test name="test2" useProxy="false">
-		<collect>
-			<open/>
-			<sleep duration="1500"/>
-			<screen/>
-			<source/>
-		</collect>
-		<compare>
-			<screen/>
-			<source comparator="w3c"/>
-		</compare>
-		<urls>
-			<url  name="value" href="http://www.google.pl&" 	name1="value1" name2="value2"/>
-			<url href="https://www.google.pl/search?q=googe&oq=googe&aqs=chrome..69i57j0l5.767j0j7&sourceid=chrome&es_sm=93&ie=UTF-8"/>
-			<url href="http://www.google.pl/search?g=<>'"/>
-		</urls>
-	</test>
-</suite>
+<#import "core.ftl" as u>
+
+<@u.page>
+<h1>Total ${size} projects are present in database.</h1><hr>
+<div class="container-fluid">
+  <div class="list-group">
+  <#list data as project>
+    <a href="?project=${project.getProject()}&company=${project.getCompany()}" class="list-group-item list-group-item-action">
+        Project: <strong>${project.getProject()}</strong> in company: <strong>${project.getCompany()}</strong>.
+    </a>
+  </#list>
+  </div>
+</div>
+</@u.page>

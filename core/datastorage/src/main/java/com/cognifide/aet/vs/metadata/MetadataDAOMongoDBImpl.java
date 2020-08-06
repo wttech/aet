@@ -25,6 +25,7 @@ import com.cognifide.aet.vs.SuiteVersion;
 import com.cognifide.aet.vs.mongodb.MongoDBClient;
 import com.google.common.base.Predicates;
 import com.google.common.collect.Collections2;
+import com.mongodb.client.DistinctIterable;
 import com.mongodb.client.FindIterable;
 import com.mongodb.client.MongoCollection;
 import com.mongodb.client.MongoDatabase;
@@ -43,6 +44,7 @@ import org.osgi.service.component.annotations.Reference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+
 @Component(immediate = true)
 public class MetadataDAOMongoDBImpl implements MetadataDAO {
 
@@ -57,6 +59,11 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
   private static final String SUITE_VERSION_PARAM_NAME = "version";
 
   private static final String CORRELATION_ID_PARAM_NAME = "correlationId";
+
+  private final transient  DocumentConverter<Suite> suiteConverter = new DocumentConverter<>(Suite.class);
+
+  private final transient DocumentConverter<SuiteVersion> suiteVersionConverter =
+          new DocumentConverter<>(SuiteVersion.class);
 
   @Reference
   private transient MongoDBClient client;
@@ -109,7 +116,7 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
         .sort(Sorts.descending(SUITE_VERSION_PARAM_NAME))
         .limit(1);
     final Document result = found.first();
-    return new DocumentConverter(result).toSuite();
+    return suiteConverter.convert(result);
   }
 
   @Override
@@ -122,7 +129,7 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
         .find(Filters.and(Filters.eq(SUITE_PARAM_NAME, name),
             Filters.eq(SUITE_VERSION_PARAM_NAME, Integer.parseInt(version))));
     final Document result = found.first();
-    return new DocumentConverter(result).toSuite();
+    return suiteConverter.convert(result);
   }
 
   @Override
@@ -136,7 +143,7 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
         .sort(Sorts.descending(SUITE_VERSION_PARAM_NAME))
         .limit(1);
     final Document result = found.first();
-    return new DocumentConverter(result).toSuite();
+    return suiteConverter.convert(result);
   }
 
   @Override
@@ -158,10 +165,23 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
         .sort(Sorts.descending(SUITE_VERSION_PARAM_NAME));
 
     return StreamSupport.stream(found.spliterator(), false)
-        .map(document -> new DocumentConverter(document).toSuite())
+        .map(suiteConverter::convert)
         .collect(Collectors.toList());
   }
 
+  @Override
+  public List<String> listDistinctSuitesNames(DBKey dbKey) throws StorageException {
+    MongoCollection<Document> metadata = getMetadataCollection(dbKey);
+    LOGGER.debug("Fetching unique suites names for company: `{}`, project: `{}`.", dbKey.getCompany(),
+            dbKey.getProject());
+
+    final DistinctIterable<String> found = metadata.distinct("name", String.class);
+
+    return StreamSupport.stream(found.spliterator(), false)
+            .sorted().collect(Collectors.toList());
+  }
+
+  @Override
   public List<SuiteVersion> listSuiteVersions(DBKey dbKey, String name) throws StorageException {
     MongoCollection<Document> metadata = getMetadataCollection(dbKey);
     LOGGER.debug("Fetching all versions of suite: `{}` , company: `{}`, project: `{}`.", name,
@@ -173,9 +193,7 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
         .sort(Sorts.descending(SUITE_VERSION_PARAM_NAME));
 
     return StreamSupport.stream(found.spliterator(), false)
-        .map(document -> new SuiteVersion(
-            document.getString(CORRELATION_ID_PARAM_NAME),
-            document.getInteger(SUITE_VERSION_PARAM_NAME)))
+        .map(suiteVersionConverter::convert)
         .collect(Collectors.toList());
   }
 
@@ -230,6 +248,6 @@ public class MetadataDAOMongoDBImpl implements MetadataDAO {
   public boolean isDatabase(DBKey dbKey) {
     final String dbName = MongoDBClient.getDbName(dbKey.getCompany(), dbKey.getProject());
     final MongoDatabase database = client.getDatabase(dbName, true);
-    return database != null ? true : false;
+    return database != null;
   }
 }

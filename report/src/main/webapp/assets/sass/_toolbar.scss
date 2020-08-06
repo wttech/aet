@@ -216,12 +216,11 @@
 
     .button {
       float: left;
-      margin-left: 15px;
+      margin-right: 15px;
     }
 
     .tab-content-toolbar & {
       padding-top: 3px;
-      padding-right: 15px;
       height: 47px;
     }
   }
@@ -233,7 +232,7 @@
   display: block;
   line-height: 44px;
   cursor: pointer;
-  margin-right: 10px;
+  margin: -3px 0 0 10px;
 
   &.small {
     line-height: 37px;
@@ -250,6 +249,7 @@
 }
 
 .tab-content-toolbar {
+  padding: 0 20px;
 
   @media (max-width: 1300px) {
     height: 94px;
@@ -261,6 +261,10 @@
 
   .toolbar-blocks {
     display: inline;
+  }
+
+  .toolbar-button {
+    margin-top: 3px;
   }
 }
 

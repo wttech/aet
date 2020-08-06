@@ -31,8 +31,6 @@ abstract public class WebElementsLocatorParams {
 
   protected static final String EXCLUDE_ELEMENT_PARAM = "exclude-elements";
 
-  private static final long TIMEOUT_SECONDS_MAX_VALUE = 15L;
-
   private static final long TIMEOUT_SECONDS_DEFAULT_VALUE = 1L;
 
   private By locator;
@@ -75,9 +73,6 @@ abstract public class WebElementsLocatorParams {
           .convert(Long.valueOf(timeoutString), TimeUnit.MILLISECONDS);
       if (timeoutInSeconds < 0) {
         throw new ParametersException("'timeout' parameter value should be greater or equal zero.");
-      } else if (TIMEOUT_SECONDS_MAX_VALUE < timeoutInSeconds) {
-        throw new ParametersException("'timeout' parameter value can't be greater than "
-            + Long.toString(TIMEOUT_SECONDS_MAX_VALUE) + " seconds.");
       }
     }
   }

@@ -1,4 +1,4 @@
-<%--
+<!--
 
     AET
 
@@ -16,5 +16,19 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 
---%>
-<%@ include file="/includes/basePage.jsp" %>
+-->
+<#import "core.ftl" as u>
+
+<@u.page>
+<h1>Project: <strong>${project}</strong> in company: <strong>${company}</strong></h1>
+<h3>Project has ${size} suites.</h3><hr>
+<div class="container-fluid">
+  <div class="list-group mb-4">
+  <#list data as name>
+    <a href="?project=${project}&company=${company}&name=${name}" class="list-group-item list-group-item-action">
+      Suite: <strong>${name}</strong>
+    </a>
+  </#list>
+  </div>
+</div>
+</@u.page>

@@ -17,8 +17,8 @@ package com.cognifide.aet.runner.processing.data.wrappers;
 
 import com.cognifide.aet.communication.api.metadata.Test;
 import com.cognifide.aet.communication.api.metadata.Url;
-import com.cognifide.aet.communication.api.wrappers.MetadataRunDecorator;
 import com.cognifide.aet.communication.api.wrappers.Run;
+import com.cognifide.aet.runner.processing.data.UrlPacket;
 import java.util.List;
 import java.util.Optional;
 
@@ -61,7 +61,7 @@ public abstract class RunIndexWrapper<T> {
     return objectToRunWrapper;
   }
 
-  public abstract List<MetadataRunDecorator<Url>> getUrls();
+  public abstract List<UrlPacket> getUrlPackets();
 
   public abstract int countUrls();
 

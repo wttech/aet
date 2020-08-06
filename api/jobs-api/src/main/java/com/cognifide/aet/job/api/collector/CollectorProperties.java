@@ -16,20 +16,31 @@
 package com.cognifide.aet.job.api.collector;
 
 import com.cognifide.aet.job.api.StepProperties;
+import org.apache.commons.lang3.StringUtils;
 
 public class CollectorProperties extends StepProperties {
 
-  private static final long serialVersionUID = -188750694404101821L;
+  private static final long serialVersionUID = -7759549743792782981L;
 
-  private final String url;
+  private final String path;
 
-  public CollectorProperties(String url, String company, String project, String patternId) {
+  private final String domain;
+
+  public CollectorProperties(String domain, String path, String company, String project, String patternId) {
     super(company, project, patternId);
-    this.url = url;
+    this.domain = domain;
+    this.path = path;
   }
 
   public String getUrl() {
-    return url;
+    return StringUtils.trimToEmpty(domain) + path;
   }
 
+  public String getPath() {
+    return path;
+  }
+
+  public String getDomain() {
+    return domain;
+  }
 }
