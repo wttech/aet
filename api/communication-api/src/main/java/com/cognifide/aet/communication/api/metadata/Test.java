@@ -123,6 +123,12 @@ public class Test implements Serializable, Commentable, Named {
             .findFirst();
   }
 
+  public Optional<Url> findUrl(String url) {
+      return this.urls.stream()
+              .filter(u -> u.getUrl().equals(url))
+              .findFirst();
+  }
+
   public void setUrls(Set<Url> urls) {
     this.urls = urls;
   }

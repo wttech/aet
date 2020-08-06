@@ -2,7 +2,7 @@
 
 # AET
 <p align="center">
-  <img src="https://raw.githubusercontent.com/Cognifide/aet/master/misc/img/aet-logo-black.png?raw=true" alt="AET Logo"/>
+  <img src="https://raw.githubusercontent.com/Cognifide/aet/master/misc/img/aet-logo-blue.png?raw=true" alt="AET Logo"/>
 </p>
 
 ## Misc

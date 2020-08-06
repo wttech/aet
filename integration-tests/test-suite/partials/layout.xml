@@ -532,5 +532,62 @@
 		</urls>
 	</test>
 
+	<test name="S-comparator-Layout-Auto-Height-1px-Page">
+		<collect>
+			<open/>
+			<resolution width="767"/>
+			<screen/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/1px_height_page.jsp"/>
+		</urls>
+	</test>
+
+	<test name="S-comparator-Layout-Auto-Height-0px-Page">
+		<collect>
+			<open/>
+			<resolution width="767"/>
+			<screen/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/0px_height_page.jsp"/>
+		</urls>
+	</test>
+
+	<test name="S-comparator-Layout-Auto-Height-0px-Page-With-Partial">
+		<collect>
+			<open/>
+			<resolution width="767"/>
+			<screen css=".someclass"/>
+		</collect>
+		<compare>
+			<screen comparator="layout"/>
+		</compare>
+		<urls>
+			<url href="comparators/layout/0px_height_page_partial.jsp"/>
+		</urls>
+	</test>
+
+	<test name="S-comparator-Layout-Auto-Height-Partial-Bigger-Than-Page">
+		<collect>
+			<open/>
+			<resolution width="767"/>
+			<screen css="body > div"/>
+		</collect>
+		<compare>
+			<screen comparator="layout" />
+		</compare>
+		<urls>
+			<url href="comparators/layout/partial_bigger_than_page.jsp"/>
+		</urls>
+	</test>
+
+
 	<!-- Layout-Comparator END -->
 </suite>

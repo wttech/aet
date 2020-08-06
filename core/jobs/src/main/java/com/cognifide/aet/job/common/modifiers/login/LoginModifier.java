@@ -17,11 +17,13 @@ package com.cognifide.aet.job.common.modifiers.login;
 
 import com.cognifide.aet.communication.api.metadata.CollectorStepResult;
 import com.cognifide.aet.job.api.collector.CollectorJob;
+import com.cognifide.aet.job.api.collector.CollectorProperties;
 import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import com.cognifide.aet.job.common.utils.javascript.JavaScriptJobExecutor;
 import java.util.Map;
+import org.apache.commons.lang3.StringUtils;
 import org.openqa.selenium.Cookie;
 import org.openqa.selenium.WebDriver;
 import org.slf4j.Logger;
@@ -34,14 +36,16 @@ public class LoginModifier implements CollectorJob {
   private static final Logger LOGGER = LoggerFactory.getLogger(LoginModifier.class);
 
   private final WebCommunicationWrapper webCommunicationWrapper;
-
   private final WebDriver webDriver;
+  private final CollectorProperties collectorProperties;
 
   private LoginModifierConfig config;
 
-  LoginModifier(WebCommunicationWrapper webCommunicationWrapper) {
+  LoginModifier(WebCommunicationWrapper webCommunicationWrapper,
+      CollectorProperties collectorProperties) {
     this.webCommunicationWrapper = webCommunicationWrapper;
     this.webDriver = webCommunicationWrapper.getWebDriver();
+    this.collectorProperties = collectorProperties;
   }
 
   @Override
@@ -92,7 +96,13 @@ public class LoginModifier implements CollectorJob {
   private void loginToForm() throws ProcessingException {
     LOGGER
         .info("Attempting to login user: {} on site {}", config.getLogin(), config.getLoginPage());
-    webDriver.get(config.getLoginPage());
+    final String loginUrl;
+    if (config.getLoginPage().startsWith("http")) {
+      loginUrl = config.getLoginPage();
+    } else {
+      loginUrl = StringUtils.trimToEmpty(collectorProperties.getDomain()) + config.getLoginPage();
+    }
+    webDriver.get(loginUrl);
     LoginFormComponent form = new LoginFormComponent(webDriver, config.getLoginInputSelector(),
         config.getPasswordInputSelector(), config.getSubmitButtonSelector(),
         new JavaScriptJobExecutor(webDriver));

@@ -13,7 +13,7 @@ Module name: **wait-for-element-to-be-visible**
 | --------- | ------------- | ----------- | --------- |
 | `xpath` | | an xpath locator which identifies the web element to be found within a web page | xpath or css |
 | `css`   | | a css selector which identifies the web element to be found within a web page | xpath or css |
-| `timeout` | 1000ms | a value of timeout for the web element to appear, in milliseconds. The max value of this parameter is 15000 milliseconds (15 seconds). | no (the default value will be used) |
+| `timeout` | 1000ms | a value of timeout for the web element to appear, in milliseconds. | no (the default value will be used) |
 
 ##### Example Usage
 

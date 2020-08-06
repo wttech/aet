@@ -31,7 +31,19 @@ define([], function () {
      ***************************************/
 
     function updateSuiteView() {
-      vm.tests = metadataAccessService.getTests();
+      var tests = metadataAccessService.getTests();
+      vm.testWrappers = [];
+      _.forEach(tests, function (test) {
+        var urlStats = {};
+        _.forEach(test.urls, function (url) {
+          var status = url.getStatus();
+          urlStats[status] = urlStats[status] ? urlStats[status] + 1 : 1;
+        });
+        vm.testWrappers.push({
+          test: test,
+          stats: urlStats
+        });
+      });
     }
   }
 });
