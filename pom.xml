@@ -638,6 +638,7 @@
               <exclude>**/*.zip</exclude>
 
               <exclude>**/*.json</exclude>
+              <exclude>**/*.svg</exclude>
 
               <!-- Eclipse files -->
               <exclude>**/.project</exclude>
