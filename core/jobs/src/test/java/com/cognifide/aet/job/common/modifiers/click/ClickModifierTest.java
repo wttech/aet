@@ -91,15 +91,7 @@ public class ClickModifierTest {
     setupParams(PARAM_TIMEOUT_VALUE, "", null);
     tested.setParameters(params);
   }
-
-
-  @Test(expected = ParametersException.class)
-  public void setParameters_whenTooBgTimeoutParamIsProvided_thenExceptionIsThrown()
-      throws ParametersException {
-    setupParams("300000", PARAM_XPATH_VALUE, null);
-    tested.setParameters(params);
-  }
-
+  
   @Test(expected = ParametersException.class)
   public void setParameters_whenNoParamsIsProvided_thenExceptionIsThrown()
       throws ParametersException {

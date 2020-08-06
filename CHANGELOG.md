@@ -11,9 +11,11 @@ All notable changes to AET will be documented in this file.
 
 **List of changes that are finished but not yet released in any final version.**
 
+- [PR-565](https://github.com/Cognifide/aet/pull/565) Fixing styles of note-editor icon ([#371](https://github.com/Cognifide/aet/issues/371))
 - [PR-567](https://github.com/Cognifide/aet/pull/567) Added missing tooltips in the report - "Previous url" and "Next url" ([#566](https://github.com/Cognifide/aet/issues/566))
 - [PR-563](https://github.com/Cognifide/aet/pull/563) Fixed bug with tooltips for "Re-run" buttons. ([#476](https://github.com/Cognifide/aet/issues/476))
 - [PR-522](https://github.com/Cognifide/aet/pull/522) Improve performance of generating /configs/list. ([#519](https://github.com/Cognifide/aet/issues/519))
+- [PR-530](https://github.com/Cognifide/aet/pull/530) Remove max timeouts limitation for login and WebElements wait ([#99](https://github.com/Cognifide/aet/issues/99))
 - [PR-554](https://github.com/Cognifide/aet/pull/554) Fix race condition under non-native bash environments ([#551](https://github.com/Cognifide/aet/issues/551))
 - [PR-564](https://github.com/Cognifide/aet/pull/564) Accessibility Issues Provider ([#557](https://github.com/Cognifide/aet/issues/557))
 
