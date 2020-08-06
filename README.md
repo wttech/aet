@@ -1,4 +1,4 @@
-![Cognifide logo](http://cognifide.github.io/images/cognifide-logo.png)
+![Cognifide logo](https://assets.cognifide.com/github/cognifide-logo.png)
 
 [![Build Status](https://travis-ci.org/Cognifide/aet.svg?branch=master)](https://travis-ci.org/Cognifide/aet)
 [![Apache License, Version 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](http://www.apache.org/licenses/)
@@ -6,7 +6,7 @@
 
 # AET
 <p align="center">
-  <img src="https://github.com/Cognifide/aet/blob/master/misc/img/aet-logo-black.png?raw=true"
+  <img src="https://github.com/Cognifide/aet/blob/master/misc/img/aet-logo-blue.png?raw=true"
          alt="AET Logo"/>
 </p>
 
@@ -54,6 +54,13 @@ AET helps testers to ensure that a change in one part of the software has not in
 * Check page **accessibility** with [HTML_CodeSniffer](http://squizlabs.github.io/HTML_CodeSniffer/).
 * Check and modify page **cookies**.
 
+## How to start
+To setup fully functional AET instance use one of the following:
+- [AET cookbook](https://github.com/Cognifide/aet-cookbook), you may run local instance using [AET Vagrant](https://github.com/Cognifide/aet/wiki/BasicSetup#set-up-vagrant).
+- [AET Docker images](https://github.com/Skejven/aet-docker), you may run local instance using [sample AET Swarm](https://github.com/Skejven/aet-docker/tree/master/example-aet-swarm).
+
+For more details on how to run AET tests, see [AET in 10 minutes](https://github.com/Cognifide/aet/wiki/AETIn10Minutes) guide.
+
 ## AET architecture
 The AET System consists of 7 units:
 
@@ -68,18 +75,6 @@ The AET System consists of 7 units:
 ![aet-architecture](misc/img/aet-architecture.png)
 
 Thanks to using AET Maven Plugin as a Client application, AET is easy to integrate with CI Tools like Jenkins or Bamboo.
-
-## How to start
-Please see our [AET in 10 minutes](https://github.com/Cognifide/aet/wiki/AETIn10Minutes) guide to start using AET.
-
-To run **AET** tests the following tools are required:
-
-* [Maven](https://maven.apache.org/download.cgi) (at least version 3.0.4)
-* [JDK 8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
-* [Chrome browser](https://www.google.com/chrome/browser/desktop/) to preview reports
-
-## Setup
-Please refer to the [Setup Guide](https://github.com/Cognifide/aet/wiki/BasicSetup) in the documentation for an overview on how to configure AET.
 
 ## License
 **AET** is licensed under [Apache License, Version 2.0 (the "License")](https://www.apache.org/licenses/LICENSE-2.0.txt)
