@@ -1,4 +1,4 @@
-<%--
+<!--
 
     AET
 
@@ -16,17 +16,19 @@
     See the License for the specific language governing permissions and
     limitations under the License.
 
---%>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
-  <meta charset="utf-8"/>
+-->
+<#import "core.ftl" as u>
 
-  <title>Client Side Performance</title>
-</head>
-<body>
-<h1>Hello World!</h1>
-<p>This is sample test page</p>
-</body>
-</html>
+<@u.page>
+<h1>Project: <strong>${project}</strong> in company: <strong>${company}</strong></h1>
+<h3>Project has ${size} suites.</h3><hr>
+<div class="container-fluid">
+  <div class="list-group mb-4">
+  <#list data as name>
+    <a href="?project=${project}&company=${company}&name=${name}" class="list-group-item list-group-item-action">
+      Suite: <strong>${name}</strong>
+    </a>
+  </#list>
+  </div>
+</div>
+</@u.page>
