@@ -1,7 +1,7 @@
 /*
  * AET
  *
- * Copyright (C) 2013 Cognifide Limited
+ * Copyright (C) 2020 Cognifide Limited
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,18 +15,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-define(['angularAMD'], function (angularAMD) {
-  'use strict';
-  angularAMD.factory('endpointConfiguration', function () {
-    return {
-      getEndpoint: function () {
-        var config = {
-          'getUrl': 'http://localhost/api/'
-          //'getUrl': 'http://aet-vagrant/api/'
-        };
-        return config;
-      }
-    };
-  });
+.accessibility-level-form, .accessibility-format-form {
+  display: flex;
+  align-items: center;
 
-});
+  .form-check {
+    margin-left: 15px;
+  }
+}
+
+.accessibility-format-form {
+  margin-top: 20px;
+}
+
+.report-correlation-id {
+  color: $gray_disabled;
+}

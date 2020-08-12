@@ -20,12 +20,13 @@ define([], function () {
   return ['$scope', '$rootScope', '$uibModal', '$stateParams',
     'patternsService', 'metadataAccessService', 'notesService',
     'viewModeService', 'suiteInfoService', 'rerunService', 'historyService',
+    '$http', 'endpointConfiguration',
     ToolbarBottomController
   ];
 
   function ToolbarBottomController($scope, $rootScope, $uibModal, $stateParams,
     patternsService, metadataAccessService, notesService, viewModeService,
-    suiteInfoService, rerunService, historyService) {
+    suiteInfoService, rerunService, historyService, $http, endpointConfiguration) {
     var vm = this;
 
     // disables accept button if compared against another suite patterns
@@ -35,6 +36,7 @@ define([], function () {
 
     vm.showAcceptButton = patternsMayBeUpdated;
     vm.showRevertButton = patternsMarkedForUpdateMayBeReverted;
+    vm.displayAccessibilityModal = displayAccessibilityModal;
     vm.displayCommentModal = displayCommentModal;
     vm.scrollSidepanel = scrollSidepanel;
     vm.rerunSuite = rerunSuite;
@@ -44,7 +46,7 @@ define([], function () {
     vm.suiteInfoService = suiteInfoService;
     vm.checkRerunStatus = rerunService.checkRerunStatus;
 
-    historyService.fetchHistory(suiteInfoService.getInfo().version, function() {
+    historyService.fetchHistory(suiteInfoService.getInfo().version, function () {
       var currentVersion = suiteInfoService.getInfo().version;
       vm.isLastSuiteVersion = historyService.getNextVersion(currentVersion) == null;
     });
@@ -64,9 +66,32 @@ define([], function () {
 
     updateToolbar();
 
+    updateAccessibilityInfo();
+
     /***************************************
      ***********  Private methods  *********
      ***************************************/
+
+    function updateAccessibilityInfo() {
+      var suiteInfo = suiteInfoService.getInfo();
+      var baseUrl = endpointConfiguration.getEndpoint().getUrl;
+
+      $http.get(baseUrl + 'accessibility/report/available', {
+        params: {
+          company: suiteInfo.company,
+          project: suiteInfo.project,
+          suite: suiteInfo.name,
+          correlationId: suiteInfo.correlationId
+        }
+      })
+        .then(function (response) {
+          vm.canGenerateAccessibilityReport = response.data.isAvailable;
+        })
+        .catch(function (error) {
+          vm.canGenerateAccessibilityReport = false;
+          console.error(error);
+        });
+    }
 
     function updateToolbar() {
       vm.viewMode = viewModeService.get();
@@ -110,6 +135,20 @@ define([], function () {
         result = false;
       }
       return result;
+    }
+
+    function displayAccessibilityModal() {
+      $uibModal.open({
+        animation: true,
+        templateUrl: 'app/layout/modal/accessibility/accessibilityModal.view.html',
+        controller: 'accessibilityModalController',
+        controllerAs: 'accessibilityModal',
+        resolve: {
+          model: function () {
+            return vm.model;
+          }
+        }
+      });
     }
 
     function displayCommentModal() {

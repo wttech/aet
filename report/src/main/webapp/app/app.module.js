@@ -67,6 +67,7 @@ define(['angularAMD',
   'filterInformationDirective',
   // modals
   'noteModalController',
+  'accessibilityModalController',
   'historyModalController',
   'unsavedChangesModalController'], function (angularAMD, _) {
 

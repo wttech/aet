@@ -22,6 +22,7 @@ All notable changes to AET will be documented in this file.
 - [PR-529](https://github.com/Cognifide/aet/pull/529) Remove client side performance test module ([#481](https://github.com/Cognifide/aet/issues/481))
 - [PR-530](https://github.com/Cognifide/aet/pull/530) Remove max timeouts limitation for login and WebElements wait ([#99](https://github.com/Cognifide/aet/issues/99))
 - [PR-554](https://github.com/Cognifide/aet/pull/554) Fix race condition under non-native bash environments ([#551](https://github.com/Cognifide/aet/issues/551))
+- [PR-564](https://github.com/Cognifide/aet/pull/564) Accessibility Issues Provider ([#557](https://github.com/Cognifide/aet/issues/557))
 
 ## Version 3.3.0
 
@@ -58,7 +59,6 @@ All notable changes to AET will be documented in this file.
 - [PR-490](https://github.com/Cognifide/aet/pull/490) Fix removing too many artifacts by cleaner job by terminating processing in case of timeout
 
 ## Version 3.2.0
-
 
 - [PR-451](https://github.com/Cognifide/aet/pull/451) Collectors and comparators configured by single config number
 - [PR-449](https://github.com/Cognifide/aet/pull/449) Improvements to the Winter Edition Theme

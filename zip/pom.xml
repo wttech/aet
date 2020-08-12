@@ -54,6 +54,11 @@
       -->
       <dependency>
         <groupId>${project.groupId}</groupId>
+        <artifactId>accessibility-report</artifactId>
+        <version>${project.version}</version>
+      </dependency>
+      <dependency>
+        <groupId>${project.groupId}</groupId>
         <artifactId>cleaner</artifactId>
         <version>${project.version}</version>
       </dependency>
@@ -133,6 +138,10 @@
 
   <!-- let Maven know that we depends on all AET artifacts -->
   <dependencies>
+    <dependency>
+      <groupId>${project.groupId}</groupId>
+      <artifactId>accessibility-report</artifactId>
+    </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
       <artifactId>cleaner</artifactId>
@@ -263,6 +272,10 @@
                     <!-- core bundles -->
                     <artifactItem>
                       <groupId>${project.groupId}</groupId>
+                      <artifactId>accessibility-report</artifactId>
+                    </artifactItem>
+                    <artifactItem>
+                      <groupId>${project.groupId}</groupId>
                       <artifactId>cleaner</artifactId>
                     </artifactItem>
                     <artifactItem>
@@ -372,6 +385,7 @@
                       <include>${project.groupId}.jobs-api.jar</include>
                       <include>${project.groupId}.validation-api.jar</include>
                       <!-- core bundles -->
+                      <include>${project.groupId}.accessibility-report.jar</include>
                       <include>${project.groupId}.cleaner.jar</include>
                       <include>${project.groupId}.communication.jar</include>
                       <include>${project.groupId}.proxy.jar</include>
