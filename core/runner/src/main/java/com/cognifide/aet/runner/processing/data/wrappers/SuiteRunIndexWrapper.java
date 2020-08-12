@@ -18,10 +18,10 @@ package com.cognifide.aet.runner.processing.data.wrappers;
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.Test;
 import com.cognifide.aet.communication.api.metadata.Url;
-import com.cognifide.aet.communication.api.wrappers.MetadataRunDecorator;
 import com.cognifide.aet.communication.api.wrappers.Run;
-import com.cognifide.aet.communication.api.wrappers.UrlRunWrapper;
+import com.cognifide.aet.runner.processing.data.UrlPacket;
 import java.util.ArrayList;
+import java.util.List;
 
 public class SuiteRunIndexWrapper extends RunIndexWrapper<Suite> {
 
@@ -30,17 +30,18 @@ public class SuiteRunIndexWrapper extends RunIndexWrapper<Suite> {
   }
 
   @Override
-  public ArrayList<MetadataRunDecorator<Url>> getUrls() {
+  public List<UrlPacket> getUrlPackets() {
     Suite suite = objectToRunWrapper.getObjectToRun();
-    ArrayList<MetadataRunDecorator<Url>> urls = new ArrayList<>();
+    List<UrlPacket> packets = new ArrayList<>();
     for (Test test : suite.getTests()) {
-      for(Url url : test.getUrls()){
+      UrlPacket packet = new UrlPacket(suite, test);
+      for (Url url : test.getUrls()) {
         cleanUrlFromExecutionData(url);
-        UrlRunWrapper urlRunWrapper = new UrlRunWrapper(url, test);
-        urls.add(new MetadataRunDecorator<>(urlRunWrapper, suite));
+        packet.addUrl(url);
       }
+      packets.add(packet);
     }
-    return urls;
+    return packets;
   }
 
   @Override

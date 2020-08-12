@@ -22,10 +22,10 @@ import static org.mockito.Mockito.when;
 
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.Url;
-import com.cognifide.aet.communication.api.wrappers.MetadataRunDecorator;
 import com.cognifide.aet.communication.api.wrappers.Run;
-import java.util.ArrayList;
+import com.cognifide.aet.runner.processing.data.UrlPacket;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 import org.junit.Before;
@@ -55,8 +55,8 @@ public class TestRunIndexWrapperTest {
   public void setUp() throws Exception {
     test = Optional
         .of(new com.cognifide.aet.communication.api.metadata.Test("testName", "proxy", "chrome"));
-    url = Optional.of(new Url("urlName","urlUrl","urlDomain"));
-    url2 = Optional.of(new Url("urlName2","urlUrl2","urlDomain2"));
+    url = Optional.of(new Url("urlName", "urlUrl", "urlDomain"));
+    url2 = Optional.of(new Url("urlName2", "urlUrl2", "urlDomain2"));
     testRunIndexWrapper = new TestRunIndexWrapper(objectToRunWrapper);
     when(objectToRunWrapper.getRealSuite()).thenReturn(suite);
     when(suite.getTest(any(String.class))).thenReturn(test);
@@ -64,18 +64,18 @@ public class TestRunIndexWrapperTest {
   }
 
   @Test
-  public void getUrls_expectTwo() {
+  public void getUrlPackets_expectTwo() {
     prepareTwoUrls();
-
-    ArrayList<MetadataRunDecorator<Url>> urlsResult = testRunIndexWrapper.getUrls();
-    assertThat(urlsResult.size(), is(2));
+    List<UrlPacket> packets = testRunIndexWrapper.getUrlPackets();
+    Long urlsCount = packets.stream().map(UrlPacket::getUrls).mapToLong(List::size).sum();
+    assertThat(urlsCount, is(2L));
   }
 
   @Test
-  public void getUrls_expectZero() {
-    ArrayList<MetadataRunDecorator<Url>> urlsResult = testRunIndexWrapper
-        .getUrls();
-    assertThat(urlsResult.size(), is(0));
+  public void getUrlPackets_expectZero() {
+    List<UrlPacket> packets = testRunIndexWrapper.getUrlPackets();
+    Long urlsCount = packets.stream().map(UrlPacket::getUrls).mapToLong(List::size).sum();
+    assertThat(urlsCount, is(0L));
   }
 
   @Test
@@ -84,12 +84,12 @@ public class TestRunIndexWrapperTest {
   }
 
   @Test
-  public void countUrls_expectTwo(){
+  public void countUrls_expectTwo() {
     prepareTwoUrls();
     assertThat(testRunIndexWrapper.countUrls(), is(2));
   }
 
-  private void prepareTwoUrls(){
+  private void prepareTwoUrls() {
     Set<Url> urls = new HashSet<>();
     urls.add(url.get());
     urls.add(url2.get());

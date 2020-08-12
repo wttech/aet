@@ -15,12 +15,13 @@
  */
 package com.cognifide.aet.runner.processing.data.wrappers;
 
+import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.Test;
 import com.cognifide.aet.communication.api.metadata.Url;
-import com.cognifide.aet.communication.api.wrappers.MetadataRunDecorator;
 import com.cognifide.aet.communication.api.wrappers.Run;
-import com.cognifide.aet.communication.api.wrappers.UrlRunWrapper;
-import java.util.ArrayList;
+import com.cognifide.aet.runner.processing.data.UrlPacket;
+import java.util.Collections;
+import java.util.List;
 
 public class TestRunIndexWrapper extends RunIndexWrapper<Test> {
 
@@ -29,15 +30,15 @@ public class TestRunIndexWrapper extends RunIndexWrapper<Test> {
   }
 
   @Override
-  public ArrayList<MetadataRunDecorator<Url>> getUrls() {
-    ArrayList<MetadataRunDecorator<Url>> urls = new ArrayList<>();
+  public List<UrlPacket> getUrlPackets() {
+    Suite suite = objectToRunWrapper.getRealSuite();
     Test test = objectToRunWrapper.getObjectToRun();
+    UrlPacket packet = new UrlPacket(suite, test);
     for (Url url : test.getUrls()) {
       cleanUrlFromExecutionData(url);
-      UrlRunWrapper urlRunWrapper = new UrlRunWrapper(url, test);
-      urls.add(new MetadataRunDecorator<>(urlRunWrapper, objectToRunWrapper.getRealSuite()));
+      packet.addUrl(url);
     }
-    return urls;
+    return Collections.singletonList(packet);
   }
 
   @Override

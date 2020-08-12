@@ -21,7 +21,7 @@
 <suite name="main" company="aet" domain="http://192.168.123.100:9090/sample-site/sanity/" project="aet">
 
 	<!--  Login-Modifier  BEGIN -->
-	<test name="S-loginModifier">
+	<test name="S-loginModifier-full-url">
 		<collect>
 			<login
 					login="admin"
@@ -31,6 +31,28 @@
 					password-input-selector="//input[@name='j_password']"
 					submit-button-selector="//input[@id='input-submit']"
 					login-token-key="login-token"/>
+			<open/>
+			<cookie/>
+		</collect>
+		<compare>
+			<cookie name="c0" action="list" />
+			<cookie name="c1" action="test" cookie-name="static-cookie" cookie-value="cookievalue"/>
+			<cookie name="c2" action="test" cookie-name="login-token" cookie-value="admin_password"/>
+		</compare>
+		<urls>
+			<url href="modifiers/login/check.jsp"/>
+		</urls>
+	</test>
+	<test name="S-loginModifier-path">
+		<collect>
+			<login
+				login="admin"
+				password="password"
+				login-page="modifiers/login/loginForm.jsp"
+				login-input-selector="//input[@name='j_username']"
+				password-input-selector="//input[@name='j_password']"
+				submit-button-selector="//input[@id='input-submit']"
+				login-token-key="login-token"/>
 			<open/>
 			<cookie/>
 		</collect>

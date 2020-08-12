@@ -17,7 +17,7 @@ package com.cognifide.aet.executor.model;
 
 import com.google.common.base.MoreObjects;
 import java.io.Serializable;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -71,7 +71,7 @@ public class TestSuiteRun implements Serializable {
   }
 
   private Map<String, TestRun> getMap(List<TestRun> testRunList) {
-    Map<String, TestRun> result = new HashMap<>();
+    Map<String, TestRun> result = new LinkedHashMap<>();
     for (TestRun testRun : testRunList) {
       result.put(testRun.getName(), testRun);
     }
