@@ -129,7 +129,7 @@ public class SuiteValidator {
   private boolean hasUniqueScreenNames(TestRun testRun) {
     Set<String> uniqueScreenNames = new HashSet<>();
     for (CollectorStep collectorStep : testRun.getCollectorSteps()) {
-      if (!uniqueScreenNames.add(collectorStep.getName())) {
+      if (SCREEN.equalsIgnoreCase(collectorStep.getModule()) && !uniqueScreenNames.add(collectorStep.getName())) {
         return false;
       }
     }
