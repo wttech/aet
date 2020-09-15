@@ -74,7 +74,8 @@ public class SuiteValidator {
         return String.format(
             "Test suite does not contain screen comparator for screen collector in '%s' test, please fix it",
             testRun.getName());
-      } else if (!hasUniqueScreenNames(testRun)) {
+      }
+      if (!hasUniqueScreenNames(testRun)) {
         return String.format("Duplicated screen collector names in '%s' test. Please use unique name for each screen collector.", testRun.getName());
       }
     }
