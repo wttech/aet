@@ -30,6 +30,11 @@ public final class ModelConverterUtils {
 
   private static final String EMPTY_URL_MESSAGE = "Empty url";
   private static final String DUPLICATED_URL_MESSAGE = "Duplicated url";
+  private static final Integer DESCRIPTION_MAX_LENGTH = 40;
+  private static final String DESCRIPTION_PATTERN = "^[a-zA-Z0-9\\_\\- ]+$";
+  private static final String TOO_LONG_DESCRIPTION_MSG = String
+      .format("URL attribute description is longer than max %d chars", DESCRIPTION_MAX_LENGTH);
+  private static final String INVALID_DESCRIPTION_MSG = "Invalid URL description provided";
 
   private ModelConverterUtils() {
     // empty utils constructor
@@ -54,6 +59,7 @@ public final class ModelConverterUtils {
       } else {
         extendedUrls.add(extendedUrl);
       }
+      validateUrlDescription(builder, extendedUrl);
     }
     if (builder.length() > 0) {
       throw new ParseException(builder.toString());
@@ -71,7 +77,18 @@ public final class ModelConverterUtils {
     return urlName;
   }
 
-  private static void buildErrorMessage(StringBuilder builder, String baseMessage, ExtendedUrl url) {
+  private static void validateUrlDescription(StringBuilder builder, ExtendedUrl url) {
+    String description = url.getDescription();
+    if (StringUtils.isNotEmpty(description) && description.length() > DESCRIPTION_MAX_LENGTH) {
+      buildErrorMessage(builder, TOO_LONG_DESCRIPTION_MSG, url);
+    }
+    if (StringUtils.isNotEmpty(description) && !description.matches(DESCRIPTION_PATTERN)) {
+      buildErrorMessage(builder, INVALID_DESCRIPTION_MSG, url);
+    }
+  }
+
+  private static void buildErrorMessage(StringBuilder builder, String baseMessage,
+      ExtendedUrl url) {
     builder.append(baseMessage);
     formatIfNotBlank(builder, ", with URL: %s", url.getUrl());
     formatIfNotBlank(builder, ", with name: %s", url.getName());

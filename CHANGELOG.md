@@ -11,13 +11,18 @@ All notable changes to AET will be documented in this file.
 
 **List of changes that are finished but not yet released in any final version.**
 - [PR-528](https://github.com/Cognifide/aet/pull/528) Added source pattern date and source collected date. ([#500](https://github.com/Cognifide/aet/issues/500))
-
+- [PR-525](https://github.com/Cognifide/aet/pull/525) Added tests ordering. ([#509](https://github.com/Cognifide/aet/issues/509))
+- [PR-524](https://github.com/Cognifide/aet/pull/524) Remove handling unescaped URLs in suites
+- [PR-526](https://github.com/Cognifide/aet/pull/526) Added sending urls to collectors in packets. ([#431](https://github.com/Cognifide/aet/issues/431))
 - [PR-565](https://github.com/Cognifide/aet/pull/565) Fixing styles of note-editor icon ([#371](https://github.com/Cognifide/aet/issues/371))
 - [PR-567](https://github.com/Cognifide/aet/pull/567) Added missing tooltips in the report - "Previous url" and "Next url" ([#566](https://github.com/Cognifide/aet/issues/566))
 - [PR-563](https://github.com/Cognifide/aet/pull/563) Fixed bug with tooltips for "Re-run" buttons. ([#476](https://github.com/Cognifide/aet/issues/476))
 - [PR-522](https://github.com/Cognifide/aet/pull/522) Improve performance of generating /configs/list. ([#519](https://github.com/Cognifide/aet/issues/519))
+- [PR-531](https://github.com/Cognifide/aet/pull/531) Login modifier can be used with partial url of login page and combined with suite `domain`.
+- [PR-529](https://github.com/Cognifide/aet/pull/529) Remove client side performance test module ([#481](https://github.com/Cognifide/aet/issues/481))
+- [PR-530](https://github.com/Cognifide/aet/pull/530) Remove max timeouts limitation for login and WebElements wait ([#99](https://github.com/Cognifide/aet/issues/99))
 - [PR-554](https://github.com/Cognifide/aet/pull/554) Fix race condition under non-native bash environments ([#551](https://github.com/Cognifide/aet/issues/551))
-
+- [PR-564](https://github.com/Cognifide/aet/pull/564) Accessibility Issues Provider ([#557](https://github.com/Cognifide/aet/issues/557))
 
 ## Version 3.3.0
 
@@ -25,6 +30,7 @@ All notable changes to AET will be documented in this file.
 - [PR-506](https://github.com/Cognifide/aet/pull/506) About tab ([#475](https://github.com/Cognifide/aet/issues/475))
 - [PR-462](https://github.com/Cognifide/aet/pull/462) Popup window unification([#367](https://github.com/Cognifide/aet/issues/367))
 - [PR-489](https://github.com/Cognifide/aet/pull/489) Cleaner integration tests
+- [PR-511](https://github.com/Cognifide/aet/pull/511) Added daily log rotation with 7 days retention
 - [PR-480](https://github.com/Cognifide/aet/pull/480) Test summary stats on the main report page. ([#474](https://github.com/Cognifide/aet/issues/474))
 - [PR-459](https://github.com/Cognifide/aet/pull/459) Print more meaningful error messages when suite.xml is malformed ([#436](https://github.com/Cognifide/aet/issues/436))
 - [PR-517](https://github.com/Cognifide/aet/pull/517) Single URL rerun fixed for named URLs ([#487](https://github.com/Cognifide/aet/issues/487))
@@ -53,7 +59,6 @@ All notable changes to AET will be documented in this file.
 - [PR-490](https://github.com/Cognifide/aet/pull/490) Fix removing too many artifacts by cleaner job by terminating processing in case of timeout
 
 ## Version 3.2.0
-
 
 - [PR-451](https://github.com/Cognifide/aet/pull/451) Collectors and comparators configured by single config number
 - [PR-449](https://github.com/Cognifide/aet/pull/449) Improvements to the Winter Edition Theme

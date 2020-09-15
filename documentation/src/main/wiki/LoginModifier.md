@@ -16,7 +16,7 @@ Module name: **login**
 | --------- | ----- | --------- | ------------- |
 | `login` | User's login | no | admin |
 | `password` | Password | no | admin |
-| `login-page` | Url to login page | yes | |
+| `login-page` | Full url to login page (starting with `http` or `https`) or login page path that is in the `domain` specified for the suite | yes | |
 | `login-input-selector` | Xpath expression for login input | no | //input[@name='j_username'] |
 | `password-input-selector` | Xpath expression for password input | no | //input[@name='j_password'] |
 | `submit-button-selector` | Xpath expression for submit button | no | //*[@type='submit'] |
@@ -34,7 +34,35 @@ Module name: **login**
         <collect>
             <login login="user"
                 password="password"
-                login-page="http://192.168.180.19:5503/libs/cq/core/content/login.html"
+                login-page="http://example.com/login.html"
+                login-input-selector="//input[@name='j_username']"
+                password-input-selector="//input[@name='j_password']"
+                submit-button-selector="//*[@type='submit']" />
+            <open />
+            ...
+        </collect>
+        <compare>
+            ...
+        </compare>
+        <urls>
+        ...
+        </urls>
+    </test>
+    ...
+    <reports>
+        ...
+    </reports>
+</suite>
+```
+
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<suite name="test-suite" company="cognifide" project="project" domain="http://example.com">
+    <test name="login-test">
+        <collect>
+            <login login="user"
+                password="password"
+                login-page="/login.html"
                 login-input-selector="//input[@name='j_username']"
                 password-input-selector="//input[@name='j_password']"
                 submit-button-selector="//*[@type='submit']" />

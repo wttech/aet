@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+    AET
+
+    Copyright (C) 2013 Cognifide Limited
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+<suite name="TS1" company="cognifide" project="project">
+	<test name="test1" useProxy="true">
+		<collect>
+			<open/>
+			<sleep duration="1500"/>
+			<resolution width="640" height="1136" />
+			<screen name="iphone5"/>
+			<source/>
+			<status-codes/>
+			<js-errors/>
+		</collect>
+		<compare>
+			<!-- executed for fullScreen/iphone5 -->
+			<screen comparator="layout"/>
+			<!-- executed only for pageSource -->
+			<source comparator="w3c"/>
+			<status-codes filterRange="400,999" name="errors"/>
+			<status-codes filterCodes="302" name="redirects"/>
+			<source comparator="source" compareType="all"/>
+			<js-errors/>
+		</compare>
+		<urls>
+			<url href="http://www.cognifide.com" description="Cognifide"/>
+			<url href="http://www.onet.pl" description="Onet"/>
+			<url href="http://www.wp.pl" />
+			<url href="http://m.interia.pl/info#iwa_block=pasek-ding"/>
+			<url href="http://www.google.com/" description="Google"/>
+		</urls>
+	</test>
+	<test name="test2" useProxy="false">
+		<collect>
+			<open/>
+			<sleep duration="1500"/>
+			<screen/>
+			<source/>
+		</collect>
+		<compare>
+			<screen/>
+			<source comparator="w3c"/>
+		</compare>
+		<urls>
+			<url href="http://www.google.pl" description="Uncle Google"/>
+			<url href="https://www.google.pl/search?q=googe&oq=googe&aqs=chrome..69i57j0l5.767j0j7&sourceid=chrome&es_sm=93&ie=UTF-8"/>
+			<url href="http://www.google.pl/search?g=<>'" />
+		</urls>
+	</test>
+</suite>
