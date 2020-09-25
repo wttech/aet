@@ -20,7 +20,8 @@
 <div class="page-main">
   <div class="row reports-list">
     <div class="reports-list-item {{test.getStatus()}}"
-         ng-repeat="test in suiteView.tests | aetTestStatusFilter:$root.activeFilters | aetTestSearchFilter:$root.searchText | orderBy:'name'"
+         ng-repeat="testWrapper in suiteView.testWrappers | aetTestStatusFilter:$root.activeFilters | aetTestSearchFilter:$root.searchText | orderBy:$root.orderAttribute:$root.orderIsReverse"
+         ng-init="test = testWrapper.test; stats = testWrapper.stats;"
          ng-class="test.getStatus()">
       <a ui-sref="test({'suite':data.project,'test':test.name})">
         <div class="inner">
@@ -33,6 +34,19 @@
                 <i class="fas {{theme.statusClasses[test.getStatus()]}}"></i>
               </div>
               <span>{{test.name}}</span>
+              <div class="tile-stats">
+                <span class="statistics">URLs statistics:</span>
+                <span class="status failed" data-toggle="popover" data-content="Failed URLs"
+                      data-trigger="hover" data-container="body">{{stats.failed || 0}}</span> /
+                <span class="status warning" data-toggle="popover" data-content="Warning URLs"
+                      data-trigger="hover" data-container="body">{{stats.warning || 0}}</span> /
+                <span class="status passed" data-toggle="popover" data-content="Passed URLs"
+                      data-trigger="hover" data-container="body">{{stats.passed || 0}}</span> /
+                <span class="status conditionallyPassed" data-toggle="popover" data-content="Conditionally passed URLs"
+                      data-trigger="hover" data-container="body">{{stats.conditionallyPassed || 0}}</span> /
+                <span class="status rebased" data-toggle="popover" data-content="Accepted URLs"
+                      data-trigger="hover" data-container="body">{{stats.rebased || 0}}</span>
+              </div>
             </div>
           </div>
         </div>

@@ -25,13 +25,13 @@ import static org.mockito.Mockito.when;
 
 import com.cognifide.aet.communication.api.metadata.Test;
 import com.cognifide.aet.communication.api.metadata.Url;
-import com.cognifide.aet.communication.api.wrappers.MetadataRunDecorator;
-import com.cognifide.aet.communication.api.wrappers.UrlRunWrapper;
+import com.cognifide.aet.runner.processing.data.UrlPacket;
 import com.cognifide.aet.runner.scheduler.MessageWithDestination;
 import com.google.common.collect.ImmutableList;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Queue;
 import java.util.Set;
 import javax.jms.JMSException;
@@ -73,8 +73,8 @@ public class CollectDispatcherTest extends StepManagerTest {
 
   @org.junit.Test
   public void process_when5Urls_expect5SchedulerJobAdded() throws Exception {
-    ArrayList<MetadataRunDecorator> urlsArray=mockUrlsWrappers(5);
-    when(runIndexWrapper.getUrls()).thenReturn(urlsArray);
+    List<UrlPacket> urlPackets = mockUrlPackets(5);
+    when(runIndexWrapper.getUrlPackets()).thenReturn(urlPackets);
 
     ((CollectDispatcher) tested).process();
 
@@ -84,8 +84,8 @@ public class CollectDispatcherTest extends StepManagerTest {
 
   @org.junit.Test
   public void process_when2Urls_expect1SchedulerJobAdded() throws Exception {
-    ArrayList<MetadataRunDecorator> urlsArray=mockUrlsWrappers(2);
-    when(runIndexWrapper.getUrls()).thenReturn(urlsArray);
+    List<UrlPacket> urlPackets = mockUrlPackets(2);
+    when(runIndexWrapper.getUrlPackets()).thenReturn(urlPackets);
     when(suite.getTests()).thenReturn(ImmutableList.of(test));
 
     ((CollectDispatcher) tested).process();
@@ -129,13 +129,14 @@ public class CollectDispatcherTest extends StepManagerTest {
     return test;
   }
 
-  private ArrayList<MetadataRunDecorator> mockUrlsWrappers (int numberOfUrls){
-    ArrayList<MetadataRunDecorator>urls = new ArrayList<>();
+  private List<UrlPacket> mockUrlPackets(int numberOfUrls) {
+    List<UrlPacket> packets = new ArrayList();
     for (int i = 0; i < numberOfUrls; ++i) {
-        UrlRunWrapper urlRunWrapper = new UrlRunWrapper(new Url("/url/" + "Name" + i, "" + i + "_name", null), test);
-        urls.add(new MetadataRunDecorator(urlRunWrapper, suite));
+      UrlPacket packet = new UrlPacket(suite, test);
+      packet.addUrl(new Url("/url/" + "Name" + i, "" + i + "_name", null));
+      packets.add(packet);
     }
-    return urls;
+    return packets;
   }
 
 }

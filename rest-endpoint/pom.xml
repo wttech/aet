@@ -24,7 +24,7 @@
   <parent>
     <artifactId>aet-root</artifactId>
     <groupId>com.cognifide.aet</groupId>
-    <version>3.2.2-SNAPSHOT</version>
+    <version>3.3.1-SNAPSHOT</version>
   </parent>
 
   <artifactId>rest-endpoint</artifactId>
@@ -41,6 +41,10 @@
     <dependency>
       <groupId>com.cognifide.aet</groupId>
       <artifactId>datastorage-api</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.cognifide.aet</groupId>
+      <artifactId>accessibility-report</artifactId>
     </dependency>
 
     <dependency>
@@ -90,6 +94,11 @@
     </dependency>
 
     <dependency>
+      <groupId>org.freemarker</groupId>
+      <artifactId>freemarker</artifactId>
+    </dependency>
+
+    <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
     </dependency>
@@ -111,6 +120,10 @@
       <groupId>com.github.stefanbirkner</groupId>
       <artifactId>system-rules</artifactId>
     </dependency>
+    <dependency>
+      <groupId>org.osgi</groupId>
+      <artifactId>org.osgi.core</artifactId>
+    </dependency>
   </dependencies>
 
   <build>
@@ -124,8 +137,7 @@
             <configuration>
               <instructions>
                 <Bundle-Vendor>Cognifide Ltd.</Bundle-Vendor>
-                <Export-Package>com.cognifide.aet.rest.*;version="${project.version}"
-                </Export-Package>
+                <Export-Package>com.cognifide.aet.rest.*</Export-Package>
               </instructions>
             </configuration>
           </execution>

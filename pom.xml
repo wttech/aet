@@ -23,7 +23,7 @@
 
   <groupId>com.cognifide.aet</groupId>
   <artifactId>aet-root</artifactId>
-  <version>3.2.2-SNAPSHOT</version>
+  <version>3.3.1-SNAPSHOT</version>
   <packaging>pom</packaging>
 
   <name>AET</name>
@@ -65,15 +65,12 @@
     </developer>
   </developers>
 
-  <prerequisites>
-    <maven>${min.maven.version}</maven>
-  </prerequisites>
-
   <modules>
     <module>api</module>
     <module>client</module>
     <module>core</module>
     <module>documentation</module>
+    <module>integration-tests/cleaner-test</module>
     <module>integration-tests/sample-site</module>
     <module>integration-tests/test-suite</module>
     <module>osgi-dependencies</module>
@@ -115,7 +112,6 @@
     <!-- Versions -->
     <source.java.version>1.8</source.java.version>
     <jetty.plugin.version>9.2.10.v20150310</jetty.plugin.version>
-    <mongo.driver.version>3.2.2</mongo.driver.version>
     <junit.version>4.11</junit.version>
 
     <!-- properties for maven uploads -->
@@ -150,6 +146,8 @@
         Add this file or override maven property for it's location.
     -->
     <external.properties>maven.properties</external.properties>
+
+    <kotlin.version>1.3.72</kotlin.version>
   </properties>
 
   <dependencyManagement>
@@ -274,7 +272,30 @@
       <dependency>
         <groupId>org.apache.camel</groupId>
         <artifactId>camel-core</artifactId>
-        <version>2.21.1</version>
+        <version>2.24.0</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.poi</groupId>
+        <artifactId>poi-ooxml</artifactId>
+        <version>4.1.2</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.poi</groupId>
+        <artifactId>ooxml-schemas</artifactId>
+        <version>1.4</version>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-text</artifactId>
+        <version>1.8</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.commons</groupId>
+        <artifactId>commons-collections4</artifactId>
+        <version>4.4</version>
         <scope>provided</scope>
       </dependency>
       <dependency>
@@ -318,6 +339,18 @@
         <artifactId>httpclient</artifactId>
         <version>4.4</version>
         <scope>provided</scope>
+      </dependency>
+
+      <dependency>
+        <groupId>org.jetbrains.kotlin</groupId>
+        <artifactId>kotlin-osgi-bundle</artifactId>
+        <version>${kotlin.version}</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.jetbrains</groupId>
+        <artifactId>annotations</artifactId>
+        <version>19.0.0</version>
       </dependency>
 
       <!-- wrapped by Karaf, see aet-features.xml file -->
@@ -406,6 +439,12 @@
       </dependency>
       <dependency>
         <groupId>com.cognifide.aet</groupId>
+        <artifactId>accessibility-report</artifactId>
+        <version>${project.version}</version>
+        <scope>provided</scope>
+      </dependency>
+      <dependency>
+        <groupId>com.cognifide.aet</groupId>
         <artifactId>datastorage</artifactId>
         <version>${project.version}</version>
         <scope>provided</scope>
@@ -428,6 +467,12 @@
         <version>${project.version}</version>
         <scope>provided</scope>
       </dependency>
+      <dependency>
+        <groupId>com.cognifide.aet</groupId>
+        <artifactId>cleaner</artifactId>
+        <version>${project.version}</version>
+        <scope>provided</scope>
+      </dependency>
 
       <!-- AET wrappers for non-OSGi libraries -->
       <dependency>
@@ -442,6 +487,16 @@
         <version>${project.version}</version>
         <scope>provided</scope>
       </dependency>
+
+      <!-- Template engine-->
+
+      <dependency>
+        <groupId>org.freemarker</groupId>
+        <artifactId>freemarker</artifactId>
+        <version>2.3.29</version>
+        <scope>provided</scope>
+      </dependency>
+
 
       <!-- Tests -->
       <dependency>
@@ -523,6 +578,12 @@
         <groupId>com.github.stefanbirkner</groupId>
         <artifactId>system-rules</artifactId>
         <version>1.18.0</version>
+        <scope>test</scope>
+      </dependency>
+      <dependency>
+        <groupId>org.apache.sling</groupId>
+        <artifactId>org.apache.sling.testing.osgi-mock.junit4</artifactId>
+        <version>2.4.6</version>
         <scope>test</scope>
       </dependency>
 
@@ -615,6 +676,7 @@
               <exclude>**/*.zip</exclude>
 
               <exclude>**/*.json</exclude>
+              <exclude>**/*.svg</exclude>
 
               <!-- Eclipse files -->
               <exclude>**/.project</exclude>
@@ -633,6 +695,24 @@
           <artifactId>maven-bundle-plugin</artifactId>
           <version>4.0.0</version>
           <extensions>true</extensions>
+          <executions>
+            <execution>
+              <id>scr-metadata</id>
+              <goals>
+                <goal>manifest</goal>
+              </goals>
+              <configuration>
+                <supportIncrementalBuild>true</supportIncrementalBuild>
+                <exportScr>true</exportScr>
+                <instructions>
+                  <!-- Enable processing of OSGI DS component annotations -->
+                  <_dsannotations>*</_dsannotations>
+                  <!-- Enable processing of OSGI metatype annotations -->
+                  <_metatypeannotations>*</_metatypeannotations>
+                </instructions>
+              </configuration>
+            </execution>
+          </executions>
         </plugin>
 
         <plugin>
@@ -669,6 +749,11 @@
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>truezip-maven-plugin</artifactId>
           <version>1.2</version>
+        </plugin>
+        <plugin>
+          <groupId>com.samaxes.maven</groupId>
+          <artifactId>minify-maven-plugin</artifactId>
+          <version>1.7.6</version>
         </plugin>
 
         <plugin>
@@ -751,6 +836,29 @@
           <groupId>org.apache.maven.plugins</groupId>
           <artifactId>maven-plugin-plugin</artifactId>
           <version>3.6.0</version>
+        </plugin>
+
+        <plugin>
+          <groupId>org.jetbrains.kotlin</groupId>
+          <artifactId>kotlin-maven-plugin</artifactId>
+          <version>${kotlin.version}</version>
+          <executions>
+            <execution>
+              <id>compile</id>
+              <phase>compile</phase>
+              <goals>
+                <goal>compile</goal>
+              </goals>
+              <configuration>
+                <sourceDirs>
+                  <sourceDir>${project.basedir}/src/main/kotlin</sourceDir>
+                </sourceDirs>
+              </configuration>
+            </execution>
+          </executions>
+          <configuration>
+            <jvmTarget>1.8</jvmTarget>
+          </configuration>
         </plugin>
 
         <plugin>

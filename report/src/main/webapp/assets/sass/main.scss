@@ -29,6 +29,7 @@
 @import "filterInfo";
 @import "newComparison";
 @import "history";
+@import "accessibilityReport";
 
 html,
 body {
@@ -188,10 +189,6 @@ body {
 
 	&.conditionallyPassed {
 		color: $conditionallyPassed;
-	}
-
-	.statistics {
-		color: $gray_dark !important;;
 	}
 
 	.name {

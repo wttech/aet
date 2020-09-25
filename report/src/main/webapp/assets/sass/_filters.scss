@@ -38,10 +38,33 @@
         cursor: pointer;
       }
     }
+
+    &.order-group {
+
+      .order-dropdown {
+        position: relative;
+        width: calc(100% - 32px);
+        float: left;
+      }
+
+      .order-reversal-icon {
+        width: 24px;
+        height: 12px;
+        color: white;
+        float: right;
+        cursor: pointer;
+        position: relative;
+
+        .fontawesome{
+          right: 0;
+          top: 7px;
+        }
+      }
+    }
   }
 
   input,
-  .filter-list {
+  .filter-list, select {
     background-color: $grayish;
     border: 0 none;
     color: $white;
@@ -105,6 +128,14 @@
       a {
         color: $text-color;
         display: inline;
+      }
+
+      button{
+        background: transparent;
+        border: none;
+        width: 100%;
+        height: 100%;
+        text-align: left;
       }
     }
   }

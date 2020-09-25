@@ -22,10 +22,13 @@ define(['angularAMD'], function (angularAMD) {
       restrict: 'A',
       link: function (scope, $element) {
         $element.on('click', function (e) {
-          if (!$(e.target).parents().hasClass('pop') && !$(
-                  e.target).parents().hasClass('popover')) {
-            $('[data-toggle="popover"], .pop').popover('hide');
-          }
+          $('[data-toggle="popover"]').each(function () {
+            //the 'is' for buttons that trigger popups
+            //the 'has' for icons within a button that triggers a popup
+            if (!$(this).is(e.target) && $(this).has(e.target).length === 0 && $('.popover').has(e.target).length === 0) {
+              (($(this).popover('hide').data('bs.popover')||{}).inState||{}).click = false;
+            }
+          });
         });
       }
     };

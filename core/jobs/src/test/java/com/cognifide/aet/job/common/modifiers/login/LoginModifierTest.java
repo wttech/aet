@@ -15,6 +15,7 @@
  */
 package com.cognifide.aet.job.common.modifiers.login;
 
+import static org.mockito.Matchers.any;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.never;
@@ -29,6 +30,7 @@ import com.cognifide.aet.job.api.collector.WebCommunicationWrapper;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import com.cognifide.aet.job.api.exceptions.ProcessingException;
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
@@ -58,7 +60,7 @@ public class LoginModifierTest {
 
   private static final String WRONG_PASSWORD = "wrong";
 
-  private static final String LOGIN_PAGE_URL = "http://localhost/login.html";
+  private static final String LOGIN_PAGE_URL = "http://example.com/login.html";
 
   @Mock
   private WebCommunicationWrapper webCommunicationWrapper;
@@ -87,10 +89,6 @@ public class LoginModifierTest {
   @Mock
   private CollectorProperties properties;
 
-  private final Map<String, String> params = Collections.singletonMap("login-page", LOGIN_PAGE_URL);
-
-  private LoginModifier tested;
-
   @Before
   public void setUp() throws ParametersException {
     // this will init modifier with default configuration
@@ -98,6 +96,11 @@ public class LoginModifierTest {
     when(webCommunicationWrapper.getHttpRequestExecutor()).thenReturn(requestExecutor);
     when(webCommunicationWrapper.getWebDriver()).thenReturn(webDriver);
     when(webDriver.manage()).thenReturn(options);
+
+    WebElement visibleElement = mock((WebElement.class));
+    when(visibleElement.isDisplayed()).thenReturn(true);
+    when(webDriver.findElements(any()))
+        .thenReturn(Collections.singletonList(visibleElement));
 
     when(webDriver.findElement(By.xpath(DEFAULT_LOGIN_INPUT_ELEMENT_SELECTOR)))
         .thenReturn(loginInput);
@@ -109,19 +112,18 @@ public class LoginModifierTest {
     when(loginInput.isDisplayed()).thenReturn(true);
     when(passwordInput.isDisplayed()).thenReturn(true);
     when(submitButton.isDisplayed()).thenReturn(true);
-
-    when(properties.getUrl()).thenReturn("http://example.url.com");
-    tested = new LoginModifier(webCommunicationWrapper);
-
-    tested.setParameters(params);
   }
 
   @Test(expected = ProcessingException.class)
-  public void collectTest_noTokenLoginFilledFailed() throws ProcessingException {
+  public void collectTest_noTokenLoginFilledFailed()
+      throws ProcessingException, ParametersException {
     when(options.getCookieNamed(DEFAULT_LOGIN_TOKEN)).thenReturn(null).thenReturn(cookie);
     when(loginInput.getAttribute(VALUE_ATTRIBUTE)).thenReturn(WRONG_LOGIN);
     when(passwordInput.getAttribute(VALUE_ATTRIBUTE)).thenReturn(WRONG_PASSWORD);
+    when(properties.getUrl()).thenReturn("http://example.com");
 
+    LoginModifier tested = new LoginModifier(webCommunicationWrapper, properties);
+    tested.setParameters(Collections.singletonMap("login-page", LOGIN_PAGE_URL));
     tested.collect();
 
     verify(webDriver, times(3)).get(LOGIN_PAGE_URL);
@@ -129,13 +131,54 @@ public class LoginModifierTest {
   }
 
   @Test
-  public void collectTest_hasToken() throws ProcessingException {
+  public void collectTest_hasToken() throws ProcessingException, ParametersException {
     when(options.getCookieNamed(DEFAULT_LOGIN_TOKEN)).thenReturn(cookie);
+    when(properties.getUrl()).thenReturn("http://example.com");
 
+    LoginModifier tested = new LoginModifier(webCommunicationWrapper, properties);
+    tested.setParameters(Collections.singletonMap("login-page", LOGIN_PAGE_URL));
     tested.collect();
 
     verify(requestExecutor).addCookie(anyString(), anyString());
     verify(webDriver, never()).get(LOGIN_PAGE_URL);
+  }
+
+  @Test
+  public void collect_whenLoginPageIsFullUrl() throws ProcessingException, ParametersException {
+    when(options.getCookieNamed(DEFAULT_LOGIN_TOKEN)).thenReturn(null).thenReturn(cookie);
+    when(loginInput.getAttribute(VALUE_ATTRIBUTE)).thenReturn("admin");
+    when(passwordInput.getAttribute(VALUE_ATTRIBUTE)).thenReturn("pass");
+    when(properties.getUrl()).thenReturn("http://example.com");
+
+    LoginModifier tested = new LoginModifier(webCommunicationWrapper, properties);
+    Map<String, String> parameters = new HashMap<>();
+    parameters.put("login", "admin");
+    parameters.put("password", "pass");
+    parameters.put("login-page", LOGIN_PAGE_URL);
+    tested.setParameters(parameters);
+    tested.collect();
+
+    verify(webDriver, times(1)).get(LOGIN_PAGE_URL);
+    verify(submitButton, times(1)).click();
+  }
+
+  @Test
+  public void collect_whenLoginPageIsPath() throws ProcessingException, ParametersException {
+    when(options.getCookieNamed(DEFAULT_LOGIN_TOKEN)).thenReturn(null).thenReturn(cookie);
+    when(loginInput.getAttribute(VALUE_ATTRIBUTE)).thenReturn("admin");
+    when(passwordInput.getAttribute(VALUE_ATTRIBUTE)).thenReturn("pass");
+    when(properties.getDomain()).thenReturn("http://example.com");
+
+    LoginModifier tested = new LoginModifier(webCommunicationWrapper, properties);
+    Map<String, String> parameters = new HashMap<>();
+    parameters.put("login", "admin");
+    parameters.put("password", "pass");
+    parameters.put("login-page", "/login.html");
+    tested.setParameters(parameters);
+    tested.collect();
+
+    verify(webDriver, times(1)).get(LOGIN_PAGE_URL);
+    verify(submitButton, times(1)).click();
   }
 
 }

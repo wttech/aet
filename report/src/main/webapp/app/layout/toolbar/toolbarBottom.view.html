@@ -28,8 +28,8 @@
          data-ng-click="toolbarBottom.scrollSidepanel(false)">
         <i class="fas fa-crosshairs fa-sm"></i>
       </div>
-      <div 
-        ng-if="toolbarBottom.viewMode != 'suite' && toolbarBottom.viewMode != 'test' && toolbarBottom.isLastSuiteVersion"
+      <div
+        ng-show="toolbarBottom.viewMode != 'suite' && toolbarBottom.viewMode != 'test' && toolbarBottom.isLastSuiteVersion"
         class="fontawesome-link"
         data-toggle="popover"
         data-content="Rerun current URL"
@@ -38,7 +38,7 @@
         data-ng-click="toolbarBottom.rerunURL(toolbarBottom.model.url)">
         <i class="far fa-play-circle fa-sm"></i>
       </div>
-      <div ng-if="toolbarBottom.viewMode == 'suite' && toolbarBottom.isLastSuiteVersion"
+      <div ng-show="toolbarBottom.viewMode == 'suite' && toolbarBottom.isLastSuiteVersion"
            class="fontawesome-link"
            data-toggle="popover"
            data-content="Rerun current suite"
@@ -47,7 +47,7 @@
            data-ng-click="toolbarBottom.rerunSuite()">
         <i class="far fa-play-circle fa-sm"></i>
       </div>
-      <div ng-if="toolbarBottom.viewMode != 'url' && toolbarBottom.viewMode != 'suite' && toolbarBottom.isLastSuiteVersion" class="fontawesome-link"
+      <div ng-show="toolbarBottom.viewMode != 'url' && toolbarBottom.viewMode != 'suite' && toolbarBottom.isLastSuiteVersion" class="fontawesome-link"
            data-toggle="popover"
            data-content="Rerun current test"
            data-trigger="hover"
@@ -86,7 +86,7 @@
         data-trigger="hover"
         data-container="body"
         data-ng-click="toolbarBottom.rerunTest()"
-        ng-if="toolbarBottom.isLastSuiteVersion">
+        ng-show="toolbarBottom.isLastSuiteVersion">
       <i class="far fa-play-circle fa-sm"></i>
       </div>
       <span class="preformatted">test:</span><span>{{toolbarBottom.model.testGroupName}}</span>
@@ -102,18 +102,35 @@
       <div class="toolbar-nav toolbar-nav-urls pull-left"
            ng-show="toolbarBottom.viewMode == 'url' || toolbarBottom.viewMode == 'test'">
         <a ng-click="traverseTree('up')">
-          <div class="nav-prev">
+          <div class="nav-prev" data-toggle="popover" data-content="Previous url"
+            data-trigger="hover" data-container="body">
             <i class="fas fa-chevron-left"></i>
           </div>
         </a>
 
         <a ng-click="traverseTree('down')"
            ng-show="toolbarBottom.viewMode == 'url' || toolbarBottom.viewMode == 'test'">
-          <div class="nav-next">
+          <div class="nav-next" data-toggle="popover" data-content="Next url"
+            data-trigger="hover" data-container="body">
             <i class="fas fa-chevron-right"></i>
           </div>
         </a>
       </div>
+
+      <span class="accessibility-status pull-left"
+        data-toggle="popover"
+        data-content="{{toolbarBottom.canGenerateAccessibilityReport ? '<span>Click to generate accessibility report</span>' : '<span>No data to generate accessibility report</span>'}}"
+        data-html="true" data-trigger="hover"
+        data-ng-click="toolbarBottom.canGenerateAccessibilityReport && toolbarBottom.displayAccessibilityModal()"
+        ng-show="toolbarBottom.viewMode == 'suite'">
+        <div ng-if="!toolbarBottom.canGenerateAccessibilityReport">
+          <i class="fas fa-universal-access icon-disabled" data-fa-transform="up-.5"></i>
+        </div>
+        <div ng-if="toolbarBottom.canGenerateAccessibilityReport">
+          <i class="fas fa-universal-access" data-fa-transform="up-.5"></i>
+        </div>
+      </span>
+
       <span class="comments-status pull-left"
         data-toggle="popover"
         data-ng-class="toolbarBottom.model.comment ? 'present' : 'absent'"
@@ -137,7 +154,7 @@
             data-trigger="hover"></i>
         Accept {{toolbarBottom.viewMode}}
       </span>
-    
+
       <span id="accept-test" class="button js-rebase-suite button-blue"
             data-ng-if="toolbarBottom.showAcceptButton()"
             data-ng-click="toolbarBottom.updatePatterns()"></i>
@@ -150,6 +167,20 @@
         <i class="fas {{theme.statusClasses['unrebased']}}"></i>
         Revert {{toolbarBottom.viewMode}}
       </span>
+
+      <span class="comments-status pull-left"
+      data-toggle="popover"
+      data-ng-class="toolbarBottom.model.comment ? 'present' : 'absent'"
+      data-content="{{toolbarBottom.model.comment && '<span>' + toolbarBottom.model.comment + '</span>' || !toolbarBottom.model.comment && '<span>Click to update this ' + toolbarBottom.viewMode + ' note</span>'}}"
+      data-html="true" data-trigger="hover"
+      data-ng-click="toolbarBottom.displayCommentModal()">
+        <div ng-if="toolbarBottom.model.comment">
+          <i class="fas fa-ellipsis-h" data-fa-transform="shrink-10 up-.5" data-fa-mask="fas fa-comment"></i>
+        </div>
+        <div ng-if="!toolbarBottom.model.comment">
+          <i class="fas fa-pencil-alt" data-fa-transform="shrink-10 up-.5" data-fa-mask="fas fa-comment"></i>
+        </div>
+    </span>
     </div>
   </div>
 </div>

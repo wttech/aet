@@ -31,15 +31,15 @@ define(['angularAMD'], function (angularAMD) {
         return tests;
       }
 
-      return tests.filter(function (test) {
-        return _.some(test.urls, function (url) {
+      return tests.filter(function (testWrapper) {
+        return _.some(testWrapper.test.urls, function (url) {
           return matches(searchPhrase, url.name);
         });
       });
     }
 
     function matches(searchPhrase, name) {
-      return name && name.indexOf(searchPhrase) > 0;
+      return name && name.includes(searchPhrase);
     }
   }
 });

@@ -1,0 +1,10 @@
+{
+    "_id" : ObjectId("5c7e291f6798f408cf3d1da7"),
+    "filename" : null,
+    "aliases" : null,
+    "chunkSize" : NumberLong(261120),
+    "uploadDate" : ISODate("2019-02-24T08:15:49.056Z"),
+    "length" : NumberLong(198205),
+    "contentType" : "image/png",
+    "md5" : "6e0ac5f99d67c5d707fb97993021f95a"
+}

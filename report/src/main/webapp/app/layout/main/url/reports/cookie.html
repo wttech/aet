@@ -56,6 +56,8 @@
         <th>Name</th>
         <th>Value</th>
         <th>Expiry</th>
+        <th>HttpOnly</th>
+        <th>Secure</th>
       </tr>
       </thead>
       <tbody>
@@ -64,6 +66,8 @@
         <td>{{item.name}}</td>
         <td>{{item.value}}</td>
         <td>{{item.expiry}}</td>
+        <td><i ng-if="item.isHttpOnly" class="glyphicon glyphicon-ok"></i></td>
+        <td><i ng-if="item.isSecure" class="glyphicon glyphicon-ok"></i></td>
       </tr>
       </tbody>
     </table>

@@ -24,7 +24,7 @@
   <parent>
     <artifactId>aet-root</artifactId>
     <groupId>com.cognifide.aet</groupId>
-    <version>3.2.2-SNAPSHOT</version>
+    <version>3.3.1-SNAPSHOT</version>
   </parent>
 
   <artifactId>core</artifactId>
@@ -34,6 +34,7 @@
   <description>Root module for AET core functionalities</description>
 
   <modules>
+    <module>accessibility-report</module>
     <module>cleaner</module>
     <module>communication</module>
     <module>datastorage</module>

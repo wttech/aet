@@ -34,7 +34,7 @@ public interface ProxyServerWrapper {
 
   void setCaptureContent(boolean captureContent);
 
-  void addHeader(String name, String value);
+  void addHeader(String name, String value, Boolean override);
 
   void stop() throws ProxyException;
 

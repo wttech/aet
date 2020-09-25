@@ -19,18 +19,18 @@ import com.cognifide.aet.communication.api.job.CollectorJobData;
 import com.cognifide.aet.communication.api.messages.ProgressLog;
 import com.cognifide.aet.communication.api.metadata.Url;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
-import com.cognifide.aet.communication.api.wrappers.MetadataRunDecorator;
-import com.cognifide.aet.communication.api.wrappers.UrlRunWrapper;
 import com.cognifide.aet.communication.api.queues.QueuesConstant;
 import com.cognifide.aet.runner.RunnerConfiguration;
 import com.cognifide.aet.runner.processing.TimeoutWatch;
+import com.cognifide.aet.runner.processing.data.UrlPacket;
 import com.cognifide.aet.runner.processing.data.wrappers.RunIndexWrapper;
 import com.cognifide.aet.runner.scheduler.CollectorJobSchedulerService;
 import com.cognifide.aet.runner.scheduler.MessageWithDestination;
+import com.google.common.collect.Lists;
 import com.google.common.collect.Queues;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Deque;
+import java.util.List;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.ObjectMessage;
@@ -52,8 +52,10 @@ public class CollectDispatcher extends StepManager {
 
   public CollectDispatcher(TimeoutWatch timeoutWatch, JmsConnection jmsConnection,
       RunnerConfiguration runnerConfiguration,
-      CollectorJobSchedulerService collectorJobScheduler, RunIndexWrapper<?> runIndexWrapper) throws JMSException {
-    super(timeoutWatch, jmsConnection, runIndexWrapper.get().getCorrelationId(), runnerConfiguration.getMttl());
+      CollectorJobSchedulerService collectorJobScheduler, RunIndexWrapper<?> runIndexWrapper)
+      throws JMSException {
+    super(timeoutWatch, jmsConnection, runIndexWrapper.get().getCorrelationId(),
+        runnerConfiguration.getMttl());
     this.urlPackageSize = runnerConfiguration.getUrlPackageSize();
     this.collectorJobScheduler = collectorJobScheduler;
     this.runIndexWrapper = runIndexWrapper;
@@ -75,15 +77,15 @@ public class CollectDispatcher extends StepManager {
     Deque<MessageWithDestination> messagesQueue = Queues.newArrayDeque();
     LOGGER.info("Starting processing new Test Suite. CorrelationId: {} ", correlationId);
 
-    for (MetadataRunDecorator<Url> metadataRunDecorator : runIndexWrapper.getUrls()) {
-      UrlRunWrapper urlRunWrapper = (UrlRunWrapper) metadataRunDecorator.getRun();
-      final CollectorJobData data = new CollectorJobData(metadataRunDecorator.getCompany(),
-          metadataRunDecorator.getProject(), metadataRunDecorator.getName(), urlRunWrapper.getTestName(),
-          new ArrayList<>(Collections.singleton(urlRunWrapper.getObjectToRun())),
-          urlRunWrapper.getProxy(), urlRunWrapper.getPreferredBrowserId());
-      ObjectMessage message = session.createObjectMessage(data);
-      message.setJMSCorrelationID(correlationId);
-      messagesQueue.add(new MessageWithDestination(getQueueOut(), message, 1));
+    for (UrlPacket urlPacket : runIndexWrapper.getUrlPackets()) {
+      for (List<Url> urls : Lists.partition(urlPacket.getUrls(), urlPackageSize)) {
+        final CollectorJobData data = new CollectorJobData(urlPacket.getCompany(),
+            urlPacket.getProject(), urlPacket.getName(), urlPacket.getTestName(),
+            new ArrayList<>(urls), urlPacket.getProxy(), urlPacket.getPreferredBrowserId());
+        ObjectMessage message = session.createObjectMessage(data);
+        message.setJMSCorrelationID(correlationId);
+        messagesQueue.add(new MessageWithDestination(getQueueOut(), message, urls.size()));
+      }
     }
     collectorJobScheduler.add(messagesQueue, runIndexWrapper.get().getCorrelationId());
     LOGGER.info("MessagesQueue was added to collectorJobScheduler. CorrelationId: {} ",

@@ -16,15 +16,15 @@
 package com.cognifide.aet.runner.processing.data.wrappers;
 
 import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.Url;
-import com.cognifide.aet.communication.api.wrappers.MetadataRunDecorator;
 import com.cognifide.aet.communication.api.wrappers.Run;
-import java.util.ArrayList;
+import com.cognifide.aet.runner.processing.data.UrlPacket;
+import java.util.List;
 import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
@@ -53,7 +53,7 @@ public class UrlRunIndexWrapperTest {
   }
 
   @Test
-  public void getUrls_expectOne() {
+  public void getUrlPackets_expectOne() {
     test = Optional
         .of(new com.cognifide.aet.communication.api.metadata.Test("testName", "proxy", "chrome"));
     url = Optional.of(new Url("urlName", "urlUrl", "urlDomain"));
@@ -61,9 +61,9 @@ public class UrlRunIndexWrapperTest {
     when(suite.getTest(any(String.class))).thenReturn(test);
     when(objectToRunWrapper.getObjectToRun()).thenReturn(url.get());
 
-    ArrayList<MetadataRunDecorator<Url>> urls = urlRunIndexWrapper
-        .getUrls();
-    assertThat(urls.size(), is(1));
+    List<UrlPacket> packets = urlRunIndexWrapper.getUrlPackets();
+    Long urlsCount = packets.stream().map(UrlPacket::getUrls).mapToLong(List::size).sum();
+    assertThat(urlsCount, is(1L));
   }
 
   @Test

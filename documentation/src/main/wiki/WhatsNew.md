@@ -3,6 +3,17 @@ To see the full list of changes, please refer to [CHANGELOG](https://github.com/
 
 ### `master` branch version (Unreleased)
 
+
+### Version 3.3.0
+* [Header Modifier|HeaderModifier] has new optional parameter `override` which allows
+to override default browser headers (e.g. `User-Agent` header).
+* [Rerun feature|SuiteReportFeatures#rerun] is working for single URLs.
+
+### Version 3.2.2
+
+Layout Comparator has new optional parameter `fuzz` which can set maximum allowed 
+color difference between the pattern and collected screenshot. Read more [[here|LayoutComparator]]
+
 ### Version 3.2.0
 
 #### Rerun

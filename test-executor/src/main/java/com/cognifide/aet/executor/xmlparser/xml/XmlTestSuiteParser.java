@@ -22,12 +22,10 @@ import com.cognifide.aet.executor.xmlparser.api.TestSuiteParser;
 import com.cognifide.aet.executor.xmlparser.xml.models.Collect;
 import com.cognifide.aet.executor.xmlparser.xml.models.Compare;
 import com.cognifide.aet.executor.xmlparser.xml.models.TestSuite;
-import com.cognifide.aet.executor.xmlparser.xml.utils.EscapeUtils;
 import com.google.common.base.Charsets;
 import com.google.common.io.Files;
 import java.io.File;
 import java.io.IOException;
-import org.apache.commons.lang3.StringUtils;
 import org.simpleframework.xml.Serializer;
 import org.simpleframework.xml.convert.Registry;
 import org.simpleframework.xml.convert.RegistryStrategy;
@@ -49,14 +47,10 @@ public class XmlTestSuiteParser implements TestSuiteParser {
   public TestSuiteRun parse(String testSuiteString) throws ParseException {
     try {
       Serializer serializer = getSerializer();
-      TestSuite testSuite = serializer
-          .read(TestSuite.class, EscapeUtils.escapeUrls(testSuiteString));
+      TestSuite testSuite = serializer.read(TestSuite.class, testSuiteString);
       return testSuite.adaptToTestSuiteRun();
     } catch (Exception e) {
-      String message = "Something is wrong with your suite definition!";
-      if (e.getCause() != null && StringUtils.isNotBlank(e.getCause().getMessage())) {
-        message += " " + e.getCause().getMessage();
-      }
+      String message = String.format("Something is wrong with your suite definition! Detected errors: %n%s", e.getMessage());
       throw new ParseException(message, e);
     }
   }

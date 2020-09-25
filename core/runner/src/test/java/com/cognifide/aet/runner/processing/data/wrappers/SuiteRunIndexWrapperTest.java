@@ -17,13 +17,12 @@ package com.cognifide.aet.runner.processing.data.wrappers;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
-import static org.mockito.Matchers.any;
 import static org.mockito.Mockito.when;
 
 import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.Url;
-import com.cognifide.aet.communication.api.wrappers.MetadataRunDecorator;
 import com.cognifide.aet.communication.api.wrappers.Run;
+import com.cognifide.aet.runner.processing.data.UrlPacket;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -63,30 +62,29 @@ public class SuiteRunIndexWrapperTest {
         .of(new com.cognifide.aet.communication.api.metadata.Test("testName", "proxy", "chrome"));
     test2 = Optional
         .of(new com.cognifide.aet.communication.api.metadata.Test("testName", "proxy", "chrome"));
-    url = Optional.of(new Url("urlName","urlUrl","urlDomain"));
-    url2 = Optional.of(new Url("urlName2","urlUrl2","urlDomain2"));
+    url = Optional.of(new Url("urlName", "urlUrl", "urlDomain"));
+    url2 = Optional.of(new Url("urlName2", "urlUrl2", "urlDomain2"));
   }
 
   @Test
-  public void getUrls_expectZero() {
+  public void getUrlPackets_expectZero() {
     prepareZeroUrls();
-
-    ArrayList<MetadataRunDecorator<Url>> urlsResult = suiteRunIndexWrapper
-        .getUrls();
-    assertThat(urlsResult.size(), is(0));
+    List<UrlPacket> packets = suiteRunIndexWrapper.getUrlPackets();
+    Long urlsCount = packets.stream().map(UrlPacket::getUrls).mapToLong(List::size).sum();
+    assertThat(urlsCount, is(0L));
   }
 
   @Test
-  public void getUrls_expectThree() {
+  public void getUrlPackets_expectThree() {
     prepareThreeUrls();
 
-    ArrayList<MetadataRunDecorator<Url>> urlsResult = suiteRunIndexWrapper
-        .getUrls();
-    assertThat(urlsResult.size(), is(3));
+    List<UrlPacket> packets = suiteRunIndexWrapper.getUrlPackets();
+    Long urlsCount = packets.stream().map(UrlPacket::getUrls).mapToLong(List::size).sum();
+    assertThat(urlsCount, is(3L));
   }
 
   @Test
-  public void countUrls_expectZero(){
+  public void countUrls_expectZero() {
     prepareZeroUrls();
 
     assertThat(suiteRunIndexWrapper.countUrls(), is(0));
@@ -99,14 +97,14 @@ public class SuiteRunIndexWrapperTest {
     assertThat(suiteRunIndexWrapper.countUrls(), is(3));
   }
 
-  private void prepareZeroUrls(){
+  private void prepareZeroUrls() {
     List<com.cognifide.aet.communication.api.metadata.Test> tests = new ArrayList<>();
     tests.add(test.get());
     tests.add(test2.get());
     when(suite.getTests()).thenReturn(tests);
   }
 
-  private void prepareThreeUrls(){
+  private void prepareThreeUrls() {
     Set<Url> firstUrlsSet = new HashSet<>();
     firstUrlsSet.add(url.get());
     test.get().setUrls(firstUrlsSet);

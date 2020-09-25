@@ -56,6 +56,7 @@ define(['angularAMD',
   // sidepanel
   'sidepanelDirective',
   'sidepanelStatusFilterDirective',
+  'sidepanelOrderDirective',
   'sidepanelSearchDirective',
   'sidepanelToggleLinkDirective',
   'sidepanelSaveChangesDirective',
@@ -66,6 +67,7 @@ define(['angularAMD',
   'filterInformationDirective',
   // modals
   'noteModalController',
+  'accessibilityModalController',
   'historyModalController',
   'unsavedChangesModalController'], function (angularAMD, _) {
 

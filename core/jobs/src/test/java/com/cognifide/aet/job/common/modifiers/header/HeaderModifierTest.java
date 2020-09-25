@@ -58,7 +58,7 @@ public class HeaderModifierTest {
     headerModifier.setParameters(ImmutableMap.of("key", "header", "value", "value1"));
     headerModifier.collect();
 
-    verify(proxyServer).addHeader("header", "value1");
+    verify(proxyServer).addHeader("header", "value1", false);
     verify(requestExecutor).addHeader("header", "value1");
   }
 
