@@ -23,18 +23,13 @@ public class RequestMonitoringResults {
 
   private final Collection<RequestMonitoringResult> results;
 
-  private double totalSize;
-
   public RequestMonitoringResults() {
-    this.results = new TreeSet<>(Collections.reverseOrder());
-    this.totalSize = 0d;
+    results = new TreeSet<>(Collections.reverseOrder());
   }
 
   public final void addItem(String url, long bodySize) {
-    RequestMonitoringResult item = new RequestMonitoringResultBuilder().setUrl(url)
-        .setSize(bodySize).build();
+    RequestMonitoringResult item = new RequestMonitoringResult(url, bodySize);
     results.add(item);
-    totalSize += item.getSize();
   }
 
   public Collection<RequestMonitoringResult> getResults() {
@@ -42,6 +37,6 @@ public class RequestMonitoringResults {
   }
 
   public double getTotalSize() {
-    return totalSize;
+    return results.stream().map(RequestMonitoringResult::getSize).reduce(0.0, Double::sum);
   }
 }

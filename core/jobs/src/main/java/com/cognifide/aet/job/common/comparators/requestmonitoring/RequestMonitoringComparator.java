@@ -37,7 +37,7 @@ public class RequestMonitoringComparator implements ComparatorJob {
 
   public static final String COMPARATOR_NAME = "request-monitoring";
 
-  public static final String MAX_SIZE = "maxSize";
+  private static final String MAX_SIZE = "maxSize";
 
   private static final Logger LOGGER = LoggerFactory.getLogger(RequestMonitoringComparator.class);
 
@@ -74,7 +74,6 @@ public class RequestMonitoringComparator implements ComparatorJob {
       } else {
         result = new ComparatorStepResult(artifactId, ComparatorStepResult.Status.PASSED);
       }
-
 
     } catch (Exception e) {
       throw new ProcessingException("Failed to get Request Size Comparator result!", e);

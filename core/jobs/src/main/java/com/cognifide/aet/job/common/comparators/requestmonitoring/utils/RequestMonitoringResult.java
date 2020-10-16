@@ -15,6 +15,8 @@
  */
 package com.cognifide.aet.job.common.comparators.requestmonitoring.utils;
 
+import java.util.Objects;
+
 public class RequestMonitoringResult implements Comparable<RequestMonitoringResult> {
 
   private final String url;
@@ -23,7 +25,7 @@ public class RequestMonitoringResult implements Comparable<RequestMonitoringResu
 
   public RequestMonitoringResult(String url, double size) {
     this.url = url;
-    this.size = size;
+    this.size = size / 1024d;
   }
 
   public String getUrl() {
@@ -37,5 +39,23 @@ public class RequestMonitoringResult implements Comparable<RequestMonitoringResu
   @Override
   public int compareTo(RequestMonitoringResult o) {
     return Double.compare(this.size, o.getSize());
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    boolean result = false;
+    if (obj == this) {
+      result = true;
+    } else if (obj != null && obj.getClass() == this.getClass()) {
+      RequestMonitoringResult other = (RequestMonitoringResult) obj;
+      result = Objects.equals(url, other.url)
+          && Objects.equals(size, other.size);
+    }
+    return result;
+  }
+
+  @Override
+  public int hashCode() {
+    return Objects.hash(url, size);
   }
 }
