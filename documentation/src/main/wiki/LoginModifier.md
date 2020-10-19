@@ -14,8 +14,8 @@ Module name: **login**
 
 | Parameter | Value | Mandatory | Default value |
 | --------- | ----- | --------- | ------------- |
-| `login` | User's login | no | admin |
-| `password` | Password | no | admin |
+| `login` | User's login, can be passed plaintext or read from environment variable using `"${ENV_VARIABLE_NAME}"`. See the example below. | no | admin |
+| `password` | Password, can be passed plaintext or read from environment variable using `"${ENV_VARIABLE_NAME}"`. See the example below. | no | admin |
 | `login-page` | Full url to login page (starting with `http` or `https`) or login page path that is in the `domain` specified for the suite | yes | |
 | `login-input-selector` | Xpath expression for login input | no | //input[@name='j_username'] |
 | `password-input-selector` | Xpath expression for password input | no | //input[@name='j_password'] |
@@ -27,6 +27,7 @@ Module name: **login**
 
 ##### Example Usage
 
+> Pass `login` and `password` as plain text and `login-page` as full URL:
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
 <suite name="test-suite" company="cognifide" project="project">
@@ -55,6 +56,7 @@ Module name: **login**
 </suite>
 ```
 
+> Pass `login` and `password` as plain text and `login-page` as URL inside the `domain` specified for the suite:
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
 <suite name="test-suite" company="cognifide" project="project" domain="http://example.com">
@@ -62,6 +64,35 @@ Module name: **login**
         <collect>
             <login login="user"
                 password="password"
+                login-page="/login.html"
+                login-input-selector="//input[@name='j_username']"
+                password-input-selector="//input[@name='j_password']"
+                submit-button-selector="//*[@type='submit']" />
+            <open />
+            ...
+        </collect>
+        <compare>
+            ...
+        </compare>
+        <urls>
+        ...
+        </urls>
+    </test>
+    ...
+    <reports>
+        ...
+    </reports>
+</suite>
+```
+
+> Pass `login` and `password` as environment variables:
+```xml
+<?xml version="1.0" encoding="UTF-8" ?>
+<suite name="test-suite" company="cognifide" project="project" domain="http://example.com">
+    <test name="login-test">
+        <collect>
+            <login login="${LOGIN_EXAMPLE_ADMIN_PANEL}"
+                password="${PASS_EXAMPLE_ADMIN_PANEL}"
                 login-page="/login.html"
                 login-input-selector="//input[@name='j_username']"
                 password-input-selector="//input[@name='j_password']"

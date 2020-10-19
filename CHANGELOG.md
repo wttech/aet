@@ -10,6 +10,7 @@ All notable changes to AET will be documented in this file.
 ## Unreleased
 
 **List of changes that are finished but not yet released in any final version.**
+- [PR-583](https://github.com/Cognifide/aet/pull/583) Enable login modifier to read login and password from environment variables (fixed [#512](https://github.com/Cognifide/aet/issues/512)).
 - [PR-525](https://github.com/Cognifide/aet/pull/525) Added tests ordering. ([#509](https://github.com/Cognifide/aet/issues/509))
 
 - [PR-524](https://github.com/Cognifide/aet/pull/524) Remove handling unescaped URLs in suites
