@@ -10,6 +10,7 @@ All notable changes to AET will be documented in this file.
 ## Unreleased
 
 **List of changes that are finished but not yet released in any final version.**
+- [PR-586](https://github.com/Cognifide/aet/pull/586) Removed duplicate of "Edit url note" button. ([#585](https://github.com/Cognifide/aet/issues/585))
 - [PR-525](https://github.com/Cognifide/aet/pull/525) Added tests ordering. ([#509](https://github.com/Cognifide/aet/issues/509))
 
 - [PR-524](https://github.com/Cognifide/aet/pull/524) Remove handling unescaped URLs in suites
