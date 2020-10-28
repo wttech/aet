@@ -32,7 +32,7 @@
              data-ng-model="$root.searchText" class="search-input">
       <div class="fontawesome"
            data-toggle="popover"
-           data-content="{{!$root.searchText && 'Start typing to filter by url name' || $root.searchText && 'Clear search'}}"
+           data-content="{{!$root.searchText && 'Start typing to filter by URL name' || $root.searchText && 'Clear search'}}"
            data-trigger="hover"
            data-container="body"
            ng-click="clearSearch()">
@@ -52,7 +52,7 @@
             <div class="fontawesome">
                   <div class="apply-filters"
                        data-toggle="popover"
-                       data-content="Apply filtering to urls"
+                       data-content="Apply filtering to URLs"
                        data-trigger="hover"
                        data-container="body">
                           <i class="fas fa-angle-down fa-lg"></i>
@@ -70,26 +70,26 @@
           <form class="dropdown-menu">
             <div class="dropdown-field">
               <label><input type="checkbox">
-                <p data-attribute="failed" class="dropdown-item">Show failed urls</p></label>
+                <p data-attribute="failed" class="dropdown-item">Show failed URLs</p></label>
             </div>
             <div class="dropdown-field">
               <label><input type="checkbox">
-                <p data-attribute="warning" class="dropdown-item" href="#">Show urls with
+                <p data-attribute="warning" class="dropdown-item" href="#">Show URLs with
                   warnings</p></labeL>
             </div>
             <div class="dropdown-field">
               <label><input type="checkbox">
-                <p data-attribute="passed" class="dropdown-item" href="#">Show passed urls</p>
+                <p data-attribute="passed" class="dropdown-item" href="#">Show passed URLs</p>
               </label>
             </div>
             <div class="dropdown-field">
               <label><input type="checkbox">
-                <p data-attribute="conditionallyPassed" class="dropdown-item" href="#">Show conditionally passed urls</p>
+                <p data-attribute="conditionallyPassed" class="dropdown-item" href="#">Show conditionally passed URLs</p>
               </label>
             </div>
             <div class="dropdown-field">
               <label><input type="checkbox">
-                <p data-attribute="rebased" class="dropdown-item" href="#">Show accepted urls</p>
+                <p data-attribute="rebased" class="dropdown-item" href="#">Show accepted URLs</p>
               </label>
             </div>
           </form>
@@ -151,7 +151,7 @@
       Tests:
     </header>
     <div class="pull-right stats">
-      <span class="status" data-toggle="popover" data-content="Total tests found."
+      <span class="status" data-toggle="popover" data-content="Total tests found"
             data-trigger="hover" data-container="body">{{sidepanel.testsStats.total}}</span>
       ( <span class="status failed" data-toggle="popover" data-content="Failed tests"
               data-trigger="hover" data-container="body">{{sidepanel.testsStats.failed}}</span> /
@@ -179,7 +179,7 @@
                 <i ng-if="test.getStatus() == 'conditionallyPassed'"><i class="fas {{theme.statusClasses[test.getStatus()]}}"></i></i>
                 {{test.name}}
             </span>
-        <div class="report-item-stats" data-toggle="popover" data-content="Urls in test"
+        <div class="report-item-stats" data-toggle="popover" data-content="URLs in test"
              data-trigger="hover" data-container="body">
           {{filteredUrls.length}}
         </div>
