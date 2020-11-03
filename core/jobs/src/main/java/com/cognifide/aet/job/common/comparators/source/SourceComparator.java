@@ -76,7 +76,7 @@ class SourceComparator implements ComparatorJob {
     return getResultOfCompare();
   }
 
-  private ComparatorStepResult getResultOfCompare() {
+  private ComparatorStepResult getResultOfCompare() throws ProcessingException {
     List<ResultDelta> deltas = calculateDeltas();
     ComparatorStepResult.Status status = calculateStatus(deltas);
     ComparatorStepResult result = createNewStepResult(deltas, status);
@@ -121,15 +121,13 @@ class SourceComparator implements ComparatorJob {
     result.addData("sourceCompareType", sourceCompareType.name());
   }
 
-  private void addTimestampToResult(ComparatorStepResult result) {
-    long stamp;
+  private void addTimestampToResult(ComparatorStepResult result) throws ProcessingException{
     try {
-      stamp = artifactsDAO.getArtifactUploadDate(properties, properties.getPatternId()).getTime();
+      result.addData("patternTimestamp", Long.toString(artifactsDAO.getArtifactUploadDate(properties, properties.getPatternId()).getTime()));
+      result.addData("collectTimestamp", Long.toString(System.currentTimeMillis()));
     } catch(Exception e) {
-      stamp = 0;
+      throw new ProcessingException(e.getMessage(), e);
     }
-    result.addData("patternTimestamp", Long.toString(stamp));
-    result.addData("collectTimestamp", Long.toString(System.currentTimeMillis()));
   }
 
 }
