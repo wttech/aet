@@ -25,6 +25,8 @@ import com.cognifide.aet.job.common.comparators.source.diff.DiffParser;
 import com.cognifide.aet.job.common.comparators.source.diff.ResultDelta;
 import com.cognifide.aet.job.common.comparators.source.diff.ResultDelta.TYPE;
 import com.cognifide.aet.vs.ArtifactsDAO;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,6 +37,7 @@ import java.util.Optional;
 class SourceComparator implements ComparatorJob {
 
   private static final String SOURCE_COMPARE_TYPE = "compareType";
+  private static final Logger LOGGER = LoggerFactory.getLogger(SourceComparator.class);
 
   private final ComparatorProperties properties;
   private final DiffParser diffParser;
@@ -76,7 +79,7 @@ class SourceComparator implements ComparatorJob {
     return getResultOfCompare();
   }
 
-  private ComparatorStepResult getResultOfCompare() throws ProcessingException {
+  private ComparatorStepResult getResultOfCompare() {
     List<ResultDelta> deltas = calculateDeltas();
     ComparatorStepResult.Status status = calculateStatus(deltas);
     ComparatorStepResult result = createNewStepResult(deltas, status);
@@ -121,12 +124,12 @@ class SourceComparator implements ComparatorJob {
     result.addData("sourceCompareType", sourceCompareType.name());
   }
 
-  private void addTimestampToResult(ComparatorStepResult result) throws ProcessingException{
+  private void addTimestampToResult(ComparatorStepResult result){
     try {
       result.addData("patternTimestamp", Long.toString(artifactsDAO.getArtifactUploadDate(properties, properties.getPatternId()).getTime()));
       result.addData("collectTimestamp", Long.toString(System.currentTimeMillis()));
     } catch(Exception e) {
-      throw new ProcessingException(e.getMessage(), e);
+      LOGGER.info(e.getMessage(), e);
     }
   }
 
