@@ -131,20 +131,6 @@
         </div>
       </span>
 
-      <span class="comments-status pull-left"
-        data-toggle="popover"
-        data-ng-class="toolbarBottom.model.comment ? 'present' : 'absent'"
-        data-content="{{toolbarBottom.model.comment && '<span>' + toolbarBottom.model.comment + '</span>' || !toolbarBottom.model.comment && '<span>Click to update this ' + toolbarBottom.viewMode + ' note</span>'}}"
-        data-html="true" data-trigger="hover"
-        data-ng-click="toolbarBottom.displayCommentModal()">
-          <div ng-if="toolbarBottom.model.comment">
-            <i class="fas fa-ellipsis-h" data-fa-transform="shrink-10 up-.5" data-fa-mask="fas fa-comment"></i>
-          </div>
-          <div ng-if="!toolbarBottom.model.comment">
-            <i class="fas fa-pencil-alt" data-fa-transform="shrink-10 up-.5" data-fa-mask="fas fa-comment"></i>
-          </div>
-      </span>
-
       <span class="button button-dark button-disabled"
             data-ng-if="toolbarBottom.usesCrossSuitePattern"
             data-aet-included-comment-popover
