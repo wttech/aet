@@ -10,7 +10,7 @@ All notable changes to AET will be documented in this file.
 ## Unreleased
 
 **List of changes that are finished but not yet released in any final version.**
-
+- [PR-528](https://github.com/Cognifide/aet/pull/528) Added source pattern date and source collected date. ([#500](https://github.com/Cognifide/aet/issues/500))
 - [PR-589](https://github.com/Cognifide/aet/pull/589) Fixed bug with 'Discard all changes' button not properly displayed. ([#587](https://github.com/Cognifide/aet/issues/587))
 - [PR-586](https://github.com/Cognifide/aet/pull/586) Removed duplicate of "Edit url note" button. ([#585](https://github.com/Cognifide/aet/issues/585))
 - [PR-502](https://github.com/Cognifide/aet/pull/502) Implement a feature that will allow monitoring the size of responses for the given requests ([#501](https://github.com/Cognifide/aet/issues/501))
