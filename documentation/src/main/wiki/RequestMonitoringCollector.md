@@ -1,6 +1,7 @@
 #### Request Monitoring Collector
 
 Request Monitoring Collector is responsible for collecting responses size for the requests that match the given regexp.
+In order to use this modifier [[proxy|SuiteStructure#proxy]] must be enabled.
 
 Module name: **request-monitoring**
 

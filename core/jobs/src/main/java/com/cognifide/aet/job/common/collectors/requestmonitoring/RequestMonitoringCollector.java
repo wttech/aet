@@ -55,6 +55,9 @@ public class RequestMonitoringCollector implements CollectorJob {
     final CollectorStepResult stepResult;
 
     RequestMonitoringResults results = new RequestMonitoringResults();
+    if (!webCommunicationWrapper.isUseProxy()) {
+      throw new ProcessingException("Cannot collect request monitoring data without using proxy!");
+    }
     HarLog log = webCommunicationWrapper.getProxyServer().getHar().getLog();
 
     for (final HarEntry harLogEntry : log.getEntries()) {
