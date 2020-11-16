@@ -65,7 +65,7 @@ public class AccessibilityCollector implements CollectorJob {
     final String json = jsExecutor.execute(script, standard).getExecutionResultAsString();
     List<AccessibilityIssue> issues = new AccessibilityIssueMarkupFinder(html, json).get();
 
-    String resultId = artifactsDAO.saveArtifactInJsonFormat(properties, issues);
+    String resultId = artifactsDAO.saveArtifactInJsonFormat(properties, issues, standard);
 
     return CollectorStepResult.newCollectedResult(resultId);
   }

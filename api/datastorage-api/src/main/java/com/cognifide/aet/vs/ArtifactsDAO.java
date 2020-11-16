@@ -64,6 +64,17 @@ public interface ArtifactsDAO extends Serializable {
   <T> String saveArtifactInJsonFormat(DBKey dbKey, T data);
 
   /**
+   * Saves data into gridfs files collection.
+   *
+   * @param dbKey - key with project and company name
+   * @param data to save in String form
+   * @param <T> - data to save
+   * @param contentType - to content type of saved artifact
+   * @return saved artifact ID
+   */
+  <T> String saveArtifactInJsonFormat(DBKey dbKey, T data, String contentType);
+
+  /**
    * @param dbKey - key with project and company name
    * @param objectID - suite run identificator
    * @return artifact object found by given criteria or null.
