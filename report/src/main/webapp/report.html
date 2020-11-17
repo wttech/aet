@@ -19,6 +19,7 @@
 -->
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <title>AET Report</title>
@@ -28,81 +29,106 @@
   <script defer src="assets/icons/fontawesome-all.js"></script>
 </head>
 
-<body aet-hide-popovers aet-keyboard-shortcuts aet-sidepanel aet-winter-edition ng-class="{ 'menu-expanded': sidebarExpanded }">
+<body aet-hide-popovers aet-keyboard-shortcuts aet-sidepanel aet-winter-edition
+  ng-class="{ 'menu-expanded': sidebarExpanded }">
 
-<div class="screen-cover js-loader-app" ng-if="metadataSaveInProgress"><h1>Saving data...</h1></div>
-<div class="screen-cover data-loading-error" ng-if="metadataLoadingStatus == 'FAILED'"><h1>Failed to
-  load metadata!</h1>
-  <p>Please make sure your URL is valid.</p></div>
-<div class="screen-cover js-loader-app" ng-if="metadataLoadingStatus == 'IN_PROGRESS'"><h1>Loading
-  data...</h1></div>
-
-<div ui-view="sidepanel"></div>
-<div class="main toolbar-holder">
-  <div class="toolbar">
-    <div ui-view="toolbarTop"></div>
-    <div ui-view="toolbarBottom"></div>
+  <div class="screen-cover js-loader-app" ng-if="metadataSaveInProgress">
+    <h1>Saving data...</h1>
   </div>
-  <div ui-view="content"></div>
-</div>
+  <div class="screen-cover data-loading-error" ng-if="metadataLoadingStatus == 'FAILED'">
+    <h1>Failed to
+      load metadata!</h1>
+    <p>Please make sure your URL is valid.</p>
+  </div>
+  <div class="screen-cover js-loader-app" ng-if="metadataLoadingStatus == 'IN_PROGRESS'">
+    <h1>Loading
+      data...</h1>
+  </div>
+
+  <div ui-view="sidepanel"></div>
+  <div class="main toolbar-holder">
+    <div class="toolbar">
+      <div ui-view="toolbar"></div>
+      <!-- <div ui-view="toolbarBottom"></div> -->
+    </div>
+    <div ui-view="content"></div>
+  </div>
 
 
-<!--
+  <!--
     Help modal
 -->
-<div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-            aria-hidden="true"><i class="fas fa-times"></i></span></button>
-        <h4 class="modal-title">Handful keyboard shortcuts</h4>
-      </div>
-      <div class="modal-body">
-        <ul>
-          <li>press <span class="label label-info">q</span> to expand/collapse all items</li>
-          <li>press <span class="label label-info">e</span> to expand/collapse all error items</li>
-          <li>press <span class="label label-info">m</span> to show/hide layout mask (when
-            available)
-          </li>
-          <li>press <span class="label label-info">[ / ]</span> to navigate between test's URLs</li>
-          <li>press <span class="label label-info">← / →</span> to navigate between URL's tabs</li>
-          <li>press <span class="label label-info">a</span> for accepting suite/test/URL</li>
-          <li>press <span class="label label-info">r</span> for reverting suite/test/URL</li>
-          <li><span class="label label-info">shift</span> modifier that will define that the specific opened test case should be accepted/reverted (shift + A - accepts opened test case; shift + R - reverts opened test case)</li>
-        </ul>
+  <div class="modal fade" id="helpModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h4 class="modal-title">Handful keyboard shortcuts</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i
+                class="fas fa-times"></i></span></button>
+        </div>
+        <div class="modal-body">
+          <ul class='help-list'>
+            <li>press <span class="help-key-info"><span>q</span></span> to expand/collapse all items</li>
+            <li>press <span class="help-key-info"><span>e</span></span> to expand/collapse all error items</li>
+            <li>press <span class="help-key-info"><span>m</span></span> to show/hide layout mask (when
+              available)
+            </li>
+            <li>press <span class="help-key-info"><span>[ / ]</span></span> to navigate between test's URLs</li>
+            <li>press <span class="help-key-info"><span>← / →</span></span> to navigate between URL's tabs</li>
+            <li>press <span class="help-key-info"><span>a</span></span> for accepting suite/test/URL</li>
+            <li>press <span class="help-key-info"><span>r</span></span> for reverting suite/test/URL</li>
+            <li><span class="help-key-info"><span>shift </span></span> modifier that will define that the specific opened test case
+              should be accepted/reverted (shift + A - accepts opened test case; shift + R - reverts opened test case)
+            </li>
+          </ul>
+          <p>If you have any questions or require technical support please contact us at
+            <a href="mailto:aet@cognifide.com">aet@cognifide.com</a>.
+            <a href="https://gitter.im/aet-tool/Lobby" target="_blank">Gitter Chat</a> is a way for users
+            to chat with the AET community. Feel free to leave a message, even if we’re not around,
+            we will definitely respond to you when available.</p>
+          <a href="https://www.cognifide.com/" target="_blank"><img class="logo cognifide-logo"
+              src="assets/img/cognifide.png"></a>
+          <p class="copyright">Copyright © 2013 Cognifide Limited</p>
+        </div>
+        <div class='modal-footer'>
+          <p>Generated with
+            <a href="https://github.com/Cognifide/aet" target="_blank">AET</a> version: {{ applicationVersion }}
+          </p>
+        </div>
+
       </div>
     </div>
   </div>
-</div>
 
 
-<!--
+  <!--
     About modal
 -->
-<div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-            aria-hidden="true"><i class="fas fa-times"></i></span></button>
-        <h4 class="modal-title">About...</h4>
-      </div>
-      <div class="modal-body">
-        <p>Generated with
-          <a href="https://github.com/Cognifide/aet" target="_blank">AET</a> version: {{ applicationVersion }}
-        </p>
-        <p>If you have any questions or require technical support please contact us at
-          <a href="mailto:aet@cognifide.com">aet@cognifide.com</a>.
-          <a href="https://gitter.im/aet-tool/Lobby" target="_blank">Gitter Chat</a> is a way for users
-          to chat with the AET community. Feel free to leave a message, even if we’re not around,
-          we will definitely respond to you when available.</p>
-        <a href="https://www.cognifide.com/" target="_blank"><img class="logo cognifide-logo" src="assets/img/cognifide.png"></a>
-        <p class="copyright">Copyright © 2013 Cognifide Limited</p>
+  <div class="modal fade" id="aboutModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true"><i
+                class="fas fa-times"></i></span></button>
+          <h4 class="modal-title">About...</h4>
+        </div>
+        <div class="modal-body">
+          <p>Generated with
+            <a href="https://github.com/Cognifide/aet" target="_blank">AET</a> version: {{ applicationVersion }}
+          </p>
+          <p>If you have any questions or require technical support please contact us at
+            <a href="mailto:aet@cognifide.com">aet@cognifide.com</a>.
+            <a href="https://gitter.im/aet-tool/Lobby" target="_blank">Gitter Chat</a> is a way for users
+            to chat with the AET community. Feel free to leave a message, even if we’re not around,
+            we will definitely respond to you when available.</p>
+          <a href="https://www.cognifide.com/" target="_blank"><img class="logo cognifide-logo"
+              src="assets/img/cognifide.png"></a>
+          <p class="copyright">Copyright © 2013 Cognifide Limited</p>
+        </div>
       </div>
     </div>
   </div>
-</div>
 </body>
 <script src='assets/libs/requirejs/require.js' data-main="app/app.config.js"></script>
+
 </html>

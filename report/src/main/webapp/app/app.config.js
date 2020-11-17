@@ -54,6 +54,8 @@ require.config({
     'patternsService': 'services/patterns.service',
     'userSettingsService': 'services/userSettings.service',
     'viewModeService': 'services/viewMode.service',
+    //Toolbar unified
+    'toolbarController': 'layout/toolbar/toolbar.controller',
     //toolbarTop
     'toolbarTopController': 'layout/toolbar/toolbarTop.controller',
     //toolbarBottom

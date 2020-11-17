@@ -41,30 +41,6 @@
       </a>
     </div>
     <div class="toolbar-block">
-      Total cases: <span class="name">{{toolbarTop.suiteStatistics.total}}</span>
-      (&nbsp;<span class="status failed" data-toggle="popover" data-content="Failed cases"
-              data-trigger="hover"
-              data-container="body">{{toolbarTop.suiteStatistics.failed}}</span> /
-      <span class="status warning" data-toggle="popover" data-content="Warning cases"
-            data-trigger="hover" data-container="body">{{toolbarTop.suiteStatistics.warning}}</span>
-      /
-      <span class="status passed" data-toggle="popover" data-content="Passed cases"
-            data-trigger="hover" data-container="body">
-        {{toolbarTop.suiteStatistics.passed}}
-      </span>
-      <span class="status conditionallyPassed" data-toggle="popover" data-content="Conditionally passed cases"
-      data-trigger="hover" data-container="body"> ({{toolbarTop.suiteStatistics.conditionallyPassed}})
-      </span>
-      /
-      <span class="status rebased" data-toggle="popover" data-content="Accepted cases"
-            data-trigger="hover" data-container="body">{{toolbarTop.suiteStatistics.rebased}}</span>&nbsp;)
-      (&nbsp;<span class="status rebased" data-toggle="popover" data-content="Not saved, accepted cases"
-              data-trigger="hover" data-container="body">{{toolbarTop.suiteStatistics.acceptedPatterns}}</span>
-      /
-      <span class="status failed" data-toggle="popover" data-content="Cases that may be accepted"
-            data-trigger="hover" data-container="body">{{toolbarTop.suiteStatistics.patternsToAccept - toolbarTop.suiteStatistics.acceptedPatterns}}</span>&nbsp;)
-    </div>
-    <div class="toolbar-block">
       Project: <span class="name">{{toolbarTop.suiteInfo.project}}</span>
     </div>
     <div class="toolbar-block">
@@ -73,7 +49,7 @@
             data-content="Go to previous version" data-trigger="hover">
         <a href="{{reportPath}}&version={{toolbarTop.previousVersion}}"><i class="fas fa-chevron-left set-initial-font-size"></i></a>
       </span>
-      Suite: 
+      Suite:
       <div class="suite-name-container" data-ng-click="toolbarTop.showSuiteHistory()">
       <span class="name">{{toolbarTop.suiteInfo.name}}</span>
       <span class="preformatted" data-toggle="popover" data-content="Suite version"

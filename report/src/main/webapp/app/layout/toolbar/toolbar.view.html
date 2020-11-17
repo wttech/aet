@@ -1,0 +1,162 @@
+<!--
+
+    AET
+
+    Copyright (C) 2013 Cognifide Limited
+
+    Licensed under the Apache License, Version 2.0 (the "License");
+    you may not use this file except in compliance with the License.
+    You may obtain a copy of the License at
+
+         http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software
+    distributed under the License is distributed on an "AS IS" BASIS,
+    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+    See the License for the specific language governing permissions and
+    limitations under the License.
+
+-->
+
+<div class="toolbar-top">
+  <div class="toolbar-toggle fontawesome-link">
+    <div ng-if="sidebarExpanded">
+      <i class="fas fa-angle-left fa-lg"></i>
+    </div>
+    <div ng-if="!sidebarExpanded">
+      <i class="fas fa-angle-right fa-lg"></i>
+    </div>
+  </div>
+  <div class="toolbar-blocks left-half">
+    <div class="toolbar-block project-name">
+      <span class="correlationIdIcon" data-toggle="popover" ng-click="copyToClipboard(toolbar.suiteInfo.correlationId)" data-content="{{toolbar.suiteInfo.correlationId}} (click to copy)"
+        data-trigger="hover" data-container="body">
+        <i class="fas fa-id-card fa-lg"></i>
+      </span>
+      Project: &nbsp; <span>{{toolbar.suiteInfo.project}}</span>
+      <span>
+        <i class="fas fa-angle-right fa-xs arrow-decoration"></i>
+      </span>
+      <span>{{toolbar.suiteInfo.name}}</span>
+    </div>
+    <div class="toolbar-block">
+      <span ng-if="toolbar.previousVersion" style="vertical-align:middle" data-toggle="popover"
+        data-content="Go to previous version" data-trigger="hover">
+        <a href="{{reportPath}}&version={{toolbar.previousVersion}}"><i
+            class="fas fa-angle-left set-initial-font-size"></i></a>
+      </span>
+      <div class="suite-name-container" data-ng-click="toolbar.showSuiteHistory()">
+        <span class="preformatted" data-toggle="popover" data-content="Suite version" data-trigger="hover"
+          data-container="body">V{{toolbar.suiteInfo.version}}</span>
+        <span class="preformatted" data-toggle="popover" data-content="Last modified" data-trigger="hover">
+          ({{toolbar.suiteInfo.lastUpdate | date: 'yyyy-MM-dd HH:mm:ss'}})
+        </span>
+        <span> - Execution time: {{toolbar.suiteInfo.duration | date: 'mm:ss'}}</span>
+      </div>
+      <span ng-if="toolbar.nextVersion" style="vertical-align:middle" data-toggle="popover"
+        data-content="Go to next version" data-trigger="hover">
+        <a href="{{reportPath}}&version={{toolbar.nextVersion}}"><i
+            class="fas fa-angle-right set-initial-font-size"></i></a>
+      </span>
+      <span ng-if="toolbar.suiteInfo.version !== suiteHeaders[0].version" style="margin-left: 12px;"
+        data-toggle="popover" data-content="Go to latest version" data-trigger="hover">
+        <a href="{{reportPath}}&version={{suiteHeaders[0].version}}">
+          <i class="fas fa-angle-double-right set-initial-font-size"></i>
+        </a>
+      </span>
+    </div>
+  </div>
+  <div class='toolbar-blocks right-half'>
+    <div class='toolbar-block test-details'>
+      <div class='test-details-left'>
+        <div ng-if="toolbar.viewMode != 'Suite'" class="fontawesome-link" data-toggle="popover"
+          data-content="Localize the currently opened url on side panel" data-trigger="hover" data-container="body"
+          data-ng-click="toolbar.scrollSidepanel(false)">
+          <i class="fas fa-crosshairs fa-sm"></i>
+        </div>
+        <div ng-show="toolbar.viewMode != 'Suite' && toolbar.viewMode != 'Test' && toolbar.isLastSuiteVersion"
+          class="fontawesome-link" data-toggle="popover" data-content="Rerun current URL" data-trigger="hover"
+          data-container="body" data-ng-click="toolbar.rerunURL(toolbar.model.url)">
+          <i class="far fa-play-circle fa-sm"></i>
+        </div>
+        <div ng-show="toolbar.viewMode == 'Suite' && toolbar.isLastSuiteVersion" class="fontawesome-link"
+          data-toggle="popover" data-content="Rerun current suite" data-trigger="hover" data-container="body"
+          data-ng-click="toolbar.rerunSuite()">
+          <i class="far fa-play-circle fa-sm"></i>
+        </div>
+        <div ng-show="toolbar.viewMode != 'URL' && toolbar.viewMode != 'Suite' && toolbar.isLastSuiteVersion"
+          class="fontawesome-link" data-toggle="popover" data-content="Rerun current test" data-trigger="hover"
+          data-container="body" data-ng-click="toolbar.rerunTest()">
+          <i class="far fa-play-circle fa-sm"></i>
+        </div>
+        <span>{{toolbar.viewMode}}:</span> &nbsp;
+        <span>{{toolbar.model.name}}</span>
+      </div>
+      <div class='right-buttons'>
+        <span class="accessibility-status pull-left" data-toggle="popover"
+          data-content="{{toolbar.canGenerateAccessibilityReport ? '<span>Click to generate accessibility report</span>' : '<span>No data to generate accessibility report</span>'}}"
+          data-html="true" data-trigger="hover"
+          data-ng-click="toolbar.canGenerateAccessibilityReport && toolbar.displayAccessibilityModal()"
+          ng-show="toolbar.viewMode == 'Suite'">
+          <div ng-if="!toolbar.canGenerateAccessibilityReport">
+            <i class="fas fa-universal-access" data-fa-transform="up-.5"></i>
+          </div>
+          <div ng-if="toolbar.canGenerateAccessibilityReport">
+            <i class="fas fa-universal-access active-icon" data-fa-transform="up-.5"></i>
+          </div>
+        </span>
+
+        <span class="comments-status pull-left" data-toggle="popover"
+          data-ng-class="toolbar.model.comment ? 'present' : 'absent'"
+          data-content="{{toolbar.model.comment && '<span>' + toolbar.model.comment + '</span>' || !toolbar.model.comment && '<span>Click to update this ' + toolbar.viewMode + ' note</span>'}}"
+          data-html="true" data-trigger="hover" data-ng-click="toolbar.displayCommentModal()">
+          <div ng-if="toolbar.model.comment">
+            <i class="fas fa-comment-alt comment-active"></i>
+          </div>
+          <div ng-if="!toolbar.model.comment">
+            <i class="far fa-comment-alt"></i>
+          </div>
+        </span>
+
+        <span class="button button-dark button-disabled" data-ng-if="toolbar.usesCrossSuitePattern"
+          data-aet-included-comment-popover data-toggle="popover"
+          data-content="May not be accepted because compared against another suite patterns." data-html="true"
+          data-trigger="hover"></i>
+          Accept {{toolbar.viewMode}}
+        </span>
+
+        <span id="accept-test" class="button js-rebase-suite button-blue" data-ng-if="toolbar.showAcceptButton()"
+          data-ng-click="toolbar.updatePatterns()"></i>
+          Accept {{toolbar.viewMode}}
+        </span>
+
+        <span id="revert-test" class="button js-rebase-suite button-red" data-ng-if="toolbar.showRevertButton()"
+          data-ng-click="toolbar.revertAcceptedPatterns()">
+          Revert {{toolbar.viewMode}}
+        </span>
+
+        <div class="toolbar-nav toolbar-nav-urls" ng-show="toolbar.viewMode == 'URL' || toolbar.viewMode == 'Test'">
+          <a ng-click="traverseTree('up')">
+            <div class="nav-prev" data-toggle="popover" data-content="Previous url" data-trigger="hover"
+              data-container="body">
+              <i class="fas fa-chevron-left"></i>
+            </div>
+          </a>
+          <a ng-click="traverseTree('down')" ng-show="toolbar.viewMode == 'URL' || toolbar.viewMode == 'Test'">
+            <div class="nav-next" data-toggle="popover" data-content="Next url" data-trigger="hover"
+              data-container="body">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="toolbar-block toolbar-info-button fontawesome-link slim-padding" data-toggle="modal"
+      data-target="#helpModal">
+      <span data-toggle="popover" data-content="Help" data-trigger="hover" data-container="body">
+        <i class="fas fa-question-circle fa-lg"></i>
+      </span>
+    </div>
+  </div>
+</div>

@@ -17,16 +17,17 @@
  */
 .aside {
   @include transition(left 0.1s, width 0.1s);
-  background: $aside_background;
+  background: $simple_background;
   position: fixed;
   top: 0;
-  left: -350px;
-  width: 350px;
-  padding: 0 1.5rem;
+  left: -$side_bar_width;
+  width: $side_bar_width;
+  padding: 0 20px;
   height: 100%;
   overflow: hidden;
   text-align: center;
   z-index: 99;
+  border-right: 1px solid $aet_light_gray;
 
   .menu-expanded & {
     left: 0;
@@ -36,30 +37,31 @@
     @include transition(left 0.1s, width 0.1s);
     display: block;
     height: 100%;
-    width: 1.5rem;
+    width: 1rem;
     position: absolute;
     top: 0;
     right: 0;
     z-index: 100;
     cursor: col-resize;
-    background-color: $aside_background;
+    background-color: $simple_background;
   }
 
   .logo-holder {
     width: 100%;
     padding-top: 10px;
     text-align: center;
-    background: $aside_background;
+    background: $simple_background;
     height: 80px;
     top: 0;
     z-index: 2;
   }
 
   &-report {
-    line-height: 47px;
-    max-height: 47px;
+    line-height: 35px;
+    max-height: 35px;
     overflow: hidden;
     position: relative;
+    border-bottom: 1px solid $aet_light_gray;
 
     &.is-expanded {
       max-height: initial;
@@ -82,10 +84,11 @@
 
     .test-name {
       color: $gray_darker;
-      display: block;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       width: 100%;
-      padding-left: 8px;
-      border-top: solid 1px $border_color_dark;
+      border-bottom: solid 1px $aet_light_gray;
 
       &.passed {
         color: $passed;
@@ -114,24 +117,27 @@
         }
       }
 
-      &.is-active {
-        color: $white;
+      // &.is-active {
+      //   color: red;
 
-        &:before {
-          color: inherit;
-        }
-      }
+      //   &:before {
+      //     color: inherit;
+      //   }
+      // }
     }
 
     span {
       @extend .ellipsis;
       color: inherit;
       font-family: $font_light;
-      font-size: 15px;
-      width: 80%;
+      font-size: 16px;
       display: block;
       cursor: pointer;
       text-align: left;
+
+      &:hover {
+        opacity: 0.8;
+      }
 
       svg.rotate-svg {
         @include transition(transform, 100ms ease-out);
@@ -142,34 +148,35 @@
     }
 
     &.is-expanded {
-
       svg.rotate-svg {
         transform: rotate(90deg);
       }
     }
 
     ul {
-      padding: 0;
-      margin: 0 0 0 30px;
-      background: $aside_background;
+      padding: 0 0 0 16px;
+      margin: 12px 0 0 0;
       display: none;
 
       li {
-        width: 80%;
+        width: 95%;
         display: block;
-        font-size: 15px;
+        font-size: 12px;
         font-family: $font_light;
-        background: $aside_background;
         position: relative;
         line-height: normal;
         margin-bottom: 20px;
         color: $gray_dark;
 
+        &:hover {
+          opacity: 0.8;
+        }
+
         a {
           display: block;
           color: inherit;
           text-align: left;
-          padding-left: 10px;
+          padding-left: 8px;
           @extend .ellipsis;
           -webkit-font-smoothing: antialiased;
         }
@@ -183,23 +190,27 @@
         &.failed,
         &.failedcommented,
         &.processing_error {
-          color: $failed;
+          color: $aet_dark_red;
         }
 
         &.passed {
-          color: $passed;
+          color: $aet_dark_green;
         }
 
         &.warning {
-          color: $warning;
+          color: $aet_dark_yellow;
         }
 
         &.rebased {
-          color: $rebased;
+          color: $aet_dark_blue;
         }
 
         &.conditionallyPassed {
-          color: $conditionallyPassed;
+          color: $aet_dark_green;
+        }
+
+        svg {
+          width: 15px !important;
         }
       }
     }
@@ -225,7 +236,6 @@
   }
 
   &.show-failed {
-
     .url-name,
     .test-name {
       display: none;
@@ -237,7 +247,6 @@
   }
 
   &.show-commented {
-
     .url-name, .test-name {
       display: none;
 
@@ -248,7 +257,6 @@
   }
 
   &.show-passed {
-
     .url-name, .test-name {
       display: none;
       &.passed {
@@ -270,23 +278,25 @@
 }
 
 .aside-report-summary {
-  display: table;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   width: 100%;
-  border-bottom: solid 1px $border_color_dark;
   text-transform: uppercase;
-  padding: 0 15px;
-  line-height: 40px;
+  padding: 15px 0;
 
   header {
     float: left;
-    color: $white;
-    font-size: 16px;
+    color: $aet_gray;
+    font-family: $font_bold;
+    font-size: 12px;
     text-transform: uppercase;
   }
 
   .stats {
     font-size: 14px;
-    color: $white;
+    color: $aet_black;
+    display: flex;
 
     &.has-errors {
       color: $warning;
@@ -299,25 +309,16 @@
 }
 
 .report-item-stats {
-  color: $gray_darker;
-  position: absolute;
-  right: 21px;
-  top: 6px;
-  background: $grayish;
-  font-family: $font_bold;
   font-size: 14px;
-  line-height: 32px;
-  padding: 0 7px;
+  line-height: 14px;
 }
 
 .aside-actions-wrapper {
   padding: 17px 0 16px;
-  border-top: solid 1px $border-color_dark;
 
   .js-rebase-all, .js-cancel-all {
     position: relative;
     width: 100%;
-    background: $aside_background;
     z-index: 1;
 
     &:not(:last-child) {
@@ -326,11 +327,7 @@
   }
 }
 
-.is-active {
-  color: $white !important;
-
-  a,
-  &:before {
-    color: $white !important;
-  }
+.is-active, .is-active:hover, .is-active:focus {
+  font-family: $font_bold;
+  text-decoration: underline;
 }
