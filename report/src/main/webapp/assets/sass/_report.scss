@@ -291,7 +291,7 @@ ul.nav-tabs {
   border-bottom: 1px solid $aet_light_gray;
 
   li.case-tab {
-    margin-bottom: 0;
+    margin-bottom: -1px;;
 
     a.nav-link {
       border-radius: 0;
@@ -300,6 +300,7 @@ ul.nav-tabs {
       font-size: 12px;
       color: $aet_black;
       border-right: 1px solid $aet_light_gray;
+      border-bottom: 1px solid $aet_light_gray;
       margin: 0;
       padding: 15px 16px;
     }

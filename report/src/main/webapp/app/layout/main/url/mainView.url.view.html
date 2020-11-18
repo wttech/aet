@@ -18,16 +18,6 @@
 
 -->
 <div class="page-main">
-  <!-- <ul class='test-tabs'>
-    <li
-    ng-repeat="case in urlView.cases"
-    class='case-tab {{case.status.toLowerCase()}}'>
-    <a href='#'>{{case.displayName}}</a>
-    <div>
-      <ng-include ng-init="templateUrl = case.getTemplate()" src="templateUrl"/>
-    </div>
-  </li>
-  </ul> -->
   <uib-tabset class="test-tabs">
     <uib-tab
         ng-repeat="case in urlView.cases"
