@@ -7,7 +7,7 @@ This tag is definition of the single test in test suite. Test suite can contain 
 | Attribute name | Description | Mandatory |
 | -------------- | ----------- | --------- |
 | `name` | Name of the test. Should consists only of letters, digits and/or characters: `-`, `_`. This value is also presented on report (more details in [[Suite Report|SuiteReport]] section). | yes |
-| `useProxy` | Defines which (if any) *Proxy* should be used during collection phase. If not provided or empty, proxy won't be used. If set to `"rest"` *Rest Manager* will be used. Otherwise *Proxy Manager* with provided name will be used (see [Proxy](#proxy)). Proxy is needed by Status Codes Collector and Header Modifier. | no |
+| `useProxy` | Defines which (if any) *Proxy* should be used during collection phase. If not provided or empty, proxy won't be used. If set to `"rest"` *Rest Manager* will be used. Otherwise *Proxy Manager* with provided name will be used (see [Proxy](#proxy)). Proxy is needed by Status Codes Collector, Request Monitoring Collector and Header Modifier. | no |
 
 Each **test** element contains:
 
@@ -19,6 +19,7 @@ Each **test** element contains:
 Web proxy is required for some of the AET features:
 
 * [[Status codes|StatusCodesCollector]]
+* [[Request monitoring|RequestMonitoringCollector]]
 * [[Header modifier|HeaderModifier]]
 
 AET proxy is currently provided by [BrowserMob Proxy](https://bmp.lightbody.net/) .
