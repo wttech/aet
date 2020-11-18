@@ -154,16 +154,6 @@ define(['angularAMD',
                 return metadataLoaderService.setup();
               }
             }
-          }),
-          'toolbarBottom@': angularAMD.route({
-            templateUrl: 'app/layout/toolbar/toolbarBottom.view.html',
-            controllerUrl: 'layout/toolbar/toolbarBottom.controller',
-            controllerAs: 'toolbarBottom',
-            resolve: {
-              metadataReady: function (metadataLoaderService) {
-                return metadataLoaderService.setup();
-              }
-            }
           })
         }
       }))
@@ -185,16 +175,6 @@ define(['angularAMD',
             templateUrl: 'app/layout/toolbar/toolbar.view.html',
             controllerUrl: 'layout/toolbar/toolbar.controller',
             controllerAs: 'toolbar',
-            resolve: {
-              metadataReady: function (metadataLoaderService) {
-                return metadataLoaderService.setup();
-              }
-            }
-          }),
-          'toolbarBottom@': angularAMD.route({
-            templateUrl: 'app/layout/toolbar/toolbarBottom.view.html',
-            controllerUrl: 'layout/toolbar/toolbarBottom.controller',
-            controllerAs: 'toolbarBottom',
             resolve: {
               metadataReady: function (metadataLoaderService) {
                 return metadataLoaderService.setup();
@@ -222,16 +202,6 @@ define(['angularAMD',
             templateUrl: 'app/layout/toolbar/toolbar.view.html',
             controllerUrl: 'layout/toolbar/toolbar.controller',
             controllerAs: 'toolbar',
-            resolve: {
-              metadataReady: function (metadataLoaderService) {
-                return metadataLoaderService.setup();
-              }
-            }
-          }),
-          'toolbarBottom@': angularAMD.route({
-            templateUrl: 'app/layout/toolbar/toolbarBottom.view.html',
-            controllerUrl: 'layout/toolbar/toolbarBottom.controller',
-            controllerAs: 'toolbarBottom',
             resolve: {
               metadataReady: function (metadataLoaderService) {
                 return metadataLoaderService.setup();

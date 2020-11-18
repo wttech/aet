@@ -56,10 +56,6 @@ require.config({
     'viewModeService': 'services/viewMode.service',
     //Toolbar unified
     'toolbarController': 'layout/toolbar/toolbar.controller',
-    //toolbarTop
-    'toolbarTopController': 'layout/toolbar/toolbarTop.controller',
-    //toolbarBottom
-    'toolbarBottomController': 'layout/toolbar/toolbarBottom.controller',
     //sidepanel
     'sidepanelDirective': 'layout/sidepanel/sidepanel.directive',
     'sidepanelStatusFilterDirective': 'layout/sidepanel/sidepanelStatusFilter.directive',

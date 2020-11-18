@@ -28,7 +28,7 @@
     display: flex;
     align-items: center;
     width: 100%;
-    height: 48px;
+    min-height: 48px;
     background: $aet_white;
     border-bottom: solid 1px $aet_light_gray;
 
@@ -43,7 +43,7 @@
     justify-content: center;
     cursor: pointer;
     height: 100%;
-    padding: 0 12px;
+    padding: 15px 12px;
     border-right: solid 1px $aet_light_gray;
 
     span {
@@ -74,7 +74,8 @@
     font-family: $font_light;
     color: $aet_gray;
     font-size: 12px;
-    padding: 0 16px;
+    padding: 8px 16px;
+    flex-wrap: wrap;
 
     .button {
       margin-right: 16px;
@@ -87,6 +88,7 @@
     &.only-right {
       width: 100%;
       justify-content: flex-end;
+      border-right: 0;
     }
 
     &.no-border {
@@ -95,7 +97,7 @@
 
     .suite-name-container {
       display: inline-block;
-      margin: 24px;
+      margin: 0 24px;
 
       &:hover {
         cursor: pointer;
@@ -293,6 +295,7 @@
     padding-top: 15px;
     height: 73px;
     display: flex;
+    align-items: center;
 
     .button {
       float: left;
@@ -300,7 +303,7 @@
     }
 
     .tab-content-toolbar & {
-      padding-top: 3px;
+      padding-top: 1px;
       height: 47px;
     }
   }
@@ -310,7 +313,7 @@
 .accessibility-status {
   font-family: $font_light;
   display: block;
-  line-height: 44px;
+  line-height: 24px;
   cursor: pointer;
   margin: 0 16px 0 0;
 
@@ -342,10 +345,6 @@
 
   .toolbar-blocks {
     display: inline;
-  }
-
-  .toolbar-button {
-    margin-top: 3px;
   }
 }
 
