@@ -46,6 +46,10 @@
         flex: 1;
         color: $aet_black;
         text-align: left;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: auto;
       }
     }
 
@@ -99,7 +103,8 @@
 
     /* Tile Style */
 
-    &.passed, &.conditionallyPassed {
+    &.passed,
+    &.conditionallyPassed {
       background: $aet_very_light_green;
 
       .fontawesome {
@@ -291,7 +296,7 @@ ul.nav-tabs {
   border-bottom: 1px solid $aet_light_gray;
 
   li.case-tab {
-    margin-bottom: -1px;;
+    margin-bottom: -1px;
 
     a.nav-link {
       border-radius: 0;
