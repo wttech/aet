@@ -320,6 +320,12 @@
 }
 
 .is-active, .is-active:hover, .is-active:focus {
-  font-family: $font_bold;
-  text-decoration: underline;
+  &.test-url {
+    font-family: $font_bold;
+    text-decoration: underline;
+  }
+
+  span {
+    font-family: $font_bold;
+  }
 }

@@ -29,8 +29,8 @@
   </div>
   <div class="toolbar-blocks left-half">
     <div class="toolbar-block project-name">
-      <span class="correlationIdIcon" data-toggle="popover" ng-click="copyToClipboard(toolbar.suiteInfo.correlationId)" data-content="{{toolbar.suiteInfo.correlationId}} (click to copy)"
-        data-trigger="hover" data-container="body">
+      <span class="correlationIdIcon" data-toggle="popover" ng-click="copyToClipboard(toolbar.suiteInfo.correlationId)"
+        data-content="{{toolbar.suiteInfo.correlationId}} (click to copy)" data-trigger="hover" data-container="body">
         <i class="fas fa-id-card fa-lg"></i>
       </span>
       Project: &nbsp; <span>{{toolbar.suiteInfo.project}}</span>
@@ -93,6 +93,21 @@
         <span>{{toolbar.model.name}}</span>
       </div>
       <div class='right-buttons'>
+        <div class="toolbar-nav toolbar-nav-urls" ng-show="toolbar.viewMode == 'URL' || toolbar.viewMode == 'Test'">
+          <a ng-click="traverseTree('up')">
+            <div class="nav-prev" data-toggle="popover" data-content="Previous url" data-trigger="hover"
+              data-container="body">
+              <i class="fas fa-chevron-left"></i>
+            </div>
+          </a>
+          <a ng-click="traverseTree('down')" ng-show="toolbar.viewMode == 'URL' || toolbar.viewMode == 'Test'">
+            <div class="nav-next" data-toggle="popover" data-content="Next url" data-trigger="hover"
+              data-container="body">
+              <i class="fas fa-chevron-right"></i>
+            </div>
+          </a>
+        </div>
+
         <span class="accessibility-status pull-left" data-toggle="popover"
           data-content="{{toolbar.canGenerateAccessibilityReport ? '<span>Click to generate accessibility report</span>' : '<span>No data to generate accessibility report</span>'}}"
           data-html="true" data-trigger="hover"
@@ -135,20 +150,6 @@
           Revert {{toolbar.viewMode}}
         </span>
 
-        <div class="toolbar-nav toolbar-nav-urls" ng-show="toolbar.viewMode == 'URL' || toolbar.viewMode == 'Test'">
-          <a ng-click="traverseTree('up')">
-            <div class="nav-prev" data-toggle="popover" data-content="Previous url" data-trigger="hover"
-              data-container="body">
-              <i class="fas fa-chevron-left"></i>
-            </div>
-          </a>
-          <a ng-click="traverseTree('down')" ng-show="toolbar.viewMode == 'URL' || toolbar.viewMode == 'Test'">
-            <div class="nav-next" data-toggle="popover" data-content="Next url" data-trigger="hover"
-              data-container="body">
-              <i class="fas fa-chevron-right"></i>
-            </div>
-          </a>
-        </div>
       </div>
     </div>
 
