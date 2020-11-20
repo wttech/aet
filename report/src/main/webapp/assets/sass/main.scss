@@ -33,182 +33,170 @@
 
 html,
 body {
-	height: 100%;
+  height: 100%;
 }
 
 body {
-	overflow-y: scroll;
-	overflow-x: hidden;
-	&.modal-open {
-		overflow-y: scroll;
-		padding-right: 0 !important;
-	}
+  overflow-y: scroll;
+  overflow-x: hidden;
+  &.modal-open {
+    overflow-y: scroll;
+    padding-right: 0 !important;
+  }
 }
 
 * {
-	box-sizing: border-box;
-	box-shadow: none !important;
+  box-sizing: border-box;
+  box-shadow: none !important;
 
-	&:hover, &:focus, &:active {
-		outline: none;
-		box-shadow: none
-	}
+  &:hover,
+  &:focus,
+  &:active {
+    outline: none;
+    box-shadow: none;
+  }
 }
 
 a {
-	@include transition(color 0.3s);
+  @include transition(color 0.3s);
 
-	&:hover, &:focus, &:active {
-		text-decoration: none;
-	}
+  &:hover,
+  &:focus,
+  &:active {
+    text-decoration: none;
+  }
 }
 
 body {
-	color: $text_color;
-	font-family: $font_regular;
+  color: $text_color;
+  font-family: $font_regular;
 }
 
 .main {
-	@include transition(left 0.1s, width 0.1s);
-	position: relative;
-	width: 100%;
-	left: 0;
+  @include transition(left 0.1s, width 0.1s);
+  position: relative;
+  width: 100%;
+  left: 0;
 
-	.menu-expanded & {
-		left: 350px;
-		width: calc(100% - 350px);
-	}
+  .menu-expanded & {
+    left: $side_bar_width;
+    width: calc(100% - #{$side_bar_width});
+  }
 }
 
 .page-main {
-	z-index: 1;
-	width: 100%;
-	float: left;
-	padding: 0 25px;
-	overflow-x: auto;
+  z-index: 1;
+  width: 100%;
+  float: left;
+  // padding: 0 25px;
+  overflow-x: auto;
 }
 
 .is-hidden {
-	display: none !important;
+  display: none !important;
 }
 
 .is-disabled {
-	pointer-events: none;
-	opacity: 0.5;
-	cursor: not-allowed !important;
+  pointer-events: none;
+  opacity: 0.5;
+  cursor: not-allowed !important;
 }
 
 .screen-cover {
-	background-repeat: no-repeat;
-	background-position: center center;
-	position: absolute;
-	left: 0;
-	width: 100%;
-	opacity: 1;
-	height: 100vh;
+  background-repeat: no-repeat;
+  background-position: center center;
+  position: absolute;
+  left: 0;
+  width: 100%;
+  opacity: 1;
+  height: 100vh;
 
-	&.js-loader-app {
-		top: 0;
-		height: 100%;
-		z-index: 999;
-		background-color: $aside_background;
-		background-image: url(#{$src}tail-spin-light.svg);
-	}
+  &.js-loader-app {
+    top: 0;
+    height: 100%;
+    z-index: 999;
+    background-color: $aside_background;
+    background-image: url(#{$src}tail-spin-light.svg);
+  }
 
-	&.data-loading-error {
-		top: 0;
-		height: 100%;
-		z-index: 999;
-		background-color: $black;
-	}
+  &.data-loading-error {
+    top: 0;
+    height: 100%;
+    z-index: 999;
+    background-color: $black;
+  }
 
-	.menu-expanded & {
-		&.js-loader-content {
-			width: calc(100vw - 365px);
-		}
-	}
+  .menu-expanded & {
+    &.js-loader-content {
+      width: calc(100vw - 365px);
+    }
+  }
 
-	h1 {
-		color: $white;
-		text-align: center;
-	}
+  h1 {
+    color: $white;
+    text-align: center;
+  }
 
-	p {
-		color: $white;
-		text-align: center;
-	}
-
+  p {
+    color: $white;
+    text-align: center;
+  }
 }
 
-.status{
-	font-weight: bold;
-	display: inline !important;
-	&.failed {
-		color: $failed !important;
-	}
+.status {
+  font-weight: bold;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 4px;
+  height: 20px;
+  min-width: 20px;
+  line-height: 20px;
+  font-size: 12px;
+  color: $aet_white;
 
-	&.warning {
-		color: $warning !important;
-	}
+  &.total {
+    color: $aet_black;
+  }
 
-	&.rebased {
-		color: $rebased !important;
-	}
+  &.failed {
+    background-color: $aet_dark_red;
+  }
 
-	&.passed {
-		color: $passed !important;
-	}
+  &.warning {
+    background-color: $aet_dark_yellow;
+  }
 
-	&.conditionallyPassed {
-		color: $conditionallyPassed !important;
-	}
-}
+  &.rebased {
+    background-color: $aet_dark_blue;
+  }
 
-.url-tile {
-	text-align: center;
-	word-break: break-all;
+  &.passed {
+    background-color: $aet_dark_green;
+    padding: 0 5px;
+  }
 
-	&.passed {
-		color: $passed;
-	}
-
-	&.rebased {
-		color: $rebased;
-		span, svg {
-			color: $white
-		}
-	}
-
-	&.warning {
-		color: $warning;
-	}
-
-	&.failed {
-		color: $failed;
-	}
-
-	&.conditionallyPassed {
-		color: $conditionallyPassed;
-	}
-
-	.name {
-		font-family: $font_bold;
-		font-size: 18px;
-	}
+  &.conditionallyPassed {
+    background-color: $aet_dark_green;
+  }
 }
 
 .fontawesome {
-	&-link {
-		cursor: pointer;
-		display: inline;
-		position: relative;
-	}
+  &-link {
+    cursor: pointer;
+    display: inline;
+    position: relative;
+  }
 }
 
 .popover {
-	max-width: none;
+  max-width: none;
 
-	&-title {
-		font-weight: 700;
-	}
+  &-title {
+    font-weight: 700;
+  }
+}
+
+.tooltip-inner {
+  background-color: red !important;
 }

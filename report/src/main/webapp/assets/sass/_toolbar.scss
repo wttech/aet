@@ -26,18 +26,25 @@
 
   &-top {
     display: flex;
-    justify-content: space-between;
+    align-items: center;
     width: 100%;
-    background: $gray_light;
-    border-bottom: solid 1px #ededed;
-    padding: 0 20px;
+    min-height: 48px;
+    background: $aet_white;
+    border-bottom: solid 1px $aet_light_gray;
+
+    svg {
+      color: $aet_gray;
+    }
   }
 
   &-toggle {
-    display: flex;
-    align-self: center;
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
     cursor: pointer;
-    margin-right: 20px;
+    height: 100%;
+    padding: 15px 12px;
+    border-right: solid 1px $aet_light_gray;
 
     span {
       display: block;
@@ -59,16 +66,38 @@
   }
 
   &-block {
-    text-align: center;
-    border-left: solid 1px $border_color;
-    font-family: $font_light;
-    color: rgb(119, 119, 124);
-    font-size: 14px;
-    padding: 16px 22px;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-right: solid 1px $aet_light_gray;
+    font-family: $font_light;
+    color: $aet_gray;
+    font-size: 12px;
+    padding: 8px 16px;
+    flex-wrap: wrap;
+
+    .button {
+      margin-right: 16px;
+    }
+
+    .correlationIdIcon {
+      margin-right: 4px;
+    }
+
+    &.only-right {
+      width: 100%;
+      justify-content: flex-end;
+      border-right: 0;
+    }
+
+    &.no-border {
+      border: none;
+    }
 
     .suite-name-container {
       display: inline-block;
+      margin: 0 24px;
 
       &:hover {
         cursor: pointer;
@@ -77,15 +106,66 @@
     }
 
     svg {
-      color: $gray_dark;
       cursor: pointer;
-      font-size: 20px;
+      font-size: 16px;
       align-self: center;
+
+      &.comment-active {
+        color: $aet_green;
+      }
     }
 
     &:last-child {
       display: flex;
-      border-right: solid 1px $border_color;
+    }
+
+    &.toolbar-info-button {
+      margin-left: auto;
+
+      svg {
+        color: $aet_blue;
+      }
+    }
+
+    &.test-details {
+      flex: 1;
+      justify-content: space-between;
+      padding-right: 0;
+
+      .test-details-left {
+        display: flex;
+        align-items: center;
+
+        span {
+          line-height: 16px;
+        }
+      }
+
+      svg {
+        margin-right: 8px;
+        font-size: 16px;
+      }
+
+      .right-buttons {
+        display: flex;
+        align-items: center;
+
+        svg {
+          margin-right: 0;
+        }
+      }
+    }
+
+    &.project-name {
+      svg {
+        margin: 0 4px;
+        font-size: 16px;
+      }
+
+      .arrow-decoration {
+        cursor: default;
+        font-size: 12px;
+      }
     }
   }
 
@@ -93,7 +173,11 @@
     display: flex;
     flex-wrap: nowrap;
     z-index: 100;
+    height: 100%;
 
+    &.right-half {
+      flex: 1;
+    }
     &.is-absolute {
       right: 0;
       padding-right: 15px;
@@ -108,23 +192,23 @@
     }
 
     .slim-padding {
-      padding: 6px;
+      padding: 12px;
     }
   }
 
   &-generate-raport {
-    display:flex;
+    display: flex;
     align-items: center;
     justify-content: center;
 
     .raport-button {
       background-color: $rebased_bg;
-      padding:10px 15px;
+      padding: 10px 15px;
       font-weight: bold;
-      color:$text_color;
+      color: $text_color;
 
       &:hover {
-        cursor:pointer;
+        cursor: pointer;
       }
     }
   }
@@ -136,7 +220,8 @@
     padding: 0 20px;
     background: $white;
 
-    h4, h5 {
+    h4,
+    h5 {
       font-weight: normal;
       color: $gray_darker;
       padding-right: 20px;
@@ -182,19 +267,17 @@
   }
 
   &-nav {
-    width: 95px;
-    padding-top: 5px;
-    margin-right: 20px;
+    margin-right: 16px;
 
     &.is-absolute {
       right: 15px;
-      background: $white;
+      background: transparent;
       position: absolute;
     }
 
     div {
       float: left;
-      border: solid 1px $border-color;
+      border: solid 1px $aet_gray;
       margin-left: -1px;
       padding: 0 12px;
       cursor: pointer;
@@ -203,48 +286,40 @@
       svg {
         margin: 7px 2px;
         display: block;
-        color: $gray_darker;
       }
     }
   }
+
   &-btns {
-    border-left: solid 1px $border-color;
     padding-left: 20px;
     padding-top: 15px;
     height: 73px;
     display: flex;
+    align-items: center;
 
     .button {
       float: left;
-      margin-right: 15px;
+      margin-right: 16px;
     }
 
     .tab-content-toolbar & {
-      padding-top: 3px;
+      padding-top: 1px;
       height: 47px;
     }
   }
 }
 
-.comments-status, .accessibility-status {
+.comments-status,
+.accessibility-status {
   font-family: $font_light;
-  font-size: 30px;
   display: block;
-  line-height: 44px;
+  line-height: 24px;
   cursor: pointer;
-  margin: -3px 10px 0 10px;
+  margin: 0 16px 0 0;
 
   &.small {
     line-height: 37px;
     font-size: 11px;
-  }
-
-  &.present {
-    color: $green_darker;
-  }
-
-  &.absent {
-    color: $grayish;
   }
 }
 
@@ -255,16 +330,13 @@
     height: 94px;
   }
 
-  .toolbar-btns, .comments-status {
+  .toolbar-btns,
+  .comments-status {
     width: auto;
   }
 
   .toolbar-blocks {
     display: inline;
-  }
-
-  .toolbar-button {
-    margin-top: 3px;
   }
 }
 
@@ -281,7 +353,7 @@
 }
 
 .preformatted {
-  font-family: monospace;
+  font-style: italic;
 }
 
 .suite-rerun {
@@ -291,13 +363,13 @@
 .suite-rerun-msg {
   color: $gray_middle;
   font-size: 12px;
-  font-family: $font_light
+  font-family: $font_light;
 }
 
 .suite-rerun p {
   margin-bottom: 3px;
 }
 
-.icon-disabled {
-  color: $gray_disabled;
+.active-icon {
+  color: $aet_blue !important;
 }

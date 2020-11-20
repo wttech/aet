@@ -19,7 +19,6 @@
 -->
 
 <div class="tab-content-toolbar">
-  <span class="tab-content-toolbar-header">Settings</span>
   <div class="checkboxes-inline">
     <div class="checkbox">
       <input type="checkbox" id="toggleMask" ng-click="urlView.toggleMask()"
@@ -28,14 +27,14 @@
         <span>Show Mask</span>
       </label>
     </div>
+    <div class="advanced-screen-comparison button button-small button-blue">
+      <a ng-if="case.status == 'FAILED' || case.status == 'CONDITIONALLY_PASSED'" data-ng-click="advancedScreenComparison()" data-aet-compare-screens>Advanced Screen Comparison</a>
+    </div>
   </div>
-  <div class="toolbar-blocks">
+  <div class="toolbar-block no-border">
     <div class="toolbar-btns pull-right">
-      <div class="advanced-screen-comparison button button-small button-blue">
-        <a ng-if="case.status == 'FAILED' || case.status == 'CONDITIONALLY_PASSED'" data-ng-click="advancedScreenComparison()" data-aet-compare-screens>Advanced Screen Comparison</a>
-      </div>
-      <ng-include src="'app/layout/main/url/navigation/navigation.patternButtons.html'"/>
       <ng-include src="'app/layout/main/url/navigation/navigation.comments.html'"/>
+      <ng-include src="'app/layout/main/url/navigation/navigation.patternButtons.html'"/>
     </div>
   </div>
 </div>

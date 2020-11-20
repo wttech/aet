@@ -16,13 +16,13 @@
  * limitations under the License.
  */
 .modal-history-window .modal-lg {
-        width: 690px;
+  width: 690px;
 }
 
-.suite-history-container{
-
-  .modal-body{
+.suite-history-container {
+  .modal-body {
     overflow: auto;
+    max-height: 80vh;
   }
 
   .suite-history-item {
@@ -30,8 +30,8 @@
     font-family: $font_light;
     color: rgb(119, 119, 124);
     font-size: 14px;
-    width:220px;
-    margin:0 auto;
+    width: 220px;
+    margin: 0 auto;
     padding: 12px 0;
     float: left;
     color: $history;
@@ -59,9 +59,9 @@
     }
 
     .suite-history-arrow {
-      margin:-3px 7px;
+      margin: -3px 7px;
       color: $grayish;
-      font-size:18px;
+      font-size: 18px;
     }
   }
 

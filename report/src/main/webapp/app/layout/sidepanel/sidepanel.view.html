@@ -28,20 +28,17 @@
   -->
   <div class="filters">
     <div class="form-group sidepanel-search-section">
-      <input type="text" placeholder="Search..." data-aet-sidepanel-search
-             data-ng-model="$root.searchText" class="search-input">
-      <div class="fontawesome"
-           data-toggle="popover"
-           data-content="{{!$root.searchText && 'Start typing to filter by URL name' || $root.searchText && 'Clear search'}}"
-           data-trigger="hover"
-           data-container="body"
-           ng-click="clearSearch()">
-            <div ng-if="!$root.searchText">
-              <i class="fas fa-search"></i>
-            </div>
-            <div ng-if="$root.searchText">
-              <i class="fas fa-times"></i>
-            </div>
+      <input type="text" placeholder="Search..." data-aet-sidepanel-search data-ng-model="$root.searchText"
+        class="search-input">
+      <div class="fontawesome" data-toggle="popover"
+        data-content="{{!$root.searchText && 'Start typing to filter by URL name' || $root.searchText && 'Clear search'}}"
+        data-trigger="hover" data-container="body" ng-click="clearSearch()">
+        <div ng-if="!$root.searchText">
+          <i class="fas fa-search"></i>
+        </div>
+        <div ng-if="$root.searchText">
+          <i class="fas fa-times"></i>
+        </div>
       </div>
     </div>
     <div class="form-group">
@@ -50,32 +47,27 @@
           <div class="filter-list-title">
             <p>No filters applied</p>
             <div class="fontawesome">
-                  <div class="apply-filters"
-                       data-toggle="popover"
-                       data-content="Apply filtering to URLs"
-                       data-trigger="hover"
-                       data-container="body">
-                          <i class="fas fa-angle-down fa-lg"></i>
-                  </div>
-                  <div class="clear-filters" style="display: none;"
-                       data-toggle="popover"
-                       data-content="Clear filters"
-                       data-trigger="hover"
-                       data-container="body"
-                       ng-click="clearFilters()">
-                          <i class="fas fa-times"></i>
-                  </div>
+              <div class="apply-filters" data-toggle="popover" data-content="Apply filtering to URLs"
+                data-trigger="hover" data-container="body">
+                <i class="fas fa-angle-down fa-lg"></i>
+              </div>
+              <div class="clear-filters" style="display: none;" data-toggle="popover" data-content="Clear filters"
+                data-trigger="hover" data-container="body" ng-click="clearFilters()">
+                <i class="fas fa-times"></i>
+              </div>
             </div>
           </div>
           <form class="dropdown-menu">
             <div class="dropdown-field">
               <label><input type="checkbox">
-                <p data-attribute="failed" class="dropdown-item">Show failed URLs</p></label>
+                <p data-attribute="failed" class="dropdown-item">Show failed URLs</p>
+              </label>
             </div>
             <div class="dropdown-field">
               <label><input type="checkbox">
                 <p data-attribute="warning" class="dropdown-item" href="#">Show URLs with
-                  warnings</p></labeL>
+                  warnings</p>
+              </labeL>
             </div>
             <div class="dropdown-field">
               <label><input type="checkbox">
@@ -84,7 +76,8 @@
             </div>
             <div class="dropdown-field">
               <label><input type="checkbox">
-                <p data-attribute="conditionallyPassed" class="dropdown-item" href="#">Show conditionally passed URLs</p>
+                <p data-attribute="conditionallyPassed" class="dropdown-item" href="#">Show conditionally passed URLs
+                </p>
               </label>
             </div>
             <div class="dropdown-field">
@@ -105,10 +98,7 @@
           <div>
             <p data-ng-bind="$root.orderLabel"></p>
             <div class="fontawesome">
-              <div data-toggle="popover"
-                   data-content="Change tests order"
-                   data-trigger="hover"
-                   data-container="body">
+              <div data-toggle="popover" data-content="Change tests order" data-trigger="hover" data-container="body">
                 <i class="fas fa-angle-down fa-lg"></i>
               </div>
             </div>
@@ -125,10 +115,7 @@
       </div>
       <div class="order-reversal-icon">
         <div class="fontawesome" data-ng-click="changeSortingOrder()">
-          <div data-toggle="popover"
-               data-content="Reverse tests order"
-               data-trigger="hover"
-               data-container="body">
+          <div data-toggle="popover" data-content="Reverse tests order" data-trigger="hover" data-container="body">
             <div data-ng-if="$root.orderIsReverse">
               <i class="fas fa-lg fa-sort-amount-up"></i>
             </div>
@@ -151,51 +138,54 @@
       Tests:
     </header>
     <div class="pull-right stats">
-      <span class="status" data-toggle="popover" data-content="Total tests found"
-            data-trigger="hover" data-container="body">{{sidepanel.testsStats.total}}</span>
-      ( <span class="status failed" data-toggle="popover" data-content="Failed tests"
-              data-trigger="hover" data-container="body">{{sidepanel.testsStats.failed}}</span> /
-      <span class="status warning" data-toggle="popover" data-content="Warning tests"
-            data-trigger="hover" data-container="body">{{sidepanel.testsStats.warning}}</span> /
-      <span class="status passed" data-toggle="popover" data-content="Passed tests"
-            data-trigger="hover" data-container="body">
-        {{sidepanel.testsStats.passed + sidepanel.testsStats.conditionallyPassed}} </span>
-      <span class="status passed" data-toggle="popover" data-content="Conditionally passed tests"
-            data-trigger="hover" data-container="body">
-        ({{sidepanel.testsStats.conditionallyPassed}})</span> /
-      <span class="status rebased" data-toggle="popover" data-content="Accepted tests"
-            data-trigger="hover" data-container="body">{{sidepanel.testsStats.rebased}}</span> )
+      <span class="status total" data-toggle="popover" data-content="Total tests found" data-trigger="hover"
+        data-container="body">{{sidepanel.testsStats.total}}</span>
+      <span class="status failed" data-toggle="popover" data-content="Failed tests" data-trigger="hover"
+        data-container="body">{{sidepanel.testsStats.failed}}</span>
+      <span class="status warning" data-toggle="popover" data-content="Warning tests" data-trigger="hover"
+        data-container="body">{{sidepanel.testsStats.warning}}</span>
+      <span class="status passed">
+        <span data-toggle="popover" data-content="Passed tests" data-trigger="hover" data-container="body">
+          {{sidepanel.testsStats.passed + sidepanel.testsStats.conditionallyPassed}}</span>
+        <span>/</span>
+        <span data-toggle="popover" data-content="Conditionally passed tests" data-trigger="hover"
+          data-container="body">{{sidepanel.testsStats.conditionallyPassed}}</span>
+      </span>
+      <span class="status rebased" data-toggle="popover" data-content="Accepted tests" data-trigger="hover"
+        data-container="body">{{sidepanel.testsStats.rebased}}</span>
     </div>
   </div>
-
-  <div class="aside-report-container" ng-class="sidepanel.thereAreChangesToSave() ? 'aside-report-container_short' : ''">
+  <div class="aside-report-container"
+    ng-class="sidepanel.thereAreChangesToSave() ? 'aside-report-container_short' : ''">
     <div ng-repeat="test in sidepanel.tests | orderBy:$root.orderAttribute:$root.orderIsReverse"
-         class="aside-report {{filteredUrls.length > 0 ? 'is-visible' : 'is-hidden'}}">
+      class="aside-report {{filteredUrls.length > 0 ? 'is-visible' : 'is-hidden'}}">
       <a ui-sref="test({'suite':$root.params.project, 'test':test.name})" ui-sref-active="is-active"
-         class="test-name {{filteredUrls.length > 0 ? 'is-visible' : 'is-hidden'}}" aet-toggle-link
-         type="test-name" ng-class="[test.getStatus()]" data-url="{{test.name}}">
-            <span>
-                <i class="rotate-svg fas fa-angle-right fa-lg fa-fw"></i>
-                <i ng-if="test.getStatus() == 'conditionallyPassed'"><i class="fas {{theme.statusClasses[test.getStatus()]}}"></i></i>
-                {{test.name}}
-            </span>
-        <div class="report-item-stats" data-toggle="popover" data-content="URLs in test"
-             data-trigger="hover" data-container="body">
+        class="test-name {{filteredUrls.length > 0 ? 'is-visible' : 'is-hidden'}}" aet-toggle-link type="test-name"
+        ng-class="[test.getStatus()]" data-url="{{test.name}}">
+        <span>
+          <i class="rotate-svg fas fa-angle-right fa-lg fa-fw"></i>
+          <i ng-if="test.getStatus() == 'conditionallyPassed'"><i
+              class="fas {{theme.statusClasses[test.getStatus()]}}"></i></i>
+          {{test.name}}
+        </span>
+        <div class="report-item-stats" data-toggle="popover" data-content="URLs in test" data-trigger="hover"
+          data-container="body">
           {{filteredUrls.length}}
         </div>
       </a>
       <ul class="urls-list">
-        <li ng-repeat="url in test.urls | filter: {name: $root.searchText} | aetUrlStatusFilter:$root.activeFilters | orderBy:'name' as filteredUrls"
-            ng-class="[url.getStatus()]" class="url-name">
+        <li
+          ng-repeat="url in test.urls | filter: {name: $root.searchText} | aetUrlStatusFilter:$root.activeFilters | orderBy:'name' as filteredUrls"
+          ng-class="[url.getStatus()]" class="url-name">
           <div aet-truncate-urls class="text-left nowrap">
-            <div ng-if="url.getStatus() != 'rebased' && url.getStatus() != 'conditionallyPassed'"  class="failed">
+            <div ng-if="url.getStatus() != 'rebased' && url.getStatus() != 'conditionallyPassed'" class="failed">
               <i class="fas {{theme.statusClasses[url.getStatus()]}}"></i>
             </div>
             <div ng-if="url.getStatus() == 'rebased' || url.getStatus() == 'conditionallyPassed'">
               <i class="fas {{theme.statusClasses[url.getStatus()]}}"></i>
             </div>
-              <a class="test-url" ui-sref-active="is-active"
-               ui-sref="url({'suite':$root.params.project,'test':test.name, 'url':url.name})">
+            <a class="test-url" ui-sref-active="is-active"
+              ui-sref="url({'suite':$root.params.project,'test':test.name, 'url':url.name})">
               {{url.name}}
             </a>
           </div>
@@ -210,16 +200,16 @@
 
   <div class="aside-actions-wrapper" ng-if="sidepanel.thereAreChangesToSave()">
     <div class="js-rebase-all" ng-click="sidepanel.saveAllChanges()">
-        <span class="button button-blue button-wide">
-            <i class="fas {{theme.statusClasses['rebased']}}"></i>
-            Save all changes
-        </span>
+      <span class="button button-darkblue button-wide">
+        <i class="fas {{theme.statusClasses['rebased']}}"></i>
+        Save all changes
+      </span>
     </div>
     <div class="js-cancel-all" ng-click="sidepanel.discardAllChanges()">
-        <span class="button button-darkred button-wide">
-            <i class="fas {{theme.statusClasses['unrebased']}}"></i>
-            Discard all changes
-        </span>
+      <span class="button button-darkred button-wide">
+        <i class="fas {{theme.statusClasses['unrebased']}}"></i>
+        Discard all changes
+      </span>
     </div>
 
   </div>

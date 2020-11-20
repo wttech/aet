@@ -20,84 +20,44 @@
 }
 
 .tab-content {
-  margin-top: 10px;
   z-index: 1;
 }
 
 .tab-content-toolbar {
   @include transition(left, .3s);
-  width: calc(100% + 50px);
+  width: 100%;
   height: 47px;
-  margin: 0 -25px 10px -25px;;
-  background: $gray_light;
-  border: solid $border_color_darken;
-  border-width: 1px 0;
+  margin: 0 0 10px 0;
+  background: transparent;
+  border-bottom: 1px solid $aet_light_gray;
   z-index: 1;
-
-  &-header {
-    font-family: $font_light;
-    color: #77777c;
-    font-size: 11px;
-    display: inline-block;
-    padding-right: 20px;
-    line-height: 31px;
-    margin: 8px 0;
-    vertical-align: middle;
-    border-right: solid 1px $border_color_darken;
-    margin-top: 5px
-  }
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 
 .checkboxes-inline {
-  display: inline-block;
+  display: flex;
+  align-items: center;
   margin: 0;
   height: 20px;
-  vertical-align: middle;
 
   .checkbox {
     display: inline-block;
     margin: 0;
+    margin-left:12px;
     height: 20px;
   }
 }
 
 .checkbox {
   position: relative;
-  width: 150px;
+  width: 100px;
+  margin-left: 8px;
 
   label {
-    position: relative;
-    cursor: pointer;
-    width: 18px;
-    height: 18px;
-    background: $white;
-    border: solid 1px $black;
-    margin-left: 4px;
-
-    span {
-      position: absolute;
-      width: 120px;
-      left: 30px;
-    }
-
-    &:after {
-      opacity: 0;
-      content: '';
-      top: 2px;
-      left: 3px;
-      position: absolute;
-      width: 14px;
-      height: 14px;
-      background: $rebased;
-    }
-  }
-
-  input[type=checkbox] {
-    opacity: 0;
-
-    &:checked + label:after {
-      opacity: 1;
-    }
+    padding-left: 4px;
+    font-size: 12px;
   }
 }
 

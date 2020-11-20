@@ -23,7 +23,7 @@ define(['angularAMD'], function (angularAMD) {
 
   function SidepanelDirective($rootScope, localStorageService) {
     var EXPANDED_SIDEBAR_KEY_NAME = 'aet:expandedSidepanel';
-    var INIT_SIDEPANEL_WIDTH = 350;
+    var INIT_SIDEPANEL_WIDTH = 260;
     var $sidepanel;
     var $content;
     var $toggleIcon;

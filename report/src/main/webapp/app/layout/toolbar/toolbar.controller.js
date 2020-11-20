@@ -21,10 +21,10 @@ define([], function () {
     'patternsService', 'metadataAccessService', 'notesService',
     'viewModeService', 'suiteInfoService', 'rerunService', 'historyService',
     '$http', 'endpointConfiguration',
-    ToolbarBottomController
+    ToolbarController
   ];
 
-  function ToolbarBottomController($scope, $rootScope, $uibModal, $stateParams,
+  function ToolbarController($scope, $rootScope, $uibModal, $stateParams,
     patternsService, metadataAccessService, notesService, viewModeService,
     suiteInfoService, rerunService, historyService, $http, endpointConfiguration) {
     var vm = this;
@@ -46,12 +46,9 @@ define([], function () {
     vm.suiteInfoService = suiteInfoService;
     vm.checkRerunStatus = rerunService.checkRerunStatus;
 
-    historyService.fetchHistory(suiteInfoService.getInfo().version, function () {
-      var currentVersion = suiteInfoService.getInfo().version;
-      vm.isLastSuiteVersion = historyService.getNextVersion(currentVersion) == null;
-    });
+    $rootScope.$on('metadata:changed', updateLeftHalfToolbar);
+    $rootScope.$on('metadata:changed', updateRightHalfToolbar);
 
-    $rootScope.$on('metadata:changed', updateToolbar);
     $scope.$watch('viewMode', function () {
       setTimeout(function () {
         $('[data-toggle="popover"]').not('.pre-initialized-popover').popover({
@@ -64,9 +61,29 @@ define([], function () {
       placement: 'bottom'
     }).addClass('pre-initialized-popover');
 
-    updateToolbar();
+    historyService.fetchHistory(suiteInfoService.getInfo().version, function () {
+      var currentVersion = suiteInfoService.getInfo().version;
+      vm.isLastSuiteVersion = historyService.getNextVersion(currentVersion) == null;
+      getPreviousVersion(currentVersion);
+      getNextVersion(currentVersion);
+      updateLeftHalfToolbar();
+    });
+
+    updateRightHalfToolbar();
 
     updateAccessibilityInfo();
+
+    $scope.copyToClipboard = function (textToCopy) {
+      var copyElement = document.createElement("textarea");
+      copyElement.style.position = 'fixed';
+      copyElement.style.opacity = '0';
+      copyElement.textContent = decodeURI(textToCopy);
+      var tempBody = document.getElementsByTagName('body')[0];
+      tempBody.appendChild(copyElement);
+      copyElement.select();
+      document.execCommand('copy');
+      tempBody.removeChild(copyElement);
+    }
 
     /***************************************
      ***********  Private methods  *********
@@ -93,7 +110,23 @@ define([], function () {
         });
     }
 
-    function updateToolbar() {
+    function updateLeftHalfToolbar() {
+      vm.showSuiteHistory = function () {
+        displayHistoryModal();
+      };
+      vm.suiteInfo = suiteInfoService.getInfo();
+      vm.suiteStatistics = metadataAccessService.getSuite();
+      if (vm.suiteStatistics.patternCorrelationId) {
+        vm.pattern = {
+          name: vm.suiteStatistics.patternCorrelationId,
+          url: 'report.html?company=' + vm.suiteStatistics.company +
+            '&project=' + vm.suiteStatistics.project +
+            '&correlationId=' + vm.suiteStatistics.patternCorrelationId
+        };
+      }
+    }
+
+    function updateRightHalfToolbar() {
       vm.viewMode = viewModeService.get();
       switch (vm.viewMode) {
         case viewModeService.SUITE:
@@ -110,6 +143,33 @@ define([], function () {
       }
     }
 
+    function getPreviousVersion(currentVersion) {
+      vm.previousVersion = historyService.getPreviousVersion(currentVersion);
+    }
+
+    function getNextVersion(currentVersion) {
+      vm.nextVersion = historyService.getNextVersion(currentVersion);
+    }
+
+    function displayHistoryModal() {
+      $uibModal.open({
+        animation: true,
+        templateUrl: 'app/layout/modal/history/historyModal.view.html',
+        controller: 'historyModalController',
+        controllerAs: 'historyModal',
+        size: 'lg',
+        windowClass: 'modal-history-window',
+        resolve: {
+          model: function () {
+            return vm.model;
+          },
+          viewMode: function () {
+            return vm.viewMode;
+          },
+        }
+      });
+    }
+
     function patternsMayBeUpdated() {
       var result = false;
       if (vm.model) {
@@ -121,7 +181,6 @@ define([], function () {
         result = false;
       }
       return result;
-
     }
 
     function patternsMarkedForUpdateMayBeReverted() {
@@ -265,5 +324,6 @@ define([], function () {
         patternsService.revertUrl($stateParams.test, $stateParams.url, true);
       };
     }
+
   }
 });
