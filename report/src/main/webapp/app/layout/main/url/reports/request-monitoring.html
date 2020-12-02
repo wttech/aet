@@ -55,16 +55,16 @@
     </tr>
     </thead>
     <tbody>
-    <tr class="divider-row" ng-if="case.result.filteredAssets.length > 0">
-        <td>{{$index+1}}</td>
-        <td><a href="{{item.url}}">{{item.url}}</a></td>
-        <td>{{item.size.toFixed(2)}}</td>
-      <td colspan="3">
+    <tr class="divider-row" ng-if="case.status == 'FAILED'">
+      <td colspan="4">
         Unexpected assets:
       </td>
     </tr>
     <tr class="danger"
         ng-repeat="item in case.result.filteredAssets">
+      <td>{{$index+1}}</td>
+      <td><a href="{{item.url}}">{{item.url}}</a></td>
+      <td>{{item.size.toFixed(2)}}</td>
       <td>{{item.code}}</td>
     </tr>
     <tr class="divider-row">
