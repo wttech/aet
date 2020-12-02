@@ -25,8 +25,27 @@
     </div>
   </div>
 </div>
+<!--<div>-->
+<!--  <h4>Total size: {{case.result.totalSize.toFixed(2)}} kB</h4>-->
+<!--  <table class="table table-hover">-->
+<!--    <thead>-->
+<!--    <tr>-->
+<!--      <th>No.</th>-->
+<!--      <th>URL</th>-->
+<!--      <th>Size (kB)</th>-->
+<!--    </tr>-->
+<!--    </thead>-->
+<!--    <tbody>-->
+<!--    <tr ng-repeat="item in case.result.results">-->
+<!--      <td>{{$index+1}}</td>-->
+<!--      <td><a href="{{item.url}}">{{item.url}}</a></td>-->
+<!--      <td>{{item.size.toFixed(2)}}</td>-->
+<!--    </tr>-->
+<!--    </tbody>-->
+<!--  </table>-->
+<!--</div>-->
 <div>
-  <h4>Total size: {{case.result.totalSize.toFixed(2)}} kB</h4>
+  <h4>Total size: {{case.result.totalSize.toFixed(4)}} kB</h4>
   <table class="table table-hover">
     <thead>
     <tr>
@@ -36,9 +55,27 @@
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="item in case.result.results">
+    <tr class="divider-row" ng-if="case.result.filteredAssets.length > 0">
+        <td>{{$index+1}}</td>
+        <td><a href="{{item.url}}">{{item.url}}</a></td>
+        <td>{{item.size.toFixed(2)}}</td>
+      <td colspan="3">
+        Unexpected assets:
+      </td>
+    </tr>
+    <tr class="danger"
+        ng-repeat="item in case.result.filteredAssets">
+      <td>{{item.code}}</td>
+    </tr>
+    <tr class="divider-row">
+      <td colspan="4">
+        All gathered assets:
+      </td>
+    </tr>
+    <tr class="info" ng-repeat="item in case.result.results">
       <td>{{$index+1}}</td>
-      <td><a href="{{item.url}}">{{item.url}}</a></td>
+      <td>{{item.code}}</td>
+      <td><a href="{{item.url}}" title="{{item.url}}">{{item.url}}</a></td>
       <td>{{item.size.toFixed(2)}}</td>
     </tr>
     </tbody>
