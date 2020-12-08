@@ -64,7 +64,6 @@ define([], function () {
           cases.push(caseFactory.getCase(step, comparator, index));
         });
       });
-      console.log({cases});
       return cases;
     }
 
