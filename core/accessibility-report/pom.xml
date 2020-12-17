@@ -22,7 +22,7 @@ limitations under the License.
   <parent>
     <artifactId>core</artifactId>
     <groupId>com.cognifide.aet</groupId>
-    <version>3.4.0</version>
+    <version>3.4.1-SNAPSHOT</version>
   </parent>
 
   <artifactId>accessibility-report</artifactId>
