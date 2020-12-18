@@ -18,35 +18,45 @@
 
 -->
 <div class="page-main">
-  <div class="row reports-list">
+  <div class="reports-list">
     <div class="reports-list-item {{url.getStatus()}}"
-         ng-repeat="url in testView.urls | aetUrlStatusFilter:$root.activeFilters | aetUrlSearchFilter:$root.searchText | orderBy:'name'"
-         ng-class="url.getStatus()">
+      ng-repeat="url in testView.urls | aetUrlStatusFilter:$root.activeFilters | aetUrlSearchFilter:$root.searchText | orderBy:'name'"
+      ng-class="url.getStatus()">
       <a ui-sref="url({'suite':data.project,'test':testView.testName,'url':url.name})">
         <div class="url-tile {{url.getStatus()}}">
           <div class="inner">
             <div ng-class="url.getStatus()">
               <div class="test-count test-count-dashboard">
-                <div ng-if="url.getStatus() != 'rebased' && url.getStatus() != 'conditionallyPassed'" class="fontawesome">
-                  <i class="fas {{theme.statusClasses[url.getStatus()]}}"></i>
+                <div class="tile-top">
+                  <div ng-if="url.getStatus() != 'rebased' && url.getStatus() != 'conditionallyPassed'"
+                    class="fontawesome">
+                    <i class="fas {{theme.statusClasses[url.getStatus()]}}"></i>
+                  </div>
+                  <div ng-if="url.getStatus() == 'rebased' || url.getStatus() == 'conditionallyPassed'"
+                    class="fontawesome">
+                    <i class="fas {{theme.statusClasses[url.getStatus()]}}"></i>
+                  </div>
+                  <span class='url-name'>{{url.name}}</span>
                 </div>
-                <div ng-if="url.getStatus() == 'rebased' || url.getStatus() == 'conditionallyPassed'" class="fontawesome">
-                  <i class="fas {{theme.statusClasses[url.getStatus()]}}"></i>
+                <div class="tile-bottom">
+                  <div class='empty-decorator'></div>
+                  <div class="tile-stats">
+                    <span class="status failed" data-toggle="popover" data-content="Failed cases" data-trigger="hover"
+                      data-container="body">{{url.failed}}</span>
+                    <span class="status warning" data-toggle="popover" data-content="Warning cases" data-trigger="hover"
+                      data-container="body">{{url.warning}}</span>
+                    <span class="status passed">
+                      <span data-toggle="popover" data-content="Passed cases" data-trigger="hover"
+                        data-container="body">{{url.passed}}</span>
+                        <span>/</span>
+                      <span data-toggle="popover"
+                        data-content="Conditionally passed cases" data-trigger="hover"
+                        data-container="body">{{url.conditionallyPassed}}</span>
+                    </span>
+                    <span class="status rebased" data-toggle="popover" data-content="Accepted cases"
+                      data-trigger="hover" data-container="body">{{url.rebased}}</span>
+                  </div>
                 </div>
-                <div class="tile-stats">
-                  <span class="statistics">Url cases statistics:</span>
-                  <span class="status failed" data-toggle="popover" data-content="Failed cases"
-                        data-trigger="hover" data-container="body">{{url.failed}}</span> /
-                  <span class="status warning" data-toggle="popover" data-content="Warning cases"
-                        data-trigger="hover" data-container="body">{{url.warning}}</span> /
-                  <span class="status passed" data-toggle="popover" data-content="Passed cases"
-                        data-trigger="hover" data-container="body">{{url.passed}}</span> /
-                        <span class="status conditionallyPassed" data-toggle="popover" data-content="Conditionally passed cases"
-                        data-trigger="hover" data-container="body">{{url.conditionallyPassed}}</span> /
-                  <span class="status rebased" data-toggle="popover" data-content="Accepted cases"
-                        data-trigger="hover" data-container="body">{{url.rebased}}</span>
-                </div>
-                <span>{{url.name}}</span>
               </div>
             </div>
           </div>

@@ -11,8 +11,16 @@ All notable changes to AET will be documented in this file.
 
 **List of changes that are finished but not yet released in any final version.**
 - [PR-583](https://github.com/Cognifide/aet/pull/583) Enable login modifier to read login and password from environment variables (fixed [#512](https://github.com/Cognifide/aet/issues/512)).
-- [PR-525](https://github.com/Cognifide/aet/pull/525) Added tests ordering. ([#509](https://github.com/Cognifide/aet/issues/509))
 
+## Version 3.4.0
+
+
+- [PR-601](https://github.com/Cognifide/aet/pull/601) Reports new design. ([#595](https://github.com/Cognifide/aet/issues/595))
+- [PR-528](https://github.com/Cognifide/aet/pull/528) Added source pattern date and source collected date. ([#500](https://github.com/Cognifide/aet/issues/500))
+- [PR-589](https://github.com/Cognifide/aet/pull/589) Fixed bug with 'Discard all changes' button not properly displayed. ([#587](https://github.com/Cognifide/aet/issues/587))
+- [PR-586](https://github.com/Cognifide/aet/pull/586) Removed duplicate of "Edit url note" button. ([#585](https://github.com/Cognifide/aet/issues/585))
+- [PR-502](https://github.com/Cognifide/aet/pull/502) Implement a feature that will allow monitoring the size of responses for the given requests ([#501](https://github.com/Cognifide/aet/issues/501))
+- [PR-525](https://github.com/Cognifide/aet/pull/525) Added tests ordering. ([#509](https://github.com/Cognifide/aet/issues/509))
 - [PR-524](https://github.com/Cognifide/aet/pull/524) Remove handling unescaped URLs in suites
 - [PR-526](https://github.com/Cognifide/aet/pull/526) Added sending urls to collectors in packets. ([#431](https://github.com/Cognifide/aet/issues/431))
 - [PR-565](https://github.com/Cognifide/aet/pull/565) Fixing styles of note-editor icon ([#371](https://github.com/Cognifide/aet/issues/371))

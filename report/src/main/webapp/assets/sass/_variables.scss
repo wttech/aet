@@ -49,13 +49,14 @@ $border_color_darken: #dcdce5;
 $simple_background: #fff;
 
 // Fonts
-$font_regular: 'montserratregular', sans-serif;
-$font_light: 'montserratlight', sans-serif;
-$font_bold: 'montserratbold', sans-serif;
+$font_regular: 'arialregular', sans-serif;
+$font_light: 'ariallight', sans-serif;
+$font_bold: 'arialbold', sans-serif;
 
 //Dimensions
-$side_bar_header_height: 240px;
+$side_bar_header_height: 280px;
 $side_bar_manage_changes_wrapper_height: 124px;
+$side_bar_width: 260px;//350px;
 
 /** NEW STYLES AFTER REFACTOR **/
 $warning: #f0ad4e;
@@ -68,3 +69,31 @@ $warning_bg: #fff085;
 $rebased_bg: #00c1ff;
 $failed_bg: #ddacac;
 $passed_bg: #caeb7f;
+
+
+/** new designs **/
+
+$aet_dark_green:#6A9918;
+$aet_green: #B2D85F;
+$aet_light_green: rgba($aet_green, 0.5);
+$aet_very_light_green: rgba($aet_green, 0.2);
+
+$aet_dark_blue:#0F6FC0;
+$aet_blue: #0DB6F1;
+$aet_light_blue: rgba($aet_blue, 0.5);
+$aet_very_light_blue: rgba($aet_blue, 0.2);
+
+$aet_dark_red: #B14E50;
+$aet_red: #D49797;
+$aet_light_red: rgba($aet_red, 0.5);
+$aet_very_light_red: rgba($aet_red, 0.2);
+
+$aet_dark_yellow: #EFA34E;
+$aet_yellow: #EFA34E;
+$aet_light_yellow: rgba($aet_yellow, 0.5);
+$aet_very_light_yellow: rgba($aet_yellow, 0.2);
+
+$aet_black: #000000;
+$aet_gray: #909090;
+$aet_light_gray: #bdbdbd;
+$aet_white: #FFFFFF;

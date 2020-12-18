@@ -24,7 +24,7 @@
   <parent>
     <artifactId>core</artifactId>
     <groupId>com.cognifide.aet</groupId>
-    <version>3.3.1-SNAPSHOT</version>
+    <version>3.4.1-SNAPSHOT</version>
   </parent>
 
   <artifactId>worker</artifactId>

@@ -18,13 +18,20 @@
 
 
 .modal {
+  &-header {
+    border: none;
+    padding-bottom: 0;
+  }
+
   &-title {
+    color: $aet_black;
     font-size: 24px;
-    color: $gray_darker;
+    display: inline;
   }
 
   &-content {
-    border:0px;
+    border: 0px;
+    border-radius: 0;
   }
 
   &-body {
@@ -73,7 +80,43 @@
 
   p {
     display: inline;
-    color: $black;
+    color: $aet_gray;
     font-weight: normal;
+  }
+}
+
+.help-key-info {
+  color: $aet_white;
+  background: $aet_dark_blue;
+  border: 1px;
+  padding: 2px 8px;
+  margin: 0 4px;
+  min-height: 24px;
+  display: inline-block;
+  text-align: center;
+}
+
+.help-list {
+  list-style: none;
+  padding: 0;
+  font-size: 16px;
+
+  li {
+    margin-top: 8px;
+    display: flex;
+    align-items: baseline;
+  }
+}
+
+.popover {
+  border: 1px solid $aet_blue;
+  border-radius: 0;
+
+  .arrow {
+    border-bottom-color: $aet_blue !important;
+  }
+
+  .popover-content {
+    color: $aet_blue;
   }
 }

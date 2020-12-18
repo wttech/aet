@@ -16,7 +16,7 @@
  * limitations under the License.
  */
 .filters {
-  padding: 0 15px;
+  padding: 0;
 
   p {
     color: $gray_darker;
@@ -30,9 +30,9 @@
       position: absolute;
       right: 15px;
       z-index: 1;
-      top: 11px;
-      font-size: 18px;
-      color: #FFF;
+      top: 6px;
+      font-size: 14px;
+      color: $aet_gray;
 
       .fa-times {
         cursor: pointer;
@@ -50,7 +50,7 @@
       .order-reversal-icon {
         width: 24px;
         height: 12px;
-        color: white;
+        color: $aet_gray;
         float: right;
         cursor: pointer;
         position: relative;
@@ -65,14 +65,14 @@
 
   input,
   .filter-list, select {
-    background-color: $grayish;
-    border: 0 none;
-    color: $white;
+    background-color: transparent;
+    border: 1px solid $aet_light_gray;
+    color: $aet_gray;
     font-family: $font_light;
-    font-size: 15px;
-    height: 40px;
-    line-height: 40px;
-    padding-left: 20px;
+    font-size: 12px;
+    height: 32px;
+    line-height: 32px;
+    padding-left: 8px;
     padding-right: 40px;
     width: 100%;
     z-index: 1;
@@ -94,6 +94,12 @@
     padding: 0;
     top: 40px;
     width: 100%;
+    left: 0 !important;
+
+    .arrow {
+      border-bottom-color: $aet_gray !important;
+      top: -10px;
+    }
 
     &.is-active {
       display: block;
@@ -101,13 +107,15 @@
 
     &-content {
       padding: 0;
+      border: 1px solid $aet_gray;
     }
 
     .dropdown-field {
-      border-bottom: 1px solid $border_color;
+      border-bottom: 1px solid $aet_gray;
       display: block;
       padding: 10px;
       width: 100%;
+      color: $aet_gray;
 
       &:last-of-type {
         border-bottom: 0;

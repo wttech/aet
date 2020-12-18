@@ -145,20 +145,10 @@ define(['angularAMD',
               }
             }
           }),
-          'toolbarTop@': angularAMD.route({
-            templateUrl: 'app/layout/toolbar/toolbarTop.view.html',
-            controllerUrl: 'layout/toolbar/toolbarTop.controller',
-            controllerAs: 'toolbarTop',
-            resolve: {
-              metadataReady: function (metadataLoaderService) {
-                return metadataLoaderService.setup();
-              }
-            }
-          }),
-          'toolbarBottom@': angularAMD.route({
-            templateUrl: 'app/layout/toolbar/toolbarBottom.view.html',
-            controllerUrl: 'layout/toolbar/toolbarBottom.controller',
-            controllerAs: 'toolbarBottom',
+          'toolbar@': angularAMD.route({
+            templateUrl: 'app/layout/toolbar/toolbar.view.html',
+            controllerUrl: 'layout/toolbar/toolbar.controller',
+            controllerAs: 'toolbar',
             resolve: {
               metadataReady: function (metadataLoaderService) {
                 return metadataLoaderService.setup();
@@ -181,20 +171,10 @@ define(['angularAMD',
               }
             }
           }),
-          'toolbarTop@': angularAMD.route({
-            templateUrl: 'app/layout/toolbar/toolbarTop.view.html',
-            controllerUrl: 'layout/toolbar/toolbarTop.controller',
-            controllerAs: 'toolbarTop',
-            resolve: {
-              metadataReady: function (metadataLoaderService) {
-                return metadataLoaderService.setup();
-              }
-            }
-          }),
-          'toolbarBottom@': angularAMD.route({
-            templateUrl: 'app/layout/toolbar/toolbarBottom.view.html',
-            controllerUrl: 'layout/toolbar/toolbarBottom.controller',
-            controllerAs: 'toolbarBottom',
+          'toolbar@': angularAMD.route({
+            templateUrl: 'app/layout/toolbar/toolbar.view.html',
+            controllerUrl: 'layout/toolbar/toolbar.controller',
+            controllerAs: 'toolbar',
             resolve: {
               metadataReady: function (metadataLoaderService) {
                 return metadataLoaderService.setup();
@@ -218,20 +198,10 @@ define(['angularAMD',
               }
             }
           }),
-          'toolbarTop@': angularAMD.route({
-            templateUrl: 'app/layout/toolbar/toolbarTop.view.html',
-            controllerUrl: 'layout/toolbar/toolbarTop.controller',
-            controllerAs: 'toolbarTop',
-            resolve: {
-              metadataReady: function (metadataLoaderService) {
-                return metadataLoaderService.setup();
-              }
-            }
-          }),
-          'toolbarBottom@': angularAMD.route({
-            templateUrl: 'app/layout/toolbar/toolbarBottom.view.html',
-            controllerUrl: 'layout/toolbar/toolbarBottom.controller',
-            controllerAs: 'toolbarBottom',
+          'toolbar@': angularAMD.route({
+            templateUrl: 'app/layout/toolbar/toolbar.view.html',
+            controllerUrl: 'layout/toolbar/toolbar.controller',
+            controllerAs: 'toolbar',
             resolve: {
               metadataReady: function (metadataLoaderService) {
                 return metadataLoaderService.setup();

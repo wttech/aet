@@ -54,10 +54,8 @@ require.config({
     'patternsService': 'services/patterns.service',
     'userSettingsService': 'services/userSettings.service',
     'viewModeService': 'services/viewMode.service',
-    //toolbarTop
-    'toolbarTopController': 'layout/toolbar/toolbarTop.controller',
-    //toolbarBottom
-    'toolbarBottomController': 'layout/toolbar/toolbarBottom.controller',
+    //Toolbar unified
+    'toolbarController': 'layout/toolbar/toolbar.controller',
     //sidepanel
     'sidepanelDirective': 'layout/sidepanel/sidepanel.directive',
     'sidepanelStatusFilterDirective': 'layout/sidepanel/sidepanelStatusFilter.directive',
