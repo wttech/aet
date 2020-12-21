@@ -36,7 +36,7 @@ AET helps testers to ensure that a change in one part of the software has not in
 4. AET produces a report.
 
 #### AET is not about
-* functional testing - checkout another Cognifide's testing framework: [Bobcat](https://github.com/Cognifide/bobcat) for functional testing,
+* functional testing - checkout another Wunderman Thompson Technology's testing framework: [Bobcat](https://github.com/Cognifide/bobcat) for functional testing,
 * cross-browser testing,
 * usability testing,
 * security or server-side performance.
@@ -59,7 +59,7 @@ To setup fully functional AET instance use one of the following:
 - [AET cookbook](https://github.com/Cognifide/aet-cookbook), you may run local instance using [AET Vagrant](https://github.com/Cognifide/aet/wiki/BasicSetup#set-up-vagrant).
 - [AET Docker images](https://github.com/Skejven/aet-docker), you may run local instance using [sample AET Swarm](https://github.com/Skejven/aet-docker/tree/master/example-aet-swarm).
 
-For more details on how to run AET tests, see [AET in 10 minutes](https://github.com/Cognifide/aet/wiki/AETIn10Minutes) guide.
+For more details on how to run AET tests, see [AET in 10 minutes](https://github.com/wttech/aet/wiki/AETIn10Minutes) guide.
 
 ## AET architecture
 The AET System consists of 7 units:
@@ -82,15 +82,15 @@ Thanks to using AET Maven Plugin as a Client application, AET is easy to integra
 
 ## Bugs and Feedback
 
-For bugs, questions and discussions please use the [Github Issues](https://github.com/Cognifide/aet/issues).
+For bugs, questions and discussions please use the [Github Issues](https://github.com/wttech/aet/issues).
 Please notice we use [ZenHub](https://www.zenhub.com/) extension to manage issues.
 
 ## Documentation
-* [AET Wiki](https://github.com/Cognifide/aet/wiki)
+* [AET Wiki](https://github.com/wttech/aet/wiki)
 
 ## Contact and Commercial Support
 
-If you have any questions or require technical support please contact us at [aet@cognifide.com](mailto:aet@cognifide.com).
+If you have any questions or require technical support please contact us at [aet@wundermanthompson.com](mailto:aet@wundermanthompson.com).
 [Gitter Chat](https://gitter.im/aet-tool/Lobby) is a way for users to chat with the AET community. Feel free to leave a message, even if we’re not around, we will definitely respond to you when available.
 
 [gitter]:https://gitter.im/aet-tool/Lobby
