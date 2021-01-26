@@ -1,4 +1,4 @@
-![Wunderman Thompson Technology Logo](https://github.com/wttech/aet/raw/master/misc/img/WT_Logo_Blue_Positive_RGB.png){:width="400px"}
+![Wunderman Thompson Technology Logo](https://github.com/wttech/aet/raw/master/misc/img/WT_Logo_Blue_Positive_RGB.png)
 
 [![Build Status](https://travis-ci.org/Cognifide/aet.svg?branch=master)](https://travis-ci.org/Cognifide/aet)
 [![Apache License, Version 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](http://www.apache.org/licenses)
