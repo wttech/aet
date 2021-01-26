@@ -6,7 +6,7 @@
 
 # AET
 <p align="center">
-  <img src="https://github.com/Cognifide/aet/blob/master/misc/img/aet-logo-blue.png?raw=true"
+  <img src="https://github.com/Cognifide/aet/blob/master/misc/img/aet-logo-blue.png?raw=true" width="200"
          alt="AET Logo"/>
 </p>
 
