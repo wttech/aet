@@ -1,7 +1,7 @@
 # Troubleshooting
 This section contains tips and ways to repair AET instances. If all the tips from the list failed
-or you have discovered a new one, please raise a ticket using [Issues Tool](https://github.com/Cognifide/aet/issues)
-or create a Pull Request with change to [this file](https://github.com/Cognifide/aet/blob/master/documentation/src/main/wiki/Troubleshooting.md).
+or you have discovered a new one, please raise a ticket using [Issues Tool](https://github.com/wttech/aet/issues)
+or create a Pull Request with change to [this file](https://github.com/wttech/aet/blob/master/documentation/src/main/wiki/Troubleshooting.md).
 
 - [Karaf](#karaf)
   - [Karaf can't find some dependencies or configurations - clearing the cache](#karaf-cant-find-some-dependencies-or-configurations---clearing-the-cache)
@@ -43,9 +43,9 @@ Navigate to `http://<mongo-db-host>:27017` with your browser. Mongo is OK if you
 
 ### Make sure that you have indexed `metadata` collection in the project db.
 Manually created databases require manually created indexes. To create
-indexes run [this script](https://github.com/Cognifide/aet/blob/master/misc/mongodb/create-indexes.js)
+indexes run [this script](https://github.com/wttech/aet/blob/master/misc/mongodb/create-indexes.js)
 in your MongoDB database. You may update all existing databases at once using
-[this script](https://github.com/Cognifide/aet/blob/master/misc/mongodb/create-indexes-for-all-dbs.js).
+[this script](https://github.com/wttech/aet/blob/master/misc/mongodb/create-indexes-for-all-dbs.js).
 
 ## Report app
 
@@ -56,4 +56,4 @@ Open browser developer's console and check the status of a request to `<aet-web-
 Make sure that your report instance is not trying to do Cross-Origin
 resource call which is blocked by most of popular browsers.
 Configuration of an endpoint for AET reports can be found in
-[`/webapp/app/services/endpointConfiguration.service.js`](https://github.com/Cognifide/aet/blob/master/report/src/main/webapp/app/services/endpointConfiguration.service.js) file.
+[`/webapp/app/services/endpointConfiguration.service.js`](https://github.com/wttech/aet/blob/master/report/src/main/webapp/app/services/endpointConfiguration.service.js) file.

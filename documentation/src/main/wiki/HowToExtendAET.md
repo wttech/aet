@@ -10,7 +10,7 @@ There are 4 types of modules in AET:
 * [[Data Filters|DataFilters]]
 
 You may extend AET with any of those types. To do so, you need to implement several interfaces from 
-[`jobs-api`](https://github.com/Cognifide/aet/tree/master/api/jobs-api) module.
+[`jobs-api`](https://github.com/wttech/aet/tree/master/api/jobs-api) module.
 Below we present how to create a custom Modifier, which is the most common case and is the easiest type to extend.
 Extending other types is similar and examples will be available in the future, however creating a new type of
 [[Collector|Collectors]] and corresponding [[Comparator|Comparators]] involves also 
@@ -161,17 +161,17 @@ be available on the Karaf instance that AET are running at.
 
 #### 2. Implement Modifier interface
 Start with creating `PageBackgroundModifier` class in the `com.example.aet.modifiers.pagebackground` package.
-Now, implement a [`CollectorJob`](https://github.com/Cognifide/aet/blob/master/api/jobs-api/src/main/java/com/cognifide/aet/job/api/collector/CollectorJob.java).
+Now, implement a [`CollectorJob`](https://github.com/wttech/aet/blob/master/api/jobs-api/src/main/java/com/cognifide/aet/job/api/collector/CollectorJob.java).
 This is common interface for both [[Collectors|Collectors]] and [[Modifiers|Modifiers]].
 You will have to implement two methods:
 - `collect` which is executed during the [[`collection phase`|TestProcessing#collection]], this method can throw 
- [`ProcessingException`](https://github.com/Cognifide/aet/blob/master/api/jobs-api/src/main/java/com/cognifide/aet/job/api/exceptions/ProcessingException.java)
+ [`ProcessingException`](https://github.com/wttech/aet/blob/master/api/jobs-api/src/main/java/com/cognifide/aet/job/api/exceptions/ProcessingException.java)
  when the modification fails. Throwing this exception from the `collect` method won't terminate processing of all collectors/modifiers. The 
  idea here is to continue processing other steps despite this error (and this is the expected behavior). 
  If you want to terminate processing you should throw an exception that doesn't inherit 
- from [`AETException`](https://github.com/Cognifide/aet/blob/master/api/communication-api/src/main/java/com/cognifide/aet/communication/api/exceptions/AETException.java).
+ from [`AETException`](https://github.com/wttech/aet/blob/master/api/communication-api/src/main/java/com/cognifide/aet/communication/api/exceptions/AETException.java).
 - `setParameters` that setups all parameters necessary to perform modification (in our case `color` parameter), 
-this method can throw [`ParametersException`](https://github.com/Cognifide/aet/blob/master/api/jobs-api/src/main/java/com/cognifide/aet/job/api/exceptions/ParametersException.java)
+this method can throw [`ParametersException`](https://github.com/wttech/aet/blob/master/api/jobs-api/src/main/java/com/cognifide/aet/job/api/exceptions/ParametersException.java)
 when some mandatory parameter is missing. Throwing this exception will terminate processing of all collectors/modifiers steps.
 
 Implementation of `PageBackgroundModifier` can look like this:
@@ -233,7 +233,7 @@ public class PageBackgroundModifier implements CollectorJob {
 ```
 #### 3. Implement CollectorFactory interface to register new Modifier
 The next step is to register new Modifier in the AET system. To do so, you need to implement a
-[`CollectorFactory`](https://github.com/Cognifide/aet/blob/master/api/jobs-api/src/main/java/com/cognifide/aet/job/api/collector/CollectorFactory.java)
+[`CollectorFactory`](https://github.com/wttech/aet/blob/master/api/jobs-api/src/main/java/com/cognifide/aet/job/api/collector/CollectorFactory.java)
 and make it an OSGi Service.
 You will need to implement two methods:
 - `getName` that will return the name of registered Modifier (this is the name that will be used in suite XML to call the Modifier) in our case it is `"change-background"`,

@@ -7,7 +7,7 @@
 | ! Notice    |
 | :---------- |
 | Screen Collector is responsible for collecting screenshot of the page or just part of it by specifying element locator (xpath or css)  under given URL. |
-| Screenshot of the page only covers the current viewport, i.e. the screenshot size (both width and height) will be equal to the browser's window size set by the [`Resolution Modifier`](https://github.com/Cognifide/aet/wiki/ResolutionModifier). |  
+| Screenshot of the page only covers the current viewport, i.e. the screenshot size (both width and height) will be equal to the browser's window size set by the [`Resolution Modifier`](https://github.com/wttech/aet/wiki/ResolutionModifier). |
 | If you want to take a screenshot of entire page, you should either skip the `height` parameter of `resolution` modifier (to let it be computed by JavaScript), or set it to a value which will cover the whole page. 
 If you want to take a screenshot of specific element on the page (using `xpath` or `css` selector), then this entire element must be visible in current viewport - otherwise you will get an processing error. | 
 
@@ -64,4 +64,4 @@ please use:
 
 | ! Note |
 |:------ |
-| Before taking screenshot [Hide modifier](https://github.com/Cognifide/aet/wiki/HideModifier) can be applied in order to hide from the screen some elements that are not necessary for comparison, i.e. Twitter feed. <br/><br/> Also [Resolution Modifier](https://github.com/Cognifide/aet/wiki/ResolutionModifier) and [Wait For Page Loaded Modifier](https://github.com/Cognifide/aet/wiki/WaitForPageLoadedModifier) can be applied before Screen Collector usage to change expected collect result. <br/><br/> As in example presented above, `name` parameter can be very useful when using screen collector. More information about this parameter can be found in [Collectors](https://github.com/Cognifide/aet/wiki/Collectors) section. |
+| Before taking screenshot [Hide modifier](https://github.com/wttech/aet/wiki/HideModifier) can be applied in order to hide from the screen some elements that are not necessary for comparison, i.e. Twitter feed. <br/><br/> Also [Resolution Modifier](https://github.com/wttech/aet/wiki/ResolutionModifier) and [Wait For Page Loaded Modifier](https://github.com/wttech/aet/wiki/WaitForPageLoadedModifier) can be applied before Screen Collector usage to change expected collect result. <br/><br/> As in example presented above, `name` parameter can be very useful when using screen collector. More information about this parameter can be found in [Collectors](https://github.com/wttech/aet/wiki/Collectors) section. |

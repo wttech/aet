@@ -1,6 +1,6 @@
 # FAQ
 This section contains answers to frequently asked questions. If you can't find an answer to your question here
-please use the [Issues Tool](https://github.com/Cognifide/aet/issues) to raise it.
+please use the [Issues Tool](https://github.com/wttech/aet/issues) to raise it.
 
 - [1. Setup and first steps](#1-setup-and-first-steps)
   - [1.1. What do I need to start using AET?](#11-what-do-i-need-to-start-using-aet)
@@ -83,7 +83,7 @@ You can add custom fonts to AET virtual machine. To do so, place desired fonts i
 Other idea is to install fonts with e.g.:
 `yum groupinstall chinese-support`
 `yum groupinstall arabic-support`
-See more details in answers for [this AET question](https://github.com/Cognifide/aet/issues/61).
+See more details in answers for [this AET question](https://github.com/wttech/aet/issues/61).
 
 ### 2.4. What do I need the REST proxy for?
 The REST proxy is required if you want to:
@@ -175,6 +175,6 @@ The technology that AET makes use of comprises:
 - MongoDB (NoSQL DB)
 - Browsermob (HTTP Proxy)
 - Selenium (Grid with Hub and Chrome nodes)
-- Chef (cookbooks + Vagrant local instance on Oracle VirtualBox - see [AET Cookbook](https://github.com/Cognifide/aet-cookbook)
+- Chef (cookbooks + Vagrant local instance on Oracle VirtualBox - see [AET Cookbook](https://github.com/wttech/aet-cookbook)
 - Docker (with example Docker Swarm cluster config) - see [AET Docker](https://github.com/Skejven/aet-docker)
 - AngularJS (Report app)
