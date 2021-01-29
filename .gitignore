@@ -3,9 +3,19 @@
 # Add this file or override maven property for it's location.
 /maven.properties
 
+### GRADLE ###
+.gradle
+build/
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**
+!**/src/test/**
+
 # IntelliJ idea specific files
 .idea
+*.iws
 *.iml
+*.ipr
+out/
 
 # Eclipse specific files
 .settings
