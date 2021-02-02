@@ -685,6 +685,12 @@
               <!-- IntelliJ files -->
               <exclude>**/.idea/**</exclude>
               <exclude>**/*.iml</exclude>
+
+              <!-- gradle files -->
+              <exclude>**/*.gradle</exclude>
+              <exclude>**/.gradle/**</exclude>
+              <exclude>**/gradle.properties</exclude>
+              <exclude>**/gradle-wrapper.properties</exclude>
             </excludes>
           </configuration>
         </plugin>
