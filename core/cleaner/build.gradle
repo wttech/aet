@@ -4,6 +4,7 @@
 
 plugins {
     id 'com.cognifide.aet.java-conventions'
+    id 'biz.aQute.bnd.builder'
 }
 
 configurations {
@@ -30,6 +31,16 @@ dependencies {
     compileOnly 'org.apache.servicemix.bundles:org.apache.servicemix.bundles.quartz:2.3.0_2'
     compileOnly 'org.apache.camel:camel-core:2.24.0'
     compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
+}
+
+jar {
+    manifest {
+        attributes(
+                'Bundle-Vendor': 'Cognifide Ltd.',
+                'Import-Package': 'javax.annotation;resolution:=optional,*',
+                'Export-Package': 'com.cognifide.aet.cleaner.*'
+        )
+    }
 }
 
 description = 'AET :: Core :: Cleaner'

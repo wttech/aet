@@ -4,6 +4,7 @@
 
 plugins {
     id 'com.cognifide.aet.java-conventions'
+    id 'biz.aQute.bnd.builder'
 }
 
 dependencies {
@@ -13,6 +14,15 @@ dependencies {
     compileOnly 'org.hibernate:hibernate-validator:4.3.2.Final'
     compileOnly 'org.jboss.logging:jboss-logging:3.3.2.Final'
     compileOnly 'com.google.code.gson:gson:2.8.5'
+}
+
+jar {
+    manifest {
+        attributes(
+                'Bundle-Vendor': 'Cognifide Ltd.',
+                'Export-Package': 'com.cognifide.aet.vs.*'
+        )
+    }
 }
 
 description = 'AET :: API :: Data Storage API'

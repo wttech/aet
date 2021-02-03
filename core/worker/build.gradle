@@ -4,6 +4,7 @@
 
 plugins {
     id 'com.cognifide.aet.java-conventions'
+    id 'biz.aQute.bnd.builder'
 }
 
 dependencies {
@@ -28,6 +29,16 @@ dependencies {
     compileOnly 'org.apache.httpcomponents:fluent-hc:4.5.5'
     compileOnly 'org.apache.httpcomponents:httpclient:4.4'
     compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
+}
+
+jar {
+    manifest {
+        attributes(
+                'Bundle-Vendor': 'Cognifide Ltd.',
+                'Import-Package': 'javax.annotation;resolution:=optional,*',
+                'Export-Package': 'com.cognifide.aet.worker.*'
+        )
+    }
 }
 
 description = 'AET :: Core :: Worker'

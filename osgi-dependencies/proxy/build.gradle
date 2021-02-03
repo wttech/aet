@@ -4,6 +4,7 @@
 
 plugins {
     id 'com.cognifide.aet.java-conventions'
+    id 'biz.aQute.bnd.builder'
 }
 
 dependencies {
@@ -17,6 +18,17 @@ dependencies {
     compileOnly 'org.json:json:20180130'
     compileOnly 'com.google.code.gson:gson:2.8.5'
     compileOnly 'org.apache.httpcomponents:httpclient:4.4'
+}
+
+jar {
+    manifest {
+        attributes(
+                'Bundle-Vendor': 'Cognifide Ltd.',
+                'Export-Package': 'com.cognifide.aet.proxy.*',
+                'Embed-Dependency': 'browsermob-proxy-client',
+                'Import-Package': 'com.sun.net.ssl.*;resolution:=optional,sun.net.spi.*;resolution:=optional,com.sun.*;resolution:=optional,*'
+        )
+    }
 }
 
 description = 'AET :: OSGi Dependencies :: Proxy'

@@ -4,6 +4,7 @@
 
 plugins {
     id 'com.cognifide.aet.java-conventions'
+    id 'biz.aQute.bnd.builder'
 }
 
 dependencies {
@@ -28,6 +29,17 @@ dependencies {
     compileOnly 'org.eclipse.jetty:jetty-server:9.3.14.v20161028'
     compileOnly 'org.eclipse.jetty:jetty-servlets:9.3.14.v20161028'
     compileOnly 'org.eclipse.jetty:jetty-util:9.3.14.v20161028'
+}
+
+jar {
+    manifest {
+        attributes(
+                'Bundle-Vendor': 'Cognifide Ltd.',
+                'Export-Package': 'nu.validator.*',
+                'Embed-Dependency': '*;scope=compile|runtime',
+                'Import-Package': 'com.icl.saxon;resolution:=optional,com.sun.org.apache.xerces.internal.*;resolution:=optional,javax.portlet;resolution:=optional,jp.co.swiftinc.relax.*;resolution:=optional,junit.framework;resolution:=optional,org.gjt.xpp;resolution:=optional,org.xmlpull.v1;resolution:=optional,org.apache.xmlbeans;resolution:=optional,org.apache.xerces.*;resolution:=optional,com.google.inject;resolution:=optional,org.fest.assertions;resolution:=optional,org.junit.*;resolution:=optional,org.seasar.framework.*;resolution:=optional,org.springframework.web.context.*;resolution:=optional,*'
+        )
+    }
 }
 
 description = 'AET :: OSGi Dependencies :: HTML validator'

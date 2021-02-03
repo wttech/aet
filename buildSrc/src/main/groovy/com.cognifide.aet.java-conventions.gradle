@@ -8,6 +8,9 @@ plugins {
 }
 
 repositories {
+    maven {
+        url = 'http://repository.jboss.org/nexus/content/groups/public'
+    }
     mavenCentral()
     jcenter()
 }
