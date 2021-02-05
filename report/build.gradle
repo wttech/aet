@@ -1,0 +1,12 @@
+plugins {
+    id 'org.siouan.frontend-jdk8' version '5.0.0'
+}
+
+frontend {
+    nodeVersion = '8.11.3'
+    packageJsonDirectory = file('./src/main/webapp')
+    nodeInstallDirectory = file('./src/main/webapp/node')
+    assembleScript = 'run gulp build'
+    cleanScript = 'run clean'
+    checkScript = 'run check'
+}
