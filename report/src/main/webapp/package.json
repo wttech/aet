@@ -4,7 +4,8 @@
   "description": "aet",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "gulp": "gulp build",
+    "clean": "rm -rf ./node_modules && rm -rf ./node"
   },
   "author": "Cognifide",
   "license": "Apache-2.0",
