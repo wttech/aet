@@ -687,6 +687,7 @@
               <exclude>**/*.iml</exclude>
 
               <!-- gradle files -->
+              <exclude>**/build/**</exclude>
               <exclude>**/*.gradle</exclude>
               <exclude>**/.gradle/**</exclude>
               <exclude>**/gradle.properties</exclude>

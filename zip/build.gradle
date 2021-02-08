@@ -6,40 +6,53 @@ plugins {
     id 'com.cognifide.aet.java-conventions'
 }
 
-task copyFeaturesXmlFile(type: Copy) {
+def packages = "${buildDir}/packages-${project.version}"
+
+task zipBundles(type: Zip) {
+    dependsOn rootProject.getTasksByName('build', true)
+    archiveFileName = 'bundles.zip'
+    destinationDirectory = file("$packages")
+    includeEmptyDirs = false
+    rootProject.subprojects { subproject ->
+        from("${subproject.buildDir}/libs") {
+            include "**/${subproject.name}*.jar"
+            exclude "*aet-maven-plugin*.jar"
+            exclude "*-test*.jar"
+            exclude "*client*.jar"
+            exclude "*sample-site*.jar"
+            exclude "*zip*"
+            rename { "${project.group}.${subproject.name}.jar" }
+        }
+    }
+}
+
+task zipConfigs(type: Zip) {
+    destinationDirectory = file("$packages")
+    archiveFileName = "configs.zip"
+    from("${rootDir}/osgi-dependencies/configs/src/main/resources")
+}
+
+task zipFeatures(type: Zip) {
+    destinationDirectory = file("$packages")
+    archiveFileName = "features.zip"
     includeEmptyDirs = false
     from("${rootDir}/osgi-dependencies") {
         include "**/aet-features.xml"
         include "**/aet-webconsole.xml"
     }
-    into "${buildDir}"
 }
 
-task zipConfigs(type: Zip) {
-    archiveFileName = "${project.group}.configs.zip"
-    destinationDirectory = file("$buildDir/packages")
-    from "${rootDir}/osgi-dependencies/configs/src/main/resources"
+task zipReport(type: Copy) {
+    dependsOn project(":report").getTasksByName('build', true)
+    from("${rootDir}/report/build/distributions/report.zip")
+    into "$packages"
 }
 
-task copyArtifacts {
-    dependsOn rootProject.getTasksByName('build', true)
-    doLast {
-        delete "${buildDir}/jars"
-        copy {
-            includeEmptyDirs = false
-            rootProject.subprojects { subproject ->
-                from("${subproject.buildDir}/libs") {
-                    include "**/${subproject.name}*.jar"
-                    exclude "*aet-maven-plugin*.jar"
-                    exclude "*-test*.jar"
-                    exclude "*client*.jar"
-                    exclude "*zip*"
-                    rename { "${project.group}.${subproject.name}.jar" }
-                }
-            }
-            into "${buildDir}/packages"
-        }
-    }
+task make {
+    dependsOn tasks.zipBundles
+    dependsOn tasks.zipConfigs
+    dependsOn tasks.zipFeatures
+    dependsOn tasks.zipReport
 }
 
 description = 'AET'

@@ -1,5 +1,6 @@
 plugins {
     id 'org.siouan.frontend-jdk8' version '5.0.0'
+    id 'distribution'
 }
 
 frontend {
@@ -7,6 +8,24 @@ frontend {
     packageJsonDirectory = file('./src/main/webapp')
     nodeInstallDirectory = file('./src/main/webapp/node')
     assembleScript = 'run gulp build'
-    cleanScript = 'run clean'
-    checkScript = 'run check'
 }
+
+distributions {
+    main {
+        contents {
+            from('src/main/webapp') {
+                include 'report.html'
+                include 'html/index.html'
+                include 'app/**'
+                include 'assets/**'
+            }
+            includeEmptyDirs = false
+            eachFile { file ->
+                String path = file.relativePath
+                file.setPath(path.substring(path.indexOf("/") + 1, path.length()))
+            }
+        }
+    }
+}
+
+tasks.assemble.dependsOn tasks.distZip
