@@ -90,7 +90,11 @@
           <i class="far fa-play-circle fa-sm"></i>
         </div>
         <span>{{toolbar.viewMode}}:</span> &nbsp;
-        <span>{{toolbar.model.name}}</span>
+        <span ng-if="toolbar.viewMode != 'URL'">{{toolbar.model.name}}</span>
+        <a ng-if="toolbar.viewMode == 'URL'" href="{{toolbar.model.domain + toolbar.model.url}}"
+          target="_blank" data-toggle="popover" data-content="Click to navigate to url" data-trigger="hover"
+          data-container="body"> {{toolbar.model.name}}
+        </a>
       </div>
       <div class='right-buttons'>
         <div class="toolbar-nav toolbar-nav-urls" ng-show="toolbar.viewMode == 'URL' || toolbar.viewMode == 'Test'">
