@@ -4,6 +4,7 @@
 
 plugins {
     id 'com.cognifide.aet.java-conventions'
+    id 'war'
 }
 
 dependencies {

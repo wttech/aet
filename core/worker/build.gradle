@@ -11,12 +11,12 @@ dependencies {
     testImplementation 'junit:junit:4.11'
     testImplementation 'org.hamcrest:hamcrest-all:1.3'
     testImplementation 'org.mockito:mockito-all:1.9.5'
-    providedCompile project(':jobs-api')
-    providedCompile project(':communication-api')
-    providedCompile project(':datastorage-api')
-    providedCompile project(':communication')
-    providedCompile project(':proxy')
-    providedCompile project(':selenium')
+    projectCompile project(':jobs-api')
+    projectCompile project(':communication-api')
+    projectCompile project(':datastorage-api')
+    projectCompile project(':communication')
+    projectCompile project(':proxy')
+    projectCompile project(':selenium')
     compileOnly 'com.google.guava:guava:25.1-jre'
     compileOnly('org.apache.activemq:activemq-osgi:5.15.2') {
         exclude group: 'com.google.guava', module: 'guava'

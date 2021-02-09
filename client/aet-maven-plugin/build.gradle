@@ -7,8 +7,8 @@ plugins {
 }
 
 dependencies {
-    providedCompile project(':communication-api')
-    providedCompile project(':client-core')
+    projectCompile project(':communication-api')
+    projectCompile project(':client-core')
     implementation 'org.apache.maven:maven-plugin-api:2.0'
     implementation 'org.apache.maven:maven-project:2.2.1'
     implementation 'org.codehaus.plexus:plexus-utils:3.0.8'

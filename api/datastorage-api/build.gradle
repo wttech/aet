@@ -8,7 +8,7 @@ plugins {
 }
 
 dependencies {
-    providedCompile project(':communication-api')
+    projectCompile project(':communication-api')
     compileOnly 'com.google.guava:guava:25.1-jre'
     compileOnly 'javax.validation:validation-api:1.1.0.Final'
     compileOnly 'org.hibernate:hibernate-validator:4.3.2.Final'

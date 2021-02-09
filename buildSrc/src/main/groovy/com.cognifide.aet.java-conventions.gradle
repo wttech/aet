@@ -31,9 +31,9 @@ tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
 
-configurations { providedCompile }
+configurations { projectCompile }
 
-sourceSets.main.compileClasspath += configurations.providedCompile
-sourceSets.test.compileClasspath += configurations.providedCompile
-sourceSets.test.runtimeClasspath += configurations.providedCompile
+sourceSets.main.compileClasspath += configurations.projectCompile
+sourceSets.test.compileClasspath += configurations.projectCompile
+sourceSets.test.runtimeClasspath += configurations.projectCompile
 

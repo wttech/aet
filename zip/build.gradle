@@ -29,7 +29,7 @@ task zipBundles(type: Zip) {
 task zipConfigs(type: Zip) {
     destinationDirectory = file("$packages")
     archiveFileName = "configs.zip"
-    from("${rootDir}/osgi-dependencies/configs/src/main/resources")
+    from("${project(':configs').projectDir}/src/main/resources")
 }
 
 task zipFeatures(type: Zip) {
@@ -44,8 +44,17 @@ task zipFeatures(type: Zip) {
 
 task zipReport(type: Copy) {
     dependsOn project(":report").getTasksByName('build', true)
-    from("${rootDir}/report/build/distributions/report.zip")
+    from "${project(':report').buildDir}/distributions/report.zip"
     into "$packages"
+}
+
+task zipSampleSite(type: Zip) {
+    dependsOn project(":sample-site").getTasksByName('build', true)
+    destinationDirectory = file("$packages")
+    archiveFileName = "sample-site.zip"
+    from(project(":sample-site").buildDir) {
+        include "**/*.war"
+    }
 }
 
 task make {
@@ -53,6 +62,7 @@ task make {
     dependsOn tasks.zipConfigs
     dependsOn tasks.zipFeatures
     dependsOn tasks.zipReport
+    dependsOn tasks.zipSampleSite
 }
 
 description = 'AET'

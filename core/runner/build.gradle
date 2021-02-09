@@ -14,9 +14,9 @@ dependencies {
     testImplementation 'com.googlecode.zohhak:zohhak:1.1.1'
     testImplementation 'commons-io:commons-io:2.6'
     implementation 'com.google.guava:guava:25.1-jre'
-    providedCompile project(':communication-api')
-    providedCompile project(':datastorage-api')
-    providedCompile project(':communication')
+    projectCompile project(':communication-api')
+    projectCompile project(':datastorage-api')
+    projectCompile project(':communication')
     compileOnly 'com.google.code.gson:gson:2.8.5'
     compileOnly 'commons-io:commons-io:2.6'
     compileOnly 'org.apache.commons:commons-lang3:3.7'

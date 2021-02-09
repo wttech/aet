@@ -11,9 +11,9 @@ dependencies {
     testImplementation 'junit:junit:4.11'
     testImplementation 'org.hamcrest:hamcrest-all:1.3'
     testImplementation 'org.mockito:mockito-all:1.9.5'
-    providedCompile project(':communication-api')
-    providedCompile project(':datastorage-api')
-    providedCompile project(':rest-endpoint')
+    projectCompile project(':communication-api')
+    projectCompile project(':datastorage-api')
+    projectCompile project(':rest-endpoint')
     implementation 'javax.jms:jms:1.1'
     implementation 'com.google.guava:guava:25.1-jre'
     implementation 'org.simpleframework:simple-xml:2.7.1'

@@ -29,13 +29,13 @@ dependencies {
     compileOnly 'com.google.code.gson:gson:2.8.5'
     compileOnly 'org.slf4j:slf4j-api:1.7.7'
     compileOnly 'com.google.code.findbugs:jsr305:3.0.2'
-    providedCompile project(':communication-api')
-    providedCompile project(':jobs-api')
-    providedCompile project(':datastorage-api')
-    providedCompile project(':validation-api')
-    providedCompile project(':proxy')
-    providedCompile project(':selenium')
-    providedCompile project(':w3chtml5validator')
+    projectCompile project(':communication-api')
+    projectCompile project(':jobs-api')
+    projectCompile project(':datastorage-api')
+    projectCompile project(':validation-api')
+    projectCompile project(':proxy')
+    projectCompile project(':selenium')
+    projectCompile project(':w3chtml5validator')
 }
 
 jar {

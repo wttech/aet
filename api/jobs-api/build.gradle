@@ -9,9 +9,9 @@ plugins {
 
 dependencies {
     testImplementation 'junit:junit:4.11'
-    providedCompile project(':communication-api')
-    providedCompile project(':datastorage-api')
-    providedCompile project(':selenium')
+    projectCompile project(':communication-api')
+    projectCompile project(':datastorage-api')
+    projectCompile project(':selenium')
     implementation 'com.google.guava:guava:25.1-jre'
     compileOnly 'org.apache.commons:commons-lang3:3.7'
     compileOnly 'org.apache.httpcomponents:fluent-hc:4.5.5'

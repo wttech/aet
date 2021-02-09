@@ -11,7 +11,7 @@ dependencies {
     testImplementation 'junit:junit:4.11'
     testImplementation 'org.hamcrest:hamcrest-all:1.3'
     testImplementation 'org.mockito:mockito-all:1.9.5'
-    providedCompile project(':communication-api')
+    projectCompile project(':communication-api')
     implementation 'javax.jms:jms:1.1'
     implementation 'org.slf4j:slf4j-api:1.7.7'
     compileOnly 'org.osgi:org.osgi.service.component.annotations:1.3.0'
