@@ -689,6 +689,7 @@
               <!-- gradle files -->
               <exclude>**/build/**</exclude>
               <exclude>**/*.gradle</exclude>
+              <exclude>**/*.gradle.kts</exclude>
               <exclude>**/.gradle/**</exclude>
               <exclude>**/gradle.properties</exclude>
               <exclude>**/gradle-wrapper.properties</exclude>
