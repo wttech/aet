@@ -4,8 +4,7 @@
   "description": "aet",
   "main": "index.js",
   "scripts": {
-    "gulp": "gulp build",
-    "clean": "rm -rf ./node_modules && rm -rf ./node"
+    "gulp": "gulp build"
   },
   "author": "Cognifide",
   "license": "Apache-2.0",
