@@ -17,7 +17,7 @@ dependencies {
     implementation("org.simpleframework:simple-xml:2.7.1")
     implementation("javax.validation:validation-api:1.1.0.Final")
     implementation("org.hibernate:hibernate-validator:4.3.2.Final")
-    testImplementation("junit:junit:4.11")
+    testImplementation("junit:junit:4.13.1")
     testImplementation("org.hamcrest:hamcrest-all:1.3")
     testImplementation("org.mockito:mockito-all:1.9.5")
     compileOnly("org.apache.maven.plugin-tools:maven-plugin-annotations:3.2")
