@@ -28,7 +28,7 @@
 
   <name>AET</name>
   <description>AET - system that detects changes on web sites</description>
-  <url>https://github.com/Cognifide/aet</url>
+  <url>https://github.com/wttech/aet</url>
   <inceptionYear>2013</inceptionYear>
 
   <organization>
@@ -81,10 +81,10 @@
   </modules>
 
   <scm>
-    <connection>scm:git:https://github.com/Cognifide/aet.git</connection>
-    <developerConnection>scm:git:https://github.com/Cognifide/aet.git</developerConnection>
+    <connection>scm:git:https://github.com/wttech/aet.git</connection>
+    <developerConnection>scm:git:https://github.com/wttech/aet.git</developerConnection>
     <tag>HEAD</tag>
-    <url>https://github.com/Cognifide/aet</url>
+    <url>https://github.com/wttech/aet</url>
   </scm>
 
   <!-- please add sonatype credentials in your user settings.xml file -->
@@ -805,7 +805,7 @@
                 </fromFile>
                 <!--
                   on Karaf we want to have jar files without versions in filename
-                  see https://github.com/Cognifide/aet/issues/248
+                  see https://github.com/wttech/aet/issues/248
                 -->
                 <toFile>${project.groupId}.${project.artifactId}.${finalName.extension}</toFile>
                 <!--

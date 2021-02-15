@@ -51,7 +51,7 @@ Execute following commands to start the virtual machine (this process may take a
 * `berks update`
 * `vagrant up` - creates a new virtual machine (the `.box` file will be downloaded during the first run), runs Chef inside it, sets domains and port forwarding up.
 
-See the [Vagrant README](https://github.com/Cognifide/aet/blob/master/vagrant/README.md) file
+See the [Vagrant README](https://github.com/wttech/aet/blob/master/vagrant/README.md) file
 for more Vagrant details, useful commands, etc.
 
 #### Set up Selenium Grid node

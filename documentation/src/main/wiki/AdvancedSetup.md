@@ -8,7 +8,7 @@ Please note that full list of required tools and its versions can be found in [[
 
 #### Linux Setup
 
-For Linux environment setup, use the [AET Cookbook](https://github.com/Cognifide/aet-cookbook) which provides following services:
+For Linux environment setup, use the [AET Cookbook](https://github.com/wttech/aet-cookbook) which provides following services:
 * Karaf with AET service running
 * MongoDB as the database
 * ActiveMQ as the message broker
@@ -46,7 +46,7 @@ the Karaf console is available under following address: http://192.168.0.1:8181/
 ##### Connections configuration
 
 Assuming that most of the system components are running on a single machine 
-(e.g. provisioned by [AET Cookbook](https://github.com/Cognifide/aet-cookbook)) then those 
+(e.g. provisioned by [AET Cookbook](https://github.com/wttech/aet-cookbook)) then those
 components can work correctly either with default `localhost` configurations,
 or with a configuration that points to Linux machine IP.
 Those configurations are:

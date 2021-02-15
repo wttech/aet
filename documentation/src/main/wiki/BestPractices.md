@@ -12,7 +12,7 @@ It's good to know them if you don't want to reinvent the wheel.
 
 #### If AET doesn't have the feature you need, you can suggest it or write it yourself
 You can either write a module and include it in your local AET instance via OSGi or you can contribute 
-to the open source community and create a pull request to the AET code repository. [Check out the tutorial here](https://github.com/Cognifide/aet/wiki/HowToExtendAET).
+to the open source community and create a pull request to the AET code repository. [Check out the tutorial here](https://github.com/wttech/aet/wiki/HowToExtendAET).
 
 #### Use timeouts
 Most commands for interacting with the elements of the page under test, such as [[click|ClickModifier]], [[hide|HideModifier]], [[replacetext|ReplaceTextModifier]] and more, have timeout variables. 

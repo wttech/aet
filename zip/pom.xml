@@ -238,7 +238,7 @@
                 </goals>
                 <configuration>
                   <!--
-                    for bundles filenames see https://github.com/Cognifide/aet/issues/248
+                    for bundles filenames see https://github.com/wttech/aet/issues/248
                   -->
                   <prependGroupId>true</prependGroupId>
                   <stripVersion>true</stripVersion>
