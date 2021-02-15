@@ -24,10 +24,10 @@
       data-html="true" data-trigger="hover"
       data-aet-included-comment-popover
       data-ng-click="urlView.displayCommentModal(case)">
-          <div ng-if="case.comment">
-              <i class="fas fa-ellipsis-h" data-fa-transform="shrink-10 up-.5" data-fa-mask="fas fa-comment"></i>
+          <div ng-if="case.comment || case.comparator.comment">
+              <i class="fas fa-comment-alt comment-active"></i>
           </div>
-          <div ng-if="!case.comment">
-              <i class="fas fa-pencil-alt" data-fa-transform="shrink-10 up-.5" data-fa-mask="fas fa-comment"></i>
+          <div ng-if="!case.comment && !case.comparator.comment">
+              <i class="far fa-comment-alt"></i>
           </div>
 </span>

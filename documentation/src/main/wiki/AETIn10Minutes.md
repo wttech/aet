@@ -38,8 +38,8 @@ Create the file named `suite.xml` (in any location) with the following content:
 </suite>
 ```
 
-Then download the AET [shell script](https://github.com/Cognifide/aet/blob/master/client/client-scripts/aet.sh)
-(see required prerequisites in [README](https://github.com/Cognifide/aet/blob/master/client/client-scripts/README.md)).
+Then download the AET [shell script](https://github.com/wttech/aet/blob/master/client/client-scripts/aet.sh)
+(see required prerequisites in [README](https://github.com/wttech/aet/blob/master/client/client-scripts/README.md)).
 
 ### Run the Test
 

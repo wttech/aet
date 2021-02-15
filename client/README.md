@@ -2,13 +2,13 @@
 
 # AET
 <p align="center">
-  <img src="https://github.com/Cognifide/aet/blob/master/misc/img/aet-logo-blue.png?raw=true"
+  <img src="https://github.com/wttech/aet/blob/master/misc/img/aet-logo-blue.png?raw=true"
          alt="AET Logo"/>
 </p>
 
 ## Important
 **`aet-maven-plugin` is deprecated and will be no longer supported. Expect it will be removed soon.
-Please use [`client script`](https://github.com/Cognifide/aet/wiki/ClientScripts) instead or simply communicate with AET Web API to schedule your suite.**
+Please use [`client script`](https://github.com/wttech/aet/wiki/ClientScripts) instead or simply communicate with AET Web API to schedule your suite.**
 
 ## AET Client
 Contains AET client applications. Currently there is only one AET client implementation - maven plugin.

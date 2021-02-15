@@ -4266,7 +4266,7 @@ list of rules with individual grades. The performance analysis is based on the [
 
 # FAQ
 This section contains answers for frequently asked questions. If you can't find an answer to your question here
-please use the [Issues Tool](https://github.com/Cognifide/aet/issues) to raise a question.
+please use the [Issues Tool](https://github.com/wttech/aet/issues) to raise a question.
 
 - [1. Setup and first steps](#1-setup-and-first-steps)
   - [1.1. What do I need to start using AET?](#11-what-do-i-need-to-start-using-aet)
@@ -4346,7 +4346,7 @@ You can add custom fonts to AET virtual machine. To do so, place desired fonts i
 Other idea is to install fonts with e.g.:
 `yum groupinstall chinese-support`
 `yum groupinstall arabic-support`
-See more details in answers for [this AET question](https://github.com/Cognifide/aet/issues/61).
+See more details in answers for [this AET question](https://github.com/wttech/aet/issues/61).
 
 ---
 
@@ -4417,11 +4417,11 @@ Example test configuration may look like this:
 
 With version 2.1.0 we are supporting regular expressions for following filters:
 
-* [Accessibility Data Filter](https://github.com/Cognifide/aet/wiki/AccessibilityDataFilter)
-* [JS Errors Data Filter](https://github.com/Cognifide/aet/wiki/JSErrorsDataFilter)
-* [W3C HTML5 Issues Filter](https://github.com/Cognifide/aet/wiki/W3CHTML5IssuesFilter)
+* [Accessibility Data Filter](https://github.com/wttech/aet/wiki/AccessibilityDataFilter)
+* [JS Errors Data Filter](https://github.com/wttech/aet/wiki/JSErrorsDataFilter)
+* [W3C HTML5 Issues Filter](https://github.com/wttech/aet/wiki/W3CHTML5IssuesFilter)
 
-Please notice that the change introduced for [W3C HTML5 Issues Filter](https://github.com/Cognifide/aet/wiki/W3CHTML5IssuesFilter) is backward **incompatible**:
+Please notice that the change introduced for [W3C HTML5 Issues Filter](https://github.com/wttech/aet/wiki/W3CHTML5IssuesFilter) is backward **incompatible**:
 
 For version **2.0.x** we were expecting that `message` parameter contains a prefix of error message.
 

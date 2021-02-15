@@ -16,13 +16,13 @@ Module name: **resolution**
 | `height` | int (1 to 35000) | Window height | no |
 | `samplingPeriod` | int (milliseconds) | Used when `height` is not defined. Defaults to 100ms (see notes below) | no |
 
-TODO: Change 15000 to 35000 when (https://github.com/Cognifide/aet/pull/387) is merged.
+TODO: Change 15000 to 35000 when (https://github.com/wttech/aet/pull/387) is merged.
 
 | Note |
 |:------ |
 | When `height` is not specified then it's computed by JavaScript (using `document.body.scrollHeight` property). |
 | For very long pages, it may take some time to render the page in order to get its full height, so AET is using an algorithm that samples the page's height over some specified period of time. `samplingPeriod` specifies the amount of time between taking each sample. If defined number of samples would match (3 last samples) or when the max number of samples is reached (15), the acquired valued is used as `height` resolution for screenshot.| 
-| **If the resolution is specified without height parameter it should be specified after [`open`](https://github.com/Cognifide/aet/wiki/Open)** and after all modifiers which may affect the page height (e.g. [`hide`](https://github.com/Cognifide/aet/wiki/HideModifier))  |
+| **If the resolution is specified without height parameter it should be specified after [`open`](https://github.com/wttech/aet/wiki/Open)** and after all modifiers which may affect the page height (e.g. [`hide`](https://github.com/wttech/aet/wiki/HideModifier))  |
 
 ##### Example Usage
 

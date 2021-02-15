@@ -22,9 +22,9 @@
   cursor: pointer;
   display: table;
   font-family: $font_light;
-  font-size: 15px;
-  line-height: 41px;
-  padding: 0 11px;
+  font-size: 12px;
+  line-height: 32px;
+  padding: 0 12px;
 
   &-disabled {
     cursor: default;
@@ -35,15 +35,11 @@
   }
 
   &-red {
-    background: $failed !important;
+    background: $aet_dark_red;
   }
 
   &-darkred {
-    background: $red_dark;
-
-    &:hover {
-      color: $white
-    }
+    background: $aet_dark_red;
   }
 
   &-warning {
@@ -55,7 +51,11 @@
   }
 
   &-blue {
-    background: $rebased;
+    background: $aet_blue;
+  }
+
+  &-darkblue {
+    background: $aet_dark_blue;
   }
 
   &-wide {
@@ -63,11 +63,15 @@
   }
 
   &-small {
-    font-size: 11px;
+    font-size: 12px;
     line-height: 33px;
   }
 
   svg {
     margin-right: 6px;
+  }
+
+  &:hover {
+    opacity: 0.90;
   }
 }

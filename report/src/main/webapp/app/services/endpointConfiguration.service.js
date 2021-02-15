@@ -21,7 +21,7 @@ define(['angularAMD'], function (angularAMD) {
     return {
       getEndpoint: function () {
         var config = {
-          'getUrl': 'http://localhost/api/'
+          'getUrl': '/api/'
           //'getUrl': 'http://aet-vagrant/api/'
         };
         return config;

@@ -21,10 +21,10 @@ define(['angularAMD'], function (angularAMD) {
 
   function ViewModeService($stateParams) {
     var keys = {
-      SUITE: 'suite',
-      TEST: 'test',
-      URL: 'url',
-      COMPARATOR: 'comparator'
+      SUITE: 'Suite',
+      TEST: 'Test',
+      URL: 'URL',
+      COMPARATOR: 'Comparator'
     };
     return {
       get: get,
