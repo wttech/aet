@@ -7,15 +7,22 @@
 </p>
 
 ## Zip
-
 This module purpose is to package all AET artifacts into zip archives.
-After installing all AET modules in local repository type:
+After installing all AET modules in local repository type in the root dir:
 
-    mvn clean install -Pzip
+- maven:
+  ```
+  mvn clean install -Pzip
+  ```
+- gradle
+  ```
+  ./gradlew # or ./gradlew :zip:make
+  ```
+    
 Please find archives containing all AET artifacts in
-`zip/target/packages-${project.version}` folder
+`zip/target/packages-${project.version}` for maven and `zip/build/packages-${prpject.version}` for gradle
 
-You could even upload this archive to remote location with:
+You can use maven upload this archive to remote location with:
 
     mvn clean install -Pzip,upload          \
         -Dtarget.zip.ServerId=remote-location   \
