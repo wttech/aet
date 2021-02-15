@@ -9,7 +9,7 @@ configurations {
 }
 
 dependencies {
-    testImplementation("junit:junit:4.11")
+    testImplementation("junit:junit:4.13.1")
     testImplementation("org.mockito:mockito-all:1.9.5")
     testImplementation("org.hamcrest:hamcrest-all:1.3")
     testImplementation("com.googlecode.zohhak:zohhak:1.1.1")
