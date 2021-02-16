@@ -34,7 +34,8 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
               notifyMetadataChanged: notifyMetadataChanged,
               saveChangesLocally: saveChangesLocally,
               discardLocalChanges: discardLocalChanges,
-              commitLocalChanges: commitLocalChanges
+              commitLocalChanges: commitLocalChanges,
+              resetPattern:resetPattern
             },
             suite,
             testsByName,
@@ -118,6 +119,10 @@ define(['angularAMD', 'metadataCacheService', 'metadataEndpointService'],
           });
           $rootScope.metadataSaveInProgress = true;
           $rootScope.$emit('metadata:savingInProgress');
+        }
+
+        function resetPattern(currentTestedSite) {
+          metadataEndpointService.resetPattern(suite,currentTestedSite)
         }
 
         /***************************************

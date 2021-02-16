@@ -27,7 +27,8 @@ define(['angularAMD', 'endpointConfiguration', 'requestParametersService'],
           requestParametersService) {
         var service = {
               getMetadata: getMetadata,
-              saveMetadata: saveMetadata
+              saveMetadata: saveMetadata,
+              resetPattern:resetPattern
             },
             requestParams = requestParametersService.get(),
             endpoint = endpointConfiguration.getEndpoint();
@@ -78,6 +79,33 @@ define(['angularAMD', 'endpointConfiguration', 'requestParametersService'],
           $http({
             method: 'POST',
             url: endpoint.getUrl + 'metadata',
+            data: suite,
+            headers: {
+              /*
+               * for cross-origin request (when working on localhost:9000 with Grunt)
+               * special content type is required according to jQuery documentation at
+               *     http://api.jquery.com/jquery.ajax/
+               * see also:
+               *     http://stackoverflow.com/a/30554385
+               */
+              'Content-Type': 'multipart/form-data; charset=UTF-8'
+            }
+          }).then(function (data) {
+            deferred.resolve(data.data);
+          }).catch(function (e) {
+            deferred.reject(e.data.message);
+          });
+
+          return deferred.promise;
+        }
+
+        function resetPattern(suite,currentTestedSite) {
+          var deferred = $q.defer();
+
+          $http({
+            method: 'POST',
+            url: endpoint.getUrl + 'reset?urlToResetPattern='
+                + currentTestedSite,
             data: suite,
             headers: {
               /*

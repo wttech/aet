@@ -25,4 +25,9 @@
   <h2>Processing error occurred!</h2>
   <p>Details:</p>
   <p>{{case.errors}}</p>
+  <div >
+    <div class="button button-small js-test-rebase button-blue ng-scope" ng-click=" resetInProgress == true || case.resetPattern() ;resetInProgress=true"  ng-hide="resetInProgress">Reset the pattern</div>
+    <p ng-show="resetInProgress">Pattern has been reset. Please generate a report again</p>
+  </div>
+
 </div>

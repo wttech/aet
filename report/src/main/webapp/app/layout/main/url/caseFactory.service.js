@@ -15,7 +15,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-define(['angularAMD', 'artifactsService', 'suiteInfoService'],
+define(['angularAMD', 'artifactsService', 'suiteInfoService','metadataService'],
     function (angularAMD) {
       'use strict';
       angularAMD.factory('caseFactory', CaseFactoryService);
@@ -24,7 +24,7 @@ define(['angularAMD', 'artifactsService', 'suiteInfoService'],
        * Service responsible for producing case that is displayed on report.
        */
       function CaseFactoryService($rootScope, artifactsService,
-          suiteInfoService) {
+          suiteInfoService,metadataService) {
         var service = {
           getCase: getCase
         };
@@ -33,7 +33,7 @@ define(['angularAMD', 'artifactsService', 'suiteInfoService'],
 
         function getCase(step, comparator, index) {
           return new BasicCaseModel(step, comparator, index, artifactsService,
-              suiteInfoService);
+              suiteInfoService,metadataService);
         }
 
       }
@@ -46,7 +46,7 @@ define(['angularAMD', 'artifactsService', 'suiteInfoService'],
        * @param artifactsService
        */
       function BasicCaseModel(step, comparator, index, artifactsService,
-          suiteInfoService) {
+          suiteInfoService,metadataService) {
         var caseModel = {
           result: {},
           collectorResult: {},
@@ -109,6 +109,12 @@ define(['angularAMD', 'artifactsService', 'suiteInfoService'],
           }
         }
 
+        function resetPattern() {
+          console.log('The suite will be reset!');
+          var currentTestedSite = $('.test-url.ng-binding.is-active').text().trim();
+          metadataService.resetPattern(currentTestedSite);
+        }
+
         function update() {
           caseModel.displayName = getCaseDisplayName(step, comparator);
           var stepResult = comparator.stepResult;
@@ -126,6 +132,7 @@ define(['angularAMD', 'artifactsService', 'suiteInfoService'],
 
           if (caseModel.status === 'PROCESSING_ERROR') {
             caseModel.errors = getCaseErrors(step, comparator);
+            caseModel.resetPattern = resetPattern;
             caseModel.getTemplate = function () {
               return 'app/layout/main/url/errors/processingError.html';
             };

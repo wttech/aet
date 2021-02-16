@@ -55,6 +55,16 @@ define([], function () {
       metadataService.commitLocalChanges();
     }
 
+    // function resetPattern() {
+    //   console.log('The suite will be reset!');
+    //   var currentTestedSite = $('.test-url.ng-binding.is-active').text().trim();
+    //   metadataService.resetPattern(currentTestedSite);
+    // }  // function resetPattern() {
+    //   console.log('The suite will be reset!');
+    //   var currentTestedSite = $('.test-url.ng-binding.is-active').text().trim();
+    //   metadataService.resetPattern(currentTestedSite);
+    // }
+
     function discardAllChanges() {
       console.log('All changes will be discarded!');
       metadataService.discardLocalChanges();
@@ -94,3 +104,20 @@ define([], function () {
     }
   }
 });
+
+// define(['angularAMD', 'metadataService'], function (angularAMD) {
+//   'use strict';
+//   angularAMD.controller('errorCtrl', ErrorController)
+//
+//   function ErrorController(metadataService) {
+//     var vm = this;
+//
+//     vm.resetPattern = resetPattern;
+//
+//     function resetPattern() {
+//       console.log('The suite will be reset!');
+//       var currentTestedSite = $('.test-url.ng-binding.is-active').text().trim();
+//       metadataService.resetPattern(currentTestedSite);
+//     }
+//   }
+// });
