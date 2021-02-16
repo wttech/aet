@@ -19,19 +19,15 @@ import com.cognifide.aet.communication.api.execution.ProcessingStatus;
 import com.cognifide.aet.communication.api.execution.SuiteStatusResult;
 import com.cognifide.aet.communication.api.messages.MessageType;
 import com.cognifide.aet.communication.api.messages.TaskMessage;
+import com.cognifide.aet.communication.api.wrappers.Run;
 import com.cognifide.aet.executor.common.MessageProcessor;
 import com.cognifide.aet.executor.common.ProcessorFactory;
 import com.cognifide.aet.executor.common.RunnerTerminator;
-import com.cognifide.aet.communication.api.wrappers.Run;
-import javax.jms.Destination;
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.MessageConsumer;
-import javax.jms.MessageProducer;
-import javax.jms.ObjectMessage;
-import javax.jms.Session;
+import com.cognifide.aet.rest.LockService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.jms.*;
 
 /**
  * This class is responsible for running a single test suite and checking the processing status.
@@ -58,10 +54,12 @@ public class SuiteRunner implements Runnable {
 
   private long messageReceiveTimeout;
 
+  private LockService lockService;
+
   public SuiteRunner(
       Session session, CacheUpdater cacheUpdater,
       SuiteStatusHandler suiteStatusHandler, Run objectToRunWrapper, String inQueueName,
-      long messageReceiveTimeout) {
+      long messageReceiveTimeout, LockService lockService) {
     this.session = session;
     this.suiteStatusHandler = suiteStatusHandler;
 
@@ -70,6 +68,8 @@ public class SuiteRunner implements Runnable {
     this.inQueueName = inQueueName;
     this.messageReceiveTimeout = messageReceiveTimeout;
     this.suiteCacheUpdater = new SuiteCacheUpdater(cacheUpdater, runnerTerminator, objectToRunWrapper);
+
+    this.lockService = lockService;
   }
 
   /**
@@ -120,20 +120,24 @@ public class SuiteRunner implements Runnable {
    */
   @Override
   public void run() {
-    while (runnerTerminator.isActive()) {
-      try {
-        SuiteStatusResult status = getSuiteStatus();
-        if (status != null) {
-          suiteStatusHandler.handle(objectToRunWrapper.getCorrelationId(), status);
-        } else {
-          handleFatalError("Timeout was reached while receiving status message");
+    try {
+      while (runnerTerminator.isActive()) {
+        try {
+          SuiteStatusResult status = getSuiteStatus();
+          if (status != null) {
+            suiteStatusHandler.handle(objectToRunWrapper.getCorrelationId(), status);
+          } else {
+            handleFatalError("Timeout was reached while receiving status message");
+          }
+        } catch (JMSException e) {
+          LOGGER.error("Failed to receive status message", e);
+          handleFatalError(e.getMessage());
         }
-      } catch (JMSException e) {
-        LOGGER.error("Failed to receive status message", e);
-        handleFatalError(e.getMessage());
       }
+      close();
+    } finally {
+        lockService.releaseSlot();
     }
-    close();
   }
 
   private void startStatusUpdate() {

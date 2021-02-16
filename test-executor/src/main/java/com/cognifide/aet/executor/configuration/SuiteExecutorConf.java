@@ -23,10 +23,15 @@ import org.osgi.service.metatype.annotations.ObjectClassDefinition;
 public @interface SuiteExecutorConf {
 
   String MESSAGE_RECEIVE_TIMEOUT_PROPERTY_NAME = "messageReceiveTimeout";
+  String CACHE_EXPIRATION_TIMEOUT_PROPERTY_NAME = "cacheExpirationTimeout";
 
   long DEFAULT_MESSAGE_RECEIVE_TIMEOUT = 300000L;
+  long DEFAULT_CACHE_EXPIRATION_TIMEOUT = 60000L;
 
   @AttributeDefinition(name = MESSAGE_RECEIVE_TIMEOUT_PROPERTY_NAME, description = "ActiveMQ message receive timeout", type = AttributeType.LONG)
   long messageReceiveTimeout() default DEFAULT_MESSAGE_RECEIVE_TIMEOUT;
+
+  @AttributeDefinition(name = CACHE_EXPIRATION_TIMEOUT_PROPERTY_NAME, description = "Message queue cache expiration timeout", type = AttributeType.LONG)
+  long cacheExpirationTimeout() default DEFAULT_CACHE_EXPIRATION_TIMEOUT;
 
 }

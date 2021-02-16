@@ -18,9 +18,10 @@ package com.cognifide.aet.cleaner;
 
 import com.cognifide.aet.cleaner.camel.CamelContextCreator;
 import com.cognifide.aet.cleaner.context.CleanerContext;
-import com.cognifide.aet.cleaner.route.MetadataCleanerRouteBuilder;
 import org.apache.camel.CamelContext;
 import org.apache.camel.ProducerTemplate;
+import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.impl.DefaultCamelContext;
 import org.quartz.Job;
 import org.quartz.JobDataMap;
 import org.quartz.JobExecutionContext;
@@ -53,7 +54,7 @@ public class CleanerJob implements Job {
     CamelContext camelContext = null;
     try {
       final JobDataMap jobDataMap = context.getJobDetail().getJobDataMap();
-      final MetadataCleanerRouteBuilder cleanerRouteBuilder = (MetadataCleanerRouteBuilder) jobDataMap
+      final RouteBuilder cleanerRouteBuilder = (RouteBuilder) jobDataMap
           .get(KEY_ROUTE_BUILDER);
 
       final Long removeOlderThan = (Long) jobDataMap.get(KEY_REMOVE_OLDER_THAN);

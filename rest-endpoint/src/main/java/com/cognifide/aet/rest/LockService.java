@@ -16,17 +16,20 @@
 package com.cognifide.aet.rest;
 
 
+import com.cognifide.aet.rest.helpers.LockType;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.collect.ImmutableMap;
-import java.io.Serializable;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
 import org.osgi.service.component.annotations.Activate;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Deactivate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.Serializable;
+import java.util.Map;
+import java.util.concurrent.Semaphore;
+import java.util.concurrent.TimeUnit;
 
 @Component(service = LockService.class, immediate = true)
 public class LockService implements Serializable {
@@ -37,13 +40,20 @@ public class LockService implements Serializable {
 
   private static final int LOCK_CACHE_TIMEOUT = 20000;
 
+  private static final int AVAILABLE_SLOTS = 100;
+
+  private transient Semaphore semaphore;
+
   private transient Cache<String, String> lockSet;
+
+  private boolean globalLock;
 
   @Activate
   public void start() {
     LOGGER.debug("Starting lock service");
     lockSet = CacheBuilder.newBuilder().expireAfterWrite(LOCK_CACHE_TIMEOUT, TimeUnit.MILLISECONDS)
         .build();
+    semaphore = new Semaphore(AVAILABLE_SLOTS);
   }
 
   @Deactivate
@@ -55,22 +65,60 @@ public class LockService implements Serializable {
     lockSet.put(key, value);
   }
 
-  public boolean isLockPresent(String key) {
-    return null != lockSet.getIfPresent(key);
+  public void setGlobalLock() {
+    globalLock = true;
   }
 
-  public synchronized boolean trySetLock(String key, String value) {
+  public void unsetGlobalLock() {
+    globalLock = false;
+  }
+
+  public boolean isLockPresent(String key) {
+    return globalLock || null != lockSet.getIfPresent(key);
+  }
+
+  public synchronized LockType trySetLock(String key, String value) {
     if (null == lockSet.getIfPresent(key)) {
-      lockSet.put(key, value);
-      return true;
+      if (!globalLock) {
+        if (semaphore.tryAcquire()) {
+          lockSet.put(key, value);
+          return LockType.LOCK;
+        } else {
+          return LockType.TOO_MANY_TESTS;
+        }
+      } else {
+        return LockType.DATABASE_LOCK;
+      }
     }
-    return false;
+    return LockType.SUITE_LOCK;
+  }
+
+  public synchronized void acquireSlot() throws InterruptedException {
+    this.semaphore.acquire();
+  }
+
+
+  public synchronized void releaseSlot() {
+    this.semaphore.release();
+  }
+
+  public void acquireUninterruptiblyAllSlots() {
+    this.semaphore.acquireUninterruptibly(AVAILABLE_SLOTS);
+  }
+
+  public void releaseAllSlots() {
+    this.semaphore.release(AVAILABLE_SLOTS);
   }
 
   public Map<String, String> getAllLocks() {
     return ImmutableMap.copyOf(lockSet.asMap());
   }
 
-
+  // for tests
+  public void clearCacheAndChangeCacheTimeout(long timeout) {
+    this.lockSet = CacheBuilder.newBuilder()
+            .expireAfterWrite(timeout, TimeUnit.MILLISECONDS)
+            .build();
+  }
 }
 

@@ -30,7 +30,11 @@ public @interface CleanerSchedulerConf {
 
   String KEEP_N_VERSIONS = "Last versions to keep";
 
-  String SCHEDULE_CRON = "Schedule";
+  String EXPIRED_SCHEDULE_CRON = "Expired Data Cleaner schedule";
+
+  String ORPHAN_SCHEDULE_CRON="Orphan Cleaner schedule";
+
+  String ORPHAN_RUN = "Run Orphan Cleaner";
 
   String DRY_RUN = "Dry run";
 
@@ -39,9 +43,20 @@ public @interface CleanerSchedulerConf {
   long DEFAULT_KEEP_N_VERSIONS_PARAM = 1L;
 
   @AttributeDefinition(
-      name = SCHEDULE_CRON,
-      description = "CRON notation of when the job is to be fired. [example: '0 0 21 ? * *' will trigger job daily at 21:00].")
-  String schedule();
+      name = EXPIRED_SCHEDULE_CRON,
+      description = "CRON notation of when the Expired Data Cleaner job is to be fired. [example: '0 0 21 ? * *' will trigger job daily at 21:00].")
+  String expiredCleanerSchedule();
+
+  @AttributeDefinition(
+      name = ORPHAN_RUN,
+      description = "Flag that says if Orphan Cleaner should be run with a given schedule.",
+      type = AttributeType.BOOLEAN)
+  boolean runOrphanCleaner() default false;
+
+  @AttributeDefinition(
+      name = ORPHAN_SCHEDULE_CRON,
+      description = "CRON notation of when the Orphan Cleaner job is to be fired.")
+  String orphanCleanerSchedule();
 
   @AttributeDefinition(
       name = KEEP_N_VERSIONS,

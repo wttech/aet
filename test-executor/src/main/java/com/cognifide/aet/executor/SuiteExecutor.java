@@ -22,16 +22,17 @@ import com.cognifide.aet.communication.api.metadata.Suite;
 import com.cognifide.aet.communication.api.metadata.ValidatorException;
 import com.cognifide.aet.communication.api.queues.JmsConnection;
 import com.cognifide.aet.communication.api.queues.QueuesConstant;
+import com.cognifide.aet.communication.api.wrappers.Run;
+import com.cognifide.aet.communication.api.wrappers.SuiteRunWrapper;
 import com.cognifide.aet.executor.configuration.SuiteExecutorConf;
 import com.cognifide.aet.executor.http.HttpSuiteExecutionResultWrapper;
 import com.cognifide.aet.executor.model.TestRun;
 import com.cognifide.aet.executor.model.TestSuiteRun;
-import com.cognifide.aet.communication.api.wrappers.Run;
-import com.cognifide.aet.communication.api.wrappers.SuiteRunWrapper;
 import com.cognifide.aet.executor.xmlparser.api.ParseException;
 import com.cognifide.aet.executor.xmlparser.api.TestSuiteParser;
 import com.cognifide.aet.executor.xmlparser.xml.XmlTestSuiteParser;
 import com.cognifide.aet.rest.LockService;
+import com.cognifide.aet.rest.helpers.LockType;
 import com.cognifide.aet.rest.helpers.ReportConfigurationManager;
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
@@ -39,12 +40,6 @@ import com.google.common.cache.RemovalListener;
 import com.google.common.cache.RemovalNotification;
 import com.google.common.collect.Lists;
 import com.google.common.collect.Sets;
-import java.util.List;
-import java.util.Queue;
-import java.util.concurrent.ConcurrentLinkedQueue;
-import java.util.concurrent.TimeUnit;
-import javax.jms.JMSException;
-import javax.jms.Session;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.http.HttpStatus;
 import org.osgi.service.component.annotations.Activate;
@@ -53,6 +48,13 @@ import org.osgi.service.component.annotations.Reference;
 import org.osgi.service.metatype.annotations.Designate;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.jms.JMSException;
+import javax.jms.Session;
+import java.util.List;
+import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
+import java.util.concurrent.TimeUnit;
 
 /**
  * This service is responsible for executing the test suite and maintaining the processing statuses.
@@ -72,8 +74,8 @@ public class SuiteExecutor {
   private static final String XUNIT_REPORT_URL_FORMAT = "%s/xunit?company=%s&project=%s&correlationId=%s";
 
   private static final String LOCKED_SUITE_MESSAGE = "Suite is currently locked. Please try again later.";
-
-  private static final long CACHE_EXPIRATION_TIMEOUT = 20000L;
+  private static final String LOCKED_DATABASE_MESSAGE = "Database is currently locked. Please try again later.";
+  private static final String TOO_MANY_TESTS_MESSAGE = "There are too many tests running in the system. Please try again later.";
 
   private SuiteExecutorConf config;
 
@@ -107,12 +109,12 @@ public class SuiteExecutor {
     this.config = config;
 
     suiteRunnerCache = CacheBuilder.newBuilder()
-        .expireAfterAccess(CACHE_EXPIRATION_TIMEOUT, TimeUnit.MILLISECONDS)
+        .expireAfterAccess(config.cacheExpirationTimeout(), TimeUnit.MILLISECONDS)
         .removalListener(new RunnerCacheRemovalListener())
         .build();
 
     suiteStatusCache = CacheBuilder.newBuilder()
-        .expireAfterAccess(CACHE_EXPIRATION_TIMEOUT, TimeUnit.MILLISECONDS)
+        .expireAfterAccess(config.cacheExpirationTimeout(), TimeUnit.MILLISECONDS)
         .build();
 
     cacheUpdater = new CacheUpdater(suiteRunnerCache, suiteStatusCache, lockService);
@@ -180,7 +182,10 @@ public class SuiteExecutor {
 
   HttpSuiteExecutionResultWrapper executeSuite(Run objectToRunWrapper)
       throws JMSException, ValidatorException {
-    if (lockTestSuite(objectToRunWrapper)) {
+
+    LockType lockResult = lockTestSuite(objectToRunWrapper);
+
+    if (lockResult == LockType.LOCK) {
       suiteRunner = createSuiteRunner(objectToRunWrapper);
       suiteRunner.runSuite();
 
@@ -191,6 +196,12 @@ public class SuiteExecutor {
       return HttpSuiteExecutionResultWrapper.wrap(
           SuiteExecutionResult.createSuccessResult(objectToRunWrapper.getCorrelationId(), statusUrl,
               htmlReportUrl, xunitReportUrl));
+    } else if (lockResult == LockType.DATABASE_LOCK) {
+      return HttpSuiteExecutionResultWrapper.wrapError(
+              SuiteExecutionResult.createErrorResult(LOCKED_DATABASE_MESSAGE), HttpStatus.SC_LOCKED);
+    } else if (lockResult == LockType.TOO_MANY_TESTS) {
+      return HttpSuiteExecutionResultWrapper.wrapError(
+              SuiteExecutionResult.createErrorResult(TOO_MANY_TESTS_MESSAGE), HttpStatus.SC_LOCKED);
     } else {
       return HttpSuiteExecutionResultWrapper.wrapError(
           SuiteExecutionResult.createErrorResult(LOCKED_SUITE_MESSAGE), HttpStatus.SC_LOCKED);
@@ -230,7 +241,7 @@ public class SuiteExecutor {
     return localTestSuiteRun;
   }
 
-  private boolean lockTestSuite(Run objectToRunWrapper) {
+  private LockType lockTestSuite(Run objectToRunWrapper) {
     String suiteIdentifier = objectToRunWrapper.getSuiteIdentifier();
     String correlationId = objectToRunWrapper.getCorrelationId();
     LOGGER.debug("locking suite: '{}' with correlation id: '{}'", suiteIdentifier, correlationId);
@@ -240,7 +251,7 @@ public class SuiteExecutor {
   private SuiteRunner createSuiteRunner(Run objectToRun) throws JMSException {
     Session session = jmsConnection.getJmsSession();
     SuiteRunner suiteRunner = new SuiteRunner(session, cacheUpdater,
-        suiteStatusHandler, objectToRun, RUNNER_IN_QUEUE, config.messageReceiveTimeout());
+        suiteStatusHandler, objectToRun, RUNNER_IN_QUEUE, config.messageReceiveTimeout(),lockService);
     suiteRunnerCache.put(objectToRun.getCorrelationId(), suiteRunner);
     suiteStatusCache
         .put(objectToRun.getCorrelationId(), new ConcurrentLinkedQueue<SuiteStatusResult>());

@@ -16,6 +16,7 @@
 package com.cognifide.aet.cleaner.processors;
 
 import com.cognifide.aet.cleaner.context.CleanerContext;
+import com.cognifide.aet.cleaner.context.DbAggregationCounter;
 import com.cognifide.aet.cleaner.processors.filters.DBKeyProjectCompanyPredicate;
 import com.cognifide.aet.vs.DBKey;
 import com.cognifide.aet.vs.SimpleDBKey;
@@ -69,6 +70,8 @@ public class StartMetadataCleanupProcessor implements Processor {
 
     LOGGER.info("Found {} databases matching criteria {}.", dbKeys.size(), predicate);
     exchange.getOut().setHeader(CleanerContext.KEY_NAME, cleanerContext);
+    exchange.getOut()
+        .setHeader(DbAggregationCounter.NAME_KEY, new DbAggregationCounter(dbKeys.size()));
     exchange.getOut().setBody(dbKeys);
   }
 

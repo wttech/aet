@@ -16,23 +16,25 @@
 package com.cognifide.aet.cleaner.route;
 
 
+import com.cognifide.aet.cleaner.context.DbAggregationCounter;
 import com.cognifide.aet.cleaner.context.SuiteAggregationCounter;
 import com.cognifide.aet.cleaner.processors.ErrorHandlingProcessor;
 import com.cognifide.aet.cleaner.processors.FetchProjectMetadataProcessor;
-import com.cognifide.aet.cleaner.processors.GetAllExpiredArtifactsProcessor;
+import com.cognifide.aet.cleaner.processors.GetAllOrphanedArtifactsProcessor;
 import com.cognifide.aet.cleaner.processors.GetMetadataArtifactsProcessor;
-import com.cognifide.aet.cleaner.processors.GroupProjectSuitesProcessor;
 import com.cognifide.aet.cleaner.processors.RemoveArtifactsProcessor;
-import com.cognifide.aet.cleaner.processors.RemoveMetadataProcessor;
 import com.cognifide.aet.cleaner.processors.StartMetadataCleanupProcessor;
-import com.cognifide.aet.cleaner.processors.SuitesRemovePredicateProcessor;
+import com.cognifide.aet.cleaner.processors.SuiteLockProcessor;
+import com.cognifide.aet.cleaner.processors.SuiteSplitterProcessor;
+import com.cognifide.aet.cleaner.processors.SuiteUnlockProcessor;
 import com.cognifide.aet.communication.api.exceptions.AETException;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.processor.aggregate.GroupedBodyAggregationStrategy;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
-@Component(service = MetadataCleanerRouteBuilder.class)
-public class MetadataCleanerRouteBuilder extends RouteBuilder {
+@Component(service = OrphanCleanerRouteBuilder.class)
+public class OrphanCleanerRouteBuilder extends RouteBuilder {
 
   private static final String ERROR_ENDPOINT = "seda:Error";
 
@@ -45,57 +47,45 @@ public class MetadataCleanerRouteBuilder extends RouteBuilder {
   private FetchProjectMetadataProcessor fetchProjectMetadataProcessor;
 
   @Reference
-  private GroupProjectSuitesProcessor groupProjectSuitesProcessor;
+  private SuiteSplitterProcessor suiteSplitterProcessor;
 
   @Reference
-  private SuitesRemovePredicateProcessor suitesRemovePredicateProcessor;
-
-  @Reference
-  private RemoveMetadataProcessor removeMetadataProcessor;
+  private RemoveArtifactsProcessor removeArtifactsProcessor;
 
   @Reference
   private GetMetadataArtifactsProcessor getMetadataArtifactsProcessor;
 
   @Reference
-  private GetAllExpiredArtifactsProcessor getArtifactsToRemoveProcessor;
+  private GetAllOrphanedArtifactsProcessor getArtifactsToRemoveProcessor;
 
   @Reference
-  private RemoveArtifactsProcessor removeArtifactsProcessor;
+  private SuiteLockProcessor suiteLockProcessor;
+
+  @Reference
+  private SuiteUnlockProcessor suiteUnlockProcessor;
 
   @Override
   public void configure() throws Exception {
     setupErrorHandling();
 
     from(direct("start"))
+        .process(suiteLockProcessor)
         .process(startMetadataCleanupProcessor)
         .split(body())
         .to(direct("fetchProjectSuites"));
 
     from(direct("fetchProjectSuites"))
         .process(fetchProjectMetadataProcessor)
-        .process(groupProjectSuitesProcessor)
+        .process(suiteSplitterProcessor)
         .split(body())
-        .to(direct("suitesRemovePredicateProcessor"));
-
-    from(direct("suitesRemovePredicateProcessor"))
-        .process(suitesRemovePredicateProcessor)
-        .split(body())
-        .choice()
-        .when(body().method("shouldBeRemoved").isEqualTo(true)).to(direct("removeMetadata"))
-        .otherwise().to(direct("getMetadataArtifacts"))
-        .endChoice();
+        .to(direct("getMetadataArtifacts"));
 
     from(direct("getMetadataArtifacts"))
         .process(getMetadataArtifactsProcessor)
-        .to(direct(AGGREGATE_SUITES_STEP));
+        .to(direct("aggregateByDbKey"));
 
-    from(direct("removeMetadata"))
-        .process(removeMetadataProcessor)
-        .process(getMetadataArtifactsProcessor)
-        .to(direct(AGGREGATE_SUITES_STEP));
-
-    from(direct(AGGREGATE_SUITES_STEP))
-        .aggregate(body().method("getId"), new SuitesAggregationStrategy())
+    from(direct("aggregateByDbKey"))
+        .aggregate(body().method("getDbKey"), new SuitesAggregationStrategy())
         .completionSize(header(SuiteAggregationCounter.NAME_KEY).method("getSuitesToAggregate"))
         .completionTimeout(60000L).forceCompletionOnStop()
         .discardOnCompletionTimeout()
@@ -103,6 +93,10 @@ public class MetadataCleanerRouteBuilder extends RouteBuilder {
 
     from(direct("removeArtifacts"))
         .process(getArtifactsToRemoveProcessor)
+        .aggregate(new GroupedBodyAggregationStrategy()).constant(true)
+        .completionSize(header(DbAggregationCounter.NAME_KEY).method("getDbsToAggregate"))
+        .process(suiteUnlockProcessor)
+        .split(body())
         .process(removeArtifactsProcessor);
   }
 
