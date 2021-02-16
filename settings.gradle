@@ -56,3 +56,6 @@ project(":worker").projectDir = file('core/worker')
 project(":communication").projectDir = file('core/communication')
 project(":communication-api").projectDir = file('api/communication-api')
 project(":jobs").projectDir = file('core/jobs')
+
+// utility projects
+include("code-coverage-report")
