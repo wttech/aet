@@ -1,5 +1,6 @@
 plugins {
     id("com.cognifide.aet.java-conventions")
+	id("com.cognifide.aet.test-coverage")
 }
 
 dependencies {
