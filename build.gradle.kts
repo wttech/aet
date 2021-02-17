@@ -1,9 +1,14 @@
 plugins {
     id("com.cognifide.aet.java-conventions")
     id("org.nosphere.apache.rat") version "0.7.0"
+    id("net.idlestate.gradle-duplicate-classes-check") version "1.0.2" apply false
 }
 
 defaultTasks(":zip:make")
+
+subprojects {
+    tasks.register("allDeps", DependencyReportTask::class) {}
+}
 
 tasks.rat {
     // general

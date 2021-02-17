@@ -32,6 +32,11 @@ val coverageDataPath: Configuration by configurations.creating {
 }
 
 val codeCoverageReport by tasks.registering(JacocoReport::class) {
+    doFirst {
+        delete(fileTree("${buildDir}/classes") {
+            include("**/CharacterIteratorWrapper*")
+        })
+    }
     additionalClassDirs(configurations.runtimeClasspath.get())
     additionalSourceDirs(sourcesPath.incoming.artifactView { lenient(true) }.files)
     executionData(coverageDataPath.incoming.artifactView { lenient(true) }.files.filter { it.exists() })
