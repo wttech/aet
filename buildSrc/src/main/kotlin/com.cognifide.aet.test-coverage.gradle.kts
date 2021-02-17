@@ -7,7 +7,7 @@ afterEvaluate {
         dependsOn(tasks.getByName("test"))
         reports {
             xml.isEnabled = true
-            xml.destination = file("${coverageRoot(project)}/xmlReport")
+            xml.destination = file("${coverageRoot(project)}/report.xml")
 
             html.isEnabled = true
             html.destination = file("${coverageRoot(project)}/htmlReport")
