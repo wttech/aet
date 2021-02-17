@@ -1,8 +1,40 @@
-<img src="https://github.com/wttech/aet/raw/master/misc/img/WT_Logo_Blue_Positive_RGB.png" alt="Wunderman Thompson Logo" width="250"/>
+<div align="center">
 
-[![Build Status](https://travis-ci.org/Cognifide/aet.svg?branch=master)](https://travis-ci.org/Cognifide/aet)
-[![Apache License, Version 2.0](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](http://www.apache.org/licenses)
-[![][gitter img]][gitter]
+  <h1><code>AET</code></h1>
+
+  <h3>
+    <strong>Detect visual changes with ease</strong>
+  </h3>
+
+  <p>
+    <img src="https://img.shields.io/github/workflow/status/wttech/aet/ci?style=for-the-badge" alt="CI status badge" />
+    <a href="https://codecov.io/gh/wttech/aet">
+      <img src="https://img.shields.io/codecov/c/github/wttech/aet?style=for-the-badge&token=bfdc4b9d55534910ae48fba0b8e984d0" alt="Code coverage"/>
+    </a>
+    <a href="https://github.com/wttech/aet">
+      <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=for-the-badge" alt="License"/>
+    </a>
+    <a href="https://gitter.im/aet-tool/Lobby">
+      <img src="https://img.shields.io/gitter/room/wttech/aet?style=for-the-badge" alt="Gitter"/>
+    </a>
+  </p>
+
+  <h3>
+    <a href="#about">About</a>
+    <span> | </span>
+    <a href="#installation">Installation</a>
+    <span> | </span>
+    <a href="#documentation">Documentation</a>
+    <span> | </span>
+    <a href="#license">License</a>
+  </h3>
+
+<sub><h4>Built with ❤️</h4></sub>
+</div>
+
+<p align="center">
+    <img src="https://github.com/wttech/aet/raw/master/misc/img/WT_Logo_Blue_Positive_RGB.png" alt="Wunderman Thompson Logo" width="150"/>
+</p>
 
 # AET
 <p align="center">
@@ -55,7 +87,7 @@ AET helps testers to ensure that a change in one part of the software has not in
 * Page **cookies** comparison and modification.
 * and many others ...
 
-## How to start
+## <p id="installation">How to start</p>
 To setup a fully functional AET instance use one of the following:
 - [AET cookbook](https://github.com/Cognifide/aet-cookbook), you may run local instance using [AET Vagrant](https://github.com/wttech/aet//wiki/BasicSetup#set-up-vagrant).
 - [AET Docker images](https://github.com/malaskowski/aet-docker), you may run local instance using [sample AET Swarm](https://github.com/malaskowski/aet-docker/tree/master/example-aet-swarm).
@@ -77,7 +109,7 @@ The AET System consists of 7 units:
 
 Thanks to using AET Maven Plugin as a Client application, AET is easy to integrate with CI Tools like Jenkins or Bamboo.
 
-## License
+## <p id="license">License</p>
 **AET** is licensed under [Apache License, Version 2.0 (the "License")](https://www.apache.org/licenses/LICENSE-2.0.txt).
 
 
@@ -86,13 +118,10 @@ Thanks to using AET Maven Plugin as a Client application, AET is easy to integra
 For bugs, questions and discussions please use [Github Issues](https://github.com/wttech/aet/issues).
 Please notice we use the [ZenHub](https://www.zenhub.com) extension to manage issues.
 
-## Documentation
+## <p id="documentation">Documentation</p>
 * [AET Wiki](https://github.com/wttech/aet//wiki)
 
 ## Contact and Commercial Support
 
 If you have any questions or require technical support please contact us at [aet@wundermanthompson.com](mailto:aet@wundermanthompson.com).
 [Gitter Chat](https://gitter.im/aet-tool/Lobby) is a way for users to chat with the AET community. Feel free to leave a message, even if we’re not around, we will definitely respond to you when available.
-
-[gitter]:https://gitter.im/aet-tool/Lobby
-[gitter img]:https://badges.gitter.im/aet-tool/aet-tool.svg

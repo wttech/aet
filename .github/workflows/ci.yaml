@@ -16,7 +16,7 @@ name: Code Coverage
 on:
   push:
     branches:
-      - "maintenance/github-actions"
+      - "master"
 jobs:
   build:
     runs-on: ubuntu-latest
