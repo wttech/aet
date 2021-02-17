@@ -2,7 +2,6 @@ plugins {
     `java-library`
     `maven-publish`
     java
-    jacoco
 }
 
 repositories {
@@ -32,37 +31,3 @@ val projectCompile by configurations.creating
 sourceSets.main.get().compileClasspath += configurations["projectCompile"]
 sourceSets.test.get().compileClasspath += configurations["projectCompile"]
 sourceSets.test.get().runtimeClasspath += configurations["projectCompile"]
-
-tasks.jacocoTestReport {
-    enabled = false
-}
-
-configurations.create("transitiveSourcesElements") {
-    isVisible = false
-    isCanBeResolved = false
-    isCanBeConsumed = true
-    extendsFrom(configurations.implementation.get())
-    attributes {
-        attribute(Usage.USAGE_ATTRIBUTE, objects.named(Usage.JAVA_RUNTIME))
-        attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category.DOCUMENTATION))
-        attribute(DocsType.DOCS_TYPE_ATTRIBUTE, objects.named("source-folders"))
-    }
-    sourceSets.main.get().java.srcDirs.forEach {
-        outgoing.artifact(it)
-    }
-}
-
-configurations.create("coverageDataElements") {
-    isVisible = false
-    isCanBeResolved = false
-    isCanBeConsumed = true
-    extendsFrom(configurations.implementation.get())
-    attributes {
-        attribute(Usage.USAGE_ATTRIBUTE, objects.named(Usage.JAVA_RUNTIME))
-        attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category.DOCUMENTATION))
-        attribute(DocsType.DOCS_TYPE_ATTRIBUTE, objects.named("jacoco-coverage-data"))
-    }
-    outgoing.artifact(tasks.test.map { task ->
-        task.extensions.getByType<JacocoTaskExtension>().destinationFile!!
-    })
-}

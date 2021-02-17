@@ -1,6 +1,5 @@
 plugins {
     id("com.cognifide.aet.java-conventions")
-	id("net.idlestate.gradle-duplicate-classes-check")
     id("org.jetbrains.kotlin.jvm") version ("1.4.21-2")
     id("biz.aQute.bnd.builder")
 }
