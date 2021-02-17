@@ -9,7 +9,7 @@
   <p>
     <img src="https://img.shields.io/github/workflow/status/wttech/aet/ci?style=for-the-badge" alt="CI status badge" />
     <a href="https://codecov.io/gh/wttech/aet">
-      <img src="https://img.shields.io/codecov/c/github/wttech/aet?style=for-the-badge&token=bfdc4b9d55534910ae48fba0b8e984d0" alt="Code coverage"/>
+      <img src="https://img.shields.io/codecov/c/github/wttech/aet?style=for-the-badge" alt="Code coverage"/>
     </a>
     <a href="https://github.com/wttech/aet">
       <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=for-the-badge" alt="License"/>
@@ -36,7 +36,7 @@
     <img src="https://github.com/wttech/aet/raw/master/misc/img/WT_Logo_Blue_Positive_RGB.png" alt="Wunderman Thompson Logo" width="150"/>
 </p>
 
-# AET
+# <p id="about">AET</p>
 <p align="center">
   <img src="https://github.com/Cognifide/aet/blob/master/misc/img/aet-logo-blue.png?raw=true" width="400"
          alt="AET Logo"/>
