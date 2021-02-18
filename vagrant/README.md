@@ -2,7 +2,7 @@
 
 # AET
 <p align="center">
-  <img src="https://github.com/Cognifide/aet/blob/master/misc/img/aet-logo-blue.png?raw=true"
+  <img src="https://github.com/wttech/aet/blob/master/misc/img/aet-logo-blue.png?raw=true"
          alt="AET Logo"/>
 </p>
 
@@ -13,7 +13,7 @@ provisioning using Vagrant (powered by Chef + Berkshelf under the hood)
 
 ### Installation
 
-See [Basic Setup](https://github.com/Cognifide/aet/wiki/BasicSetup) guide.
+See [Basic Setup](https://github.com/wttech/aet/wiki/BasicSetup) guide.
 
 ### Updates
 

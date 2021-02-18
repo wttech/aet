@@ -16,8 +16,8 @@ Assuming your test executor instance is available at `aet-instance.com` domain.
 ### Running suite with bash script
 
 #### Requirements
-* Download the AET [shell script](https://github.com/Cognifide/aet/blob/master/client/client-scripts/aet.sh)
-  (see required prerequisites in [README](https://github.com/Cognifide/aet/blob/master/client/client-scripts/README.md))
+* Download the AET [shell script](https://github.com/wttech/aet/blob/master/client/client-scripts/aet.sh)
+  (see required prerequisites in [README](https://github.com/wttech/aet/blob/master/client/client-scripts/README.md))
 * Well-formed and valid xml test suite file available
 (described with details in [[Defining Suite|DefiningSuite]] chapter)
 

@@ -1,6 +1,6 @@
 ### Client Scripts
 
-Apart from the [[client application|ClientApplication]] in the form of a maven plugin, AET offers a [shell script](https://github.com/Cognifide/aet/blob/master/client/client-scripts/aet.sh)
+Apart from the [[client application|ClientApplication]] in the form of a maven plugin, AET offers a [shell script](https://github.com/wttech/aet/blob/master/client/client-scripts/aet.sh)
 to execute tests. In order to trigger tests, the shell script provided utilizes the exposed [[Test Executor API|TestExecutor]].
 
 ### Usage

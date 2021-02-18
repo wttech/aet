@@ -6,7 +6,7 @@ plugins {
 
 dependencies {
     testImplementation("com.googlecode.zohhak:zohhak:1.1.1")
-    testImplementation("junit:junit:4.11")
+    testImplementation("junit:junit:4.13.1")
     testImplementation("org.hamcrest:hamcrest-all:1.3")
     testImplementation("commons-io:commons-io:2.6")
     testImplementation("com.google.guava:guava:25.1-jre")

@@ -38,7 +38,7 @@
 
 # <p id="about">AET</p>
 <p align="center">
-  <img src="https://github.com/Cognifide/aet/blob/master/misc/img/aet-logo-blue.png?raw=true" width="400"
+  <img src="https://raw.githubusercontent.com/wttech/aet/master/misc/img/aet-logo-blue.png" width="400"
          alt="AET Logo"/>
 </p>
 
@@ -68,7 +68,7 @@ AET helps testers to ensure that a change in one part of the software has not in
 4. AET produces a report.
 
 #### AET is not about
-* functional testing - checkout another Wunderman Thompson Technology's testing framework: [Bobcat](https://github.com/Cognifide/bobcat) for functional testing,
+* functional testing - checkout another Wunderman Thompson Technology's testing framework: [Bobcat](https://github.com/wttech/bobcat) for functional testing,
 * cross-browser testing,
 * usability testing,
 * security or server-side performance.
@@ -89,7 +89,7 @@ AET helps testers to ensure that a change in one part of the software has not in
 
 ## <p id="installation">How to start</p>
 To setup a fully functional AET instance use one of the following:
-- [AET cookbook](https://github.com/Cognifide/aet-cookbook), you may run local instance using [AET Vagrant](https://github.com/wttech/aet//wiki/BasicSetup#set-up-vagrant).
+- [AET cookbook](https://github.com/wttech/aet-cookbook), you may run local instance using [AET Vagrant](https://github.com/wttech/aet//wiki/BasicSetup#set-up-vagrant).
 - [AET Docker images](https://github.com/malaskowski/aet-docker), you may run local instance using [sample AET Swarm](https://github.com/malaskowski/aet-docker/tree/master/example-aet-swarm).
 
 For more details on how to run AET tests, see [AET in 10 minutes](https://github.com/wttech/aet//wiki/AETIn10Minutes) guide.

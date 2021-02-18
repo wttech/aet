@@ -3,7 +3,7 @@
 If you are upgrading AET from the previous version, here are notes that will help you do all 
 necessary configuration changes that were introduced in comparison to previously released AET version.
 
-You may see all changes in the [Changelog](https://github.com/Cognifide/aet/blob/master/CHANGELOG.md).
+You may see all changes in the [Changelog](https://github.com/wttech/aet/blob/master/CHANGELOG.md).
 
 ## Unreleased
 
@@ -14,14 +14,14 @@ For example - given suite line:
 ``<url href="https://en.wikipedia.org/wiki/Main_Page?a=b&c=d"/>``
 has to be updated into:
 ``<url href="https://en.wikipedia.org/wiki/Main_Page?a=b&amp;c=d"/>``
-Related issue: [#441](https://github.com/Cognifide/aet/issues/441)
+Related issue: [#441](https://github.com/wttech/aet/issues/441)
 
 ## Version 3.2.1
 Changes:
 * Counting line and column number of an accessibility issue occurrence in [[Accessibility Collector|AccessibilityCollector]] has been improved. 
 Columns are now indexed starting from 1. Bug with two identical issues on a single page yielding the same line and column number has been fixed.
 When upgrading from previous AET version you may need to increase `column` values by 1. Pay special attention to issues that occur more than once on a single page. In new AET version they will be listed twice, each with its exact column and line number.
-Related issue: [#438](https://github.com/Cognifide/aet/issues/438)
+Related issue: [#438](https://github.com/wttech/aet/issues/438)
 
 ## Version 3.2.0
 
@@ -29,12 +29,12 @@ Related issue: [#438](https://github.com/Cognifide/aet/issues/438)
 
 ### Admins
 
-#### [PR-451](https://github.com/Cognifide/aet/pull/451) Collectors and comparators configured by single config number
+#### [PR-451](https://github.com/wttech/aet/pull/451) Collectors and comparators configured by single config number
 
 Remove all `CollectorMessageListenerImpl` and `ComparatorMessageListenerImpl` config files.
 Create `com.cognifide.aet.worker.listeners.WorkersListenersService.cfg` and configure proper 
 number of collectors and comparators there.
-You can find example config file [here](https://github.com/Cognifide/aet/blob/master/osgi-dependencies/configs/src/main/resources/com.cognifide.aet.worker.listeners.WorkersListenersService.cfg).
+You can find example config file [here](https://github.com/wttech/aet/blob/master/osgi-dependencies/configs/src/main/resources/com.cognifide.aet.worker.listeners.WorkersListenersService.cfg).
 
 
 ## Version 3.0.0
@@ -57,7 +57,7 @@ the width of collected screenshot could be different that the width set in the `
 sure to adjust the resolution `width` value when updating your suite from previous AET versions.
 ##### Known issues
 
-* [#357](https://github.com/Cognifide/aet/issues/357) - see Known issues section in [[Resolution Modifier|ResolutionModifier]] wiki
+* [#357](https://github.com/wttech/aet/issues/357) - see Known issues section in [[Resolution Modifier|ResolutionModifier]] wiki
 for possible workarounds.
 
 #### `aet-maven-plugin` marked as deprecated
@@ -67,7 +67,7 @@ Please use [[client script|ClientScripts]] instead or simply communicate with AE
 
 ### Admins
 
-#### [PR-326](https://github.com/Cognifide/aet/pull/326) Upgrade OSGI annotations to 6.0.0 version
+#### [PR-326](https://github.com/wttech/aet/pull/326) Upgrade OSGI annotations to 6.0.0 version
 
 With the OSGI annotations update to 6.0.0 version we had to change a little bit variable names. Currently, your config could have old names and you have to update them. Please follow instruction below:
 

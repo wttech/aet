@@ -24,7 +24,9 @@ import com.cognifide.aet.vs.MetadataDAO;
 import com.cognifide.aet.vs.SimpleDBKey;
 import com.cognifide.aet.vs.StorageException;
 import com.google.common.base.Joiner;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import org.apache.commons.lang3.StringUtils;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
@@ -73,6 +75,9 @@ public class SuiteValidator {
             "Test suite does not contain screen comparator for screen collector in '%s' test, please fix it",
             testRun.getName());
       }
+      if (!hasUniqueScreenNames(testRun)) {
+        return String.format("Duplicated screen collector names in '%s' test. Please use unique name for each screen collector.", testRun.getName());
+      }
     }
     return null;
   }
@@ -119,6 +124,16 @@ public class SuiteValidator {
       }
     }
     return false;
+  }
+
+  private boolean hasUniqueScreenNames(TestRun testRun) {
+    Set<String> uniqueScreenNames = new HashSet<>();
+    for (CollectorStep collectorStep : testRun.getCollectorSteps()) {
+      if (SCREEN.equalsIgnoreCase(collectorStep.getModule()) && !uniqueScreenNames.add(collectorStep.getName())) {
+        return false;
+      }
+    }
+    return true;
   }
 
   private boolean isPatternInDatabase(TestSuiteRun testSuiteRun) {

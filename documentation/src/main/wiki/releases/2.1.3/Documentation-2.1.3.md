@@ -497,7 +497,7 @@ There are 4 types of modules in AET:
 * [[Data Filters|DataFilters]]
 
 You may extend AET with any of those types. To do so, you need to implement several interfaces from 
-[`jobs-api`](https://github.com/Cognifide/aet/tree/master/api/jobs-api) module.
+[`jobs-api`](https://github.com/wttech/aet/tree/master/api/jobs-api) module.
 Below we present how to create a custom Modifier, which is the most common case and is the easiest type to extend.
 Extending other types is similar and examples will be available in the future, however creating a new type of
 [[Collector|Collectors]] and corresponding [[Comparator|Comparators]] involves also 
@@ -653,17 +653,17 @@ be available on the Karaf instance that AET are running at.
 
 #### 2. Implement Modifier interface
 Start with creating `PageBackgroundModifier` class in the `com.example.aet.modifiers.pagebackground` package.
-Now, implement a [`CollectorJob`](https://github.com/Cognifide/aet/blob/master/api/jobs-api/src/main/java/com/cognifide/aet/job/api/collector/CollectorJob.java).
+Now, implement a [`CollectorJob`](https://github.com/wttech/aet/blob/master/api/jobs-api/src/main/java/com/cognifide/aet/job/api/collector/CollectorJob.java).
 This is common interface for both [[Collectors|Collectors]] and [[Modifiers|Modifiers]].
 You will have to implement two methods:
 - `collect` which is executed during the [[`collection phase`|TestProcessing#collection]], this method can throw 
- [`ProcessingException`](https://github.com/Cognifide/aet/blob/master/api/jobs-api/src/main/java/com/cognifide/aet/job/api/exceptions/ProcessingException.java)
+ [`ProcessingException`](https://github.com/wttech/aet/blob/master/api/jobs-api/src/main/java/com/cognifide/aet/job/api/exceptions/ProcessingException.java)
  when the modification fails. Throwing this exception from the `collect` method won't terminate processing of all collectors/modifiers. The 
  idea here is to continue processing other steps despite this error (and this is the expected behavior). 
  If you want to terminate processing you should throw an exception that doesn't inherit 
- from [`AETException`](https://github.com/Cognifide/aet/blob/master/api/communication-api/src/main/java/com/cognifide/aet/communication/api/exceptions/AETException.java).
+ from [`AETException`](https://github.com/wttech/aet/blob/master/api/communication-api/src/main/java/com/cognifide/aet/communication/api/exceptions/AETException.java).
 - `setParameters` that setups all parameters necessary to perform modification (in our case `color` parameter), 
-this method can throw [`ParametersException`](https://github.com/Cognifide/aet/blob/master/api/jobs-api/src/main/java/com/cognifide/aet/job/api/exceptions/ParametersException.java)
+this method can throw [`ParametersException`](https://github.com/wttech/aet/blob/master/api/jobs-api/src/main/java/com/cognifide/aet/job/api/exceptions/ParametersException.java)
 when some mandatory parameter is missing. Throwing this exception will terminate processing of all collectors/modifiers steps.
 
 Implementation of `PageBackgroundModifier` can look like this:
@@ -725,7 +725,7 @@ public class PageBackgroundModifier implements CollectorJob {
 ```
 #### 3. Implement CollectorFactory interface to register new Modifier
 The next step is to register new Modifier in the AET system. To do so, you need to implement a
-[`CollectorFactory`](https://github.com/Cognifide/aet/blob/master/api/jobs-api/src/main/java/com/cognifide/aet/job/api/collector/CollectorFactory.java)
+[`CollectorFactory`](https://github.com/wttech/aet/blob/master/api/jobs-api/src/main/java/com/cognifide/aet/job/api/collector/CollectorFactory.java)
 and make it an OSGi Service.
 You will need to implement two methods:
 - `getName` that will return the name of registered Modifier (this is the name that will be used in suite XML to call the Modifier) in our case it is `"change-background"`,
@@ -974,7 +974,7 @@ Please note that full list of required tools and its versions can be found in [S
     
 ##### Windows Setup
 Windows Setup.
-1. [Follow to link](https://github.com/Cognifide/aet/releases) and download all packages to your local instance.
+1. [Follow to link](https://github.com/wttech/aet/releases) and download all packages to your local instance.
 2. Turn off Windows Firewall (both, private and public network location settings).
 3. Install JDK 7 and set JAVA_HOME variable: C:\Program Files\Java\jdkYouVersion.
 4. Create dir under C:\ for karaf files. Preferebly C:\aet\.
@@ -4215,7 +4215,7 @@ mvn aet:run -DtestSuite=suite.xml -DxUnit=true
 
 ### Client Scripts
 
-Next to [[client application|ClientApplication]] in form of a maven plugin, AET offers a [shell script](https://github.com/Cognifide/aet/blob/master/client/client-scripts/aet.sh)
+Next to [[client application|ClientApplication]] in form of a maven plugin, AET offers a [shell script](https://github.com/wttech/aet/blob/master/client/client-scripts/aet.sh)
 to execute tests. In order to trigger test execution, provided shell script utilizes exposed [[Test Executor API|TestExecutor]].
 
 ### Usage
@@ -4840,7 +4840,7 @@ list of rules with individual grades. The performance analysis is based on the [
 
 # FAQ
 This section contains answers for frequently asked questions. If you can't find an answer to your question here
-please use the [Issues Tool](https://github.com/Cognifide/aet/issues) to raise a question.
+please use the [Issues Tool](https://github.com/wttech/aet/issues) to raise a question.
 
 - [1. Setup and first steps](#1-setup-and-first-steps)
   - [1.1. What do I need to start using AET?](#11-what-do-i-need-to-start-using-aet)
@@ -4921,7 +4921,7 @@ You can add custom fonts to AET virtual machine. To do so, place desired fonts i
 Other idea is to install fonts with e.g.:
 `yum groupinstall chinese-support`
 `yum groupinstall arabic-support`
-See more details in answers for [this AET question](https://github.com/Cognifide/aet/issues/61).
+See more details in answers for [this AET question](https://github.com/wttech/aet/issues/61).
 
 ---
 
@@ -5008,11 +5008,11 @@ Example test configuration may look like this:
 
 With version 2.1.0 we are supporting regular expressions for following filters:
 
-* [Accessibility Data Filter](https://github.com/Cognifide/aet/wiki/AccessibilityDataFilter)
-* [JS Errors Data Filter](https://github.com/Cognifide/aet/wiki/JSErrorsDataFilter)
-* [W3C HTML5 Issues Filter](https://github.com/Cognifide/aet/wiki/W3CHTML5IssuesFilter)
+* [Accessibility Data Filter](https://github.com/wttech/aet/wiki/AccessibilityDataFilter)
+* [JS Errors Data Filter](https://github.com/wttech/aet/wiki/JSErrorsDataFilter)
+* [W3C HTML5 Issues Filter](https://github.com/wttech/aet/wiki/W3CHTML5IssuesFilter)
 
-Please notice that the change introduced for [W3C HTML5 Issues Filter](https://github.com/Cognifide/aet/wiki/W3CHTML5IssuesFilter) is backward **incompatible**:
+Please notice that the change introduced for [W3C HTML5 Issues Filter](https://github.com/wttech/aet/wiki/W3CHTML5IssuesFilter) is backward **incompatible**:
 
 For version **2.0.x** we were expecting that `message` parameter contains a prefix of error message.
 

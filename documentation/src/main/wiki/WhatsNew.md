@@ -1,5 +1,5 @@
 Here are notes that summarize the most important changes in AET from the user and admin perspective.
-To see the full list of changes, please refer to [CHANGELOG](https://github.com/Cognifide/aet/blob/master/CHANGELOG.md).
+To see the full list of changes, please refer to [CHANGELOG](https://github.com/wttech/aet/blob/master/CHANGELOG.md).
 
 ### `master` branch version (Unreleased)
 
@@ -57,7 +57,7 @@ Karaf was upgraded to 4.2.0 version. Please remember to upgrade your Karaf insta
 
 #### Selenium Grid
 Selenium Grid support is currently in beta test. You may use it already on your developer instances to check how it works.
-It enables working with Chrome (please remember that not all AET features are supported there yet!). See more details in [PR-264](https://github.com/Cognifide/aet/pull/264).
+It enables working with Chrome (please remember that not all AET features are supported there yet!). See more details in [PR-264](https://github.com/wttech/aet/pull/264).
 
 ### Version 2.1.5
 #### Selenium and Guava has been upgraded to current versions
@@ -84,14 +84,14 @@ See more in [[Suite Structure|SuiteStructure]] documentation.
 
 ### Version 2.1.3
 #### Two new modifiers have been added:
-- [wait for element being visible](https://github.com/Cognifide/aet/wiki/WaitForElementToBeVisibleModifier),
-- [wait for image being loaded](https://github.com/Cognifide/aet/wiki/WaitForImageCompletionModifier).
+- [wait for element being visible](https://github.com/wttech/aet/wiki/WaitForElementToBeVisibleModifier),
+- [wait for image being loaded](https://github.com/wttech/aet/wiki/WaitForImageCompletionModifier).
 
 #### A new (recommended!) way to run the AET suite
-There is a new (recommended!) way to run the AET suite with a bash script, read more [here](https://github.com/Cognifide/aet/wiki/ClientScripts).
+There is a new (recommended!) way to run the AET suite with a bash script, read more [here](https://github.com/wttech/aet/wiki/ClientScripts).
 
 #### Improved ExecuteJavaScriptModifier
-Since this version [ExecuteJavaScriptModifier](https://github.com/Cognifide/aet/wiki/ExecuteJavaScriptModifier) has supported the external snippets source with basic auth.
+Since this version [ExecuteJavaScriptModifier](https://github.com/wttech/aet/wiki/ExecuteJavaScriptModifier) has supported the external snippets source with basic auth.
 
 ### Version 2.1.2
 Besides technical improvements within this version we've updated the W3C validator to the most recent version (15.6.29).

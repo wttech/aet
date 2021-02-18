@@ -5,7 +5,7 @@ plugins {
 }
 
 dependencies {
-    testImplementation("junit:junit:4.11")
+    testImplementation("junit:junit:4.13.1")
     projectCompile(project(":communication-api"))
     projectCompile(project(":datastorage-api"))
     projectCompile(project(":selenium"))

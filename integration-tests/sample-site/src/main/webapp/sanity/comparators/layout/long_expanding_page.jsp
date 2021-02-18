@@ -42,7 +42,7 @@ window.onload = function () {
   }, 100);
 
   <%--
-      TODO: Change 12 iterations to 30 when (https://github.com/Cognifide/aet/pull/387) is merged.
+      TODO: Change 12 iterations to 30 when (https://github.com/wttech/aet/pull/387) is merged.
   --%>
 
 };
