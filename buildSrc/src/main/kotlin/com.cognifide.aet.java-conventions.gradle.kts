@@ -5,7 +5,7 @@ plugins {
 
 repositories {
     maven {
-        url = uri("http://repository.jboss.org/nexus/content/groups/public")
+        url = uri("https://repository.jboss.org/nexus/content/groups/public")
     }
     mavenCentral()
     jcenter()

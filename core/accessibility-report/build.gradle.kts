@@ -1,5 +1,6 @@
 plugins {
     id("com.cognifide.aet.java-conventions")
+    id("com.cognifide.aet.test-coverage")
     id("org.jetbrains.kotlin.jvm") version ("1.4.21-2")
     id("biz.aQute.bnd.builder")
 }

@@ -1,5 +1,6 @@
 plugins {
     id("com.cognifide.aet.java-conventions")
+    id("com.cognifide.aet.test-coverage")
     id("biz.aQute.bnd.builder")
 }
 
@@ -20,7 +21,7 @@ tasks.jar {
     manifest {
         attributes(
             Pair("Bundle-Vendor", "Cognifide Ltd."),
-            Pair("Export-Package", "com.cognifide.aet.proxy.*"),
+            Pair("Export-Package", "com.cognifide.aet.proxy.*,com.github.detro.browsermobproxyclient.*"),
             Pair("Include-Resource", "browsermob-proxy-client-0.1.3.jar"),
             Pair("Bundle-ClassPath", ".,browsermob-proxy-client-0.1.3.jar"),
             Pair(
