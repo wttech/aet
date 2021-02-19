@@ -2,6 +2,7 @@ plugins {
     id("com.cognifide.aet.java-conventions")
     id("com.cognifide.aet.test-coverage") apply false
     id("org.nosphere.apache.rat") version "0.7.0"
+    id("net.researchgate.release") version "2.8.1"
 }
 
 defaultTasks(":zip:make")
