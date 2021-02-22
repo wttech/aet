@@ -31,10 +31,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Build project
-        run: |
-          ./gradlew :zip:make
-
       - name: Update CHANGELOG.md
         run: |
           sed -i '/^\*\*List of changes that are finished but not yet released in any final version.\*\*$/a \
@@ -42,13 +38,17 @@ jobs:
           ## Version '"$VERSION"'\
           ' CHANGELOG.md
 
-      - name: Commit report
+      - name: Commit changes
         run: |
           git config --global user.name 'AET Release'
           git config --global user.email 'aet-release@users.noreply.github.com'
           git commit -am "[AET Release] Update CHANGELOG.md"
           cat CHANGELOG.md
           # git push
+
+      - name: Build project
+        run: |
+          ./gradlew :zip:make
 
       - name: Build Changelog
         id: build_changelog
