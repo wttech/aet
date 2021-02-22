@@ -33,7 +33,7 @@ jobs:
       - name: Build Changelog
         id: build_changelog
         run: |
-          DESCRIPTION=$(sed '/## Version '"$VERSION"'/,/## Version/!d;//d' CHANGELOG.md | python -c "import sys, json; print json.dumps(sys.stdin.read())")
+          DESCRIPTION=$(sed '/## Version '"$VERSION"'/,/## Version/!d;//d' CHANGELOG.md)
           echo "::set-output name=changelog::$DESCRIPTION"
 
       - name: Create Release
