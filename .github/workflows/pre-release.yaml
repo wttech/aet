@@ -16,10 +16,12 @@ name: pre-release
 on:
   workflow_dispatch:
     inputs:
-      logLevel:
-        description: 'Log level'
+      releaseVersion:
+        description: 'Release Version'
         required: true
-        default: 'warning'
+      snapshotVersion:
+        description: 'Snapshot Version'
+        required: true
 
 jobs:
   build:
