@@ -20,7 +20,7 @@ After installing all AET modules in local repository type in the root dir:
   ```
     
 Please find archives containing all AET artifacts in
-`zip/target/packages-${project.version}` for maven and `zip/build/packages` for gradle
+`zip/target/packages-${project.version}` for maven and `zip/build/packages-${prpject.version}` for gradle
 
 You can use maven upload this archive to remote location with:
 

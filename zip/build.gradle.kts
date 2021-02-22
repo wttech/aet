@@ -3,7 +3,7 @@ plugins {
     id("com.cognifide.aet.test-coverage")
 }
 
-val packages = "${buildDir}/packages"
+val packages = "${buildDir}/packages-${project.version}"
 
 tasks.register<Zip>("zipBundles") {
     dependsOn(rootProject.getTasksByName("build", true))
