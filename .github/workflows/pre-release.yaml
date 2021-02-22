@@ -32,9 +32,9 @@ jobs:
 
       - name: Build Changelog
         id: build_changelog
-        uses: mikepenz/release-changelog-builder-action@main
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          DESCRIPTION=$(sed '/## Version '"$VERSION"'/,/## Version/!d;//d' CHANGELOG.md | python -c "import sys, json; print json.dumps(sys.stdin.read())")
+          echo "::set-output name=changelog::$DESCRIPTION"
 
       - name: Create Release
         id: create_release
