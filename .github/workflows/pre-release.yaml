@@ -30,11 +30,26 @@ jobs:
         run: |
           ./gradlew :zip:make
 
+      - name: Update CHANGELOG.md
+        run: |
+          sed -i '/^\*\*List of changes that are finished but not yet released in any final version.\*\*$/a \
+          \
+          ## Version '"$VERSION"'\
+          ' CHANGELOG.md
+
+      - name: Commit report
+        run: |
+          git config --global user.name 'AET Release'
+          git config --global user.email 'aet-release@users.noreply.github.com'
+          git commit -am "[AET Release] Update CHANGELOG.md"
+          cat CHANGELOG.md
+          # git push
+
       - name: Build Changelog
         id: build_changelog
         run: |
-          DESCRIPTION=$(sed '/## Version '"$VERSION"'/,/## Version/!d;//d' CHANGELOG.md)
-          echo "::set-output name=changelog::$DESCRIPTION"
+          RELEASE_CHANGELOG=$(sed '/## Version '"$VERSION"'/,/## Version/!d;//d' CHANGELOG.md)
+          echo "$RELEASE_CHANGELOG" >> release_changelog.md
 
       - name: Create Release
         id: create_release
@@ -42,7 +57,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          body: ${{ steps.build_changelog.outputs.changelog }}
+          body_path: release_changelog.md
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
           prerelease: true
