@@ -17,9 +17,11 @@ on:
   workflow_dispatch:
     inputs:
       releaseVersion:
-        description: Release Version
+        description: 'Release Version'
         required: true
-        default: auto
+      snapshotVersion:
+        description: 'Snapshot Version'
+        required: true
 
 jobs:
   build:
@@ -28,9 +30,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-          persist-credentials: false
 
       - name: Update CHANGELOG.md
         run: |
@@ -44,40 +43,26 @@ jobs:
           git config --global user.name 'AET Release'
           git config --global user.email 'aet-release@users.noreply.github.com'
           git commit -am "[AET Release] Update CHANGELOG.md"
-          git push https://aet-release:${{ secrets.AET_RELEASE_TOKEN }}@github.com/wttech/aet.git
-
-      - name: Build Changelog for Github Release
-        id: build_changelog
-        run: |
-          RELEASE_CHANGELOG=$(sed '/## Version '"$VERSION"'/,/## Version/!d;//d' CHANGELOG.md)
-          echo "Release changelog content: $RELEASE_CHANGELOG" >> /tmp/release_changelog.md
+          cat CHANGELOG.md
+          # git push
 
       - name: Build project
         run: |
           ./gradlew :zip:make
 
-      - name: Create Project Release with Auto Versioning
-        if: github.event.inputs.releaseVersion == 'auto'
+      - name: Build Changelog
+        id: build_changelog
         run: |
-          ./gradlew release \
-              -Prelease.customUsername=aet-release \
-              -Prelease.customPassword=${{ secrets.AET_RELEASE_TOKEN }}
+          RELEASE_CHANGELOG=$(sed '/## Version '"$VERSION"'/,/## Version/!d;//d' CHANGELOG.md)
+          echo "$RELEASE_CHANGELOG" >> release_changelog.md
 
-      - name: Create Project Release with Forced Versions
-        if: github.event.inputs.releaseVersion != 'auto'
-        run: |
-          ./gradlew release \
-            -Prelease.forceVersion=${{ github.event.inputs.releaseVersion }}
-            -Prelease.customUsername=aet-release \
-            -Prelease.customPassword=${{ secrets.AET_RELEASE_TOKEN }}
-
-      - name: Create Github Release
+      - name: Create Release
         id: create_release
         uses: actions/create-release@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          body_path: /tmp/release_changelog.md
+          body_path: release_changelog.md
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
           prerelease: true

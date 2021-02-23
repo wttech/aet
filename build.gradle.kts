@@ -2,17 +2,12 @@ plugins {
     id("com.cognifide.aet.java-conventions")
     id("com.cognifide.aet.test-coverage") apply false
     id("org.nosphere.apache.rat") version "0.7.0"
-    id("pl.allegro.tech.build.axion-release") version "1.12.1"
+    id("net.researchgate.release") version "2.8.1"
 }
 
-scmVersion {
-    tag.prefix = ""
-}
-
-project.version = scmVersion.version
-
-subprojects {
-    project.version = rootProject.version
+release {
+    val gitConfig = getProperty("git") as net.researchgate.release.GitAdapter.GitConfig
+    gitConfig.requireBranch = "maintenance/github-actions"
 }
 
 defaultTasks(":zip:make")
