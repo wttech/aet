@@ -30,7 +30,7 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-          token: ${{ github.AET_RELEASE_TOKEN }}
+          token: ${{ secrets.AET_RELEASE_TOKEN }}
 
       - name: Update CHANGELOG.md
         run: |
@@ -61,15 +61,15 @@ jobs:
         run: |
           ./gradlew release \
               -Prelease.customUsername=aet-release \
-              -Prelease.customPassword=${{ github.AET_RELEASE_TOKEN }}
+              -Prelease.customPassword=${{ secrets.AET_RELEASE_TOKEN }}
 
       - name: Create Project Release with Forced Versions
         if: github.event.inputs.releaseVersion != 'auto'
         run: |
           ./gradlew release \
             -Prelease.forceVersion=${{ github.event.inputs.releaseVersion }}
-            -Prelease.customUsername=${{ github.actor }} \
-            -Prelease.customPassword=${{ github.token }}
+            -Prelease.customUsername=aet-release \
+            -Prelease.customPassword=${{ secrets.AET_RELEASE_TOKEN }}
 
       - name: Create Github Release
         id: create_release
