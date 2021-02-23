@@ -7,7 +7,6 @@ plugins {
 
 scmVersion {
     tag.prefix = ""
-    localOnly = true
 }
 
 defaultTasks(":zip:make")
