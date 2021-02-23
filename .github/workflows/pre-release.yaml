@@ -44,7 +44,7 @@ jobs:
           git config --global user.email 'aet-release@users.noreply.github.com'
           git commit -am "[AET Release] Update CHANGELOG.md"
           cat CHANGELOG.md
-          # git push
+          git push
 
       - name: Build Changelog for Github Release
         id: build_changelog
