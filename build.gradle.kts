@@ -9,6 +9,12 @@ scmVersion {
     tag.prefix = ""
 }
 
+project.version = scmVersion.version
+
+subprojects {
+    project.version = rootProject.version
+}
+
 defaultTasks(":zip:make")
 
 tasks.rat {
