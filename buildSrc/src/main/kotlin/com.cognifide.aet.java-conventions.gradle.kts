@@ -12,7 +12,6 @@ repositories {
 }
 
 group = "com.cognifide.aet"
-version = "3.4.1-SNAPSHOT"
 java.sourceCompatibility = JavaVersion.VERSION_1_8
 
 publishing {
