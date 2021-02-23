@@ -43,8 +43,12 @@ jobs:
           git config --global user.name 'AET Release'
           git config --global user.email 'aet-release@users.noreply.github.com'
           git commit -am "[AET Release] Update CHANGELOG.md"
-          cat CHANGELOG.md
-          git push
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.AET_RELEASE_TOKEN }}
+          branch: master
 
       - name: Build Changelog for Github Release
         id: build_changelog
@@ -60,8 +64,8 @@ jobs:
         if: github.event.inputs.releaseVersion == 'auto'
         run: |
           ./gradlew release \
-              -Prelease.customUsername=${{ github.actor }} \
-              -Prelease.customPassword=${{ github.token }}
+              -Prelease.customUsername=aet-release \
+              -Prelease.customPassword=${{ github.AET_RELEASE_TOKEN }}
 
       - name: Create Project Release with Forced Versions
         if: github.event.inputs.releaseVersion != 'auto'
