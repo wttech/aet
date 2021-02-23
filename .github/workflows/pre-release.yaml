@@ -19,7 +19,6 @@ on:
       releaseVersion:
         description: Release Version
         required: true
-        default: auto
 
 jobs:
   build:
@@ -34,9 +33,10 @@ jobs:
 
       - name: Update CHANGELOG.md
         run: |
+          git checkout -b release/${{ github.event.inputs.releaseVersion }}
           sed -i '/^\*\*List of changes that are finished but not yet released in any final version.\*\*$/a \
           \
-          ## Version '"$VERSION"'\
+          ## Version '"${{ github.event.inputs.releaseVersion }}"'\
           ' CHANGELOG.md
 
       - name: Commit changes
@@ -47,31 +47,22 @@ jobs:
           git push https://aet-release:${{ secrets.AET_RELEASE_TOKEN }}@github.com/wttech/aet.git
 
       - name: Build Changelog for Github Release
-        id: build_changelog
         run: |
-          RELEASE_CHANGELOG=$(sed '/## Version '"$VERSION"'/,/## Version/!d;//d' CHANGELOG.md)
+          RELEASE_CHANGELOG=$(sed '/## Version '"${{ github.event.inputs.releaseVersion }}"'/,/## Version/!d;//d' CHANGELOG.md)
           echo "Release changelog content: $RELEASE_CHANGELOG" >> /tmp/release_changelog.md
 
       - name: Build project
         run: |
           ./gradlew :zip:make
 
-      - name: Create Project Release with Auto Versioning
-        if: github.event.inputs.releaseVersion == 'auto'
-        run: |
-          ./gradlew release \
-              -Prelease.customUsername=aet-release \
-              -Prelease.customPassword=${{ secrets.AET_RELEASE_TOKEN }}
-
-      - name: Create Project Release with Forced Versions
-        if: github.event.inputs.releaseVersion != 'auto'
+      - name: Create Project Release
         run: |
           ./gradlew release \
             -Prelease.forceVersion=${{ github.event.inputs.releaseVersion }}
             -Prelease.customUsername=aet-release \
             -Prelease.customPassword=${{ secrets.AET_RELEASE_TOKEN }}
 
-      - name: Create Github Release
+      - name: Create Github Release Draft
         id: create_release
         uses: actions/create-release@v1
         env:
@@ -80,7 +71,7 @@ jobs:
           body_path: /tmp/release_changelog.md
           tag_name: ${{ github.ref }}
           release_name: Release ${{ github.ref }}
-          prerelease: true
+          draft: true
 
       - name: Upload Bundles
         uses: actions/upload-release-asset@v1
@@ -131,3 +122,18 @@ jobs:
           asset_name: sample-site.zip
           asset_path: ./zip/build/packages/sample-site.zip
           asset_content_type: application/zip
+
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          commit-message: Release ${{ github.event.inputs.releaseVersion }}
+          committer: aet-release
+          author: aet-release <aet-release@users.noreply.github.com>
+          signoff: false
+          branch: release/${{ github.event.inputs.releaseVersion }}
+          delete-branch: true
+          title: '[AET Release] Release ${{ github.event.inputs.releaseVersion }}'
+          labels: |
+            automated pr
+            release
+          draft: false
