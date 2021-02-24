@@ -61,6 +61,8 @@ jobs:
 
       - name: Create Project Release
         run: |
+          echo "Remotes ####"
+          git remote -v
           ./gradlew --stacktrace release \
             -Prelease.forceVersion=${{ github.event.inputs.releaseVersion }}
             -Prelease.customUsername=${{ github.actor }} \
