@@ -40,8 +40,7 @@ jobs:
         run: |
           sed -i '/^\*\*List of changes that are finished but not yet released in any final version.\*\*$/a \
           \
-          ## Version '"${{ github.event.inputs.releaseVersion }}"'\
-          ' CHANGELOG.md
+          ## Version '"${{ github.event.inputs.releaseVersion }}"'' CHANGELOG.md
 
       - name: Commit changes
         run: |
@@ -128,9 +127,11 @@ jobs:
       #    asset_path: ./zip/build/packages/sample-site.zip
       #    asset_content_type: application/zip
 
-      - name: pull-request
+      - name: Create Pull Request
         uses: repo-sync/pull-request@v2
         with:
+          source_branch: "release/${{ github.event.inputs.releaseVersion }}"
+          destination_branch: "master"
           pr_title: "'[AET Release] Release ${{ github.event.inputs.releaseVersion }}'"
           pr_label: "auto-pr,release"
           pr_draft: true
