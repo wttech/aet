@@ -67,8 +67,8 @@ jobs:
           git remote -v
           ./gradlew --stacktrace release \
             -Prelease.forceVersion=${{ github.event.inputs.releaseVersion }}
-            -Prelease.customUsername=${{ github.actor }} \
-            -Prelease.customPassword=${{ github.token }} \
+            -Prelease.customUsername=aet-release \
+            -Prelease.customPassword=${{ secrets.AET_RELEASE_TOKEN }} \
             -Prelease.disableChecks
 
       - name: Create Github Release Draft
