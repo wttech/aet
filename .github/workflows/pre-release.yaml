@@ -20,24 +20,18 @@ on:
         description: Release Version
         required: true
 
-defaults:
-  run:
-    working-directory: ./aet
-
 jobs:
   build:
     name: Create Pre-Release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        run: |
-          git clone https://aet-release:${{ secrets.AET_RELEASE_TOKEN }}@github.com/wttech/aet.git
-          cd ./aet
-          pwd
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - name: Switch to Release Branch
         run: |
-          pwd
           echo "Branch~::"
           git branch
           git checkout -b release/${{ github.event.inputs.releaseVersion }}
