@@ -30,10 +30,14 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
+          ref: master
+
+      - name: Switch to Release Branch
+        run: |
+          git checkout -b release/${{ github.event.inputs.releaseVersion }}
 
       - name: Update CHANGELOG.md
         run: |
-          git checkout -b release/${{ github.event.inputs.releaseVersion }}
           sed -i '/^\*\*List of changes that are finished but not yet released in any final version.\*\*$/a \
           \
           ## Version '"${{ github.event.inputs.releaseVersion }}"'\
