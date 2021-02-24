@@ -61,7 +61,7 @@ jobs:
 
       - name: Create Project Release
         run: |
-          ./gradlew release \
+          ./gradlew --stacktrace release \
             -Prelease.forceVersion=${{ github.event.inputs.releaseVersion }}
             -Prelease.customUsername=${{ github.actor }} \
             -Prelease.customPassword=${{ github.token }} \
