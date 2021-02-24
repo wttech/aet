@@ -26,11 +26,9 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
-        with:
-          fetch-depth: 0
-          persist-credentials: false
-          ref: master
+        run: |
+          git clone https://aet-release:${{ secrets.AET_RELEASE_TOKEN }}@github.com/wttech/aet.git
+          cd ./aet
 
       - name: Switch to Release Branch
         run: |
