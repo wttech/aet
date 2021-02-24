@@ -64,7 +64,8 @@ jobs:
           ./gradlew release \
             -Prelease.forceVersion=${{ github.event.inputs.releaseVersion }}
             -Prelease.customUsername=aet-release \
-            -Prelease.customPassword=${{ secrets.AET_RELEASE_TOKEN }}
+            -Prelease.customPassword=${{ secrets.AET_RELEASE_TOKEN }} \
+            -Prelease.disableChecks
 
       - name: Create Github Release Draft
         id: create_release
