@@ -29,9 +29,11 @@ jobs:
         run: |
           git clone https://aet-release:${{ secrets.AET_RELEASE_TOKEN }}@github.com/wttech/aet.git
           cd ./aet
+          pwd
 
       - name: Switch to Release Branch
         run: |
+          pwd
           echo "Branch~::"
           git branch
           git checkout -b release/${{ github.event.inputs.releaseVersion }}
