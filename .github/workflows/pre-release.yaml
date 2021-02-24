@@ -57,9 +57,9 @@ jobs:
           RELEASE_CHANGELOG=$(sed '/## Version '"${{ github.event.inputs.releaseVersion }}"'/,/## Version/!d;//d' CHANGELOG.md)
           echo "Release changelog content: $RELEASE_CHANGELOG" >> /tmp/release_changelog.md
 
-      - name: Build project
-        run: |
-          ./gradlew :zip:make
+      #- name: Build project
+      #  run: |
+      #    ./gradlew :zip:make
 
       - name: Create Project Release
         run: |
@@ -79,55 +79,55 @@ jobs:
           release_name: Release ${{ github.ref }}
           draft: true
 
-      - name: Upload Bundles
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_name: bundles.zip
-          asset_path: ./zip/build/packages/bundles.zip
-          asset_content_type: application/zip
+      #- name: Upload Bundles
+      #  uses: actions/upload-release-asset@v1
+      #  env:
+      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #  with:
+      #    upload_url: ${{ steps.create_release.outputs.upload_url }}
+      #    asset_name: bundles.zip
+      #    asset_path: ./zip/build/packages/bundles.zip
+      #    asset_content_type: application/zip
 
-      - name: Upload Configs
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_name: configs.zip
-          asset_path: ./zip/build/packages/configs.zip
-          asset_content_type: application/zip
+      #- name: Upload Configs
+      #  uses: actions/upload-release-asset@v1
+      #  env:
+      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #  with:
+      #    upload_url: ${{ steps.create_release.outputs.upload_url }}
+      #    asset_name: configs.zip
+      #    asset_path: ./zip/build/packages/configs.zip
+      #    asset_content_type: application/zip
 
-      - name: Upload Features
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_name: features.zip
-          asset_path: ./zip/build/packages/features.zip
-          asset_content_type: application/zip
+      #- name: Upload Features
+      #  uses: actions/upload-release-asset@v1
+      #  env:
+      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #  with:
+      #    upload_url: ${{ steps.create_release.outputs.upload_url }}
+      #    asset_name: features.zip
+      #    asset_path: ./zip/build/packages/features.zip
+      #    asset_content_type: application/zip
 
-      - name: Upload Report
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_name: report.zip
-          asset_path: ./zip/build/packages/report.zip
-          asset_content_type: application/zip
+      #- name: Upload Report
+      #  uses: actions/upload-release-asset@v1
+      #  env:
+      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #  with:
+      #    upload_url: ${{ steps.create_release.outputs.upload_url }}
+      #    asset_name: report.zip
+      #    asset_path: ./zip/build/packages/report.zip
+      #    asset_content_type: application/zip
 
-      - name: Upload Sample Site
-        uses: actions/upload-release-asset@v1
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_name: sample-site.zip
-          asset_path: ./zip/build/packages/sample-site.zip
-          asset_content_type: application/zip
+      #- name: Upload Sample Site
+      #  uses: actions/upload-release-asset@v1
+      #  env:
+      #    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      #  with:
+      #    upload_url: ${{ steps.create_release.outputs.upload_url }}
+      #    asset_name: sample-site.zip
+      #    asset_path: ./zip/build/packages/sample-site.zip
+      #    asset_content_type: application/zip
 
       - name: Create Pull Request
         uses: peter-evans/create-pull-request@v3
