@@ -11,7 +11,7 @@
 # or implied. See the License for the specific language governing permissions and limitations under
 # the License.
 #
-name: pre-release
+name: release-draft
 
 on:
   workflow_dispatch:
@@ -22,7 +22,7 @@ on:
 
 jobs:
   build:
-    name: Create Pre-Release
+    name: Create Release Draft
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -132,14 +132,8 @@ jobs:
         uses: peter-evans/create-pull-request@v3
         with:
           commit-message: Release ${{ github.event.inputs.releaseVersion }}
-          committer: aet-release
-          author: aet-release <aet-release@users.noreply.github.com>
-          signoff: false
           branch: release/${{ github.event.inputs.releaseVersion }}
           base: master
           delete-branch: true
           title: '[AET Release] Release ${{ github.event.inputs.releaseVersion }}'
-          labels: |
-            automated pr
-            release
           draft: false
