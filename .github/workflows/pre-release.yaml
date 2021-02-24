@@ -48,7 +48,8 @@ jobs:
           git config --global user.name 'AET Release'
           git config --global user.email 'aet-release@users.noreply.github.com'
           git commit -am "[AET Release] Update CHANGELOG.md"
-          git push -u origin release/${{ github.event.inputs.releaseVersion }}
+          git branch -u origin/release/${{ github.event.inputs.releaseVersion }}
+          git push https://aet-release:${{ secrets.AET_RELEASE_TOKEN }}@github.com/wttech/aet.git
 
       - name: Build Changelog for Github Release
         run: |
