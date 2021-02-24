@@ -134,6 +134,5 @@ jobs:
           commit-message: Release ${{ github.event.inputs.releaseVersion }}
           branch: master
           base: release/${{ github.event.inputs.releaseVersion }}
-          delete-branch: true
           title: '[AET Release] Release ${{ github.event.inputs.releaseVersion }}'
           draft: false
