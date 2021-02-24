@@ -20,6 +20,10 @@ on:
         description: Release Version
         required: true
 
+defaults:
+  run:
+    working-directory: ./aet
+
 jobs:
   build:
     name: Create Pre-Release
