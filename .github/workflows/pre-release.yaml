@@ -132,8 +132,8 @@ jobs:
         uses: peter-evans/create-pull-request@v3
         with:
           commit-message: Release ${{ github.event.inputs.releaseVersion }}
-          branch: release/${{ github.event.inputs.releaseVersion }}
-          base: master
+          branch: master
+          base: release/${{ github.event.inputs.releaseVersion }}
           delete-branch: true
           title: '[AET Release] Release ${{ github.event.inputs.releaseVersion }}'
           draft: false
