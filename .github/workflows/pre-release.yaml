@@ -128,11 +128,10 @@ jobs:
       #    asset_path: ./zip/build/packages/sample-site.zip
       #    asset_content_type: application/zip
 
-      - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3
-        with:
-          commit-message: Release ${{ github.event.inputs.releaseVersion }}
-          branch: master
-          base: release/${{ github.event.inputs.releaseVersion }}
-          title: '[AET Release] Release ${{ github.event.inputs.releaseVersion }}'
-          draft: false
+        - name: pull-request
+          uses: repo-sync/pull-request@v2
+          with:
+            pr_title: "'[AET Release] Release ${{ github.event.inputs.releaseVersion }}'"
+            pr_label: "auto-pr,release"
+            pr_draft: true
+            github_token: ${{ secrets.GITHUB_TOKEN }}
