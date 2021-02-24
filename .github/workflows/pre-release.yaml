@@ -34,6 +34,8 @@ jobs:
 
       - name: Switch to Release Branch
         run: |
+          echo "Branch~::"
+          git branch
           git checkout -b release/${{ github.event.inputs.releaseVersion }}
 
       - name: Update CHANGELOG.md
@@ -48,7 +50,7 @@ jobs:
           git config --global user.name 'AET Release'
           git config --global user.email 'aet-release@users.noreply.github.com'
           git commit -am "[AET Release] Update CHANGELOG.md"
-          git push https://aet-release:${{ secrets.AET_RELEASE_TOKEN }}@github.com/wttech/aet.git
+          git push https://aet-release:${{ secrets.AET_RELEASE_TOKEN }}@github.com/wttech/aet.git origin release/${{ github.event.inputs.releaseVersion }}
 
       - name: Build Changelog for Github Release
         run: |
