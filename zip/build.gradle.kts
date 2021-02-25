@@ -41,7 +41,9 @@ tasks.register<Zip>("zipFeatures") {
 
 tasks.register<Copy>("zipReport") {
     dependsOn(project(":report").getTasksByName("build", true))
-    from("${project(":report").buildDir}/distributions/report-${rootProject.version}.zip")
+    from("${project(":report").buildDir}/distributions/report-${rootProject.version}.zip") {
+        rename { "report.zip" }
+    }
     into(packages)
 }
 
