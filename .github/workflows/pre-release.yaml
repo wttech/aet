@@ -56,7 +56,7 @@ jobs:
 
       - name: Build project
         run: |
-          ./gradlew :zip:make
+          ./gradlew :zip:make -x test
 
       - name: Create Project Release
         run: |
