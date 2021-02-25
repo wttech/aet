@@ -32,8 +32,6 @@ jobs:
 
       - name: Switch to Release Branch
         run: |
-          echo "Branch~::"
-          git branch
           git checkout -b release/${{ github.event.inputs.releaseVersion }}
 
       - name: Update CHANGELOG.md
@@ -60,7 +58,7 @@ jobs:
 
       - name: Create Project Release
         run: |
-          ./gradlew --stacktrace release \
+          ./gradlew release \
             -Prelease.forceVersion=${{ github.event.inputs.releaseVersion }} \
             -Prelease.customUsername=aet-release \
             -Prelease.customPassword=${{ secrets.AET_RELEASE_TOKEN }} \
