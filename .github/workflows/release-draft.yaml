@@ -73,7 +73,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           body_path: /tmp/release_changelog.md
-          tag_name: ${{ github.ref }}
+          tag_name: ${{ github.event.inputs.releaseVersion }}
           release_name: Release ${{ github.ref }}
           draft: true
 
