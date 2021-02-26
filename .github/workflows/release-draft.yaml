@@ -73,7 +73,7 @@ jobs:
           body_path: /tmp/release_changelog.md
           tag_name: ${{ github.event.inputs.releaseVersion }}
           release_name: ${{ github.event.inputs.releaseVersion }}
-          draft: true
+          prerelease: true
 
       - name: Upload Bundles
         uses: actions/upload-release-asset@v1
