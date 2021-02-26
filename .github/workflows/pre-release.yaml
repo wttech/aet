@@ -64,7 +64,7 @@ jobs:
             -Prelease.customPassword=${{ secrets.AET_RELEASE_TOKEN }} \
             -Prelease.disableChecks
 
-      - name: Create Github Release Draft
+      - name: Create Github Pre-Release
         id: create_release
         uses: actions/create-release@v1
         env:
