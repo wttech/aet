@@ -51,8 +51,10 @@ tasks.register<Zip>("zipSampleSite") {
     dependsOn(project(":sample-site").getTasksByName("build", true))
     destinationDirectory.set(file(packages))
     archiveFileName.set("sample-site.zip")
+    includeEmptyDirs = false
     from(project(":sample-site").buildDir) {
         include("**/*.war")
+        rename { "sample-site.war" }
     }
 }
 
