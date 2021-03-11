@@ -21,7 +21,7 @@
 * added HTMLCS.getMessagesJSON()
 * wrapped everything in IIFE to fix minifier syntax errors
 */
-(function(arguments){
+(function(args){
 (function (root, factory) {
     if (typeof define === 'function' && define.amd) {
         define(['htmlcs'], factory);
@@ -7840,6 +7840,6 @@ var Runner = function () {
 }();
 
 var HTMLCS_RUNNER = new Runner();
-HTMLCS.process(arguments[0], window.document);
+HTMLCS.process(args[0], window.document);
 return HTMLCS.getMessagesJSON();
 })(arguments);
