@@ -130,7 +130,6 @@ jobs:
         with:
           token: ${{ secrets.RELEASE_PR_TOKEN }}
           base: master
-          author: aet-release
           body: Changelog update for release ${{ github.event.inputs.releaseVersion }}
           branch: "release/${{ github.event.inputs.releaseVersion }}"
           title: "[AET Release] Release ${{ github.event.inputs.releaseVersion }}"
