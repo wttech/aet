@@ -45,7 +45,7 @@ jobs:
           git config --global user.name 'AET Release'
           git config --global user.email 'aet-release@users.noreply.github.com'
           git commit -am "[AET Release] Update CHANGELOG.md"
-#          git push https://aet-release:${{ secrets.AET_RELEASE_URL_ENCODED_TOKEN }}@github.com/wttech/aet.git
+          git push https://aet-release:${{ secrets.AET_RELEASE_URL_ENCODED_TOKEN }}@github.com/wttech/aet.git
 
       - name: Build Changelog for Github Release
         run: |
@@ -126,14 +126,11 @@ jobs:
           asset_content_type: application/zip
 
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v3
+        uses: repo-sync/pull-request@v2
         with:
-          token: ${{ secrets.RELEASE_PR_TOKEN }}
-          base: master
-          body: Changelog update for release ${{ github.event.inputs.releaseVersion }}
-          branch: "release/${{ github.event.inputs.releaseVersion }}"
-          title: "[AET Release] Release ${{ github.event.inputs.releaseVersion }}"
-          labels: |
-            auto-pr
-            release
-          draft: true
+          source_branch: "release/${{ github.event.inputs.releaseVersion }}"
+          destination_branch: "master"
+          pr_title: "[AET Release] Release ${{ github.event.inputs.releaseVersion }}"
+          pr_label: "auto-pr,release"
+          pr_draft: true
+          github_token: ${{ secrets.RELEASE_PR_TOKEN }}
