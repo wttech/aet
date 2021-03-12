@@ -125,23 +125,13 @@ jobs:
           asset_path: ./zip/build/packages/sample-site.zip
           asset_content_type: application/zip
 
-#      - name: Create Pull Request
-#        uses: repo-sync/pull-request@v2
-#        with:
-#          source_branch: "release/${{ github.event.inputs.releaseVersion }}"
-#          destination_branch: "master"
-#          pr_title: "[AET Release] Release ${{ github.event.inputs.releaseVersion }}"
-#          pr_label: "auto-pr,release"
-#          pr_draft: true
-#          github_token: ${{ secrets.RELEASE_PR_TOKEN }}
-
-        - name: Create Pull Request
-          uses: peter-evans/create-pull-request@v3
-          with:
-            token: ${{ secrets.RELEASE_PR_TOKEN }}
-            branch: "release/${{ github.event.inputs.releaseVersion }}"
-            title: "[AET Release] Release ${{ github.event.inputs.releaseVersion }}"
-            labels: |
-              auto-pr
-              release
-            draft: true
+      - name: Create Pull Request
+        uses: peter-evans/create-pull-request@v3
+        with:
+          token: ${{ secrets.RELEASE_PR_TOKEN }}
+          branch: "release/${{ github.event.inputs.releaseVersion }}"
+          title: "[AET Release] Release ${{ github.event.inputs.releaseVersion }}"
+          labels: |
+            auto-pr
+            release
+          draft: true
