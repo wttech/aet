@@ -1,8 +1,13 @@
+import com.google.javascript.jscomp.CompilerOptions.LanguageMode;
+import org.gradlewebtools.minify.JsMinifyTask;
+
 plugins {
     id("com.cognifide.aet.java-conventions")
     id("com.cognifide.aet.test-coverage")
     id("biz.aQute.bnd.builder")
+    id("org.gradlewebtools.minify") version "1.1.0"
 }
+
 
 dependencies {
     testImplementation("junit:junit:4.13.1")
@@ -33,6 +38,18 @@ dependencies {
     projectCompile(project(":proxy"))
     projectCompile(project(":selenium"))
     projectCompile(project(":w3chtml5validator"))
+}
+
+tasks.register<JsMinifyTask>("minifyHtmlcs") {
+    srcDir = project.file("src/main/resources/collectors/accessibility")
+    dstDir = project.file("${buildDir}/resources/main/collectors/accessibility")
+    options {
+        languageOut = LanguageMode.ECMASCRIPT5
+    }
+}
+
+tasks.processResources {
+    dependsOn(tasks["minifyHtmlcs"])
 }
 
 tasks.jar {
