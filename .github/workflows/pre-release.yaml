@@ -133,4 +133,4 @@ jobs:
           pr_title: "[AET Release] Release ${{ github.event.inputs.releaseVersion }}"
           pr_label: "auto-pr,release"
           pr_draft: true
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.RELEASE_PR_TOKEN }}
