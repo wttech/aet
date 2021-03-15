@@ -77,7 +77,7 @@ tasks.register<Zip>("zipSampleSite") {
     }
 }
 
-tasks.register("make") {
+tasks.register("makeZip") {
     dependsOn(tasks["zipBundles"])
     dependsOn(tasks["zipConfigs"])
     dependsOn(tasks["zipFeatures"])
