@@ -1,8 +1,11 @@
+import de.undercouch.gradle.tasks.download.Download;
+
 plugins {
     id("com.cognifide.aet.java-conventions")
     id("com.cognifide.aet.test-coverage") apply false
     id("org.nosphere.apache.rat") version "0.7.0"
     id("pl.allegro.tech.build.axion-release") version "1.12.1"
+    id("de.undercouch.download") version "4.1.1"
 }
 
 scmVersion {
@@ -99,3 +102,19 @@ tasks.rat {
 
 tasks["rat"].outputs.upToDateWhen { false }
 tasks["build"].dependsOn(tasks["rat"])
+
+tasks.register<Download>("downloadSwarm") {
+    src("https://github.com/Skejven/aet-docker/releases/latest/download/example-aet-swarm.zip")
+    dest("../aet-docker/swarm.zip")
+    overwrite(false)
+    tempAndMove(true)
+}
+
+tasks.register<Copy>("unzipSwarm") {
+    dependsOn(tasks["downloadSwarm"])
+    from(zipTree("../aet-docker/swarm.zip")) {
+        include("example-aet-swarm/**")
+    }
+    into("../aet-docker")
+    eachFile { path = path.replaceFirst("example-aet-swarm", "") }
+}
