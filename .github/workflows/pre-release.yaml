@@ -22,7 +22,7 @@ on:
 
 jobs:
   build:
-    name: Create Release Draft
+    name: Create Pre-Release
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
@@ -127,11 +127,8 @@ jobs:
 
       - name: Create Pull Request
         run: |
-          curl -X POST \
-            "https://api.github.com/repos/wttech/aet/pulls?access_token=${{ secrets.RELEASE_PR_TOKEN }}" \
-            -H 'content-type: application/json' \
-            -d '{
-            "title": "[AET Release] Release ${{ github.event.inputs.releaseVersion }}",
+          curl -X POST "https://api.github.com/repos/wttech/aet/pulls?access_token=${{ secrets.RELEASE_PR_TOKEN }}"
+            -H 'content-type: application/json'
+            -d '{"title": "[AET Release] Release ${{ github.event.inputs.releaseVersion }}",
             "head": "release/${{ github.event.inputs.releaseVersion }}",
-            "base": "master"
-          }'
+            "base": "master"}'
