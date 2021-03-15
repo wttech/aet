@@ -103,18 +103,6 @@ tasks.rat {
 tasks["rat"].outputs.upToDateWhen { false }
 tasks["build"].dependsOn(tasks["rat"])
 
-tasks.register<Download>("downloadSwarm") {
-    src("https://github.com/Skejven/aet-docker/releases/latest/download/example-aet-swarm.zip")
-    dest("../aet-docker/swarm.zip")
-    overwrite(false)
-    tempAndMove(true)
-}
+tasks.register("deployLocal") {
 
-tasks.register<Copy>("unzipSwarm") {
-    dependsOn(tasks["downloadSwarm"])
-    from(zipTree("../aet-docker/swarm.zip")) {
-        include("example-aet-swarm/**")
-    }
-    into("../aet-docker")
-    eachFile { path = path.replaceFirst("example-aet-swarm", "") }
 }
