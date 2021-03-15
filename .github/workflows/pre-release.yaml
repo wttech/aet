@@ -127,8 +127,8 @@ jobs:
 
       - name: Create Pull Request
         run: |
-          curl -X POST "https://api.github.com/repos/wttech/aet/pulls?access_token=${{ secrets.RELEASE_PR_TOKEN }}"
-            -H 'content-type: application/json'
-            -d '{"title": "[AET Release] Release ${{ github.event.inputs.releaseVersion }}",
-            "head": "release/${{ github.event.inputs.releaseVersion }}",
+          curl -X POST "https://api.github.com/repos/wttech/aet/pulls?access_token=${{ secrets.RELEASE_PR_TOKEN }}" \
+            -H 'content-type: application/json' \
+            -d '{"title": "[AET Release] Release ${{ github.event.inputs.releaseVersion }}", \
+            "head": "release/${{ github.event.inputs.releaseVersion }}", \
             "base": "master"}'
