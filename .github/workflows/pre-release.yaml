@@ -125,11 +125,6 @@ jobs:
           asset_path: ./zip/build/packages/sample-site.zip
           asset_content_type: application/zip
 
-      - name: Test Curl
-        run: |
-          echo "curl -X POST \"https://api.github.com/repos/wttech/aet/pulls?access_token=${{ secrets.RELEASE_PR_TOKEN }}\" \
-            -H \"Accept: application/vnd.github.v3+json\" \
-            -d '{\"title\": \"[AET Release] Release ${{ github.event.inputs.releaseVersion }}\",\"head\": \"release/${{ github.event.inputs.releaseVersion }}\",\"base\": \"master\"}'"
       - name: Create Pull Request
         run: |
           curl -X POST "https://api.github.com/repos/wttech/aet/pulls?access_token=${{ secrets.RELEASE_PR_TOKEN }}" \
