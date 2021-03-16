@@ -5,10 +5,8 @@ plugins {
 
 val packages = "${buildDir}/packages"
 
-tasks.register<Zip>("zipBundles") {
+tasks.register<Copy>("packageBundles") {
     dependsOn(rootProject.getTasksByName("build", true))
-    archiveFileName.set("bundles.zip")
-    destinationDirectory.set(file(packages))
     includeEmptyDirs = false
     rootProject.subprojects.forEach { subproject ->
         from("${subproject.buildDir}/libs") {
@@ -20,23 +18,45 @@ tasks.register<Zip>("zipBundles") {
             exclude("*zip*")
             rename { "${project.group}.${subproject.name}.jar" }
         }
+        into("${packages}/bundles")
     }
 }
 
-tasks.register<Zip>("zipConfigs") {
+tasks.register<Zip>("zipBundles") {
+    dependsOn(tasks["packageBundles"])
+    archiveFileName.set("bundles.zip")
     destinationDirectory.set(file(packages))
-    archiveFileName.set("configs.zip")
-    from("${project(":configs").projectDir}/src/main/resources")
+    includeEmptyDirs = false
+    from("${packages}/bundles")
 }
 
-tasks.register<Zip>("zipFeatures") {
+tasks.register<Copy>("packageConfigs") {
+    from("${project(":configs").projectDir}/src/main/resources")
+    into("${packages}/configs")
+}
+
+tasks.register<Zip>("zipConfigs") {
+    dependsOn(tasks["packageConfigs"])
     destinationDirectory.set(file(packages))
-    archiveFileName.set("features.zip")
+    archiveFileName.set("configs.zip")
+    from("${packages}/configs")
+}
+
+tasks.register<Copy>("packageFeatures") {
     includeEmptyDirs = false
     from("${rootDir}/osgi-dependencies") {
         include("**/aet-features.xml")
         include("**/aet-webconsole.xml")
     }
+    into("${packages}/features")
+}
+
+tasks.register<Zip>("zipFeatures") {
+    dependsOn(tasks["packageFeatures"])
+    destinationDirectory.set(file(packages))
+    archiveFileName.set("features.zip")
+    includeEmptyDirs = false
+    from("${packages}/features")
 }
 
 tasks.register<Copy>("zipReport") {
@@ -57,7 +77,7 @@ tasks.register<Zip>("zipSampleSite") {
     }
 }
 
-tasks.register("make") {
+tasks.register("makeZip") {
     dependsOn(tasks["zipBundles"])
     dependsOn(tasks["zipConfigs"])
     dependsOn(tasks["zipFeatures"])

@@ -3,6 +3,7 @@ plugins {
     id("com.cognifide.aet.test-coverage") apply false
     id("org.nosphere.apache.rat") version "0.7.0"
     id("pl.allegro.tech.build.axion-release") version "1.12.1"
+    id("de.undercouch.download") version "4.1.1"
 }
 
 scmVersion {
@@ -15,7 +16,7 @@ subprojects {
     project.version = rootProject.version
 }
 
-defaultTasks(":zip:make")
+defaultTasks("deployLocal")
 
 tasks.rat {
     // general
@@ -99,3 +100,56 @@ tasks.rat {
 
 tasks["rat"].outputs.upToDateWhen { false }
 tasks["build"].dependsOn(tasks["rat"])
+
+val packages = "${project(":zip").buildDir}/packages"
+val dockerRoot = "../aet-docker"
+
+val coreBundles = "${dockerRoot}/core-bundles"
+val coreConfigs = "${dockerRoot}/core-configs"
+val coreFeatures = "${dockerRoot}/core-features"
+
+tasks.register<Copy>("deployBundles") {
+    verifySetup(coreBundles)
+    dependsOn(project(":zip").tasks["packageBundles"])
+    from("${packages}/bundles")
+    into(coreBundles)
+}
+
+tasks.register<Copy>("deployConfigs") {
+    verifySetup(coreConfigs)
+    dependsOn(project(":zip").tasks["packageConfigs"])
+    from("${packages}/configs")
+    into(coreConfigs)
+}
+
+tasks.register<Copy>("deployFeatures") {
+    verifySetup(coreFeatures)
+    dependsOn(project(":zip").tasks["packageFeatures"])
+    from("${packages}/features")
+    into(coreFeatures)
+}
+
+tasks.register("deployLocal") {
+    dependsOn(tasks["deployBundles"])
+    dependsOn(tasks["deployConfigs"])
+    dependsOn(tasks["deployFeatures"])
+}
+
+fun verifySetup(path: String) {
+    if (!File(path).exists()) {
+        logger.error("Directory $path must exist")
+        throw ProjectConfigurationException(configErrorMsg(), configErrorThrowable(requiredDirs()))
+    }
+}
+
+fun requiredDirs() = listOf(coreBundles, coreConfigs, coreFeatures)
+
+fun configErrorMsg() =
+        """
+            Incorrect local environment setup.
+            Please refer to https://github.com/malaskowski/aet-docker
+            for a guide of setting up the environment.
+        """.trimIndent()
+
+fun configErrorThrowable(requiredDirs: List<String>) =
+        Throwable("At least one of the directories: $requiredDirs does not exist")

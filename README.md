@@ -90,7 +90,11 @@ AET helps testers to ensure that a change in one part of the software has not in
 ## <p id="installation">How to start</p>
 To setup a fully functional AET instance use one of the following:
 - [AET cookbook](https://github.com/wttech/aet-cookbook), you may run local instance using [AET Vagrant](https://github.com/wttech/aet//wiki/BasicSetup#set-up-vagrant).
-- [AET Docker images](https://github.com/malaskowski/aet-docker), you may run local instance using [sample AET Swarm](https://github.com/malaskowski/aet-docker/tree/master/example-aet-swarm).
+- [AET Docker images](https://github.com/malaskowski/aet-docker), you may run local instance as follows:
+    - follow the guide [here](https://github.com/malaskowski/aet-docker#developer-environment)
+    - assume `AET_ROOT` mentioned in the guide above to be equal `../aet-docker`
+    - this way, from the root directory of **this** project, you can run `./gradlew` or `./gradlew deployLocal` to automatically 
+      install all core bundles, core configs and core features
 
 For more details on how to run AET tests, see [AET in 10 minutes](https://github.com/wttech/aet//wiki/AETIn10Minutes) guide.
 

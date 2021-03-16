@@ -54,7 +54,7 @@ jobs:
 
       - name: Build project
         run: |
-          ./gradlew :zip:make -x test
+          ./gradlew makeZip -x test
 
       - name: Create Project Release
         run: |

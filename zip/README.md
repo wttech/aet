@@ -16,7 +16,7 @@ After installing all AET modules in local repository type in the root dir:
   ```
 - gradle
   ```
-  ./gradlew # or ./gradlew :zip:make
+  ./gradlew makeZip
   ```
     
 Please find archives containing all AET artifacts in
