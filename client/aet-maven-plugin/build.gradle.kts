@@ -9,7 +9,7 @@ dependencies {
     implementation("org.apache.maven:maven-plugin-api:2.0")
     implementation("org.apache.maven:maven-project:2.2.1")
     implementation("org.codehaus.plexus:plexus-utils:3.0.8")
-    implementation("com.google.guava:guava:24.1.1-jre")
+    implementation("com.google.guava:guava:30.1.1-jre")
     implementation("org.apache.commons:commons-lang3:3.3.2")
     implementation("commons-io:commons-io:2.4")
     implementation("com.jcabi:jcabi-log:0.12.2")

@@ -6,7 +6,7 @@ plugins {
 dependencies {
     projectCompile(project(":communication-api"))
     implementation("org.codehaus.plexus:plexus-utils:3.0.8")
-    implementation("com.google.guava:guava:24.1.1-jre")
+    implementation("com.google.guava:guava:30.1.1-jre")
     implementation("org.apache.commons:commons-lang3:3.3.2")
     implementation("org.apache.httpcomponents:fluent-hc:4.5.2")
     implementation("org.apache.httpcomponents:httpmime:4.5.2")
