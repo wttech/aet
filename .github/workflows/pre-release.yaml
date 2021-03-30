@@ -57,10 +57,6 @@ jobs:
           RELEASE_CHANGELOG=$(sed '/## Version '"${{ github.event.inputs.releaseVersion }}"'/,/## Version/!d;//d' CHANGELOG.md)
           echo "Release changelog content: $RELEASE_CHANGELOG" >> /tmp/release_changelog.md
 
-      - name: Print gradle version
-        run: |
-          ./gradlew --version
-
       - name: Build project
         run: |
           ./gradlew makeZip -x test
