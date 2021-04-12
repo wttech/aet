@@ -13,9 +13,6 @@ All notable changes to AET will be documented in this file.
 
 - [PR-576](https://github.com/wttech/aet/pull/576) Unique screen name validation
 - [PR-617](https://github.com/wttech/aet/pull/617) Add gradle builds.
-
-## Version 3.4.0
-
 - [PR-601](https://github.com/wttech/aet/pull/601) Reports new design. ([#595](https://github.com/wttech/aet/issues/595))
 - [PR-528](https://github.com/wttech/aet/pull/528) Added source pattern date and source collected date. ([#500](https://github.com/wttech/aet/issues/500))
 - [PR-589](https://github.com/wttech/aet/pull/589) Fixed bug with 'Discard all changes' button not properly displayed. ([#587](https://github.com/wttech/aet/issues/587))
