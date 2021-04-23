@@ -6,7 +6,7 @@
   "scripts": {
     "gulp": "gulp build"
   },
-  "author": "Cognifide",
+  "author": "Wttech",
   "license": "Apache-2.0",
   "dependencies": {
     "angular": "^1.8.2",
