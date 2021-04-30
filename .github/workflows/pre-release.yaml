@@ -59,7 +59,7 @@ jobs:
 
       - name: Build project
         run: |
-          ./gradlew makeZip -x test
+          ./gradlew makeZip -x test -Prelease.forceVersion=${{ github.event.inputs.releaseVersion }}
 
       - name: Create Project Release
         run: |
