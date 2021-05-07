@@ -11,6 +11,8 @@ All notable changes to AET will be documented in this file.
 
 **List of changes that are finished but not yet released in any final version.**
 
+## Version 3.4.0
+
 - [PR-576](https://github.com/wttech/aet/pull/576) Unique screen name validation
 - [PR-617](https://github.com/wttech/aet/pull/617) Add gradle builds.
 - [PR-601](https://github.com/wttech/aet/pull/601) Reports new design. ([#595](https://github.com/wttech/aet/issues/595))
