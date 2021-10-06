@@ -67,11 +67,11 @@ AET helps testers to ensure that a change in one part of the software has not in
    * There is a change and the user does not accept it, so she/he has to fix it.
 4. AET produces a report.
 
-#### AET is not about
-* functional testing - checkout another Wunderman Thompson Technology's testing framework: [Bobcat](https://github.com/wttech/bobcat) for functional testing,
-* cross-browser testing,
-* usability testing,
-* security or server-side performance.
+#### AET is NOT about
+* functional testing
+* cross-browser testing
+* usability testing
+* security or server-side performance
 
 ## What's inside?
 *AET* uses several tools and frameworks that are used to check page quality in the following areas:
