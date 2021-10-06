@@ -1,11 +1,11 @@
-![Cognifide logo](http://cognifide.github.io/images/cognifide-logo.png)
+<img src="https://github.com/wttech/aet/raw/master/misc/img/WT_Logo_Blue_Positive_RGB.png" alt="Wunderman Thompson Logo" width="150"/>
 
 # How to contribute to AET
 Thank you for taking the time to contribute!
 We appreciate all commits and improvements, feel free to join AET community and contribute.
 
 ## How to start
-Please refer to [AET Documentation](https://cognifide.atlassian.net/wiki/display/AET/) to see how to setup local environment.
+Please refer to [AET Documentation](https://github.com/wttech/aet/wiki) to see how to setup local environment.
 Submit a ticket for your issue, assuming one does not already exist.
 
 - Clearly describe the issue including steps to reproduce when it is a bug.
