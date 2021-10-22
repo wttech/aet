@@ -95,6 +95,7 @@ To setup a fully functional AET instance use one of the following:
     - assume `AET_ROOT` mentioned in the guide above to be equal `../aet-docker`
     - this way, from the root directory of **this** project, you can run `./gradlew` or `./gradlew deployLocal` to automatically 
       install all core bundles, core configs and core features
+- [AET Helm chart](https://github.com/malaskowski/aet-helm) when you have Kubernetes cluster.
 
 For more details on how to run AET tests, see [AET in 10 minutes](https://github.com/wttech/aet//wiki/AETIn10Minutes) guide.
 
