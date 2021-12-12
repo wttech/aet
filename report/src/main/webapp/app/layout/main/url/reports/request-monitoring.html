@@ -36,9 +36,29 @@
     </tr>
     </thead>
     <tbody>
-    <tr ng-repeat="item in case.result.results">
+<!--    TO DO: Uncomment and test if it's working after implementing improvement checking max size for one specific item-->
+
+<!--    <tr class="divider-row" ng-if="case.status == 'FAILED'">-->
+<!--      <td colspan="4">-->
+<!--        Unexpected assets:-->
+<!--      </td>-->
+<!--    </tr>-->
+<!--    <tr class="danger"-->
+<!--        ng-repeat="item in case.result.results.size >= maxSize">-->
+<!--      <td>{{$index+1}}</td>-->
+<!--      <td><a href="{{item.url}}">{{item.url}}</a></td>-->
+<!--      <td>{{item.size.toFixed(2)}}</td>-->
+<!--      <td>{{item.code}}</td>-->
+<!--    </tr>-->
+    <tr class="divider-row">
+      <td colspan="4">
+        All gathered assets:
+      </td>
+    </tr>
+    <tr class="info" ng-repeat="item in case.result.results">
       <td>{{$index+1}}</td>
-      <td><a href="{{item.url}}">{{item.url}}</a></td>
+      <td>{{item.code}}</td>
+      <td><a href="{{item.url}}" title="{{item.url}}">{{item.url}}</a></td>
       <td>{{item.size.toFixed(2)}}</td>
     </tr>
     </tbody>
