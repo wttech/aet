@@ -35,7 +35,7 @@
 
   <properties>
     <!-- Jetty version that is provided on Karaf instance -->
-    <jetty.version>9.3.14.v20161028</jetty.version>
+    <jetty.version>9.4.41.v20210516</jetty.version>
   </properties>
 
   <dependencies>
