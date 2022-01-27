@@ -1,0 +1,124 @@
+#
+# AET Docker
+#
+# Copyright (C) 2018 Maciej Laskowski
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+#
+
+version: '3.7'
+
+networks:
+  private:
+    driver: overlay
+
+volumes:
+  mongo-data:
+
+services:
+  hub:
+    image: selenium/hub:3.14.0-arsenic
+    ports:
+      - '4444:4444'
+    deploy:
+      mode: global
+      placement:
+        constraints:
+          - node.role == manager
+    networks:
+      - private
+
+  chrome:
+    image: selenium/node-chrome:3.14.0-arsenic
+    volumes:
+      - /dev/shm:/dev/shm # Mitigates the Chromium issue described at https://code.google.com/p/chromium/issues/detail?id=519952
+    depends_on:
+      - hub
+    environment:
+      - HUB_HOST=hub
+      - HUB_PORT=4444
+      - NODE_MAX_INSTANCES=1
+      - NODE_MAX_SESSION=1
+    entrypoint: bash -c 'SE_OPTS="-host $$HOSTNAME -port 5556" /opt/bin/entry_point.sh'
+    deploy:
+      replicas: 3
+    networks:
+      - private
+
+  mongo:
+    image: mongo:3.6
+    command: mongod --enableMajorityReadConcern
+    deploy:
+      placement:
+        constraints:
+          - node.role == manager
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+    volumes:
+      - mongo-data:/data/db
+    ports:
+      - '27017:27017'
+    networks:
+      - private
+
+  activemq:
+    image: malaskowski/aet_activemq:1.0.0
+    ports:
+      - '8161:8161'
+    networks:
+      - private
+
+  browsermob:
+    image: malaskowski/aet_browsermob:1.0.0
+    ports:
+      - '8080:8080'
+      - '8281-8681:8281-8681'
+    networks:
+      - private
+
+  karaf:
+    image: malaskowski/aet_karaf:1.0.0
+    depends_on:
+      - hub
+      - activemq
+    volumes:
+      - ./bundles:/aet/core/bundles
+      - ./configs:/aet/custom/configs
+      - ./features:/aet/core/features
+    secrets:
+      - KARAF_EXAMPLE_SECRET
+    ports:
+      - '8181:8181'
+    #      - '5005:5005' # uncomment to be able to connect Karaf in debug mode
+    #    environment:
+    #      - KARAF_DEBUG=true # uncomment (with section above) to start Karaf in debug mode
+    networks:
+      - private
+
+  report:
+    image: malaskowski/aet_report:1.0.0
+    ports:
+      - '9999:80'
+    #    volumes:
+    #      - ./report:/usr/local/apache2/htdocs
+    #    environment:
+    #      - AET_WEB_API=http://my.karaf.com # uncomment to configure custom AET Web API endpoint
+    networks:
+      - private
+
+secrets:
+  KARAF_EXAMPLE_SECRET:
+    file: secrets/KARAF_EXAMPLE_SECRET

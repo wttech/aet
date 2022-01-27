@@ -52,6 +52,9 @@ tasks.rat {
     excludes.add("**/gradle.properties")
     excludes.add("**/gradle-wrapper.properties")
 
+    // dev environment
+    excludes.add("**/dev-env/**")
+
     // sample-site
     excludes.add("**/integration-tests/sample-site/src/main/resources/mock/**/*.html")
     excludes.add("**/integration-tests/sample-site/src/main/webapp/assets/demo_files/accessibility/bootstrap.css")
