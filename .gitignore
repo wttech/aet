@@ -67,3 +67,9 @@ build/
 
 ### Gradle Patch ###
 **/build/
+
+# Dev Environment
+/dev-env/bundles/*.jar
+/dev-env/features/*.xml
+/dev-env/report/*
+!dev-env/report/README.md

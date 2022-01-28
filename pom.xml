@@ -1033,6 +1033,8 @@
 
                 <!-- for AET cookbook development process -->
                 <exclude>/vagrant/cookbooks/**</exclude>
+                <!-- exclude dev env -->
+                <exclude>/dev-env/**</exclude>
 
                 <!-- TODO: update license headers in those files, see AET-1301 -->
                 <exclude>integration-tests/**/*.css</exclude>

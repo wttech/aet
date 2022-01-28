@@ -5,7 +5,15 @@ Thank you for taking the time to contribute!
 We appreciate all commits and improvements, feel free to join AET community and contribute.
 
 ## How to start
-Please refer to [AET Documentation](https://github.com/wttech/aet/wiki) to see how to setup local environment.
+To build and develop AET you will need installed:
+- JDK 8
+- Maven or Gradle
+- Docker (to run dev instance)
+- shell command line (Linux preffered)
+
+### Development
+See the instructions in the [Dev Environment](https://github.com/wttech/aet/tree/master/dev-env) to see how to setup local environment.
+
 Submit a ticket for your issue, assuming one does not already exist.
 
 - Clearly describe the issue including steps to reproduce when it is a bug.
