@@ -1,5 +1,11 @@
-# Local AET instance with docker swarm
+# Dev AET instance with Docker Swarm
 This directory contains Docker Swarm configuration that enables running AET developer environment. It base on AET Docker images from https://github.com/malaskowski/aet-docker.
+
+Make sure you have installed:
+- Java 8 (newer JDK versions are not supported)
+- Maven or Gradle
+- Docker
+- shell command line (Linux preffered)
 
 ## Running dev environment
 In order to be able to easily deploy AET artifacts on your docker instance follow these steps:
@@ -24,10 +30,11 @@ In order to be able to easily deploy AET artifacts on your docker instance follo
 This scenario shows how to update your AET Docker Swarm dev instance with changes made to any of AET bundles that runs on Karaf.
 
 1. Hack, hack, hack.
-2. Build the module you updated, e.g.
-3. Copy the artifact to `dev-environment/bundles` (override if needed). Karaf should auto-discover changes and reload the bundle in a short period.
+2. Build the module you updated, e.g. `core/jobs`.
+3. Rename the `jar` file so that it does not contain the version and replace existing `jar` in `dev-environment/bundles`. Karaf should auto-discover changes and reload the bundle in a short period.
   - If you changed configuration, don't forget to update corresponding `.cfg` file in the `configs` directory.
   - If you added new dependencies remember to update `osgi-dependencies/aet-features.xml` and updating this file in `dev-den/features` so that Karaf can download dependencies for your bundle.
+  - Avoid duplicated bundles (hence the renaming of single module jar). All jar files are renamed by the build tools when building the distribution (`zip` module).
 
 ### Report
 - ToDo
