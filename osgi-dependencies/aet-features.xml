@@ -59,7 +59,7 @@
         <bundle>mvn:org.apache.commons/commons-text/1.8</bundle>
 
         <!-- required by fileupload -->
-        <bundle>mvn:org.apache.felix/org.apache.felix.http.servlet-api/1.1.2</bundle>
+        <bundle>mvn:org.apache.felix/org.apache.felix.http.servlet-api/1.1.4</bundle>
     </feature>
 
     <feature name="aet-jackson" version="0.6.0" description="Bundles for Jackson" install="auto">
