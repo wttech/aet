@@ -95,9 +95,9 @@ services:
       - hub
       - activemq
     volumes:
-      - ./bundles:/aet/core/bundles
+      - ./bundles:/aet/custom/bundles
       - ./configs:/aet/custom/configs
-      - ./features:/aet/core/features
+      - ./features:/aet/custom/features
     secrets:
       - KARAF_EXAMPLE_SECRET
     ports:

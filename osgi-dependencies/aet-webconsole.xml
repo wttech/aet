@@ -25,7 +25,7 @@
 
     <feature name="aet-webconsole" version="0.6.0" description="Felix Web Console" install="auto">
         <feature>webconsole</feature>
-        <bundle>mvn:org.apache.karaf.webconsole/org.apache.karaf.webconsole.features/4.1.2</bundle>
+        <bundle>mvn:org.apache.karaf.webconsole/org.apache.karaf.webconsole.features/4.2.15</bundle>
     </feature>
 
 </features>
