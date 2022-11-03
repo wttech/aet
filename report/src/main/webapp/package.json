@@ -34,7 +34,7 @@
     "eslint-plugin-promise": "^3.8.0",
     "eslint-plugin-standard": "^3.1.0",
     "glob": "^7.1.2",
-    "gulp": "3.9.1",
+    "gulp": "4.0.2",
     "gulp-autoprefixer": "^5.0.0",
     "gulp-clean-css": "^3.9.4",
     "gulp-concat": "^2.6.1",
