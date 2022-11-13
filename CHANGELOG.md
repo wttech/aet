@@ -10,6 +10,7 @@ All notable changes to AET will be documented in this file.
 ## Unreleased
 
 **List of changes that are finished but not yet released in any final version.**
+- [PR-583](https://github.com/Cognifide/aet/pull/583) Enable login modifier to read login and password from environment variables (fixed [#512](https://github.com/Cognifide/aet/issues/512)).
 
 - [PR-576](https://github.com/wttech/aet/pull/576) Unique screen name validation
 - [PR-617](https://github.com/wttech/aet/pull/617) Add gradle builds.

@@ -18,15 +18,16 @@ package com.cognifide.aet.job.common.modifiers.login;
 import com.cognifide.aet.job.api.ParametersValidator;
 import com.cognifide.aet.job.api.exceptions.ParametersException;
 import java.util.Map;
+import java.util.Optional;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.math.NumberUtils;
 
 class LoginModifierConfig {
 
-  private static final String DEFAULT_LOGIN = "admin";
+  static final String DEFAULT_LOGIN = "admin";
 
-  private static final String DEFAULT_PASSWORD = "admin";
+  static final String DEFAULT_PASSWORD = "admin";
 
   private static final String DEFAULT_LOGIN_INPUT_SELECTOR = "//input[@name='j_username']";
 
@@ -36,11 +37,11 @@ class LoginModifierConfig {
 
   private static final String DEFAULT_LOGIN_TOKEN = "login-token";
 
-  private static final String LOGIN_PARAM = "login";
+  static final String LOGIN_PARAM = "login";
 
-  private static final String PASSWORD_PARAM = "password";
+  static final String PASSWORD_PARAM = "password";
 
-  private static final String LOGIN_PAGE_PARAM = "login-page";
+  static final String LOGIN_PAGE_PARAM = "login-page";
 
   private static final String LOGIN_INPUT_SELECTOR_PARAM = "login-input-selector";
 
@@ -82,8 +83,8 @@ class LoginModifierConfig {
 
   public LoginModifierConfig(Map<String, String> params) throws ParametersException {
     this.loginPage = params.get(LOGIN_PAGE_PARAM);
-    this.login = getParameter(params, LOGIN_PARAM, DEFAULT_LOGIN);
-    this.password = getParameter(params, PASSWORD_PARAM, DEFAULT_PASSWORD);
+    this.login = getEnvParameter(params, LOGIN_PARAM, DEFAULT_LOGIN);
+    this.password = getEnvParameter(params, PASSWORD_PARAM, DEFAULT_PASSWORD);
     this.loginInputSelector = getParameter(params, LOGIN_INPUT_SELECTOR_PARAM,
         DEFAULT_LOGIN_INPUT_SELECTOR);
     this.passwordInputSelector = getParameter(params, PASSWORD_INPUT_SELECTOR_PARAM,
@@ -100,6 +101,22 @@ class LoginModifierConfig {
     ParametersValidator.checkNotBlank(loginPage, "`login-page` parameter is mandatory");
     ParametersValidator
         .checkRange(retrialNumber, 1, Integer.MAX_VALUE, "Retrial number has to be at least 1");
+  }
+
+  private String getEnvParameter(Map<String, String> params, String key, String defaultValue) {
+    return Optional.ofNullable(params.get(key))
+        .filter(StringUtils::isNotEmpty)
+        .map(value -> isEnv(value) ? getEnv(value, defaultValue) : value)
+        .orElse(defaultValue);
+  }
+
+  private boolean isEnv(String value) {
+    return value.startsWith("${") && value.endsWith("}") ;
+  }
+
+  private String getEnv(String value, String defaultValue) {
+    return Optional.ofNullable(System.getenv(value.substring(2, value.length() - 1)))
+        .orElse(defaultValue);
   }
 
   private String getParameter(Map<String, String> params, String key, String defaultValue) {
