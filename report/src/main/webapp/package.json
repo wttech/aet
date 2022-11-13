@@ -14,7 +14,7 @@
     "angular-ui-bootstrap": "^1.1.0",
     "angular-ui-router": "^0.2.18",
     "bootstrap-sass": "~3.3.5",
-    "jquery": "^2.2.3",
+    "jquery": "^3.5.0",
     "lodash": "^4.17.19",
     "requirejs": "~2.1.8",
     "requirejs-text": "~2.0.10"
