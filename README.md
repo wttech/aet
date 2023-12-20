@@ -33,7 +33,7 @@
 </div>
 
 <p align="center">
-    <img src="https://github.com/wttech/aet/raw/master/misc/img/white-vml-square-small.png" alt="Wunderman Thompson Logo" width="150"/>
+    <img src="https://github.com/wttech/aet/raw/master/misc/img/white-vml-square-small.png" alt="VML" width="150"/>
 </p>
 
 # <p id="about">AET</p>
