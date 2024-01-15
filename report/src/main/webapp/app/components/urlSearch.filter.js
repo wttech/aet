@@ -43,4 +43,8 @@ define(['angularAMD'], function (angularAMD) {
       return name && name.indexOf(searchPhrase) > 0;
     }
   }
+
+  function concatenate(listOfStrings) {
+    listOfStrings.join('');
+  }
 });

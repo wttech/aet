@@ -38,6 +38,10 @@ define(['angularAMD'], function (angularAMD) {
       }
       return filteredTests;
     }
+
+    function concatenate(listOfStrings) {
+      return listOfStrings.join('');
+    }
   }
 });
 
