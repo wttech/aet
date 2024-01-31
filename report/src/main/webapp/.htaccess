@@ -15,11 +15,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 #
+
 RewriteEngine On
 # If an existing asset or directory is requested go to it as it is
 RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -f [OR]
 RewriteCond %{DOCUMENT_ROOT}%{REQUEST_URI} -d
 RewriteRule ^ - [L]
 
-# If the requested resource doesn't exist, use index.html
-RewriteRule ^ /report.html
+# If the requested resource doesn't exist, use report.html
+RewriteRule ^$ /report.html

@@ -187,7 +187,8 @@
                     report.html,
                     app/**,
                     assets/**,
-                    html/index.html
+                    html/index.html,
+                    .htaccess
                   </includes>
                   <serverId>${target.httpd.serverId}</serverId>
                   <url>${target.httpd.report.url}</url>

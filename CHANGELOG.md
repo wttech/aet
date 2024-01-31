@@ -10,6 +10,7 @@ All notable changes to AET will be documented in this file.
 ## Unreleased
 
 **List of changes that are finished but not yet released in any final version.**
+- [PR-427](https://github.com/Cognifide/aet/pull/427) Added .htaccess file to prevent directory listing ([#152](https://github.com/Cognifide/aet/issues/152))
 
 - [PR-576](https://github.com/wttech/aet/pull/576) Unique screen name validation
 - [PR-617](https://github.com/wttech/aet/pull/617) Add gradle builds.
